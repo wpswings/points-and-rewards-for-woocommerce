@@ -326,7 +326,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	* @param $user_id
 	*/
 	public function mwb_wpr_get_social_shraing_section($user_id) {
-		$enable_mwb_social = isset($general_settings['mwb_wpr_general_social_media_enable']) ? intval($general_settings['mwb_wpr_general_social_media_enable']) : 0;
+		$enable_mwb_social = $this->mwb_wpr_get_general_settings_num('mwb_wpr_general_social_media_enable');
 		$user_reference_key =  get_user_meta($user_id, 'mwb_points_referral', true);
 		$page_permalink = wc_get_page_permalink('myaccount');
 		if($enable_mwb_social){
@@ -347,15 +347,15 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 
 			$google = '<div class="google mwb_wpr_common_class"><script src="https://apis.google.com/js/platform.js" async defer></script><div class="g-plus google-plus-button" data-action="share" data-height="24" data-href="'.$page_permalink.'?pkey='.$user_reference_key.'"></div></div>';
 
-			if( isset($general_settings['mwb_wpr_facebook']) && $general_settings['mwb_wpr_facebook'] == 1) {
+			if( $this->mwb_wpr_get_general_settings_num('mwb_wpr_facebook') == 1) {
 
 				$content =  $content.$fb_button;
 			}
-			if( isset($general_settings['mwb_wpr_twitter']) && $general_settings['mwb_wpr_twitter'] == 1){
+			if( $this->mwb_wpr_get_general_settings_num('mwb_wpr_twitter') == 1){
 
 				$content =  $content.$share_button;
 			}
-			if( isset($general_settings['mwb_wpr_email']) && $general_settings['mwb_wpr_email'] == 1) {
+			if(  $this->mwb_wpr_get_general_settings_num('mwb_wpr_email') == 1) {
 				$content =  $content.$mail;
 			}
 			$content = $content.'</div>';

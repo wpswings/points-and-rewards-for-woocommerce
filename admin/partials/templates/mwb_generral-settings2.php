@@ -146,7 +146,7 @@ $mwb_wpr_general_settings = array(
 		'class' => 'input-text',
 		'desc_tip' => __( 'Entered text will append before the Total Number of Point', MWB_RWPR_Domain ),
 		'default' => __( 'My Points', MWB_RWPR_Domain ),
-		'desc2' => '[Refer Points]' . __( ' for Referral Points', MWB_RWPR_Domain ) . ' [Comment Points]' . __( ' for Comment Points ', MWB_RWPR_Domain ) . '[Per Currency Spent Points]' . __( ' for Per currency spent points and', MWB_RWPR_Domain ) . '[Per Currency Spent Price]' . __( ' for per currency spent price', MWB_RWPR_Domain ),
+		'desc2' => '[Refer Points]' . __( ' for Referral Points', MWB_RWPR_Domain ). '[Per Currency Spent Points]' . __( ' for Per currency spent points and', MWB_RWPR_Domain ) . '[Per Currency Spent Price]' . __( ' for per currency spent price', MWB_RWPR_Domain ),
 		'desc'  => __( 'Use these shortcodes for providing ways to gain points at front end.', MWB_RWPR_Domain ),
 	),
 	array(
@@ -236,8 +236,10 @@ if ( isset( $_POST['mwb_wpr_save_general'] ) ) {
 			$general_settings_array = array();
 
 			foreach ( $postdata as $key => $value ) {
-				$value = stripcslashes( $value );
-				$value = sanitize_text_field( $value );
+				if ('mwb_wpr_general_ways_to_gain_points' != $key) {
+					$value = stripcslashes( $value );
+					$value = sanitize_text_field( $value );
+				}
 				$general_settings_array[ $key ] = $value;
 			}
 			if ( is_array( $general_settings_array ) && ! empty( $general_settings_array ) ) {

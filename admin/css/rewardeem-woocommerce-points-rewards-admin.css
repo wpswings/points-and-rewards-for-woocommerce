@@ -13,8 +13,16 @@
   width: 100%;
   z-index: 99999;
 }
-.mwb_wpr_object_purchase {
-  background-color: #ef5350;
+.mwb_wpr_object_purchase p {
+
+    background-color: #ef5350;
+    color: #fff;
+    padding: 7px 10px;
+    margin-top: 10px !important;
+    border-radius: 4px;
+    display: block;
+    font-size: 15px !important;
+
 }
 #mwb_wpr_loader img {
   display: block;
@@ -50,10 +58,11 @@
   background-color:  #ef5350;
   color: #ffffff;
 }
-#mwb_rwpr_setting_wrapper input[type="checkbox"],
-#mwb_rwpr_setting_wrapper input[type="radio"]{
+#mwb_rwpr_setting_wrapper input[type="checkbox"], #mwb_rwpr_setting_wrapper input[type="radio"] {
   width: 16px;
   height: 16px;
+  position: relative;
+  z-index: 111;
 }
 #mwb_rwpr_setting_wrapper .mwb_rwpr_pro_version_wrapper .mwb_rwpr_about_pro_version {
   font-size: 15px;
@@ -537,4 +546,3 @@
   #mwb_wpr_settings_wrapper #mainform .mwb_wpr_email_wrapper .mwb_wpr_email_wrapper_text h2 {
    text-align: left!important;
  }
- 

@@ -83,23 +83,6 @@ if ($activated) {
 	}
 
 	/**
-	 * The code that runs during plugin activation.
-	 * This action is documented in includes/class-rewardeem-woocommerce-points-rewards-activator.php
-	 */
-	function activate_rewardeem_woocommerce_points_rewards() {
-		require_once plugin_dir_path( __FILE__ ) . 'includes/class-rewardeem-woocommerce-points-rewards-activator.php';
-		Rewardeem_woocommerce_Points_Rewards_Activator::activate();
-	}
-
-	/**
-	* The code that runs during plugin deactivation.
-	* This action is documented in includes/class-rewardeem-woocommerce-points-rewards-deactivator.php
-	*/
-	function deactivate_rewardeem_woocommerce_points_rewards() {
-		require_once plugin_dir_path( __FILE__ ) . 'includes/class-rewardeem-woocommerce-points-rewards-deactivator.php';
-		Rewardeem_woocommerce_Points_Rewards_Deactivator::deactivate();
-	}
-	/**
 	* Dynamically Generate Coupon Code
 	* 
 	* @name mwb_wpr_coupon_generator
@@ -146,10 +129,7 @@ if ($activated) {
 		}
 		return $pkey;
 	}
-
-	register_activation_hook( __FILE__, 'activate_rewardeem_woocommerce_points_rewards' );
-	register_deactivation_hook( __FILE__, 'deactivate_rewardeem_woocommerce_points_rewards' );
-
+	
 	/**
 	 * The core plugin class that is used to define internationalization,
 	 * admin-specific hooks, and public-facing site hooks.
@@ -190,7 +170,7 @@ if ($activated) {
 			$mwb_wpr_shortcode_text_membership = $mwb_wpr_other_settings['mwb_wpr_shortcode_text_membership'];
 		}
 		else {
-			$mwb_wpr_shortcode_text_membership = __("Your Current Level",MWB_WPR_Domain);
+			$mwb_wpr_shortcode_text_membership = __("Your Current Level",MWB_RWPR_Domain);
 		}
 		if(isset($user_ID) && !empty($user_ID))
 		{
@@ -210,13 +190,13 @@ if ($activated) {
 	 */
 	function mwb_wpr_signupnotif_shortcode(){
 		$general_settings = get_option('mwb_wpr_settings_gallery',true);
-		$enable_mwb_signup = isset($general_settings['enable_mwb_signup']) ? intval($general_settings['enable_mwb_signup']) : 0;
+		$enable_mwb_signup = isset($general_settings['mwb_wpr_general_signup']) ? intval($general_settings['mwb_wpr_general_signup']) : 0;
 		if($enable_mwb_signup && !is_user_logged_in()){	
-			$mwb_wpr_signup_value = isset($general_settings['mwb_signup_value']) ? intval($general_settings['mwb_signup_value']) : 1;
+			$mwb_wpr_signup_value = isset($general_settings['mwb_wpr_general_signup_value']) ? intval($general_settings['mwb_wpr_general_signup_value']) : 1;
 			?>
 			<div class="woocommerce-message">
 				<?php 
-					echo  __( 'You will get ', MWB_WPR_Domain ) .$mwb_wpr_signup_value.__(' points for SignUp',MWB_WPR_Domain);
+					echo  __( 'You will get ', MWB_RWPR_Domain ) .$mwb_wpr_signup_value.__(' points for SignUp',MWB_RWPR_Domain);
 				 ?>
 			</div>
 		<?php

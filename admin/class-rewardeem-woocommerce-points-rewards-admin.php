@@ -471,7 +471,9 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 						<label for="mwb_wpr_membership_level_name">
 							<input type="text" name="mwb_wpr_membership_level_name_<?php echo $count; ?>" value="<?php echo $this->check_is_not_empty( $key ); ?>" id="mwb_wpr_membership_level_name_<?php echo $count; ?>" class="text_points" required><?php esc_html_e( 'Enter the Name of the Level', 'rewardeem-woocommerce-points-rewards' ); ?>
 						</label>
-						<input type="button" value='<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo $count; ?>">				
+						<?php if(!empty($value)):?>
+						<input type="button" value='<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo $count; ?>">	
+						<?php endif;?> 			
 					</td>
 				</tr>
 				<tr valign="top">

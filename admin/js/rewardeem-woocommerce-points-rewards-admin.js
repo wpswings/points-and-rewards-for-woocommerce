@@ -118,6 +118,7 @@
 		if(mwb_wpr_object.check_pro_activate) {
 			jQuery(document).on('click','.mwb_wpr_repeat_button',function(){
 				var html = '';
+				$(document).find('.mwb_wpr_object_purchase').remove();
 				html = '<div class="mwb_wpr_object_purchase"><p>'+mwb_wpr_object.pro_text+'</p></div>';
 				$('.parent_of_div').append(html);
 			});
@@ -127,10 +128,21 @@
 		if(mwb_wpr_object.check_pro_activate) {
 			$(document).on('click','#mwb_wpr_add_more',function() {
 				var html = '';
+				$(document).find('.mwb_wpr_object_purchase').remove();
 				html = '<div class="mwb_wpr_object_purchase"><p>'+mwb_wpr_object.pro_text+'</p></div>';
-				$('.wp-list-table').append(html);
+				$(html).insertAfter('.wp-list-table');
 			});
 		}
+		jQuery(document).on('click','.mwb_wpr_remove_button',function(){
+    		//$('.parent_of_div .mwb_wpr_repeat:last').remove();
+    		var curr_div = $(this).attr('id');
+    		if(curr_div == 0) {
+    			$(document).find('.mwb_wpr_repeat_button').hide();
+    			$('#mwb_wpr_membership_setting_enable').attr('checked',false);
+    		}
+    		$('#mwb_wpr_parent_repeatable_'+curr_div).remove();
+    		
+    	});
 
 	});
 
