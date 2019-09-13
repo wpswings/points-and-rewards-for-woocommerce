@@ -97,6 +97,13 @@
 						}
 					});
 				}
+				else {
+					$('html, body').animate({
+						scrollTop: $(".woocommerce-cart-form").offset().top
+					}, 800);
+					var assing_message = '<ul class="woocommerce-error" role="alert"><li>'+mwb_wpr.not_suffient+'</li></ul>';
+					$(assing_message).insertBefore($('.woocommerce-cart-form'));
+				}
 			}
 		});
 
@@ -142,7 +149,13 @@
 		var unblock = function( $node ) {
 			$node.removeClass( 'processing' ).unblock();
 		};
-
+		/*Add confirmation in the myaccount page*/
+		$(document).on('click','#mwb_wpr_upgrade_level_click',function(){
+			var mwb_wpr_confirm = confirm(mwb_wpr.confirmation_msg);
+			if (mwb_wpr_confirm) {
+				$(document).find('#mwb_wpr_upgrade_level').click();
+			}
+		});
 	});
 	 
 })( jQuery );

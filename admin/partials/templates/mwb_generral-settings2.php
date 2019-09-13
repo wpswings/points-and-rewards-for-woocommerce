@@ -145,8 +145,7 @@ $mwb_wpr_general_settings = array(
 		'id'    => 'mwb_wpr_general_ways_to_gain_points',
 		'class' => 'input-text',
 		'desc_tip' => __( 'Entered text will append before the Total Number of Point', MWB_RWPR_Domain ),
-		'default' => __( 'My Points', MWB_RWPR_Domain ),
-		'desc2' => '[Refer Points]' . __( ' for Referral Points', MWB_RWPR_Domain ) . ' [Comment Points]' . __( ' for Comment Points ', MWB_RWPR_Domain ) . '[Per Currency Spent Points]' . __( ' for Per currency spent points and', MWB_RWPR_Domain ) . '[Per Currency Spent Price]' . __( ' for per currency spent price', MWB_RWPR_Domain ),
+		'desc2' => '[Refer Points]' . __( ' for Referral Points', MWB_RWPR_Domain ). '[Per Currency Spent Points]' . __( ' for Per currency spent points and', MWB_RWPR_Domain ) . '[Per Currency Spent Price]' . __( ' for per currency spent price', MWB_RWPR_Domain ),
 		'desc'  => __( 'Use these shortcodes for providing ways to gain points at front end.', MWB_RWPR_Domain ),
 	),
 	array(
@@ -180,7 +179,7 @@ $mwb_wpr_general_settings = array(
 		'id'    => 'mwb_wpr_custom_points_on_cart',
 		'desc_tip' => __( 'Check this box if you want to let your customers to redeem their earned points for the cart subtotal, there would be no relation with product purchase through point feature', MWB_RWPR_Domain ),
 		'class' => 'input-text',
-		'desc'  => __( 'No relation with Purchase Product Through Point Feature', MWB_RWPR_Domain ),
+		'desc'  => __( 'Allow customers to apply points during Cart.', MWB_RWPR_Domain ),
 	),
 	array(
 		'title' => __( 'Conversion rate for Cart Sub-Total Redemption', MWB_RWPR_Domain ),
@@ -236,8 +235,10 @@ if ( isset( $_POST['mwb_wpr_save_general'] ) ) {
 			$general_settings_array = array();
 
 			foreach ( $postdata as $key => $value ) {
-				$value = stripcslashes( $value );
-				$value = sanitize_text_field( $value );
+				if ('mwb_wpr_general_ways_to_gain_points' != $key) {
+					$value = stripcslashes( $value );
+					$value = sanitize_text_field( $value );
+				}
 				$general_settings_array[ $key ] = $value;
 			}
 			if ( is_array( $general_settings_array ) && ! empty( $general_settings_array ) ) {

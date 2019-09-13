@@ -50,7 +50,7 @@ $mwb_wpr_other_settings = array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Notification Settings', MWB_RWPR_Domain ),
+		'title' => __( 'Other Settings', MWB_RWPR_Domain ),
 		'type'  => 'title',
 	),
 	array(

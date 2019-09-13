@@ -152,6 +152,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 					'mwb_wpr_nonce' => wp_create_nonce( 'mwb-wpr-verify-nonce' ),
 					'check_pro_activate' => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
 					'pro_text' => __( 'Please Purchase the Pro Plugin.', 'rewardeem-woocommerce-points-rewards' ),
+					'success_update' => __('Points are updated successfully','rewardeem-woocommerce-points-rewards'),
 				);
 
 				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/rewardeem-woocommerce-points-rewards-admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2' ), $this->version, false );
@@ -172,7 +173,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_rwpr_admin_menu() {
-		add_submenu_page( 'woocommerce', __( 'Rewardeem-Woocommerce Points Rewards', 'rewardeem-woocommerce-points-rewards' ), __( 'Rewardeem-Woocommerce Points Rewards', 'rewardeem-woocommerce-points-rewards' ), 'manage_options', 'mwb-rwpr-setting', array( $this, 'mwb_rwpr_admin_setting' ) );
+		add_submenu_page( 'woocommerce', __( 'Ultimate WooCommerce Points and Rewards', 'rewardeem-woocommerce-points-rewards' ), __( 'Ultimate WooCommerce Points and Rewards', 'rewardeem-woocommerce-points-rewards' ), 'manage_options', 'mwb-rwpr-setting', array( $this, 'mwb_rwpr_admin_setting' ) );
 	}
 
 	/**
@@ -222,13 +223,13 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 				'reason' => $reason,
 			);
 			/* Update user points*/
-			self::mwb_wpr_update_points_details( $user_id, 'admin_points', $points, $data );
-			/* Send Mail to the user*/
-			$this->mwb_wpr_send_mail_details( $user_id, 'admin_notification' );
-			/* Update user points*/
 			if ( ! empty( $total_points ) ) {
 				update_user_meta( $user_id, 'mwb_wpr_points', $total_points );
 			}
+			/* Update user points*/
+			self::mwb_wpr_update_points_details( $user_id, 'admin_points', $points, $data );
+			/* Send Mail to the user*/
+			$this->mwb_wpr_send_mail_details( $user_id, 'admin_notification' );
 			wp_die();
 		}
 	}
@@ -471,7 +472,9 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 						<label for="mwb_wpr_membership_level_name">
 							<input type="text" name="mwb_wpr_membership_level_name_<?php echo $count; ?>" value="<?php echo $this->check_is_not_empty( $key ); ?>" id="mwb_wpr_membership_level_name_<?php echo $count; ?>" class="text_points" required><?php esc_html_e( 'Enter the Name of the Level', 'rewardeem-woocommerce-points-rewards' ); ?>
 						</label>
-						<input type="button" value='<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo $count; ?>">				
+						<?php if(!empty($value)):?>
+						<input type="button" value='<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo $count; ?>">	
+						<?php endif;?> 			
 					</td>
 				</tr>
 				<tr valign="top">
@@ -570,7 +573,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 									$catid = $category->term_id;
 									$catname = $category->name;
 									$catselect = '';
-									if ( ! empty( $this->check_is_not_empty( $value['Prod_Categ'] ) ) ) {
+									if ( isset($value['Prod_Categ'])&&! empty($value['Prod_Categ'] ) ) {
 										if ( is_array( $value['Prod_Categ'] ) && in_array( $catid, $value['Prod_Categ'] ) ) {
 											$catselect = "selected='selected'";
 										}
@@ -691,26 +694,41 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	 */
 	public function mwb_wpr_add_rule_for_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value, $key ) {
 		?>
-		<tr valign="top">
-			<td class="forminp forminp-text">
-				<label for="mwb_wpr_thankyouorder_minimum">
-					<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price" required="" placeholder = "No minimum" value="<?php echo $this->check_is_not_empty( $thankyouorder_min[ $key ] ); ?>">
-				</label>
-			</td>
-			<td class="forminp forminp-text">
-				<label for="mwb_wpr_thankyouorder_maximum">
-					<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum" value="<?php echo $this->check_is_not_empty( $thankyouorder_max[ $key ] ); ?>">
-				</label>
-			</td>
-			<td class="forminp forminp-text">
-				<label for="mwb_wpr_thankyouorder_current_type">
-					<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price" required=""  value="<?php echo $this->check_is_not_empty( $thankyouorder_value[ $key ] ); ?>">
-				</label>
-			</td>                           
-			<td class="mwb_wpr_remove_thankyouorder_content forminp forminp-text">
-				<input type="button" value="<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>" class="mwb_wpr_remove_thankyouorder button" >
-			</td>
-		</tr>
+		<table class="form-table wp-list-table widefat fixed striped">
+			<tbody class="mwb_wpr_thankyouorder_tbody"> 
+				<tr valign="top">
+					<th><?php _e( 'Minimum', MWB_RWPR_Domain ); ?></th>
+					<th><?php _e( 'Maximum', MWB_RWPR_Domain ); ?></th>
+
+					<th><?php _e( 'Points', MWB_RWPR_Domain ); ?></th>
+					<?php if(!empty($key)):?> 
+					<th class="mwb_wpr_remove_thankyouorder_content"><?php _e( 'Action', 'woocommerce-ultimate-gift-card' ); ?></th>
+					<?php endif;?>
+				</tr>
+				<tr valign="top">
+					<td class="forminp forminp-text">
+						<label for="mwb_wpr_thankyouorder_minimum">
+							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price" required="" placeholder = "No minimum" value="<?php echo (!empty($thankyouorder_min[ $key ] ))?$thankyouorder_min[ $key ]:''; ?>">
+						</label>
+					</td>
+					<td class="forminp forminp-text">
+						<label for="mwb_wpr_thankyouorder_maximum">
+							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum" value="<?php echo (!empty( $thankyouorder_max[ $key ] ))?$thankyouorder_max[ $key ]:''; ?>">
+						</label>
+					</td>
+					<td class="forminp forminp-text">
+						<label for="mwb_wpr_thankyouorder_current_type">
+							<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price" required=""  value="<?php echo (!empty( $thankyouorder_value[ $key ] ))?$thankyouorder_value[ $key ]:''; ?>">
+						</label>
+					</td>    
+					<?php if(!empty($key)):?>                       
+						<td class="mwb_wpr_remove_thankyouorder_content forminp forminp-text">
+							<input type="button" value="<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>" class="mwb_wpr_remove_thankyouorder button" >
+						</td>
+					<?php endif;?>
+				</tr>
+			</tbody>
+		</table>
 		<?php
 	}
 }

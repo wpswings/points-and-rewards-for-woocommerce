@@ -62,7 +62,7 @@ if(isset($user_id) && !empty($user_id)){
 	$mwb_wpr_cart_points_rate = ($mwb_wpr_cart_points_rate == 0)?1:$mwb_wpr_cart_points_rate;
 	/* Points Rate*/
 	$mwb_wpr_cart_price_rate = $public_obj->mwb_wpr_get_general_settings_num("mwb_wpr_cart_price_rate");
-	$mwb_wpr_cart_points_rate = ($mwb_wpr_cart_price_rate == 0)?1:$mwb_wpr_cart_price_rate;
+	$mwb_wpr_cart_price_rate = ($mwb_wpr_cart_price_rate == 0)?1:$mwb_wpr_cart_price_rate;
 	$conversion = ($get_points * $mwb_wpr_cart_price_rate / $mwb_wpr_cart_points_rate); 
 	?>
 <div class="custom_point_checkout woocommerce-info">

@@ -19,50 +19,33 @@ if(isset($_POST['mwb_wpr_save_level']))
 	$expiration_date = '';
 	$membership_settings_array = get_option('mwb_wpr_membership_settings',true);
 	$mwb_wpr_membership_roles = isset($membership_settings_array['membership_roles']) && !empty($membership_settings_array['membership_roles']) ? $membership_settings_array['membership_roles'] : array();
-	$mwb_wpr_notificatin_array=get_option('mwb_wpr_notificatin_array',true);
-
-	foreach( $mwb_wpr_membership_roles as $roles => $values)
-	{	
-		if( $selected_role == $roles && ($values['Points'] == $get_points || $values['Points'] < $get_points ) )
-		{	
+	foreach( $mwb_wpr_membership_roles as $roles => $values) {	
+		if( $selected_role == $roles && ($values['Points'] == $get_points || $values['Points'] < $get_points ) ) {	
+			/*Calculate the points*/
 			$remaining_points = $get_points - $values['Points'];
-			if(isset($membership_detail['membership']) && !empty($membership_detail['membership']) )
-			{
-				$membership_arr = array();
-			
-				$membership_arr= array(
-						'membership'=>$values['Points'],
-						'date'=>$today_date);
-				$membership_detail['membership'][] = $membership_arr;
-			}
-			else
-			{
-				$membership_arr = array();
-				$membership_arr= array(
-						'membership'=>$values['Points'],
-						'date'=>$today_date);
-				$membership_detail['membership'][]= $membership_arr;
-			}
+			/*Update points log*/
+			$data = array();
+			$this->mwb_wpr_update_points_details($user_id,'membership',$values['Points'],$data);
+
 			if(isset($values['Exp_Number']) && !empty($values['Exp_Number']) && isset($values['Exp_Days']) && !empty($values['Exp_Days']))
 			{
 				$expiration_date= date_i18n('Y-m-d', strtotime($today_date. ' +'.$values['Exp_Number'].' '.$values['Exp_Days']));
 			}
 			update_user_meta($user_id,'mwb_wpr_points',$remaining_points);
-			update_user_meta( $user_id , 'points_details' , $membership_detail);
 			update_user_meta($user_id,'membership_level',$selected_role);
 			update_user_meta($user_id,'membership_expiration',$expiration_date);
-			if(is_array($mwb_wpr_notificatin_array) && !empty($mwb_wpr_notificatin_array))
-			{
-				$mwb_wpr_notificatin_enable=isset($mwb_wpr_notificatin_array['mwb_wpr_notificatin_enable']) ? intval($mwb_wpr_notificatin_array['mwb_wpr_notificatin_enable']) : 0;
-				$mwb_wpr_email_subject=isset($mwb_wpr_notificatin_array['mwb_wpr_membership_email_subject'])? $mwb_wpr_notificatin_array['mwb_wpr_membership_email_subject'] :'';
-				$mwb_wpr_email_discription=isset($mwb_wpr_notificatin_array['mwb_wpr_membership_email_discription_custom_id']) ? $mwb_wpr_notificatin_array['mwb_wpr_membership_email_discription_custom_id'] :'';
-				$mwb_wpr_email_discription=str_replace("[USERLEVEL]",$selected_role,$mwb_wpr_email_discription);
-				if($mwb_wpr_notificatin_enable)
-				{	
-					$headers = array('Content-Type: text/html; charset=UTF-8');
-					wc_mail($user_email,$mwb_wpr_email_subject,$mwb_wpr_email_discription,$headers);
-				}
-			}
+			/*Send mail*/
+			$user=get_user_by('ID',$user_id);
+			$mwb_wpr_shortcode = array(
+				'[USERLEVEL]' => $selected_role,
+				"[USERNAME]" => $user->user_firstname,
+				);
+
+			$mwb_wpr_subject_content = array(
+				'mwb_wpr_subject' => 'mwb_wpr_membership_email_subject',
+				'mwb_wpr_content' => 'mwb_wpr_membership_email_discription_custom_id',
+				);
+			$this->mwb_wpr_send_notification_mail_product($user_id,$values['Points'],$mwb_wpr_shortcode,$mwb_wpr_subject_content);
 		}
 	}
 }
@@ -72,7 +55,6 @@ $user_id = get_current_user_id();
 $get_points = (int)get_user_meta($user_id, 'mwb_wpr_points', true);
 /* Get points of the Membership Level*/
 $user_level = get_user_meta($user_id,'membership_level',true);
-
 /* Get the General Settings*/
 $general_settings = get_option('mwb_wpr_settings_gallery',true);
 $enable_mwb_refer = isset($general_settings['mwb_wpr_general_refer_enable']) ? intval($general_settings['mwb_wpr_general_refer_enable']) : 0;
@@ -165,7 +147,7 @@ if($mwb_wpr_mem_enable)
 				</thead>
 				<tbody>
 				<?php
-				if(is_array($mwb_wpr_membership_roles) && !empty($mwb_wpr_membership_roles)){
+				if(is_array($mwb_wpr_membership_roles) && !empty($mwb_wpr_membership_roles)) {
 				foreach($mwb_wpr_membership_roles as $role => $values)
 				{?>
 				<tr>
@@ -190,6 +172,7 @@ if($mwb_wpr_mem_enable)
 													$pro_img = wp_get_attachment_image_src( get_post_thumbnail_id($pro_id), 'single-post-thumbnail' );
 													$_product = wc_get_product( $pro_id );
 													$price = $_product->get_price();
+													$product_name = $_product->get_title();
 													$pro_url = get_permalink( $pro_id );
 													if(empty($pro_img[0])){
 															$pro_img[0] = MWB_WPR_URL.'/assets/images/placeholder.png';
@@ -198,6 +181,7 @@ if($mwb_wpr_mem_enable)
 												<li>
 													<a href="<?php echo $pro_url;?>">
 														<span class="mwb_wpr_thumbnail_img_wrap"><img src="<?php echo $pro_img[0];?>" alt=""></span>
+														<span class="mwb_wpr_thumbnail_product_name"><?php echo $product_name;?></span>
 														<span class="mwb_wpr_thumbnail_price_wrap"><?php echo wc_price($price);?></span>
 													</a>
 												</li>		
@@ -261,32 +245,33 @@ if($mwb_wpr_mem_enable)
 }
 	if(isset($enable_drop) && $enable_drop)
 	{
-	?>	<p class="mwb_wpr_heading"><?php echo __( 'Upgrade User Level', MWB_RWPR_Domain ); ?></p>
-		<fieldset class="mwb_wpr_each_section">	
-		<span class="mwb_wpr_membership_message"><?php echo __('Upgrade Your User Level: ',MWB_RWPR_Domain);?></span>
-		<form action="" method="post" id="mwb_wpr_membership">
-		<select id="mwb_wpr_membership_roles" class="mwb_wpr_membership_roles" name="mwb_wpr_membership_roles">
-		<option><?php echo __('Select Roles',MWB_RWPR_Domain);?></option>
-		<?php
-		if(isset($user_level) && !empty($user_level) && array_key_exists($user_level, $mwb_wpr_membership_roles))
-				{	
-					unset($mwb_wpr_membership_roles[$user_level]);
-				}
-			foreach($mwb_wpr_membership_roles as $role => $values)
-			{	
-				if($values['Points'] == $get_points || $values['Points'] < $get_points )
-				{
-
-			?>	
-				<option value="<?php echo $role; ?>"><?php echo $role; ?></option>
-		<?php
-				}
-			}
-		?>
-		</select>
-		<input type="submit" id = "mwb_wpr_upgrade_level" value='<?php _e("Upgrade Level",MWB_RWPR_Domain); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_level">
-		</form></fieldset>	
-<?php		
+		if(isset($user_level) && !empty($user_level) && array_key_exists($user_level, $mwb_wpr_membership_roles)) {	
+			unset($mwb_wpr_membership_roles[$user_level]);
+		}
+		if (!empty($mwb_wpr_membership_roles) && is_array($mwb_wpr_membership_roles)) {
+		?>	<p class="mwb_wpr_heading"><?php echo __( 'Upgrade User Level', MWB_RWPR_Domain ); ?></p>
+			<fieldset class="mwb_wpr_each_section">	
+				<span class="mwb_wpr_membership_message"><?php echo __('Upgrade Your User Level: ',MWB_RWPR_Domain);?></span>
+				<form action="" method="post" id="mwb_wpr_membership">
+					<select id="mwb_wpr_membership_roles" class="mwb_wpr_membership_roles" name="mwb_wpr_membership_roles">
+						<option><?php echo __('Select Level',MWB_RWPR_Domain);?></option>
+						<?php
+						foreach($mwb_wpr_membership_roles as $role => $values) {	
+							if($values['Points'] == $get_points 
+								|| $values['Points'] < $get_points ) {
+									?>	
+									<option value="<?php echo $role; ?>"><?php echo $role; ?></option>
+									<?php
+								}
+							}
+							?>
+						</select>
+						<input style="display:none;"type="submit" id = "mwb_wpr_upgrade_level" value='<?php _e("Upgrade Level",MWB_RWPR_Domain); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_level">
+						<input type="button" id = "mwb_wpr_upgrade_level_click" value='<?php _e("Upgrade Level",MWB_RWPR_Domain); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_level_click">
+				</form>
+			</fieldset>	
+		<?php	
+		}	
 	}
 
 do_action('mwb_wpr_add_coupon_generation',$user_id);

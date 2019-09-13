@@ -30,7 +30,10 @@
 	 */
 
 	$(document).ready(function() {
-
+		$(document).on('click', '.mwb_wpr_common_slider', function(){
+			$(this).next('.mwb_wpr_points_view').slideToggle('slow');
+			$(this).toggleClass('active');
+		});
 		$(document).find('#mwb_wpr_restrictions_for_purchasing_cat').select2();
 		/* Update user Points in the points Table*/
 		$('.mwb_points_update').click(function(){
@@ -57,7 +60,12 @@
 			  			success: function(response) 
 			  			{
 			  				jQuery("#mwb_wpr_loader").hide();
-			  				location.reload();
+			  				$('html, body').animate({
+			  					scrollTop: $(".mwb_rwpr_header").offset().top
+			  				}, 800);
+							var assing_message = '<div class="notice notice-success is-dismissible"><p><strong>'+mwb_wpr_object.success_update+'</strong></p></div>';
+							$(assing_message).insertAfter($('.mwb_rwpr_header'));
+							setTimeout(function(){ location.reload(); }, 1000);
 			  			}
 			  		});
 				}
@@ -118,6 +126,7 @@
 		if(mwb_wpr_object.check_pro_activate) {
 			jQuery(document).on('click','.mwb_wpr_repeat_button',function(){
 				var html = '';
+				$(document).find('.mwb_wpr_object_purchase').remove();
 				html = '<div class="mwb_wpr_object_purchase"><p>'+mwb_wpr_object.pro_text+'</p></div>';
 				$('.parent_of_div').append(html);
 			});
@@ -127,10 +136,21 @@
 		if(mwb_wpr_object.check_pro_activate) {
 			$(document).on('click','#mwb_wpr_add_more',function() {
 				var html = '';
+				$(document).find('.mwb_wpr_object_purchase').remove();
 				html = '<div class="mwb_wpr_object_purchase"><p>'+mwb_wpr_object.pro_text+'</p></div>';
-				$('.wp-list-table').append(html);
+				$(html).insertAfter('.wp-list-table');
 			});
 		}
+		jQuery(document).on('click','.mwb_wpr_remove_button',function(){
+    		//$('.parent_of_div .mwb_wpr_repeat:last').remove();
+    		var curr_div = $(this).attr('id');
+    		if(curr_div == 0) {
+    			$(document).find('.mwb_wpr_repeat_button').hide();
+    			$('#mwb_wpr_membership_setting_enable').attr('checked',false);
+    		}
+    		$('#mwb_wpr_parent_repeatable_'+curr_div).remove();
+    		
+    	});
 
 	});
 
