@@ -65,57 +65,17 @@ if ( isset( $_GET['action'] ) && $_GET['action'] == 'view_membership_log' ) {
 	include_once MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb_wpr_membership_log_table.php';
 
 } else {
-	if ( isset( $_POST['set_expiry_to_old_users'] ) ) {
-		$today_date = date_i18n( 'Y-m-d h:i:sa' );
-		$args['meta_query'] = array(
-			'relation' => 'AND',
-			array(
-				'key' => 'membership_level',
-				'compare' => 'EXISTS',
-			),
-			array(
-				'key' => 'membership_expiration',
-				'compare' => 'NOT EXISTS',
-			),
-		);
-		$args['role__in'] = array( 'subscriber', 'customer' );
-		$user_data = new WP_User_Query( $args );
-		$user_data = $user_data->get_results();
-		foreach ( $user_data as $key => $value ) {
-			$user_id = $value->data->ID;
-			$expiration_date = date( 'Y-m-d', strtotime( $today_date . ' +6 months' ) );
-			update_user_meta( $user_id, 'membership_expiration', $expiration_date );
-		}
-		update_option( 'mwb_wpr_set_expiry_for_old_users', 'true' );
-		?>
-		<div class="notice notice-success is-dismissible">
-		<p><strong><?php _e( 'Membership Expiration For Old Membership Users has been Updated Successfully. ', MWB_RWPR_Domain ); ?></strong></p>
-		<button type="button" class="notice-dismiss">
-			<span class="screen-reader-text"><?php _e( 'Dismiss this notices.', MWB_RWPR_Domain ); ?></span>
-		</button>
-	</div>
-		<?php
-	}
-	?>
-	<?php
 	$membership_settings_array = get_option( 'mwb_wpr_membership_settings', true );
 	$mwb_wpr_membership_roles = array();
 	?>
 	<?php
 	if ( ! is_array( $membership_settings_array ) ) :
 		$membership_settings_array = array();
-endif;
+	endif;
 	$mwbsetexpiry = get_option( 'mwb_wpr_set_expiry_for_old_users', false );
 	$mwb_wpr_membership_roles = ( isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ) ? $membership_settings_array['membership_roles'] : array();
-	if ( $mwbsetexpiry == false ) {
-		?>
-	<div id= "mwb_wpr_set_expiry_to_old_users"> <p class="description" style="color: #7F527D;"><?php _e( 'Click on this button if you want to set 6 months expiry for all users who had  upgraded their user level to any "Membership Level" but do not have any expiration for that level,else they would not be able to use related discounts.', MWB_RWPR_Domain ); ?></p>
-	<input type="submit" name="set_expiry_to_old_users" value="<?php _e( ' Expiry for Old Users', MWB_RWPR_Domain ); ?>" class="set_expiry_to_old_users mwb_wpr_save_changes button">
-   </div>
-		<?php
-	}
 	?>
-		
+	
 	<?php
 
 	$mwb_wpr_settings = array(
@@ -127,7 +87,7 @@ endif;
 			'desc' => __( 'Enable Membership', MWB_RWPR_Domain ),
 			'desc_tip' => __( 'Check this box to enable the Membership Feature', MWB_RWPR_Domain ),
 			'memebrship_log' => true,
-		),
+			),
 		array(
 			'title' => __( 'Exclude Sale Products', MWB_RWPR_Domain ),
 			'id'  => 'exclude_sale_product',
@@ -135,55 +95,55 @@ endif;
 			'class' => 'input-text',
 			'desc' => __( 'Exclude Sale Products for Membership Discount', MWB_RWPR_Domain ),
 			'desc_tip' => __( 'Check this box to do not apply the membership discount on sale products', MWB_RWPR_Domain ),
-		),
+			),
 		array(
 			'title' => __( 'Create Member', MWB_RWPR_Domain ),
 			'id'  => 'mwb_wpr_membership_create_section',
 			'type' => 'create_member',
 			'class' => 'parent_of_div',
 			'create_member' => array(),
-		),
-	);
+			),
+		);
 
-	?>
-	<div class="mwb_wpr_wrap_table">
-		<table class="form-table mwb_wpr_membership_setting mwp_wpr_settings">
-			<tbody>
-				<?php foreach ( $mwb_wpr_settings as $key => $value ) { ?>
-				<tr valign="top">
-					<th scope="row" class="titledesc">
-						<?php
-						$settings_obj->mwb_rwpr_generate_label( $value );
-						?>
-					</th>
-					<td class="forminp forminp-text">
-						<?php
-						echo array_key_exists( 'desc_tip', $value ) ? wc_help_tip( $value['desc_tip'] ) : '';
-						if ( $value['type'] == 'checkbox' ) {
-							$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $membership_settings_array );
-						}
-						if ( array_key_exists( 'memebrship_log', $value ) ) {
-							?>
-							<a href="<?php echo admin_url( 'admin.php?page=mwb-rwpr-setting&tab=membership&action=view_membership_log' ); ?>" class="mwb_wpr_membership_log"><?php _e( 'Membership Log', MWB_RWPR_Domain ); ?></a>
+		?>
+		<div class="mwb_wpr_wrap_table">
+			<table class="form-table mwb_wpr_membership_setting mwp_wpr_settings">
+				<tbody>
+					<?php foreach ( $mwb_wpr_settings as $key => $value ) { ?>
+					<tr valign="top">
+						<th scope="row" class="titledesc">
 							<?php
-						}
-						if ( $value['type'] == 'create_member' ) {
-							do_action( 'mwb_wpr_add_membership_rule', $mwb_wpr_membership_roles );
+							$settings_obj->mwb_rwpr_generate_label( $value );
 							?>
-						 <input type="button" value='<?php _e( 'Add Another', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_repeat_button">
-						<p class= "description"><?php _e( 'Please do not change the "Level Name" once it will be saved, as it become the key for the Membership User', MWB_RWPR_Domain ); ?></p>
+						</th>
+						<td class="forminp forminp-text">
 							<?php
-						}
-						?>
-						
-					</td>
-				</tr>
-				<?php } ?>
-			</tbody>
-		</table>
-	</div>
-<p class="submit">
-	<input type="submit" value='<?php _e( 'Save changes', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_membership">
-</p>
-	<?php
-}
+							echo array_key_exists( 'desc_tip', $value ) ? wc_help_tip( $value['desc_tip'] ) : '';
+							if ( $value['type'] == 'checkbox' ) {
+								$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $membership_settings_array );
+							}
+							if ( array_key_exists( 'memebrship_log', $value ) ) {
+								?>
+								<a href="<?php echo admin_url( 'admin.php?page=mwb-rwpr-setting&tab=membership&action=view_membership_log' ); ?>" class="mwb_wpr_membership_log"><?php _e( 'Membership Log', MWB_RWPR_Domain ); ?></a>
+								<?php
+							}
+							if ( $value['type'] == 'create_member' ) {
+								do_action( 'mwb_wpr_add_membership_rule', $mwb_wpr_membership_roles );
+								?>
+								<input type="button" value='<?php _e( 'Add Another', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_repeat_button">
+								<p class= "description"><?php _e( 'Please do not change the "Level Name" once it will be saved, as it become the key for the Membership User', MWB_RWPR_Domain ); ?></p>
+								<?php
+							}
+							?>
+							
+						</td>
+					</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+		</div>
+		<p class="submit">
+			<input type="submit" value='<?php _e( 'Save changes', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_membership">
+		</p>
+		<?php
+	}

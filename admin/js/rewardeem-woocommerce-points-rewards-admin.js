@@ -30,7 +30,10 @@
 	 */
 
 	$(document).ready(function() {
-
+		$(document).on('click', '.mwb_wpr_common_slider', function(){
+			$(this).next('.mwb_wpr_points_view').slideToggle('slow');
+			$(this).toggleClass('active');
+		});
 		$(document).find('#mwb_wpr_restrictions_for_purchasing_cat').select2();
 		/* Update user Points in the points Table*/
 		$('.mwb_points_update').click(function(){
@@ -57,7 +60,12 @@
 			  			success: function(response) 
 			  			{
 			  				jQuery("#mwb_wpr_loader").hide();
-			  				location.reload();
+			  				$('html, body').animate({
+			  					scrollTop: $(".mwb_rwpr_header").offset().top
+			  				}, 800);
+							var assing_message = '<div class="notice notice-success is-dismissible"><p><strong>'+mwb_wpr_object.success_update+'</strong></p></div>';
+							$(assing_message).insertAfter($('.mwb_rwpr_header'));
+							setTimeout(function(){ location.reload(); }, 1000);
 			  			}
 			  		});
 				}

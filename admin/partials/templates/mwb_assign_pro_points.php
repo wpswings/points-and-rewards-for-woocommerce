@@ -69,8 +69,12 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) {
 				<?php
 			}
 		} else {
-			update_option( 'mwb_wpr_global_product_enable', 'off' );
-			update_option( 'mwb_wpr_pro_points_to_all', '' );
+			$mwb_wpr_assing_product_points['mwb_wpr_global_product_enable'] = 0;
+			$mwb_wpr_assing_product_points['mwb_wpr_pro_points_to_all'] = '';
+			if ( is_array( $mwb_wpr_assing_product_points ) && ! empty( $mwb_wpr_assing_product_points ) ) {
+
+				update_option( 'mwb_wpr_assign_products_points', $mwb_wpr_assing_product_points );
+			}
 			$args = array(
 				'post_type' => 'product',
 				'posts_per_page' => -1,

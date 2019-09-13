@@ -247,11 +247,13 @@ class Points_Log_List_Table extends WP_List_Table {
 		$user_data = $user_data->get_results();
 		$points_data = array();
 		foreach ( $user_data as $key => $value ) {
+			$user_points = get_user_meta( $value->data->ID, 'mwb_wpr_points', true );
+			$user_points = (empty($user_points))?0:$user_points;
 			$points_data[] = array(
 				'id' => $value->data->ID,
 				'user_name' => $value->data->user_nicename,
 				'user_email' => $value->data->user_email,
-				'user_points' => get_user_meta( $value->data->ID, 'mwb_wpr_points', true ),
+				'user_points' => $user_points,
 			);
 		}
 		return $points_data;
@@ -397,35 +399,40 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			?>
 			  
 			<div class="mwb_wpr_wrapper_div">
-				<table class="form-table mwp_wpr_settings mwb_wpr_points_view" >
-					<thead>
-						<tr valign="top">
-							<th scope="row" class="titledesc">
-								<span class="nobr"><?php echo __( 'Date & Time', MWB_RWPR_Domain ); ?></span>
-							</th>
-							<th scope="row" class="titledesc">
-								<span class="nobr"><?php echo __( 'Point Status', MWB_RWPR_Domain ); ?></span>
-							</th>
-							<th scope="row" class="titledesc">
-								<span class="nobr"><?php echo __( 'Activity', MWB_RWPR_Domain ); ?></span>
-							</th>
-						</tr>
-					</thead>
-				</table>
+				<div class="mwb_wpr_points_view">
+					<table class="form-table mwp_wpr_settings" >
+						<thead>
+							<tr valign="top">
+								<th scope="row" class="titledesc">
+									<span class="nobr"><?php echo __( 'Date & Time', MWB_RWPR_Domain ); ?></span>
+								</th>
+								<th scope="row" class="titledesc">
+									<span class="nobr"><?php echo __( 'Point Status', MWB_RWPR_Domain ); ?></span>
+								</th>
+								<th scope="row" class="titledesc">
+									<span class="nobr"><?php echo __( 'Activity', MWB_RWPR_Domain ); ?></span>
+								</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
 				<?php
 				if ( array_key_exists( 'registration', $point_log ) ) {
 					?>
 					<div class="mwb_wpr_slide_toggle">
 						<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Signup Event', MWB_RWPR_Domain ); ?>
 						  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
-					  </p> 
-					  <table class="form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table" >
-						<tr valign="top">
-							<td class="forminp forminp-text"><?php echo( $point_log['registration']['0']['date'] ); ?></td>
-							<td class="forminp forminp-text"><?php echo '+' . ( $point_log['registration']['0']['registration'] ); ?></td>
-							<td class="forminp forminp-text"><?php _e( 'Registration Points', MWB_RWPR_Domain ); ?></td>
-						</tr>
-					</table></div>
+					  </p>
+					  <div class="mwb_wpr_points_view"> 
+						  <table class="form-table mwp_wpr_settings mwb_wpr_common_table" >
+								<tr valign="top">
+								<td class="forminp forminp-text"><?php echo( $point_log['registration']['0']['date'] ); ?></td>
+								<td class="forminp forminp-text"><?php echo '+' . ( $point_log['registration']['0']['registration'] ); ?></td>
+								<td class="forminp forminp-text"><?php _e( 'Registration Points', MWB_RWPR_Domain ); ?></td>
+								</tr>
+							</table>
+						</div>
+					</div>
 					<?php
 				}
 				if ( array_key_exists( 'import_points', $point_log ) ) {
@@ -433,14 +440,15 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					<div class="mwb_wpr_slide_toggle">
 						<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Signup Event', MWB_RWPR_Domain ); ?>
 						  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
-					  </p>  
-					  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
+					  </p> 
+					  <div class="mwb_wpr_points_view">  
+					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
 						<tr valign="top">
 							<td class="forminp forminp-text"><?php echo( $point_log['import_points']['0']['date'] ); ?></td>
 							<td class="forminp forminp-text"><?php echo '+' . ( $point_log['import_points']['0']['import_points'] ); ?></td>
 							<td class="forminp forminp-text"><?php _e( 'Registration Points', MWB_RWPR_Domain ); ?></td>
 						</tr>
-					</table></div>
+					</table></div></div>
 					<?php
 				}
 				if ( array_key_exists( 'Coupon_details', $point_log ) ) {
@@ -449,7 +457,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Coupon Generation', MWB_RWPR_Domain ); ?>
 						  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 					  </p> 
-					  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">  
+					  <div class="mwb_wpr_points_view"> 
+					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">  
 						 <?php
 							foreach ( $point_log['Coupon_details'] as $key => $value ) {
 								?>
@@ -461,7 +470,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								<?php
 							}
 							?>
-					</table></div> 
+					</table></div></div> 
 					<?php
 				}
 				if ( array_key_exists( 'points_on_order', $point_log ) ) {
@@ -470,19 +479,20 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Points on Order', MWB_RWPR_Domain ); ?>
 					  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 				  </p>
-				  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table"> 
-					<?php
-					foreach ( $point_log['points_on_order'] as $key => $value ) {
-						?>
-						<tr valign="top">
-							<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-							<td class="forminp forminp-text"><?php echo '+' . $value['points_on_order']; ?></td>
-							<td class="forminp forminp-text"><?php _e( 'Points earned on Order Total', MWB_RWPR_Domain ); ?></td>
-						</tr>
+				   <div class="mwb_wpr_points_view"> 
+					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
 						<?php
-					}
-					?>
-				</table></div>
+						foreach ( $point_log['points_on_order'] as $key => $value ) {
+							?>
+							<tr valign="top">
+								<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
+								<td class="forminp forminp-text"><?php echo '+' . $value['points_on_order']; ?></td>
+								<td class="forminp forminp-text"><?php _e( 'Points earned on Order Total', MWB_RWPR_Domain ); ?></td>
+							</tr>
+							<?php
+						}
+						?>
+					</table></div></div>
 					<?php
 				}
 				if ( array_key_exists( 'product_details', $point_log ) ) {
@@ -491,7 +501,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Assigned Product Point', MWB_RWPR_Domain ); ?>
 					  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 				  </p>
-				  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table"> 
+				    <div class="mwb_wpr_points_view"> 
+				  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
 					<?php
 					foreach ( $point_log['product_details'] as $key => $value ) {
 						?>
@@ -503,7 +514,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<?php
 					}
 					?>
-				</table></div>
+				</table></div></div>
 					<?php
 				}
 				if ( array_key_exists( 'pro_conversion_points', $point_log ) ) {
@@ -512,7 +523,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Order Total Points', MWB_RWPR_Domain ); ?>
 				  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 			  </p>
-			  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
+			  <div class="mwb_wpr_points_view"> 
+			  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
 					<?php
 					foreach ( $point_log['pro_conversion_points'] as $key => $value ) {
 						?>
@@ -524,7 +536,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<?php
 					}
 					?>
-			</table></div> 
+			</table></div></div> 
 					<?php
 				}
 				if ( array_key_exists( 'comment', $point_log ) ) {
@@ -533,7 +545,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Product Review Point', MWB_RWPR_Domain ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
-		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
+		  <div class="mwb_wpr_points_view"> 
+		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 					<?php
 					foreach ( $point_log['comment'] as $key => $value ) {
 						?>
@@ -545,7 +558,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<?php
 					}
 					?>
-		</table></div>
+		</table></div></div>
 					<?php
 				}
 				if ( array_key_exists( 'membership', $point_log ) ) {
@@ -554,7 +567,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Membership Points', MWB_RWPR_Domain ); ?>
 			<a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		</p>
-		<table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
+		<div class="mwb_wpr_points_view"> 
+		<table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 						<?php
 						foreach ( $point_log['membership'] as $key => $value ) {
 							?>
@@ -566,7 +580,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 							<?php
 						}
 						?>
-		</table></div>
+		</table></div></div>
 					<?php
 				}
 				if ( array_key_exists( 'reference_details', $point_log ) ) {
@@ -575,6 +589,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Referral Earns', MWB_RWPR_Domain ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
+		  <div class="mwb_wpr_points_view"> 
 		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 					<?php
 					foreach ( $point_log['reference_details'] as $key => $value ) {
@@ -597,7 +612,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<?php
 					}
 					?>
-		</table></div>
+		</table></div></div>
 					<?php
 				}
 				if ( array_key_exists( 'ref_product_detail', $point_log ) ) {
@@ -606,7 +621,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Referral Purchase Point', MWB_RWPR_Domain ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
-		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
+		  <div class="mwb_wpr_points_view"> 
+		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 					<?php
 					foreach ( $point_log['ref_product_detail'] as $key => $value ) {
 						?>
@@ -618,7 +634,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<?php
 					}
 					?>
-		</table></div>
+		</table></div></div>
 					<?php
 				}
 				if ( array_key_exists( 'admin_points', $point_log ) ) {
@@ -627,7 +643,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Admin Updates', MWB_RWPR_Domain ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
-		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
+		  <div class="mwb_wpr_points_view"> 
+		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 					<?php
 					foreach ( $point_log['admin_points'] as $key => $value ) {
 						$value['sign'] = isset( $value['sign'] ) ? $value['sign'] : '+/-';
@@ -641,7 +658,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<?php
 					}
 					?>
-		</table></div>
+		</table></div></div>
 					<?php
 				}
 				if ( array_key_exists( 'pur_by_points', $point_log ) ) {
@@ -650,6 +667,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Product has been purchased using points', MWB_RWPR_Domain ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
+		  <div class="mwb_wpr_points_view"> 
 		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 					<?php
 					foreach ( $point_log['pur_by_points'] as $key => $value ) {
@@ -662,7 +680,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<?php
 					}
 					?>
-			</table></div> 
+			</table></div></div> 
 					<?php
 				}
 				if ( array_key_exists( 'deduction_of_points', $point_log ) ) {
@@ -671,7 +689,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Deduction of points for return request', MWB_RWPR_Domain ); ?>
 				  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 			  </p>
-			  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
+			  <div class="mwb_wpr_points_view"> 
+			  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
 					<?php
 					foreach ( $point_log['deduction_of_points'] as $key => $value ) {
 						?>
@@ -683,7 +702,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<?php
 					}
 					?>
-			</table></div> 
+			</table></div></div> 
 					<?php
 				}
 				if ( array_key_exists( 'return_pur_points', $point_log ) ) {
@@ -692,7 +711,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Return Points', MWB_RWPR_Domain ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
-		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
+		  <div class="mwb_wpr_points_view"> 
+		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 					<?php
 					foreach ( $point_log['return_pur_points'] as $key => $value ) {
 						?>
@@ -704,7 +724,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<?php
 					}
 					?>
-		</table></div>  
+		</table></div></div>  
 					<?php
 				}
 				if ( array_key_exists( 'deduction_currency_spent', $point_log ) ) {
@@ -713,7 +733,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Deduct Order Total Points', MWB_RWPR_Domain ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
-		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table"> 
+		  <div class="mwb_wpr_points_view"> 
+		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table"> 
 					<?php
 					foreach ( $point_log['deduction_currency_spent'] as $key => $value ) {
 						?>
@@ -725,7 +746,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<?php
 					}
 					?>
-		</table></div>
+		</table></div></div>
 					<?php
 				}
 				if ( array_key_exists( 'Sender_point_details', $point_log ) ) {
