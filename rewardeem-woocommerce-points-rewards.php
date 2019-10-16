@@ -16,8 +16,8 @@
  * Plugin Name:       Ultimate WooCommerce Points and Rewards Lite
  * Plugin URI:        https://makewebbetter.com/product/rewardeem-woocommerce-points-rewards/
  * Description:       This woocommerce extension allow merchants to reward their customers with loyalty points..
- * Version:           1.0.0
- * Author:            makewebbetter
+ * Version:           1.0.1
+ * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       rewardeem-woocommerce-points-rewards
  * Domain Path:       /languages
@@ -150,9 +150,7 @@ if ($activated) {
 		if(isset($user_ID) && !empty($user_ID))
 		{
 			$get_points = (int)get_user_meta($user_ID , 'mwb_wpr_points', true);
-			echo '<div class="mwb_wpr_shortcode_wrapper">';
-			echo $mwb_wpr_shortcode_text_point.' '.$get_points;
-			echo '</div>';
+			return '<div class="mwb_wpr_shortcode_wrapper">'.$mwb_wpr_shortcode_text_point.' '.$get_points.'</div>';
 		}
 	}
 	add_shortcode( 'MYCURRENTUSERLEVEL', 'mwb_wpr_mycurrentlevel_shortcode' );
@@ -176,7 +174,7 @@ if ($activated) {
 		{
 			$user_level = get_user_meta($user_ID,'membership_level',true);
 			if(isset($user_level) && !empty($user_level)){
-				echo $mwb_wpr_shortcode_text_membership.' '.$user_level;
+				return $mwb_wpr_shortcode_text_membership.' '.$user_level;
 			}
 		}
 	}
@@ -193,13 +191,8 @@ if ($activated) {
 		$enable_mwb_signup = isset($general_settings['mwb_wpr_general_signup']) ? intval($general_settings['mwb_wpr_general_signup']) : 0;
 		if($enable_mwb_signup && !is_user_logged_in()){	
 			$mwb_wpr_signup_value = isset($general_settings['mwb_wpr_general_signup_value']) ? intval($general_settings['mwb_wpr_general_signup_value']) : 1;
-			?>
-			<div class="woocommerce-message">
-				<?php 
-					echo  __( 'You will get ', MWB_RWPR_Domain ) .$mwb_wpr_signup_value.__(' points for SignUp',MWB_RWPR_Domain);
-				 ?>
-			</div>
-		<?php
+			
+			 return '<div class="woocommerce-message">'.__( 'You will get ', MWB_RWPR_Domain ) .$mwb_wpr_signup_value.__(' points for SignUp',MWB_RWPR_Domain).'</div>';
 		}
 	}
 

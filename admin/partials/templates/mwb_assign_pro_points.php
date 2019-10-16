@@ -104,20 +104,20 @@ $mwb_wpr_assing_product_points = get_option( 'mwb_wpr_assign_products_points', a
 <?php
 $mwb_wpr_assign_product_table_settings = array(
 	array(
-		'title' => __( 'Global Product Points', MWB_RWPR_Domain ),
+		'title' => __( 'Global Assign Product Points', MWB_RWPR_Domain ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Global Product Points', MWB_RWPR_Domain ),
+		'title' => __( 'Global Assign Product Points', MWB_RWPR_Domain ),
 		'type'  => 'checkbox',
-		'desc'  => __( 'Enable Global Product Points', MWB_RWPR_Domain ),
+		'desc'  => __( 'Enable Global Assign Product Points', MWB_RWPR_Domain ),
 		'id'    => 'mwb_wpr_global_product_enable',
 		'desc_tip' => __( 'This is the global setting for Product Purchase Points, check this if you want to assign points to all products at once or uncheck if you want to remove assigned points from all products at once.', MWB_RWPR_Domain ),
 	),
 	array(
-		'title' => __( 'Global Product Points', MWB_RWPR_Domain ),
+		'title' => __( 'Global Assign Product Points', MWB_RWPR_Domain ),
 		'type'  => 'number',
-		'desc'  => __( 'Enable Global Product Points', MWB_RWPR_Domain ),
+		'desc'  => __( 'Enable Global Assign Product Points', MWB_RWPR_Domain ),
 		'id'    => 'mwb_wpr_pro_points_to_all',
 		'desc_tip' => __( 'Entered Points are assigned to All Products .', MWB_RWPR_Domain ),
 		'custom_attribute' => array( 'min' => '"1"' ),

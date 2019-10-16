@@ -152,7 +152,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 					'mwb_wpr_nonce' => wp_create_nonce( 'mwb-wpr-verify-nonce' ),
 					'check_pro_activate' => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
 					'pro_text' => __( 'Please Purchase the Pro Plugin.', 'rewardeem-woocommerce-points-rewards' ),
-					'success_update' => __('Points are updated successfully','rewardeem-woocommerce-points-rewards'),
+					'success_update' => __( 'Points are updated successfully', 'rewardeem-woocommerce-points-rewards' ),
 				);
 
 				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/rewardeem-woocommerce-points-rewards-admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2' ), $this->version, false );
@@ -385,26 +385,33 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	public function mwb_wpr_select_category() {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
 		$mwb_wpr_categ_list = $_POST['mwb_wpr_categ_list'];
-		$response['result'] = __('Fail due to an error',MWB_WPR_Domain);
-		if(isset($_POST['mwb_wpr_categ_list'])) {
+		$response['result'] = __( 'Fail due to an error', MWB_WPR_Domain );
+		if ( isset( $_POST['mwb_wpr_categ_list'] ) ) {
 			$products = array();
 			$selected_cat = $_POST['mwb_wpr_categ_list'];
 			$tax_query['taxonomy'] = 'product_cat';
 			$tax_query['field'] = 'id';
 			$tax_query['terms'] = $selected_cat;
 			$tax_queries[] = $tax_query;
-			$args = array( 'post_type' => 'product', 'posts_per_page' => -1, 'tax_query' => $tax_queries, 'orderby' => 'rand' );
+			$args = array(
+				'post_type' => 'product',
+				'posts_per_page' => -1,
+				'tax_query' => $tax_queries,
+				'orderby' => 'rand',
+			);
 			$loop = new WP_Query( $args );
-			while ( $loop->have_posts() ) : $loop->the_post(); global $product;
+			while ( $loop->have_posts() ) :
+				$loop->the_post();
+				global $product;
 
-			$product_id = $loop->post->ID;
-			$product_title = $loop->post->post_title;
-			$products[$product_id] = $product_title;
+				$product_id = $loop->post->ID;
+				$product_title = $loop->post->post_title;
+				$products[ $product_id ] = $product_title;
 			endwhile;
 
 			$response['data'] = $products;
 			$response['result'] = 'success';
-			echo json_encode($response);
+			echo json_encode( $response );
 			wp_die();
 
 		}
@@ -472,9 +479,9 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 						<label for="mwb_wpr_membership_level_name">
 							<input type="text" name="mwb_wpr_membership_level_name_<?php echo $count; ?>" value="<?php echo $this->check_is_not_empty( $key ); ?>" id="mwb_wpr_membership_level_name_<?php echo $count; ?>" class="text_points" required><?php esc_html_e( 'Enter the Name of the Level', 'rewardeem-woocommerce-points-rewards' ); ?>
 						</label>
-						<?php if(!empty($value)):?>
+						<?php if ( ! empty( $value ) ) : ?>
 						<input type="button" value='<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo $count; ?>">	
-						<?php endif;?> 			
+						<?php endif; ?> 			
 					</td>
 				</tr>
 				<tr valign="top">
@@ -573,7 +580,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 									$catid = $category->term_id;
 									$catname = $category->name;
 									$catselect = '';
-									if ( isset($value['Prod_Categ'])&&! empty($value['Prod_Categ'] ) ) {
+									if ( isset( $value['Prod_Categ'] ) && ! empty( $value['Prod_Categ'] ) ) {
 										if ( is_array( $value['Prod_Categ'] ) && in_array( $catid, $value['Prod_Categ'] ) ) {
 											$catselect = "selected='selected'";
 										}
@@ -701,31 +708,31 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 					<th><?php _e( 'Maximum', MWB_RWPR_Domain ); ?></th>
 
 					<th><?php _e( 'Points', MWB_RWPR_Domain ); ?></th>
-					<?php if(!empty($key)):?> 
+					<?php if ( ! empty( $key ) ) : ?> 
 					<th class="mwb_wpr_remove_thankyouorder_content"><?php _e( 'Action', 'woocommerce-ultimate-gift-card' ); ?></th>
-					<?php endif;?>
+					<?php endif; ?>
 				</tr>
 				<tr valign="top">
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_minimum">
-							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price" required="" placeholder = "No minimum" value="<?php echo (!empty($thankyouorder_min[ $key ] ))?$thankyouorder_min[ $key ]:''; ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price" required="" placeholder = "No minimum" value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? $thankyouorder_min[ $key ] : ''; ?>">
 						</label>
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_maximum">
-							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum" value="<?php echo (!empty( $thankyouorder_max[ $key ] ))?$thankyouorder_max[ $key ]:''; ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum" value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? $thankyouorder_max[ $key ] : ''; ?>">
 						</label>
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_current_type">
-							<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price" required=""  value="<?php echo (!empty( $thankyouorder_value[ $key ] ))?$thankyouorder_value[ $key ]:''; ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price" required=""  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? $thankyouorder_value[ $key ] : ''; ?>">
 						</label>
 					</td>    
-					<?php if(!empty($key)):?>                       
+					<?php if ( ! empty( $key ) ) : ?>                       
 						<td class="mwb_wpr_remove_thankyouorder_content forminp forminp-text">
 							<input type="button" value="<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>" class="mwb_wpr_remove_thankyouorder button" >
 						</td>
-					<?php endif;?>
+					<?php endif; ?>
 				</tr>
 			</tbody>
 		</table>
