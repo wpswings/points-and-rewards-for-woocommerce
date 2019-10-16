@@ -385,6 +385,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	public function mwb_wpr_select_category() {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
 		$mwb_wpr_categ_list = $_POST['mwb_wpr_categ_list'];
+
 		$response['result'] = __( 'Fail due to an error', MWB_WPR_Domain );
 		if ( isset( $_POST['mwb_wpr_categ_list'] ) ) {
 			$products = array();
@@ -581,6 +582,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 									$catname = $category->name;
 									$catselect = '';
 									if ( isset( $value['Prod_Categ'] ) && ! empty( $value['Prod_Categ'] ) ) {
+
 										if ( is_array( $value['Prod_Categ'] ) && in_array( $catid, $value['Prod_Categ'] ) ) {
 											$catselect = "selected='selected'";
 										}
@@ -708,6 +710,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 					<th><?php _e( 'Maximum', MWB_RWPR_Domain ); ?></th>
 
 					<th><?php _e( 'Points', MWB_RWPR_Domain ); ?></th>
+
 					<?php if ( ! empty( $key ) ) : ?> 
 					<th class="mwb_wpr_remove_thankyouorder_content"><?php _e( 'Action', 'woocommerce-ultimate-gift-card' ); ?></th>
 					<?php endif; ?>
@@ -715,16 +718,20 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 				<tr valign="top">
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_minimum">
-							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price" required="" placeholder = "No minimum" value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? $thankyouorder_min[ $key ] : ''; ?>">
+
+							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price" required="" placeholder = "No minimum" value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? $thankyouorder_min[ $key ] : ''; ?>
 						</label>
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_maximum">
+
 							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum" value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? $thankyouorder_max[ $key ] : ''; ?>">
+
 						</label>
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_current_type">
+
 							<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price" required=""  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? $thankyouorder_value[ $key ] : ''; ?>">
 						</label>
 					</td>    
@@ -733,6 +740,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 							<input type="button" value="<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>" class="mwb_wpr_remove_thankyouorder button" >
 						</td>
 					<?php endif; ?>
+
 				</tr>
 			</tbody>
 		</table>

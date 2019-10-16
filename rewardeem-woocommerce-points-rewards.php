@@ -16,7 +16,7 @@
  * Plugin Name:       Ultimate WooCommerce Points and Rewards Lite
  * Plugin URI:        https://makewebbetter.com/product/rewardeem-woocommerce-points-rewards/
  * Description:       This woocommerce extension allow merchants to reward their customers with loyalty points..
- * Version:           1.0.1
+ * Version:           1.0.0
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       rewardeem-woocommerce-points-rewards
