@@ -83,15 +83,6 @@ if ($activated) {
 	}
 
 	/**
-	 * The code that runs during plugin activation.
-	 * This action is documented in includes/class-rewardeem-woocommerce-points-rewards-activator.php
-	 */
-	function activate_rewardeem_woocommerce_points_rewards() {
-		require_once plugin_dir_path( __FILE__ ) . 'includes/class-rewardeem-woocommerce-points-rewards-activator.php';
-		Rewardeem_woocommerce_Points_Rewards_Activator::activate();
-	}
-
-	/**
 	* The code that runs during plugin deactivation.
 	* This action is documented in includes/class-rewardeem-woocommerce-points-rewards-deactivator.php
 	*/
@@ -146,8 +137,6 @@ if ($activated) {
 		}
 		return $pkey;
 	}
-
-	register_activation_hook( __FILE__, 'activate_rewardeem_woocommerce_points_rewards' );
 	register_deactivation_hook( __FILE__, 'deactivate_rewardeem_woocommerce_points_rewards' );
 
 	/**
