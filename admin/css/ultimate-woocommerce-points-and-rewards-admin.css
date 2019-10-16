@@ -1,0 +1,508 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+
+ .toplevel_page_ultimate_woocommerce_points_and_rewards_menu #wpbody-content {
+   width: 98% !important;
+ }
+
+ .toplevel_page_ultimate_woocommerce_points_and_rewards_menu #wpbody-content .notice,
+ .toplevel_page_ultimate_woocommerce_points_and_rewards_menu #wpbody-content .updated {
+   margin: 20px 0px 20px;
+ }
+
+ .ultimate-woocommerce-points-and-rewards-wrap .form-table tr {
+   display: block;
+   padding-left: 10px;
+ }
+
+ .ultimate-woocommerce-points-and-rewards-license-sec {
+  background: #ffffff;
+  padding: 0px 15px;
+  border: solid 1px #e6e6e6;
+  margin-top: 25px;
+}
+
+.ultimate-woocommerce-points-and-rewards-license-sec p {
+  font-size: 13.8px
+} 
+
+.ultimate-woocommerce-points-and-rewards-license-sec label {
+  font-size: 13.5px
+}
+
+#ultimate-woocommerce-points-and-rewards-license-activate {
+	margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+#ultimate-woocommerce-points-and-rewards-ajax-loading-gif {
+  display: none;
+  position: relative;
+  top: 5px;
+}
+
+#ultimate-woocommerce-points-and-rewards-license-key {
+	width: 100%;
+  max-width: 350px;
+  margin-top: 10px;
+}
+
+#ultimate-woocommerce-points-and-rewards-thirty-days-notify p {
+  font-size: 14px;
+}
+
+#ultimate-woocommerce-points-and-rewards-day-count {
+  color: #c40b0b;
+}
+/*============================
+=            help            =
+============================*/
+.ultimate_woocommerce_points_and_rewards_help-link-wrap::after,
+.ultimate_woocommerce_points_and_rewards_help_wrapper .ultimate_woocommerce_points_and_rewards_help_input-wrap::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+.ultimate_woocommerce_points_and_rewards_help-link-wrap {
+  text-align: center;
+  width: 100%;
+}
+.ultimate-woocommerce-points-and-rewards-suggestion {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: -2px 2px 12px 0 #cccccc;
+  padding: 10px 10px 30px;
+  max-width: 550px;
+  /*width: 100%;*/
+}
+.ultimate_woocommerce_points_and_rewards_help_wrapper ul.ultimate_woocommerce_points_and_rewards_help-link-wrap li {
+  background-color: #1872dc;
+  border-radius: 4px;
+  display: inline-block;
+  max-width: 235px;
+  padding: 20px;
+  position: relative;
+  width: 100%;
+}
+.ultimate_woocommerce_points_and_rewards_help_wrapper ul.ultimate_woocommerce_points_and_rewards_help-link-wrap li:nth-of-type(1) {
+  margin-right: 10px;
+}
+
+
+.ultimate_woocommerce_points_and_rewards_icon {
+  display: block;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+.ultimate_woocommerce_points_and_rewards_help-link {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.ultimate_woocommerce_points_and_rewards_doc_video_section {
+  background-color: #f1f1f1;
+  box-shadow: -2px 2px 12px 0 #cccccc;
+  display: inline-block;
+  padding: 20px;
+  width: 50%;
+  margin-top: 25px;
+}
+.ultimate_woocommerce_points_and_rewards_form {
+  display: inline-block;
+  padding: 25px;
+  vertical-align: top;
+  width: 40%;
+}
+
+.ultimate_woocommerce_points_and_rewards_help_wrapper ul.ultimate_woocommerce_points_and_rewards_help-link-wrap li .ultimate_woocommerce_points_and_rewards_help-link:hover {
+  background-color: #ffffff;
+  color: #889cb7;
+  transition: all 0.3s ease 0s;
+}
+.ultimate_woocommerce_points_and_rewards_help_wrapper {
+  display: block;
+  padding-bottom: 40px;
+}
+.ultimate-woocommerce-points-and-rewards-suggestion > h2 {
+  font-size: 30px;
+  margin-bottom: 71px;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 30px;
+}
+.ultimate_woocommerce_points_and_rewards_help_wrapper .ultimate_woocommerce_points_and_rewards_help_input-wrap {
+  display: table;
+  width: 100%;
+}
+.ultimate_woocommerce_points_and_rewards_help_wrapper .ultimate_woocommerce_points_and_rewards_help_input-wrap label {
+  font-weight: bold;
+}
+.ultimate_woocommerce_points_and_rewards_help_wrapper .ultimate_woocommerce_points_and_rewards_help_input, .ultimate_woocommerce_points_and_rewards_help_wrapper .ultimate_woocommerce_points_and_rewards_help_input-wrap label {
+  padding: 10px;
+}
+.ultimate_woocommerce_points_and_rewards_help_wrapper .ultimate_woocommerce_points_and_rewards_help_form-control {
+  width: 100%;
+}
+.ultimate_woocommerce_points_and_rewards_help_wrapper .ultimate_woocommerce_points_and_rewards_help_form-control.text-field{
+  height: 36px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.ultimate_woocommerce_points_and_rewards_help-send-suggetion-button-wrap {
+  margin-left: 10px;
+  margin-top: 20px;
+}
+.ultimate_woocommerce_points_and_rewards_help-send-suggetion-button{
+  background-color: #a0a0a0!important;
+  border-color: #a0a0a0!important;
+  border-radius: 34px!important;
+  box-shadow: none!important;
+  font-size: 16px!important;
+  font-weight: bold!important;
+  height: auto!important;
+  padding: 2px 20px!important;
+  text-shadow: none!important;
+  color: #ffffff!important;
+}
+/*=====  End of help  ======*/
+/*==================================
+=            common css            =
+==================================*/
+.ultimate_woocommerce_points_and_rewards_help_wrapper, .ced-main-form {
+  background-color: #ffffff;
+  float: left;
+  padding-top: 20px;
+  width: calc(100% - 340px);
+}
+.clear::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+.ultimate_woocommerce_points_and_rewards_mail_success_messege,.ultimate_woocommerce_points_and_rewards_mail_unsuccess_messege {
+  color: #109010;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 30px;
+  text-align: center;
+}
+.ultimate_woocommerce_points_and_rewards_mail_unsuccess_messege {
+  color: #ff0000;
+}
+/*=====  End of common css  ======*/
+/*===============================
+=            sidebar            =
+===============================*/
+.ultimate-woocommerce-points-and-rewards-sidebar {
+  float: left;
+  padding-left: 30px;
+  padding-right: 10px;
+  width: 300px;
+}
+.ultimate-woocommerce-points-and-rewards-sidebar-inner {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  padding: 10px;
+  /*height: 350px;*/
+  overflow: auto;
+}
+.ultimate-woocommerce-points-and-rewards-sidebar-inner img {
+  display: block;
+  margin: 0 auto;
+}
+.ultimate_woocommerce_points_and_rewards_help_wrapper.ultimate_woocommerce_points_and_rewards_help_second_wrapper {
+  width: 100%;
+}
+
+/*================================================
+=            standard plugin help css            =
+================================================*/
+.ultimate_woocommerce_points_and_rewards_video_section {
+  display: inline-block;
+  margin: 0 5px;
+  max-width: 273px;
+}
+.ultimate_woocommerce_points_and_rewards_video_content {
+  text-align: center;
+  width: 100%;
+  margin: 30px 0;
+}
+.ultimate_woocommerce_points_and_rewards_vedio_feature_name {
+  font-size: 20px;
+  color: #000;
+  padding-top: 10px;
+  font-weight: d;
+}
+.ultimate_woocommerce_points_and_rewards_help_input-wrap {
+  margin-bottom: 40px;
+}
+
+/*=====  End of standard plugin help css  ======*/
+/*================================
+=            about us            =
+================================*/
+.ultimate_woocommerce_points_and_rewards_about_logo_desc{
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.ultimate_woocommerce_points_and_rewards_about_wrap {
+  margin: 30px 0;
+}
+.ultimate_woocommerce_points_and_rewards_about_logo{
+  width: 300px;
+  display: inline-block;
+}
+.ultimate_woocommerce_points_and_rewards_about_desc {
+  color: #000000;
+  display: inline-block;
+  font-size: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 89%;
+}
+.ultimate_woocommerce_points_and_rewards_about_full_desc p, .ultimate_woocommerce_points_and_rewards_about_more_desc p {
+  color: #000000;
+  font-size: 17px;
+  line-height: 30px;
+  margin: 30px 0;
+}
+.ultimate_woocommerce_points_and_rewards_subscription_wrap h3 {
+  color: #000000;
+  font-size: 24px;
+  margin-top: 40px;
+  text-transform: uppercase;
+}
+.ultimate_woocommerce_points_and_rewards_featured_wrap h3{
+  color: #000000;
+  font-size: 24px;
+  margin-top: 40px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+.ultimate_woocommerce_points_and_rewards_subscription {
+  background: rgba(0, 0, 0, 0) linear-gradient(to right, #7a28ff 0px, #00a1ff 100%) repeat scroll 0 0;
+  color: #ffffff;
+  display: inline-block;
+  padding: 30px;
+  width: 65%;
+}
+.ultimate_woocommerce_points_and_rewards_subscription > span {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.ultimate_woocommerce_points_and_rewards_featured_plugin {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  display: inline-block;
+  width: 23.4%;
+  margin-right: 20px;
+  min-height: 480px;
+  vertical-align: top;
+  margin-bottom: 26px;
+}
+.ultimate_woocommerce_points_and_rewards_featured_plugin:nth-of-type(4n) {
+  margin-right: 0;
+}
+.ultimate_woocommerce_points_and_rewards_desc{
+  padding: 20px;
+}
+.ultimate_woocommerce_points_and_rewards_desc:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+.ultimate_woocommerce_points_and_rewards_image {
+  width: 100%;
+}
+.ultimate_woocommerce_points_and_rewards_subscription_wrap {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  display: inline-block;
+  margin-bottom: 30px;
+  padding: 20px;
+  width: 48%;
+  margin-right: 20px;
+  vertical-align: top;
+}
+.ultimate_woocommerce_points_and_rewards_subscription_wrap > p {
+  font-size: 16px;
+  margin-bottom: 44px;
+  color: #000000;
+}
+.ultimate_woocommerce_points_and_rewards_subscription_wrap:nth-child(2) {
+  margin-right: 30px;
+}
+.ultimate_woocommerce_points_and_rewards_title {
+  color: #000000;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-top: 0;
+}
+.ultimate_woocommerce_points_and_rewards_price{
+ color: #000000;
+ font-size: 22px;
+ font-weight: bold;
+ float: left;
+}
+.ultimate_woocommerce_points_and_rewards_buy_now {
+  background: #3071FF;
+  float: right;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 9px 30px;
+  text-transform: uppercase;
+}
+.ultimate_woocommerce_points_and_rewards_buy_now a{
+ color: #ffffff;
+ text-decoration: none;
+}
+.ultimate_woocommerce_points_and_rewards_logo {
+  max-width: 200px;
+  width: 100%;
+}
+.ultimate_woocommerce_points_and_rewards_star {
+  max-width: 16px;
+  margin-bottom: 16px;
+}
+/*=====  End of about us  ======*/
+/*assign products points*/
+.mwb_wpr_pro_points_setting{
+  border: 1px solid #cccccc;
+}
+.mwb_wpr_pro_points_setting tr:nth-child(2n+1) {
+  background-color: #f4f4f4;
+}
+.mwb_wpr_pro_points_setting th {
+  width: 170px;
+}
+.mwb_wpr_pro_points_setting th, .mwb_wpr_pro_points_setting td {
+  padding: 10px !important;
+}
+.mwb_wpr_pro_points_setting tr:hover {
+  background-color: #ffefff;
+}
+.mwb_wpr_pro_points_setting .mwb_wpr_new_woo_ver_style_text {
+  width: 100% !important;
+  padding: 10px !important;
+  height: auto;
+  border-radius: 4px;
+}
+.mwb_wpr_pro_points_setting .mwb_wpr_submit_purchase_points_per_category
+,.mwb_wpr_pro_points_setting .mwb_wpr_submit_per_category {
+  background: #ef5350 !important;
+  border: none!important;
+  box-shadow: none!important;
+  text-shadow: none!important;
+}
+/*end assign products points*/
+
+/*=====================================
+=            Media Queries            =
+=====================================*/
+
+@media screen and (max-width:992px){
+  .ultimate_woocommerce_points_and_rewards_subscription_wrap{
+    width: 100%;
+  }
+   .ultimate_woocommerce_points_and_rewards_featured_plugin{
+    width: 31%;
+   }
+   .ultimate_woocommerce_points_and_rewards_featured_plugin:nth-of-type(3n) {
+      margin-right: 0;
+    }
+    .ultimate_woocommerce_points_and_rewards_featured_plugin:nth-of-type(4n) {
+      margin-right: 15px;
+    }
+}
+@media screen and (max-width:767px){
+  .ultimate_woocommerce_points_and_rewards_video_section{
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 60px;
+  }
+
+  .ultimate_woocommerce_points_and_rewards_help_wrapper {
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    text-align: center;
+    width: 100%;
+  }
+  .ultimate_woocommerce_points_and_rewards_doc_video_section,.ultimate_woocommerce_points_and_rewards_form{
+    width: auto;
+  }
+  .ultimate_woocommerce_points_and_rewards_help_wrapper .ultimate_woocommerce_points_and_rewards_help_form-control {
+    width: 100%;
+  }
+  .ultimate_woocommerce_points_and_rewards_help_wrapper, .ced-main-form {
+    background-color: #ffffff;
+    float: none;
+    width: 94%
+  }
+  .ultimate-woocommerce-points-and-rewards-sidebar {
+    float: none;
+    padding-left: 0;
+    width: 97%;
+    margin-top: 20px;
+  }
+  .ultimate_woocommerce_points_and_rewards_help_wrapper ul.ultimate_woocommerce_points_and_rewards_help-link-wrap li .ultimate_woocommerce_points_and_rewards_help-link {
+    font-size: 17px;
+    padding: 13px;
+    width: 200px;
+  }
+  .ultimate_woocommerce_points_and_rewards_help_wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .ultimate-woocommerce-points-and-rewards-main-section{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .ultimate_woocommerce_points_and_rewards_featured_plugin{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .ultimate_woocommerce_points_and_rewards_about_logo_desc{
+    display: block;
+  }
+  .ultimate_woocommerce_points_and_rewards_about_logo {
+    display: block;
+    text-align: center;
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 1100px) and (min-width: 767px) {
+  .ultimate_woocommerce_points_and_rewards_help_wrapper ul.ultimate_woocommerce_points_and_rewards_help-link-wrap li {
+    float: none;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  .ultimate_woocommerce_points_and_rewards_help_wrapper {
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    text-align: center;
+    width: 100%;
+  }
+  .ultimate_woocommerce_points_and_rewards_doc_video_section,.ultimate_woocommerce_points_and_rewards_form{
+    width: auto;
+  }
+}
+@media screen and (max-width: 550px) {
+  .ultimate_woocommerce_points_and_rewards_help_wrapper ul.ultimate_woocommerce_points_and_rewards_help-link-wrap li {
+    float: none;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+}
+/*=====  End of Media Queries  ======*/
