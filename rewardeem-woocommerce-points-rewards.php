@@ -129,7 +129,7 @@ if ($activated) {
 		}
 		return $pkey;
 	}
-	
+
 	/**
 	 * The core plugin class that is used to define internationalization,
 	 * admin-specific hooks, and public-facing site hooks.
