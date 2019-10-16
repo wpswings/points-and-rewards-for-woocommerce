@@ -91,6 +91,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 				'mwb_wpr_cart_price_rate' => $mwb_wpr_cart_price_rate,
 				// 'make_readonly' => $mwb_wpr_make_readonly,
 				'not_allowed' => __('Please enter some valid points!',MWB_RWPR_Domain),
+				'not_suffient' => __('You do not have suffient amount of points',MWB_RWPR_Domain),
 				);
 		wp_localize_script('mwb_wpr_clipboard', 'mwb_wpr', $mwb_wpr );
 		wp_enqueue_script('mwb_wpr_clipboard' );
@@ -201,7 +202,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	*/
 	public function mwb_wpr_get_order_total_settings_num($id) {
 		$mwb_wpr_value = 0;
-		$order_total_settings = get_option('mwb_wpr_other_settings',true);
+		$order_total_settings = get_option('mwb_wpr_order_total_settings',true);
 		if(!empty($order_total_settings[$id])) {
 			$mwb_wpr_value = (int)$order_total_settings[$id];
 		}
@@ -285,8 +286,8 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	* 
 	* @name mwb_wpr_get_referral_section
 	* @author makewebbetter<webmaster@makewebbetter.com>
-	* @link http://www.makewebbetter.com/
-	* @param $user_id
+	* @link http://www.makewebbetter.com
+	* @param int $user_id ID of the user.
 	*/
 	public function mwb_wpr_get_referral_section($user_id) {
 		$get_referral = get_user_meta($user_id, 'mwb_points_referral', true);
@@ -326,7 +327,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	* @param $user_id
 	*/
 	public function mwb_wpr_get_social_shraing_section($user_id) {
-		$enable_mwb_social = isset($general_settings['mwb_wpr_general_social_media_enable']) ? intval($general_settings['mwb_wpr_general_social_media_enable']) : 0;
+		$enable_mwb_social = $this->mwb_wpr_get_general_settings_num('mwb_wpr_general_social_media_enable');
 		$user_reference_key =  get_user_meta($user_id, 'mwb_points_referral', true);
 		$page_permalink = wc_get_page_permalink('myaccount');
 		if($enable_mwb_social){
@@ -347,15 +348,15 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 
 			$google = '<div class="google mwb_wpr_common_class"><script src="https://apis.google.com/js/platform.js" async defer></script><div class="g-plus google-plus-button" data-action="share" data-height="24" data-href="'.$page_permalink.'?pkey='.$user_reference_key.'"></div></div>';
 
-			if( isset($general_settings['mwb_wpr_facebook']) && $general_settings['mwb_wpr_facebook'] == 1) {
+			if( $this->mwb_wpr_get_general_settings_num('mwb_wpr_facebook') == 1) {
 
 				$content =  $content.$fb_button;
 			}
-			if( isset($general_settings['mwb_wpr_twitter']) && $general_settings['mwb_wpr_twitter'] == 1){
+			if( $this->mwb_wpr_get_general_settings_num('mwb_wpr_twitter') == 1){
 
 				$content =  $content.$share_button;
 			}
-			if( isset($general_settings['mwb_wpr_email']) && $general_settings['mwb_wpr_email'] == 1) {
+			if(  $this->mwb_wpr_get_general_settings_num('mwb_wpr_email') == 1) {
 				$content =  $content.$mail;
 			}
 			$content = $content.'</div>';
@@ -466,13 +467,6 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	*/
 	public  function mwb_wpr_update_points_details($user_id,$type,$points,$data) {
 		$today_date = date_i18n("Y-m-d h:i:sa");
-		// if ($type == "registration") {
-		// 	$points_details['registration'][] = array(
-		// 		'registration'=> $points,
-		// 		'date' => $today_date);	
-		// 	/*Update the user meta for the points details*/
-		// 	update_user_meta($user_id,'points_details', $points_details);
-		// }
 		/*Create the Referral Signup*/
 		if ($type == "reference_details" || $type == "ref_product_detail") {
 			$get_referral_detail = get_user_meta($user_id, 'points_details', true);
@@ -499,7 +493,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 		}
 		/*Here is cart discount through the points*/
 		if ($type == "cart_subtotal_point" || $type == "product_details"
-		 || $type  == 'pro_conversion_points' || $type == "registration" ||$type == 'points_on_order') {
+		 || $type  == 'pro_conversion_points' || $type == "registration" ||$type == 'points_on_order' || $type = 'membership') {
 			$cart_subtotal_point_arr = get_user_meta($user_id, 'points_details', true);
 			if(isset($cart_subtotal_point_arr[$type]) && !empty($cart_subtotal_point_arr[$type])) {
 				$cart_array = array(
@@ -1125,8 +1119,9 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	*/
 	public function mwb_overwrite_form_temp($path, $template_name) {
 		/*Check is apply points on the cart is enable or not*/
-		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num("mwb_wpr_apply_points_checkout");
-		if($mwb_wpr_custom_points_on_cart == 1){
+		$mwb_wpr_custom_points_on_checkout = $this->mwb_wpr_get_general_settings_num("mwb_wpr_apply_points_checkout");
+		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num("mwb_wpr_custom_points_on_cart");
+		if($mwb_wpr_custom_points_on_checkout == 1 && $mwb_wpr_custom_points_on_cart == 1){
 			if( $template_name == 'checkout/form-coupon.php') {
 				return MWB_RWPR_DIR_PATH.'public/woocommerce/checkout/form-coupon.php';
 			}
@@ -1389,10 +1384,9 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 		$mwb_wpr_mem_expr = get_user_meta($user_id,'membership_expiration',true);
 		$membership_settings_array = get_option('mwb_wpr_membership_settings',true);
 		$mwb_wpr_membership_roles = isset($membership_settings_array['membership_roles']) && !empty($membership_settings_array['membership_roles']) ? $membership_settings_array['membership_roles'] : array();
-		if( isset( $user_level ) && !empty( $user_level ) )
-		{
-			if( isset( $mwb_wpr_mem_expr ) && !empty( $mwb_wpr_mem_expr ) && $today_date <= $mwb_wpr_mem_expr )
-			{
+		if( isset( $user_level ) && !empty( $user_level ) ) {
+			/*check isset the membership is not expried*/
+			if( isset( $mwb_wpr_mem_expr ) && !empty( $mwb_wpr_mem_expr ) && $today_date <= $mwb_wpr_mem_expr ) {
 				if(is_array($mwb_wpr_membership_roles) && !empty($mwb_wpr_membership_roles))
 				{
 					foreach($mwb_wpr_membership_roles as $roles => $values)
@@ -1409,17 +1403,14 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 								}
 
 							}
-							else if(!$this->check_exclude_sale_products($product_data))
-							{
+							else if(!$this->check_exclude_sale_products($product_data)) {
 								$terms = get_the_terms ( $product_id, 'product_cat' );
-								if(is_array($terms) && !empty($terms) && !$product_is_variable)
-								{
-									foreach ( $terms as $term ) 
-									{
+								if(is_array($terms) && !empty($terms) && !$product_is_variable) {
+									foreach ( $terms as $term )  {
 										$cat_id = $term->term_id;
 										$parent_cat = $term->parent;
 										if(in_array($cat_id, $values['Prod_Categ']) || in_array($parent_cat, $values['Prod_Categ'])) {	
-											if(!empty($reg_price)){
+											if(!empty($reg_price)) {
 
 												$new_price = $reg_price - ($reg_price * $values['Discount'])/100;
 												$price = '<del>'.wc_price( $reg_price ) . $product_data->get_price_suffix().'</del><ins>'.wc_price( $new_price ) . $product_data->get_price_suffix().'</ins>';
@@ -1427,7 +1418,6 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 										}
 									}
 								}
-
 							}	
 						}
 					}
@@ -1590,7 +1580,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 										$get_product_points = get_post_meta($cart[$key]['variation_id'], 'mwb_wpr_variable_points', 1);
 									}
 								}
-								else{
+								else {
 									if(isset($cart[$key]['product_id']) && !empty($cart[$key]['product_id'])){
 										$get_product_points = get_post_meta($cart[$key]['product_id'], 'mwb_points_product_value', 1);
 									}

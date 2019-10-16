@@ -22,7 +22,7 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Rewardeem_woocommerce_Points_Rewards
+ * @package    Ultimate_Woocommerce_Points_And_Rewards
  */
 
 // If uninstall not called from WordPress, then exit.

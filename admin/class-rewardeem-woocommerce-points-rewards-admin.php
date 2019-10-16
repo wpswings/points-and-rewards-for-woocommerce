@@ -152,6 +152,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 					'mwb_wpr_nonce' => wp_create_nonce( 'mwb-wpr-verify-nonce' ),
 					'check_pro_activate' => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
 					'pro_text' => __( 'Please Purchase the Pro Plugin.', 'rewardeem-woocommerce-points-rewards' ),
+					'success_update' => __( 'Points are updated successfully', 'rewardeem-woocommerce-points-rewards' ),
 				);
 
 				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/rewardeem-woocommerce-points-rewards-admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2' ), $this->version, false );
@@ -172,7 +173,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_rwpr_admin_menu() {
-		add_submenu_page( 'woocommerce', __( 'Rewardeem-Woocommerce Points Rewards', 'rewardeem-woocommerce-points-rewards' ), __( 'Rewardeem-Woocommerce Points Rewards', 'rewardeem-woocommerce-points-rewards' ), 'manage_options', 'mwb-rwpr-setting', array( $this, 'mwb_rwpr_admin_setting' ) );
+		add_submenu_page( 'woocommerce', __( 'Ultimate WooCommerce Points and Rewards', 'rewardeem-woocommerce-points-rewards' ), __( 'Ultimate WooCommerce Points and Rewards', 'rewardeem-woocommerce-points-rewards' ), 'manage_options', 'mwb-rwpr-setting', array( $this, 'mwb_rwpr_admin_setting' ) );
 	}
 
 	/**
@@ -222,13 +223,13 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 				'reason' => $reason,
 			);
 			/* Update user points*/
-			self::mwb_wpr_update_points_details( $user_id, 'admin_points', $points, $data );
-			/* Send Mail to the user*/
-			$this->mwb_wpr_send_mail_details( $user_id, 'admin_notification' );
-			/* Update user points*/
 			if ( ! empty( $total_points ) ) {
 				update_user_meta( $user_id, 'mwb_wpr_points', $total_points );
 			}
+			/* Update user points*/
+			self::mwb_wpr_update_points_details( $user_id, 'admin_points', $points, $data );
+			/* Send Mail to the user*/
+			$this->mwb_wpr_send_mail_details( $user_id, 'admin_notification' );
 			wp_die();
 		}
 	}
@@ -384,26 +385,34 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	public function mwb_wpr_select_category() {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
 		$mwb_wpr_categ_list = $_POST['mwb_wpr_categ_list'];
-		$response['result'] = __('Fail due to an error',MWB_WPR_Domain);
-		if(isset($_POST['mwb_wpr_categ_list'])) {
+
+		$response['result'] = __( 'Fail due to an error', MWB_WPR_Domain );
+		if ( isset( $_POST['mwb_wpr_categ_list'] ) ) {
 			$products = array();
 			$selected_cat = $_POST['mwb_wpr_categ_list'];
 			$tax_query['taxonomy'] = 'product_cat';
 			$tax_query['field'] = 'id';
 			$tax_query['terms'] = $selected_cat;
 			$tax_queries[] = $tax_query;
-			$args = array( 'post_type' => 'product', 'posts_per_page' => -1, 'tax_query' => $tax_queries, 'orderby' => 'rand' );
+			$args = array(
+				'post_type' => 'product',
+				'posts_per_page' => -1,
+				'tax_query' => $tax_queries,
+				'orderby' => 'rand',
+			);
 			$loop = new WP_Query( $args );
-			while ( $loop->have_posts() ) : $loop->the_post(); global $product;
+			while ( $loop->have_posts() ) :
+				$loop->the_post();
+				global $product;
 
-			$product_id = $loop->post->ID;
-			$product_title = $loop->post->post_title;
-			$products[$product_id] = $product_title;
+				$product_id = $loop->post->ID;
+				$product_title = $loop->post->post_title;
+				$products[ $product_id ] = $product_title;
 			endwhile;
 
 			$response['data'] = $products;
 			$response['result'] = 'success';
-			echo json_encode($response);
+			echo json_encode( $response );
 			wp_die();
 
 		}
@@ -471,7 +480,9 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 						<label for="mwb_wpr_membership_level_name">
 							<input type="text" name="mwb_wpr_membership_level_name_<?php echo $count; ?>" value="<?php echo $this->check_is_not_empty( $key ); ?>" id="mwb_wpr_membership_level_name_<?php echo $count; ?>" class="text_points" required><?php esc_html_e( 'Enter the Name of the Level', 'rewardeem-woocommerce-points-rewards' ); ?>
 						</label>
-						<input type="button" value='<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo $count; ?>">				
+						<?php if ( ! empty( $value ) ) : ?>
+						<input type="button" value='<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo $count; ?>">	
+						<?php endif; ?> 			
 					</td>
 				</tr>
 				<tr valign="top">
@@ -570,7 +581,8 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 									$catid = $category->term_id;
 									$catname = $category->name;
 									$catselect = '';
-									if ( ! empty( $this->check_is_not_empty( $value['Prod_Categ'] ) ) ) {
+									if ( isset( $value['Prod_Categ'] ) && ! empty( $value['Prod_Categ'] ) ) {
+
 										if ( is_array( $value['Prod_Categ'] ) && in_array( $catid, $value['Prod_Categ'] ) ) {
 											$catselect = "selected='selected'";
 										}

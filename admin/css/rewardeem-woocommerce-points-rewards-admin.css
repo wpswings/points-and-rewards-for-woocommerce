@@ -2,6 +2,7 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+ @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
  #mwb_wpr_loader {
   background-color: rgba(255, 255, 255, 0.6);
   bottom: 0;
@@ -13,8 +14,14 @@
   width: 100%;
   z-index: 99999;
 }
-.mwb_wpr_object_purchase {
+.mwb_wpr_object_purchase p {
   background-color: #ef5350;
+  color: #fff;
+  padding: 7px 10px;
+  margin-top: 10px !important;
+  border-radius: 4px;
+  display: block;
+  font-size: 15px !important;
 }
 #mwb_wpr_loader img {
   display: block;
@@ -24,14 +31,13 @@
   right: 0;
   top: 40%;
 }
- @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
- #mwb_rwpr_setting_wrapper * {
-   box-sizing: border-box;
+#mwb_rwpr_setting_wrapper * {
+ box-sizing: border-box;
 }
- #mwb_rwpr_setting_wrapper{
+#mwb_rwpr_setting_wrapper{
   font-family: 'Lato', sans-serif;
 }
- .button-primary.woocommerce-save-button.mwb_wpr_save_changes {
+.button-primary.woocommerce-save-button.mwb_wpr_save_changes {
   background: #ffffff;
   color: #555555;
   padding: 8px 25px;
@@ -151,8 +157,6 @@
   border-radius: 4px;
   color: #ffffff !important;
 }
-
-
 #mwb_rwpr_setting_wrapper .mwb_wgc_pro_version_wrapper .mwb_wgc_about_pro_version {
   font-size: 15px;
   font-weight: bold;
@@ -276,7 +280,6 @@
 #mwb_rwpr_other_setting_upload_image {
   vertical-align: middle;
 }
-
 .mwb_rwpr_body_template {
   background: #ffffff;
   display: flex;
@@ -409,7 +412,6 @@
 .mwb_wpr_membership_setting,.mwb_wpr_general_setting.mwp_wpr_settings{
   border: 1px solid #cccccc;
 }
-
 .mwb_wpr_membership_setting tr:nth-child(2n+1),.mwb_wpr_general_setting.mwp_wpr_settings tr:nth-child(2n+1) {
   background-color: #f4f4f4;
 }
@@ -475,6 +477,34 @@
   width: auto;
 }
 /*end member css*/
+/*====================================
+=            points table            =
+====================================*/
+.mwb_wpr_view_log_notice.mwb_wpr_common_slider {
+  background-color: #eeeeee;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+}
+.mwb_wpr_view_log_notice.mwb_wpr_common_slider.active {
+  background-color: #ef5350;
+  color: #ffffff;
+}
+.mwb_wpr_view_log_notice.mwb_wpr_common_slider::after {
+  content: "\f460";
+  font-family: 'dashicons';
+  position: absolute;
+  right: 10px;
+  top: 55%;
+  transform: translateY(-48%);
+  display: inline-block;
+}
+.mwb_wpr_view_log_notice.mwb_wpr_common_slider.active::after {
+  content: "\f132";
+}
+/*=====  End of points table  ======*/
+
 @media screen and (max-width: 675px) {
   .mwb_rwpr_header_content_left,
   .mwb_rwpr_header_content_right{
@@ -497,7 +527,6 @@
     width: 100%;
   }
 }
-
 @media only screen and (max-width: 782px){
   .mwb_rwpr_mobile_nav {
     display: block;
@@ -517,7 +546,6 @@
   .mwb_rwpr_navigator_template {
     display: none;
   }
-
 }
 .mwb_rwpr_header_content_right ul li:first-child .dashicons.dashicons-phone {
   transform: rotate(90deg);
@@ -526,13 +554,11 @@
 .mwb_wpr_email_wrapper_text
 {
   color: white;
-  
   background-color: #7f527d ;
 }
 .mwb_wpr_email_wrapper_text h2
 {
   color: white;
-  
   text-align: center!important;
   }*/
   #mwb_wpr_settings_wrapper #mainform .mwb_wpr_email_wrapper .mwb_wpr_email_wrapper_text h2 {

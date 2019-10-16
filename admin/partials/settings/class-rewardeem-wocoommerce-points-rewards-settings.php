@@ -420,7 +420,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin_settings {
 				}
 			}
 			if ($value['type'] == "color") {
-				$_postdata[$val['id']] = $this->mwb_wpr_check_input_color($value,$_postdata);
+				$_postdata[$value['id']] = $this->mwb_wpr_check_input_color($value,$_postdata);
 			}
 			do_action('mwb_wpr_add_custom_type_settings',$value,$mwb_wpr_general_settings,$_postdata);
 		}

@@ -1,2 +1,15 @@
 <wpml-config>
+	<admin-texts>
+		<key name="mwb_wpr_shortcode_text_point" />
+		<key name="mwb_wpr_shortcode_text_membership" />
+		<key name="mwb_wpr_thnku_order_msg_usin_points" />
+		<key name="mwb_wpr_thnku_order_msg" />
+		<key name="mwb_wpr_threshold_notif" />
+		<key name="mwb_wpr_re_notification" />
+		<key name="mwb_wpr_settings_gallery">
+			<key name="mwb_wpr_points_tab_text" />
+			<key name="mwb_text_points_value" />
+			<key name="mwb_ways_to_gain_points_value" />
+		</key>	
+	</admin-texts>
 </wpml-config>

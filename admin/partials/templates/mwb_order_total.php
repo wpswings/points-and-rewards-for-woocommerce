@@ -67,20 +67,11 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) ) {
 					}
 					if ( $value['type'] == 'create_order_total_points' ) {
 						?>
-					<table class="form-table wp-list-table widefat fixed striped">
-						<tbody class="mwb_wpr_thankyouorder_tbody"> 
-							<tr valign="top">
-								<th><?php _e( 'Minimum', MWB_RWPR_Domain ); ?></th>
-								<th><?php _e( 'Maximum', MWB_RWPR_Domain ); ?></th>
-
-								<th><?php _e( 'Points', MWB_RWPR_Domain ); ?></th>
-								<th class="mwb_wpr_remove_thankyouorder_content"><?php _e( 'Action', 'woocommerce-ultimate-gift-card' ); ?></th>
-							</tr>
+					
 							<?php
 							 do_action( 'mwb_wpr_order_total_points', $thankyouorder_min, $thankyouorder_max, $thankyouorder_value );
 							?>
-						</tbody>
-					</table>
+						
 					<input type="button" value="<?php _e( 'Add More', MWB_RWPR_Domain ); ?>" class="mwb_wpr_add_more button" id="mwb_wpr_add_more">
 						<?php
 					}
