@@ -286,8 +286,8 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	* 
 	* @name mwb_wpr_get_referral_section
 	* @author makewebbetter<webmaster@makewebbetter.com>
-	* @link http://www.makewebbetter.com/
-	* @param $user_id
+	* @link http://www.makewebbetter.com
+	* @param int $user_id ID of the user.
 	*/
 	public function mwb_wpr_get_referral_section($user_id) {
 		$get_referral = get_user_meta($user_id, 'mwb_points_referral', true);
