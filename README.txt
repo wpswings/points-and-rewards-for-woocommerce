@@ -1,4 +1,4 @@
-=== Ultimate WooCommerce Points and Rewards ===
+=== Rewardeem-Woocommerce Points Rewards ===
 Contributors: makewebbetter
 Tags: comments, spam
 Requires at least: 4.6
@@ -42,7 +42,7 @@ This section describes how to install the plugin and get it working.
 
 e.g.
 
-1. Upload the `ultimate-woocommerce-points-and-rewards` folder to the `/wp-content/plugins/` directory
+1. Upload the `rewardeem-woocommerce-points-rewards` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
