@@ -14,108 +14,108 @@ $settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
 /*Array of the Settings*/
 $mwb_wpr_general_settings = array(
 	array(
-		'title' => __( 'Enable', MWB_RWPR_Domain ),
+		'title' => __( 'Enable', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Enable', MWB_RWPR_Domain ),
+		'title' => __( 'Enable', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'checkbox',
-		'desc'  => __( 'Enable WooCommerce Points and Rewards', MWB_RWPR_Domain ),
+		'desc'  => __( 'Enable WooCommerce Points and Rewards', 'rewardeem-woocommerce-points-rewards' ),
 		'id'    => 'mwb_wpr_general_setting_enable',
-		'desc_tip' => __( 'Check this box to enable the plugin.', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'Check this box to enable the plugin.', 'rewardeem-woocommerce-points-rewards' ),
 		'default'   => 0,
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Signup', MWB_RWPR_Domain ),
+		'title' => __( 'Signup', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Enable Signup Points', MWB_RWPR_Domain ),
+		'title' => __( 'Enable Signup Points', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'checkbox',
 		'id'    => 'mwb_wpr_general_signup',
-		'heading' => __( 'Sign Up', MWB_RWPR_Domain ),
+		'heading' => __( 'Sign Up', 'rewardeem-woocommerce-points-rewards' ),
 		'class'   => 'input-text',
-		'desc_tip' => __( 'Check this box to enable the Signup Points.', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'Check this box to enable the Signup Points.', 'rewardeem-woocommerce-points-rewards' ),
 		'default'   => 0,
-		'desc'    => __( 'Enable Signup Points for Rewards', MWB_RWPR_Domain ),
+		'desc'    => __( 'Enable Signup Points for Rewards', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title' => __( 'Enter Signup Points', MWB_RWPR_Domain ),
+		'title' => __( 'Enter Signup Points', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'number',
 		'default'   => 1,
 		'id'    => 'mwb_wpr_general_signup_value',
 		'custom_attributes'   => array( 'min' => '"1"' ),
 		'class'   => 'input-text mwb_wpr_new_woo_ver_style_text',
-		'desc_tip' => __( 'The points which the new customer will get after signup.', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'The points which the new customer will get after signup.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Referral', MWB_RWPR_Domain ),
+		'title' => __( 'Referral', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Enable Referral Points', MWB_RWPR_Domain ),
+		'title' => __( 'Enable Referral Points', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'checkbox',
 		'default'   => 0,
 		'id'    => 'mwb_wpr_general_refer_enable',
-		'heading' => __( 'Sign Up', MWB_RWPR_Domain ),
+		'heading' => __( 'Sign Up', 'rewardeem-woocommerce-points-rewards' ),
 		'class'   => 'input-text',
-		'desc_tip' => __( 'Check this box to enable the Referral Points when customer invites another customers.', MWB_RWPR_Domain ),
-		'desc'    => __( 'Enable Referral Points for Rewards.', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'Check this box to enable the Referral Points when customer invites another customers.', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'    => __( 'Enable Referral Points for Rewards.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title' => __( 'Enter Referral Points', MWB_RWPR_Domain ),
+		'title' => __( 'Enter Referral Points', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'number',
 		'default'   => 1,
 		'id'    => 'mwb_wpr_general_refer_value',
 		'custom_attributes'   => array( 'min' => '1' ),
 		'class'   => 'input-text mwb_wpr_new_woo_ver_style_text',
-		'desc_tip' => __( 'The points which the customer will get when they successfully invites given number of customers.', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'The points which the customer will get when they successfully invites given number of customers.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Social Sharing', MWB_RWPR_Domain ),
+		'title' => __( 'Social Sharing', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Enable Social Links', MWB_RWPR_Domain ),
+		'title' => __( 'Enable Social Links', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'checkbox',
 		'default'   => 0,
 		'id'    => 'mwb_wpr_general_social_media_enable',
 		'class'   => 'input-text',
-		'desc_tip' => __( 'Enable Social Media Sharing.', MWB_RWPR_Domain ),
-		'desc'  => __( 'Enable Social Media Sharing.', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'Enable Social Media Sharing.', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'  => __( 'Enable Social Media Sharing.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title' => __( 'Select Social Links', MWB_RWPR_Domain ),
+		'title' => __( 'Select Social Links', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'multiple_checkbox',
 		'id'    => 'mwb_wpr_facebook',
-		'desc_tip' => __( 'Check these boxes to share referral link', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'Check these boxes to share referral link', 'rewardeem-woocommerce-points-rewards' ),
 		'multiple_checkbox' => array(
 			array(
 				'type'  => 'checkbox',
 				'id'    => 'mwb_wpr_facebook',
 				'class'   => 'input-text',
-				'desc'  => __( 'Facebook', MWB_RWPR_Domain ),
+				'desc'  => __( 'Facebook', 'rewardeem-woocommerce-points-rewards' ),
 			),
 			array(
 				'type'  => 'checkbox',
 				'id'    => 'mwb_wpr_twitter',
 				'class'   => 'input-text',
-				'desc'  => __( 'Twitter', MWB_RWPR_Domain ),
+				'desc'  => __( 'Twitter', 'rewardeem-woocommerce-points-rewards' ),
 			),
 			array(
 				'type'  => 'checkbox',
 				'id'    => 'mwb_wpr_email',
 				'class'   => 'input-text',
-				'desc'  => __( 'Email', MWB_RWPR_Domain ),
+				'desc'  => __( 'Email', 'rewardeem-woocommerce-points-rewards' ),
 			),
 		),
 	),
@@ -123,20 +123,20 @@ $mwb_wpr_general_settings = array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Text Settings', MWB_RWPR_Domain ),
+		'title' => __( 'Text Settings', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Enter Text', MWB_RWPR_Domain ),
+		'title' => __( 'Enter Text', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'text',
 		'id'    => 'mwb_wpr_general_text_points',
 		'class' => 'text_points mwb_wpr_new_woo_ver_style_text',
-		'desc'  => __( 'Entered text will get displayed on points page.', MWB_RWPR_Domain ),
-		'desc_tip' => __( 'Entered text will append before the Total Number of Point', MWB_RWPR_Domain ),
-		'default' => __( 'My Points', MWB_RWPR_Domain ),
+		'desc'  => __( 'Entered text will get displayed on points page.', 'rewardeem-woocommerce-points-rewards' ),
+		'desc_tip' => __( 'Entered text will append before the Total Number of Point', 'rewardeem-woocommerce-points-rewards' ),
+		'default' => __( 'My Points', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title' => __( 'Enter Ways to Gain Points', MWB_RWPR_Domain ),
+		'title' => __( 'Enter Ways to Gain Points', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'textarea',
 		'custom_attributes' => array(
 			'cols' => '"35"',
@@ -144,45 +144,45 @@ $mwb_wpr_general_settings = array(
 		),
 		'id'    => 'mwb_wpr_general_ways_to_gain_points',
 		'class' => 'input-text',
-		'desc_tip' => __( 'Entered text will append before the Total Number of Point', MWB_RWPR_Domain ),
-		'desc2' => '[Refer Points]' . __( ' for Referral Points', MWB_RWPR_Domain ). '[Per Currency Spent Points]' . __( ' for Per currency spent points and', MWB_RWPR_Domain ) . '[Per Currency Spent Price]' . __( ' for per currency spent price', MWB_RWPR_Domain ),
-		'desc'  => __( 'Use these shortcodes for providing ways to gain points at front end.', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'Entered text will append before the Total Number of Point', 'rewardeem-woocommerce-points-rewards' ),
+		'desc2' => '[Refer Points]' . __( ' for Referral Points', 'rewardeem-woocommerce-points-rewards' ). '[Per Currency Spent Points]' . __( ' for Per currency spent points and', 'rewardeem-woocommerce-points-rewards' ) . '[Per Currency Spent Price]' . __( ' for per currency spent price', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'  => __( 'Use these shortcodes for providing ways to gain points at front end.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title' => __( 'Points Tab Text', MWB_RWPR_Domain ),
+		'title' => __( 'Points Tab Text', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'text',
 		'id'    => 'mwb_wpr_points_tab_text',
 		'class' => 'text_points mwb_wpr_new_woo_ver_style_text',
-		'desc'  => __( 'Points Tab replaced with your text.', MWB_RWPR_Domain ),
-		'desc_tip' => __( 'Entered text will be replaced the Points tab at Myaccount Page', MWB_RWPR_Domain ),
-		'default' => __( 'Points', MWB_RWPR_Domain ),
+		'desc'  => __( 'Points Tab replaced with your text.', 'rewardeem-woocommerce-points-rewards' ),
+		'desc_tip' => __( 'Entered text will be replaced the Points tab at Myaccount Page', 'rewardeem-woocommerce-points-rewards' ),
+		'default' => __( 'Points', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title' => __( 'Assigned Product Points Text', MWB_RWPR_Domain ),
+		'title' => __( 'Assigned Product Points Text', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'text',
 		'id'    => 'mwb_wpr_assign_pro_text',
 		'class' => 'text_points mwb_wpr_new_woo_ver_style_text',
-		'desc'  => __( 'Product Point text can be replaced with entered text', MWB_RWPR_Domain ),
-		'desc_tip' => __( 'Enter the message you want to display for those product who have assigned with some of the Points', MWB_RWPR_Domain ),
-		'default' => __( 'Product Points', MWB_RWPR_Domain ),
+		'desc'  => __( 'Product Point text can be replaced with entered text', 'rewardeem-woocommerce-points-rewards' ),
+		'desc_tip' => __( 'Enter the message you want to display for those product who have assigned with some of the Points', 'rewardeem-woocommerce-points-rewards' ),
+		'default' => __( 'Product Points', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Redemption Settings', MWB_RWPR_Domain ),
+		'title' => __( 'Redemption Settings', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Redemption Over Cart Sub-Total', MWB_RWPR_Domain ),
+		'title' => __( 'Redemption Over Cart Sub-Total', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'checkbox',
 		'id'    => 'mwb_wpr_custom_points_on_cart',
-		'desc_tip' => __( 'Check this box if you want to let your customers to redeem their earned points for the cart subtotal, there would be no relation with product purchase through point feature', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'Check this box if you want to let your customers to redeem their earned points for the cart subtotal, there would be no relation with product purchase through point feature', 'rewardeem-woocommerce-points-rewards' ),
 		'class' => 'input-text',
-		'desc'  => __( 'Allow customers to apply points during Cart.', MWB_RWPR_Domain ),
+		'desc'  => __( 'Allow customers to apply points during Cart.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title' => __( 'Conversion rate for Cart Sub-Total Redemption', MWB_RWPR_Domain ),
+		'title' => __( 'Conversion rate for Cart Sub-Total Redemption', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'number_text',
 		'number_text' => array(
 			array(
@@ -192,9 +192,9 @@ $mwb_wpr_general_settings = array(
 				'custom_attributes' => array( 'min' => '"1"' ),
 				'desc_tip' => __(
 					'Entered point will assign to that user by which another user reffered from refrral link and purchase some products.',
-					MWB_RWPR_Domain
+					'rewardeem-woocommerce-points-rewards'
 				),
-				'desc' => __( 'Points =', MWB_RWPR_Domain ),
+				'desc' => __( 'Points =', 'rewardeem-woocommerce-points-rewards' ),
 			),
 			array(
 				'type'  => 'text',
@@ -203,19 +203,19 @@ $mwb_wpr_general_settings = array(
 				'custom_attributes' => array( 'min' => '"1"' ),
 				'desc_tip' => __(
 					'Entered point will assign to that user by which another user reffered from refrral link and purchase some products.',
-					MWB_RWPR_Domain
+					'rewardeem-woocommerce-points-rewards'
 				),
 				'default' => '1',
 			),
 		),
 	),
 	array(
-		'title' => __( 'Enable apply points during checkout', MWB_RWPR_Domain ),
+		'title' => __( 'Enable apply points during checkout', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'checkbox',
 		'id'    => 'mwb_wpr_apply_points_checkout',
-		'desc_tip' => __( 'Check this box if you want that customer can apply also apply points on checkout', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'Check this box if you want that customer can apply also apply points on checkout', 'rewardeem-woocommerce-points-rewards' ),
 		'class' => 'input-text',
-		'desc'  => __( 'Allow customers to apply points during checkout also', MWB_RWPR_Domain ),
+		'desc'  => __( 'Allow customers to apply points during checkout also', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
 		'type'  => 'sectionend',
@@ -227,7 +227,7 @@ if ( isset( $_POST['mwb_wpr_save_general'] ) ) {
 	if ( wp_verify_nonce( $_POST['mwb-wpr-nonce'], 'mwb-wpr-nonce' ) ) {
 		?>
 		<?php
-		if ( $current_tab == 'mwb_wpr_general_setting' ) {
+		if ( 'mwb_wpr_general_setting' == $current_tab ) {
 
 			/* Save Settings and check is not empty*/
 			$postdata = $settings_obj->check_is_settings_is_not_empty( $mwb_wpr_general_settings, $_POST );
@@ -235,7 +235,7 @@ if ( isset( $_POST['mwb_wpr_save_general'] ) ) {
 			$general_settings_array = array();
 
 			foreach ( $postdata as $key => $value ) {
-				if ('mwb_wpr_general_ways_to_gain_points' != $key) {
+				if ( 'mwb_wpr_general_ways_to_gain_points' != $key ) {
 					$value = stripcslashes( $value );
 					$value = sanitize_text_field( $value );
 				}
@@ -266,38 +266,38 @@ endif;
 					<div class="mwb_wpr_general_row_wrap">
 						<?php $settings_obj->mwb_rwpr_generate_heading( $value ); ?>
 					<?php } ?>
-					<?php if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) { ?>
+					<?php if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) { //phpcs:ignore WordPress.PHP.YodaConditions.NotYoda ?>
 				<div class="mwb_wpr_general_row">
 						<?php $settings_obj->mwb_rwpr_generate_label( $value ); ?>
 					<div class="mwb_wpr_general_content">
 						<?php
 						$settings_obj->mwb_rwpr_generate_tool_tip( $value );
-						if ( $value['type'] == 'checkbox' ) {
+						if ( 'checkbox'  == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $general_settings );
 						}
 						if ( $value['type'] == 'number' ) {
 							$settings_obj->mwb_rwpr_generate_number_html( $value, $general_settings );
 						}
-						if ( $value['type'] == 'multiple_checkbox' ) {
+						if ( 'multiple_checkbox' == $value['type'] ) {
 							foreach ( $value['multiple_checkbox'] as $k => $val ) {
 								$settings_obj->mwb_rwpr_generate_checkbox_html( $val, $general_settings );
 							}
 						}
-						if ( $value['type'] == 'text' ) {
+						if ( 'text' == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_text_html( $value, $general_settings );
 						}
-						if ( $value['type'] == 'textarea' ) {
+						if ( 'textarea' == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_textarea_html( $value, $general_settings );
 						}
-						if ( $value['type'] == 'number_text' ) {
+						if ( 'number_text' == $value['type'] ) {
 							foreach ( $value['number_text'] as $k => $val ) {
-								if ( $val['type'] == 'text' ) {
+								if ( 'text' == $val['type'] ) {
 									$settings_obj->mwb_rwpr_generate_text_html( $val, $general_settings );
 
 								}
-								if ( $val['type'] == 'number' ) {
+								if ( 'number' == $val['type'] ) {
 									$settings_obj->mwb_rwpr_generate_number_html( $val, $general_settings );
-									echo get_woocommerce_currency_symbol();
+									echo get_woocommerce_currency_symbol();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								}
 							}
 						}
@@ -305,7 +305,7 @@ endif;
 					</div>
 				</div>
 				<?php } ?>
-					<?php if ( $value['type'] == 'sectionend' ) : ?>
+					<?php if ( 'sectionend' == $value['type'] ) : ?>
 				 </div>	
 				<?php endif; ?>
 			<?php } ?> 		
@@ -313,5 +313,5 @@ endif;
 	</div>
 	<div class="clear"></div>
 	<p class="submit">
-		<input type="submit" value='<?php _e( 'Save changes', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_general">
+		<input type="submit" value='<?php esc_html_e( 'Save changes', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_general">
 	</p>

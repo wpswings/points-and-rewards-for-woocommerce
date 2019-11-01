@@ -15,7 +15,7 @@ $settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
 if ( isset( $_POST['mwb_wpr_save_membership'] ) ) {
 	unset( $_POST['mwb_wpr_save_membership'] );
 	if ( wp_verify_nonce( $_POST['mwb-wpr-nonce'], 'mwb-wpr-nonce' ) ) {
-		if ( $current_tab == 'mwb_wpr_membership_tab' ) {
+		if ( 'mwb_wpr_membership_tab' == $current_tab ) {
 			$membership_settings_array = array();
 			$membership_roles_list = array();
 			$mwb_wpr_no_of_section = isset( $_POST['hidden_count'] ) ? $_POST['hidden_count'] : 0;
@@ -49,19 +49,19 @@ if ( isset( $_POST['mwb_wpr_save_membership'] ) ) {
 			if ( is_array( $membership_settings_array ) ) {
 				update_option( 'mwb_wpr_membership_settings', $membership_settings_array );
 			}
-			do_action('mwb_wpr_save_membership_settings',$mwb_wpr_no_of_section);
+			do_action( 'mwb_wpr_save_membership_settings', $mwb_wpr_no_of_section );
 		}
 		?>
 		<div class="notice notice-success is-dismissible">
-			<p><strong><?php _e( 'Settings saved.', MWB_RWPR_Domain ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'Settings saved.', 'rewardeem-woocommerce-points-rewards' ); ?></strong></p>
 			<button type="button" class="notice-dismiss">
-				<span class="screen-reader-text"><?php _e( 'Dismiss this notices.', MWB_RWPR_Domain ); ?></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'rewardeem-woocommerce-points-rewards' ); ?></span>
 			</button>
 		</div>
 		<?php
 	}
 }
-if ( isset( $_GET['action'] ) && $_GET['action'] == 'view_membership_log' ) {
+if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 	include_once MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb_wpr_membership_log_table.php';
 
 } else {
@@ -80,24 +80,24 @@ if ( isset( $_GET['action'] ) && $_GET['action'] == 'view_membership_log' ) {
 
 	$mwb_wpr_settings = array(
 		array(
-			'title' => __( 'Enable Membership', MWB_RWPR_Domain ),
+			'title' => __( 'Enable Membership', 'rewardeem-woocommerce-points-rewards' ),
 			'id'  => 'mwb_wpr_membership_setting_enable',
 			'type' => 'checkbox',
 			'class' => 'input-text',
-			'desc' => __( 'Enable Membership', MWB_RWPR_Domain ),
-			'desc_tip' => __( 'Check this box to enable the Membership Feature', MWB_RWPR_Domain ),
+			'desc' => __( 'Enable Membership', 'rewardeem-woocommerce-points-rewards' ),
+			'desc_tip' => __( 'Check this box to enable the Membership Feature', 'rewardeem-woocommerce-points-rewards' ),
 			'memebrship_log' => true,
 			),
 		array(
-			'title' => __( 'Exclude Sale Products', MWB_RWPR_Domain ),
+			'title' => __( 'Exclude Sale Products', 'rewardeem-woocommerce-points-rewards' ),
 			'id'  => 'exclude_sale_product',
 			'type' => 'checkbox',
 			'class' => 'input-text',
-			'desc' => __( 'Exclude Sale Products for Membership Discount', MWB_RWPR_Domain ),
-			'desc_tip' => __( 'Check this box to do not apply the membership discount on sale products', MWB_RWPR_Domain ),
+			'desc' => __( 'Exclude Sale Products for Membership Discount', 'rewardeem-woocommerce-points-rewards' ),
+			'desc_tip' => __( 'Check this box to do not apply the membership discount on sale products', 'rewardeem-woocommerce-points-rewards' ),
 			),
 		array(
-			'title' => __( 'Create Member', MWB_RWPR_Domain ),
+			'title' => __( 'Create Member', 'rewardeem-woocommerce-points-rewards' ),
 			'id'  => 'mwb_wpr_membership_create_section',
 			'type' => 'create_member',
 			'class' => 'parent_of_div',
@@ -118,20 +118,20 @@ if ( isset( $_GET['action'] ) && $_GET['action'] == 'view_membership_log' ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							echo array_key_exists( 'desc_tip', $value ) ? wc_help_tip( $value['desc_tip'] ) : '';
-							if ( $value['type'] == 'checkbox' ) {
+							echo array_key_exists( 'desc_tip', $value ) ? wc_help_tip( $value['desc_tip'] ) : '';//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							if ( 'checkbox' == $value['type'] ) {
 								$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $membership_settings_array );
 							}
 							if ( array_key_exists( 'memebrship_log', $value ) ) {
 								?>
-								<a href="<?php echo admin_url( 'admin.php?page=mwb-rwpr-setting&tab=membership&action=view_membership_log' ); ?>" class="mwb_wpr_membership_log"><?php _e( 'Membership Log', MWB_RWPR_Domain ); ?></a>
+								<a href="<?php echo esc_url( admin_url( 'admin.php?page=mwb-rwpr-setting&tab=membership&action=view_membership_log' ) ); ?>" class="mwb_wpr_membership_log"><?php esc_html_e( 'Membership Log', 'rewardeem-woocommerce-points-rewards' ); ?></a>
 								<?php
 							}
-							if ( $value['type'] == 'create_member' ) {
+							if ( 'create_member' == $value['type'] ) {
 								do_action( 'mwb_wpr_add_membership_rule', $mwb_wpr_membership_roles );
 								?>
-								<input type="button" value='<?php _e( 'Add Another', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_repeat_button">
-								<p class= "description"><?php _e( 'Please do not change the "Level Name" once it will be saved, as it become the key for the Membership User', MWB_RWPR_Domain ); ?></p>
+								<input type="button" value='<?php esc_html_e( 'Add Another', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_repeat_button">
+								<p class= "description"><?php esc_html_e( 'Please do not change the "Level Name" once it will be saved, as it become the key for the Membership User', 'rewardeem-woocommerce-points-rewards' ); ?></p>
 								<?php
 							}
 							?>
@@ -143,7 +143,7 @@ if ( isset( $_GET['action'] ) && $_GET['action'] == 'view_membership_log' ) {
 			</table>
 		</div>
 		<p class="submit">
-			<input type="submit" value='<?php _e( 'Save changes', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_membership">
+			<input type="submit" value='<?php esc_attr_e( 'Save changes', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_membership">
 		</p>
 		<?php
 	}

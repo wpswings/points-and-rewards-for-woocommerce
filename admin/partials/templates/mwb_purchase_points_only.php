@@ -15,10 +15,10 @@ if ( isset( $_GET['tab'] ) ) {
 	$current_tab = $_GET['tab'];
 }
 
-if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) {
-	if ( isset( $_POST['mwb_wpr_global_product_enable'] ) && ! empty( $_POST['mwb_wpr_global_product_enable'] ) ) {
-		if ( isset( $_POST['mwb_wpr_pro_points_to_all'] ) && ! empty( $_POST['mwb_wpr_pro_points_to_all'] ) ) {
-			$mwb_wpr_pro_points_to_all = sanitize_text_field( $_POST['mwb_wpr_pro_points_to_all'] );
+if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Missing
+	if ( isset( $_POST['mwb_wpr_global_product_enable'] ) && ! empty( $_POST['mwb_wpr_global_product_enable'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['mwb_wpr_pro_points_to_all'] ) && ! empty( $_POST['mwb_wpr_pro_points_to_all'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$mwb_wpr_pro_points_to_all = sanitize_text_field( $_POST['mwb_wpr_pro_points_to_all'] );//phpcs:ignore WordPress.Security.NonceVerification.Missing
 			update_option( 'mwb_wpr_global_product_enable', 'on' );
 			update_option( 'mwb_wpr_pro_points_to_all', $mwb_wpr_pro_points_to_all );
 			$args = array(
@@ -44,21 +44,21 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) {
 			<div class="notice notice-success is-dismissible">
 				<p><strong>
 				<?php
-				echo $mwb_wpr_pro_points_to_all;
-				_e( ' Point Assigned Successfully to All Products', MWB_WPR_Domain );
+				echo esc_html( $mwb_wpr_pro_points_to_all );
+				esc_html_e( ' Point Assigned Successfully to All Products', 'rewardeem-woocommerce-points-rewards' );
 				?>
 				</strong></p>
 				<button type="button" class="notice-dismiss">
-					<span class="screen-reader-text"><?php _e( 'Dismiss this notices.', MWB_WPR_Domain ); ?></span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'rewardeem-woocommerce-points-rewards' ); ?></span>
 				</button>
 			</div>
 			<?php
 		} else {
 			?>
 			<div class="notice notice-error is-dismissible">
-				<p><strong><?php _e( ' Please enter some points !', MWB_WPR_Domain ); ?></strong></p>
+				<p><strong><?php esc_html_e( ' Please enter some points !', 'rewardeem-woocommerce-points-rewards' ); ?></strong></p>
 				<button type="button" class="notice-dismiss">
-					<span class="screen-reader-text"><?php _e( 'Dismiss this notices.', MWB_WPR_Domain ); ?></span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'rewardeem-woocommerce-points-rewards' ); ?></span>
 				</button>
 			</div>
 			<?php
@@ -78,9 +78,9 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) {
 		wp_reset_query();
 		?>
 		<div class="notice notice-success is-dismissible">
-			<p><strong><?php _e( 'Points are removed Successfully from All Products', MWB_WPR_Domain ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'Points are removed Successfully from All Products', 'rewardeem-woocommerce-points-rewards' ); ?></strong></p>
 			<button type="button" class="notice-dismiss">
-				<span class="screen-reader-text"><?php _e( 'Dismiss this notices.', MWB_WPR_Domain ); ?></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'rewardeem-woocommerce-points-rewards' ); ?></span>
 			</button>
 		</div>
 		<?php
@@ -93,14 +93,14 @@ $mwb_wpr_pro_points_to_all = get_option( 'mwb_wpr_pro_points_to_all', '' );
 <!-- Category Listing -->
 
 <div class="mwb_table">
-	<p class="mwb_wpr_section_notice"><?php _e( 'This is the category wise setting for purchase product from points only, enter some valid points for assigning, leave blank fields for removing assigned points', MWB_WPR_Domain ); ?></p>
+	<p class="mwb_wpr_section_notice"><?php esc_html_e( 'This is the category wise setting for purchase product from points only, enter some valid points for assigning, leave blank fields for removing assigned points', 'rewardeem-woocommerce-points-rewards' ); ?></p>
 	<div class="mwb_wpr_categ_details">
 		<table class="form-table mwb_wpr_pro_points_setting mwp_wpr_settings">
 			<tbody>
 				<tr>
-					<th class="titledesc"><?php _e( 'Categories', MWB_WPR_Domain ); ?></th>
-					<th class="titledesc"><?php _e( 'Enter Points', MWB_WPR_Domain ); ?></th>
-					<th class="titledesc"><?php _e( 'Assign/Remove', MWB_WPR_Domain ); ?></th>
+					<th class="titledesc"><?php esc_html_e( 'Categories', 'rewardeem-woocommerce-points-rewards' ); ?></th>
+					<th class="titledesc"><?php esc_html_e( 'Enter Points', 'rewardeem-woocommerce-points-rewards' ); ?></th>
+					<th class="titledesc"><?php esc_html_e( 'Assign/Remove', 'rewardeem-woocommerce-points-rewards' ); ?></th>
 				</tr>
 				<?php
 				$args = array( 'taxonomy' => 'product_cat' );
@@ -113,8 +113,8 @@ $mwb_wpr_pro_points_to_all = get_option( 'mwb_wpr_pro_points_to_all', '' );
 						?>
 						<tr>
 							<td><?php echo $catname; ?></td>
-							<td><input type="number" min="1" name="mwb_wpr_purchase_points_per_categ" id="mwb_wpr_purchase_points_cat<?php echo $catid; ?>" value="<?php echo $mwb_wpr_purchase_categ_point; ?>" class="input-text mwb_wpr_new_woo_ver_style_text"></td>
-							<td><input type="button" value='<?php _e( 'Submit', MWB_WPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_submit_purchase_points_per_category" name="mwb_wpr_submit_purchase_points_per_category" id="<?php echo $catid; ?>"></td>
+							<td><input type="number" min="1" name="mwb_wpr_purchase_points_per_categ" id="mwb_wpr_purchase_points_cat<?php echo $catid; ?>" value="<?php echo esc_html( $mwb_wpr_purchase_categ_point ); ?>" class="input-text mwb_wpr_new_woo_ver_style_text"></td>
+							<td><input type="button" value='<?php esc_html_e( 'Submit', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_submit_purchase_points_per_category" name="mwb_wpr_submit_purchase_points_per_category" id="<?php echo esc_html( $catid ); ?>"></td>
 						</tr>
 						<?php
 					}

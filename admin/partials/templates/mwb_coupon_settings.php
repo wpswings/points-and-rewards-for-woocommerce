@@ -14,20 +14,20 @@ include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-rewardeem-wocoo
 $settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
 $mwb_wpr_coupon_settings = array(
 	array(
-		'title' => __( 'Earn Points Per Currency Settings', MWB_RWPR_Domain ),
+		'title' => __( 'Earn Points Per Currency Settings', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Enable Per Currency Points Conversion', MWB_RWPR_Domain ),
+		'title' => __( 'Enable Per Currency Points Conversion', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'checkbox',
 		'id'  => 'mwb_wpr_coupon_conversion_enable',
 		'class' => 'input-text',
-		'desc'  => __( 'Allow per currency points conversion', MWB_RWPR_Domain ),
-		'desc_tip' => __( 'Check this box if you want enable per currency points conversion.', MWB_RWPR_Domain ),
+		'desc'  => __( 'Allow per currency points conversion', 'rewardeem-woocommerce-points-rewards' ),
+		'desc_tip' => __( 'Check this box if you want enable per currency points conversion.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title' => __( 'Per ', MWB_RWPR_Domain ) . get_woocommerce_currency_symbol() . __( 'Points Conversion', MWB_RWPR_Domain ),
-		'desc_tip'  => __( 'Enter the redeem price for points.(i.e., how much amounts will be equivalent to the points)', MWB_RWPR_Domain ),
+		'title' => __( 'Per ', 'rewardeem-woocommerce-points-rewards' ) . get_woocommerce_currency_symbol() . __( 'Points Conversion', 'rewardeem-woocommerce-points-rewards' ),
+		'desc_tip'  => __( 'Enter the redeem price for points.(i.e., how much amounts will be equivalent to the points)', 'rewardeem-woocommerce-points-rewards' ),
 		'type'    => 'number_text',
 		'number_text' => array(
 			array(
@@ -35,7 +35,7 @@ $mwb_wpr_coupon_settings = array(
 				'id'    => 'mwb_wpr_coupon_conversion_points',
 				'class'   => 'input-text wc_input_price mwb_wpr_new_woo_ver_style_text',
 				'custom_attributes' => array( 'min' => '"1"' ),
-				'desc' => __( 'Points =', MWB_RWPR_Domain ),
+				'desc' => __( 'Points =', 'rewardeem-woocommerce-points-rewards' ),
 			),
 			array(
 				'type'  => 'text',
@@ -58,7 +58,7 @@ if ( isset( $_POST['mwb_wpr_save_coupon'] ) ) {
 		?>
 		<?php
 		$settings_obj->mwb_wpr_settings_saved();
-		if ( $current_tab == 'mwb_wpr_coupons_tab' ) {
+		if ( $current_tab == 'mwb_wpr_coupons_tab' ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 			unset( $_POST['mwb_wpr_save_coupon'] );
 			$coupon_settings_array = array();
 			$postdata = $settings_obj->check_is_settings_is_not_empty( $mwb_wpr_coupon_settings, $_POST );
@@ -91,40 +91,40 @@ endif;
 		<div class="mwb_wpr_general_wrapper">
 		<?php
 		foreach ( $mwb_wpr_coupon_settings as $key => $value ) {
-			if ( $value['type'] == 'title' ) {
+			if ( $value['type'] == 'title' ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 				?>
 					<div class="mwb_wpr_general_row_wrap">
 					<?php
 						$settings_obj->mwb_rwpr_generate_heading( $value );
 			}
-			if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) {
+			if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 				?>
 				<div class="mwb_wpr_general_row">
 				<?php $settings_obj->mwb_rwpr_generate_label( $value ); ?>
 					<div class="mwb_wpr_general_content">
 					<?php
 					$settings_obj->mwb_rwpr_generate_tool_tip( $value );
-					if ( $value['type'] == 'checkbox' ) {
+					if ( 'checkbox' == $value['type'] ) {
 						$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $coupon_settings );
 					}
-					if ( $value['type'] == 'number' ) {
+					if ( 'number' == $value['type'] ) {
 						$settings_obj->mwb_rwpr_generate_number_html( $value, $coupon_settings );
 					}
-					if ( $value['type'] == 'text' ) {
+					if ( 'text' == $value['type'] ) {
 						$settings_obj->mwb_rwpr_generate_text_html( $value, $coupon_settings );
 					}
-					if ( $value['type'] == 'textarea' ) {
+					if ( 'textarea' == $value['type'] ) {
 						$settings_obj->mwb_rwpr_generate_textarea_html( $value, $coupon_settings );
 					}
-					if ( $value['type'] == 'number_text' ) {
+					if ( 'number_text' == $value['type'] ) {
 						foreach ( $value['number_text'] as $k => $val ) {
-							if ( $val['type'] == 'text' ) {
+							if ( 'text' == $val['type'] ) {
 								$settings_obj->mwb_rwpr_generate_text_html( $val, $coupon_settings );
 
 							}
-							if ( $val['type'] == 'number' ) {
+							if ( 'number' == $val['type'] ) {
 								$settings_obj->mwb_rwpr_generate_number_html( $val, $coupon_settings );
-								echo get_woocommerce_currency_symbol();
+								echo get_woocommerce_currency_symbol();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							}
 						}
 					}
@@ -133,7 +133,7 @@ endif;
 				</div>
 					<?php
 			}
-			if ( $value['type'] == 'sectionend' ) {
+			if ( 'sectionend' == $value['type'] ) {
 				?>
 				</div> 
 				<?php
@@ -145,5 +145,5 @@ endif;
 </div>
 <div class="clear"></div>	
 <p class="submit">
-	<input type="submit" value='<?php _e( 'Save changes', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_coupon">
+	<input type="submit" value='<?php esc_html_e( 'Save changes', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_coupon">
 </p>

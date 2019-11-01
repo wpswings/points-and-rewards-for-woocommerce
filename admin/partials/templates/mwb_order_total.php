@@ -4,16 +4,16 @@ $settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
 /*  This is the setting array */
 $mwb_wpr_order_total_points_settings = array(
 	array(
-		'title' => __( 'Enable the settings for the orders', MWB_RWPR_Domain ),
+		'title' => __( 'Enable the settings for the orders', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'checkbox',
 		'id' => 'mwb_wpr_thankyouorder_enable',
-		'desc_tip' => __( 'Check this box to enable gift coupon for those customers who had placed orders in your site', MWB_RWPR_Domain ),
-		'desc' => __( 'Enable Points on order total.', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'Check this box to enable gift coupon for those customers who had placed orders in your site', 'rewardeem-woocommerce-points-rewards' ),
+		'desc' => __( 'Enable Points on order total.', 'rewardeem-woocommerce-points-rewards' ),
 		'class' => 'input-text',
 	),
 	array(
 		'type' => 'create_order_total_points',
-		'title' => __( 'Enter Points  within Order Range', MWB_RWPR_Domain ),
+		'title' => __( 'Enter Points  within Order Range', 'rewardeem-woocommerce-points-rewards' ),
 	),
 );
 if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) ) {
@@ -61,18 +61,18 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) ) {
 			   </th>
 			<td class="forminp forminp-text">
 				   <?php
-					echo array_key_exists( 'desc_tip', $value ) ? wc_help_tip( $value['desc_tip'] ) : '';
-					if ( $value['type'] == 'checkbox' ) {
+					echo array_key_exists( 'desc_tip', $value ) ? wc_help_tip( $value['desc_tip'] ) : '';//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					if ( 'checkbox' == $value['type'] ) {
 						$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $mwb_get_order_total_settings );
 					}
-					if ( $value['type'] == 'create_order_total_points' ) {
+					if ( 'create_order_total_points' == $value['type'] ) {
 						?>
 					
 							<?php
 							 do_action( 'mwb_wpr_order_total_points', $thankyouorder_min, $thankyouorder_max, $thankyouorder_value );
 							?>
 						
-					<input type="button" value="<?php _e( 'Add More', MWB_RWPR_Domain ); ?>" class="mwb_wpr_add_more button" id="mwb_wpr_add_more">
+					<input type="button" value="<?php esc_html_e( 'Add More', 'rewardeem-woocommerce-points-rewards' ); ?>" class="mwb_wpr_add_more button" id="mwb_wpr_add_more">
 						<?php
 					}
 					?>
@@ -83,5 +83,5 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) ) {
 	</table>
 </div>
 <p class="submit">
-	<input type="submit" value='<?php _e( 'Save changes', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_order_totalsettings">
+	<input type="submit" value='<?php esc_html_e( 'Save changes', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_order_totalsettings">
 </p>

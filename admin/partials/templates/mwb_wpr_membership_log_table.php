@@ -29,14 +29,14 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
-	function get_columns() {
+	public function get_columns() {
 
 		$columns = array(
 			'cb'      => '<input type="checkbox" />',
-			'user_name' => __( 'User Name', MWB_RWPR_Domain ),
-			'user_email'    => __( 'User Email', MWB_RWPR_Domain ),
-			'user_points'     => __( 'User Points', MWB_RWPR_Domain ),
-			'user_level' => __( 'Level', MWB_RWPR_Domain ),
+			'user_name' => __( 'User Name', 'rewardeem-woocommerce-points-rewards' ),
+			'user_email'    => __( 'User Email', 'rewardeem-woocommerce-points-rewards' ),
+			'user_points'     => __( 'User Points', 'rewardeem-woocommerce-points-rewards' ),
+			'user_level' => __( 'Level', 'rewardeem-woocommerce-points-rewards' ),
 
 		);
 		return $columns;
@@ -47,9 +47,11 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @name column_default.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
+	 * @param array $item array of the row.
+	 * @param string $column_name column name of the Table.
 	 */
 
-	function column_default( $item, $column_name ) {
+	public function column_default( $item, $column_name ) {
 
 		switch ( $column_name ) {
 
@@ -80,8 +82,8 @@ class Points_Log_List_Table extends WP_List_Table {
 
 		if ( 'bulk-delete' === $this->current_action() ) {
 
-			if ( isset( $_POST['mpr_points_ids'] ) && ! empty( $_POST['mpr_points_ids'] ) ) {
-				$all_id = $_POST['mpr_points_ids'];
+			if ( isset( $_POST['mpr_points_ids'] ) && ! empty( $_POST['mpr_points_ids'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
+				$all_id = $_POST['mpr_points_ids'];//phpcs:ignore WordPress.Security.NonceVerification.Missing
 				foreach ( $all_id as $key => $value ) {
 
 					delete_user_meta( $value, 'membership_level' );
@@ -99,7 +101,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
-			'bulk-delete' => __( 'Delete', MWB_RWPR_Domain ),
+			'bulk-delete' => __( 'Delete', 'rewardeem-woocommerce-points-rewards' ),
 		);
 		return $actions;
 	}
@@ -112,7 +114,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
-	function get_sortable_columns() {
+	public function get_sortable_columns() {
 		$sortable_columns = array(
 			'user_name'    => array( 'user_name', false ),
 			'user_email'  => array( 'user_email', false ),
@@ -128,7 +130,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
-	function prepare_items() {
+	public function prepare_items() {
 		$per_page = 10;
 		$columns = $this->get_columns();
 		$hidden = array();
@@ -161,7 +163,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
-	function mwb_wpr_usort_reorder( $cloumna, $cloumnb ) {
+	public function mwb_wpr_usort_reorder( $cloumna, $cloumnb ) {
 		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? $_REQUEST['orderby'] : 'id';
 		$order = ( ! empty( $_REQUEST['order'] ) ) ? $_REQUEST['order'] : 'desc';
 		if ( is_numeric( $cloumna[ $orderby ] ) && is_numeric( $cloumnb[ $orderby ] ) ) {
@@ -179,7 +181,16 @@ class Points_Log_List_Table extends WP_List_Table {
 			return ( $order === 'asc' ) ? $result : -$result;
 		}
 	}
-	function column_cb( $item ) {
+
+	/**
+	 * Print the checkobox in the Table.
+	 *
+	 * @name column_cb.
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link http://www.makewebbetter.com/
+	 * @param array $item array of the items.
+	 */
+	public function column_cb( $item ) {
 		return sprintf(
 			'<input type="checkbox" name="mpr_points_ids[]" value="%s" />',
 			$item['id']
@@ -193,7 +204,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
-	function get_users_points() {
+	public function get_users_points() {
 		$args['meta_query'] = array(
 			'relation' => 'AND',
 			array(
@@ -226,12 +237,12 @@ class Points_Log_List_Table extends WP_List_Table {
 }
 ?>
 <form method="post">
-	<input type="hidden" name="page" value="<?php _e( 'points_log_list_table', MWB_RWPR_Domain ); ?>">
+	<input type="hidden" name="page" value="<?php esc_html_e( 'points_log_list_table', 'rewardeem-woocommerce-points-rewards' ); ?>">
 	<?php
-	$myListTable = new Points_Log_List_Table();
-	$myListTable->prepare_items();
-	$myListTable->search_box( __( 'Search Users', MWB_RWPR_Domain ), 'mwb-wpr-user' );
-	$myListTable->display();
+	$mylisttable = new Points_Log_List_Table();
+	$mylisttable->prepare_items();
+	$mylisttable->search_box( __( 'Search Users', 'rewardeem-woocommerce-points-rewards' ), 'mwb-wpr-user' );
+	$mylisttable->display();
 	?>
 </form>
 

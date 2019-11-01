@@ -15,7 +15,7 @@ $settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
 $current_tab = 'mwb_wpr_notificatin_tab';
 if ( isset( $_POST['mwb_wpr_save_notification'] ) ) {
 	if ( wp_verify_nonce( $_POST['mwb-wpr-nonce'], 'mwb-wpr-nonce' ) ) {
-		if ( $current_tab == 'mwb_wpr_notificatin_tab' ) {
+		if ( 'mwb_wpr_notificatin_tab' == $current_tab ) {
 
 			$mwb_wpr_notificatin_array = array();
 			/* Enable Settings*/
@@ -52,139 +52,139 @@ endif;
 <?php
 $mwb_settings = array(
 	array(
-		'title' => __( 'Enable Points Notification Settings', MWB_RWPR_Domain ),
+		'title' => __( 'Enable Points Notification Settings', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Enable', MWB_RWPR_Domain ),
+		'title'         => __( 'Enable', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'checkbox',
 		'id'            => 'mwb_wpr_notification_setting_enable',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Check this box to enable the points notification.', MWB_RWPR_Domain ),
-		'desc'          => __( 'Enable Points Notification', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Check this box to enable the points notification.', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'          => __( 'Enable Points Notification', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( "Points table's Custom Points Notification Settings", MWB_RWPR_Domain ),
+		'title' => __( "Points table's Custom Points Notification Settings", 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_email_subject',
 		'class'             => 'input-text mwb_wpr_new_woo_ver_style_text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Custom Points Notification', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Custom Points Notification', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_email_discription_custom_id',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[Total Points]' . __( ' shortcode in place of Total Points, ', MWB_RWPR_Domain ) . '[USERNAME]' . __( ' shortcode in place of username and', MWB_RWPR_Domain ) . __( 'In this section donot use', MWB_RWPR_Domain ) . '[Points]' . __( ' shortcode ', MWB_RWPR_Domain ),
-		'default'   => __( 'Your points is updated and your total points is ', MWB_RWPR_Domain ) . '[Total Points].',
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[Total Points]' . __( ' shortcode in place of Total Points, ', 'rewardeem-woocommerce-points-rewards' ) . '[USERNAME]' . __( ' shortcode in place of username and', 'rewardeem-woocommerce-points-rewards' ) . __( 'In this section donot use', 'rewardeem-woocommerce-points-rewards' ) . '[Points]' . __( ' shortcode ', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Your points is updated and your total points is ', 'rewardeem-woocommerce-points-rewards' ) . '[Total Points].',
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Signup Points Notification Settings', MWB_RWPR_Domain ),
+		'title' => __( 'Signup Points Notification Settings', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_signup_email_subject',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Signup Points Notification', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Signup Points Notification', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_signup_email_discription_custom_id',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[Points]' . __( ' shortcode to be placed Signup Points dynamically, ', MWB_RWPR_Domain ) . '[USERNAME]' . __( ' shortcode in place of username', MWB_RWPR_Domain ) . '[Refer Points]' . __( ' in place of Referral points', MWB_RWPR_Domain ) . '[Comment Points]' . __( ' in place of comment points ', MWB_RWPR_Domain ) . '[Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', MWB_RWPR_Domain ) . '[Total Points]' . __( ' shortcode in place of Total Points.', MWB_RWPR_Domain ),
-		'default'   => __( 'You have received [Points] points and your total points is [Total Points].', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[Points]' . __( ' shortcode to be placed Signup Points dynamically, ', 'rewardeem-woocommerce-points-rewards' ) . '[USERNAME]' . __( ' shortcode in place of username', 'rewardeem-woocommerce-points-rewards' ) . '[Refer Points]' . __( ' in place of Referral points', 'rewardeem-woocommerce-points-rewards' ) . '[Comment Points]' . __( ' in place of comment points ', 'rewardeem-woocommerce-points-rewards' ) . '[Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', 'rewardeem-woocommerce-points-rewards' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'You have received [Points] points and your total points is [Total Points].', 'rewardeem-woocommerce-points-rewards' ),
 
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Product Purchase Points Notification Settings', MWB_RWPR_Domain ),
+		'title' => __( 'Product Purchase Points Notification Settings', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_product_email_subject',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Product Purchase Points Notification', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Product Purchase Points Notification', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_product_email_discription_custom_id',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'default'   => __( 'You have received [Points] points and your total points is [Total Points].', MWB_RWPR_Domain ),
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[Points]' . __( ' shortcode in place of Product Purchase Points ', MWB_RWPR_Domain ) . '[USERNAME]' . __( ' shortcode in place of username ', MWB_RWPR_Domain ) . '[Refer Points]' . __( ' in place of Referral points', MWB_RWPR_Domain ) . '[Comment Points]' . __( ' in place of comment points ', MWB_RWPR_Domain ) . '[Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', MWB_RWPR_Domain ) . '[Total Points]' . __( ' shortcode in place of Total Points.', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'You have received [Points] points and your total points is [Total Points].', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[Points]' . __( ' shortcode in place of Product Purchase Points ', 'rewardeem-woocommerce-points-rewards' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'rewardeem-woocommerce-points-rewards' ) . '[Refer Points]' . __( ' in place of Referral points', 'rewardeem-woocommerce-points-rewards' ) . '[Comment Points]' . __( ' in place of comment points ', 'rewardeem-woocommerce-points-rewards' ) . '[Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', 'rewardeem-woocommerce-points-rewards' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'rewardeem-woocommerce-points-rewards' ),
 
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Order Amount Points Notification Settings(Per ', MWB_RWPR_Domain ) . get_woocommerce_currency_symbol() . __( ' Spent Points)', MWB_RWPR_Domain ),
+		'title' => __( 'Order Amount Points Notification Settings(Per ', 'rewardeem-woocommerce-points-rewards' ) . get_woocommerce_currency_symbol() . __( ' Spent Points)', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_amount_email_subject',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Order Amount Points Notification', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Order Amount Points Notification', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_amount_email_discription_custom_id',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'default'       => __( 'You have received [Points] points and your total points is [Total Points].', MWB_RWPR_Domain ),
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[Points]' . __( ' shortcode in place of per currency spent points', MWB_RWPR_Domain ) . '[USERNAME]' . __( ' shortcode in place of username ', MWB_RWPR_Domain ) . '[Refer Points]' . __( ' in place of Referral points', MWB_RWPR_Domain ) . '[Comment Points]' . __( 'in place of comment points and ', MWB_RWPR_Domain ) . '[Total Points]' . __( ' shortcode in place of Total Points.', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'       => __( 'You have received [Points] points and your total points is [Total Points].', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[Points]' . __( ' shortcode in place of per currency spent points', 'rewardeem-woocommerce-points-rewards' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'rewardeem-woocommerce-points-rewards' ) . '[Refer Points]' . __( ' in place of Referral points', 'rewardeem-woocommerce-points-rewards' ) . '[Comment Points]' . __( 'in place of comment points and ', 'rewardeem-woocommerce-points-rewards' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'rewardeem-woocommerce-points-rewards' ),
 
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Referral Points Notification Settings', MWB_RWPR_Domain ),
+		'title' => __( 'Referral Points Notification Settings', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_referral_email_subject',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Referral Points Notification', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Referral Points Notification', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_referral_email_discription_custom_id',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'default'   => __( 'You have received', MWB_RWPR_Domain ) . '[Points]' . __( 'points and your total points is.', MWB_RWPR_Domain ) . '[Total Points]',
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[Points]' . __( ' shortcode in place of per currency spent points', MWB_RWPR_Domain ) . '[USERNAME]' . __( ' shortcode in place of username ', MWB_RWPR_Domain ) . '[Refer Points]' . __( ' in place of Referral points', MWB_RWPR_Domain ) . '[Comment Points]' . __( 'in place of comment points and ', MWB_RWPR_Domain ) . '[Total Points]' . __( ' shortcode in place of Total Points.', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'You have received', 'rewardeem-woocommerce-points-rewards' ) . '[Points]' . __( 'points and your total points is.', 'rewardeem-woocommerce-points-rewards' ) . '[Total Points]',
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[Points]' . __( ' shortcode in place of per currency spent points', 'rewardeem-woocommerce-points-rewards' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'rewardeem-woocommerce-points-rewards' ) . '[Refer Points]' . __( ' in place of Referral points', 'rewardeem-woocommerce-points-rewards' ) . '[Comment Points]' . __( 'in place of comment points and ', 'rewardeem-woocommerce-points-rewards' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'rewardeem-woocommerce-points-rewards' ),
 
 
 	),
@@ -192,25 +192,25 @@ $mwb_settings = array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Referral Purchase Points Notification Settings', MWB_RWPR_Domain ),
+		'title' => __( 'Referral Purchase Points Notification Settings', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_referral_purchase_email_subject',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Referral Purchase Points Notification', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Referral Purchase Points Notification', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_referral_purchase_email_discription_custom_id',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'default'   => __( 'You have received', MWB_RWPR_Domain ) . '[Points]' . __( 'points and your total points is', MWB_RWPR_Domain ) . '[Total Points]',
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[Points]' . __( ' shortcode in place of Referral Purchase Points ', MWB_RWPR_Domain ) . '[Refer Points]' . __( ' in place of Referral points', MWB_RWPR_Domain ) . '[Comment Points]' . __( ' in place of comment points', MWB_RWPR_Domain ) . ' [Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', MWB_RWPR_Domain ) . '[Total Points]' . __( ' shortcode in place of Total Points.', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'You have received', 'rewardeem-woocommerce-points-rewards' ) . '[Points]' . __( 'points and your total points is', 'rewardeem-woocommerce-points-rewards' ) . '[Total Points]',
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[Points]' . __( ' shortcode in place of Referral Purchase Points ', 'rewardeem-woocommerce-points-rewards' ) . '[Refer Points]' . __( ' in place of Referral points', 'rewardeem-woocommerce-points-rewards' ) . '[Comment Points]' . __( ' in place of comment points', 'rewardeem-woocommerce-points-rewards' ) . ' [Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', 'rewardeem-woocommerce-points-rewards' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'rewardeem-woocommerce-points-rewards' ),
 
 
 	),
@@ -218,121 +218,121 @@ $mwb_settings = array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Upgrade Membership Level Notification', MWB_RWPR_Domain ),
+		'title' => __( 'Upgrade Membership Level Notification', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_membership_email_subject',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Upgrade Membership Level Notification', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Upgrade Membership Level Notification', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_membership_email_discription_custom_id',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'default'   => __( 'Your User Level has been Upgraded to [USERLEVEL]. And Now You will get some offers on some products.', MWB_RWPR_Domain ),
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[USERLEVEL]' . __( ' shortcode in place of User Level ', MWB_RWPR_Domain ) . '[USERNAME]' . __( ' shortcode in place of username ', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Your User Level has been Upgraded to [USERLEVEL]. And Now You will get some offers on some products.', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[USERLEVEL]' . __( ' shortcode in place of User Level ', 'rewardeem-woocommerce-points-rewards' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Deduct Assigned Point Notification', MWB_RWPR_Domain ),
+		'title' => __( 'Deduct Assigned Point Notification', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_deduct_assigned_point_subject',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Your Points has been Deducted', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Your Points has been Deducted', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_deduct_assigned_point_desciption',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'default'   => __( 'Your [DEDUCTEDPOINT] has been deducted from your total points as you have requested for your refund, and your Total Point is [TOTALPOINTS].', MWB_RWPR_Domain ),
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[DEDUCTEDPOINT]' . __( ' shortcode in place of points which has been deducted ', MWB_RWPR_Domain ) . '[USERNAME]' . __( ' shortcode in place of username ', MWB_RWPR_Domain ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Remaining Points.', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Your [DEDUCTEDPOINT] has been deducted from your total points as you have requested for your refund, and your Total Point is [TOTALPOINTS].', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[DEDUCTEDPOINT]' . __( ' shortcode in place of points which has been deducted ', 'rewardeem-woocommerce-points-rewards' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'rewardeem-woocommerce-points-rewards' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Remaining Points.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( "Deduct 'Per Currency Spent' Point Notification", MWB_RWPR_Domain ),
+		'title' => __( "Deduct 'Per Currency Spent' Point Notification", 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_deduct_per_currency_point_subject',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Your Points has been Deducted', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Your Points has been Deducted', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_deduct_per_currency_point_description',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'default'   => __( 'Your [DEDUCTEDPOINT] has been deducted from your total points as you have requested for your refund, and your Total Point is [TOTALPOINTS].', MWB_RWPR_Domain ),
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[DEDUCTEDPOINT]' . __( ' shortcode in place of points which has been deducted ', MWB_RWPR_Domain ) . '[USERNAME]' . __( ' shortcode in place of username ', MWB_RWPR_Domain ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Remaining Points.', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Your [DEDUCTEDPOINT] has been deducted from your total points as you have requested for your refund, and your Total Point is [TOTALPOINTS].', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[DEDUCTEDPOINT]' . __( ' shortcode in place of points which has been deducted ', 'rewardeem-woocommerce-points-rewards' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'rewardeem-woocommerce-points-rewards' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Remaining Points.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Points On Cart Sub-Total', MWB_RWPR_Domain ),
+		'title' => __( 'Points On Cart Sub-Total', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_point_on_cart_subject',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Points Deducted!!', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Points Deducted!!', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_point_on_cart_desc',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'default'   => __( 'Your [DEDUCTCARTPOINT] Points has been deducted from your account, now your Total Point is [TOTALPOINTS].', MWB_RWPR_Domain ),
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[DEDUCTCARTPOINT]' . __( ' shortcode in place of points which has been deducted ', MWB_RWPR_Domain ) . '[USERNAME]' . __( ' shortcode in place of username ', MWB_RWPR_Domain ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Your [DEDUCTCARTPOINT] Points has been deducted from your account, now your Total Point is [TOTALPOINTS].', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[DEDUCTCARTPOINT]' . __( ' shortcode in place of points which has been deducted ', 'rewardeem-woocommerce-points-rewards' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'rewardeem-woocommerce-points-rewards' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Points On Order Total Range', MWB_RWPR_Domain ),
+		'title' => __( 'Points On Order Total Range', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Subject', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'text',
 		'id'            => 'mwb_wpr_point_on_order_total_range_subject',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', MWB_RWPR_Domain ),
-		'default'   => __( 'Points Added', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Input subject for email.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Points Added', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title'         => __( 'Email Description', MWB_RWPR_Domain ),
+		'title'         => __( 'Email Description', 'rewardeem-woocommerce-points-rewards' ),
 		'type'          => 'textarea_email',
 		'id'            => 'mwb_wpr_point_on_order_total_range_desc',
 		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', MWB_RWPR_Domain ),
-		'default'   => __( 'Your [ORDERTOTALPOINT] Points has been added in now your Total Point is [TOTALPOINTS].', MWB_RWPR_Domain ),
-		'desc'          => __( 'Use ', MWB_RWPR_Domain ) . '[DEDUCTCARTPOINT]' . __( ' shortcode in place of points which has been deducted ', MWB_RWPR_Domain ) . '[USERNAME]' . __( ' shortcode in place of username ', MWB_RWPR_Domain ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', MWB_RWPR_Domain ),
+		'desc_tip'      => __( 'Enter Email Description for user.', 'rewardeem-woocommerce-points-rewards' ),
+		'default'   => __( 'Your [ORDERTOTALPOINT] Points has been added in now your Total Point is [TOTALPOINTS].', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'          => __( 'Use ', 'rewardeem-woocommerce-points-rewards' ) . '[DEDUCTCARTPOINT]' . __( ' shortcode in place of points which has been deducted ', 'rewardeem-woocommerce-points-rewards' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'rewardeem-woocommerce-points-rewards' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
 		'type'  => 'sectionend',
@@ -340,27 +340,27 @@ $mwb_settings = array(
 );
 	$mwb_settings = apply_filters( 'mwb_wpr_email_notification_settings', $mwb_settings );
 foreach ( $mwb_settings as $key => $value ) {
-	if ( $value['type'] == 'title' ) {
+	if (  'title' == $value['type'] ) {
 		?>
 					<div class="mwb_wpr_general_row_wrap">
 				<?php
 				$settings_obj->mwb_rwpr_generate_heading( $value );
 	}
-	if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) {
+	if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) { //phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 		?>
 					<div class="mwb_wpr_general_row">
 			<?php $settings_obj->mwb_rwpr_generate_label( $value ); ?>
 						<div class="mwb_wpr_general_content">
 				<?php
 				$settings_obj->mwb_rwpr_generate_tool_tip( $value );
-				if ( $value['type'] == 'checkbox' ) {
+				if ( 'checkbox' == $value['type'] ) {
 					$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $mwb_wpr_notification_settings );
 				}
-				if ( $value['type'] == 'textarea_email' ) {
+				if ( 'textarea_email' == $value['type'] ) {
 					echo $value['desc'];
 					$settings_obj->mwb_rwpr_generate_wp_editor( $value, $mwb_wpr_notification_settings );
 				}
-				if ( $value['type'] == 'text' ) {
+				if ( 'text' == $value['type'] ) {
 					$settings_obj->mwb_rwpr_generate_text_html( $value, $mwb_wpr_notification_settings );
 				}
 				?>
@@ -368,7 +368,7 @@ foreach ( $mwb_settings as $key => $value ) {
 					</div>
 			<?php
 	}
-	if ( $value['type'] == 'sectionend' ) {
+	if ( 'sectionend' == $value['type'] ) {
 		?>
 				 </div> 
 			<?php
@@ -380,5 +380,5 @@ foreach ( $mwb_settings as $key => $value ) {
 </div>
 <div class="clear"></div>
 <p class="submit">
-	<input type="submit" value='<?php _e( 'Save changes', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_notification">
+	<input type="submit" value='<?php esc_html_e( 'Save changes', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_notification">
 </p>	

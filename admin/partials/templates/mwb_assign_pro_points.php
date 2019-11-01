@@ -49,21 +49,21 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) {
 				<div class="notice notice-success is-dismissible">
 					<p><strong>
 					<?php
-					echo $mwb_wpr_pro_points_to_all;
-					_e( ' Point Assigned Successfully to All Products', MWB_RWPR_Domain );
+					echo esc_html( $mwb_wpr_pro_points_to_all );
+					esc_html_e( ' Point Assigned Successfully to All Products', 'rewardeem-woocommerce-points-rewards' );
 					?>
 					</strong></p>
 					<button type="button" class="notice-dismiss">
-						<span class="screen-reader-text"><?php _e( 'Dismiss this notices.', MWB_RWPR_Domain ); ?></span>
+						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'rewardeem-woocommerce-points-rewards' ); ?></span>
 					</button>
 				</div>
 				<?php
 			} else {
 				?>
 				<div class="notice notice-error is-dismissible">
-					<p><strong><?php _e( ' Please enter some points !', MWB_RWPR_Domain ); ?></strong></p>
+					<p><strong><?php esc_html_e( ' Please enter some points !', 'rewardeem-woocommerce-points-rewards' ); ?></strong></p>
 					<button type="button" class="notice-dismiss">
-						<span class="screen-reader-text"><?php _e( 'Dismiss this notices.', MWB_RWPR_Domain ); ?></span>
+						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'rewardeem-woocommerce-points-rewards' ); ?></span>
 					</button>
 				</div>
 				<?php
@@ -87,9 +87,9 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) {
 			wp_reset_query();
 			?>
 			<div class="notice notice-success is-dismissible">
-				<p><strong><?php _e( 'Points are removed Successfully from All Products', MWB_RWPR_Domain ); ?></strong></p>
+				<p><strong><?php esc_html_e( 'Points are removed Successfully from All Products', 'rewardeem-woocommerce-points-rewards' ); ?></strong></p>
 				<button type="button" class="notice-dismiss">
-					<span class="screen-reader-text"><?php _e( 'Dismiss this notices.', MWB_RWPR_Domain ); ?></span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'rewardeem-woocommerce-points-rewards' ); ?></span>
 				</button>
 			</div>
 			<?php
@@ -104,22 +104,22 @@ $mwb_wpr_assing_product_points = get_option( 'mwb_wpr_assign_products_points', a
 <?php
 $mwb_wpr_assign_product_table_settings = array(
 	array(
-		'title' => __( 'Global Product Points', MWB_RWPR_Domain ),
+		'title' => __('Global setting for assigning points to all products at once', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Global Product Points', MWB_RWPR_Domain ),
+		'title' => __( 'Global Assign Product Points', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'checkbox',
-		'desc'  => __( 'Enable Global Product Points', MWB_RWPR_Domain ),
+		'desc'  => __('Enable Assign Global Product Points', 'rewardeem-woocommerce-points-rewards' ),
 		'id'    => 'mwb_wpr_global_product_enable',
-		'desc_tip' => __( 'This is the global setting for Product Purchase Points, check this if you want to assign points to all products at once or uncheck if you want to remove assigned points from all products at once.', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'This is the global setting for Product Purchase Points, check this if you want to assign points to all products at once or uncheck if you want to remove assigned points from all products at once.', 'rewardeem-woocommerce-points-rewards' ),
 	),
 	array(
-		'title' => __( 'Global Product Points', MWB_RWPR_Domain ),
+		'title' => __('Enable Assign Global Product Points', 'rewardeem-woocommerce-points-rewards' ),
 		'type'  => 'number',
-		'desc'  => __( 'Enable Global Product Points', MWB_RWPR_Domain ),
+		'desc'  => __('Enable Assign Global Product Points', 'rewardeem-woocommerce-points-rewards' ),
 		'id'    => 'mwb_wpr_pro_points_to_all',
-		'desc_tip' => __( 'Entered Points are assigned to All Products .', MWB_RWPR_Domain ),
+		'desc_tip' => __( 'Entered Points are assigned to All Products .', 'rewardeem-woocommerce-points-rewards' ),
 		'custom_attribute' => array( 'min' => '"1"' ),
 		'class' => 'input-text mwb_wpr_common_width',
 	),
@@ -133,43 +133,43 @@ $mwb_wpr_assign_product_table_settings = array(
 	<div class="mwb_wpr_general_wrapper">
 	<?php
 	foreach ( $mwb_wpr_assign_product_table_settings as $key => $value ) {
-		if ( $value['type'] == 'title' ) {
+		if ( $value['type'] == 'title' ) { //phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 			?>
 					<div class="mwb_wpr_general_row_wrap">
 				<?php $settings_obj->mwb_rwpr_generate_heading( $value ); ?>
 				<?php } ?>
-				<?php if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) { ?>
+				<?php if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) { //phpcs:ignore WordPress.PHP.YodaConditions.NotYoda ?>
 				<div class="mwb_wpr_general_row">
 					<?php $settings_obj->mwb_rwpr_generate_label( $value ); ?>
 					<div class="mwb_wpr_general_content">
 						<?php
 						$settings_obj->mwb_rwpr_generate_tool_tip( $value );
-						if ( $value['type'] == 'checkbox' ) {
+						if ( 'checkbox' == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $mwb_wpr_assing_product_points );
 						}
-						if ( $value['type'] == 'number' ) {
+						if ( 'number' == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_number_html( $value, $mwb_wpr_assing_product_points );
 						}
-						if ( $value['type'] == 'multiple_checkbox' ) {
+						if ( 'multiple_checkbox' == $value['type'] ) {
 							foreach ( $value['multiple_checkbox'] as $k => $val ) {
 								$settings_obj->mwb_rwpr_generate_checkbox_html( $val, $mwb_wpr_assing_product_points );
 							}
 						}
-						if ( $value['type'] == 'text' ) {
+						if ( 'text' == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_text_html( $value, $mwb_wpr_assing_product_points );
 						}
-						if ( $value['type'] == 'textarea' ) {
+						if ( 'textarea' == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_textarea_html( $value, $mwb_wpr_assing_product_points );
 						}
-						if ( $value['type'] == 'number_text' ) {
+						if ( 'number_text' == $value['type'] ) {
 							foreach ( $value['number_text'] as $k => $val ) {
-								if ( $val['type'] == 'text' ) {
+								if ( 'text' == $val['type'] ) {
 									$settings_obj->mwb_rwpr_generate_text_html( $val, $mwb_wpr_assing_product_points );
 
 								}
-								if ( $val['type'] == 'number' ) {
+								if ( 'number' == $val['type'] ) {
 									$settings_obj->mwb_rwpr_generate_number_html( $val, $mwb_wpr_assing_product_points );
-									echo get_woocommerce_currency_symbol();
+									echo get_woocommerce_currency_symbol();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								}
 							}
 						}
@@ -177,7 +177,7 @@ $mwb_wpr_assign_product_table_settings = array(
 					</div>
 				</div>
 				<?php } ?>
-			<?php if ( $value['type'] == 'sectionend' ) : ?>
+			<?php if ( 'sectionend' == $value['type'] ) : ?>
 				 </div>	
 				<?php endif; ?>
 		<?php } ?> 
@@ -186,6 +186,6 @@ $mwb_wpr_assign_product_table_settings = array(
 </div>
 <div class="clear"></div>
 	<p class="submit">
-		<input type="submit" value='<?php _e( 'Save changes', MWB_RWPR_Domain ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_select_all_products">
+		<input type="submit" value='<?php esc_attr_e( 'Save changes', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_select_all_products">
 	</p>
 	<?php do_action( 'mwb_wpr_product_assign_points' ); ?>

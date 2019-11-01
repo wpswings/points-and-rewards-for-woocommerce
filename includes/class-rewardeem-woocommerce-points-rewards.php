@@ -220,6 +220,8 @@ class Rewardeem_woocommerce_Points_Rewards {
 			$this->loader->add_filter( 'woocommerce_get_price_html',$plugin_public, 'mwb_wpr_user_level_discount_on_price', 10,2);
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public,'mwb_wpr_woocommerce_before_calculate_totals', 10, 1);
 			$this->loader->add_filter('woocommerce_update_cart_action_cart_updated',$plugin_public, 'mwb_update_cart_points');
+			/*Make Tax calculation 0 on the fees applied on the points*/
+			$this->loader->add_action('woocommerce_cart_totals_get_fees_from_cart_taxes',$plugin_public,'mwb_wpr_fee_tax_calculation',10,3);
 		}
 	}
 
