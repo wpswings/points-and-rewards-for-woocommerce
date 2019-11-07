@@ -45,20 +45,20 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) { //phpcs:ignore WordPress
 				<p><strong>
 				<?php
 				echo esc_html( $mwb_wpr_pro_points_to_all );
-				esc_html_e( ' Point Assigned Successfully to All Products', 'rewardeem-woocommerce-points-rewards' );
+				esc_html_e( ' Point Assigned Successfully to All Products', 'points-rewards-for-woocommerce' );
 				?>
 				</strong></p>
 				<button type="button" class="notice-dismiss">
-					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'rewardeem-woocommerce-points-rewards' ); ?></span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-rewards-for-woocommerce' ); ?></span>
 				</button>
 			</div>
 			<?php
 		} else {
 			?>
 			<div class="notice notice-error is-dismissible">
-				<p><strong><?php esc_html_e( ' Please enter some points !', 'rewardeem-woocommerce-points-rewards' ); ?></strong></p>
+				<p><strong><?php esc_html_e( ' Please enter some points !', 'points-rewards-for-woocommerce' ); ?></strong></p>
 				<button type="button" class="notice-dismiss">
-					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'rewardeem-woocommerce-points-rewards' ); ?></span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-rewards-for-woocommerce' ); ?></span>
 				</button>
 			</div>
 			<?php
@@ -78,9 +78,9 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) { //phpcs:ignore WordPress
 		wp_reset_query();
 		?>
 		<div class="notice notice-success is-dismissible">
-			<p><strong><?php esc_html_e( 'Points are removed Successfully from All Products', 'rewardeem-woocommerce-points-rewards' ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'Points are removed Successfully from All Products', 'points-rewards-for-woocommerce' ); ?></strong></p>
 			<button type="button" class="notice-dismiss">
-				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'rewardeem-woocommerce-points-rewards' ); ?></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-rewards-for-woocommerce' ); ?></span>
 			</button>
 		</div>
 		<?php
@@ -93,14 +93,14 @@ $mwb_wpr_pro_points_to_all = get_option( 'mwb_wpr_pro_points_to_all', '' );
 <!-- Category Listing -->
 
 <div class="mwb_table">
-	<p class="mwb_wpr_section_notice"><?php esc_html_e( 'This is the category wise setting for purchase product from points only, enter some valid points for assigning, leave blank fields for removing assigned points', 'rewardeem-woocommerce-points-rewards' ); ?></p>
+	<p class="mwb_wpr_section_notice"><?php esc_html_e( 'This is the category wise setting for purchase product from points only, enter some valid points for assigning, leave blank fields for removing assigned points', 'points-rewards-for-woocommerce' ); ?></p>
 	<div class="mwb_wpr_categ_details">
 		<table class="form-table mwb_wpr_pro_points_setting mwp_wpr_settings">
 			<tbody>
 				<tr>
-					<th class="titledesc"><?php esc_html_e( 'Categories', 'rewardeem-woocommerce-points-rewards' ); ?></th>
-					<th class="titledesc"><?php esc_html_e( 'Enter Points', 'rewardeem-woocommerce-points-rewards' ); ?></th>
-					<th class="titledesc"><?php esc_html_e( 'Assign/Remove', 'rewardeem-woocommerce-points-rewards' ); ?></th>
+					<th class="titledesc"><?php esc_html_e( 'Categories', 'points-rewards-for-woocommerce' ); ?></th>
+					<th class="titledesc"><?php esc_html_e( 'Enter Points', 'points-rewards-for-woocommerce' ); ?></th>
+					<th class="titledesc"><?php esc_html_e( 'Assign/Remove', 'points-rewards-for-woocommerce' ); ?></th>
 				</tr>
 				<?php
 				$args = array( 'taxonomy' => 'product_cat' );
@@ -114,7 +114,7 @@ $mwb_wpr_pro_points_to_all = get_option( 'mwb_wpr_pro_points_to_all', '' );
 						<tr>
 							<td><?php echo $catname; ?></td>
 							<td><input type="number" min="1" name="mwb_wpr_purchase_points_per_categ" id="mwb_wpr_purchase_points_cat<?php echo $catid; ?>" value="<?php echo esc_html( $mwb_wpr_purchase_categ_point ); ?>" class="input-text mwb_wpr_new_woo_ver_style_text"></td>
-							<td><input type="button" value='<?php esc_html_e( 'Submit', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_submit_purchase_points_per_category" name="mwb_wpr_submit_purchase_points_per_category" id="<?php echo esc_html( $catid ); ?>"></td>
+							<td><input type="button" value='<?php esc_html_e( 'Submit', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_submit_purchase_points_per_category" name="mwb_wpr_submit_purchase_points_per_category" id="<?php echo esc_html( $catid ); ?>"></td>
 						</tr>
 						<?php
 					}

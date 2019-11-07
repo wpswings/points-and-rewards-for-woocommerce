@@ -67,18 +67,16 @@ class Rewardeem_woocommerce_Points_Rewards {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		
+
 		if ( defined( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION' ) ) {
 
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
-		} 
-		
-		else {
+		} else {
 
 			$this->version = '1.0.0';
 		}
 
-		$this->plugin_name = 'rewardeem-woocommerce-points-rewards';
+		$this->plugin_name = 'points-rewards-for-woocommerce';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -95,7 +93,7 @@ class Rewardeem_woocommerce_Points_Rewards {
 	 * - Rewardeem_woocommerce_Points_Rewards_Loader. Orchestrates the hooks of the plugin.
 	 * - Rewardeem_woocommerce_Points_Rewards_i18n. Defines internationalization functionality.
 	 * - Rewardeem_woocommerce_Points_Rewards_Admin. Defines all hooks for the admin area.
-	 * - Rewardeem_woocommerce_Points_Rewards_Public. Defines all hooks for the public side of the site.
+	 * - Points_Rewards_For_WooCommerce_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -109,24 +107,24 @@ class Rewardeem_woocommerce_Points_Rewards {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rewardeem-woocommerce-points-rewards-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-points-rewards-for-woocommerce-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rewardeem-woocommerce-points-rewards-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-points-rewards-for-woocommerce-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-rewardeem-woocommerce-points-rewards-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-points-rewards-for-woocommerce-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-rewardeem-woocommerce-points-rewards-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-points-rewards-for-woocommerce-public.php';
 
 		$this->loader = new Rewardeem_woocommerce_Points_Rewards_Loader();
 
@@ -157,20 +155,19 @@ class Rewardeem_woocommerce_Points_Rewards {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-
-		$plugin_admin = new Rewardeem_woocommerce_Points_Rewards_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Points_Rewards_For_WooCommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_rwpr_admin_menu', 10, 2);
-		$this->loader->add_action( 'wp_ajax_mwb_wpr_points_update',$plugin_admin, 'mwb_wpr_points_update');
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_points_update', $plugin_admin, 'mwb_wpr_points_update');
-		$this->loader->add_action( 'wp_ajax_mwb_wpr_select_category',$plugin_admin, 'mwb_wpr_select_category');
-		$this->loader->add_action('wp_ajax_nopriv_mwb_wpr_select_category',$plugin_admin,'mwb_wpr_select_category');
-		$this->loader->add_action('admin_head',$plugin_admin,'mwb_wpr_add_membership_rule');
-		// $this->loader->add_filter('mwb_wpr_general_settings',$plugin_admin,'add_mwb_settings',10,1);
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_rwpr_admin_menu', 10, 2 );
+		$this->loader->add_action( 'wp_ajax_mwb_wpr_points_update', $plugin_admin, 'mwb_wpr_points_update' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_points_update', $plugin_admin, 'mwb_wpr_points_update' );
+		$this->loader->add_action( 'wp_ajax_mwb_wpr_select_category', $plugin_admin, 'mwb_wpr_select_category' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_select_category', $plugin_admin, 'mwb_wpr_select_category' );
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'mwb_wpr_add_membership_rule' );
 
+		// $this->loader->add_filter('mwb_wpr_general_settings',$plugin_admin,'add_mwb_settings',10,1);
 	}
 
 	/**
@@ -182,62 +179,65 @@ class Rewardeem_woocommerce_Points_Rewards {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Rewardeem_woocommerce_Points_Rewards_Public( $this->get_plugin_name(), $this->get_version() );
-		if($this->mwb_rwpr_is_plugin_enable()) {
+		$plugin_public = new Points_Rewards_For_WooCommerce_Public( $this->get_plugin_name(), $this->get_version() );
+		if ( $this->mwb_rwpr_is_plugin_enable() ) {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 			/* Include the points tab woocommrerce dashboard and template file*/
-			$this->loader->add_action( 'init',$plugin_public,'mwb_wpr_add_my_account_endpoint');
-			$this->loader->add_filter('woocommerce_account_menu_items',$plugin_public, 'mwb_wpr_points_dashboard');
+			$this->loader->add_action( 'init', $plugin_public, 'mwb_wpr_add_my_account_endpoint' );
+			$this->loader->add_filter( 'woocommerce_account_menu_items', $plugin_public, 'mwb_wpr_points_dashboard' );
 			/*Add the points tabs page in woocommerce*/
-			$this->loader->add_action( 'woocommerce_account_points_endpoint', $plugin_public, 'mwb_wpr_account_points');
+			$this->loader->add_action( 'woocommerce_account_points_endpoint', $plugin_public, 'mwb_wpr_account_points' );
 			/*Add the view logs poitns page in woocommerce*/
-			$this->loader->add_action( 'woocommerce_account_view-log_endpoint', $plugin_public, 'mwb_wpr_account_viewlog');
+			$this->loader->add_action( 'woocommerce_account_view-log_endpoint', $plugin_public, 'mwb_wpr_account_viewlog' );
 			/*Set the referral key in the woocommerce*/
-			$this->loader->add_action('wp_loaded' ,$plugin_public,'mwb_wpr_referral_link_using_cookie');
+			$this->loader->add_action( 'wp_loaded', $plugin_public, 'mwb_wpr_referral_link_using_cookie' );
 			/*Assign signup points and referral points in woocommerce*/
-			$this->loader->add_action( 'woocommerce_created_customer' ,$plugin_public,'mwb_wpr_new_customer_registerd', 10, 3 );
-			$this->loader->add_action( 'woocommerce_order_status_changed',$plugin_public, 'mwb_wpr_woocommerce_order_status_changed',10,3);
+			$this->loader->add_action( 'woocommerce_created_customer', $plugin_public, 'mwb_wpr_new_customer_registerd', 10, 3 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'mwb_wpr_woocommerce_order_status_changed', 10, 3 );
 
-			$this->loader->add_action('woocommerce_before_customer_login_form',$plugin_public,'mwb_wpr_woocommerce_signup_point');
+			$this->loader->add_action( 'woocommerce_before_customer_login_form', $plugin_public, 'mwb_wpr_woocommerce_signup_point' );
 			/*Add html in the cart for apply points*/
-			$this->loader->add_action('woocommerce_cart_actions',$plugin_public,'mwb_wpr_woocommerce_cart_coupon');
-			$this->loader->add_action('wp_ajax_mwb_wpr_apply_fee_on_cart_subtotal',$plugin_public,'mwb_wpr_apply_fee_on_cart_subtotal');
-			$this->loader->add_action('woocommerce_cart_calculate_fees',$plugin_public,'mwb_wpr_woocommerce_cart_custom_points');
-			$this->loader->add_action('woocommerce_before_cart_contents',$plugin_public,'mwb_wpr_woocommerce_before_cart_contents');
-			$this->loader->add_filter('woocommerce_cart_totals_fee_html',$plugin_public,'mwb_wpr_woocommerce_cart_totals_fee_html',10,2);
-			$this->loader->add_action('wp_ajax_mwb_wpr_remove_cart_point',$plugin_public,'mwb_wpr_remove_cart_point');
+			$this->loader->add_action( 'woocommerce_cart_actions', $plugin_public, 'mwb_wpr_woocommerce_cart_coupon' );
+			$this->loader->add_action( 'wp_ajax_mwb_wpr_apply_fee_on_cart_subtotal', $plugin_public, 'mwb_wpr_apply_fee_on_cart_subtotal' );
+			$this->loader->add_action( 'woocommerce_cart_calculate_fees', $plugin_public, 'mwb_wpr_woocommerce_cart_custom_points' );
+			$this->loader->add_action( 'woocommerce_before_cart_contents', $plugin_public, 'mwb_wpr_woocommerce_before_cart_contents' );
+			$this->loader->add_filter( 'woocommerce_cart_totals_fee_html', $plugin_public, 'mwb_wpr_woocommerce_cart_totals_fee_html', 10, 2 );
+			$this->loader->add_action( 'wp_ajax_mwb_wpr_remove_cart_point', $plugin_public, 'mwb_wpr_remove_cart_point' );
 			/*Apply points on the cart sub total*/
-			$this->loader->add_filter('wc_get_template',$plugin_public,'mwb_overwrite_form_temp',10,2);
+			$this->loader->add_filter( 'wc_get_template', $plugin_public, 'mwb_overwrite_form_temp', 10, 2 );
 			/*Update order meta of the order*/
-			$this->loader->add_action('woocommerce_checkout_update_order_meta',$plugin_public,'mwb_wpr_woocommerce_checkout_update_order_meta',10,2);
-			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public,'mwb_wpr_woocommerce_add_cart_item_data', 10,4);
-			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public,'mwb_wpr_woocommerce_get_item_data',10, 2 );
-			$this->loader->add_action('woocommerce_single_product_summary',$plugin_public,'mwb_display_product_points',7);
+			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'mwb_wpr_woocommerce_checkout_update_order_meta', 10, 2 );
+			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'mwb_wpr_woocommerce_add_cart_item_data', 10, 4 );
+			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'mwb_wpr_woocommerce_get_item_data', 10, 2 );
+			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'mwb_display_product_points', 7 );
 			/*Display the meta key*/
-			$this->loader->add_filter('woocommerce_order_item_display_meta_key',$plugin_public,'mwb_wpr_woocommerce_order_item_display_meta_key',10,1 );
-			$this->loader->add_action('woocommerce_checkout_create_order_line_item',$plugin_public,'mwb_wpr_woocommerce_add_order_item_meta_version_3',10,4);
-			$this->loader->add_filter( 'woocommerce_get_price_html',$plugin_public, 'mwb_wpr_user_level_discount_on_price', 10,2);
-			$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public,'mwb_wpr_woocommerce_before_calculate_totals', 10, 1);
-			$this->loader->add_filter('woocommerce_update_cart_action_cart_updated',$plugin_public, 'mwb_update_cart_points');
+			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $plugin_public, 'mwb_wpr_woocommerce_order_item_display_meta_key', 10, 1 );
+			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $plugin_public, 'mwb_wpr_woocommerce_add_order_item_meta_version_3', 10, 4 );
+			$this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'mwb_wpr_user_level_discount_on_price', 10, 2 );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public, 'mwb_wpr_woocommerce_before_calculate_totals', 10, 1 );
+			$this->loader->add_filter( 'woocommerce_update_cart_action_cart_updated', $plugin_public, 'mwb_update_cart_points' );
+
 			/*Make Tax calculation 0 on the fees applied on the points*/
-			$this->loader->add_action('woocommerce_cart_totals_get_fees_from_cart_taxes',$plugin_public,'mwb_wpr_fee_tax_calculation',10,3);
+			$this->loader->add_filter( 'woocommerce_cart_totals_get_fees_from_cart_taxes', $plugin_public, 'mwb_wpr_fee_tax_calculation', 10, 3 );
+
 		}
 	}
 
 	/**
 	 * Check is plugin is enable.
+	 *
 	 * @return true/false
 	 * @since    1.0.0
 	 */
 	public function mwb_rwpr_is_plugin_enable() {
 		$is_enable = false;
-		$general_settings = get_option('mwb_wpr_settings_gallery',true);
+		$general_settings = get_option( 'mwb_wpr_settings_gallery', true );
 		$mwb_wpr_enable = $general_settings['mwb_wpr_general_setting_enable'];
-		if (!empty($mwb_wpr_enable) && $mwb_wpr_enable == 1 )   {
+		if ( ! empty( $mwb_wpr_enable ) && $mwb_wpr_enable == 1 ) {
 			$is_enable = true;
 		}
-		return $is_enable; 
+		return $is_enable;
 	}
 
 	/**

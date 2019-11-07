@@ -6,18 +6,18 @@
  */
 global $wp_version;
 global $current_user; ?>
-<h3><?php _e( 'Woocommerce Ultimate Points and Rewards', MWB_WPR_Domain ); ?> </h3>
+<h3><?php _e( 'Woocommerce Ultimate Points and Rewards', 'points-rewards-for-woocommerce' ); ?> </h3>
 <hr/>
 <div style="text-align: justify; float: left; width: 66%; font-size: 16px; line-height: 25px; padding-right: 4%;">
 <?php
- _e( 'This is the License Activation Panel. After purchasing plugin from Codecanyon you will get the purchase code of this plugin. Please verify your purchase below so that you can use feature of this plugin before 30 days of Activation.', MWB_WPR_Domain );
+ _e( 'This is the License Activation Panel. After purchasing plugin from Codecanyon you will get the purchase code of this plugin. Please verify your purchase below so that you can use feature of this plugin before 30 days of Activation.', 'points-rewards-for-woocommerce' );
 ?>
  </div>
 <table class="form-table">
 	<tbody>
 		<tr valign="top">
 			<th class="titledesc" scope="row">
-				<label><?php _e( 'Enter Purchase Code', MWB_WPR_Domain ); ?></label>
+				<label><?php _e( 'Enter Purchase Code', 'points-rewards-for-woocommerce' ); ?></label>
 			</th>
 			<td class="forminp">
 				<fieldset>

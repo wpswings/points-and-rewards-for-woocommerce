@@ -13,42 +13,42 @@
  */
 $mwb_wpr_setting_tab = array(
 	'overview_setting' => array(
-		'title'     => __( 'OverView', 'rewardeem-woocommerce-points-rewards' ),
-		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb_rwpr_overview_setting.php',
+		'title'     => __( 'OverView', 'points-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-rwpr-overview-setting.php',
 	),
 	'general-setting' => array(
-		'title'     => __( 'General', 'rewardeem-woocommerce-points-rewards' ),
-		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb_generral-settings2.php',
+		'title'     => __( 'General', 'points-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-generral-settings2.php',
 	),
 	'coupon-setting' => array(
 
-		'title'     => __( 'Coupon Settings', 'rewardeem-woocommerce-points-rewards' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb_coupon_settings.php',
+		'title'     => __( 'Per Currency Points & Coupon Settings', 'points-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-coupon-settings.php',
 	),
 	'points-table' => array(
-		'title'     => __( 'Points Table', 'rewardeem-woocommerce-points-rewards' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb_points_table.php',
+		'title'     => __( 'Points Table', 'points-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-points-table.php',
 	),
 	'points-notification' => array(
-		'title'     => __( 'Points Notification', 'rewardeem-woocommerce-points-rewards' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb_points_notification_settings.php',
+		'title'     => __( 'Points Notification', 'points-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-points-notification-settings.php',
 	),
 	'membership' => array(
-		'title' => __( 'Membership', 'rewardeem-woocommerce-points-rewards' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb_membership_settings.php',
+		'title' => __( 'Membership', 'points-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-membership-settings.php',
 	),
 	'assign-product-points' => array(
-		'title' => __( 'Assign Product Points', 'rewardeem-woocommerce-points-rewards' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb_assign_pro_points.php',
+		'title' => __( 'Assign Product Points', 'points-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-assign-pro-points.php',
 	),
 
 	'other-setting' => array(
-		'title' => __( 'Other Settings', 'rewardeem-woocommerce-points-rewards' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb_other_setting.php',
+		'title' => __( 'Other Settings', 'points-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-other-setting.php',
 	),
 	'order-total-points' => array(
-		'title' => __( 'Order Total Points', 'rewardeem-woocommerce-points-rewards' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb_order_total.php',
+		'title' => __( 'Order Total Points', 'points-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-order-total.php',
 	),
 );
   $mwb_wpr_setting_tab = apply_filters( 'mwb_rwpr_add_setting_tab', $mwb_wpr_setting_tab );
@@ -58,7 +58,7 @@ $mwb_wpr_setting_tab = array(
 	 <form enctype="multipart/form-data" action="" id="mainform" method="post">		<div class="mwb_rwpr_header">
 			<div class="mwb_rwpr_header_content_left">
 				<div>
-					<h3 class="mwb_rwpr_setting_title"><?php esc_html_e( 'Ultimate WooCommerce Points and Rewards Lite', 'rewardeem-woocommerce-points-rewards' ); ?></h3>
+					<h3 class="mwb_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce Lite', 'points-rewards-for-woocommerce' ); ?></h3>
 				</div>
 			</div>
 			<div class="mwb_rwpr_header_content_right">
@@ -71,12 +71,12 @@ $mwb_wpr_setting_tab = array(
 					<span class="dashicons dashicons-media-document"></span>
 				</a>
 			</li>
-			<li class="mwb_rwpr_header_menu_button"><a  href="https://makewebbetter.com/product/giftware-woocommerce-gift-cards/?utm_source=mwb-giftcard-org&utm_medium=mwb-org&utm_campaign=giftcard-org" class="" title="" target="_blank">GO PRO NOW</a></li>
+			<li class="mwb_rwpr_header_menu_button"><a  href="" class="" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-rewards-for-woocommerce' ); ?></a></li>
 		</ul>
 	</div>
 </div>
 <?php do_action( 'mwb_wpr_add_notice' ); ?>
-<input type="hidden" name="mwb-wpr-nonce" value="<?php echo wp_create_nonce( 'mwb-wpr-nonce' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?>">
+<input type="hidden" name="mwb-wpr-nonce" value="<?php echo wp_create_nonce( 'mwb-wpr-nonce' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
 <div class="mwb_rwpr_main_template">
 	<div class="mwb_rwpr_body_template">
 		<div class="mwb_rwpr_mobile_nav">
@@ -94,7 +94,7 @@ $mwb_wpr_setting_tab = array(
 							</div>
 							<?php
 						} else {
-							if ( empty( $_GET['tab'] ) &&  'overview_setting' == $key ) {
+							if ( empty( $_GET['tab'] ) && 'overview_setting' == $key ) {
 								?>
 								<div class="mwb_rwpr_tabs">
 									<a class="mwb_gw_nav_tab nav-tab nav-tab-active" href="?page=mwb-rwpr-setting&tab=<?php echo $key; ?>"><?php echo $mwb_tab['title']; ?></a>

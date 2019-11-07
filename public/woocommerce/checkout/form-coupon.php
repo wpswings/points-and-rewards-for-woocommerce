@@ -51,27 +51,26 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 <?php
 
 $user_id = get_current_user_ID();
-if(isset($user_id) && !empty($user_id)){ 
-	if (class_exists('Rewardeem_woocommerce_Points_Rewards_Public')) {
-		$public_obj = new Rewardeem_woocommerce_Points_Rewards_Public('rewardeem-woocommerce-points-rewards','1.0.0');
+if ( isset( $user_id ) && ! empty( $user_id ) ) {
+	if ( class_exists( 'Points_Rewards_For_WooCommerce_Public' ) ) {
+		$public_obj = new Points_Rewards_For_WooCommerce_Public( 'points-rewards-for-woocommerce', '1.0.0' );
 	}
 
-	$get_points = (int)get_user_meta($user_id,'mwb_wpr_points',true);
+	$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 	/* Points Rate*/
-	$mwb_wpr_cart_points_rate = $public_obj->mwb_wpr_get_general_settings_num("mwb_wpr_cart_points_rate");
-	$mwb_wpr_cart_points_rate = ($mwb_wpr_cart_points_rate == 0)?1:$mwb_wpr_cart_points_rate;
+	$mwb_wpr_cart_points_rate = $public_obj->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_points_rate' );
+	$mwb_wpr_cart_points_rate = ( 0 == $mwb_wpr_cart_points_rate ) ? 1 : $mwb_wpr_cart_points_rate;
 	/* Points Rate*/
-	$mwb_wpr_cart_price_rate = $public_obj->mwb_wpr_get_general_settings_num("mwb_wpr_cart_price_rate");
-	$mwb_wpr_cart_price_rate = ($mwb_wpr_cart_price_rate == 0)?1:$mwb_wpr_cart_price_rate;
-	$conversion = ($get_points * $mwb_wpr_cart_price_rate / $mwb_wpr_cart_points_rate); 
+	$mwb_wpr_cart_price_rate = $public_obj->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_price_rate' );
+	$mwb_wpr_cart_price_rate = ( 0 == $mwb_wpr_cart_price_rate ) ? 1 : $mwb_wpr_cart_price_rate;
+	$conversion = ( $get_points * $mwb_wpr_cart_price_rate / $mwb_wpr_cart_points_rate );
 	?>
 <div class="custom_point_checkout woocommerce-info">
-	<input type="number" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', MWB_RWPR_Domain ); ?>"/>
-	<input type="button" name="mwb_cart_points_apply" data-point="<?php echo $get_points;?>" data-id="<?php echo $user_id;?>" class="button mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php _e('Apply Points',MWB_RWPR_Domain);?>"/>
-	<p><?php echo $get_points.__(' Points',MWB_RWPR_Domain) .' = '.wc_price($conversion); ?></p>
+	<input type="number" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>
+	<input type="button" name="mwb_cart_points_apply" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" class="button mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?>"/>
+	<p><?php echo esc_html( $get_points ) . esc_html__( ' Points', 'points-rewards-for-woocommerce' ) . ' = ' . wc_price( $conversion ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 </div>
 
-<?php	
+	<?php
 }
 ?>
-

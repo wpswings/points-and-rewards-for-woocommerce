@@ -19,7 +19,7 @@
  * @subpackage Rewardeem_woocommerce_Points_Rewards/public
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Rewardeem_woocommerce_Points_Rewards_Public {
+class Points_Rewards_For_WooCommerce_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -59,7 +59,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/css/rewardeem-woocommerce-points-rewards-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -76,21 +76,21 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 		$mwb_wpr_cart_price_rate = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_price_rate' );
 		$mwb_wpr_make_readonly   = $this->mwb_wpr_get_other_settings_num( 'mwb_wpr_cart_price_rate' );
 
-		wp_enqueue_script( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/js/rewardeem-woocommerce-points-rewards-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
 		wp_register_script( 'mwb_wpr_clipboard', MWB_RWPR_DIR_URL . 'public/js/dist/clipboard.min.js', array( 'jquery' ), $this->version, false );
 		$mwb_wpr = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'message' => esc_html__( 'Please enter valid points', 'rewardeem-woocommerce-points-rewards' ),
+			'message' => esc_html__( 'Please enter valid points', 'points-rewards-for-woocommerce' ),
 			'minimum_points' => $mwb_minimum_points_value,
-			'confirmation_msg' => __( 'Do you really want to upgrade your user level as this process will deduct the required points from your account?', 'rewardeem-woocommerce-points-rewards' ),
-			'minimum_points_text' => __( 'Minimum Points Require To Convert Points To Coupon is ', 'rewardeem-woocommerce-points-rewards' ) . $mwb_minimum_points_value,
-			'mwb_wpr_custom_notice' => __( 'Number of Point you had entered will get deducted from your Account', 'rewardeem-woocommerce-points-rewards' ),
+			'confirmation_msg' => __( 'Do you really want to upgrade your user level as this process will deduct the required points from your account?', 'points-rewards-for-woocommerce' ),
+			'minimum_points_text' => __( 'Minimum Points Require To Convert Points To Coupon is ', 'points-rewards-for-woocommerce' ) . $mwb_minimum_points_value,
+			'mwb_wpr_custom_notice' => __( 'Number of Point you had entered will get deducted from your Account', 'points-rewards-for-woocommerce' ),
 			'mwb_wpr_nonce' => wp_create_nonce( 'mwb-wpr-verify-nonce' ),
 			'mwb_wpr_cart_points_rate' => $mwb_wpr_cart_points_rate,
 			'mwb_wpr_cart_price_rate' => $mwb_wpr_cart_price_rate,
 			// 'make_readonly' => $mwb_wpr_make_readonly,
-			'not_allowed' => __( 'Please enter some valid points!', 'rewardeem-woocommerce-points-rewards' ),
-			'not_suffient' => __( 'You do not have suffient amount of points', 'rewardeem-woocommerce-points-rewards' ),
+			'not_allowed' => __( 'Please enter some valid points!', 'points-rewards-for-woocommerce' ),
+			'not_suffient' => __( 'You do not have suffient amount of points', 'points-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( 'mwb_wpr_clipboard', 'mwb_wpr', $mwb_wpr );
 		wp_enqueue_script( 'mwb_wpr_clipboard' );
@@ -242,7 +242,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 		$user = new WP_User( $user_ID );
 		$mwb_wpr_points_tab_text = $this->mwb_wpr_get_general_settings( 'mwb_wpr_points_tab_text' );
 		if ( empty( $mwb_wpr_points_tab_text ) ) {
-			$mwb_wpr_points_tab_text = __( 'Points', 'rewardeem-woocommerce-points-rewards' );
+			$mwb_wpr_points_tab_text = __( 'Points', 'points-rewards-for-woocommerce' );
 		}
 		if ( in_array( 'subscriber', $user->roles ) || in_array( 'customer', $user->roles ) ) {
 
@@ -310,12 +310,12 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 		$site_url = site_url();
 		?>
 		<div class="mwb_account_wrapper">
-			<p class="mwb_wpr_heading"><?php echo esc_html__( 'Referral Link', 'rewardeem-woocommerce-points-rewards' ); ?></p>
+			<p class="mwb_wpr_heading"><?php echo esc_html__( 'Referral Link', 'points-rewards-for-woocommerce' ); ?></p>
 			<fieldset class="mwb_wpr_each_section">
 				<div class="mwb_wpr_refrral_code_copy">
 					<p id="mwb_wpr_copy"><code><?php echo esc_url( $site_url . '?pkey=' . $get_referral ); ?></code></p>
 					<button class="mwb_wpr_btn_copy mwb_tooltip" data-clipboard-target="#mwb_wpr_copy" aria-label="copied">
-						<span class="mwb_tooltiptext"><?php esc_html_e( 'Copy', 'rewardeem-woocommerce-points-rewards' ); ?></span>
+						<span class="mwb_tooltiptext"><?php esc_html_e( 'Copy', 'points-rewards-for-woocommerce' ); ?></span>
 						<img src="<?php echo esc_url( MWB_RWPR_DIR_URL . 'public/images/copy.png' ); ?>" alt="Copy to clipboard">
 					</button>
 				</div>
@@ -342,7 +342,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 		if ( $enable_mwb_social ) {
 			$content = '';
 			$content = $content . '<div class="mwb_wpr_wrapper_button">';
-			$share_button = '<div class="mwb_wpr_btn mwb_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . MWB_RWPR_DIR_URL . '/public/images/twitter.png">' . __( 'Tweet', 'rewardeem-woocommerce-points-rewards' ) . '</a></div>';
+			$share_button = '<div class="mwb_wpr_btn mwb_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . MWB_RWPR_DIR_URL . '/public/images/twitter.png">' . __( 'Tweet', 'points-rewards-for-woocommerce' ) . '</a></div>';
 
 			$fb_button = '<div id="fb-root"></div>
 			<script>(function(d, s, id) {
@@ -352,10 +352,10 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 				js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.9";
 				fjs.parentNode.insertBefore(js, fjs);
 			}(document, "script", "facebook-jssdk"));</script>
-			<div class="fb-share-button mwb_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">' . __( 'Share', 'rewardeem-woocommerce-points-rewards' ) . '</a></div>';
+			<div class="fb-share-button mwb_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">' . __( 'Share', 'points-rewards-for-woocommerce' ) . '</a></div>';
 			$mail = '<a class="mwb_wpr_mail_button mwb_wpr_common_class" href="mailto:enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . MWB_RWPR_DIR_URL . 'public/images/email.png"></a>';
 
-			$google = '<div class="google mwb_wpr_common_class"><script src="https://apis.google.com/js/platform.js" async defer></script><div class="g-plus google-plus-button" data-action="share" data-height="24" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '"></div></div>';
+			$google = '<div class="google mwb_wpr_common_class"><script src="https://apis.google.com/js/platform.js" async defer></script><div class="g-plus google-plus-button" data-action="share" data-height="24" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '"></div></div>';//phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 
 			if ( $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_facebook' ) == 1 ) {
 
@@ -568,8 +568,9 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	public function mwb_wpr_send_notification_mail( $user_id, $type ) {
 		$user = get_user_by( 'ID', $user_id );
 		$user_email = $user->user_email;
-		$user_name = $user->user_firstname;
+		$user_name = $user->user_login;
 		$mwb_wpr_notificatin_array = get_option( 'mwb_wpr_notificatin_array', true );
+		$total_points = get_user_meta( $user_id, 'mwb_wpr_points', true );
 		/*check is not empty the notification array*/
 		if ( ! empty( $mwb_wpr_notificatin_array ) && is_array( $mwb_wpr_notificatin_array ) ) {
 			/*Get the Email Subject*/
@@ -584,11 +585,11 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 				$mwb_refer_value = ( 0 == $mwb_refer_value ) ? 1 : $mwb_refer_value;
 
 				$mwb_wpr_email_discription = str_replace( '[Points]', $mwb_signup_value, $mwb_wpr_email_discription );
-				$mwb_wpr_email_discription = str_replace( '[Total Points]', $mwb_signup_value, $mwb_wpr_email_discription );
+				$mwb_wpr_email_discription = str_replace( '[Total Points]', $total_points, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[Refer Points]', $mwb_refer_value, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				/*check is mail notification is enable or not*/
-				if ( Rewardeem_woocommerce_Points_Rewards_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
+				if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
 					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 					/*Send the email to user related to the signup*/
 					wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
@@ -603,11 +604,11 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 				$mwb_refer_value = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_refer_value' );
 				$mwb_refer_value = ( 0 == $mwb_refer_value ) ? 1 : $mwb_refer_value;
 
-				$mwb_wpr_email_discription = str_replace( '[Points]', $mwb_signup_value, $mwb_wpr_email_discription );
-				$mwb_wpr_email_discription = str_replace( '[Total Points]', $mwb_signup_value, $mwb_wpr_email_discription );
+				$mwb_wpr_email_discription = str_replace( '[Points]', $mwb_refer_value, $mwb_wpr_email_discription );
+				$mwb_wpr_email_discription = str_replace( '[Total Points]', $total_points, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[Refer Points]', $mwb_refer_value, $mwb_wpr_email_discription );
 				/*check is mail notification is enable or not*/
-				if ( Rewardeem_woocommerce_Points_Rewards_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
+				if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
 					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 					/*Send the email to user related to the signup*/
 					wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
@@ -723,7 +724,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 			$mwb_wpr_shortcode = array(
 				'[Points]' => $mwb_wpr_point,
 				'[Total Points]' => $total_points,
-				'[USERNAME]' => $user->user_firstname,
+				'[USERNAME]' => $user->user_login,
 			);
 			$mwb_wpr_subject_content = array(
 				'mwb_wpr_subject' => 'mwb_wpr_point_on_order_total_range_subject',
@@ -831,7 +832,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 									'[Refer Points]'              => $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_refer_value' ),
 									'[Comment Points]'            => $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_comment_enable' ),
 									'[Per Currency Spent Points]' => $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_points' ),
-									'[USERNAME]'                  => $user->user_firstname,
+									'[USERNAME]'                  => $user->user_login,
 								);
 
 								$mwb_wpr_subject_content = array(
@@ -866,7 +867,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 							'[Refer Points]'              => $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_refer_value' ),
 							'[Comment Points]'            => $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_comment_enable' ),
 							'[Per Currency Spent Points]' => $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_points' ),
-							'[USERNAME]'                  => $user->user_firstname,
+							'[USERNAME]'                  => $user->user_login,
 						);
 						$mwb_wpr_subject_content = array(
 							'mwb_wpr_subject' => 'mwb_wpr_product_email_subject',
@@ -908,7 +909,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 				}
 			}
 			/*check is mail notification is enable or not*/
-			if ( Rewardeem_woocommerce_Points_Rewards_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
+			if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
 				$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 				/*Send the email to user related to the signup*/
 				wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
@@ -935,7 +936,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 			?>
 			<div class="woocommerce-message">
 				<?php
-				echo esc_html__( 'You will get ', 'rewardeem-woocommerce-points-rewards' ) . esc_html( $mwb_wpr_signup_value ) . esc_html__( 'points for SignUp', 'rewardeem-woocommerce-points-rewards' )
+				echo esc_html__( 'You will get ', 'points-rewards-for-woocommerce' ) . esc_html( $mwb_wpr_signup_value ) . esc_html__( ' points for SignUp', 'points-rewards-for-woocommerce' )
 				?>
 			</div>
 			<?php
@@ -955,12 +956,16 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 		if ( 1 == $mwb_wpr_custom_points_on_cart ) {
 			$user_id = get_current_user_ID();
 			$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
-
+			if ( empty( $get_points ) ) {
+				$get_points = 0;
+			}
 			if ( isset( $user_id ) && ! empty( $user_id ) ) {
 				?>
 				<div class="mwb_wpr_apply_custom_points">
-					<input type="number" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'rewardeem-woocommerce-points-rewards' ); ?>"/>
-					<input type="button" name="mwb_cart_points_apply" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" class="button mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'rewardeem-woocommerce-points-rewards' ); ?>"/>
+					<input type="number" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>
+					<input type="button" name="mwb_cart_points_apply" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" class="button mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?>"/>
+					<p><?php esc_html_e( 'Your available points:', 'points-rewards-for-woocommerce' ); ?>
+					<?php echo esc_html( $get_points ); ?></p>
 				</div>	
 				<?php
 			}
@@ -977,7 +982,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	public function mwb_wpr_apply_fee_on_cart_subtotal() {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
 		$response['result'] = false;
-		$response['message'] = __( 'Can not redeem!', 'rewardeem-woocommerce-points-rewards' );
+		$response['message'] = __( 'Can not redeem!', 'points-rewards-for-woocommerce' );
 		if ( ! empty( $_POST['user_id'] ) && isset( $_POST['user_id'] ) ) {
 			$user_id = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
 		}
@@ -985,18 +990,16 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 			$mwb_cart_points = sanitize_text_field( wp_unslash( $_POST['mwb_cart_points'] ) );
 		}
 		if ( isset( $user_id ) && ! empty( $user_id ) ) {
-			$cart = WC()->cart;
 			if ( isset( $mwb_cart_points ) && ! empty( $mwb_cart_points ) ) {
 				WC()->session->set( 'mwb_cart_points', $mwb_cart_points );
 				$response['result'] = true;
-				$response['message'] = esc_html__( 'Custom Point has been applied Successfully!', 'rewardeem-woocommerce-points-rewards' );
+				$response['message'] = esc_html__( 'Custom Point has been applied Successfully!', 'points-rewards-for-woocommerce' );
 			} else {
 				$response['result'] = false;
-				$response['message'] = __( 'Please enter some valid points!', 'rewardeem-woocommerce-points-rewards' );
+				$response['message'] = __( 'Please enter some valid points!', 'points-rewards-for-woocommerce' );
 			}
 		}
-		wp_json_encode( $response );
-		wp_die();
+		wp_send_json( $response );
 	}
 
 	/**
@@ -1018,7 +1021,6 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 			$mwb_wpr_cart_points_rate = ( 0 == $mwb_wpr_cart_points_rate ) ? 1 : $mwb_wpr_cart_points_rate;
 			$mwb_wpr_cart_price_rate = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_price_rate' );
 			$mwb_wpr_cart_price_rate = ( 0 == $mwb_wpr_cart_price_rate ) ? 1 : $mwb_wpr_cart_price_rate;
-
 			if ( ! empty( WC()->session->get( 'mwb_cart_points' ) ) ) {
 				$mwb_wpr_points = WC()->session->get( 'mwb_cart_points' );
 				$mwb_fee_on_cart = ( $mwb_wpr_points * $mwb_wpr_cart_price_rate / $mwb_wpr_cart_points_rate );
@@ -1050,11 +1052,11 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 		$user_id = get_current_user_ID();
 		if ( 1 == $mwb_wpr_custom_points_on_cart && isset( $user_id ) && ! empty( $user_id ) ) {
 			?>
-			<div class="woocommerce-message"><?php esc_html_e( 'Here is the Discount Rule for applying your points to Cart sub-total', 'rewardeem-woocommerce-points-rewards' ); ?>
+			<div class="woocommerce-message"><?php esc_html_e( 'Here is the Discount Rule for applying your points to Cart sub-total', 'points-rewards-for-woocommerce' ); ?>
 				<ul>
 					<li>
 					<?php
-					echo wc_price( $mwb_wpr_cart_price_rate ) . ' = ' . $mwb_wpr_cart_points_rate . esc_html__( ' Points', 'rewardeem-woocommerce-points-rewards' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wc_price( $mwb_wpr_cart_price_rate ) . ' = ' . $mwb_wpr_cart_points_rate . esc_html__( ' Points', 'points-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
 					</li>
 				</ul>
@@ -1068,7 +1070,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 			?>
 			<div class="woocommerce-message" id="mwb_wpr_order_notice" style="background-color: <?php echo esc_html( $mwb_wpr_notification_color ); ?>">
 				<?php
-				 esc_html_e( 'Place Order And Earn Something in Return', 'rewardeem-woocommerce-points-rewards' );
+				 esc_html_e( 'Place Order And Earn Something in Return', 'points-rewards-for-woocommerce' );
 				?>
 				<p style="background-color: 
 				<?php
@@ -1076,9 +1078,9 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 				?>
 				">
 				<?php
-				esc_html_e( 'Conversion Rate: ', 'rewardeem-woocommerce-points-rewards' );
+				esc_html_e( 'Conversion Rate: ', 'points-rewards-for-woocommerce' );
 				echo wc_price( $order_conversion_rate['Value'] ) . ' = ' . $order_conversion_rate['Points']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				 esc_html_e( ' Points', 'rewardeem-woocommerce-points-rewards' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				 esc_html_e( ' Points', 'points-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				</p>
 			</div>
@@ -1132,7 +1134,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 		if ( isset( $fee ) && ! empty( $fee ) ) {
 			$fee_name = $fee->name;
 			if ( isset( $fee_name ) && 'Cart Discount' == $fee_name ) {
-				$cart_totals_fee_html = $cart_totals_fee_html . '<a href="javascript:void(0);" id="mwb_wpr_remove_cart_point">' . __( '[Remove]', 'rewardeem-woocommerce-points-rewards' ) . '</a>';
+				$cart_totals_fee_html = $cart_totals_fee_html . '<a href="javascript:void(0);" id="mwb_wpr_remove_cart_point">' . __( '[Remove]', 'points-rewards-for-woocommerce' ) . '</a>';
 			}
 		}
 		return $cart_totals_fee_html;
@@ -1148,11 +1150,11 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	public function mwb_wpr_remove_cart_point() {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
 		$response['result'] = false;
-		$response['message'] = __( 'Failed to Remove Cart Disocunt', 'rewardeem-woocommerce-points-rewards' );
+		$response['message'] = __( 'Failed to Remove Cart Disocunt', 'points-rewards-for-woocommerce' );
 		if ( ! empty( WC()->session->get( 'mwb_cart_points' ) ) ) {
 			WC()->session->__unset( 'mwb_cart_points' );
 			$response['result'] = true;
-			$response['message'] = __( 'Successfully Removed Cart Disocunt', 'rewardeem-woocommerce-points-rewards' );
+			$response['message'] = __( 'Successfully Removed Cart Disocunt', 'points-rewards-for-woocommerce' );
 		}
 		wp_send_json( $response );
 	}
@@ -1248,7 +1250,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	public function mwb_wpr_send_points_deducted_mail( $user_id, $type, $fee_to_point ) {
 		$user = get_user_by( 'ID', $user_id );
 		$user_email = $user->user_email;
-		$user_name = $user->user_firstname;
+		$user_name = $user->user_login;
 		$mwb_wpr_notificatin_array = get_option( 'mwb_wpr_notificatin_array', true );
 		/*check is not empty the notification array*/
 		if ( ! empty( $mwb_wpr_notificatin_array ) && is_array( $mwb_wpr_notificatin_array ) ) {
@@ -1261,7 +1263,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 			$mwb_wpr_email_discription = str_replace( '[TOTALPOINTS]', $mwb_wpr_total_points, $mwb_wpr_email_discription );
 			$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 			/*check is mail notification is enable or not*/
-			if ( Rewardeem_woocommerce_Points_Rewards_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
+			if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
 				$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 				/*Send the email to user related to the signup*/
 				 wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
@@ -1325,7 +1327,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 				foreach ( $existing_item_meta['product_meta'] ['meta_data'] as $key => $val ) {
 					if ( 'mwb_wpm_points' == $key ) {
 						$item_meta [] = array(
-							'name' => __( 'Points', 'rewardeem-woocommerce-points-rewards' ),
+							'name' => __( 'Points', 'points-rewards-for-woocommerce' ),
 							'value' => stripslashes( $val ),
 						);
 					}
@@ -1360,12 +1362,12 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 			if ( ! $product_is_variable ) {
 				$get_product_points = get_post_meta( $post->ID, 'mwb_points_product_value', 1 );
 				echo '<span class=mwb_wpr_product_point style=background-color:' . esc_html( $mwb_wpr_notification_color ) . '>' . esc_html( $mwb_wpr_assign_pro_text ) . ':' . esc_html( $get_product_points );
-				esc_html_e( 'Points', 'rewardeem-woocommerce-points-rewards' );
+				esc_html_e( 'Points', 'points-rewards-for-woocommerce' );
 				echo '</span>';
 			} elseif ( $product_is_variable ) {
 				$get_product_points = '<span class=mwb_wpr_variable_points></span>';
 				echo '<span class=mwb_wpr_product_point style="display:none;background-color:' . esc_html( $mwb_wpr_notification_color ) . '">' . esc_html( $mwb_wpr_assign_pro_text ) . ': ' . esc_html( $get_product_points );
-				esc_html_e( ' Points', 'rewardeem-woocommerce-points-rewards' );
+				esc_html_e( ' Points', 'points-rewards-for-woocommerce' );
 				echo '</span>';
 			}
 		}
@@ -1399,7 +1401,7 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	 */
 	public function mwb_wpr_woocommerce_order_item_display_meta_key( $display_key ) {
 		if ( 'Points' == $display_key ) {
-			$display_key = esc_html__( 'Points', 'rewardeem-woocommerce-points-rewards' );
+			$display_key = esc_html__( 'Points', 'points-rewards-for-woocommerce' );
 		}
 		return $display_key;
 	}
@@ -1647,8 +1649,11 @@ class Rewardeem_woocommerce_Points_Rewards_Public {
 	 * @name mwb_wpr_fee_tax_calculation
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
+	 * @param array $fee_taxes   taxes array.
+	 * @param array $fee   object array of the fee.
+	 * @param array $object  object of the add fee.
 	 */
-	public function mwb_wpr_fee_tax_calculation( $fee ) {
+	public function mwb_wpr_fee_tax_calculation( $fee_taxes, $fee, $object ) {
 		if ( 'point-discount' == $fee->object->id || 'cart-discount' == $fee->object->id ) {
 			foreach ( $fee_taxes as $key => $value ) {
 				$fee_taxes[ $key ] = 0;

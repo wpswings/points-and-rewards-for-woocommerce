@@ -4,16 +4,16 @@ $settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
 /*  This is the setting array */
 $mwb_wpr_order_total_points_settings = array(
 	array(
-		'title' => __( 'Enable the settings for the orders', 'rewardeem-woocommerce-points-rewards' ),
+		'title' => __( 'Enable the settings for the orders', 'points-rewards-for-woocommerce' ),
 		'type'  => 'checkbox',
 		'id' => 'mwb_wpr_thankyouorder_enable',
-		'desc_tip' => __( 'Check this box to enable gift coupon for those customers who had placed orders in your site', 'rewardeem-woocommerce-points-rewards' ),
-		'desc' => __( 'Enable Points on order total.', 'rewardeem-woocommerce-points-rewards' ),
+		'desc_tip' => __( 'Check this box to enable gift coupon for those customers who had placed orders in your site', 'points-rewards-for-woocommerce' ),
+		'desc' => __( 'Enable Points on order total.', 'points-rewards-for-woocommerce' ),
 		'class' => 'input-text',
 	),
 	array(
 		'type' => 'create_order_total_points',
-		'title' => __( 'Enter Points  within Order Range', 'rewardeem-woocommerce-points-rewards' ),
+		'title' => __( 'Enter Points  within Order Range', 'points-rewards-for-woocommerce' ),
 	),
 );
 if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) ) {
@@ -72,7 +72,7 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) ) {
 							 do_action( 'mwb_wpr_order_total_points', $thankyouorder_min, $thankyouorder_max, $thankyouorder_value );
 							?>
 						
-					<input type="button" value="<?php esc_html_e( 'Add More', 'rewardeem-woocommerce-points-rewards' ); ?>" class="mwb_wpr_add_more button" id="mwb_wpr_add_more">
+					<input type="button" value="<?php esc_html_e( 'Add More', 'points-rewards-for-woocommerce' ); ?>" class="mwb_wpr_add_more button" id="mwb_wpr_add_more">
 						<?php
 					}
 					?>
@@ -83,5 +83,5 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) ) {
 	</table>
 </div>
 <p class="submit">
-	<input type="submit" value='<?php esc_html_e( 'Save changes', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_order_totalsettings">
+	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_order_totalsettings">
 </p>

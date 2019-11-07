@@ -19,7 +19,7 @@
  * @subpackage Rewardeem_woocommerce_Points_Rewards/admin
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Rewardeem_woocommerce_Points_Rewards_Admin {
+class Points_Rewards_For_WooCommerce_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -60,7 +60,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	 */
 	public function enqueue_styles( $hook ) {
 		if ( 'woocommerce_page_mwb-rwpr-setting' == $hook ) {
-			wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'admin/css/rewardeem-woocommerce-points-rewards-admin.css', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'select2' );
 		}
 	}
@@ -83,21 +83,23 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 				wp_enqueue_style( 'woocommerce_admin_styles' );
 				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION );
+				// Sticky-JS
+				wp_enqueue_script( 'sticky_js', MWB_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ),WC_VERSION , true );
 				wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery' ), WC_VERSION, true );
 				$locale  = localeconv();
 				$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
 				$params  = array(
 					/* translators: %s: decimal */
-					'i18n_decimal_error'               => sprintf( __( 'Please enter in decimal (%s) format without thousand separators.', 'rewardeem-woocommerce-points-rewards' ), $decimal ),
+					'i18n_decimal_error'               => sprintf( __( 'Please enter in decimal (%s) format without thousand separators.', 'points-rewards-for-woocommerce' ), $decimal ),
 					/* translators: %s: price decimal separator */
-					'i18n_mon_decimal_error'           => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.', 'rewardeem-woocommerce-points-rewards' ), wc_get_price_decimal_separator() ),
-					'i18n_country_iso_error'           => __( 'Please enter in country code with two capital letters.', 'rewardeem-woocommerce-points-rewards' ),
-					'i18_sale_less_than_regular_error' => __( 'Please enter in a value less than the regular price.', 'rewardeem-woocommerce-points-rewards' ),
+					'i18n_mon_decimal_error'           => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.', 'points-rewards-for-woocommerce' ), wc_get_price_decimal_separator() ),
+					'i18n_country_iso_error'           => __( 'Please enter in country code with two capital letters.', 'points-rewards-for-woocommerce' ),
+					'i18_sale_less_than_regular_error' => __( 'Please enter in a value less than the regular price.', 'points-rewards-for-woocommerce' ),
 					'decimal_point'                    => $decimal,
 					'mon_decimal_point'                => wc_get_price_decimal_separator(),
 					'strings'                          => array(
-						'import_products' => __( 'Import', 'rewardeem-woocommerce-points-rewards' ),
-						'export_products' => __( 'Export', 'rewardeem-woocommerce-points-rewards' ),
+						'import_products' => __( 'Import', 'points-rewards-for-woocommerce' ),
+						'export_products' => __( 'Export', 'points-rewards-for-woocommerce' ),
 					),
 					'urls'                             => array(
 						'import_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_importer' ) ),
@@ -124,38 +126,38 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 				$url     = admin_url( 'admin.php?page=mwb-wpr-setting' );
 				$mwb_wpr = array(
 					'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-					'validpoint'         => __( 'Please enter valid points', 'rewardeem-woocommerce-points-rewards' ),
-					'Labelname'          => __( 'Enter the Name of the Level', 'rewardeem-woocommerce-points-rewards' ),
-					'Labeltext'          => __( 'Enter Level', 'rewardeem-woocommerce-points-rewards' ),
-					'Points'             => __( 'Enter Points', 'rewardeem-woocommerce-points-rewards' ),
-					'Categ_text'         => __( 'Select Product Category', 'rewardeem-woocommerce-points-rewards' ),
-					'Remove_text'        => __( 'Remove', 'rewardeem-woocommerce-points-rewards' ),
+					'validpoint'         => __( 'Please enter valid points', 'points-rewards-for-woocommerce' ),
+					'Labelname'          => __( 'Enter the Name of the Level', 'points-rewards-for-woocommerce' ),
+					'Labeltext'          => __( 'Enter Level', 'points-rewards-for-woocommerce' ),
+					'Points'             => __( 'Enter Points', 'points-rewards-for-woocommerce' ),
+					'Categ_text'         => __( 'Select Product Category', 'points-rewards-for-woocommerce' ),
+					'Remove_text'        => __( 'Remove', 'points-rewards-for-woocommerce' ),
 					'Categ_option'       => $option_categ,
-					'Prod_text'          => __( 'Select Product', 'rewardeem-woocommerce-points-rewards' ),
-					'Discounttext'       => __( 'Enter Discount (%)', 'rewardeem-woocommerce-points-rewards' ),
-					'error_notice'       => __( 'Fields cannot be empty', 'rewardeem-woocommerce-points-rewards' ),
-					'LevelName_notice'   => __( 'Please Enter the Name of the Level', 'rewardeem-woocommerce-points-rewards' ),
-					'LevelValue_notice'  => __( 'Please Enter valid Points', 'rewardeem-woocommerce-points-rewards' ),
-					'CategValue_notice'  => __( 'Please select a category', 'rewardeem-woocommerce-points-rewards' ),
-					'ProdValue_notice'   => __( 'Please select a product', 'rewardeem-woocommerce-points-rewards' ),
-					'Discount_notice'    => __( 'Please enter valid discount', 'rewardeem-woocommerce-points-rewards' ),
-					'success_assign'     => __( 'Points are assigned successfully!', 'rewardeem-woocommerce-points-rewards' ),
-					'error_assign'       => __( 'Enter Some Valid Points!', 'rewardeem-woocommerce-points-rewards' ),
-					'success_remove'     => __( 'Points are removed successfully!', 'rewardeem-woocommerce-points-rewards' ),
-					'Days'               => __( 'Days', 'rewardeem-woocommerce-points-rewards' ),
-					'Weeks'              => __( 'Weeks', 'rewardeem-woocommerce-points-rewards' ),
-					'Months'             => __( 'Months', 'rewardeem-woocommerce-points-rewards' ),
-					'Years'              => __( 'Years', 'rewardeem-woocommerce-points-rewards' ),
-					'Exp_period'         => __( 'Expiration Period', 'rewardeem-woocommerce-points-rewards' ),
+					'Prod_text'          => __( 'Select Product', 'points-rewards-for-woocommerce' ),
+					'Discounttext'       => __( 'Enter Discount (%)', 'points-rewards-for-woocommerce' ),
+					'error_notice'       => __( 'Fields cannot be empty', 'points-rewards-for-woocommerce' ),
+					'LevelName_notice'   => __( 'Please Enter the Name of the Level', 'points-rewards-for-woocommerce' ),
+					'LevelValue_notice'  => __( 'Please Enter valid Points', 'points-rewards-for-woocommerce' ),
+					'CategValue_notice'  => __( 'Please select a category', 'points-rewards-for-woocommerce' ),
+					'ProdValue_notice'   => __( 'Please select a product', 'points-rewards-for-woocommerce' ),
+					'Discount_notice'    => __( 'Please enter valid discount', 'points-rewards-for-woocommerce' ),
+					'success_assign'     => __( 'Points are assigned successfully!', 'points-rewards-for-woocommerce' ),
+					'error_assign'       => __( 'Enter Some Valid Points!', 'points-rewards-for-woocommerce' ),
+					'success_remove'     => __( 'Points are removed successfully!', 'points-rewards-for-woocommerce' ),
+					'Days'               => __( 'Days', 'points-rewards-for-woocommerce' ),
+					'Weeks'              => __( 'Weeks', 'points-rewards-for-woocommerce' ),
+					'Months'             => __( 'Months', 'points-rewards-for-woocommerce' ),
+					'Years'              => __( 'Years', 'points-rewards-for-woocommerce' ),
+					'Exp_period'         => __( 'Expiration Period', 'points-rewards-for-woocommerce' ),
 					'mwb_wpr_url'        => $url,
-					'reason'             => __( 'Please enter Remark', 'rewardeem-woocommerce-points-rewards' ),
+					'reason'             => __( 'Please enter Remark', 'points-rewards-for-woocommerce' ),
 					'mwb_wpr_nonce'      => wp_create_nonce( 'mwb-wpr-verify-nonce' ),
 					'check_pro_activate' => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
-					'pro_text'           => __( 'Please Purchase the Pro Plugin.', 'rewardeem-woocommerce-points-rewards' ),
-					'success_update'     => __( 'Points are updated successfully', 'rewardeem-woocommerce-points-rewards' ),
+					'pro_text'           => __( 'Please Purchase the Pro Plugin.', 'points-rewards-for-woocommerce' ),
+					'success_update'     => __( 'Points are updated successfully', 'points-rewards-for-woocommerce' ),
 				);
 
-				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/rewardeem-woocommerce-points-rewards-admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2' ), $this->version, false );
+				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2' ), $this->version, false );
 
 				wp_localize_script( $this->plugin_name . 'admin-js', 'mwb_wpr_object', $mwb_wpr );
 
@@ -173,7 +175,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_rwpr_admin_menu() {
-		add_submenu_page( 'woocommerce', __( 'Ultimate WooCommerce Points and Rewards', 'rewardeem-woocommerce-points-rewards' ), __( 'Ultimate WooCommerce Points and Rewards', 'rewardeem-woocommerce-points-rewards' ), 'manage_options', 'mwb-rwpr-setting', array( $this, 'mwb_rwpr_admin_setting' ) );
+		add_submenu_page( 'woocommerce', __( 'Points and Rewards for WooCommerce', 'points-rewards-for-woocommerce' ), __( 'Points and Rewards for WooCommerce', 'points-rewards-for-woocommerce' ), 'manage_options', 'mwb-rwpr-setting', array( $this, 'mwb_rwpr_admin_setting' ) );
 	}
 
 	/**
@@ -185,7 +187,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_rwpr_admin_setting() {
-		include_once MWB_RWPR_DIR_PATH . '/admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php';
+		include_once MWB_RWPR_DIR_PATH . '/admin/partials/points-rewards-for-woocommerce-admin-display.php';
 	}
 
 	/**
@@ -203,7 +205,6 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 			/* Get the user points*/
 			$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 			/* Get the Input Values*/
-			$today_date = date_i18n( 'Y-m-d h:i:sa' );
 			$points     = sanitize_text_field( wp_unslash( $_POST['points'] ) );
 			$sign       = sanitize_text_field( wp_unslash( $_POST['sign'] ) );
 			$reason     = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
@@ -247,6 +248,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	 */
 	public static function mwb_wpr_update_points_details( $user_id, $type, $points, $data ) {
 		/* Get the points of the points details*/
+		$today_date = date_i18n( 'Y-m-d h:i:sa' );
 		$admin_points = get_user_meta( $user_id, 'points_details', true );
 		if ( isset( $points ) && ! empty( $points ) ) {
 			/* Check the type of the array*/
@@ -292,7 +294,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 	public function mwb_wpr_send_mail_details( $user_id, $type ) {
 		$user                      = get_user_by( 'ID', $user_id );
 		$user_email                = $user->user_email;
-		$user_name                 = $user->user_firstname;
+		$user_name                 = $user->user_login;
 		$mwb_wpr_notificatin_array = get_option( 'mwb_wpr_notificatin_array', true );
 		if ( 'admin_notification' == $type ) {
 			/* Check is settings array is not empty*/
@@ -386,9 +388,9 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
 		$mwb_wpr_categ_list = array();
 		if ( isset( $_POST['mwb_wpr_categ_list'] ) && ! empty( $_POST['mwb_wpr_categ_list'] ) ) {
-			$mwb_wpr_categ_list = sanitize_text_field( wp_unslash( $_POST['mwb_wpr_categ_list'] ) );
+			$mwb_wpr_categ_list = map_deep( wp_unslash( $_POST['mwb_wpr_categ_list'] ), 'sanitize_text_field' );
 		}
-		$response['result'] = __( 'Fail due to an error', 'rewardeem-woocommerce-points-rewards' );
+		$response['result'] = __( 'Fail due to an error', 'points-rewards-for-woocommerce' );
 		if ( isset( $mwb_wpr_categ_list ) ) {
 			$products              = array();
 			$selected_cat          = $mwb_wpr_categ_list;
@@ -411,7 +413,6 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 				$product_title           = $loop->post->post_title;
 				$products[ $product_id ] = $product_title;
 			endwhile;
-
 			$response['data']   = $products;
 			$response['result'] = 'success';
 			wp_send_json( $response );
@@ -471,28 +472,28 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 			<table class="mwb_wpr_repeatable_section">
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_level_name"><?php esc_html_e( 'Enter Level', 'rewardeem-woocommerce-points-rewards' ); ?></label>
+						<label for="mwb_wpr_membership_level_name"><?php esc_html_e( 'Enter Level', 'points-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$attribute_description = __( 'Entered text will be name of the level for membership', 'rewardeem-woocommerce-points-rewards' );
+						$attribute_description = __( 'Entered text will be name of the level for membership', 'points-rewards-for-woocommerce' );
 						echo wc_help_tip( $attribute_description );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 						<label for="mwb_wpr_membership_level_name">
-							<input type="text" name="mwb_wpr_membership_level_name_<?php echo esc_html( $count ); ?>" value="<?php echo esc_html( $this->check_is_not_empty( $key ) ); ?>" id="mwb_wpr_membership_level_name_<?php echo esc_html( $count ); ?>" class="text_points" required><?php esc_html_e( 'Enter the Name of the Level', 'rewardeem-woocommerce-points-rewards' ); ?>
+							<input type="text" name="mwb_wpr_membership_level_name_<?php echo esc_html( $count ); ?>" value="<?php echo esc_html( $this->check_is_not_empty( $key ) ); ?>" id="mwb_wpr_membership_level_name_<?php echo esc_html( $count ); ?>" class="text_points" required><?php esc_html_e( 'Enter the Name of the Level', 'points-rewards-for-woocommerce' ); ?>
 						</label>
 						<?php if ( ! empty( $value ) ) : ?>
-						<input type="button" value='<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo esc_html( $count ); ?>">	
+						<input type="button" value='<?php esc_html_e( 'Remove', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo esc_html( $count ); ?>">	
 						<?php endif; ?> 			
 					</td>
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_level_value"><?php esc_html_e( 'Enter Points', 'rewardeem-woocommerce-points-rewards' ); ?></label>
+						<label for="mwb_wpr_membership_level_value"><?php esc_html_e( 'Enter Points', 'points-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$attribute_description = __( 'Entered points need to be reached for this level', 'rewardeem-woocommerce-points-rewards' );
+						$attribute_description = __( 'Entered points need to be reached for this level', 'points-rewards-for-woocommerce' );
 						echo wc_help_tip( $attribute_description );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 						<label for="mwb_wpr_membership_level_value">
@@ -502,11 +503,11 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_expiration"><?php esc_html_e( 'Expiration Period', 'rewardeem-woocommerce-points-rewards' ); ?></label>
+						<label for="mwb_wpr_membership_expiration"><?php esc_html_e( 'Expiration Period', 'points-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$attribute_description = __( 'Select the days,week,month or year for expiartion of current level', 'rewardeem-woocommerce-points-rewards' );
+						$attribute_description = __( 'Select the days,week,month or year for expiartion of current level', 'points-rewards-for-woocommerce' );
 						echo wc_help_tip( $attribute_description );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						$exp_num = isset( $value['Exp_Number'] ) ? $value['Exp_Number'] : '';
 						?>
@@ -523,7 +524,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 						}
 						?>
 						>
-						<?php esc_html_e( 'Days', 'rewardeem-woocommerce-points-rewards' ); ?>
+						<?php esc_html_e( 'Days', 'points-rewards-for-woocommerce' ); ?>
 						</option>
 						<option value="weeks"
 						<?php
@@ -535,7 +536,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 							}
 						}
 						?>
-						><?php esc_html_e( 'Weeks', 'rewardeem-woocommerce-points-rewards' ); ?>
+						><?php esc_html_e( 'Weeks', 'points-rewards-for-woocommerce' ); ?>
 						</option>
 						<option value="months"
 						<?php
@@ -547,7 +548,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 							}
 						}
 						?>
-						><?php esc_html_e( 'Months', 'rewardeem-woocommerce-points-rewards' ); ?>
+						><?php esc_html_e( 'Months', 'points-rewards-for-woocommerce' ); ?>
 						</option>
 						<option value="years"
 						<?php
@@ -559,18 +560,18 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 							}
 						}
 						?>
-						><?php esc_html_e( 'Years', 'rewardeem-woocommerce-points-rewards' ); ?>
+						><?php esc_html_e( 'Years', 'points-rewards-for-woocommerce' ); ?>
 						</option>	
 						</select>		
 					</td>
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_category_list"><?php esc_html_e( 'Select Product Category', 'rewardeem-woocommerce-points-rewards' ); ?></label>
+						<label for="mwb_wpr_membership_category_list"><?php esc_html_e( 'Select Product Category', 'points-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$attribute_description = __( 'Select', 'rewardeem-woocommerce-points-rewards' );
+						$attribute_description = __( 'Select', 'points-rewards-for-woocommerce' );
 						echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 						<select id="mwb_wpr_membership_category_list_<?php echo esc_html( $count ); ?>" required="true" multiple="multiple" class="mwb_wpr_common_class_categ" data-id="<?php echo esc_html( $count ); ?>" name="mwb_wpr_membership_category_list_<?php echo esc_html( $count ); ?>[]">
@@ -599,11 +600,11 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_product_list"><?php esc_html_e( 'Select Product', 'rewardeem-woocommerce-points-rewards' ); ?></label>
+						<label for="mwb_wpr_membership_product_list"><?php esc_html_e( 'Select Product', 'points-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$attribute_description = __( 'Product of selected category will get displayed in Select Product Section', 'rewardeem-woocommerce-points-rewards' );
+						$attribute_description = __( 'Product of selected category will get displayed in Select Product Section', 'points-rewards-for-woocommerce' );
 						echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 						<select id="mwb_wpr_membership_product_list_<?php echo esc_html( $count ); ?>" multiple="multiple" name="mwb_wpr_membership_product_list_<?php echo esc_html( $count ); ?>[]">
@@ -643,11 +644,11 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_discount"><?php esc_html_e( 'Enter Discount (%)', 'rewardeem-woocommerce-points-rewards' ); ?></label>
+						<label for="mwb_wpr_membership_discount"><?php esc_html_e( 'Enter Discount (%)', 'points-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$attribute_description = __( 'Entered Discount will be applied on above selected products', 'rewardeem-woocommerce-points-rewards' );
+						$attribute_description = __( 'Entered Discount will be applied on above selected products', 'points-rewards-for-woocommerce' );
 						echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 						<label for="mwb_wpr_membership_discount">
@@ -713,12 +714,12 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 		<table class="form-table wp-list-table widefat fixed striped">
 			<tbody class="mwb_wpr_thankyouorder_tbody"> 
 				<tr valign="top">
-					<th><?php esc_html_e( 'Minimum', 'rewardeem-woocommerce-points-rewards' ); ?></th>
-					<th><?php esc_html_e( 'Maximum', 'rewardeem-woocommerce-points-rewards' ); ?></th>
+					<th><?php esc_html_e( 'Minimum', 'points-rewards-for-woocommerce' ); ?></th>
+					<th><?php esc_html_e( 'Maximum', 'points-rewards-for-woocommerce' ); ?></th>
 
-					<th><?php esc_html_e( 'Points', 'rewardeem-woocommerce-points-rewards' ); ?></th>
+					<th><?php esc_html_e( 'Points', 'points-rewards-for-woocommerce' ); ?></th>
 					<?php if ( ! empty( $key ) ) : ?> 
-					<th class="mwb_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'rewardeem-woocommerce-points-rewards' ); ?></th>
+					<th class="mwb_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'points-rewards-for-woocommerce' ); ?></th>
 					<?php endif; ?>
 				</tr>
 				<tr valign="top">
@@ -739,7 +740,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin {
 					</td>    
 					<?php if ( ! empty( $key ) ) : ?>                       
 						<td class="mwb_wpr_remove_thankyouorder_content forminp forminp-text">
-							<input type="button" value="<?php esc_html_e( 'Remove', 'rewardeem-woocommerce-points-rewards' ); ?>" class="mwb_wpr_remove_thankyouorder button" >
+							<input type="button" value="<?php esc_html_e( 'Remove', 'points-rewards-for-woocommerce' ); ?>" class="mwb_wpr_remove_thankyouorder button" >
 						</td>
 					<?php endif; ?>
 				</tr>

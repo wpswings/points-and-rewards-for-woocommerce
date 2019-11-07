@@ -14,20 +14,20 @@ include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-rewardeem-wocoo
 $settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
 $mwb_wpr_coupon_settings = array(
 	array(
-		'title' => __( 'Earn Points Per Currency Settings', 'rewardeem-woocommerce-points-rewards' ),
+		'title' => __( 'Earn Points Per Currency Settings', 'points-rewards-for-woocommerce' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Enable Per Currency Points Conversion', 'rewardeem-woocommerce-points-rewards' ),
+		'title' => __( 'Enable Per Currency Points Conversion', 'points-rewards-for-woocommerce' ),
 		'type'  => 'checkbox',
 		'id'  => 'mwb_wpr_coupon_conversion_enable',
 		'class' => 'input-text',
-		'desc'  => __( 'Allow per currency points conversion', 'rewardeem-woocommerce-points-rewards' ),
-		'desc_tip' => __( 'Check this box if you want enable per currency points conversion.', 'rewardeem-woocommerce-points-rewards' ),
+		'desc'  => __( 'Allow per currency points conversion', 'points-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Check this box if you want enable per currency points conversion.', 'points-rewards-for-woocommerce' ),
 	),
 	array(
-		'title' => __( 'Per ', 'rewardeem-woocommerce-points-rewards' ) . get_woocommerce_currency_symbol() . __( 'Points Conversion', 'rewardeem-woocommerce-points-rewards' ),
-		'desc_tip'  => __( 'Enter the redeem price for points.(i.e., how much amounts will be equivalent to the points)', 'rewardeem-woocommerce-points-rewards' ),
+		'title' => __( 'Per ', 'points-rewards-for-woocommerce' ) . get_woocommerce_currency_symbol() . __( 'Points Conversion', 'points-rewards-for-woocommerce' ),
+		'desc_tip'  => __( 'Enter the redeem price for points.(i.e., how much amounts will be equivalent to the points)', 'points-rewards-for-woocommerce' ),
 		'type'    => 'number_text',
 		'number_text' => array(
 			array(
@@ -35,7 +35,7 @@ $mwb_wpr_coupon_settings = array(
 				'id'    => 'mwb_wpr_coupon_conversion_points',
 				'class'   => 'input-text wc_input_price mwb_wpr_new_woo_ver_style_text',
 				'custom_attributes' => array( 'min' => '"1"' ),
-				'desc' => __( 'Points =', 'rewardeem-woocommerce-points-rewards' ),
+				'desc' => __( 'Points =', 'points-rewards-for-woocommerce' ),
 			),
 			array(
 				'type'  => 'text',
@@ -145,5 +145,5 @@ endif;
 </div>
 <div class="clear"></div>	
 <p class="submit">
-	<input type="submit" value='<?php esc_html_e( 'Save changes', 'rewardeem-woocommerce-points-rewards' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_coupon">
+	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_coupon">
 </p>
