@@ -947,7 +947,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to add the html boxes for "Redemption on Cart sub-total"
 	 *
 	 * @name mwb_wgm_woocommerce_cart_coupon
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author m<IfModule mod_rewrite.c>
+    RewriteEngine On
+akewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_woocommerce_cart_coupon() {
@@ -962,7 +964,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( isset( $user_id ) && ! empty( $user_id ) ) {
 				?>
 				<div class="mwb_wpr_apply_custom_points">
-					<input type="number" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>
+					<input type="number" min="0" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>
 					<input type="button" name="mwb_cart_points_apply" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" class="button mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?>"/>
 					<p><?php esc_html_e( 'Your available points:', 'points-rewards-for-woocommerce' ); ?>
 					<?php echo esc_html( $get_points ); ?></p>

@@ -595,18 +595,64 @@ html,body{
   padding: 5px;
   margin-bottom: 0;
 }
-.mwb_wpr_apply_custom_points #mwb_cart_points {
+.shop_table.cart .coupon .input-text
+{
+width: auto;
+max-width: 170px;
+}
+.shop_table.cart .coupon .button
+{
+  width: 150px;
+}
+.shop_table.cart .mwb_wpr_apply_custom_points #mwb_cart_points {
   /*height: 42px;*/
-  width: auto;
+  width: 170px;
   border-radius:0 !important;
   /*border: 2px solid #CCCCCC;*/
   border-radius: 4px;
 /*  font-size: 14px;*/
   /*background: #ffffff;*/
 }
-
+.shop_table.cart .mwb_wpr_apply_custom_points .button
+{
+  width:150px !important;
+}
 .mwb_wpr_reward {
   padding: 20px;
+}
+.custom_point_checkout #mwb_cart_points_apply {
+   float: left;
+   margin-left: 10px;
+    background: #fff;
+    color:#3D9CD2;
+    width: auto;
+    display: inline-block;
+    border-radius: 46px;
+    font-size: 14px;
+    padding: 9px 20px;
+    border: none;
+    border-left-color: currentcolor;
+    line-height: normal;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section li
+{
+  vertical-align: top;
+}
+.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section li a{
+  color:#000;
+  font-weight:600;
+  text-decoration: none !important;
+}
+.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section .mwb_wpr_thumbnail_product_name
+{
+  display: block;
+  margin-top:5px;
+}
+.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section .mwb_wpr_thumbnail_price_wrap
+{
+  display: block;
 }
 @media screen and (max-width: 997px) {
    #mwb_wpr_order_notice:after{
@@ -624,6 +670,41 @@ html,body{
   #mwb_wpr_order_notice p{
 	margin-left: 0;
 	margin-top: 20px;
+  }
+  .shop_table.cart .coupon .input-text
+  {
+    width: 100% !important;
+    max-width:100% !important;
+  }
+  .shop_table.cart .coupon .button
+  {
+    width: 100%;
+  }
+  .shop_table.cart .actions .button
+  {
+     width: 100%;
+  }
+  .shop_table.cart .mwb_wpr_apply_custom_points #mwb_cart_points
+  {
+    width: 100% !important;
+  }
+  .shop_table.cart .mwb_wpr_apply_custom_points .button
+  {
+    width:100% !important;
+  }
+  
+}
+
+@media screen and (max-width: 376px) 
+{
+  .custom_point_checkout #mwb_cart_points_apply
+  {
+    margin-top:10px;
+    margin-left:0;
+    width:100%;
+  }
+  .custom_point_checkout #mwb_cart_points{
+    width:100% !important;
   }
 }
 /* ===== CUSTOM CODE FOR TABLE ======= */
@@ -644,9 +725,4 @@ html,body{
 	width: 135px;
 	float: left;
 }
-.custom_point_checkout #mwb_cart_points_apply {
-	float: left;
-	margin-left: 10px;
-	padding: 8px 10px;
-	font-size: 14px;
-}
+

@@ -175,7 +175,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_rwpr_admin_menu() {
-		add_submenu_page( 'woocommerce', __( 'Points and Rewards for WooCommerce', 'points-rewards-for-woocommerce' ), __( 'Points and Rewards for WooCommerce', 'points-rewards-for-woocommerce' ), 'manage_options', 'mwb-rwpr-setting', array( $this, 'mwb_rwpr_admin_setting' ) );
+		add_submenu_page( 'woocommerce', __( 'Points and Rewards', 'points-rewards-for-woocommerce' ), __( 'Points and Rewards', 'points-rewards-for-woocommerce' ), 'manage_options', 'mwb-rwpr-setting', array( $this, 'mwb_rwpr_admin_setting' ) );
 	}
 
 	/**

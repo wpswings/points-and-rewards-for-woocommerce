@@ -62,7 +62,7 @@ if ( isset( $_POST['mwb_wpr_save_membership'] ) ) {
 	}
 }
 if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
-	include_once MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb_wpr_membership_log_table.php';
+	include_once MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-wpr-membership-log-table.php';
 
 } else {
 	$membership_settings_array = get_option( 'mwb_wpr_membership_settings', true );

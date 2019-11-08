@@ -249,6 +249,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	}
 }
 ?>
+<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'Membership Log', 'points-rewards-for-woocommerce' ); ?></h1>
 <form method="post">
 	<input type="hidden" name="page" value="<?php esc_html_e( 'points_log_list_table', 'points-rewards-for-woocommerce' ); ?>">
 	<?php
