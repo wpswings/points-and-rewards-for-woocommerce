@@ -22,7 +22,7 @@ $mwb_wpr_setting_tab = array(
 	),
 	'coupon-setting' => array(
 
-		'title'     => __( 'Per Currency Points & Coupon Settings', 'points-rewards-for-woocommerce' ),
+		'title'     => apply_filters( 'mwb_coupon_tab_text', __( 'Per Currency Points Settings', 'points-rewards-for-woocommerce' ) ),
 		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-coupon-settings.php',
 	),
 	'points-table' => array(
