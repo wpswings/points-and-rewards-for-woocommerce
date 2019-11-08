@@ -27,7 +27,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin_settings {
 	*@since 1.0.0 
 	*/
 	public function mwb_rwpr_generate_checkbox_html($value,$general_settings) {
-		 	$enable_mwb_wpr = isset($general_settings[$value['id']]) ? intval($general_settings[$value['id']]) : 0;
+		$enable_mwb_wpr = isset($general_settings[$value['id']]) ? intval($general_settings[$value['id']]) : 0;
 		?>
 		<label for="<?php echo (array_key_exists('id', $value))?$value['id']:''; ?>">
 			<input type="checkbox" name="<?php echo (array_key_exists('id', $value))?$value['id']:''; ?>" <?php checked($enable_mwb_wpr,1);?> id="<?php echo (array_key_exists('id', $value))?$value['id']:''; ?>" class="<?php echo (array_key_exists('class', $value))?$value['class']:'';?>"> <?php echo (array_key_exists('desc', $value))?$value['desc']:'';?>
@@ -244,7 +244,7 @@ class Rewardeem_woocommerce_Points_Rewards_Admin_settings {
 						
 					}
 				}?>  name="<?php echo (array_key_exists('id', $value))?$value['id']:''; ?>" id="<?php echo (array_key_exists('id', $value))?$value['id']:''; ?>"
-				class="<?php echo (array_key_exists('class', $value))?$value['class']:'';?>"><?php echo $mwb_signup_value;?>
+				class="<?php echo (array_key_exists('class', $value))?$value['class']:'';?>"><?php echo trim( $mwb_signup_value );?>
 			</textarea>
 		</label>
 		<p class="description"><?php echo $value['desc2']; ?></p>
