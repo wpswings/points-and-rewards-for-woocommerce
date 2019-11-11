@@ -115,9 +115,9 @@ $mwb_wpr_assign_product_table_settings = array(
 		'desc_tip' => __( 'This is the global setting for Product Purchase Points, check this if you want to assign points to all products at once or uncheck if you want to remove assigned points from all products at once.', 'points-rewards-for-woocommerce' ),
 	),
 	array(
-		'title' => __( 'Enable Assign Global Product Points', 'points-rewards-for-woocommerce' ),
+		'title' => __( 'Enter Assign Global Product Points', 'points-rewards-for-woocommerce' ),
 		'type'  => 'number',
-		'desc'  => __( 'Enable Assign Global Product Points', 'points-rewards-for-woocommerce' ),
+		'desc'  => __( 'Enter Global Product Points', 'points-rewards-for-woocommerce' ),
 		'id'    => 'mwb_wpr_pro_points_to_all',
 		'desc_tip' => __( 'Entered Points are assigned to All Products .', 'points-rewards-for-woocommerce' ),
 		'custom_attribute' => array( 'min' => '"1"' ),

@@ -722,8 +722,8 @@ class Points_Rewards_For_WooCommerce_Public {
 			$data = array();
 			$this->mwb_wpr_update_points_details( $user_id, 'points_on_order', $mwb_wpr_point, $data );
 			$mwb_wpr_shortcode = array(
-				'[Points]' => $mwb_wpr_point,
-				'[Total Points]' => $total_points,
+				'[ORDERTOTALPOINT]' => $mwb_wpr_point,
+				'[TOTALPOINTS]' => $total_points,
 				'[USERNAME]' => $user->user_login,
 			);
 			$mwb_wpr_subject_content = array(

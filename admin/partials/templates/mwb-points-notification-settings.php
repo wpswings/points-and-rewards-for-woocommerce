@@ -159,7 +159,7 @@ $mwb_settings = array(
 		'class'             => 'input-text',
 		'desc_tip'      => __( 'Enter Email Description for user.', 'points-rewards-for-woocommerce' ),
 		'default'       => __( 'You have received [Points] points and your total points are [Total Points].', 'points-rewards-for-woocommerce' ),
-		'desc'          => __( 'Use ', 'points-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of per currency spent points', 'points-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points ', 'points-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-rewards-for-woocommerce' ),
+		'desc'          => __( 'Use ', 'points-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of per currency spent points ', 'points-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points ', 'points-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-rewards-for-woocommerce' ),
 
 	),
 	array(
@@ -191,32 +191,32 @@ $mwb_settings = array(
 	array(
 		'type'  => 'sectionend',
 	),
-	array(
-		'title' => __( 'Referral Purchase Points Notification Settings', 'points-rewards-for-woocommerce' ),
-		'type'  => 'title',
-	),
-	array(
-		'title'         => __( 'Email Subject', 'points-rewards-for-woocommerce' ),
-		'type'          => 'text',
-		'id'            => 'mwb_wpr_referral_purchase_email_subject',
-		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', 'points-rewards-for-woocommerce' ),
-		'default'   => __( 'Referral Purchase Points Notification', 'points-rewards-for-woocommerce' ),
-	),
-	array(
-		'title'         => __( 'Email Description', 'points-rewards-for-woocommerce' ),
-		'type'          => 'textarea_email',
-		'id'            => 'mwb_wpr_referral_purchase_email_discription_custom_id',
-		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', 'points-rewards-for-woocommerce' ),
-		'default'   => __( 'You have received ', 'points-rewards-for-woocommerce' ) . '[Points]' . __( ' points and your total points are ', 'points-rewards-for-woocommerce' ) . '[Total Points]',
-		'desc'          => __( 'Use ', 'points-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of Referral Purchase Points ', 'points-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points', 'points-rewards-for-woocommerce' ) . ' [Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', 'points-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-rewards-for-woocommerce' ),
+	// array(
+	// 	'title' => __( 'Referral Purchase Points Notification Settings', 'points-rewards-for-woocommerce' ),
+	// 	'type'  => 'title',
+	// ),
+	// array(
+	// 	'title'         => __( 'Email Subject', 'points-rewards-for-woocommerce' ),
+	// 	'type'          => 'text',
+	// 	'id'            => 'mwb_wpr_referral_purchase_email_subject',
+	// 	'class'             => 'input-text',
+	// 	'desc_tip'      => __( 'Input subject for email.', 'points-rewards-for-woocommerce' ),
+	// 	'default'   => __( 'Referral Purchase Points Notification', 'points-rewards-for-woocommerce' ),
+	// ),
+	// array(
+	// 	'title'         => __( 'Email Description', 'points-rewards-for-woocommerce' ),
+	// 	'type'          => 'textarea_email',
+	// 	'id'            => 'mwb_wpr_referral_purchase_email_discription_custom_id',
+	// 	'class'             => 'input-text',
+	// 	'desc_tip'      => __( 'Enter Email Description for user.', 'points-rewards-for-woocommerce' ),
+	// 	'default'   => __( 'You have received ', 'points-rewards-for-woocommerce' ) . '[Points]' . __( ' points and your total points are ', 'points-rewards-for-woocommerce' ) . '[Total Points]',
+	// 	'desc'          => __( 'Use ', 'points-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of Referral Purchase Points ', 'points-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points', 'points-rewards-for-woocommerce' ) . ' [Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', 'points-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-rewards-for-woocommerce' ),
 
 
-	),
-	array(
-		'type'  => 'sectionend',
-	),
+	// ),
+	// array(
+	// 	'type'  => 'sectionend',
+	// ),
 	array(
 		'title' => __( 'Upgrade Membership Level Notification', 'points-rewards-for-woocommerce' ),
 		'type'  => 'title',
@@ -265,30 +265,30 @@ $mwb_settings = array(
 	array(
 		'type'  => 'sectionend',
 	),
-	array(
-		'title' => __( "Deduct 'Per Currency Spent' Point Notification", 'points-rewards-for-woocommerce' ),
-		'type'  => 'title',
-	),
-	array(
-		'title'         => __( 'Email Subject', 'points-rewards-for-woocommerce' ),
-		'type'          => 'text',
-		'id'            => 'mwb_wpr_deduct_per_currency_point_subject',
-		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for email.', 'points-rewards-for-woocommerce' ),
-		'default'   => __( 'Your Points has been Deducted', 'points-rewards-for-woocommerce' ),
-	),
-	array(
-		'title'         => __( 'Email Description', 'points-rewards-for-woocommerce' ),
-		'type'          => 'textarea_email',
-		'id'            => 'mwb_wpr_deduct_per_currency_point_description',
-		'class'             => 'input-text',
-		'desc_tip'      => __( 'Enter Email Description for user.', 'points-rewards-for-woocommerce' ),
-		'default'   => __( 'Your [DEDUCTEDPOINT] has been deducted from your total points as you have requested for your refund, and your Total Point are [TOTALPOINTS].', 'points-rewards-for-woocommerce' ),
-		'desc'          => __( 'Use ', 'points-rewards-for-woocommerce' ) . '[DEDUCTEDPOINT]' . __( ' shortcode in place of points which has been deducted ', 'points-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Remaining Points.', 'points-rewards-for-woocommerce' ),
-	),
-	array(
-		'type'  => 'sectionend',
-	),
+	// array(
+	// 	'title' => __( "Deduct 'Per Currency Spent' Point Notification", 'points-rewards-for-woocommerce' ),
+	// 	'type'  => 'title',
+	// ),
+	// array(
+	// 	'title'         => __( 'Email Subject', 'points-rewards-for-woocommerce' ),
+	// 	'type'          => 'text',
+	// 	'id'            => 'mwb_wpr_deduct_per_currency_point_subject',
+	// 	'class'             => 'input-text',
+	// 	'desc_tip'      => __( 'Input subject for email.', 'points-rewards-for-woocommerce' ),
+	// 	'default'   => __( 'Your Points has been Deducted', 'points-rewards-for-woocommerce' ),
+	// ),
+	// array(
+	// 	'title'         => __( 'Email Description', 'points-rewards-for-woocommerce' ),
+	// 	'type'          => 'textarea_email',
+	// 	'id'            => 'mwb_wpr_deduct_per_currency_point_description',
+	// 	'class'             => 'input-text',
+	// 	'desc_tip'      => __( 'Enter Email Description for user.', 'points-rewards-for-woocommerce' ),
+	// 	'default'   => __( 'Your [DEDUCTEDPOINT] has been deducted from your total points as you have requested for your refund, and your Total Point are [TOTALPOINTS].', 'points-rewards-for-woocommerce' ),
+	// 	'desc'          => __( 'Use ', 'points-rewards-for-woocommerce' ) . '[DEDUCTEDPOINT]' . __( ' shortcode in place of points which has been deducted ', 'points-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Remaining Points.', 'points-rewards-for-woocommerce' ),
+	// ),
+	// array(
+	// 	'type'  => 'sectionend',
+	// ),
 	array(
 		'title' => __( 'Points On Cart Sub-Total', 'points-rewards-for-woocommerce' ),
 		'type'  => 'title',
@@ -331,8 +331,8 @@ $mwb_settings = array(
 		'id'            => 'mwb_wpr_point_on_order_total_range_desc',
 		'class'             => 'input-text',
 		'desc_tip'      => __( 'Enter Email Description for user.', 'points-rewards-for-woocommerce' ),
-		'default'   => __( 'Your [ORDERTOTALPOINT] Points has been added in now your Total Point are [TOTALPOINTS].', 'points-rewards-for-woocommerce' ),
-		'desc'          => __( 'Use ', 'points-rewards-for-woocommerce' ) . '[DEDUCTCARTPOINT]' . __( ' shortcode in place of points which has been deducted ', 'points-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-rewards-for-woocommerce' ),
+		'default'   => __( 'Your [ORDERTOTALPOINT] Points has been added in now your Total Point are [Total Points].', 'points-rewards-for-woocommerce' ),
+		'desc'          => __( 'Use ', 'points-rewards-for-woocommerce' ) . '[ORDERTOTALPOINT]' . __( ' shortcode in place of points which has been added ', 'points-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-rewards-for-woocommerce' ),
 	),
 	array(
 		'type'  => 'sectionend',
