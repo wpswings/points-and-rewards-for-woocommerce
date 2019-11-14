@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -27,7 +26,7 @@
  * @subpackage Rewardeem_woocommerce_Points_Rewards/includes
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Rewardeem_woocommerce_Points_Rewards {
+class Points_Rewards_For_Woocommerce {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -133,7 +132,7 @@ class Rewardeem_woocommerce_Points_Rewards {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Rewardeem_woocommerce_Points_Rewards_i18n class in order to set the domain and to register the hook
+	 * Uses the Points_Rewards_For_Woocommerce_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -141,7 +140,7 @@ class Rewardeem_woocommerce_Points_Rewards {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Rewardeem_woocommerce_Points_Rewards_i18n();
+		$plugin_i18n = new Points_Rewards_For_Woocommerce_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 

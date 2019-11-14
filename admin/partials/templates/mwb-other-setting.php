@@ -1,18 +1,22 @@
 <?php
 /**
- * Exit if accessed directly
+ * This is setttings array for the other settings
+ *
+ * Other Settings Template
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php';
-$settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
-/*
-/*
- * Other Settings Template
- */
-/* This is setttings array for the other settings*/
+include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
+$settings_obj = new Points_Rewards_For_WooCommerce_Settings();
+
 $mwb_wpr_other_settings = array(
 	array(
 		'title' => __( 'Shortcodes', 'points-rewards-for-woocommerce' ),
@@ -71,13 +75,10 @@ $mwb_wpr_other_settings = apply_filters( 'mwb_wpr_others_settings', $mwb_wpr_oth
 /*Save Settings*/
 $current_tab = 'mwb_wpr_othersetting_tab';
 
-if ( isset( $_GET['tab'] ) ) {
-	$current_tab = $_GET['tab'];
-}
-if ( isset( $_POST['mwb_wpr_save_othersetting'] ) ) {
-	if ( wp_verify_nonce( $_POST['mwb-wpr-nonce'], 'mwb-wpr-nonce' ) ) {
+if ( isset( $_POST['mwb_wpr_save_othersetting'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
+	$mwb_par_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+	if ( wp_verify_nonce( $mwb_par_nonce, 'mwb-wpr-nonce' ) ) {
 		unset( $_POST['mwb_wpr_save_othersetting'] );
-
 		$other_settings = array();
 		/* Check is input is not empty if empty then assign them default value*/
 		$postdata = $settings_obj->check_is_settings_is_not_empty( $mwb_wpr_other_settings, $_POST );
@@ -123,7 +124,7 @@ $other_settings = get_option( 'mwb_wpr_other_settings', array() );
 						if ( 'number' == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_number_html( $value, $other_settings );
 						}
-						if ( $value['type'] == 'color' ) {
+						if ( 'color' == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_color_box( $value, $other_settings );
 						}
 						if ( 'multiple_checkbox' == $value['type'] ) {

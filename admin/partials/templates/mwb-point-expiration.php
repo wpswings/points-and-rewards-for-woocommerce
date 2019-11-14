@@ -1,19 +1,22 @@
 <?php
 /**
- * Exit if accessed directly
+ * Points Expiration Template
+ *
+ * Points Expiration Template Template
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-/*
- * Points Expiration Template
- */
+
 $current_tab = 'mwb_wpr_point_expiration_tab';
 
-if ( isset( $_GET['tab'] ) ) {
-	$current_tab = $_GET['tab'];
-}
 if ( isset( $_POST['mwb_wpr_save_point_expiration'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Missing
 	if ( isset( $_POST['mwb_wpr_points_expiration_enable'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$_POST['mwb_wpr_points_expiration_enable'] = 'on';
@@ -77,7 +80,7 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 					echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
 					<label for="mwb_wpr_points_exp_onmyaccount">
-						<input type="checkbox" <?php echo ( 'on' == $mwb_wpr_points_exp_onmyaccount ) ? "checked='checked'" : ''; ?> name="mwb_wpr_points_exp_onmyaccount" id="mwb_wpr_points_exp_onmyaccount" class="input-text"> <?php _e( 'Expiartion willl get displayed just below the Total Point', 'points-rewards-for-woocommerce' ); ?>
+						<input type="checkbox" <?php echo ( 'on' == $mwb_wpr_points_exp_onmyaccount ) ? "checked='checked'" : ''; ?> name="mwb_wpr_points_exp_onmyaccount" id="mwb_wpr_points_exp_onmyaccount" class="input-text"> <?php esc_html_e( 'Expiartion willl get displayed just below the Total Point', 'points-rewards-for-woocommerce' ); ?>
 					</label>						
 				</td>
 			</tr>
@@ -109,7 +112,7 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 							<option value="days"
 							<?php
 							if ( isset( $mwb_wpr_points_expiration_time_drop ) ) {
-								if ( $mwb_wpr_points_expiration_time_drop == 'days' ) {
+								if ( 'days' == $mwb_wpr_points_expiration_time_drop ) {
 									?>
 								selected="selected"
 									<?php
@@ -120,7 +123,7 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 							<option value="weeks"
 							<?php
 							if ( isset( $mwb_wpr_points_expiration_time_drop ) ) {
-								if ( $mwb_wpr_points_expiration_time_drop == 'weeks' ) {
+								if ( 'weeks' == $mwb_wpr_points_expiration_time_drop ) {
 									?>
 								selected="selected"
 									<?php
@@ -131,7 +134,7 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 							<option value="months"
 							<?php
 							if ( isset( $mwb_wpr_points_expiration_time_drop ) ) {
-								if ( $mwb_wpr_points_expiration_time_drop == 'months' ) {
+								if ( 'months' == $mwb_wpr_points_expiration_time_drop ) {
 									?>
 								selected="selected"
 									<?php
@@ -142,7 +145,7 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 							<option value="years"
 							<?php
 							if ( isset( $mwb_wpr_points_expiration_time_drop ) ) {
-								if ( $mwb_wpr_points_expiration_time_drop == 'years' ) {
+								if ( 'years' == $mwb_wpr_points_expiration_time_drop ) {
 									?>
 								selected="selected"
 									<?php
@@ -196,7 +199,7 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 					$attribute_description = __( 'Entered Message will appears inside the Email Template for notifying the Customer that they have left just some days more before the expiration', 'points-rewards-for-woocommerce' );
 					echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
-					<textarea cols="35" rows="5" name="mwb_wpr_re_notification" id="mwb_wpr_re_notification" class="input-text" ><?php echo $mwb_wpr_re_notification; ?></textarea>
+					<textarea cols="35" rows="5" name="mwb_wpr_re_notification" id="mwb_wpr_re_notification" class="input-text" ><?php echo esc_html( $mwb_wpr_re_notification ); ?></textarea>
 					<p class="description"><?php esc_html_e( 'Use these shortcodes for providing an appropriate message for your customers ', 'points-rewards-for-woocommerce' ); ?>
 														<?php
 														echo '[TOTALPOINT]';

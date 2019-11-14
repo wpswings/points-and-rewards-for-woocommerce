@@ -1,17 +1,21 @@
 <?php
 /**
- * Exit if accessed directly
+ * This is setttings array for the General settings
+ *
+ * General Settings Template
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php';
-$settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
-/*
- * General Settings Template
- */
-/*Array of the Settings*/
+include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
+$settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 $mwb_wpr_general_settings = array(
 	array(
 		'title' => __( 'Enable', 'points-rewards-for-woocommerce' ),
@@ -223,8 +227,9 @@ $mwb_wpr_general_settings = array(
 );
 $mwb_wpr_general_settings = apply_filters( 'mwb_wpr_general_settings', $mwb_wpr_general_settings );
 $current_tab = 'mwb_wpr_general_setting';
-if ( isset( $_POST['mwb_wpr_save_general'] ) ) {
-	if ( wp_verify_nonce( $_POST['mwb-wpr-nonce'], 'mwb-wpr-nonce' ) ) {
+if ( isset( $_POST['mwb_wpr_save_general'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
+	$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+	if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
 		?>
 		<?php
 		if ( 'mwb_wpr_general_setting' == $current_tab ) {
@@ -260,7 +265,7 @@ endif;
 		<div class="mwb_wpr_general_wrapper">
 				<?php
 				foreach ( $mwb_wpr_general_settings as $key => $value ) {
-					if ( $value['type'] == 'title' ) {
+					if ( 'title' == $value['type'] ) {
 						?>
 					<div class="mwb_wpr_general_row_wrap">
 						<?php $settings_obj->mwb_rwpr_generate_heading( $value ); ?>
@@ -274,7 +279,7 @@ endif;
 						if ( 'checkbox' == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $general_settings );
 						}
-						if ( $value['type'] == 'number' ) {
+						if ( 'number' == $value['type'] ) {
 							$settings_obj->mwb_rwpr_generate_number_html( $value, $general_settings );
 						}
 						if ( 'multiple_checkbox' == $value['type'] ) {

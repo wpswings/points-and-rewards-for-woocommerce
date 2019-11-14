@@ -1,6 +1,21 @@
 <?php
-include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php';
-$settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
+/**
+ * This is the setting template
+ *
+ * Order total points settings.
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
+$settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 /*  This is the setting array */
 $mwb_wpr_order_total_points_settings = array(
 	array(
@@ -16,14 +31,15 @@ $mwb_wpr_order_total_points_settings = array(
 		'title' => __( 'Enter Points  within Order Range', 'points-rewards-for-woocommerce' ),
 	),
 );
-if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) ) {
+if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
 	unset( $_POST['mwb_wpr_save_order_totalsettings'] );
-	if ( wp_verify_nonce( $_POST['mwb-wpr-nonce'], 'mwb-wpr-nonce' ) ) {
+	$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+	if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
 		$mwb_wpr_order_total_points = array();
 		$_POST['mwb_wpr_thankyouorder_enable'] = isset( $_POST['mwb_wpr_thankyouorder_enable'] ) ? 1 : 0;
-		$_POST['mwb_wpr_thankyouorder_minimum'] = ( isset( $_POST['mwb_wpr_thankyouorder_minimum'] ) && ! empty( $_POST['mwb_wpr_thankyouorder_minimum'] ) ) ? $_POST['mwb_wpr_thankyouorder_minimum'] : array();
-		$_POST['mwb_wpr_thankyouorder_maximum'] = ( isset( $_POST['mwb_wpr_thankyouorder_maximum'] ) && ! empty( $_POST['mwb_wpr_thankyouorder_maximum'] ) ) ? $_POST['mwb_wpr_thankyouorder_maximum'] : array();
-		$_POST['mwb_wpr_thankyouorder_current_type'] = ( isset( $_POST['mwb_wpr_thankyouorder_current_type'] ) && ! empty( $_POST['mwb_wpr_thankyouorder_current_type'] ) ) ? $_POST['mwb_wpr_thankyouorder_current_type'] : array();
+		$_POST['mwb_wpr_thankyouorder_minimum'] = ( isset( $_POST['mwb_wpr_thankyouorder_minimum'] ) && ! empty( $_POST['mwb_wpr_thankyouorder_minimum'] ) ) ? map_deep( wp_unslash( $_POST['mwb_wpr_thankyouorder_minimum'] ), 'sanitize_text_field' ) : array();
+		$_POST['mwb_wpr_thankyouorder_maximum'] = ( isset( $_POST['mwb_wpr_thankyouorder_maximum'] ) && ! empty( $_POST['mwb_wpr_thankyouorder_maximum'] ) ) ? map_deep( wp_unslash( $_POST['mwb_wpr_thankyouorder_maximum'] ), 'sanitize_text_field' ) : array();
+		$_POST['mwb_wpr_thankyouorder_current_type'] = ( isset( $_POST['mwb_wpr_thankyouorder_current_type'] ) && ! empty( $_POST['mwb_wpr_thankyouorder_current_type'] ) ) ? map_deep( wp_unslash( $_POST['mwb_wpr_thankyouorder_current_type'] ), 'sanitize_text_field' ) : array();
 		/* Save Order Total Points*/
 		$_postdata = $_POST;
 		foreach ( $_postdata as $key => $value ) {

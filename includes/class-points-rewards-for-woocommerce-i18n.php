@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -24,7 +23,7 @@
  * @subpackage Rewardeem_woocommerce_Points_Rewards/includes
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Rewardeem_woocommerce_Points_Rewards_i18n {
+class Points_Rewards_For_Woocommerce_I18n {
 
 
 	/**

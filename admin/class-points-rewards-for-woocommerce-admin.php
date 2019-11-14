@@ -83,8 +83,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 				wp_enqueue_style( 'woocommerce_admin_styles' );
 				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION );
-				// Sticky-JS
-				wp_enqueue_script( 'sticky_js', MWB_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ),WC_VERSION , true );
+				// Sticky-JS.
+				wp_enqueue_script( 'sticky_js', MWB_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), WC_VERSION, true );
 				wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery' ), WC_VERSION, true );
 				$locale  = localeconv();
 				$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';

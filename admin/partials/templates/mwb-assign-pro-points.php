@@ -1,25 +1,31 @@
 <?php
 /**
- * Exit if accessed directly
+ * This is setttings array for the Assign Product Points settings.
+ *
+ * Assign Product Points Template
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php';
-$settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
-/*
- * Assign Points to Products Template
- */
+include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
+$settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 $current_tab = 'mwb_wpr_pro_points_tab';
 
-if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) {
-	if ( wp_verify_nonce( $_POST['mwb-wpr-nonce'], 'mwb-wpr-nonce' ) ) {
+if ( isset( $_POST['mwb_wpr_select_all_products'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
+	$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+	if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
 		if ( isset( $_POST['mwb_wpr_global_product_enable'] ) && ! empty( $_POST['mwb_wpr_global_product_enable'] ) ) {
 
 			if ( isset( $_POST['mwb_wpr_pro_points_to_all'] ) && ! empty( $_POST['mwb_wpr_pro_points_to_all'] ) ) {
 				$mwb_wpr_assing_product_points = array();
-				$mwb_wpr_pro_points_to_all = sanitize_text_field( $_POST['mwb_wpr_pro_points_to_all'] );
+				$mwb_wpr_pro_points_to_all = sanitize_text_field( wp_unslash( $_POST['mwb_wpr_pro_points_to_all'] ) );
 				$mwb_wpr_assing_product_points['mwb_wpr_global_product_enable'] = 1;
 				$mwb_wpr_assing_product_points['mwb_wpr_pro_points_to_all'] = $mwb_wpr_pro_points_to_all;
 				if ( is_array( $mwb_wpr_assing_product_points ) && ! empty( $mwb_wpr_assing_product_points ) ) {

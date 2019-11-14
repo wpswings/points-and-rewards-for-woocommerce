@@ -1,24 +1,24 @@
 <?php
 /**
  * Exit if accessed directly
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 /*
  * Assign Points to Products Template
  */
 $current_tab = 'mwb_wpr_purchase_points_only';
 
-if ( isset( $_GET['tab'] ) ) {
-	$current_tab = $_GET['tab'];
-}
-
 if ( isset( $_POST['mwb_wpr_select_all_products'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Missing
 	if ( isset( $_POST['mwb_wpr_global_product_enable'] ) && ! empty( $_POST['mwb_wpr_global_product_enable'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['mwb_wpr_pro_points_to_all'] ) && ! empty( $_POST['mwb_wpr_pro_points_to_all'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
-			$mwb_wpr_pro_points_to_all = sanitize_text_field( $_POST['mwb_wpr_pro_points_to_all'] );//phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$mwb_wpr_pro_points_to_all = sanitize_text_field( wp_unslash( $_POST['mwb_wpr_pro_points_to_all'] ) );//phpcs:ignore WordPress.Security.NonceVerification.Missing
 			update_option( 'mwb_wpr_global_product_enable', 'on' );
 			update_option( 'mwb_wpr_pro_points_to_all', $mwb_wpr_pro_points_to_all );
 			$args = array(
@@ -112,8 +112,8 @@ $mwb_wpr_pro_points_to_all = get_option( 'mwb_wpr_pro_points_to_all', '' );
 						$mwb_wpr_purchase_categ_point = get_option( 'mwb_wpr_purchase_points_cat' . $catid, '' );
 						?>
 						<tr>
-							<td><?php echo $catname; ?></td>
-							<td><input type="number" min="1" name="mwb_wpr_purchase_points_per_categ" id="mwb_wpr_purchase_points_cat<?php echo $catid; ?>" value="<?php echo esc_html( $mwb_wpr_purchase_categ_point ); ?>" class="input-text mwb_wpr_new_woo_ver_style_text"></td>
+							<td><?php echo esc_html( $catname ); ?></td>
+							<td><input type="number" min="1" name="mwb_wpr_purchase_points_per_categ" id="mwb_wpr_purchase_points_cat<?php echo esc_html( $catid ); ?>" value="<?php echo esc_html( $mwb_wpr_purchase_categ_point ); ?>" class="input-text mwb_wpr_new_woo_ver_style_text"></td>
 							<td><input type="button" value='<?php esc_html_e( 'Submit', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_submit_purchase_points_per_category" name="mwb_wpr_submit_purchase_points_per_category" id="<?php echo esc_html( $catid ); ?>"></td>
 						</tr>
 						<?php

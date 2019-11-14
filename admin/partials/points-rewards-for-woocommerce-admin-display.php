@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide a admin area view for the plugin
  *
@@ -11,6 +10,7 @@
  * @package    Rewardeem_woocommerce_Points_Rewards
  * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
+
 $mwb_wpr_setting_tab = array(
 	'overview_setting' => array(
 		'title'     => __( 'OverView', 'points-rewards-for-woocommerce' ),
@@ -27,7 +27,7 @@ $mwb_wpr_setting_tab = array(
 	),
 	'points-table' => array(
 		'title'     => __( 'Points Table', 'points-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-points-table.php',
+		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/class-points-log-list-table.php',
 	),
 	'points-notification' => array(
 		'title'     => __( 'Points Notification', 'points-rewards-for-woocommerce' ),
@@ -71,7 +71,6 @@ $mwb_wpr_setting_tab = array(
 					<span class="dashicons dashicons-media-document"></span>
 				</a>
 			</li>
-			<li class="mwb_rwpr_header_menu_button"><a  href="" class="" title="" target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-rewards-for-woocommerce' ); ?></a></li>
 		</ul>
 	</div>
 </div>
@@ -90,21 +89,21 @@ $mwb_wpr_setting_tab = array(
 						if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
 							?>
 							<div class="mwb_rwpr_tabs">
-								<a class="mwb_gw_nav_tab nav-tab nav-tab-active " href="?page=mwb-rwpr-setting&tab=<?php echo $key; ?>"><?php echo $mwb_tab['title']; ?></a>
+								<a class="mwb_gw_nav_tab nav-tab nav-tab-active " href="?page=mwb-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $mwb_tab['title'] ); ?></a>
 							</div>
 							<?php
 						} else {
 							if ( empty( $_GET['tab'] ) && 'overview_setting' == $key ) {
 								?>
 								<div class="mwb_rwpr_tabs">
-									<a class="mwb_gw_nav_tab nav-tab nav-tab-active" href="?page=mwb-rwpr-setting&tab=<?php echo $key; ?>"><?php echo $mwb_tab['title']; ?></a>
+									<a class="mwb_gw_nav_tab nav-tab nav-tab-active" href="?page=mwb-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $mwb_tab['title'] ); ?></a>
 								</div>
 								<?php
 							} else {
 								?>
 											
 								<div class="mwb_rwpr_tabs">
-									<a class="mwb_gw_nav_tab nav-tab " href="?page=mwb-rwpr-setting&tab=<?php echo $key; ?>"><?php echo $mwb_tab['title']; ?></a>
+									<a class="mwb_gw_nav_tab nav-tab " href="?page=mwb-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $mwb_tab['title'] ); ?></a>
 								</div>
 								<?php
 							}

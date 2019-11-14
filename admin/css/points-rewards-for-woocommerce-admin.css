@@ -508,11 +508,11 @@
 
 /*New-css*/
 a.mwb_gw_nav_tab.nav-tab {
-    white-space: unset;
+	white-space: unset;
 }
 .woocommerce table.form-table .mwb_wpr_repeatable_section .select2-container {
-    min-width: auto !important;
-    width: auto !important;
+	min-width: auto !important;
+	width: auto !important;
 }
 
 @media screen and (max-width: 675px) {
@@ -555,22 +555,22 @@ a.mwb_gw_nav_tab.nav-tab {
   }
   .mwb_rwpr_body_template
   {
-    display: block;
+	display: block;
   }
   .mwb_rwpr_navigator_template {
 	 display: none;
   }
   .mwb_rwpr_navigator_template.open-btn
   {
-    display: block !important;
+	display: block !important;
   }
   #mwb_rwpr_setting_wrapper input[type="checkbox"]:before
   {
-    font: normal 22px/1 dashicons;
+	font: normal 22px/1 dashicons;
   }
 
   textarea{
-    width:100%;
+	width:100%;
   }
 }
 .mwb_rwpr_header_content_right ul li:first-child .dashicons.dashicons-phone {
