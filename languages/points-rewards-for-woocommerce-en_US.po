@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Points and Rewards for WooCommerce Lite1.0.0\n"
-"POT-Creation-Date: 2019-11-11 13:19+0530\n"
-"PO-Revision-Date: 2019-11-11 13:19+0530\n"
+"POT-Creation-Date: 2019-11-14 16:47+0530\n"
+"PO-Revision-Date: 2019-11-14 16:47+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter <webmaster@makewebbetter.com>\n"
 "Language: English\n"
@@ -17,573 +17,424 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: rewardeem-woocommerce-points-rewards.php:143
-#: admin/partials/templates/mwb-other-setting.php:38
-#: admin/partials/templates/mwb_other_setting.php:38
+#: points-rewards-for-woocommerce.php:145
+#: admin/partials/templates/mwb-other-setting.php:42
 msgid "Your Current Point"
 msgstr ""
 
-#: rewardeem-woocommerce-points-rewards.php:164
-#: admin/partials/templates/mwb-other-setting.php:47
-#: admin/partials/templates/mwb_other_setting.php:47
+#: points-rewards-for-woocommerce.php:166
+#: admin/partials/templates/mwb-other-setting.php:51
 msgid "Your Current Level"
 msgstr ""
 
-#: rewardeem-woocommerce-points-rewards.php:187
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:920
-#: public/class-points-rewards-for-woocommerce-public.php:939
-#: public/partials/mwb_wpr_points_template.php:160
+#: points-rewards-for-woocommerce.php:189
+#: public/class-points-rewards-for-woocommerce-public.php:942
 #: public/partials/mwb-wpr-points-template.php:197
 msgid "You will get "
 msgstr ""
 
-#: rewardeem-woocommerce-points-rewards.php:187
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:920
-#: public/class-points-rewards-for-woocommerce-public.php:939
+#: points-rewards-for-woocommerce.php:189
+#: public/class-points-rewards-for-woocommerce-public.php:942
 msgid " points for SignUp"
 msgstr ""
 
-#: rewardeem-woocommerce-points-rewards.php:218
+#: points-rewards-for-woocommerce.php:223
 msgid "Settings"
 msgstr ""
 
-#: rewardeem-woocommerce-points-rewards.php:277
+#: points-rewards-for-woocommerce.php:295
 msgid ""
 "WooCommerce is not activated, Please activate WooCommerce first to activate "
 "Ultimate WooCommerce Points and Rewards."
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:84
 #: public/class-points-rewards-for-woocommerce-public.php:83
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:127
 #: admin/class-points-rewards-for-woocommerce-admin.php:129
 msgid "Please enter valid points"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:86
 #: public/class-points-rewards-for-woocommerce-public.php:85
 msgid ""
 "Do you really want to upgrade your user level as this process will deduct "
 "the required points from your account?"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:87
 #: public/class-points-rewards-for-woocommerce-public.php:86
 msgid "Minimum Points Require To Convert Points To Coupon is "
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:88
 #: public/class-points-rewards-for-woocommerce-public.php:87
 msgid "Number of Point you had entered will get deducted from your Account"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:93
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:972
 #: public/class-points-rewards-for-woocommerce-public.php:92
-#: public/class-points-rewards-for-woocommerce-public.php:1001
+#: public/class-points-rewards-for-woocommerce-public.php:1004
 msgid "Please enter some valid points!"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:94
 #: public/class-points-rewards-for-woocommerce-public.php:93
 msgid "You do not have suffient amount of points"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:238
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1268
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1341
 #: public/class-points-rewards-for-woocommerce-public.php:245
-#: public/class-points-rewards-for-woocommerce-public.php:1332
-#: public/class-points-rewards-for-woocommerce-public.php:1367
-#: public/class-points-rewards-for-woocommerce-public.php:1406
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:703
+#: public/class-points-rewards-for-woocommerce-public.php:1335
+#: public/class-points-rewards-for-woocommerce-public.php:1370
+#: public/class-points-rewards-for-woocommerce-public.php:1409
 #: admin/class-points-rewards-for-woocommerce-admin.php:720
-#: admin/partials/templates/mwb_generral-settings2.php:158
-#: admin/partials/templates/mwb-generral-settings2.php:158
-#: admin/partials/templates/mwb-points-table.php:344
-#: admin/partials/templates/mwb_points_table.php:332
+#: admin/partials/templates/mwb-generral-settings2.php:162
+#: admin/partials/templates/class-points-log-list-table.php:352
 msgid "Points"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:307
 #: public/class-points-rewards-for-woocommerce-public.php:313
 msgid "Referral Link"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:312
 #: public/class-points-rewards-for-woocommerce-public.php:318
 msgid "Copy"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:336
 #: public/class-points-rewards-for-woocommerce-public.php:345
 msgid "Tweet"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:346
 #: public/class-points-rewards-for-woocommerce-public.php:355
 msgid "Share"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:945
-#: public/class-points-rewards-for-woocommerce-public.php:968
+#: public/class-points-rewards-for-woocommerce-public.php:971
 #: public/woocommerce/checkout/form-coupon.php:70
 msgid "Apply Points"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:961
-#: public/class-points-rewards-for-woocommerce-public.php:987
+#: public/class-points-rewards-for-woocommerce-public.php:972
+msgid "Your available points:"
+msgstr ""
+
+#: public/class-points-rewards-for-woocommerce-public.php:990
 msgid "Can not redeem!"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:969
-#: public/class-points-rewards-for-woocommerce-public.php:998
+#: public/class-points-rewards-for-woocommerce-public.php:1001
 msgid "Custom Point has been applied Successfully!"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1029
-#: public/class-points-rewards-for-woocommerce-public.php:1057
+#: public/class-points-rewards-for-woocommerce-public.php:1060
 msgid "Here is the Discount Rule for applying your points to Cart sub-total"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1031
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1044
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1303
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1308
-#: public/class-points-rewards-for-woocommerce-public.php:1061
-#: public/class-points-rewards-for-woocommerce-public.php:1085
-#: public/class-points-rewards-for-woocommerce-public.php:1372
+#: public/class-points-rewards-for-woocommerce-public.php:1064
+#: public/class-points-rewards-for-woocommerce-public.php:1088
+#: public/class-points-rewards-for-woocommerce-public.php:1375
 #: public/woocommerce/checkout/form-coupon.php:71
 msgid " Points"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1042
-#: public/class-points-rewards-for-woocommerce-public.php:1075
+#: public/class-points-rewards-for-woocommerce-public.php:1078
 msgid "Place Order And Earn Something in Return"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1044
-#: public/class-points-rewards-for-woocommerce-public.php:1083
+#: public/class-points-rewards-for-woocommerce-public.php:1086
 msgid "Conversion Rate: "
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1089
-#: public/class-points-rewards-for-woocommerce-public.php:1139
+#: public/class-points-rewards-for-woocommerce-public.php:1142
 msgid "[Remove]"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1104
-#: public/class-points-rewards-for-woocommerce-public.php:1155
+#: public/class-points-rewards-for-woocommerce-public.php:1158
 msgid "Failed to Remove Cart Disocunt"
 msgstr ""
 
-#: public/class-rewardeem-woocommerce-points-rewards-public.php:1108
-#: public/class-points-rewards-for-woocommerce-public.php:1159
+#: public/class-points-rewards-for-woocommerce-public.php:1162
 msgid "Successfully Removed Cart Disocunt"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:969
-msgid "Your available points:"
-msgstr ""
-
-#: public/partials/mwb_wpr_points_template.php:63
 #: public/partials/mwb-wpr-points-template.php:73
-#: admin/partials/templates/mwb_general-settings.php:41
-#: admin/partials/templates/mwb_general-settings.php:130
-#: admin/partials/templates/mwb_generral-settings2.php:136
-#: admin/partials/templates/mwb-generral-settings2.php:136
-#: admin/partials/templates/mwb-general-settings.php:41
-#: admin/partials/templates/mwb-general-settings.php:130
+#: admin/partials/templates/mwb-generral-settings2.php:140
 msgid "My Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:100
 #: public/partials/mwb-wpr-points-template.php:117
 msgid "Get Expired: "
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:106
 #: public/partials/mwb-wpr-points-template.php:129
-#: admin/partials/templates/mwb-points-table.php:63
-#: admin/partials/templates/mwb_points_table.php:61
+#: admin/partials/templates/class-points-log-list-table.php:70
 msgid "View Point Log"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:111
 #: public/partials/mwb-wpr-points-template.php:137
 msgid "Ways to gain more points:"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:129
 #: public/partials/mwb-wpr-points-template.php:154
 msgid "Membership List"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:133
 #: public/partials/mwb-wpr-points-template.php:160
 msgid "Your level has been upgraded to "
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:141
 #: public/partials/mwb-wpr-points-template.php:172
-#: admin/partials/templates/mwb-wpr-membership-log_table.php:48
-#: admin/partials/templates/mwb_wpr_membership_log_table.php:39
-#: admin/partials/templates/mwb-wpr-membership-log-table.php:48
+#: admin/partials/templates/class-membership-log-list-table.php:48
 msgid "Level"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:144
 #: public/partials/mwb-wpr-points-template.php:175
 msgid "Required Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:154
 #: public/partials/mwb-wpr-points-template.php:187
 msgid "View Benefits"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:160
 #: public/partials/mwb-wpr-points-template.php:199
 #, php-format
 msgid "% discount on below products or categories"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:252
 #: public/partials/mwb-wpr-points-template.php:298
 msgid "Upgrade User Level"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:254
 #: public/partials/mwb-wpr-points-template.php:300
 msgid "Upgrade Your User Level: "
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:257
 #: public/partials/mwb-wpr-points-template.php:303
 msgid "Select Level"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_template.php:269
-#: public/partials/mwb_wpr_points_template.php:270
 #: public/partials/mwb-wpr-points-template.php:320
 #: public/partials/mwb-wpr-points-template.php:321
 msgid "Upgrade Level"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:9
 #: public/partials/mwb-wpr-points-log-template.php:18
 msgid " Point Log Table"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:14
 #: public/partials/mwb-wpr-points-log-template.php:23
 msgid "Date"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:17
 #: public/partials/mwb-wpr-points-log-template.php:26
-#: admin/partials/templates/mwb-points-table.php:422
-#: admin/partials/templates/mwb_points_table.php:410
+#: admin/partials/templates/class-points-log-list-table.php:429
 msgid "Point Status"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:20
 #: public/partials/mwb-wpr-points-log-template.php:29
-#: admin/partials/templates/mwb-points-table.php:425
-#: admin/partials/templates/mwb_points_table.php:413
+#: admin/partials/templates/class-points-log-list-table.php:432
 msgid "Activity"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:31
 #: public/partials/mwb-wpr-points-log-template.php:41
-#: admin/partials/templates/mwb-points-table.php:435
-#: admin/partials/templates/mwb-points-table.php:453
-#: admin/partials/templates/mwb_points_table.php:423
-#: admin/partials/templates/mwb_points_table.php:441
+#: admin/partials/templates/class-points-log-list-table.php:442
+#: admin/partials/templates/class-points-log-list-table.php:460
 msgid "Signup Event"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:34
-#: public/partials/mwb_wpr_points_log_template.php:45
 #: public/partials/mwb-wpr-points-log-template.php:52
 #: public/partials/mwb-wpr-points-log-template.php:64
-#: admin/partials/templates/mwb-points-table.php:443
-#: admin/partials/templates/mwb-points-table.php:461
-#: admin/partials/templates/mwb_points_table.php:431
-#: admin/partials/templates/mwb_points_table.php:449
+#: admin/partials/templates/class-points-log-list-table.php:450
+#: admin/partials/templates/class-points-log-list-table.php:468
 msgid "Registration Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:55
 #: public/partials/mwb-wpr-points-log-template.php:75
 msgid "Coupon Creation"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:64
 #: public/partials/mwb-wpr-points-log-template.php:84
-#: admin/partials/templates/mwb-points-table.php:480
-#: admin/partials/templates/mwb_points_table.php:468
+#: admin/partials/templates/class-points-log-list-table.php:487
 msgid "Coupon Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:73
 #: public/partials/mwb-wpr-points-log-template.php:95
 msgid "Points Earned via Particular Product"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:82
 #: public/partials/mwb-wpr-points-log-template.php:104
-#: admin/partials/templates/mwb-points-table.php:524
-#: admin/partials/templates/mwb_points_table.php:512
+#: admin/partials/templates/class-points-log-list-table.php:531
 msgid "Product purchase Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:93
-#: public/partials/mwb_wpr_points_log_template.php:116
 #: public/partials/mwb-wpr-points-log-template.php:116
 #: public/partials/mwb-wpr-points-log-template.php:140
-#: admin/partials/templates/mwb-points-table.php:502
-#: admin/partials/templates/mwb_points_table.php:490
+#: admin/partials/templates/class-points-log-list-table.php:509
 msgid "Points earned on Order Total"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:99
 #: public/partials/mwb-wpr-points-log-template.php:122
-#: admin/partials/templates/mwb-points-table.php:546
-#: admin/partials/templates/mwb_points_table.php:534
+#: admin/partials/templates/class-points-log-list-table.php:553
 msgid "Product Conversion Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:110
 #: public/partials/mwb-wpr-points-log-template.php:134
-#: admin/partials/templates/mwb-points-table.php:491
-#: admin/partials/templates/mwb_points_table.php:479
+#: admin/partials/templates/class-points-log-list-table.php:498
 msgid "Points on Order"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:127
 #: public/partials/mwb-wpr-points-log-template.php:152
 msgid "Points earned via giving review"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:136
-#: admin/partials/templates/mwb-points-table.php:568
-#: admin/partials/templates/mwb_points_table.php:556
-msgid "Comment Points"
-msgstr ""
-
-#: public/partials/mwb_wpr_points_log_template.php:146
 #: public/partials/mwb-wpr-points-log-template.php:173
 msgid "Points earned via referring someone"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:159
 #: public/partials/mwb-wpr-points-log-template.php:188
-#: admin/partials/templates/mwb-points-table.php:619
-#: admin/partials/templates/mwb_points_table.php:607
+#: admin/partials/templates/class-points-log-list-table.php:626
 msgid "Reference Points by "
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:168
 #: public/partials/mwb-wpr-points-log-template.php:202
 msgid "Points earned by the puchase has been made by referrals"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:181
 #: public/partials/mwb-wpr-points-log-template.php:217
 msgid "Product purchase by Reffered User Points "
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:191
 #: public/partials/mwb-wpr-points-log-template.php:232
 msgid ""
 "Points deducted becuase you have entered to the membership level and may use "
 "more benefit"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:200
 #: public/partials/mwb-wpr-points-log-template.php:241
-#: admin/partials/templates/mwb-points-table.php:579
-#: admin/partials/templates/mwb-points-table.php:590
-#: admin/partials/templates/mwb_points_table.php:567
-#: admin/partials/templates/mwb_points_table.php:578
+#: admin/partials/templates/class-points-log-list-table.php:586
+#: admin/partials/templates/class-points-log-list-table.php:597
 msgid "Membership Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:210
 #: public/partials/mwb-wpr-points-log-template.php:253
 msgid "Free rewards you earned becuase of loyality"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:215
 #: public/partials/mwb-wpr-points-log-template.php:258
-#: admin/partials/templates/mwb-points-table.php:663
-#: admin/partials/templates/mwb_points_table.php:651
+#: admin/partials/templates/class-points-log-list-table.php:670
 msgid "Updated By Admin"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:229
 #: public/partials/mwb-wpr-points-log-template.php:274
 msgid "Deduction of points as you has purchased your product"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:238
 #: public/partials/mwb-wpr-points-log-template.php:283
-#: admin/partials/templates/mwb-points-table.php:690
-#: admin/partials/templates/mwb_points_table.php:678
+#: admin/partials/templates/class-points-log-list-table.php:697
 msgid "Purchased through Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:247
 #: public/partials/mwb-wpr-points-log-template.php:294
 msgid "Deduction of points for your return request"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:256
 #: public/partials/mwb-wpr-points-log-template.php:303
-#: admin/partials/templates/mwb-points-table.php:712
-#: admin/partials/templates/mwb_points_table.php:700
+#: admin/partials/templates/class-points-log-list-table.php:719
 msgid "Deduct Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:266
 #: public/partials/mwb-wpr-points-log-template.php:314
 msgid "Points returned successfully on your return request"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:275
 #: public/partials/mwb-wpr-points-log-template.php:323
-#: admin/partials/templates/mwb-points-table.php:723
-#: admin/partials/templates/mwb_points_table.php:711
+#: admin/partials/templates/class-points-log-list-table.php:730
 msgid "Return Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:285
 #: public/partials/mwb-wpr-points-log-template.php:335
 msgid "Points deducted successfully on your return request"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:294
 #: public/partials/mwb-wpr-points-log-template.php:344
-#: admin/partials/templates/mwb-points-table.php:756
-#: admin/partials/templates/mwb_points_table.php:744
+#: admin/partials/templates/class-points-log-list-table.php:763
 msgid "Deduct Per Currency Spent Point"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:304
 #: public/partials/mwb-wpr-points-log-template.php:356
 msgid "Points deducted successfully as you have shared your points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:318
 #: public/partials/mwb-wpr-points-log-template.php:372
-#: admin/partials/templates/mwb-points-table.php:784
-#: admin/partials/templates/mwb_points_table.php:772
+#: admin/partials/templates/class-points-log-list-table.php:791
 msgid "Shared to "
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:326
 #: public/partials/mwb-wpr-points-log-template.php:386
 msgid "Points received successfully as someone has shared"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:340
 #: public/partials/mwb-wpr-points-log-template.php:402
 msgid "Received Points via "
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:349
 #: public/partials/mwb-wpr-points-log-template.php:416
-#: admin/partials/templates/mwb-points-table.php:829
-#: admin/partials/templates/mwb-points-table.php:935
-#: admin/partials/templates/mwb_points_table.php:817
-#: admin/partials/templates/mwb_points_table.php:923
+#: admin/partials/templates/class-points-log-list-table.php:836
+#: admin/partials/templates/class-points-log-list-table.php:941
 msgid "Points Applied on Cart"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:358
 #: public/partials/mwb-wpr-points-log-template.php:425
-#: admin/partials/templates/mwb-points-table.php:839
-#: admin/partials/templates/mwb_points_table.php:827
+#: admin/partials/templates/class-points-log-list-table.php:846
 msgid "Points Used on Cart Subtotal"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:367
 #: public/partials/mwb-wpr-points-log-template.php:436
 msgid "Oops!! Points are expired!"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:376
 #: public/partials/mwb-wpr-points-log-template.php:445
-#: admin/partials/templates/mwb-points-table.php:860
-#: admin/partials/templates/mwb_points_table.php:848
+#: admin/partials/templates/class-points-log-list-table.php:867
 msgid "Get Expired"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:387
 #: public/partials/mwb-wpr-points-log-template.php:457
-#: admin/partials/templates/mwb-points-table.php:871
-#: admin/partials/templates/mwb_points_table.php:859
+#: admin/partials/templates/class-points-log-list-table.php:878
 msgid "Order Points Deducted due to Cancelation of Order"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:396
-#: public/partials/mwb_wpr_points_log_template.php:416
 #: public/partials/mwb-wpr-points-log-template.php:466
 #: public/partials/mwb-wpr-points-log-template.php:487
-#: admin/partials/templates/mwb-points-table.php:881
-#: admin/partials/templates/mwb-points-table.php:902
-#: admin/partials/templates/mwb_points_table.php:869
-#: admin/partials/templates/mwb_points_table.php:890
+#: admin/partials/templates/class-points-log-list-table.php:888
+#: admin/partials/templates/class-points-log-list-table.php:909
 msgid "Deducted Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:407
 #: public/partials/mwb-wpr-points-log-template.php:478
 msgid "Assigned Points Deducted due Cancelation of Order"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:427
 #: public/partials/mwb-wpr-points-log-template.php:499
-#: admin/partials/templates/mwb-points-table.php:913
-#: admin/partials/templates/mwb_points_table.php:901
+#: admin/partials/templates/class-points-log-list-table.php:920
 msgid "Points Returned due to Cancelation of Order"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:436
 #: public/partials/mwb-wpr-points-log-template.php:508
-#: admin/partials/templates/mwb-points-table.php:734
-#: admin/partials/templates/mwb-points-table.php:923
-#: admin/partials/templates/mwb_points_table.php:722
-#: admin/partials/templates/mwb_points_table.php:911
+#: admin/partials/templates/class-points-log-list-table.php:741
+#: admin/partials/templates/class-points-log-list-table.php:930
 msgid "Returned Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:448
 #: public/partials/mwb-wpr-points-log-template.php:521
 msgid "Points deducted for purchasing the product"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:457
 #: public/partials/mwb-wpr-points-log-template.php:530
-#: admin/partials/templates/mwb-points-table.php:945
-#: admin/partials/templates/mwb_points_table.php:933
+#: admin/partials/templates/class-points-log-list-table.php:951
 msgid "Product Purchased by Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:471
 #: public/partials/mwb-wpr-points-log-template.php:544
-#: admin/partials/templates/mwb-points-table.php:38
-#: admin/partials/templates/mwb-points-table.php:958
-#: admin/partials/templates/mwb_points_table.php:38
-#: admin/partials/templates/mwb_points_table.php:946
+#: admin/partials/templates/class-points-log-list-table.php:45
+#: admin/partials/templates/class-points-log-list-table.php:963
 msgid "Total Points"
 msgstr ""
 
-#: public/partials/mwb_wpr_points_log_template.php:480
 #: public/partials/mwb-wpr-points-log-template.php:552
-#: admin/partials/templates/mwb-points-table.php:967
-#: admin/partials/templates/mwb_points_table.php:955
+#: admin/partials/templates/class-points-log-list-table.php:972
 msgid "No Points Generated Yet."
 msgstr ""
 
@@ -603,13 +454,11 @@ msgstr ""
 msgid "Apply coupon"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:91
 #: admin/class-points-rewards-for-woocommerce-admin.php:93
 #, php-format
 msgid "Please enter in decimal (%s) format without thousand separators."
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:93
 #: admin/class-points-rewards-for-woocommerce-admin.php:95
 #, php-format
 msgid ""
@@ -617,1043 +466,375 @@ msgid ""
 "currency symbols."
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:94
 #: admin/class-points-rewards-for-woocommerce-admin.php:96
 msgid "Please enter in country code with two capital letters."
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:95
 #: admin/class-points-rewards-for-woocommerce-admin.php:97
 msgid "Please enter in a value less than the regular price."
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:99
 #: admin/class-points-rewards-for-woocommerce-admin.php:101
-#: admin/partials/templates/mwb-points-table.php:988
-#: admin/partials/templates/mwb-points-table.php:1014
-#: admin/partials/templates/mwb_points_table.php:976
-#: admin/partials/templates/mwb_points_table.php:1002
+#: admin/partials/templates/class-points-log-list-table.php:993
+#: admin/partials/templates/class-points-log-list-table.php:1019
 msgid "Import"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:100
 #: admin/class-points-rewards-for-woocommerce-admin.php:102
 msgid "Export"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:128
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:473
 #: admin/class-points-rewards-for-woocommerce-admin.php:130
 #: admin/class-points-rewards-for-woocommerce-admin.php:483
 msgid "Enter the Name of the Level"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:129
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:465
 #: admin/class-points-rewards-for-woocommerce-admin.php:131
 #: admin/class-points-rewards-for-woocommerce-admin.php:475
 msgid "Enter Level"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:130
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:482
 #: admin/class-points-rewards-for-woocommerce-admin.php:132
 #: admin/class-points-rewards-for-woocommerce-admin.php:492
 #: admin/partials/templates/mwb-purchase-points-only.php:102
-#: admin/partials/templates/mwb-points-table.php:40
-#: admin/partials/templates/mwb_points_table.php:40
-#: admin/partials/templates/mwb_purchase_points_only.php:102
+#: admin/partials/templates/class-points-log-list-table.php:47
 msgid "Enter Points"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:131
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:560
 #: admin/class-points-rewards-for-woocommerce-admin.php:133
 #: admin/class-points-rewards-for-woocommerce-admin.php:570
-#: admin/partials/templates/mwb_general-settings.php:550
-#: admin/partials/templates/mwb-general-settings.php:550
 msgid "Select Product Category"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:132
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:476
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:726
 #: admin/class-points-rewards-for-woocommerce-admin.php:134
 #: admin/class-points-rewards-for-woocommerce-admin.php:486
 #: admin/class-points-rewards-for-woocommerce-admin.php:743
 msgid "Remove"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:134
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:593
 #: admin/class-points-rewards-for-woocommerce-admin.php:136
 #: admin/class-points-rewards-for-woocommerce-admin.php:603
 msgid "Select Product"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:135
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:637
 #: admin/class-points-rewards-for-woocommerce-admin.php:137
 #: admin/class-points-rewards-for-woocommerce-admin.php:647
 msgid "Enter Discount (%)"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:136
 #: admin/class-points-rewards-for-woocommerce-admin.php:138
 msgid "Fields cannot be empty"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:137
 #: admin/class-points-rewards-for-woocommerce-admin.php:139
 msgid "Please Enter the Name of the Level"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:138
 #: admin/class-points-rewards-for-woocommerce-admin.php:140
 msgid "Please Enter valid Points"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:139
 #: admin/class-points-rewards-for-woocommerce-admin.php:141
 msgid "Please select a category"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:140
 #: admin/class-points-rewards-for-woocommerce-admin.php:142
 msgid "Please select a product"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:141
 #: admin/class-points-rewards-for-woocommerce-admin.php:143
 msgid "Please enter valid discount"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:142
 #: admin/class-points-rewards-for-woocommerce-admin.php:144
 msgid "Points are assigned successfully!"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:143
 #: admin/class-points-rewards-for-woocommerce-admin.php:145
 msgid "Enter Some Valid Points!"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:144
 #: admin/class-points-rewards-for-woocommerce-admin.php:146
 msgid "Points are removed successfully!"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:145
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:517
 #: admin/class-points-rewards-for-woocommerce-admin.php:147
 #: admin/class-points-rewards-for-woocommerce-admin.php:527
-#: admin/partials/templates/mwb-point-expiration.php:119
-#: admin/partials/templates/mwb_point_expiration.php:119
-#: admin/partials/templates/mwb_general-settings.php:384
-#: admin/partials/templates/mwb-general-settings.php:384
-#: admin/partials/templates/mwb_other_setting.php:295
+#: admin/partials/templates/mwb-point-expiration.php:122
 msgid "Days"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:146
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:529
 #: admin/class-points-rewards-for-woocommerce-admin.php:148
 #: admin/class-points-rewards-for-woocommerce-admin.php:539
-#: admin/partials/templates/mwb-point-expiration.php:130
-#: admin/partials/templates/mwb_point_expiration.php:130
+#: admin/partials/templates/mwb-point-expiration.php:133
 msgid "Weeks"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:147
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:541
 #: admin/class-points-rewards-for-woocommerce-admin.php:149
 #: admin/class-points-rewards-for-woocommerce-admin.php:551
-#: admin/partials/templates/mwb-point-expiration.php:141
-#: admin/partials/templates/mwb_point_expiration.php:141
+#: admin/partials/templates/mwb-point-expiration.php:144
 msgid "Months"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:148
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:553
 #: admin/class-points-rewards-for-woocommerce-admin.php:150
 #: admin/class-points-rewards-for-woocommerce-admin.php:563
-#: admin/partials/templates/mwb-point-expiration.php:152
-#: admin/partials/templates/mwb_point_expiration.php:152
+#: admin/partials/templates/mwb-point-expiration.php:155
 msgid "Years"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:149
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:496
 #: admin/class-points-rewards-for-woocommerce-admin.php:151
 #: admin/class-points-rewards-for-woocommerce-admin.php:506
 msgid "Expiration Period"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:151
 #: admin/class-points-rewards-for-woocommerce-admin.php:153
 msgid "Please enter Remark"
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:154
 #: admin/class-points-rewards-for-woocommerce-admin.php:156
 msgid "Please Purchase the Pro Plugin."
 msgstr ""
 
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:155
 #: admin/class-points-rewards-for-woocommerce-admin.php:157
 msgid "Points are updated successfully"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:176
-msgid "Ultimate WooCommerce Points and Rewards"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:388
-#: admin/class-points-rewards-for-woocommerce-admin.php:393
-msgid "Fail due to an error"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:469
-#: admin/class-points-rewards-for-woocommerce-admin.php:479
-msgid "Entered text will be name of the level for membership"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:486
-#: admin/class-points-rewards-for-woocommerce-admin.php:496
-msgid "Entered points need to be reached for this level"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:500
-#: admin/class-points-rewards-for-woocommerce-admin.php:510
-msgid "Select the days,week,month or year for expiartion of current level"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:564
-#: admin/class-points-rewards-for-woocommerce-admin.php:574
-msgid "Select"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:597
-#: admin/class-points-rewards-for-woocommerce-admin.php:607
-msgid ""
-"Product of selected category will get displayed in Select Product Section"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:641
-#: admin/class-points-rewards-for-woocommerce-admin.php:651
-msgid "Entered Discount will be applied on above selected products"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:700
-#: admin/class-points-rewards-for-woocommerce-admin.php:717
-msgid "Minimum"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:701
-#: admin/class-points-rewards-for-woocommerce-admin.php:718
-msgid "Maximum"
-msgstr ""
-
-#: admin/class-rewardeem-woocommerce-points-rewards-admin.php:705
-#: admin/class-points-rewards-for-woocommerce-admin.php:722
-#: admin/partials/templates/mwb-points-table.php:42
-#: admin/partials/templates/mwb_points_table.php:42
-msgid "Action"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:178
 msgid "Points and Rewards"
 msgstr ""
 
-#: admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php:16
+#: admin/class-points-rewards-for-woocommerce-admin.php:393
+msgid "Fail due to an error"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:479
+msgid "Entered text will be name of the level for membership"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:496
+msgid "Entered points need to be reached for this level"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:510
+msgid "Select the days,week,month or year for expiartion of current level"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:574
+msgid "Select"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:607
+msgid ""
+"Product of selected category will get displayed in Select Product Section"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:651
+msgid "Entered Discount will be applied on above selected products"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:717
+msgid "Minimum"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:718
+msgid "Maximum"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:722
+#: admin/partials/templates/class-points-log-list-table.php:49
+msgid "Action"
+msgstr ""
+
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:16
 msgid "OverView"
 msgstr ""
 
-#: admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php:20
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:20
 msgid "General"
-msgstr ""
-
-#: admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php:25
-msgid "Coupon Settings"
-msgstr ""
-
-#: admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php:29
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:29
-#: admin/partials/templates/mwb-points-table.php:972
-#: admin/partials/templates/mwb_points_table.php:960
-msgid "Points Table"
-msgstr ""
-
-#: admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php:33
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:33
-msgid "Points Notification"
-msgstr ""
-
-#: admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php:37
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:37
-msgid "Membership"
-msgstr ""
-
-#: admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php:41
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:41
-msgid "Assign Product Points"
-msgstr ""
-
-#: admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php:46
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:46
-#: admin/partials/templates/mwb-other-setting.php:53
-#: admin/partials/templates/mwb_other_setting.php:53
-msgid "Other Settings"
-msgstr ""
-
-#: admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php:50
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:50
-#: admin/partials/templates/mwb-points-table.php:535
-#: admin/partials/templates/mwb_points_table.php:523
-msgid "Order Total Points"
-msgstr ""
-
-#: admin/partials/rewardeem-woocommerce-points-rewards-admin-display.php:61
-msgid "Ultimate WooCommerce Points and Rewards Lite"
 msgstr ""
 
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:25
 msgid "Per Currency Points Settings"
 msgstr ""
 
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:29
+#: admin/partials/templates/class-points-log-list-table.php:977
+msgid "Points Table"
+msgstr ""
+
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:33
+msgid "Points Notification"
+msgstr ""
+
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:37
+msgid "Membership"
+msgstr ""
+
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:41
+msgid "Assign Product Points"
+msgstr ""
+
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:46
+#: admin/partials/templates/mwb-other-setting.php:57
+msgid "Other Settings"
+msgstr ""
+
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:50
+#: admin/partials/templates/class-points-log-list-table.php:542
+msgid "Order Total Points"
+msgstr ""
+
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:61
 msgid "Points and Rewards for WooCommerce Lite"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:74
-msgid "GO PRO NOW"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:55
-#: admin/partials/templates/mwb-points-notification-settings.php:55
-msgid "Enable Points Notification Settings"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:59
-#: admin/partials/templates/mwb_general-settings.php:155
-#: admin/partials/templates/mwb_general-settings.php:158
-#: admin/partials/templates/mwb_generral-settings2.php:17
-#: admin/partials/templates/mwb_generral-settings2.php:21
-#: admin/partials/templates/mwb-generral-settings2.php:17
-#: admin/partials/templates/mwb-generral-settings2.php:21
-#: admin/partials/templates/mwb-general-settings.php:155
-#: admin/partials/templates/mwb-general-settings.php:158
-#: admin/partials/templates/mwb-points-notification-settings.php:59
-msgid "Enable"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:63
-#: admin/partials/templates/mwb-points-notification-settings.php:63
-msgid "Check this box to enable the points notification."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:64
-#: admin/partials/templates/mwb-points-notification-settings.php:64
-msgid "Enable Points Notification"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:70
-#: admin/partials/templates/mwb-points-notification-settings.php:70
-msgid "Points table's Custom Points Notification Settings"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:74
-#: admin/partials/templates/mwb_points_notification_settings.php:98
-#: admin/partials/templates/mwb_points_notification_settings.php:123
-#: admin/partials/templates/mwb_points_notification_settings.php:148
-#: admin/partials/templates/mwb_points_notification_settings.php:173
-#: admin/partials/templates/mwb_points_notification_settings.php:199
-#: admin/partials/templates/mwb_points_notification_settings.php:225
-#: admin/partials/templates/mwb_points_notification_settings.php:249
-#: admin/partials/templates/mwb_points_notification_settings.php:273
-#: admin/partials/templates/mwb_points_notification_settings.php:297
-#: admin/partials/templates/mwb_points_notification_settings.php:321
-#: admin/partials/templates/mwb-points-notification-settings.php:74
-#: admin/partials/templates/mwb-points-notification-settings.php:98
-#: admin/partials/templates/mwb-points-notification-settings.php:123
-#: admin/partials/templates/mwb-points-notification-settings.php:148
-#: admin/partials/templates/mwb-points-notification-settings.php:173
-#: admin/partials/templates/mwb-points-notification-settings.php:225
-#: admin/partials/templates/mwb-points-notification-settings.php:249
-#: admin/partials/templates/mwb-points-notification-settings.php:297
-#: admin/partials/templates/mwb-points-notification-settings.php:321
-msgid "Email Subject"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:78
-#: admin/partials/templates/mwb_points_notification_settings.php:102
-#: admin/partials/templates/mwb_points_notification_settings.php:127
-#: admin/partials/templates/mwb_points_notification_settings.php:152
-#: admin/partials/templates/mwb_points_notification_settings.php:177
-#: admin/partials/templates/mwb_points_notification_settings.php:203
-#: admin/partials/templates/mwb_points_notification_settings.php:229
-#: admin/partials/templates/mwb_points_notification_settings.php:253
-#: admin/partials/templates/mwb_points_notification_settings.php:277
-#: admin/partials/templates/mwb_points_notification_settings.php:301
-#: admin/partials/templates/mwb_points_notification_settings.php:325
-#: admin/partials/templates/mwb-points-notification-settings.php:78
-#: admin/partials/templates/mwb-points-notification-settings.php:102
-#: admin/partials/templates/mwb-points-notification-settings.php:127
-#: admin/partials/templates/mwb-points-notification-settings.php:152
-#: admin/partials/templates/mwb-points-notification-settings.php:177
-#: admin/partials/templates/mwb-points-notification-settings.php:229
-#: admin/partials/templates/mwb-points-notification-settings.php:253
-#: admin/partials/templates/mwb-points-notification-settings.php:301
-#: admin/partials/templates/mwb-points-notification-settings.php:325
-msgid "Input subject for email."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:79
-#: admin/partials/templates/mwb-points-notification-settings.php:79
-msgid "Custom Points Notification"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:82
-#: admin/partials/templates/mwb_points_notification_settings.php:106
-#: admin/partials/templates/mwb_points_notification_settings.php:131
-#: admin/partials/templates/mwb_points_notification_settings.php:156
-#: admin/partials/templates/mwb_points_notification_settings.php:181
-#: admin/partials/templates/mwb_points_notification_settings.php:207
-#: admin/partials/templates/mwb_points_notification_settings.php:233
-#: admin/partials/templates/mwb_points_notification_settings.php:257
-#: admin/partials/templates/mwb_points_notification_settings.php:281
-#: admin/partials/templates/mwb_points_notification_settings.php:305
-#: admin/partials/templates/mwb_points_notification_settings.php:329
-#: admin/partials/templates/mwb-points-notification-settings.php:82
-#: admin/partials/templates/mwb-points-notification-settings.php:106
-#: admin/partials/templates/mwb-points-notification-settings.php:131
-#: admin/partials/templates/mwb-points-notification-settings.php:156
-#: admin/partials/templates/mwb-points-notification-settings.php:181
-#: admin/partials/templates/mwb-points-notification-settings.php:233
-#: admin/partials/templates/mwb-points-notification-settings.php:257
-#: admin/partials/templates/mwb-points-notification-settings.php:305
-#: admin/partials/templates/mwb-points-notification-settings.php:329
-msgid "Email Description"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:86
-#: admin/partials/templates/mwb_points_notification_settings.php:110
-#: admin/partials/templates/mwb_points_notification_settings.php:135
-#: admin/partials/templates/mwb_points_notification_settings.php:160
-#: admin/partials/templates/mwb_points_notification_settings.php:185
-#: admin/partials/templates/mwb_points_notification_settings.php:211
-#: admin/partials/templates/mwb_points_notification_settings.php:237
-#: admin/partials/templates/mwb_points_notification_settings.php:261
-#: admin/partials/templates/mwb_points_notification_settings.php:285
-#: admin/partials/templates/mwb_points_notification_settings.php:309
-#: admin/partials/templates/mwb_points_notification_settings.php:333
-#: admin/partials/templates/mwb-points-notification-settings.php:86
-#: admin/partials/templates/mwb-points-notification-settings.php:110
-#: admin/partials/templates/mwb-points-notification-settings.php:135
-#: admin/partials/templates/mwb-points-notification-settings.php:160
-#: admin/partials/templates/mwb-points-notification-settings.php:185
-#: admin/partials/templates/mwb-points-notification-settings.php:237
-#: admin/partials/templates/mwb-points-notification-settings.php:261
-#: admin/partials/templates/mwb-points-notification-settings.php:309
-#: admin/partials/templates/mwb-points-notification-settings.php:333
-msgid "Enter Email Description for user."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:87
-#: admin/partials/templates/mwb_points_notification_settings.php:111
-#: admin/partials/templates/mwb_points_notification_settings.php:137
-#: admin/partials/templates/mwb_points_notification_settings.php:162
-#: admin/partials/templates/mwb_points_notification_settings.php:187
-#: admin/partials/templates/mwb_points_notification_settings.php:213
-#: admin/partials/templates/mwb_points_notification_settings.php:239
-#: admin/partials/templates/mwb_points_notification_settings.php:263
-#: admin/partials/templates/mwb_points_notification_settings.php:287
-#: admin/partials/templates/mwb_points_notification_settings.php:311
-#: admin/partials/templates/mwb_points_notification_settings.php:335
-#: admin/partials/templates/mwb-points-notification-settings.php:87
-#: admin/partials/templates/mwb-points-notification-settings.php:111
-#: admin/partials/templates/mwb-points-notification-settings.php:137
-#: admin/partials/templates/mwb-points-notification-settings.php:162
-#: admin/partials/templates/mwb-points-notification-settings.php:187
-#: admin/partials/templates/mwb-points-notification-settings.php:239
-#: admin/partials/templates/mwb-points-notification-settings.php:263
-#: admin/partials/templates/mwb-points-notification-settings.php:311
-#: admin/partials/templates/mwb-points-notification-settings.php:335
-msgid "Use "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:87
-#: admin/partials/templates/mwb-points-notification-settings.php:87
-msgid " shortcode in place of Total Points, "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:87
-msgid " shortcode in place of username and"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:87
-msgid "In this section donot use"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:87
-#: admin/partials/templates/mwb-points-notification-settings.php:87
-msgid " shortcode "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:88
-msgid "Your points is updated and your total points is "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:94
-#: admin/partials/templates/mwb-points-notification-settings.php:94
-msgid "Signup Points Notification Settings"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:103
-#: admin/partials/templates/mwb-points-notification-settings.php:103
-msgid "Signup Points Notification"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:111
-#: admin/partials/templates/mwb-points-notification-settings.php:111
-msgid " shortcode to be placed Signup Points dynamically, "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:111
-msgid " shortcode in place of username"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:111
-#: admin/partials/templates/mwb_points_notification_settings.php:137
-#: admin/partials/templates/mwb_points_notification_settings.php:162
-#: admin/partials/templates/mwb_points_notification_settings.php:187
-#: admin/partials/templates/mwb_points_notification_settings.php:213
-msgid " in place of Referral points"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:111
-#: admin/partials/templates/mwb_points_notification_settings.php:137
-msgid " in place of comment points "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:111
-#: admin/partials/templates/mwb_points_notification_settings.php:137
-#: admin/partials/templates/mwb_points_notification_settings.php:213
-#: admin/partials/templates/mwb-points-notification-settings.php:137
-msgid " in place of Per Currency spent points and "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:111
-#: admin/partials/templates/mwb_points_notification_settings.php:137
-#: admin/partials/templates/mwb_points_notification_settings.php:162
-#: admin/partials/templates/mwb_points_notification_settings.php:187
-#: admin/partials/templates/mwb_points_notification_settings.php:213
-#: admin/partials/templates/mwb_points_notification_settings.php:311
-#: admin/partials/templates/mwb_points_notification_settings.php:335
-#: admin/partials/templates/mwb-points-notification-settings.php:111
-#: admin/partials/templates/mwb-points-notification-settings.php:137
-#: admin/partials/templates/mwb-points-notification-settings.php:162
-#: admin/partials/templates/mwb-points-notification-settings.php:187
-#: admin/partials/templates/mwb-points-notification-settings.php:311
-#: admin/partials/templates/mwb-points-notification-settings.php:335
-msgid " shortcode in place of Total Points."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:112
-#: admin/partials/templates/mwb_points_notification_settings.php:136
-#: admin/partials/templates/mwb_points_notification_settings.php:161
-msgid ""
-"You have received [Points] points and your total points is [Total Points]."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:119
-#: admin/partials/templates/mwb-points-notification-settings.php:119
-msgid "Product Purchase Points Notification Settings"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:128
-#: admin/partials/templates/mwb-points-notification-settings.php:128
-msgid "Product Purchase Points Notification"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:137
-#: admin/partials/templates/mwb-points-notification-settings.php:137
-msgid " shortcode in place of Product Purchase Points "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:137
-#: admin/partials/templates/mwb_points_notification_settings.php:162
-#: admin/partials/templates/mwb_points_notification_settings.php:187
-#: admin/partials/templates/mwb_points_notification_settings.php:239
-#: admin/partials/templates/mwb_points_notification_settings.php:263
-#: admin/partials/templates/mwb_points_notification_settings.php:287
-#: admin/partials/templates/mwb_points_notification_settings.php:311
-#: admin/partials/templates/mwb_points_notification_settings.php:335
-#: admin/partials/templates/mwb-points-notification-settings.php:111
-#: admin/partials/templates/mwb-points-notification-settings.php:137
-#: admin/partials/templates/mwb-points-notification-settings.php:162
-#: admin/partials/templates/mwb-points-notification-settings.php:187
-#: admin/partials/templates/mwb-points-notification-settings.php:239
-#: admin/partials/templates/mwb-points-notification-settings.php:263
-#: admin/partials/templates/mwb-points-notification-settings.php:311
-#: admin/partials/templates/mwb-points-notification-settings.php:335
-msgid " shortcode in place of username "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:144
-#: admin/partials/templates/mwb-points-notification-settings.php:144
-msgid "Order Amount Points Notification Settings(Per "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:144
-#: admin/partials/templates/mwb-points-notification-settings.php:144
-msgid " Spent Points)"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:153
-#: admin/partials/templates/mwb-points-notification-settings.php:153
-msgid "Order Amount Points Notification"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:162
-#: admin/partials/templates/mwb_points_notification_settings.php:187
-msgid " shortcode in place of per currency spent points"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:162
-#: admin/partials/templates/mwb_points_notification_settings.php:187
-msgid "in place of comment points and "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:169
-#: admin/partials/templates/mwb-points-notification-settings.php:169
-msgid "Referral Points Notification Settings"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:178
-#: admin/partials/templates/mwb-points-notification-settings.php:178
-msgid "Referral Points Notification"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:186
-#: admin/partials/templates/mwb_points_notification_settings.php:212
-msgid "You have received"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:186
-msgid "points and your total points is."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:195
-msgid "Referral Purchase Points Notification Settings"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:204
-msgid "Referral Purchase Points Notification"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:212
-msgid "points and your total points is"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:213
-msgid " shortcode in place of Referral Purchase Points "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:213
-msgid " in place of comment points"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:221
-#: admin/partials/templates/mwb_points_notification_settings.php:230
-#: admin/partials/templates/mwb-points-notification-settings.php:221
-#: admin/partials/templates/mwb-points-notification-settings.php:230
-msgid "Upgrade Membership Level Notification"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:238
-#: admin/partials/templates/mwb-points-notification-settings.php:238
-msgid ""
-"Your User Level has been Upgraded to [USERLEVEL]. And Now You will get some "
-"offers on some products."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:239
-#: admin/partials/templates/mwb-points-notification-settings.php:239
-msgid " shortcode in place of User Level "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:245
-#: admin/partials/templates/mwb-points-notification-settings.php:245
-msgid "Deduct Assigned Point Notification"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:254
-#: admin/partials/templates/mwb_points_notification_settings.php:278
-#: admin/partials/templates/mwb-points-notification-settings.php:254
-msgid "Your Points has been Deducted"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:262
-#: admin/partials/templates/mwb_points_notification_settings.php:286
-msgid ""
-"Your [DEDUCTEDPOINT] has been deducted from your total points as you have "
-"requested for your refund, and your Total Point is [TOTALPOINTS]."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:263
-#: admin/partials/templates/mwb_points_notification_settings.php:287
-#: admin/partials/templates/mwb_points_notification_settings.php:311
-#: admin/partials/templates/mwb_points_notification_settings.php:335
-#: admin/partials/templates/mwb-points-notification-settings.php:263
-#: admin/partials/templates/mwb-points-notification-settings.php:311
-msgid " shortcode in place of points which has been deducted "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:263
-#: admin/partials/templates/mwb_points_notification_settings.php:287
-#: admin/partials/templates/mwb-points-notification-settings.php:263
-msgid " shortcode in place of Total Remaining Points."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:269
-msgid "Deduct 'Per Currency Spent' Point Notification"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:293
-#: admin/partials/templates/mwb-points-notification-settings.php:293
-msgid "Points On Cart Sub-Total"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:302
-#: admin/partials/templates/mwb-points-notification-settings.php:302
-msgid "Points Deducted!!"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:310
-msgid ""
-"Your [DEDUCTCARTPOINT] Points has been deducted from your account, now your "
-"Total Point is [TOTALPOINTS]."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:317
-#: admin/partials/templates/mwb-points-notification-settings.php:317
-msgid "Points On Order Total Range"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:326
-#: admin/partials/templates/mwb-points-notification-settings.php:326
-msgid "Points Added"
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:334
-msgid ""
-"Your [ORDERTOTALPOINT] Points has been added in now your Total Point is "
-"[TOTALPOINTS]."
-msgstr ""
-
-#: admin/partials/templates/mwb_points_notification_settings.php:383
-#: admin/partials/templates/mwb_membership_settings.php:146
-#: admin/partials/templates/mwb_coupon_settings.php:148
-#: admin/partials/templates/mwb-point-expiration.php:227
-#: admin/partials/templates/mwb_point_expiration.php:227
-#: admin/partials/templates/mwb_general-settings.php:678
-#: admin/partials/templates/mwb-other-setting.php:163
-#: admin/partials/templates/mwb_assign_pro_points.php:189
-#: admin/partials/templates/mwb_generral-settings2.php:316
-#: admin/partials/templates/mwb-generral-settings2.php:315
-#: admin/partials/templates/mwb-coupon-settings.php:148
-#: admin/partials/templates/mwb-general-settings.php:678
-#: admin/partials/templates/mwb-order-total.php:86
-#: admin/partials/templates/mwb_order_total.php:86
-#: admin/partials/templates/mwb_other_setting.php:376
-#: admin/partials/templates/mwb-points-notification-settings.php:383
-msgid "Save changes"
-msgstr ""
-
-#: admin/partials/templates/mwb_membership_settings.php:56
-#: admin/partials/templates/mwb-point-expiration.php:36
-#: admin/partials/templates/mwb_point_expiration.php:36
-#: admin/partials/templates/mwb_general-settings.php:104
-#: admin/partials/templates/mwb-general-settings.php:104
-#: admin/partials/templates/mwb-membership-settings.php:56
-#: admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php:263
+#: admin/partials/templates/mwb-point-expiration.php:39
+#: admin/partials/templates/mwb-membership-settings.php:62
+#: admin/partials/settings/class-points-rewards-for-woocommerce-settings.php:290
 msgid "Settings saved."
 msgstr ""
 
-#: admin/partials/templates/mwb_membership_settings.php:58
-#: admin/partials/templates/mwb-point-expiration.php:38
-#: admin/partials/templates/mwb_point_expiration.php:38
+#: admin/partials/templates/mwb-point-expiration.php:41
 #: admin/partials/templates/mwb-purchase-points-only.php:52
 #: admin/partials/templates/mwb-purchase-points-only.php:61
 #: admin/partials/templates/mwb-purchase-points-only.php:83
-#: admin/partials/templates/mwb_general-settings.php:106
-#: admin/partials/templates/mwb_assign_pro_points.php:57
-#: admin/partials/templates/mwb_assign_pro_points.php:66
-#: admin/partials/templates/mwb_assign_pro_points.php:92
-#: admin/partials/templates/mwb-general-settings.php:106
-#: admin/partials/templates/mwb-membership-settings.php:58
-#: admin/partials/templates/mwb-assign-pro-points.php:57
-#: admin/partials/templates/mwb-assign-pro-points.php:66
-#: admin/partials/templates/mwb-assign-pro-points.php:92
-#: admin/partials/templates/mwb_purchase_points_only.php:52
-#: admin/partials/templates/mwb_purchase_points_only.php:61
-#: admin/partials/templates/mwb_purchase_points_only.php:83
-#: admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php:265
+#: admin/partials/templates/mwb-membership-settings.php:64
+#: admin/partials/templates/mwb-assign-pro-points.php:63
+#: admin/partials/templates/mwb-assign-pro-points.php:72
+#: admin/partials/templates/mwb-assign-pro-points.php:98
+#: admin/partials/settings/class-points-rewards-for-woocommerce-settings.php:292
 msgid "Dismiss this notices."
 msgstr ""
 
-#: admin/partials/templates/mwb_membership_settings.php:83
-#: admin/partials/templates/mwb_membership_settings.php:87
-#: admin/partials/templates/mwb-membership-settings.php:83
-#: admin/partials/templates/mwb-membership-settings.php:87
-msgid "Enable Membership"
-msgstr ""
-
-#: admin/partials/templates/mwb_membership_settings.php:88
-#: admin/partials/templates/mwb-membership-settings.php:88
-msgid "Check this box to enable the Membership Feature"
-msgstr ""
-
-#: admin/partials/templates/mwb_membership_settings.php:92
-#: admin/partials/templates/mwb-membership-settings.php:92
-msgid "Exclude Sale Products"
-msgstr ""
-
-#: admin/partials/templates/mwb_membership_settings.php:96
-#: admin/partials/templates/mwb-membership-settings.php:96
-msgid "Exclude Sale Products for Membership Discount"
-msgstr ""
-
-#: admin/partials/templates/mwb_membership_settings.php:97
-#: admin/partials/templates/mwb-membership-settings.php:97
-msgid "Check this box to do not apply the membership discount on sale products"
-msgstr ""
-
-#: admin/partials/templates/mwb_membership_settings.php:100
-#: admin/partials/templates/mwb-membership-settings.php:100
-msgid "Create Member"
-msgstr ""
-
-#: admin/partials/templates/mwb_membership_settings.php:127
-#: admin/partials/templates/mwb-membership-settings.php:127
-#: admin/partials/templates/mwb-wpr-membership-log-table.php:252
-msgid "Membership Log"
-msgstr ""
-
-#: admin/partials/templates/mwb_membership_settings.php:133
-#: admin/partials/templates/mwb-membership-settings.php:133
-msgid "Add Another"
-msgstr ""
-
-#: admin/partials/templates/mwb_membership_settings.php:134
-#: admin/partials/templates/mwb-membership-settings.php:134
-msgid ""
-"Please do not change the \"Level Name\" once it will be saved, as it become "
-"the key for the Membership User"
-msgstr ""
-
-#: admin/partials/templates/mwb_coupon_settings.php:17
-#: admin/partials/templates/mwb-coupon-settings.php:17
-msgid "Earn Points Per Currency Settings"
-msgstr ""
-
-#: admin/partials/templates/mwb_coupon_settings.php:21
-#: admin/partials/templates/mwb-coupon-settings.php:21
-msgid "Enable Per Currency Points Conversion"
-msgstr ""
-
-#: admin/partials/templates/mwb_coupon_settings.php:25
-#: admin/partials/templates/mwb-coupon-settings.php:25
-msgid "Allow per currency points conversion"
-msgstr ""
-
-#: admin/partials/templates/mwb_coupon_settings.php:26
-#: admin/partials/templates/mwb-coupon-settings.php:26
-msgid "Check this box if you want enable per currency points conversion."
-msgstr ""
-
-#: admin/partials/templates/mwb_coupon_settings.php:29
-#: admin/partials/templates/mwb-coupon-settings.php:29
-msgid "Per "
-msgstr ""
-
-#: admin/partials/templates/mwb_coupon_settings.php:29
-#: admin/partials/templates/mwb-coupon-settings.php:29
-msgid "Points Conversion"
-msgstr ""
-
-#: admin/partials/templates/mwb_coupon_settings.php:30
-#: admin/partials/templates/mwb-coupon-settings.php:30
-msgid ""
-"Enter the redeem price for points.(i.e., how much amounts will be equivalent "
-"to the points)"
-msgstr ""
-
-#: admin/partials/templates/mwb_coupon_settings.php:38
-#: admin/partials/templates/mwb_generral-settings2.php:197
-#: admin/partials/templates/mwb-generral-settings2.php:197
-#: admin/partials/templates/mwb-coupon-settings.php:38
-msgid "Points ="
-msgstr ""
-
-#: admin/partials/templates/mwb-point-expiration.php:58
-#: admin/partials/templates/mwb_point_expiration.php:58
+#: admin/partials/templates/mwb-point-expiration.php:61
 msgid "Enable Points Expiration "
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:62
-#: admin/partials/templates/mwb_point_expiration.php:62
+#: admin/partials/templates/mwb-point-expiration.php:65
 msgid ""
 "Check this, If you want to set the expiration period for the Rewarded Points"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:66
-#: admin/partials/templates/mwb_point_expiration.php:66
+#: admin/partials/templates/mwb-point-expiration.php:69
 msgid "Enable Point Expiration"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:72
-#: admin/partials/templates/mwb_point_expiration.php:72
+#: admin/partials/templates/mwb-point-expiration.php:75
 msgid "Show Points expiration on Myaccount Page"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:76
-#: admin/partials/templates/mwb_point_expiration.php:76
+#: admin/partials/templates/mwb-point-expiration.php:79
 msgid ""
 "Check this, If you want to show the expiration period for the Rewarded "
 "Points on Myaccount Page"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:80
-#: admin/partials/templates/mwb_point_expiration.php:80
+#: admin/partials/templates/mwb-point-expiration.php:83
 msgid "Expiartion willl get displayed just below the Total Point"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:86
-#: admin/partials/templates/mwb_point_expiration.php:86
+#: admin/partials/templates/mwb-point-expiration.php:89
 msgid "Set the Required Threshold"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:90
-#: admin/partials/templates/mwb_point_expiration.php:90
+#: admin/partials/templates/mwb-point-expiration.php:93
 msgid ""
 "Set the threshold for points expiration, The expiration period will be "
 "calculated when the threshold has been reached"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:100
-#: admin/partials/templates/mwb_point_expiration.php:100
+#: admin/partials/templates/mwb-point-expiration.php:103
 msgid "Set Expiration Time"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:104
-#: admin/partials/templates/mwb_point_expiration.php:104
+#: admin/partials/templates/mwb-point-expiration.php:107
 msgid ""
 "Set the Time-Period for \"When the points needs to get expired?\" It will "
 "calculated over the above Threshold Time"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:158
-#: admin/partials/templates/mwb_point_expiration.php:158
+#: admin/partials/templates/mwb-point-expiration.php:161
 msgid "Email Notification(Re-Notify Days)"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:162
-#: admin/partials/templates/mwb_point_expiration.php:162
+#: admin/partials/templates/mwb-point-expiration.php:165
 msgid "Set the number of days beofre the Email will get sent out"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:172
-#: admin/partials/templates/mwb_point_expiration.php:172
+#: admin/partials/templates/mwb-point-expiration.php:175
 msgid ""
 "Enter the Message for notifying the user about they have reached their "
 "Threshold"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:176
-#: admin/partials/templates/mwb_point_expiration.php:176
+#: admin/partials/templates/mwb-point-expiration.php:179
 msgid ""
 "Entered Message will appears inside the Email Template for notifying the "
 "Customer that they have reached the Threshold now they should redeem their "
 "Points before it will get expired"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:180
-#: admin/partials/templates/mwb-point-expiration.php:200
-#: admin/partials/templates/mwb_point_expiration.php:180
-#: admin/partials/templates/mwb_point_expiration.php:200
-#: admin/partials/templates/mwb_other_setting.php:213
-#: admin/partials/templates/mwb_other_setting.php:233
+#: admin/partials/templates/mwb-point-expiration.php:183
+#: admin/partials/templates/mwb-point-expiration.php:203
 msgid ""
 "Use these shortcodes for providing an appropriate message for your customers "
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:183
-#: admin/partials/templates/mwb-point-expiration.php:203
-#: admin/partials/templates/mwb_point_expiration.php:183
-#: admin/partials/templates/mwb_point_expiration.php:203
-#: admin/partials/templates/mwb_other_setting.php:218
-#: admin/partials/templates/mwb_other_setting.php:238
+#: admin/partials/templates/mwb-point-expiration.php:186
+#: admin/partials/templates/mwb-point-expiration.php:206
 msgid " for their Total Points "
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:185
-#: admin/partials/templates/mwb-point-expiration.php:205
-#: admin/partials/templates/mwb_point_expiration.php:185
-#: admin/partials/templates/mwb_point_expiration.php:205
+#: admin/partials/templates/mwb-point-expiration.php:188
+#: admin/partials/templates/mwb-point-expiration.php:208
 msgid " for the Expiration Date "
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:192
-#: admin/partials/templates/mwb_point_expiration.php:192
+#: admin/partials/templates/mwb-point-expiration.php:195
 msgid "Re-notify Message before some days"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:196
-#: admin/partials/templates/mwb_point_expiration.php:196
+#: admin/partials/templates/mwb-point-expiration.php:199
 msgid ""
 "Entered Message will appears inside the Email Template for notifying the "
 "Customer that they have left just some days more before the expiration"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:212
-#: admin/partials/templates/mwb_point_expiration.php:212
+#: admin/partials/templates/mwb-point-expiration.php:215
 msgid "Message when Points has been Expired"
 msgstr ""
 
-#: admin/partials/templates/mwb-point-expiration.php:216
-#: admin/partials/templates/mwb_point_expiration.php:216
+#: admin/partials/templates/mwb-point-expiration.php:219
 msgid ""
 "Entered Message will appears inside the Email Template for notifying the "
 "Customer that the Points has been expired"
 msgstr ""
 
+#: admin/partials/templates/mwb-point-expiration.php:230
+#: admin/partials/templates/mwb-other-setting.php:164
+#: admin/partials/templates/mwb-generral-settings2.php:320
+#: admin/partials/templates/mwb-coupon-settings.php:153
+#: admin/partials/templates/mwb-order-total.php:102
+#: admin/partials/templates/mwb-points-notification-settings.php:338
+msgid "Save changes"
+msgstr ""
+
 #: admin/partials/templates/mwb-purchase-points-only.php:48
-#: admin/partials/templates/mwb_assign_pro_points.php:53
-#: admin/partials/templates/mwb-assign-pro-points.php:53
-#: admin/partials/templates/mwb_purchase_points_only.php:48
+#: admin/partials/templates/mwb-assign-pro-points.php:59
 msgid " Point Assigned Successfully to All Products"
 msgstr ""
 
 #: admin/partials/templates/mwb-purchase-points-only.php:59
-#: admin/partials/templates/mwb_assign_pro_points.php:64
-#: admin/partials/templates/mwb-assign-pro-points.php:64
-#: admin/partials/templates/mwb_purchase_points_only.php:59
+#: admin/partials/templates/mwb-assign-pro-points.php:70
 msgid " Please enter some points !"
 msgstr ""
 
 #: admin/partials/templates/mwb-purchase-points-only.php:81
-#: admin/partials/templates/mwb_assign_pro_points.php:90
-#: admin/partials/templates/mwb-assign-pro-points.php:90
-#: admin/partials/templates/mwb_purchase_points_only.php:81
+#: admin/partials/templates/mwb-assign-pro-points.php:96
 msgid "Points are removed Successfully from All Products"
 msgstr ""
 
 #: admin/partials/templates/mwb-purchase-points-only.php:96
-#: admin/partials/templates/mwb_purchase_points_only.php:96
 msgid ""
 "This is the category wise setting for purchase product from points only, "
 "enter some valid points for assigning, leave blank fields for removing "
@@ -1661,1195 +842,828 @@ msgid ""
 msgstr ""
 
 #: admin/partials/templates/mwb-purchase-points-only.php:101
-#: admin/partials/templates/mwb_purchase_points_only.php:101
 msgid "Categories"
 msgstr ""
 
 #: admin/partials/templates/mwb-purchase-points-only.php:103
-#: admin/partials/templates/mwb_purchase_points_only.php:103
 msgid "Assign/Remove"
 msgstr ""
 
 #: admin/partials/templates/mwb-purchase-points-only.php:117
-#: admin/partials/templates/mwb_purchase_points_only.php:117
 msgid "Submit"
 msgstr ""
 
-#: admin/partials/templates/mwb_general-settings.php:50
-#: admin/partials/templates/mwb_general-settings.php:140
-#: admin/partials/templates/mwb-general-settings.php:50
-#: admin/partials/templates/mwb-general-settings.php:140
-msgid "Use your Points for purchasing this Product"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:55
-#: admin/partials/templates/mwb_general-settings.php:145
-#: admin/partials/templates/mwb_generral-settings2.php:167
-#: admin/partials/templates/mwb-generral-settings2.php:167
-#: admin/partials/templates/mwb-general-settings.php:55
-#: admin/partials/templates/mwb-general-settings.php:145
-msgid "Product Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:163
-#: admin/partials/templates/mwb_generral-settings2.php:25
-#: admin/partials/templates/mwb-generral-settings2.php:25
-#: admin/partials/templates/mwb-general-settings.php:163
-msgid "Check this box to enable the plugin."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:167
-#: admin/partials/templates/mwb_generral-settings2.php:23
-#: admin/partials/templates/mwb-generral-settings2.php:23
-#: admin/partials/templates/mwb-general-settings.php:167
-msgid "Enable WooCommerce Points and Rewards"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:174
-#: admin/partials/templates/mwb_generral-settings2.php:39
-#: admin/partials/templates/mwb_generral-settings2.php:66
-#: admin/partials/templates/mwb-generral-settings2.php:39
-#: admin/partials/templates/mwb-generral-settings2.php:66
-#: admin/partials/templates/mwb-general-settings.php:174
-msgid "Sign Up"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:177
-#: admin/partials/templates/mwb_generral-settings2.php:36
-#: admin/partials/templates/mwb-generral-settings2.php:36
-#: admin/partials/templates/mwb-general-settings.php:177
-msgid "Enable Signup Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:181
-#: admin/partials/templates/mwb_generral-settings2.php:41
-#: admin/partials/templates/mwb-generral-settings2.php:41
-#: admin/partials/templates/mwb-general-settings.php:181
-msgid "Check this box to enable the Signup Points."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:185
-#: admin/partials/templates/mwb_generral-settings2.php:43
-#: admin/partials/templates/mwb-generral-settings2.php:43
-#: admin/partials/templates/mwb-general-settings.php:185
-msgid "Enable Signup Points for Rewards"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:191
-#: admin/partials/templates/mwb_generral-settings2.php:46
-#: admin/partials/templates/mwb-generral-settings2.php:46
-#: admin/partials/templates/mwb-general-settings.php:191
-msgid "Enter Signup Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:195
-#: admin/partials/templates/mwb_generral-settings2.php:52
-#: admin/partials/templates/mwb-generral-settings2.php:52
-#: admin/partials/templates/mwb-general-settings.php:195
-msgid "The points which the new customer will get after signup."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:206
-#: admin/partials/templates/mwb-general-settings.php:206
-msgid "Comment"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:209
-#: admin/partials/templates/mwb-general-settings.php:209
-msgid "Enable Comments Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:214
-#: admin/partials/templates/mwb-general-settings.php:214
-msgid "Check this box to enable the Comments Points when comment is approved."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:218
-#: admin/partials/templates/mwb-general-settings.php:218
-msgid "Enable Comments Points for Rewards"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:224
-#: admin/partials/templates/mwb-general-settings.php:224
-msgid "Enter Comments Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:229
-#: admin/partials/templates/mwb-general-settings.php:229
-msgid ""
-"The points which the new customer will get after their comments are approved."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:240
-#: admin/partials/templates/mwb_generral-settings2.php:58
-#: admin/partials/templates/mwb-generral-settings2.php:58
-#: admin/partials/templates/mwb-general-settings.php:240
-msgid "Referral"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:243
-#: admin/partials/templates/mwb_generral-settings2.php:62
-#: admin/partials/templates/mwb-generral-settings2.php:62
-#: admin/partials/templates/mwb-general-settings.php:243
-msgid "Enable Referral Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:247
-#: admin/partials/templates/mwb_generral-settings2.php:68
-#: admin/partials/templates/mwb-generral-settings2.php:68
-#: admin/partials/templates/mwb-general-settings.php:247
-msgid ""
-"Check this box to enable the Referral Points when customer invites another "
-"customers."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:251
-#: admin/partials/templates/mwb_generral-settings2.php:69
-#: admin/partials/templates/mwb-generral-settings2.php:69
-#: admin/partials/templates/mwb-general-settings.php:251
-msgid "Enable Referral Points for Rewards."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:257
-#: admin/partials/templates/mwb_generral-settings2.php:72
-#: admin/partials/templates/mwb-generral-settings2.php:72
-#: admin/partials/templates/mwb-general-settings.php:257
-msgid "Enter Referral Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:261
-#: admin/partials/templates/mwb_generral-settings2.php:78
-#: admin/partials/templates/mwb-generral-settings2.php:78
-#: admin/partials/templates/mwb-general-settings.php:261
-msgid ""
-"The points which the customer will get when they successfully invites given "
-"number of customers."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:271
-#: admin/partials/templates/mwb-general-settings.php:271
-msgid "Minimum Referrals Required"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:276
-#: admin/partials/templates/mwb-general-settings.php:276
-msgid ""
-"Minimum number of referrals required to get referral points when the new "
-"customer sign ups."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:286
-#: admin/partials/templates/mwb-general-settings.php:286
-msgid "Assign Only Referral Purchase Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:291
-#: admin/partials/templates/mwb-general-settings.php:291
-msgid ""
-"Check this if you want to assign only purchase points to referred user not "
-"referral points."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:295
-#: admin/partials/templates/mwb-general-settings.php:295
-msgid "Make sure Referral Points & Referral Purchase Points should be enable "
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:301
-#: admin/partials/templates/mwb_general-settings.php:309
-#: admin/partials/templates/mwb-general-settings.php:301
-#: admin/partials/templates/mwb-general-settings.php:309
-msgid "Enable Referral Purchase Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:305
-#: admin/partials/templates/mwb-general-settings.php:305
-msgid "Check this box to enable the referral purchase points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:315
-#: admin/partials/templates/mwb-general-settings.php:315
-msgid "Enter Referral Purchase Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:319
-#: admin/partials/templates/mwb-general-settings.php:319
-msgid ""
-"Entered point will assign to that user by which another user reffered from "
-"refrral link and purchase some products "
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:329
-#: admin/partials/templates/mwb-general-settings.php:329
-msgid "Enable Referral Purchase Limit"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:334
-#: admin/partials/templates/mwb-general-settings.php:334
-msgid ""
-"Check this box to provide some limitation for referral purchase point, where "
-"you can set the number of orders for refree"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:338
-#: admin/partials/templates/mwb-general-settings.php:338
-msgid "Enable limit for Referral Purchase Option"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:344
-#: admin/partials/templates/mwb-general-settings.php:344
-msgid "Set the Number of Orders for Referral Purchase Limit"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:349
-#: admin/partials/templates/mwb-general-settings.php:349
-msgid ""
-"Enter the number of orders, Refree would get assigned only till the limit(no "
-"of orders) would be reached"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:360
-#: admin/partials/templates/mwb-general-settings.php:360
-#: admin/partials/templates/mwb_other_setting.php:273
-msgid "Static Referral Link"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:365
-#: admin/partials/templates/mwb-general-settings.php:365
-#: admin/partials/templates/mwb_other_setting.php:277
-msgid "Check this box if you want to make your referral link permanent."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:369
-#: admin/partials/templates/mwb-general-settings.php:369
-#: admin/partials/templates/mwb_other_setting.php:281
-msgid "Make Referral Link Permanent"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:375
-#: admin/partials/templates/mwb-general-settings.php:375
-#: admin/partials/templates/mwb_other_setting.php:287
-msgid "Referral Link Expiry"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:380
-#: admin/partials/templates/mwb-general-settings.php:380
-#: admin/partials/templates/mwb_other_setting.php:291
-msgid ""
-"Set the number of days after that the system will not able to remember the "
-"reffered user anymore"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:391
-#: admin/partials/templates/mwb_generral-settings2.php:84
-#: admin/partials/templates/mwb-generral-settings2.php:84
-#: admin/partials/templates/mwb-general-settings.php:391
-msgid "Social Sharing"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:394
-#: admin/partials/templates/mwb_generral-settings2.php:88
-#: admin/partials/templates/mwb-generral-settings2.php:88
-#: admin/partials/templates/mwb-general-settings.php:394
-msgid "Enable Social Links"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:398
-#: admin/partials/templates/mwb-general-settings.php:398
-msgid "Check this box to share the Referral Link on social media"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:402
-#: admin/partials/templates/mwb_generral-settings2.php:93
-#: admin/partials/templates/mwb_generral-settings2.php:94
-#: admin/partials/templates/mwb-generral-settings2.php:93
-#: admin/partials/templates/mwb-generral-settings2.php:94
-#: admin/partials/templates/mwb-general-settings.php:402
-msgid "Enable Social Media Sharing."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:408
-#: admin/partials/templates/mwb_generral-settings2.php:97
-#: admin/partials/templates/mwb-generral-settings2.php:97
-#: admin/partials/templates/mwb-general-settings.php:408
-msgid "Select Social Links"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:412
-#: admin/partials/templates/mwb_generral-settings2.php:100
-#: admin/partials/templates/mwb-generral-settings2.php:100
-#: admin/partials/templates/mwb-general-settings.php:412
-msgid "Check these boxes to share referral link"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:416
-#: admin/partials/templates/mwb_generral-settings2.php:106
-#: admin/partials/templates/mwb-generral-settings2.php:106
-#: admin/partials/templates/mwb-general-settings.php:416
-msgid "Facebook"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:419
-#: admin/partials/templates/mwb_generral-settings2.php:112
-#: admin/partials/templates/mwb-generral-settings2.php:112
-#: admin/partials/templates/mwb-general-settings.php:419
-msgid "Twitter"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:422
-#: admin/partials/templates/mwb_generral-settings2.php:118
-#: admin/partials/templates/mwb-generral-settings2.php:118
-#: admin/partials/templates/mwb-general-settings.php:422
-msgid "Email"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:429
-#: admin/partials/templates/mwb_generral-settings2.php:126
-#: admin/partials/templates/mwb-generral-settings2.php:126
-#: admin/partials/templates/mwb-general-settings.php:429
-msgid "Text Settings"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:432
-#: admin/partials/templates/mwb_general-settings.php:474
-#: admin/partials/templates/mwb_generral-settings2.php:130
-#: admin/partials/templates/mwb-generral-settings2.php:130
-#: admin/partials/templates/mwb-general-settings.php:432
-#: admin/partials/templates/mwb-general-settings.php:474
-msgid "Enter Text"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:436
-#: admin/partials/templates/mwb_generral-settings2.php:135
-#: admin/partials/templates/mwb_generral-settings2.php:147
-#: admin/partials/templates/mwb-generral-settings2.php:135
-#: admin/partials/templates/mwb-generral-settings2.php:147
-#: admin/partials/templates/mwb-general-settings.php:436
-msgid "Entered text will append before the Total Number of Point"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:440
-#: admin/partials/templates/mwb_generral-settings2.php:134
-#: admin/partials/templates/mwb-generral-settings2.php:134
-#: admin/partials/templates/mwb-general-settings.php:440
-msgid "Entered text will get displayed on points page."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:446
-#: admin/partials/templates/mwb_generral-settings2.php:139
-#: admin/partials/templates/mwb-generral-settings2.php:139
-#: admin/partials/templates/mwb-general-settings.php:446
-msgid "Enter Ways to Gain Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:451
-#: admin/partials/templates/mwb-general-settings.php:451
-msgid "Entered ways will get displayed on points page."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:454
-#: admin/partials/templates/mwb_generral-settings2.php:149
-#: admin/partials/templates/mwb-generral-settings2.php:149
-#: admin/partials/templates/mwb-general-settings.php:454
-msgid "Use these shortcodes for providing ways to gain points at front end."
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:461
-#: admin/partials/templates/mwb_generral-settings2.php:148
-#: admin/partials/templates/mwb-generral-settings2.php:148
-#: admin/partials/templates/mwb-general-settings.php:461
-msgid " for Referral Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:463
-#: admin/partials/templates/mwb-general-settings.php:463
-msgid " for Comment Points "
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:465
-#: admin/partials/templates/mwb_generral-settings2.php:148
-#: admin/partials/templates/mwb-generral-settings2.php:148
-#: admin/partials/templates/mwb-general-settings.php:465
-msgid " for Per currency spent points and"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:467
-#: admin/partials/templates/mwb_generral-settings2.php:148
-#: admin/partials/templates/mwb-generral-settings2.php:148
-#: admin/partials/templates/mwb-general-settings.php:467
-msgid " for per currency spent price"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:478
-#: admin/partials/templates/mwb-general-settings.php:478
-msgid "Entered text will get displayed on Single Product Page"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:482
-#: admin/partials/templates/mwb-general-settings.php:482
-msgid "Entered text will get displayed on single product page"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:488
-#: admin/partials/templates/mwb_generral-settings2.php:152
-#: admin/partials/templates/mwb-generral-settings2.php:152
-#: admin/partials/templates/mwb-general-settings.php:488
-msgid "Points Tab Text"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:492
-#: admin/partials/templates/mwb_generral-settings2.php:157
-#: admin/partials/templates/mwb-generral-settings2.php:157
-#: admin/partials/templates/mwb-general-settings.php:492
-msgid "Entered text will be replaced the Points tab at Myaccount Page"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:496
-#: admin/partials/templates/mwb-general-settings.php:496
-msgid "Points Tab replaced with your text"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:502
-#: admin/partials/templates/mwb_generral-settings2.php:161
-#: admin/partials/templates/mwb-generral-settings2.php:161
-#: admin/partials/templates/mwb-general-settings.php:502
-msgid "Assigned Product Points Text"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:506
-#: admin/partials/templates/mwb_generral-settings2.php:166
-#: admin/partials/templates/mwb-generral-settings2.php:166
-#: admin/partials/templates/mwb-general-settings.php:506
-msgid ""
-"Enter the message you want to display for those product who have assigned "
-"with some of the Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:510
-#: admin/partials/templates/mwb_generral-settings2.php:165
-#: admin/partials/templates/mwb-generral-settings2.php:165
-#: admin/partials/templates/mwb-general-settings.php:510
-msgid "Product Point text can be replaced with entered text"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:517
-#: admin/partials/templates/mwb-general-settings.php:517
-msgid "Purchase Through Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:520
-#: admin/partials/templates/mwb-general-settings.php:520
-msgid "Enable Purchase through Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:525
-#: admin/partials/templates/mwb-general-settings.php:525
-msgid "Check this box to enable puchasing products through points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:529
-#: admin/partials/templates/mwb-general-settings.php:529
-msgid "Purchase Products through Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:535
-#: admin/partials/templates/mwb-general-settings.php:535
-msgid "Enable restrictions for above setting"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:540
-#: admin/partials/templates/mwb-general-settings.php:540
-msgid ""
-"Check this box if you want to allow some of the products for purchasing "
-"through points not all"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:544
-#: admin/partials/templates/mwb-general-settings.php:544
-msgid "Allow some of the products for purchasing through points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:555
-#: admin/partials/templates/mwb-general-settings.php:555
-msgid ""
-"Select those categories which you want to allow to customers for purchase "
-"that product through points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:581
-#: admin/partials/templates/mwb-general-settings.php:581
-msgid "Purchase Points Conversion"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:586
-#: admin/partials/templates/mwb-general-settings.php:586
-msgid ""
-"Entered points will be converted to price.(i.e., how many points will be "
-"equivalent to the product price)"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:592
-#: admin/partials/templates/mwb_general-settings.php:652
-#: admin/partials/templates/mwb-general-settings.php:592
-#: admin/partials/templates/mwb-general-settings.php:652
-#: admin/partials/templates/mwb_other_setting.php:325
-msgid "Points "
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:601
-#: admin/partials/templates/mwb_general-settings.php:604
-#: admin/partials/templates/mwb-general-settings.php:601
-#: admin/partials/templates/mwb-general-settings.php:604
-msgid "Set Preferences"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:608
-#: admin/partials/templates/mwb-general-settings.php:608
-msgid ""
-"What you want to choose when you have enabled \"Per currency Spent Point\" "
-"and a product with some \"Points\" assigned ?"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:612
-#: admin/partials/templates/mwb-general-settings.php:612
-msgid "Only Product Assigned Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:615
-#: admin/partials/templates/mwb-general-settings.php:615
-msgid "Only Per Currency Spent Point"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:618
-#: admin/partials/templates/mwb-general-settings.php:618
-msgid "Both"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:625
-#: admin/partials/templates/mwb_generral-settings2.php:173
-#: admin/partials/templates/mwb-generral-settings2.php:173
-#: admin/partials/templates/mwb-general-settings.php:625
-msgid "Redemption Settings"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:628
-#: admin/partials/templates/mwb_generral-settings2.php:177
-#: admin/partials/templates/mwb-generral-settings2.php:177
-#: admin/partials/templates/mwb-general-settings.php:628
-#: admin/partials/templates/mwb_other_setting.php:301
-msgid "Redemption Over Cart Sub-Total"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:632
-#: admin/partials/templates/mwb_generral-settings2.php:180
-#: admin/partials/templates/mwb-general-settings.php:632
-#: admin/partials/templates/mwb_other_setting.php:305
-msgid ""
-"Check this box if you want to let your customers to redeem their earned "
-"points for the cart subtotal, there would be no relation with product "
-"purchase through point feature"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:636
-#: admin/partials/templates/mwb-general-settings.php:636
-#: admin/partials/templates/mwb_other_setting.php:309
-msgid "No relation with Purchase Product Through Point Feature"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:642
-#: admin/partials/templates/mwb_generral-settings2.php:185
-#: admin/partials/templates/mwb-generral-settings2.php:185
-#: admin/partials/templates/mwb-general-settings.php:642
-#: admin/partials/templates/mwb_other_setting.php:315
-msgid "Conversion rate for Cart Sub-Total Redemption"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:646
-#: admin/partials/templates/mwb-general-settings.php:646
-#: admin/partials/templates/mwb_other_setting.php:319
-msgid ""
-"Enter the redeem points for cart sub-total. (i.e., how many points will be "
-"equivalent to your currency)"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:660
-#: admin/partials/templates/mwb_generral-settings2.php:213
-#: admin/partials/templates/mwb-generral-settings2.php:213
-#: admin/partials/templates/mwb-general-settings.php:660
-#: admin/partials/templates/mwb_other_setting.php:333
-msgid "Enable apply points during checkout"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:665
-#: admin/partials/templates/mwb_generral-settings2.php:216
-#: admin/partials/templates/mwb-generral-settings2.php:216
-#: admin/partials/templates/mwb-general-settings.php:665
-#: admin/partials/templates/mwb_other_setting.php:337
-msgid ""
-"Check this box if you want that customer can apply also apply points on "
-"checkout"
-msgstr ""
-
-#: admin/partials/templates/mwb_general-settings.php:669
-#: admin/partials/templates/mwb_generral-settings2.php:218
-#: admin/partials/templates/mwb-general-settings.php:669
-#: admin/partials/templates/mwb_other_setting.php:341
-msgid "Allow customers to apply points during checkout also"
-msgstr ""
-
-#: admin/partials/templates/mwb-other-setting.php:18
-#: admin/partials/templates/mwb-other-setting.php:23
-#: admin/partials/templates/mwb_other_setting.php:18
-#: admin/partials/templates/mwb_other_setting.php:23
-#: admin/partials/templates/mwb_other_setting.php:167
+#: admin/partials/templates/mwb-other-setting.php:22
+#: admin/partials/templates/mwb-other-setting.php:27
 msgid "Shortcodes"
 msgstr ""
 
-#: admin/partials/templates/mwb-other-setting.php:26
-#: admin/partials/templates/mwb_other_setting.php:26
-#: admin/partials/templates/mwb_other_setting.php:170
-#: admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php:46
+#: admin/partials/templates/mwb-other-setting.php:30
+#: admin/partials/settings/class-points-rewards-for-woocommerce-settings.php:49
 msgid ""
 "Use shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level "
 "of Users"
 msgstr ""
 
-#: admin/partials/templates/mwb-other-setting.php:27
-#: admin/partials/templates/mwb_other_setting.php:27
-#: admin/partials/templates/mwb_other_setting.php:171
-#: admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php:47
+#: admin/partials/templates/mwb-other-setting.php:31
+#: admin/partials/settings/class-points-rewards-for-woocommerce-settings.php:50
 msgid "Use shortcode [MYCURRENTPOINT] for displaying current Points of Users"
 msgstr ""
 
-#: admin/partials/templates/mwb-other-setting.php:28
-#: admin/partials/templates/mwb_other_setting.php:28
-#: admin/partials/templates/mwb_other_setting.php:172
-#: admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php:48
+#: admin/partials/templates/mwb-other-setting.php:32
+#: admin/partials/settings/class-points-rewards-for-woocommerce-settings.php:51
 msgid ""
 "Use shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on "
 "site"
 msgstr ""
 
-#: admin/partials/templates/mwb-other-setting.php:33
-#: admin/partials/templates/mwb_other_setting.php:33
-#: admin/partials/templates/mwb_other_setting.php:177
+#: admin/partials/templates/mwb-other-setting.php:37
 msgid ""
 "Enter the text which you want to display with shortcode [MYCURRENTPOINT]"
 msgstr ""
 
-#: admin/partials/templates/mwb-other-setting.php:35
-#: admin/partials/templates/mwb-other-setting.php:37
-#: admin/partials/templates/mwb_other_setting.php:35
-#: admin/partials/templates/mwb_other_setting.php:37
-#: admin/partials/templates/mwb_other_setting.php:181
-#: admin/partials/templates/mwb_other_setting.php:186
+#: admin/partials/templates/mwb-other-setting.php:39
+#: admin/partials/templates/mwb-other-setting.php:41
 msgid "Entered text will get displayed along with [MYCURRENTPOINT] shortcode"
 msgstr ""
 
-#: admin/partials/templates/mwb-other-setting.php:43
-#: admin/partials/templates/mwb_other_setting.php:43
-#: admin/partials/templates/mwb_other_setting.php:191
+#: admin/partials/templates/mwb-other-setting.php:47
 msgid ""
 "Enter the text which you want to display with shortcode [MYCURRENTUSERLEVEL]"
 msgstr ""
 
-#: admin/partials/templates/mwb-other-setting.php:44
-#: admin/partials/templates/mwb-other-setting.php:46
-#: admin/partials/templates/mwb_other_setting.php:44
-#: admin/partials/templates/mwb_other_setting.php:46
-#: admin/partials/templates/mwb_other_setting.php:195
-#: admin/partials/templates/mwb_other_setting.php:200
+#: admin/partials/templates/mwb-other-setting.php:48
+#: admin/partials/templates/mwb-other-setting.php:50
 msgid ""
 "Entered text will get displayed along with [MYCURRENTUSERLEVEL] shortcode"
 msgstr ""
 
-#: admin/partials/templates/mwb-other-setting.php:59
-#: admin/partials/templates/mwb_other_setting.php:59
-#: admin/partials/templates/mwb_other_setting.php:361
+#: admin/partials/templates/mwb-other-setting.php:63
 msgid "Select Color Notification Bar"
 msgstr ""
 
-#: admin/partials/templates/mwb-other-setting.php:60
-#: admin/partials/templates/mwb_other_setting.php:60
-#: admin/partials/templates/mwb_other_setting.php:365
+#: admin/partials/templates/mwb-other-setting.php:64
 msgid "You can also choose the color for your Notification Bar."
 msgstr ""
 
-#: admin/partials/templates/mwb-other-setting.php:62
-#: admin/partials/templates/mwb_other_setting.php:62
-#: admin/partials/templates/mwb_other_setting.php:267
+#: admin/partials/templates/mwb-other-setting.php:66
 msgid "Enable Point Sharing"
 msgstr ""
 
-#: admin/partials/templates/mwb_assign_pro_points.php:107
-#: admin/partials/templates/mwb_assign_pro_points.php:111
-#: admin/partials/templates/mwb_assign_pro_points.php:118
-msgid "Global Product Points"
+#: admin/partials/templates/mwb-generral-settings2.php:21
+#: admin/partials/templates/mwb-generral-settings2.php:25
+#: admin/partials/templates/mwb-points-notification-settings.php:64
+msgid "Enable"
 msgstr ""
 
-#: admin/partials/templates/mwb_assign_pro_points.php:113
-#: admin/partials/templates/mwb_assign_pro_points.php:120
-msgid "Enable Global Product Points"
+#: admin/partials/templates/mwb-generral-settings2.php:27
+msgid "Enable WooCommerce Points and Rewards"
 msgstr ""
 
-#: admin/partials/templates/mwb_assign_pro_points.php:115
-#: admin/partials/templates/mwb-assign-pro-points.php:115
+#: admin/partials/templates/mwb-generral-settings2.php:29
+msgid "Check this box to enable the plugin."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:36
+msgid "Signup"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:40
+msgid "Enable Signup Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:43
+#: admin/partials/templates/mwb-generral-settings2.php:70
+msgid "Sign Up"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:45
+msgid "Check this box to enable the Signup Points."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:47
+msgid "Enable Signup Points for Rewards"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:50
+msgid "Enter Signup Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:56
+msgid "The points which the new customer will get after signup."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:62
+msgid "Referral"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:66
+msgid "Enable Referral Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:72
+msgid ""
+"Check this box to enable the Referral Points when customer invites another "
+"customers."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:73
+msgid "Enable Referral Points for Rewards."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:76
+msgid "Enter Referral Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:82
+msgid ""
+"The points which the customer will get when they successfully invites given "
+"number of customers."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:88
+msgid "Social Sharing"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:92
+msgid "Enable Social Links"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:97
+#: admin/partials/templates/mwb-generral-settings2.php:98
+msgid "Enable Social Media Sharing."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:101
+msgid "Select Social Links"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:104
+msgid "Check these boxes to share referral link"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:110
+msgid "Facebook"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:116
+msgid "Twitter"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:122
+msgid "Email"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:130
+msgid "Text Settings"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:134
+msgid "Enter Text"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:138
+msgid "Entered text will get displayed on points page."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:139
+#: admin/partials/templates/mwb-generral-settings2.php:151
+msgid "Entered text will append before the Total Number of Point"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:143
+msgid "Enter Ways to Gain Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:152
+msgid " for Referral Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:152
+msgid " for Per currency spent points and"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:152
+msgid " for per currency spent price"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:153
+msgid "Use these shortcodes for providing ways to gain points at front end."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:156
+msgid "Points Tab Text"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:160
+msgid "Points Tab replaced with your text."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:161
+msgid "Entered text will be replaced the Points tab at Myaccount Page"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:165
+msgid "Assigned Product Points Text"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:169
+msgid "Product Point text can be replaced with entered text"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:170
+msgid ""
+"Enter the message you want to display for those product who have assigned "
+"with some of the Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:171
+msgid "Product Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:177
+msgid "Redemption Settings"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:181
+msgid "Redemption Over Cart Sub-Total"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:184
+msgid ""
+"Check this box if you want to let your customers to redeem their earned "
+"points for the cart subtotal."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:186
+msgid "Allow customers to apply points during Cart."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:189
+msgid "Conversion rate for Cart Sub-Total Redemption"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:198
+#: admin/partials/templates/mwb-generral-settings2.php:209
+msgid ""
+"Entered point will assign to that user by which another user reffered from "
+"refrral link and purchase some products."
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:201
+#: admin/partials/templates/mwb-coupon-settings.php:43
+msgid "Points ="
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:217
+msgid "Enable apply points during checkout"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:220
+msgid ""
+"Check this box if you want that customer can apply also apply points on "
+"checkout"
+msgstr ""
+
+#: admin/partials/templates/mwb-generral-settings2.php:222
+msgid "Allow customers to apply points during checkout also."
+msgstr ""
+
+#: admin/partials/templates/mwb-coupon-settings.php:22
+msgid "Earn Points Per Currency Settings"
+msgstr ""
+
+#: admin/partials/templates/mwb-coupon-settings.php:26
+msgid "Enable Per Currency Points Conversion"
+msgstr ""
+
+#: admin/partials/templates/mwb-coupon-settings.php:30
+msgid "Allow per currency points conversion"
+msgstr ""
+
+#: admin/partials/templates/mwb-coupon-settings.php:31
+msgid "Check this box if you want enable per currency points conversion."
+msgstr ""
+
+#: admin/partials/templates/mwb-coupon-settings.php:34
+msgid "Per "
+msgstr ""
+
+#: admin/partials/templates/mwb-coupon-settings.php:34
+msgid "Points Conversion"
+msgstr ""
+
+#: admin/partials/templates/mwb-coupon-settings.php:35
+msgid ""
+"Enter the redeem price for points.(i.e., how much amounts will be equivalent "
+"to the points)"
+msgstr ""
+
+#: admin/partials/templates/class-membership-log-list-table.php:45
+#: admin/partials/templates/class-points-log-list-table.php:43
+msgid "User Name"
+msgstr ""
+
+#: admin/partials/templates/class-membership-log-list-table.php:46
+#: admin/partials/templates/class-points-log-list-table.php:44
+msgid "User Email"
+msgstr ""
+
+#: admin/partials/templates/class-membership-log-list-table.php:47
+msgid "User Points"
+msgstr ""
+
+#: admin/partials/templates/class-membership-log-list-table.php:114
+#: admin/partials/templates/class-points-log-list-table.php:140
+msgid "Delete"
+msgstr ""
+
+#: admin/partials/templates/class-membership-log-list-table.php:252
+#: admin/partials/templates/mwb-membership-settings.php:133
+msgid "Membership Log"
+msgstr ""
+
+#: admin/partials/templates/class-membership-log-list-table.php:254
+#: admin/partials/templates/class-points-log-list-table.php:1029
+msgid "points_log_list_table"
+msgstr ""
+
+#: admin/partials/templates/class-membership-log-list-table.php:258
+#: admin/partials/templates/class-points-log-list-table.php:1033
+msgid "Search Users"
+msgstr ""
+
+#: admin/partials/templates/mwb-order-total.php:22
+msgid "Enable the settings for the orders"
+msgstr ""
+
+#: admin/partials/templates/mwb-order-total.php:25
+msgid ""
+"Check this box to enable gift coupon for those customers who had placed "
+"orders in your site"
+msgstr ""
+
+#: admin/partials/templates/mwb-order-total.php:26
+msgid "Enable Points on order total."
+msgstr ""
+
+#: admin/partials/templates/mwb-order-total.php:31
+msgid "Enter Points  within Order Range"
+msgstr ""
+
+#: admin/partials/templates/mwb-order-total.php:91
+msgid "Add More"
+msgstr ""
+
+#: admin/partials/templates/mwb-membership-settings.php:89
+#: admin/partials/templates/mwb-membership-settings.php:93
+msgid "Enable Membership"
+msgstr ""
+
+#: admin/partials/templates/mwb-membership-settings.php:94
+msgid "Check this box to enable the Membership Feature"
+msgstr ""
+
+#: admin/partials/templates/mwb-membership-settings.php:98
+msgid "Exclude Sale Products"
+msgstr ""
+
+#: admin/partials/templates/mwb-membership-settings.php:102
+msgid "Exclude Sale Products for Membership Discount"
+msgstr ""
+
+#: admin/partials/templates/mwb-membership-settings.php:103
+msgid "Check this box to do not apply the membership discount on sale products"
+msgstr ""
+
+#: admin/partials/templates/mwb-membership-settings.php:106
+msgid "Create Member"
+msgstr ""
+
+#: admin/partials/templates/mwb-membership-settings.php:139
+msgid "Add Another"
+msgstr ""
+
+#: admin/partials/templates/mwb-membership-settings.php:140
+msgid ""
+"Please do not change the \"Level Name\" once it will be saved, as it become "
+"the key for the Membership User"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:46
+msgid "Choose +/-"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:48
+msgid "Enter Remark"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:106
+msgid "Update"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:344
+msgid "User Coupon Details"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:355
+msgid "Coupon Code"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:358
+msgid "Coupon Amount"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:361
+msgid "Amount Left"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:364
+msgid "Expiry"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:403
+msgid "No Coupons Generated Yet."
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:407
+msgid "Go Back"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:415
+msgid "User Point Log Details"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:426
+msgid "Date & Time"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:476
+msgid "Coupon Generation"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:520
+msgid "Assigned Product Point"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:564
+msgid "Product Review Point"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:575
+msgid "Comment Points"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:608
+msgid "Referral Earns"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:640
+msgid "Referral Purchase Point"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:651
+msgid "Product purchased by Reffered User Points"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:662
+msgid "Admin Updates"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:686
+msgid "Product has been purchased using points"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:708
+msgid "Deduction of points for return request"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:752
+msgid "Deduct Order Total Points"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:774
+msgid "Shared with"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:805
+msgid "Receives Points"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:822
+msgid "Received Points by "
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:857
+msgid "Expired Points"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:899
+msgid "Assigned Points Deducted due to Cancelation of Order"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:988
+#: admin/partials/templates/class-points-log-list-table.php:1014
+msgid "Import Users"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:991
+#: admin/partials/templates/class-points-log-list-table.php:1017
+msgid "Import existing users and assign them with Sign Up Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-assign-pro-points.php:113
+msgid "Global setting for assigning points to all products at once"
+msgstr ""
+
+#: admin/partials/templates/mwb-assign-pro-points.php:117
+msgid "Global Assign Product Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-assign-pro-points.php:119
+msgid "Enable Assign Global Product Points"
+msgstr ""
+
+#: admin/partials/templates/mwb-assign-pro-points.php:121
 msgid ""
 "This is the global setting for Product Purchase Points, check this if you "
 "want to assign points to all products at once or uncheck if you want to "
 "remove assigned points from all products at once."
 msgstr ""
 
-#: admin/partials/templates/mwb_assign_pro_points.php:122
-#: admin/partials/templates/mwb-assign-pro-points.php:122
-msgid "Entered Points are assigned to All Products ."
-msgstr ""
-
-#: admin/partials/templates/mwb_generral-settings2.php:32
-#: admin/partials/templates/mwb-generral-settings2.php:32
-msgid "Signup"
-msgstr ""
-
-#: admin/partials/templates/mwb_generral-settings2.php:156
-#: admin/partials/templates/mwb-generral-settings2.php:156
-msgid "Points Tab replaced with your text."
-msgstr ""
-
-#: admin/partials/templates/mwb_generral-settings2.php:182
-#: admin/partials/templates/mwb-generral-settings2.php:182
-msgid "Allow customers to apply points during Cart."
-msgstr ""
-
-#: admin/partials/templates/mwb_generral-settings2.php:194
-#: admin/partials/templates/mwb_generral-settings2.php:205
-#: admin/partials/templates/mwb-generral-settings2.php:194
-#: admin/partials/templates/mwb-generral-settings2.php:205
-msgid ""
-"Entered point will assign to that user by which another user reffered from "
-"refrral link and purchase some products."
-msgstr ""
-
-#: admin/partials/templates/mwb-generral-settings2.php:180
-msgid ""
-"Check this box if you want to let your customers to redeem their earned "
-"points for the cart subtotal."
-msgstr ""
-
-#: admin/partials/templates/mwb-generral-settings2.php:218
-msgid "Allow customers to apply points during checkout also."
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:36
-#: admin/partials/templates/mwb-wpr-membership-log_table.php:45
-#: admin/partials/templates/mwb_wpr_membership_log_table.php:36
-#: admin/partials/templates/mwb_points_table.php:36
-#: admin/partials/templates/mwb-wpr-membership-log-table.php:45
-msgid "User Name"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:37
-#: admin/partials/templates/mwb-wpr-membership-log_table.php:46
-#: admin/partials/templates/mwb_wpr_membership_log_table.php:37
-#: admin/partials/templates/mwb_points_table.php:37
-#: admin/partials/templates/mwb-wpr-membership-log-table.php:46
-msgid "User Email"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:39
-#: admin/partials/templates/mwb_points_table.php:39
-msgid "Choose +/-"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:41
-#: admin/partials/templates/mwb_points_table.php:41
-msgid "Enter Remark"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:100
-#: admin/partials/templates/mwb_points_table.php:96
-msgid "Update"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:134
-#: admin/partials/templates/mwb-wpr-membership-log_table.php:114
-#: admin/partials/templates/mwb_wpr_membership_log_table.php:102
-#: admin/partials/templates/mwb_points_table.php:130
-#: admin/partials/templates/mwb-wpr-membership-log-table.php:114
-msgid "Delete"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:336
-#: admin/partials/templates/mwb_points_table.php:324
-msgid "User Coupon Details"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:347
-#: admin/partials/templates/mwb_points_table.php:335
-msgid "Coupon Code"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:350
-#: admin/partials/templates/mwb_points_table.php:338
-msgid "Coupon Amount"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:353
-#: admin/partials/templates/mwb_points_table.php:341
-msgid "Amount Left"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:356
-#: admin/partials/templates/mwb_points_table.php:344
-msgid "Expiry"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:395
-#: admin/partials/templates/mwb_points_table.php:383
-msgid "No Coupons Generated Yet."
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:400
-#: admin/partials/templates/mwb_points_table.php:388
-msgid "Go Back"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:408
-#: admin/partials/templates/mwb_points_table.php:396
-msgid "User Point Log Details"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:419
-#: admin/partials/templates/mwb_points_table.php:407
-msgid "Date & Time"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:469
-#: admin/partials/templates/mwb_points_table.php:457
-msgid "Coupon Generation"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:513
-#: admin/partials/templates/mwb_points_table.php:501
-msgid "Assigned Product Point"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:557
-#: admin/partials/templates/mwb_points_table.php:545
-msgid "Product Review Point"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:601
-#: admin/partials/templates/mwb_points_table.php:589
-msgid "Referral Earns"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:633
-#: admin/partials/templates/mwb_points_table.php:621
-msgid "Referral Purchase Point"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:644
-#: admin/partials/templates/mwb_points_table.php:632
-msgid "Product purchased by Reffered User Points"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:655
-#: admin/partials/templates/mwb_points_table.php:643
-msgid "Admin Updates"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:679
-#: admin/partials/templates/mwb_points_table.php:667
-msgid "Product has been purchased using points"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:701
-#: admin/partials/templates/mwb_points_table.php:689
-msgid "Deduction of points for return request"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:745
-#: admin/partials/templates/mwb_points_table.php:733
-msgid "Deduct Order Total Points"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:767
-#: admin/partials/templates/mwb_points_table.php:755
-msgid "Shared with"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:798
-#: admin/partials/templates/mwb_points_table.php:786
-msgid "Receives Points"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:815
-#: admin/partials/templates/mwb_points_table.php:803
-msgid "Received Points by "
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:850
-#: admin/partials/templates/mwb_points_table.php:838
-msgid "Expired Points"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:892
-#: admin/partials/templates/mwb_points_table.php:880
-msgid "Assigned Points Deducted due to Cancelation of Order"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:983
-#: admin/partials/templates/mwb-points-table.php:1009
-#: admin/partials/templates/mwb_points_table.php:971
-#: admin/partials/templates/mwb_points_table.php:997
-msgid "Import Users"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:986
-#: admin/partials/templates/mwb-points-table.php:1012
-#: admin/partials/templates/mwb_points_table.php:974
-#: admin/partials/templates/mwb_points_table.php:1000
-msgid "Import existing users and assign them with Sign Up Points"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:1024
-#: admin/partials/templates/mwb-wpr-membership-log_table.php:253
-#: admin/partials/templates/mwb_wpr_membership_log_table.php:229
-#: admin/partials/templates/mwb_points_table.php:1012
-#: admin/partials/templates/mwb-wpr-membership-log-table.php:254
-msgid "points_log_list_table"
-msgstr ""
-
-#: admin/partials/templates/mwb-points-table.php:1028
-#: admin/partials/templates/mwb-wpr-membership-log_table.php:257
-#: admin/partials/templates/mwb_wpr_membership_log_table.php:233
-#: admin/partials/templates/mwb_points_table.php:1016
-#: admin/partials/templates/mwb-wpr-membership-log-table.php:258
-msgid "Search Users"
-msgstr ""
-
-#: admin/partials/templates/mwb_license_verify.php:9
-#: admin/partials/templates/mwb-license-verify.php:9
-msgid "Woocommerce Ultimate Points and Rewards"
-msgstr ""
-
-#: admin/partials/templates/mwb_license_verify.php:13
-#: admin/partials/templates/mwb-license-verify.php:13
-msgid ""
-"This is the License Activation Panel. After purchasing plugin from "
-"Codecanyon you will get the purchase code of this plugin. Please verify your "
-"purchase below so that you can use feature of this plugin before 30 days of "
-"Activation."
-msgstr ""
-
-#: admin/partials/templates/mwb_license_verify.php:20
-#: admin/partials/templates/mwb-license-verify.php:20
-msgid "Enter Purchase Code"
-msgstr ""
-
-#: admin/partials/templates/mwb-order-total.php:7
-#: admin/partials/templates/mwb_order_total.php:7
-msgid "Enable the settings for the orders"
-msgstr ""
-
-#: admin/partials/templates/mwb-order-total.php:10
-#: admin/partials/templates/mwb_order_total.php:10
-msgid ""
-"Check this box to enable gift coupon for those customers who had placed "
-"orders in your site"
-msgstr ""
-
-#: admin/partials/templates/mwb-order-total.php:11
-#: admin/partials/templates/mwb_order_total.php:11
-msgid "Enable Points on order total."
-msgstr ""
-
-#: admin/partials/templates/mwb-order-total.php:16
-#: admin/partials/templates/mwb_order_total.php:16
-msgid "Enter Points  within Order Range"
-msgstr ""
-
-#: admin/partials/templates/mwb-order-total.php:75
-#: admin/partials/templates/mwb_order_total.php:75
-msgid "Add More"
-msgstr ""
-
-#: admin/partials/templates/mwb-wpr-membership-log_table.php:47
-#: admin/partials/templates/mwb_wpr_membership_log_table.php:38
-#: admin/partials/templates/mwb-wpr-membership-log-table.php:47
-msgid "User Points"
-msgstr ""
-
-#: admin/partials/templates/mwb_addon.php:19
-#: admin/partials/templates/mwb-addon.php:19
-msgid "Suggestion for Points and Reward Addon"
-msgstr ""
-
-#: admin/partials/templates/mwb_addon.php:20
-#: admin/partials/templates/mwb-addon.php:20
-msgid "Suggestion for "
-msgstr ""
-
-#: admin/partials/templates/mwb_addon.php:175
-#: admin/partials/templates/mwb-addon.php:175
-msgid "Suggestion"
-msgstr ""
-
-#: admin/partials/templates/mwb_addon.php:191
-#: admin/partials/templates/mwb-addon.php:191
-msgid "Addon Name: "
-msgstr ""
-
-#: admin/partials/templates/mwb_addon.php:193
-#: admin/partials/templates/mwb-addon.php:193
-msgid "Suggestion: "
-msgstr ""
-
-#: admin/partials/templates/mwb_points_table.php:62
-msgid "View Coupon Detail"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:205
-msgid "Enter Thankyou Order Message When your customer gain some points"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:209
-msgid ""
-"Entered Message will appears at thankyou page when any order item is having "
-"some of the points"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:216
-#: admin/partials/templates/mwb_other_setting.php:236
-msgid " for product points "
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:225
-msgid ""
-"Enter Thankyou Order Message When your customer spent some of the points"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:229
-msgid ""
-"Entered Message will appears at thankyou page when any item has been "
-"purchased through points"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:245
-msgid "Disable Points Conversion"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:249
-msgid ""
-"Check this box if you want to disable the coupon generation functionality "
-"for customers"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:253
-msgid "Disable Points Conversion Fields"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:259
-msgid "Point Sharing"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:263
-msgid ""
-"Check this box if you want to let your customers to send some of the points "
-"from his/her account to any other user"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:347
-msgid "Make \"Per Product Redemption\" Readonly"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:351
-msgid ""
-"Check this box if you want to make the redemption box readonly(where end "
-"user can enter the number of points they want to redeem)"
-msgstr ""
-
-#: admin/partials/templates/mwb_other_setting.php:355
-msgid "Readonly for Enter Number of Points for Redemption"
-msgstr ""
-
-#: admin/partials/templates/mwb-assign-pro-points.php:107
-msgid "Global setting for assigning points to all products at once"
-msgstr ""
-
-#: admin/partials/templates/mwb-assign-pro-points.php:111
-msgid "Global Assign Product Points"
-msgstr ""
-
-#: admin/partials/templates/mwb-assign-pro-points.php:113
-msgid "Enable Assign Global Product Points"
-msgstr ""
-
-#: admin/partials/templates/mwb-assign-pro-points.php:118
+#: admin/partials/templates/mwb-assign-pro-points.php:124
 msgid "Enter Assign Global Product Points"
 msgstr ""
 
-#: admin/partials/templates/mwb-assign-pro-points.php:120
+#: admin/partials/templates/mwb-assign-pro-points.php:126
 msgid "Enter Global Product Points"
 msgstr ""
 
+#: admin/partials/templates/mwb-assign-pro-points.php:128
+msgid "Entered Points are assigned to All Products ."
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:60
+msgid "Enable Points Notification Settings"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:68
+msgid "Check this box to enable the points notification."
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:69
+msgid "Enable Points Notification"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:75
+msgid "Points table's Custom Points Notification Settings"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:79
+#: admin/partials/templates/mwb-points-notification-settings.php:103
+#: admin/partials/templates/mwb-points-notification-settings.php:128
+#: admin/partials/templates/mwb-points-notification-settings.php:153
+#: admin/partials/templates/mwb-points-notification-settings.php:178
+#: admin/partials/templates/mwb-points-notification-settings.php:204
+#: admin/partials/templates/mwb-points-notification-settings.php:228
+#: admin/partials/templates/mwb-points-notification-settings.php:252
+#: admin/partials/templates/mwb-points-notification-settings.php:276
+msgid "Email Subject"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:83
+#: admin/partials/templates/mwb-points-notification-settings.php:107
+#: admin/partials/templates/mwb-points-notification-settings.php:132
+#: admin/partials/templates/mwb-points-notification-settings.php:157
+#: admin/partials/templates/mwb-points-notification-settings.php:182
+#: admin/partials/templates/mwb-points-notification-settings.php:208
+#: admin/partials/templates/mwb-points-notification-settings.php:232
+#: admin/partials/templates/mwb-points-notification-settings.php:256
+#: admin/partials/templates/mwb-points-notification-settings.php:280
+msgid "Input subject for email."
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:84
+msgid "Custom Points Notification"
+msgstr ""
+
 #: admin/partials/templates/mwb-points-notification-settings.php:87
+#: admin/partials/templates/mwb-points-notification-settings.php:111
+#: admin/partials/templates/mwb-points-notification-settings.php:136
+#: admin/partials/templates/mwb-points-notification-settings.php:161
+#: admin/partials/templates/mwb-points-notification-settings.php:186
+#: admin/partials/templates/mwb-points-notification-settings.php:212
+#: admin/partials/templates/mwb-points-notification-settings.php:236
+#: admin/partials/templates/mwb-points-notification-settings.php:260
+#: admin/partials/templates/mwb-points-notification-settings.php:284
+msgid "Email Description"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:91
+#: admin/partials/templates/mwb-points-notification-settings.php:115
+#: admin/partials/templates/mwb-points-notification-settings.php:140
+#: admin/partials/templates/mwb-points-notification-settings.php:165
+#: admin/partials/templates/mwb-points-notification-settings.php:190
+#: admin/partials/templates/mwb-points-notification-settings.php:216
+#: admin/partials/templates/mwb-points-notification-settings.php:240
+#: admin/partials/templates/mwb-points-notification-settings.php:264
+#: admin/partials/templates/mwb-points-notification-settings.php:288
+msgid "Enter Email Description for user."
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:92
+#: admin/partials/templates/mwb-points-notification-settings.php:116
+#: admin/partials/templates/mwb-points-notification-settings.php:142
+#: admin/partials/templates/mwb-points-notification-settings.php:167
+#: admin/partials/templates/mwb-points-notification-settings.php:192
+#: admin/partials/templates/mwb-points-notification-settings.php:218
+#: admin/partials/templates/mwb-points-notification-settings.php:242
+#: admin/partials/templates/mwb-points-notification-settings.php:266
+#: admin/partials/templates/mwb-points-notification-settings.php:290
+msgid "Use "
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:92
+msgid " shortcode in place of Total Points, "
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:92
 msgid " shortcode in place of username and "
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:87
+#: admin/partials/templates/mwb-points-notification-settings.php:92
 msgid "in this section donot use "
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:88
+#: admin/partials/templates/mwb-points-notification-settings.php:92
+msgid " shortcode "
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:93
 msgid "Your points are updated and your total points are "
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:111
-#: admin/partials/templates/mwb-points-notification-settings.php:137
-#: admin/partials/templates/mwb-points-notification-settings.php:162
-#: admin/partials/templates/mwb-points-notification-settings.php:187
+#: admin/partials/templates/mwb-points-notification-settings.php:99
+msgid "Signup Points Notification Settings"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:108
+msgid "Signup Points Notification"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:116
+msgid " shortcode to be placed Signup Points dynamically, "
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:116
+#: admin/partials/templates/mwb-points-notification-settings.php:142
+#: admin/partials/templates/mwb-points-notification-settings.php:167
+#: admin/partials/templates/mwb-points-notification-settings.php:192
+#: admin/partials/templates/mwb-points-notification-settings.php:218
+#: admin/partials/templates/mwb-points-notification-settings.php:242
+#: admin/partials/templates/mwb-points-notification-settings.php:266
+#: admin/partials/templates/mwb-points-notification-settings.php:290
+msgid " shortcode in place of username "
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:116
+#: admin/partials/templates/mwb-points-notification-settings.php:142
+#: admin/partials/templates/mwb-points-notification-settings.php:167
+#: admin/partials/templates/mwb-points-notification-settings.php:192
 msgid " in place of Referral points "
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:112
-#: admin/partials/templates/mwb-points-notification-settings.php:136
-#: admin/partials/templates/mwb-points-notification-settings.php:161
+#: admin/partials/templates/mwb-points-notification-settings.php:116
+#: admin/partials/templates/mwb-points-notification-settings.php:142
+#: admin/partials/templates/mwb-points-notification-settings.php:167
+#: admin/partials/templates/mwb-points-notification-settings.php:192
+#: admin/partials/templates/mwb-points-notification-settings.php:266
+#: admin/partials/templates/mwb-points-notification-settings.php:290
+msgid " shortcode in place of Total Points."
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:117
+#: admin/partials/templates/mwb-points-notification-settings.php:141
+#: admin/partials/templates/mwb-points-notification-settings.php:166
 msgid ""
 "You have received [Points] points and your total points are [Total Points]."
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:162
-#: admin/partials/templates/mwb-points-notification-settings.php:187
+#: admin/partials/templates/mwb-points-notification-settings.php:124
+msgid "Product Purchase Points Notification Settings"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:133
+msgid "Product Purchase Points Notification"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:142
+msgid " shortcode in place of Product Purchase Points "
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:142
+msgid " in place of Per Currency spent points and "
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:149
+msgid "Order Amount Points Notification Settings(Per "
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:149
+msgid " Spent Points)"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:158
+msgid "Order Amount Points Notification"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:167
+#: admin/partials/templates/mwb-points-notification-settings.php:192
 msgid " shortcode in place of per currency spent points "
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:186
+#: admin/partials/templates/mwb-points-notification-settings.php:174
+msgid "Referral Points Notification Settings"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:183
+msgid "Referral Points Notification"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:191
 msgid "You have received "
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:186
+#: admin/partials/templates/mwb-points-notification-settings.php:191
 msgid " points and your total points are "
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:262
+#: admin/partials/templates/mwb-points-notification-settings.php:200
+#: admin/partials/templates/mwb-points-notification-settings.php:209
+msgid "Upgrade Membership Level Notification"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:217
+msgid ""
+"Your User Level has been Upgraded to [USERLEVEL]. And Now You will get some "
+"offers on some products."
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:218
+msgid " shortcode in place of User Level "
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:224
+msgid "Deduct Assigned Point Notification"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:233
+msgid "Your Points has been Deducted"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:241
 msgid ""
 "Your [DEDUCTEDPOINT] has been deducted from your total points as you have "
 "requested for your refund, and your Total Point are [TOTALPOINTS]."
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:310
+#: admin/partials/templates/mwb-points-notification-settings.php:242
+#: admin/partials/templates/mwb-points-notification-settings.php:266
+msgid " shortcode in place of points which has been deducted "
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:242
+msgid " shortcode in place of Total Remaining Points."
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:248
+msgid "Points On Cart Sub-Total"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:257
+msgid "Points Deducted!!"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:265
 msgid ""
 "Your [DEDUCTCARTPOINT] Points has been deducted from your account, now your "
 "Total Point are [TOTALPOINTS]."
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:334
+#: admin/partials/templates/mwb-points-notification-settings.php:272
+msgid "Points On Order Total Range"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:281
+msgid "Points Added"
+msgstr ""
+
+#: admin/partials/templates/mwb-points-notification-settings.php:289
 msgid ""
 "Your [ORDERTOTALPOINT] Points has been added in now your Total Point are "
 "[Total Points]."
 msgstr ""
 
-#: admin/partials/templates/mwb-points-notification-settings.php:335
+#: admin/partials/templates/mwb-points-notification-settings.php:290
 msgid " shortcode in place of points which has been added "
 msgstr ""
