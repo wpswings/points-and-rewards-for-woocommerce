@@ -1,36 +1,42 @@
 <?php
 /**
- * Exit if accessed directly
+ * Membership Settings Template for creating the setting
+ *
+ * Membership Settings Template
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-/*
- * Membership Settings Template
- */
 $current_tab = 'mwb_wpr_membership_tab';
-include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php';
-$settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
-if ( isset( $_POST['mwb_wpr_save_membership'] ) ) {
+include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
+$settings_obj = new Points_Rewards_For_WooCommerce_Settings();
+if ( isset( $_POST['mwb_wpr_save_membership'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
+	$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
 	unset( $_POST['mwb_wpr_save_membership'] );
-	if ( wp_verify_nonce( $_POST['mwb-wpr-nonce'], 'mwb-wpr-nonce' ) ) {
+	if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
 		if ( 'mwb_wpr_membership_tab' == $current_tab ) {
 			$membership_settings_array = array();
 			$membership_roles_list = array();
-			$mwb_wpr_no_of_section = isset( $_POST['hidden_count'] ) ? $_POST['hidden_count'] : 0;
+			$mwb_wpr_no_of_section = isset( $_POST['hidden_count'] ) ? sanitize_text_field( wp_unslash( $_POST['hidden_count'] ) ) : 0;
 			$mwb_wpr_mem_enable = isset( $_POST['mwb_wpr_membership_setting_enable'] ) ? 1 : 0;
 			$exclude_sale_product = isset( $_POST['exclude_sale_product'] ) ? 1 : 0;
 			if ( isset( $mwb_wpr_no_of_section ) ) {
 				$count = $mwb_wpr_no_of_section;
-				$mwb_wpr_membersip_roles = isset( $_POST[ 'mwb_wpr_membership_level_name_' . $count ] ) ? $_POST[ 'mwb_wpr_membership_level_name_' . $count ] : '';
+				$mwb_wpr_membersip_roles = isset( $_POST[ 'mwb_wpr_membership_level_name_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_level_name_' . $count ] ) ) : '';
 				$mwb_wpr_membersip_roles = preg_replace( '/\s+/', '', $mwb_wpr_membersip_roles );
-				$mwb_wpr_membersip_points = isset( $_POST[ 'mwb_wpr_membership_level_value_' . $count ] ) ? $_POST[ 'mwb_wpr_membership_level_value_' . $count ] : '';
-				$mwb_wpr_categ_list = ( isset( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) ) ? $_POST[ 'mwb_wpr_membership_category_list_' . $count ] : '';
-				$mwb_wpr_prod_list = ( isset( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) ) ? $_POST[ 'mwb_wpr_membership_product_list_' . $count ] : '';
-				$mwb_wpr_discount = ( isset( $_POST[ 'mwb_wpr_membership_discount_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_discount_' . $count ] ) ) ? $_POST[ 'mwb_wpr_membership_discount_' . $count ] : '';
-				$mwb_wpr_expnum = isset( $_POST[ 'mwb_wpr_membership_expiration_' . $count ] ) ? $_POST[ 'mwb_wpr_membership_expiration_' . $count ] : '';
-				$mwb_wpr_expdays = isset( $_POST[ 'mwb_wpr_membership_expiration_days_' . $count ] ) ? $_POST[ 'mwb_wpr_membership_expiration_days_' . $count ] : '';
+				$mwb_wpr_membersip_points = isset( $_POST[ 'mwb_wpr_membership_level_value_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_level_value_' . $count ] ) ) : '';
+				$mwb_wpr_categ_list = ( isset( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) ) : '';
+				$mwb_wpr_prod_list = ( isset( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) ) : '';
+				$mwb_wpr_discount = ( isset( $_POST[ 'mwb_wpr_membership_discount_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_discount_' . $count ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_discount_' . $count ] ) ) : '';
+				$mwb_wpr_expnum = isset( $_POST[ 'mwb_wpr_membership_expiration_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_expiration_' . $count ] ) ) : '';
+				$mwb_wpr_expdays = isset( $_POST[ 'mwb_wpr_membership_expiration_days_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_expiration_days_' . $count ] ) ) : '';
 
 				if ( isset( $mwb_wpr_membersip_roles ) && ! empty( $mwb_wpr_membersip_roles ) ) {
 					$membership_roles_list[ $mwb_wpr_membersip_roles ] = array(
@@ -62,7 +68,7 @@ if ( isset( $_POST['mwb_wpr_save_membership'] ) ) {
 	}
 }
 if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
-	include_once MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-wpr-membership-log-table.php';
+	include_once MWB_RWPR_DIR_PATH . '/admin/partials/templates/class-membership-log-list-table.php';
 
 } else {
 	$membership_settings_array = get_option( 'mwb_wpr_membership_settings', true );

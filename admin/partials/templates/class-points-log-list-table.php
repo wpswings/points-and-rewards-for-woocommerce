@@ -1,6 +1,9 @@
 <?php
 /**
  * Exit if accessed directly
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,7 +22,11 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * @link https://www.makewebbetter.com/
  */
 class Points_Log_List_Table extends WP_List_Table {
-
+	/**
+	 * This is variable which is used for the store all the data.
+	 *
+	 * @var array $example_data variable for store data.
+	 */
 	public $example_data;
 
 	/**
@@ -29,38 +36,41 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function get_columns() {
+	public function get_columns() {
 
 		$columns = array(
 			'cb'            => '<input type="checkbox" />',
-			'user_name'     => __( 'User Name', MWB_RWPR_Domain ),
-			'user_email'    => __( 'User Email', MWB_RWPR_Domain ),
-			'user_points'   => __( 'Total Points', MWB_RWPR_Domain ),
-			'sign'          => __( 'Choose +/-', MWB_RWPR_Domain ),
-			'add_sub_points' => __( 'Enter Points', MWB_RWPR_Domain ),
-			'reason'        => __( 'Enter Remark', MWB_RWPR_Domain ),
-			'details'       => __( 'Action', MWB_RWPR_Domain ),
+			'user_name'     => __( 'User Name', 'points-rewards-for-woocommerce' ),
+			'user_email'    => __( 'User Email', 'points-rewards-for-woocommerce' ),
+			'user_points'   => __( 'Total Points', 'points-rewards-for-woocommerce' ),
+			'sign'          => __( 'Choose +/-', 'points-rewards-for-woocommerce' ),
+			'add_sub_points' => __( 'Enter Points', 'points-rewards-for-woocommerce' ),
+			'reason'        => __( 'Enter Remark', 'points-rewards-for-woocommerce' ),
+			'details'       => __( 'Action', 'points-rewards-for-woocommerce' ),
 
 		);
 		return $columns;
 	}
+
 	/**
 	 * This show points table list.
 	 *
 	 * @name column_default.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
+	 * @param array  $item  array of the items.
+	 * @param string $column_name name of the colmn.
 	 */
-
-	function column_default( $item, $column_name ) {
+	public function column_default( $item, $column_name ) {
 
 		switch ( $column_name ) {
 
 			case 'user_name':
 				$actions = array(
-					'view_point_log' => '<a href="' . MWB_RWPR_HOME_URL . 'admin.php?page=mwb-rwpr-setting&tab=points-table&user_id=' . $item['id'] . '&action=view_point_log">' . __( 'View Point Log', MWB_RWPR_Domain ) . '</a>',
-					'view_coupon_detail' => '<a href="' . MWB_RWPR_HOME_URL . 'admin.php?page=mwb-rwpr-setting&tab=points-table&user_id=' . $item['id'] . '&action=view">' . __( 'View Coupon Detail', MWB_RWPR_Domain ) . '</a>',
+					'view_point_log' => '<a href="' . MWB_RWPR_HOME_URL . 'admin.php?page=mwb-rwpr-setting&tab=points-table&user_id=' . $item['id'] . '&action=view_point_log">' . __( 'View Point Log', 'points-rewards-for-woocommerce' ) . '</a>',
+					// 'view_coupon_detail' => '<a href="' . MWB_RWPR_HOME_URL . 'admin.php?page=mwb-rwpr-setting&tab=points-table&user_id=' . $item['id'] . '&action=view">' . __( 'View Coupon Detail', 'points-rewards-for-woocommerce' ) . '</a>',
 				);
+				$actions = apply_filters( 'mwb_add_coupon_details', $actions, $item['id'] );
 				return $item[ $column_name ] . $this->row_actions( $actions );
 			case 'user_email':
 				return '<b>' . $item[ $column_name ] . '</b>';
@@ -69,8 +79,7 @@ class Points_Log_List_Table extends WP_List_Table {
 			case 'sign':
 				$html = '<select id="mwb_sign' . $item['id'] . '" style="width:35%;"><option value="+">+</option><option value="-">-</option></select>';
 				return $html;
-			case 'add_sub_points':/*
-				$max_pnt = get_user_meta( $item['id'],'mwb_wpr_points',true);*/
+			case 'add_sub_points':
 				$html = '<input style="width:75%;" type="number" min="0" id="add_sub_points' . $item['id'] . '" value="">';
 				return $html;
 			case 'reason':
@@ -90,10 +99,11 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @name view_html.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
+	 * @param int $user_id  user id of the user.
 	 */
 	public function view_html( $user_id ) {
 
-		echo '<a  href="javascript:void(0)" class="mwb_points_update button button-primary mwb_wpr_save_changes" data-id="' . $user_id . '">' . __( 'Update', MWB_RWPR_Domain ) . '</a>';
+		echo '<a  href="javascript:void(0)" class="mwb_points_update button button-primary mwb_wpr_save_changes" data-id="' . esc_html( $user_id ) . '">' . esc_html__( 'Update', 'points-rewards-for-woocommerce' ) . '</a>';
 
 	}
 
@@ -108,8 +118,8 @@ class Points_Log_List_Table extends WP_List_Table {
 
 		if ( 'bulk-delete' === $this->current_action() ) {
 
-			if ( isset( $_POST['mpr_points_ids'] ) && ! empty( $_POST['mpr_points_ids'] ) ) {
-				$all_id = $_POST['mpr_points_ids'];
+			if ( isset( $_POST['mpr_points_ids'] ) && ! empty( $_POST['mpr_points_ids'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
+				$all_id = map_deep( wp_unslash( $_POST['mpr_points_ids'] ), 'sanitize_text_field' );//phpcs:ignore WordPress.Security.NonceVerification.Missing
 				foreach ( $all_id as $key => $value ) {
 
 					delete_user_meta( $value, 'mwb_wpr_points' );
@@ -127,7 +137,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
-			'bulk-delete' => __( 'Delete', MWB_RWPR_Domain ),
+			'bulk-delete' => __( 'Delete', 'points-rewards-for-woocommerce' ),
 		);
 		return $actions;
 	}
@@ -140,7 +150,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function get_sortable_columns() {
+	public function get_sortable_columns() {
 		$sortable_columns = array(
 			'user_name'    => array( 'user_name', false ),
 			'user_email'  => array( 'user_email', false ),
@@ -156,7 +166,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function prepare_items() {
+	public function prepare_items() {
 		$per_page = 10;
 		$columns = $this->get_columns();
 		$hidden = array();
@@ -190,26 +200,38 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @return array
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
+	 * @param array $cloumna column of the points.
+	 * @param array $cloumnb column of the points.
 	 */
-	function mwb_wpr_usort_reorder( $cloumna, $cloumnb ) {
-		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? $_REQUEST['orderby'] : 'id';
-		$order = ( ! empty( $_REQUEST['order'] ) ) ? $_REQUEST['order'] : 'desc';
+	public function mwb_wpr_usort_reorder( $cloumna, $cloumnb ) {
+		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'id';
+		$order = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'desc';
 		if ( is_numeric( $cloumna[ $orderby ] ) && is_numeric( $cloumnb[ $orderby ] ) ) {
 			if ( $cloumna[ $orderby ] == $cloumnb[ $orderby ] ) {
 				return 0;
-			} elseif ( $cloumna[ $orderby ] < $cloumnb[ $orderby ] ) {
+			} elseif ( $cloumna[ $orderby ] < $cloumnb[ $orderby ] ) { //phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 				$result = -1;
-				return ( $order === 'asc' ) ? $result : -$result;
+				return ( $order === 'asc' ) ? $result : -$result;//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 			} elseif ( $cloumna[ $orderby ] > $cloumnb[ $orderby ] ) {
 				$result = 1;
-				return ( $order === 'asc' ) ? $result : -$result;
+				return ( $order === 'asc' ) ? $result : -$result;//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 			}
 		} else {
 			$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
-			return ( $order === 'asc' ) ? $result : -$result;
+			return ( $order === 'asc' ) ? $result : -$result;//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 		}
 	}
-	function column_cb( $item ) {
+
+	/**
+	 * THis function is used for the add the checkbox.
+	 *
+	 * @name column_cb.
+	 * @return array
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @param array $item array of the items.
+	 */
+	public function column_cb( $item ) {
 		return sprintf(
 			'<input type="checkbox" name="mpr_points_ids[]" value="%s" />',
 			$item['id']
@@ -224,8 +246,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-
-	function get_users_points() {
+	public function get_users_points() {
 		$args['meta_query'] = array(
 			'relation' => 'OR',
 			array(
@@ -240,7 +261,8 @@ class Points_Log_List_Table extends WP_List_Table {
 		);
 
 		if ( isset( $_REQUEST['s'] ) ) {
-			$args['search'] = '*' . $_REQUEST['s'] . '*';
+			$mwb_request_search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
+			$args['search'] = '*' . $mwb_request_search . '*';
 		}
 		$args['role__in'] = array( 'subscriber', 'customer' );
 		$user_data = new WP_User_Query( $args );
@@ -248,7 +270,7 @@ class Points_Log_List_Table extends WP_List_Table {
 		$points_data = array();
 		foreach ( $user_data as $key => $value ) {
 			$user_points = get_user_meta( $value->data->ID, 'mwb_wpr_points', true );
-			$user_points = (empty($user_points))?0:$user_points;
+			$user_points = ( empty( $user_points ) ) ? 0 : $user_points;
 			$points_data[] = array(
 				'id' => $value->data->ID,
 				'user_name' => $value->data->user_nicename,
@@ -260,11 +282,11 @@ class Points_Log_List_Table extends WP_List_Table {
 	}
 }
 
-if ( isset( $_POST['mwb_wpr_import_user'] ) ) {
+if ( isset( $_POST['mwb_wpr_import_user'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 	$import_user = get_option( 'mwb_wpr_user_imported', false );
 
-	if ( $import_user == false ) {
+	if ( false == $import_user ) {
 		$user_data = get_users();
 
 		$points_data = array();
@@ -274,7 +296,7 @@ if ( isset( $_POST['mwb_wpr_import_user'] ) ) {
 		foreach ( $user_data as $key => $value ) {
 			$check_user = get_user_meta( $value->data->ID, 'mwb_wpr_points', false );
 
-			if ( $check_user == false ) {
+			if ( false == $check_user ) {
 
 				if ( in_array( 'subscriber', $value->roles ) || in_array( 'customer', $value->roles ) ) {
 					$today_date = date_i18n( 'Y-m-d h:i:sa' );
@@ -312,36 +334,34 @@ if ( isset( $_POST['mwb_wpr_import_user'] ) ) {
 
 			update_option( 'mwb_wpr_user_imported', true );
 		}
-	} else {
-
 	}
 }
 if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
-	if ( $_GET['action'] == 'view' ) {
-		$user_log_id = sanitize_post( $_GET['user_id'] );
+	if ( 'view' == $_GET['action'] ) {
+		$user_log_id = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
 		$user_log = get_user_meta( $user_log_id, 'mwb_wpr_user_log', true );
 		?>
-		<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php _e( 'User Coupon Details', MWB_RWPR_Domain ); ?></h1>
+		<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Coupon Details', 'points-rewards-for-woocommerce' ); ?></h1>
 		<?php
-		if ( isset( $user_log ) && is_array( $user_log ) && $user_log != null ) {
+		if ( isset( $user_log ) && is_array( $user_log ) && $user_log != null ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 			?>
 			<table class="form-table mwp_wpr_settings mwb_wpr_points_view" >
 				<thead>
 					<tr valign="top">
 						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo __( 'Points', MWB_RWPR_Domain ); ?></span>
+							<span class="nobr"><?php echo esc_html__( 'Points', 'points-rewards-for-woocommerce' ); ?></span>
 						</th>
 						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo __( 'Coupon Code', MWB_RWPR_Domain ); ?></span>
+							<span class="nobr"><?php echo esc_html__( 'Coupon Code', 'points-rewards-for-woocommerce' ); ?></span>
 						</th>
 						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo __( 'Coupon Amount', MWB_RWPR_Domain ); ?></span>
+							<span class="nobr"><?php echo esc_html__( 'Coupon Amount', 'points-rewards-for-woocommerce' ); ?></span>
 						</th>
 						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo __( 'Amount Left', MWB_RWPR_Domain ); ?></span>
+							<span class="nobr"><?php echo esc_html__( 'Amount Left', 'points-rewards-for-woocommerce' ); ?></span>
 						</th>
 						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo __( 'Expiry', MWB_RWPR_Domain ); ?></span>
+							<span class="nobr"><?php echo esc_html__( 'Expiry', 'points-rewards-for-woocommerce' ); ?></span>
 						</th>
 					</tr>
 				</thead>
@@ -352,23 +372,23 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 							<?php foreach ( $mwb_user_log as $column_id => $column_name ) : ?>
 								<td class="forminp forminp-text">
 									<?php
-									if ( $column_id == 'left' ) {
+									if ( 'left' == $column_id ) {
 										$mwb_split = explode( '#', $key );
 										$column_name = get_post_meta( $mwb_split[1], 'coupon_amount', true );
-										echo get_woocommerce_currency_symbol() . $column_name;
-									} elseif ( $column_id == 'expiry' ) {
+										echo get_woocommerce_currency_symbol() . $column_name;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									} elseif ( 'expiry' == $column_id ) {
 										if ( WC()->version < '3.0.6' ) {
 
 											$column_name = get_post_meta( $mwb_split[1], 'expiry_date', true );
-											echo $column_name;
+											echo $column_name;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 										} else {
 											$column_name = get_post_meta( $mwb_split[1], 'date_expires', true );
 											$dt = new DateTime( "@$column_name" );
-											echo $dt->format( 'Y-m-d' );
+											echo $dt->format( 'Y-m-d' );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 										}
 									} else {
-										echo $column_name;
+										echo $column_name;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									}
 									?>
 								</td>
@@ -380,22 +400,21 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 
 			<?php
 		} else {
-			echo '<h2>' . __( 'No Coupons Generated Yet.', MWB_RWPR_Domain ) . '<h2>';
-			// http://192.168.0.162/wordpress15/wp-admin/admin.php?page=mwb-rwpr-setting&tab=points-table
+			echo '<h2>' . esc_html__( 'No Coupons Generated Yet.', 'points-rewards-for-woocommerce' ) . '<h2>';
 		}
 		?>
 		<br> 
-		<a  href="<?php echo MWB_RWPR_HOME_URL; ?>admin.php?page=mwb-rwpr-setting&tab=points-table" style="line-height: 2" class="button button-primary mwb_wpr_save_changes"><?php _e( 'Go Back', MWB_RWPR_Domain ); ?></a> 
+		<a  href="<?php echo esc_url( MWB_RWPR_HOME_URL ); ?>admin.php?page=mwb-rwpr-setting&tab=points-table" style="line-height: 2" class="button button-primary mwb_wpr_save_changes"><?php esc_html_e( 'Go Back', 'points-rewards-for-woocommerce' ); ?></a> 
 							 <?php
 
-	} else if ( $_GET['action'] == 'view_point_log' ) {
-		$user_id = sanitize_post( $_GET['user_id'] );
+	} else if ( $_GET['action'] == 'view_point_log' ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+		$user_id = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
 		$point_log = get_user_meta( $user_id, 'points_details', true );
 		$total_points = get_user_meta( $user_id, 'mwb_wpr_points', true )
 		?>
-		<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php _e( 'User Point Log Details', MWB_RWPR_Domain ); ?></h1>
+		<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Point Log Details', 'points-rewards-for-woocommerce' ); ?></h1>
 		<?php
-		if ( isset( $point_log ) && is_array( $point_log ) && $point_log != null ) {
+		if ( isset( $point_log ) && is_array( $point_log ) && $point_log != null ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
 			?>
 			  
 			<div class="mwb_wpr_wrapper_div">
@@ -404,13 +423,13 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<thead>
 							<tr valign="top">
 								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo __( 'Date & Time', MWB_RWPR_Domain ); ?></span>
+									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
 								</th>
 								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo __( 'Point Status', MWB_RWPR_Domain ); ?></span>
+									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-rewards-for-woocommerce' ); ?></span>
 								</th>
 								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo __( 'Activity', MWB_RWPR_Domain ); ?></span>
+									<span class="nobr"><?php echo esc_html__( 'Activity', 'points-rewards-for-woocommerce' ); ?></span>
 								</th>
 							</tr>
 						</thead>
@@ -420,15 +439,15 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'registration', $point_log ) ) {
 					?>
 					<div class="mwb_wpr_slide_toggle">
-						<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Signup Event', MWB_RWPR_Domain ); ?>
+						<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Signup Event', 'points-rewards-for-woocommerce' ); ?>
 						  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 					  </p>
 					  <div class="mwb_wpr_points_view"> 
 						  <table class="form-table mwp_wpr_settings mwb_wpr_common_table" >
 								<tr valign="top">
-								<td class="forminp forminp-text"><?php echo( $point_log['registration']['0']['date'] ); ?></td>
-								<td class="forminp forminp-text"><?php echo '+' . ( $point_log['registration']['0']['registration'] ); ?></td>
-								<td class="forminp forminp-text"><?php _e( 'Registration Points', MWB_RWPR_Domain ); ?></td>
+								<td class="forminp forminp-text"><?php echo( $point_log['registration']['0']['date'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
+								<td class="forminp forminp-text"><?php echo '+' . ( $point_log['registration']['0']['registration'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
+								<td class="forminp forminp-text"><?php esc_html_e( 'Registration Points', 'points-rewards-for-woocommerce' ); ?></td>
 								</tr>
 							</table>
 						</div>
@@ -438,15 +457,15 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'import_points', $point_log ) ) {
 					?>
 					<div class="mwb_wpr_slide_toggle">
-						<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Signup Event', MWB_RWPR_Domain ); ?>
+						<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Signup Event', 'points-rewards-for-woocommerce' ); ?>
 						  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 					  </p> 
 					  <div class="mwb_wpr_points_view">  
 					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
 						<tr valign="top">
-							<td class="forminp forminp-text"><?php echo( $point_log['import_points']['0']['date'] ); ?></td>
-							<td class="forminp forminp-text"><?php echo '+' . ( $point_log['import_points']['0']['import_points'] ); ?></td>
-							<td class="forminp forminp-text"><?php _e( 'Registration Points', MWB_RWPR_Domain ); ?></td>
+							<td class="forminp forminp-text"><?php echo( $point_log['import_points']['0']['date'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
+							<td class="forminp forminp-text"><?php echo '+' . ( $point_log['import_points']['0']['import_points'] );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
+							<td class="forminp forminp-text"><?php esc_html_e( 'Registration Points', 'points-rewards-for-woocommerce' ); ?></td>
 						</tr>
 					</table></div></div>
 					<?php
@@ -454,7 +473,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'Coupon_details', $point_log ) ) {
 					?>
 					<div class="mwb_wpr_slide_toggle">
-						<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Coupon Generation', MWB_RWPR_Domain ); ?>
+						<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Coupon Generation', 'points-rewards-for-woocommerce' ); ?>
 						  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 					  </p> 
 					  <div class="mwb_wpr_points_view"> 
@@ -463,9 +482,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 							foreach ( $point_log['Coupon_details'] as $key => $value ) {
 								?>
 							<tr valign="top">
-								<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-								<td class="forminp forminp-text"><?php echo '-' . $value['Coupon_details']; ?></td>
-								<td class="forminp forminp-text"><?php _e( 'Coupon Points', MWB_RWPR_Domain ); ?></td>
+								<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+								<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['Coupon_details'] ); ?></td>
+								<td class="forminp forminp-text"><?php esc_html_e( 'Coupon Points', 'points-rewards-for-woocommerce' ); ?></td>
 							</tr>
 								<?php
 							}
@@ -476,7 +495,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'points_on_order', $point_log ) ) {
 					?>
 				<div class="mwb_wpr_slide_toggle">
-					<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Points on Order', MWB_RWPR_Domain ); ?>
+					<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Points on Order', 'points-rewards-for-woocommerce' ); ?>
 					  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 				  </p>
 				   <div class="mwb_wpr_points_view"> 
@@ -485,9 +504,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						foreach ( $point_log['points_on_order'] as $key => $value ) {
 							?>
 							<tr valign="top">
-								<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-								<td class="forminp forminp-text"><?php echo '+' . $value['points_on_order']; ?></td>
-								<td class="forminp forminp-text"><?php _e( 'Points earned on Order Total', MWB_RWPR_Domain ); ?></td>
+								<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+								<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['points_on_order'] ); ?></td>
+								<td class="forminp forminp-text"><?php esc_html_e( 'Points earned on Order Total', 'points-rewards-for-woocommerce' ); ?></td>
 							</tr>
 							<?php
 						}
@@ -498,18 +517,18 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'product_details', $point_log ) ) {
 					?>
 				<div class="mwb_wpr_slide_toggle">
-					<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Assigned Product Point', MWB_RWPR_Domain ); ?>
+					<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Assigned Product Point', 'points-rewards-for-woocommerce' ); ?>
 					  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 				  </p>
-				    <div class="mwb_wpr_points_view"> 
+					<div class="mwb_wpr_points_view"> 
 				  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
 					<?php
 					foreach ( $point_log['product_details'] as $key => $value ) {
 						?>
 						<tr valign="top">
-							<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-							<td class="forminp forminp-text"><?php echo '+' . $value['product_details']; ?></td>
-							<td class="forminp forminp-text"><?php _e( 'Product purchase Points', MWB_RWPR_Domain ); ?></td>
+							<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+							<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['product_details'] ); ?></td>
+							<td class="forminp forminp-text"><?php esc_html_e( 'Product purchase Points', 'points-rewards-for-woocommerce' ); ?></td>
 						</tr>
 						<?php
 					}
@@ -520,7 +539,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'pro_conversion_points', $point_log ) ) {
 					?>
 			<div class="mwb_wpr_slide_toggle">
-				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Order Total Points', MWB_RWPR_Domain ); ?>
+				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Order Total Points', 'points-rewards-for-woocommerce' ); ?>
 				  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 			  </p>
 			  <div class="mwb_wpr_points_view"> 
@@ -529,9 +548,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['pro_conversion_points'] as $key => $value ) {
 						?>
 					<tr valign="top">
-						<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-						<td class="forminp forminp-text"><?php echo '+' . $value['pro_conversion_points']; ?></td>
-						<td class="forminp forminp-text"><?php _e( 'Product Conversion Points', 'MWB_RWPR_Domain' ); ?></td>
+						<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+						<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['pro_conversion_points'] ); ?></td>
+						<td class="forminp forminp-text"><?php esc_html_e( 'Product Conversion Points', 'points-rewards-for-woocommerce' ); ?></td>
 					</tr>
 						<?php
 					}
@@ -542,7 +561,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'comment', $point_log ) ) {
 					?>
 		<div class="mwb_wpr_slide_toggle">
-			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Product Review Point', MWB_RWPR_Domain ); ?>
+			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Product Review Point', 'points-rewards-for-woocommerce' ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
@@ -551,9 +570,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['comment'] as $key => $value ) {
 						?>
 				<tr valign="top">
-					<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-					<td class="forminp forminp-text"><?php echo '+' . $value['comment']; ?></td>
-					<td class="forminp forminp-text"><?php _e( 'Comment Points', MWB_RWPR_Domain ); ?></td>
+					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+					<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['comment'] ); ?></td>
+					<td class="forminp forminp-text"><?php esc_html_e( 'Comment Points', 'points-rewards-for-woocommerce' ); ?></td>
 				</tr>
 						<?php
 					}
@@ -564,7 +583,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'membership', $point_log ) ) {
 					?>
 	<div class="mwb_wpr_slide_toggle">
-		<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Membership Points', MWB_RWPR_Domain ); ?>
+		<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Membership Points', 'points-rewards-for-woocommerce' ); ?>
 			<a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		</p>
 		<div class="mwb_wpr_points_view"> 
@@ -573,9 +592,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						foreach ( $point_log['membership'] as $key => $value ) {
 							?>
 				<tr valign="top">
-					<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-					<td class="forminp forminp-text"><?php echo '-' . $value['membership']; ?></td>
-					<td class="forminp forminp-text"><?php _e( 'Membership Points', MWB_RWPR_Domain ); ?></td>
+					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+					<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['membership'] ); ?></td>
+					<td class="forminp forminp-text"><?php esc_html_e( 'Membership Points', 'points-rewards-for-woocommerce' ); ?></td>
 				</tr>
 							<?php
 						}
@@ -586,7 +605,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'reference_details', $point_log ) ) {
 					?>
 		<div class="mwb_wpr_slide_toggle">
-			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Referral Earns', MWB_RWPR_Domain ); ?>
+			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Referral Earns', 'points-rewards-for-woocommerce' ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
@@ -600,12 +619,12 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						}
 						?>
 				<tr valign="top">
-					<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-					<td class="forminp forminp-text"><?php echo '+' . $value['reference_details']; ?></td>
+					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+					<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['reference_details'] ); ?></td>
 					<td class="forminp forminp-text">
 						<?php
-						_e( 'Reference Points by ', MWB_RWPR_Domain );
-						echo $user_name;
+						esc_html_e( 'Reference Points by ', 'points-rewards-for-woocommerce' );
+						echo esc_html( $user_name );
 						?>
 					</td>
 				</tr>
@@ -618,7 +637,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'ref_product_detail', $point_log ) ) {
 					?>
 		<div class="mwb_wpr_slide_toggle">
-			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Referral Purchase Point', MWB_RWPR_Domain ); ?>
+			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Referral Purchase Point', 'points-rewards-for-woocommerce' ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
@@ -627,9 +646,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['ref_product_detail'] as $key => $value ) {
 						?>
 				<tr valign="top">
-					<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-					<td class="forminp forminp-text"><?php echo '+' . $value['ref_product_detail']; ?></td>
-					<td class="forminp forminp-text"><?php _e( 'Product purchased by Reffered User Points', MWB_RWPR_Domain ); ?></td>
+					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+					<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['ref_product_detail'] ); ?></td>
+					<td class="forminp forminp-text"><?php esc_html_e( 'Product purchased by Reffered User Points', 'points-rewards-for-woocommerce' ); ?></td>
 				</tr>
 						<?php
 					}
@@ -640,7 +659,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'admin_points', $point_log ) ) {
 					?>
 		<div class="mwb_wpr_slide_toggle">
-			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Admin Updates', MWB_RWPR_Domain ); ?>
+			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Admin Updates', 'points-rewards-for-woocommerce' ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
@@ -648,12 +667,12 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					<?php
 					foreach ( $point_log['admin_points'] as $key => $value ) {
 						$value['sign'] = isset( $value['sign'] ) ? $value['sign'] : '+/-';
-						$value['reason'] = isset( $value['reason'] ) ? $value['reason'] : __( 'Updated By Admin', MWB_RWPR_Domain );
+						$value['reason'] = isset( $value['reason'] ) ? $value['reason'] : __( 'Updated By Admin', 'points-rewards-for-woocommerce' );
 						?>
 				<tr valign="top">
-					<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-					<td class="forminp forminp-text"><?php echo $value['sign'] . $value['admin_points']; ?></td>
-					<td class="forminp forminp-text"><?php echo $value['reason']; ?></td>
+					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+					<td class="forminp forminp-text"><?php echo $value['sign'] . $value['admin_points']; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
+					<td class="forminp forminp-text"><?php echo esc_html( $value['reason'] ); ?></td>
 				</tr>
 						<?php
 					}
@@ -664,7 +683,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'pur_by_points', $point_log ) ) {
 					?>
 		<div class="mwb_wpr_slide_toggle">
-			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Product has been purchased using points', MWB_RWPR_Domain ); ?>
+			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Product has been purchased using points', 'points-rewards-for-woocommerce' ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
@@ -673,9 +692,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['pur_by_points'] as $key => $value ) {
 						?>
 				<tr valign="top">
-					<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-					<td class="forminp forminp-text"><?php echo '-' . $value['pur_by_points']; ?></td>
-					<td class="forminp forminp-text"><?php _e( 'Purchased through Points', MWB_RWPR_Domain ); ?></td>
+					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+					<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['pur_by_points'] ); ?></td>
+					<td class="forminp forminp-text"><?php esc_html_e( 'Purchased through Points', 'points-rewards-for-woocommerce' ); ?></td>
 				</tr>
 						<?php
 					}
@@ -686,7 +705,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'deduction_of_points', $point_log ) ) {
 					?>
 			<div class="mwb_wpr_slide_toggle">
-				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Deduction of points for return request', MWB_RWPR_Domain ); ?>
+				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Deduction of points for return request', 'points-rewards-for-woocommerce' ); ?>
 				  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 			  </p>
 			  <div class="mwb_wpr_points_view"> 
@@ -695,9 +714,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['deduction_of_points'] as $key => $value ) {
 						?>
 					<tr valign="top">
-						<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-						<td class="forminp forminp-text"><?php echo '-' . $value['deduction_of_points']; ?></td>
-						<td class="forminp forminp-text"><?php _e( 'Deduct Points', MWB_RWPR_Domain ); ?></td>
+						<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+						<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduction_of_points'] ); ?></td>
+						<td class="forminp forminp-text"><?php esc_html_e( 'Deduct Points', 'points-rewards-for-woocommerce' ); ?></td>
 					</tr>
 						<?php
 					}
@@ -708,7 +727,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'return_pur_points', $point_log ) ) {
 					?>
 		<div class="mwb_wpr_slide_toggle">
-			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Return Points', MWB_RWPR_Domain ); ?>
+			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Return Points', 'points-rewards-for-woocommerce' ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
@@ -717,9 +736,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['return_pur_points'] as $key => $value ) {
 						?>
 				<tr valign="top">
-					<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-					<td class="forminp forminp-text"><?php echo '+' . $value['return_pur_points']; ?></td>
-					<td class="forminp forminp-text"><?php _e( 'Returned Points', MWB_RWPR_Domain ); ?></td>
+					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+					<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['return_pur_points'] ); ?></td>
+					<td class="forminp forminp-text"><?php esc_html_e( 'Returned Points', 'points-rewards-for-woocommerce' ); ?></td>
 				</tr>
 						<?php
 					}
@@ -730,7 +749,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'deduction_currency_spent', $point_log ) ) {
 					?>
 		<div class="mwb_wpr_slide_toggle">
-			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Deduct Order Total Points', MWB_RWPR_Domain ); ?>
+			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Deduct Order Total Points', 'points-rewards-for-woocommerce' ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
@@ -739,9 +758,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['deduction_currency_spent'] as $key => $value ) {
 						?>
 				<tr valign="top">
-					<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-					<td class="forminp forminp-text"><?php echo '-' . $value['deduction_currency_spent']; ?></td>
-					<td class="forminp forminp-text"><?php _e( 'Deduct Per Currency Spent Point', MWB_RWPR_Domain ); ?></td>
+					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+					<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduction_currency_spent'] ); ?></td>
+					<td class="forminp forminp-text"><?php esc_html_e( 'Deduct Per Currency Spent Point', 'points-rewards-for-woocommerce' ); ?></td>
 				</tr>
 						<?php
 					}
@@ -752,7 +771,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'Sender_point_details', $point_log ) ) {
 					?>
 	<div class="mwb_wpr_slide_toggle">
-		<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Shared with', MWB_RWPR_Domain ); ?>
+		<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Shared with', 'points-rewards-for-woocommerce' ); ?>
 		  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 	  </p>
 	  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table"> 
@@ -765,12 +784,12 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						}
 						?>
 			<tr valign="top">
-				<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-				<td class="forminp forminp-text"><?php echo '-' . $value['Sender_point_details']; ?></td>
+				<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+				<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['Sender_point_details'] ); ?></td>
 				<td class="forminp forminp-text">
 						<?php
-						_e( 'Shared to ', MWB_RWPR_Domain );
-						echo $user_name;
+						esc_html_e( 'Shared to ', 'points-rewards-for-woocommerce' );
+						echo esc_html( $user_name );
 						?>
 				</td>
 			</tr>
@@ -783,7 +802,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'Receiver_point_details', $point_log ) ) {
 					?>
 <div class="mwb_wpr_slide_toggle">
-	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Receives Points', MWB_RWPR_Domain ); ?>
+	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Receives Points', 'points-rewards-for-woocommerce' ); ?>
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
@@ -796,12 +815,12 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						}
 						?>
 		<tr valign="top">
-			<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-			<td class="forminp forminp-text"><?php echo '+' . $value['Receiver_point_details']; ?> </td>
+			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+			<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['Receiver_point_details'] ); ?> </td>
 			<td class="forminp forminp-text">
 						<?php
-						_e( 'Received Points by ', MWB_RWPR_Domain );
-						echo $user_name;
+						esc_html_e( 'Received Points by ', 'points-rewards-for-woocommerce' );
+						echo esc_html( $user_name );
 						?>
 			</td>
 		</tr>
@@ -814,7 +833,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'cart_subtotal_point', $point_log ) ) {
 					?>
 <div class="mwb_wpr_slide_toggle">
-	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Points Applied on Cart', MWB_RWPR_Domain ); ?>
+	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Points Applied on Cart', 'points-rewards-for-woocommerce' ); ?>
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
@@ -822,9 +841,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['cart_subtotal_point'] as $key => $value ) {
 						?>
 		<tr valign="top">
-			<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-			<td class="forminp forminp-text"><?php echo '-' . $value['cart_subtotal_point']; ?> </td>
-			<td class="forminp forminp-text"><?php _e( 'Points Used on Cart Subtotal', MWB_RWPR_Domain ); ?></td>
+			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+			<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['cart_subtotal_point'] ); ?> </td>
+			<td class="forminp forminp-text"><?php esc_html_e( 'Points Used on Cart Subtotal', 'points-rewards-for-woocommerce' ); ?></td>
 		</tr>
 						<?php
 					}
@@ -835,7 +854,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'expired_details', $point_log ) ) {
 					?>
 <div class="mwb_wpr_slide_toggle">
-	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Expired Points', MWB_RWPR_Domain ); ?>
+	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Expired Points', 'points-rewards-for-woocommerce' ); ?>
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
@@ -843,9 +862,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['expired_details'] as $key => $value ) {
 						?>
 		<tr valign="top">
-			<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-			<td class="forminp forminp-text"><?php echo '-' . $value['expired_details']; ?></td>
-			<td class="forminp forminp-text"><?php _e( 'Get Expired', MWB_RWPR_Domain ); ?></td>
+			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+			<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['expired_details'] ); ?></td>
+			<td class="forminp forminp-text"><?php esc_html_e( 'Get Expired', 'points-rewards-for-woocommerce' ); ?></td>
 		</tr>
 						<?php
 					}
@@ -856,7 +875,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'deduct_currency_pnt_cancel', $point_log ) ) {
 					?>
 <div class="mwb_wpr_slide_toggle">
-	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Order Points Deducted due to Cancelation of Order', MWB_RWPR_Domain ); ?>
+	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Order Points Deducted due to Cancelation of Order', 'points-rewards-for-woocommerce' ); ?>
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
@@ -864,9 +883,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['deduct_currency_pnt_cancel'] as $key => $value ) {
 						?>
 		<tr valign="top">
-			<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-			<td class="forminp forminp-text"><?php echo '-' . $value['deduct_currency_pnt_cancel']; ?></td>
-			<td class="forminp forminp-text"><?php _e( 'Deducted Points', MWB_RWPR_Domain ); ?></td>
+			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+			<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduct_currency_pnt_cancel'] ); ?></td>
+			<td class="forminp forminp-text"><?php esc_html_e( 'Deducted Points', 'points-rewards-for-woocommerce' ); ?></td>
 		</tr>
 						<?php
 					}
@@ -877,7 +896,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'deduct_bcz_cancel', $point_log ) ) {
 					?>
 <div class="mwb_wpr_slide_toggle">
-	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Assigned Points Deducted due to Cancelation of Order', MWB_RWPR_Domain ); ?>
+	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Assigned Points Deducted due to Cancelation of Order', 'points-rewards-for-woocommerce' ); ?>
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
@@ -885,9 +904,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['deduct_bcz_cancel'] as $key => $value ) {
 						?>
 		<tr valign="top">
-			<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-			<td class="forminp forminp-text"><?php echo '-' . $value['deduct_bcz_cancel']; ?></td>
-			<td class="forminp forminp-text"><?php _e( 'Deducted Points', MWB_RWPR_Domain ); ?></td>
+			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+			<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduct_bcz_cancel'] ); ?></td>
+			<td class="forminp forminp-text"><?php esc_html_e( 'Deducted Points', 'points-rewards-for-woocommerce' ); ?></td>
 		</tr>
 						<?php
 					}
@@ -898,7 +917,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'pur_points_cancel', $point_log ) ) {
 					?>
 <div class="mwb_wpr_slide_toggle">
-	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Points Returned due to Cancelation of Order', MWB_RWPR_Domain ); ?>
+	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Points Returned due to Cancelation of Order', 'points-rewards-for-woocommerce' ); ?>
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
@@ -906,9 +925,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['pur_points_cancel'] as $key => $value ) {
 						?>
 		<tr valign="top">
-			<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-			<td class="forminp forminp-text"><?php echo '+' . $value['pur_points_cancel']; ?></td>
-			<td class="forminp forminp-text"><?php _e( 'Returned Points', MWB_RWPR_Domain ); ?></td>
+			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+			<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['pur_points_cancel'] ); ?></td>
+			<td class="forminp forminp-text"><?php esc_html_e( 'Returned Points', 'points-rewards-for-woocommerce' ); ?></td>
 		</tr>
 						<?php
 					}
@@ -916,11 +935,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 </table></div>
 					<?php
 				}
-				// MWB CUSTOM CODE
 				if ( array_key_exists( 'pur_pro_pnt_only', $point_log ) ) {
 					?>
 <div class="mwb_wpr_slide_toggle">
-	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php _e( 'Points Applied on Cart', MWB_RWPR_Domain ); ?>
+	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Points Applied on Cart', 'points-rewards-for-woocommerce' ); ?>
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
@@ -928,9 +946,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['pur_pro_pnt_only'] as $key => $value ) {
 						?>
 		<tr valign="top">
-			<td class="forminp forminp-text"><?php echo $value['date']; ?></td>
-			<td class="forminp forminp-text"><?php echo '-' . $value['pur_pro_pnt_only']; ?> </td>
-			<td class="forminp forminp-text"><?php _e( 'Product Purchased by Points', MWB_RWPR_Domain ); ?></td>
+			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+			<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['pur_pro_pnt_only'] ); ?> </td>
+			<td class="forminp forminp-text"><?php esc_html_e( 'Product Purchased by Points', 'points-rewards-for-woocommerce' ); ?></td>
 		</tr>
 						<?php
 					}
@@ -938,13 +956,12 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 </table></div>
 					<?php
 				}
-				// END OF MWB CUSTOM CODE
 				?>
 
 <table class = "form-table mwp_wpr_settings mwb_wpr_points_view">
 	<tr valign="top">
-		<td class="forminp forminp-text"><strong><?php _e( 'Total Points', MWB_RWPR_Domain ); ?></strong></td>
-		<td class="forminp forminp-text"><strong><?php echo $total_points; ?></strong>
+		<td class="forminp forminp-text"><strong><?php esc_html_e( 'Total Points', 'points-rewards-for-woocommerce' ); ?></strong></td>
+		<td class="forminp forminp-text"><strong><?php echo esc_html( $total_points ); ?></strong>
 		</td>
 		<td class="forminp forminp-text"></td>
 	</tr>
@@ -952,28 +969,28 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 </div>
 			<?php
 		} else {
-			echo '<h2>' . __( 'No Points Generated Yet.', MWB_RWPR_Domain ) . '<h2>';
+			echo '<h2>' . esc_html__( 'No Points Generated Yet.', 'points-rewards-for-woocommerce' ) . '<h2>';
 		}
 	}
 } else {
 	?>
-	<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php _e( 'Points Table', MWB_RWPR_Domain ); ?></h1>
+	<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-rewards-for-woocommerce' ); ?></h1>
 	<?php
 	$general_settings = get_option( 'mwb_wpr_settings_gallery', true );
 	$enable_mwb_signup = isset( $general_settings['enable_mwb_signup'] ) ? intval( $general_settings['enable_mwb_signup'] ) : 0;
 	if ( $enable_mwb_signup ) {
 		$import_user = get_option( 'mwb_wpr_user_imported', false );
 
-		if ( $import_user == false ) {
+		if ( false == $import_user ) {
 			?>
 			<div class="mwb_wpr_import_user container">
 				<h3>
-					<?php _e( 'Import Users', MWB_RWPR_Domain ); ?>
+					<?php esc_html_e( 'Import Users', 'points-rewards-for-woocommerce' ); ?>
 				</h3>
 				<p>
-					<?php _e( 'Import existing users and assign them with Sign Up Points', MWB_RWPR_Domain ); ?>
+					<?php esc_html_e( 'Import existing users and assign them with Sign Up Points', 'points-rewards-for-woocommerce' ); ?>
 				</p>
-				<input type="submit" value="<?php _e( 'Import', MWB_RWPR_Domain ); ?>" id="mwb_wpr_import" class="page-title-action button button-primary button-large mwb_wpr_save_changes" name="mwb_wpr_import_user">
+				<input type="submit" value="<?php esc_html_e( 'Import', 'points-rewards-for-woocommerce' ); ?>" id="mwb_wpr_import" class="page-title-action button button-primary button-large mwb_wpr_save_changes" name="mwb_wpr_import_user">
 			</div>
 			
 			<?php
@@ -986,7 +1003,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				$user_id = $value->data->ID;
 				$guest_points = get_user_meta( $value->data->ID, 'mwb_wpr_points', false );
 
-				if ( $guest_points == false ) {
+				if ( false == $guest_points ) {
 					$guest_flag = true;
 				}
 			}
@@ -994,12 +1011,12 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				?>
 				<div class="mwb_wpr_import_user container">
 					<h3>
-						<?php _e( 'Import Users', MWB_RWPR_Domain ); ?>
+						<?php esc_html_e( 'Import Users', 'points-rewards-for-woocommerce' ); ?>
 					</h3>
 					<p>
-						<?php _e( 'Import existing users and assign them with Sign Up Points', MWB_RWPR_Domain ); ?>
+						<?php esc_html_e( 'Import existing users and assign them with Sign Up Points', 'points-rewards-for-woocommerce' ); ?>
 					</p>
-					<input type="button" value="<?php _e( 'Import', MWB_RWPR_Domain ); ?>" id="mwb_wpr_import" class="page-title-action button button-primary button-large mwb_wpr_save_changes" name="mwb_wpr_import_user">
+					<input type="button" value="<?php esc_html_e( 'Import', 'points-rewards-for-woocommerce' ); ?>" id="mwb_wpr_import" class="page-title-action button button-primary button-large mwb_wpr_save_changes" name="mwb_wpr_import_user">
 				</div>
 				
 				<?php
@@ -1009,12 +1026,12 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	}
 	?>
 	<form method="post">
-		<input type="hidden" name="page" value="<?php _e( 'points_log_list_table', MWB_RWPR_Domain ); ?>">
+		<input type="hidden" name="page" value="<?php esc_html_e( 'points_log_list_table', 'points-rewards-for-woocommerce' ); ?>">
 		<?php
-		$myListTable = new Points_Log_List_Table();
-		$myListTable->prepare_items();
-		$myListTable->search_box( __( 'Search Users', MWB_RWPR_Domain ), 'mwb-wpr-user' );
-		$myListTable->display();
+		$mylisttable = new Points_Log_List_Table();
+		$mylisttable->prepare_items();
+		$mylisttable->search_box( __( 'Search Users', 'points-rewards-for-woocommerce' ), 'mwb-wpr-user' );
+		$mylisttable->display();
 		?>
 	</form>
 	<?php

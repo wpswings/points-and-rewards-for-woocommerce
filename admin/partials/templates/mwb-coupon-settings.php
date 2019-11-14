@@ -1,17 +1,22 @@
 <?php
 /**
- * Exit if accessed directly
+ * This is setttings array for the Coupon settings
+ *
+ * Coupon Settings Template
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/*
- * Coupons Setting Template
- */
-include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php';
-$settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
+include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
+$settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 $mwb_wpr_coupon_settings = array(
 	array(
 		'title' => __( 'Earn Points Per Currency Settings', 'points-rewards-for-woocommerce' ),
@@ -53,8 +58,9 @@ $mwb_wpr_coupon_settings = array(
 );
 	$mwb_wpr_coupon_settings = apply_filters( 'mwb_wpr_coupon_settings', $mwb_wpr_coupon_settings );
 $current_tab = 'mwb_wpr_coupons_tab';
-if ( isset( $_POST['mwb_wpr_save_coupon'] ) ) {
-	if ( wp_verify_nonce( $_POST['mwb-wpr-nonce'], 'mwb-wpr-nonce' ) ) {
+if ( isset( $_POST['mwb_wpr_save_coupon'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
+	$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+	if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
 		?>
 		<?php
 		$settings_obj->mwb_wpr_settings_saved();
@@ -80,7 +86,6 @@ if ( isset( $_POST['mwb_wpr_save_coupon'] ) ) {
 ?>
 <?php
 $coupon_settings = get_option( 'mwb_wpr_coupons_gallery', true );
-// print_r(expression)
 ?>
 <?php
 if ( ! is_array( $coupon_settings ) ) :

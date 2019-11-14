@@ -16,12 +16,12 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 /**
  * This is construct of class where all users point listed.
  *
- * @name Points_Log_List_Table
+ * @name Membership_Log_List_Table
  * @category Class
  * @author makewebbetter<webmaster@makewebbetter.com>
  * @link http://www.makewebbetter.com/
  */
-class Points_Log_List_Table extends WP_List_Table {
+class Membership_Log_List_Table extends WP_List_Table {
 	/**
 	 * This variable used for the totoal data.
 	 *
@@ -253,7 +253,7 @@ class Points_Log_List_Table extends WP_List_Table {
 <form method="post">
 	<input type="hidden" name="page" value="<?php esc_html_e( 'points_log_list_table', 'points-rewards-for-woocommerce' ); ?>">
 	<?php
-	$mylisttable = new Points_Log_List_Table();
+	$mylisttable = new Membership_Log_List_Table();
 	$mylisttable->prepare_items();
 	$mylisttable->search_box( __( 'Search Users', 'points-rewards-for-woocommerce' ), 'mwb-wpr-user' );
 	$mylisttable->display();

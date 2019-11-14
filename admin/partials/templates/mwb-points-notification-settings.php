@@ -1,20 +1,25 @@
 <?php
 /**
- * Exit if accessed directly
+ * Points notitfication Settings Template
+ *
+ * Points notitfication Settings Template
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
-
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-/*
- * Points notitfication Settings Template
- */
-include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-rewardeem-wocoommerce-points-rewards-settings.php';
-$settings_obj = new Rewardeem_woocommerce_Points_Rewards_Admin_settings();
+include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
+$settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 $current_tab = 'mwb_wpr_notificatin_tab';
-if ( isset( $_POST['mwb_wpr_save_notification'] ) ) {
-	if ( wp_verify_nonce( $_POST['mwb-wpr-nonce'], 'mwb-wpr-nonce' ) ) {
+if ( isset( $_POST['mwb_wpr_save_notification'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
+	$mwb_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+	if ( wp_verify_nonce( $mwb_nonce, 'mwb-wpr-nonce' ) ) {
 		if ( 'mwb_wpr_notificatin_tab' == $current_tab ) {
 
 			$mwb_wpr_notificatin_array = array();
@@ -191,32 +196,6 @@ $mwb_settings = array(
 	array(
 		'type'  => 'sectionend',
 	),
-	// array(
-	// 	'title' => __( 'Referral Purchase Points Notification Settings', 'points-rewards-for-woocommerce' ),
-	// 	'type'  => 'title',
-	// ),
-	// array(
-	// 	'title'         => __( 'Email Subject', 'points-rewards-for-woocommerce' ),
-	// 	'type'          => 'text',
-	// 	'id'            => 'mwb_wpr_referral_purchase_email_subject',
-	// 	'class'             => 'input-text',
-	// 	'desc_tip'      => __( 'Input subject for email.', 'points-rewards-for-woocommerce' ),
-	// 	'default'   => __( 'Referral Purchase Points Notification', 'points-rewards-for-woocommerce' ),
-	// ),
-	// array(
-	// 	'title'         => __( 'Email Description', 'points-rewards-for-woocommerce' ),
-	// 	'type'          => 'textarea_email',
-	// 	'id'            => 'mwb_wpr_referral_purchase_email_discription_custom_id',
-	// 	'class'             => 'input-text',
-	// 	'desc_tip'      => __( 'Enter Email Description for user.', 'points-rewards-for-woocommerce' ),
-	// 	'default'   => __( 'You have received ', 'points-rewards-for-woocommerce' ) . '[Points]' . __( ' points and your total points are ', 'points-rewards-for-woocommerce' ) . '[Total Points]',
-	// 	'desc'          => __( 'Use ', 'points-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of Referral Purchase Points ', 'points-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points', 'points-rewards-for-woocommerce' ) . ' [Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', 'points-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-rewards-for-woocommerce' ),
-
-
-	// ),
-	// array(
-	// 	'type'  => 'sectionend',
-	// ),
 	array(
 		'title' => __( 'Upgrade Membership Level Notification', 'points-rewards-for-woocommerce' ),
 		'type'  => 'title',
@@ -265,30 +244,6 @@ $mwb_settings = array(
 	array(
 		'type'  => 'sectionend',
 	),
-	// array(
-	// 	'title' => __( "Deduct 'Per Currency Spent' Point Notification", 'points-rewards-for-woocommerce' ),
-	// 	'type'  => 'title',
-	// ),
-	// array(
-	// 	'title'         => __( 'Email Subject', 'points-rewards-for-woocommerce' ),
-	// 	'type'          => 'text',
-	// 	'id'            => 'mwb_wpr_deduct_per_currency_point_subject',
-	// 	'class'             => 'input-text',
-	// 	'desc_tip'      => __( 'Input subject for email.', 'points-rewards-for-woocommerce' ),
-	// 	'default'   => __( 'Your Points has been Deducted', 'points-rewards-for-woocommerce' ),
-	// ),
-	// array(
-	// 	'title'         => __( 'Email Description', 'points-rewards-for-woocommerce' ),
-	// 	'type'          => 'textarea_email',
-	// 	'id'            => 'mwb_wpr_deduct_per_currency_point_description',
-	// 	'class'             => 'input-text',
-	// 	'desc_tip'      => __( 'Enter Email Description for user.', 'points-rewards-for-woocommerce' ),
-	// 	'default'   => __( 'Your [DEDUCTEDPOINT] has been deducted from your total points as you have requested for your refund, and your Total Point are [TOTALPOINTS].', 'points-rewards-for-woocommerce' ),
-	// 	'desc'          => __( 'Use ', 'points-rewards-for-woocommerce' ) . '[DEDUCTEDPOINT]' . __( ' shortcode in place of points which has been deducted ', 'points-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Remaining Points.', 'points-rewards-for-woocommerce' ),
-	// ),
-	// array(
-	// 	'type'  => 'sectionend',
-	// ),
 	array(
 		'title' => __( 'Points On Cart Sub-Total', 'points-rewards-for-woocommerce' ),
 		'type'  => 'title',
@@ -357,7 +312,7 @@ foreach ( $mwb_settings as $key => $value ) {
 					$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $mwb_wpr_notification_settings );
 				}
 				if ( 'textarea_email' == $value['type'] ) {
-					echo $value['desc'];
+					echo esc_html( $value['desc'] );
 					$settings_obj->mwb_rwpr_generate_wp_editor( $value, $mwb_wpr_notification_settings );
 				}
 				if ( 'text' == $value['type'] ) {

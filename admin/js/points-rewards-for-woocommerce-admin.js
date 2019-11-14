@@ -1,3 +1,13 @@
+/**
+ * The admin-specific js functionlity
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Rewardeem_woocommerce_Points_Rewards
+ * @subpackage Rewardeem_woocommerce_Points_Rewards/admin
+ */
+
 (function( $ ) {
 	'use strict';
 
@@ -135,7 +145,6 @@
 			);
 			var count = $( '.mwb_wpr_repeat:last' ).data( 'id' );
 			for (var i = 0; i <= count; i++) {
-				// var mwb_wpr_categ_list = $('#mwb_wpr_membership_category_list_'+i).val();
 				 $( document ).find( '#mwb_wpr_membership_category_list_' + i ).select2();
 				 $( document ).find( '#mwb_wpr_membership_product_list_' + i ).select2();
 			}
@@ -190,19 +199,27 @@
 	=            Sticky-Sidebar            =
 	======================================*/
 setTimeout(
-	  function() 
+	function()
 	  {
-	    if ( jQuery(window).width() >= 900 ) {
-			jQuery('.mwb_rwpr_navigator_template').stickySidebar({
-			    topSpacing: 60,
-			    bottomSpacing: 60
-			});
+		if ( jQuery( window ).width() >= 900 ) {
+			jQuery( '.mwb_rwpr_navigator_template' ).stickySidebar(
+				{
+					topSpacing: 60,
+					bottomSpacing: 60
+					}
+			);
 		}
-	}, 500);
+	},
+	500
+);
 
 /*=====  End of Sticky-Sidebar  ======*/
-   jQuery(document).ready(function(){
-        jQuery(".dashicons.dashicons-menu").click(function(){
-          jQuery(".mwb_rwpr_navigator_template").toggleClass("open-btn");
-      });
-    });	
+jQuery( document ).ready(
+	function(){
+			jQuery( ".dashicons.dashicons-menu" ).click(
+				function(){
+					jQuery( ".mwb_rwpr_navigator_template" ).toggleClass( "open-btn" );
+				}
+			);
+	}
+);

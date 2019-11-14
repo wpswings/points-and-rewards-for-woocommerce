@@ -448,6 +448,9 @@ class Points_Rewards_For_WooCommerce_Public {
 					$custom_ref_pnt = get_user_meta( $refere_id, 'mwb_custom_points_referral_invite', true );
 					/*Check */
 					$get_points = (int) get_user_meta( $refere_id, 'mwb_wpr_points', true );
+					if ( empty( $get_points ) ) {
+						$get_points = 0;
+					}
 					$mwb_wpr_referral_program = true;
 					/*filter that will add restriction*/
 					$mwb_wpr_referral_program = apply_filters( 'mwb_wpr_referral_points', $mwb_wpr_referral_program, $customer_id, $refere_id );
@@ -948,7 +951,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name mwb_wgm_woocommerce_cart_coupon
 	 * @author m<IfModule mod_rewrite.c>
-    RewriteEngine On
+	RewriteEngine On
 akewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
