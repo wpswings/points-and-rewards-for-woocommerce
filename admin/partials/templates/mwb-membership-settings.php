@@ -14,6 +14,23 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+/**
+ * Check the allowed the html in for the html.
+ *
+ * @name mwb_wpr_allowed_html
+ */
+function mwb_wpr_allowed_html() {
+	$allowed_tags = array(
+		'span' => array(
+			'class' => array(),
+			'title' => array(),
+			'style' => array(),
+			'data-tip' => array(),
+		),
+	);
+	return $allowed_tags;
+}
+
 $current_tab = 'mwb_wpr_membership_tab';
 include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
 $settings_obj = new Points_Rewards_For_WooCommerce_Settings();
@@ -32,8 +49,8 @@ if ( isset( $_POST['mwb_wpr_save_membership'] ) && isset( $_POST['mwb-wpr-nonce'
 				$mwb_wpr_membersip_roles = isset( $_POST[ 'mwb_wpr_membership_level_name_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_level_name_' . $count ] ) ) : '';
 				$mwb_wpr_membersip_roles = preg_replace( '/\s+/', '', $mwb_wpr_membersip_roles );
 				$mwb_wpr_membersip_points = isset( $_POST[ 'mwb_wpr_membership_level_value_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_level_value_' . $count ] ) ) : '';
-				$mwb_wpr_categ_list = ( isset( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) ) : '';
-				$mwb_wpr_prod_list = ( isset( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) ) : '';
+				$mwb_wpr_categ_list = ( isset( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) ) ? map_deep( wp_unslash( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ), 'sanitize_text_field' ) : '';
+				$mwb_wpr_prod_list = ( isset( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) ) ? map_deep( wp_unslash( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ), 'sanitize_text_field' ) : '';
 				$mwb_wpr_discount = ( isset( $_POST[ 'mwb_wpr_membership_discount_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_discount_' . $count ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_discount_' . $count ] ) ) : '';
 				$mwb_wpr_expnum = isset( $_POST[ 'mwb_wpr_membership_expiration_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_expiration_' . $count ] ) ) : '';
 				$mwb_wpr_expdays = isset( $_POST[ 'mwb_wpr_membership_expiration_days_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_expiration_days_' . $count ] ) ) : '';
@@ -124,7 +141,8 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 						</th>
 						<td class="forminp forminp-text">
 							<?php
-							echo array_key_exists( 'desc_tip', $value ) ? wc_help_tip( $value['desc_tip'] ) : '';//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							$allowed_tags = mwb_wpr_allowed_html();
+							echo array_key_exists( 'desc_tip', $value ) ? wp_kses( wc_help_tip( $value['desc_tip'] ), $allowed_tags ) : '';//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							if ( 'checkbox' == $value['type'] ) {
 								$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $membership_settings_array );
 							}

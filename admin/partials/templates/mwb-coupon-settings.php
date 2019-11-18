@@ -64,7 +64,7 @@ if ( isset( $_POST['mwb_wpr_save_coupon'] ) && isset( $_POST['mwb-wpr-nonce'] ) 
 		?>
 		<?php
 		$settings_obj->mwb_wpr_settings_saved();
-		if ( $current_tab == 'mwb_wpr_coupons_tab' ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+		if ( 'mwb_wpr_coupons_tab' == $current_tab ) {
 			unset( $_POST['mwb_wpr_save_coupon'] );
 			$coupon_settings_array = array();
 			$postdata = $settings_obj->check_is_settings_is_not_empty( $mwb_wpr_coupon_settings, $_POST );
@@ -96,13 +96,13 @@ endif;
 		<div class="mwb_wpr_general_wrapper">
 		<?php
 		foreach ( $mwb_wpr_coupon_settings as $key => $value ) {
-			if ( $value['type'] == 'title' ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+			if ( 'title' == $value['type'] ) {
 				?>
 					<div class="mwb_wpr_general_row_wrap">
 					<?php
 						$settings_obj->mwb_rwpr_generate_heading( $value );
 			}
-			if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+			if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) {
 				?>
 				<div class="mwb_wpr_general_row">
 				<?php $settings_obj->mwb_rwpr_generate_label( $value ); ?>
@@ -129,7 +129,7 @@ endif;
 							}
 							if ( 'number' == $val['type'] ) {
 								$settings_obj->mwb_rwpr_generate_number_html( $val, $coupon_settings );
-								echo get_woocommerce_currency_symbol();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo esc_html( get_woocommerce_currency_symbol() );
 							}
 						}
 					}

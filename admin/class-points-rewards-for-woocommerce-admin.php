@@ -179,6 +179,30 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
+	 * This is function is used for the validating the data.
+	 *
+	 * @name mwb_wpr_allowed_html
+	 * @since 1.0.0
+	 */
+	public function mwb_wpr_allowed_html() {
+		$allowed_tags = array(
+			'span' => array(
+				'class' => array(),
+				'title' => array(),
+				'style' => array(),
+				'data-tip' => array(),
+			),
+			'min' => array(),
+			'max' => array(),
+			'class' => array(),
+			'style' => array(),
+			'<br>'  => array(),
+		);
+		return $allowed_tags;
+
+	}
+
+	/**
 	 * Including a File for displaying the required setting page for setup the plugin
 	 *
 	 * @since 1.0.0
@@ -476,8 +500,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
+						$allowed_tags = $this->mwb_wpr_allowed_html();
 						$attribute_description = __( 'Entered text will be name of the level for membership', 'points-rewards-for-woocommerce' );
-						echo wc_help_tip( $attribute_description );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="mwb_wpr_membership_level_name">
 							<input type="text" name="mwb_wpr_membership_level_name_<?php echo esc_html( $count ); ?>" value="<?php echo esc_html( $this->check_is_not_empty( $key ) ); ?>" id="mwb_wpr_membership_level_name_<?php echo esc_html( $count ); ?>" class="text_points" required><?php esc_html_e( 'Enter the Name of the Level', 'points-rewards-for-woocommerce' ); ?>
@@ -493,11 +518,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
+						$allowed_tags = $this->mwb_wpr_allowed_html();
 						$attribute_description = __( 'Entered points need to be reached for this level', 'points-rewards-for-woocommerce' );
-						echo wc_help_tip( $attribute_description );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="mwb_wpr_membership_level_value">
-						<input type="number" min="1" value="<?php echo $this->check_is_not_empty( $value['Points'] );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="mwb_wpr_membership_level_value_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_level_value_<?php echo esc_html( $count ); ?>" class="input-text" required>
+						<input type="number" min="1" value="<?php echo esc_html( $this->check_is_not_empty( $value['Points'] ) ); ?>" name="mwb_wpr_membership_level_value_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_level_value_<?php echo esc_html( $count ); ?>" class="input-text" required>
 						</label>			
 					</td>
 				</tr>
@@ -507,8 +533,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
+						$allowed_tags = $this->mwb_wpr_allowed_html();
 						$attribute_description = __( 'Select the days,week,month or year for expiartion of current level', 'points-rewards-for-woocommerce' );
-						echo wc_help_tip( $attribute_description );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						$exp_num = isset( $value['Exp_Number'] ) ? $value['Exp_Number'] : '';
 						?>
 						<input type="number" min="1" value="<?php echo esc_html( $exp_num ); ?>" name="mwb_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" class="input-text">
@@ -571,8 +598,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
+						$allowed_tags = $this->mwb_wpr_allowed_html();
 						$attribute_description = __( 'Select', 'points-rewards-for-woocommerce' );
-						echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<select id="mwb_wpr_membership_category_list_<?php echo esc_html( $count ); ?>" required="true" multiple="multiple" class="mwb_wpr_common_class_categ" data-id="<?php echo esc_html( $count ); ?>" name="mwb_wpr_membership_category_list_<?php echo esc_html( $count ); ?>[]">
 							<?php
@@ -604,8 +632,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
+						$allowed_tags = $this->mwb_wpr_allowed_html();
 						$attribute_description = __( 'Product of selected category will get displayed in Select Product Section', 'points-rewards-for-woocommerce' );
-						echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<select id="mwb_wpr_membership_product_list_<?php echo esc_html( $count ); ?>" multiple="multiple" name="mwb_wpr_membership_product_list_<?php echo esc_html( $count ); ?>[]">
 							<?php
@@ -648,11 +677,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
+						$allowed_tags = $this->mwb_wpr_allowed_html();
 						$attribute_description = __( 'Entered Discount will be applied on above selected products', 'points-rewards-for-woocommerce' );
-						echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="mwb_wpr_membership_discount">
-						<input type="number" min="1" value="<?php echo $this->check_is_not_empty( $value['Discount'] );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="mwb_wpr_membership_discount_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_discount_<?php echo esc_html( $count ); ?>" class="input-text" required>
+						<input type="number" min="1" value="<?php echo esc_html( $this->check_is_not_empty( $value['Discount'] ) ); ?>" name="mwb_wpr_membership_discount_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_discount_<?php echo esc_html( $count ); ?>" class="input-text" required>
 						</label>			
 					</td>
 					<input type = "hidden" value="<?php echo esc_html( $count ); ?>" name="hidden_count">
@@ -688,7 +718,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param array $thankyouorder_value array of the points value.
 	 */
 	public function mwb_wpr_add_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value ) {
-		if ( isset( $thankyouorder_min ) && $thankyouorder_min != null && isset( $thankyouorder_max ) && $thankyouorder_max != null && isset( $thankyouorder_value ) && $thankyouorder_value != null ) {//phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison,WordPress.PHP.YodaConditions.NotYoda
+		if ( isset( $thankyouorder_min ) && null != $thankyouorder_min && isset( $thankyouorder_max ) && null != $thankyouorder_max && isset( $thankyouorder_value ) && null != $thankyouorder_value ) {
 			$mwb_wpr_no = 1;
 			if ( count( $thankyouorder_min ) == count( $thankyouorder_max ) && count( $thankyouorder_max ) == count( $thankyouorder_value ) ) {
 				$this->mwb_wpr_add_rule_for_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value, '0' );
@@ -725,17 +755,17 @@ class Points_Rewards_For_WooCommerce_Admin {
 				<tr valign="top">
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_minimum">
-							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price" required="" placeholder = "No minimum" value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? $thankyouorder_min[ $key ] : '';//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price" required="" placeholder = "No minimum" value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? esc_html( $thankyouorder_min[ $key ] ) : ''; ?>">
 						</label>
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_maximum">
-							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum" value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? $thankyouorder_max[ $key ] : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum" value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>">
 						</label>
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_current_type">
-							<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price" required=""  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? $thankyouorder_value[ $key ] : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price" required=""  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? esc_html( $thankyouorder_value[ $key ] ) : ''; ?>">
 						</label>
 					</td>    
 					<?php if ( ! empty( $key ) ) : ?>                       

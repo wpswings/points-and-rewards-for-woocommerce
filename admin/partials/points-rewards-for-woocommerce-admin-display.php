@@ -75,7 +75,7 @@ $mwb_wpr_setting_tab = array(
 	</div>
 </div>
 <?php do_action( 'mwb_wpr_add_notice' ); ?>
-<input type="hidden" name="mwb-wpr-nonce" value="<?php echo wp_create_nonce( 'mwb-wpr-nonce' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+<?php wp_nonce_field( 'mwb-wpr-nonce', 'mwb-wpr-nonce' ); ?>
 <div class="mwb_rwpr_main_template">
 	<div class="mwb_rwpr_body_template">
 		<div class="mwb_rwpr_mobile_nav">

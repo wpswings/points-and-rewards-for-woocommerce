@@ -301,7 +301,7 @@ foreach ( $mwb_settings as $key => $value ) {
 				<?php
 				$settings_obj->mwb_rwpr_generate_heading( $value );
 	}
-	if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) { //phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+	if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) {
 		?>
 					<div class="mwb_wpr_general_row">
 			<?php $settings_obj->mwb_rwpr_generate_label( $value ); ?>

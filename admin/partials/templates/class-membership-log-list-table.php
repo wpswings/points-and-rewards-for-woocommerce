@@ -89,13 +89,17 @@ class Membership_Log_List_Table extends WP_List_Table {
 	public function process_bulk_action() {
 
 		if ( 'bulk-delete' === $this->current_action() ) {
+			if ( isset( $_POST['membership-log'] ) ) {
+				$mwb_membership_nonce = sanitize_text_field( wp_unslash( $_POST['membership-log'] ) );
+				if ( wp_verify_nonce( $mwb_membership_nonce, 'membership-log' ) ) {
+					if ( isset( $_POST['mpr_points_ids'] ) && ! empty( $_POST['mpr_points_ids'] ) ) {
+						$all_id = map_deep( wp_unslash( $_POST['mpr_points_ids'] ), 'sanitize_text_field' );
+						if ( ! empty( $all_id ) && is_array( $all_id ) ) {
+							foreach ( $all_id as $key => $value ) {
 
-			if ( isset( $_POST['mpr_points_ids'] ) && ! empty( $_POST['mpr_points_ids'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
-				$all_id = map_deep( wp_unslash( $_POST['mpr_points_ids'] ), 'sanitize_text_field' );//phpcs:ignore WordPress.Security.NonceVerification.Missing
-				if ( ! empty( $all_id ) && is_array( $all_id ) ) {
-					foreach ( $all_id as $key => $value ) {
-
-						delete_user_meta( $value, 'membership_level' );
+								delete_user_meta( $value, 'membership_level' );
+							}
+						}
 					}
 				}
 			}
@@ -229,7 +233,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 			),
 		);
 		if ( isset( $_REQUEST['s'] ) ) {
-			$data = sanitize_text_field( wp_unslash( $data ) );
+			$data           = sanitize_text_field( wp_unslash( $data ) );
 			$args['search'] = '*' . $data . '*';
 		}
 		$args['role__in'] = array( 'subscriber', 'customer' );
@@ -249,9 +253,12 @@ class Membership_Log_List_Table extends WP_List_Table {
 	}
 }
 ?>
-<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'Membership Log', 'points-rewards-for-woocommerce' ); ?></h1>
+<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading">
+	<?php esc_html_e( 'Membership Log', 'points-rewards-for-woocommerce' ); ?></h1>
 <form method="post">
-	<input type="hidden" name="page" value="<?php esc_html_e( 'points_log_list_table', 'points-rewards-for-woocommerce' ); ?>">
+	<input type="hidden" name="page"
+		value="<?php esc_html_e( 'points_log_list_table', 'points-rewards-for-woocommerce' ); ?>">
+	<?php wp_nonce_field( 'membership-log', 'membership-log' ); ?>
 	<?php
 	$mylisttable = new Membership_Log_List_Table();
 	$mylisttable->prepare_items();
@@ -259,4 +266,3 @@ class Membership_Log_List_Table extends WP_List_Table {
 	$mylisttable->display();
 	?>
 </form>
-

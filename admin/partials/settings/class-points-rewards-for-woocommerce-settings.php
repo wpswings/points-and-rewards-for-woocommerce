@@ -38,6 +38,29 @@ class Points_Rewards_For_WooCommerce_Settings {
 	}
 
 	/**
+	 * This is function is used for the validating the data.
+	 *
+	 * @name mwb_wpr_allowed_html
+	 * @since 1.0.0
+	 */
+	public function mwb_wpr_allowed_html() {
+		$allowed_tags = array(
+			'span' => array(
+				'class' => array(),
+				'title' => array(),
+				'style' => array(),
+				'data-tip' => array(),
+			),
+			'min' => array(),
+			'max' => array(),
+			'class' => array(),
+			'style' => array(),
+			'<br>'  => array(),
+		);
+		return $allowed_tags;
+
+	}
+	/**
 	 * This function is for generating for the checkbox for the Settings
 	 *
 	 * @name mwb_rwpr_generate_checkbox_html
@@ -72,7 +95,8 @@ class Points_Rewards_For_WooCommerce_Settings {
 
 				foreach ( $value['custom_attributes'] as $attribute_name => $attribute_val ) {
 					echo esc_html( $attribute_name );
-					echo "=$attribute_val";//phpcs:ignore
+					$allowed_tags = $this->mwb_wpr_allowed_html();
+					echo wp_kses( "=$attribute_val", $allowed_tags );
 
 				}
 			}
@@ -174,7 +198,8 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 */
 	public function mwb_rwpr_generate_tool_tip( $value ) {
 		if ( array_key_exists( 'desc_tip', $value ) ) {
-			echo wc_help_tip( $value['desc_tip'] );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$allowed_tags = $this->mwb_wpr_allowed_html();
+			echo wp_kses( wc_help_tip( $value['desc_tip'] ), $allowed_tags );
 		}
 	}
 
@@ -199,12 +224,13 @@ class Points_Rewards_For_WooCommerce_Settings {
 			if ( array_key_exists( 'custom_attributes', $value ) ) {
 				foreach ( $value['custom_attributes'] as $attribute_name => $attribute_val ) {
 					echo esc_html( $attribute_name );
-					echo "=$attribute_val";//phpcs:ignore
+					$allowed_tags = $this->mwb_wpr_allowed_html();
+					echo wp_kses( "=$attribute_val", $allowed_tags );
 				}
 			}
 			?>
 				 
-				style ="<?php echo ( array_key_exists( 'style', $value ) ) ? $value['style'] : ''; //phpcs:ignore ?>"
+				style ="<?php echo ( array_key_exists( 'style', $value ) ) ? esc_html( $value['style'] ) : ''; ?>"
 				value="<?php echo esc_html( $mwb_signup_value ); ?>" name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
 				class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php echo ( array_key_exists( 'desc', $value ) ) ? esc_html( $value['desc'] ) : ''; ?>
 		</label>
@@ -231,7 +257,8 @@ class Points_Rewards_For_WooCommerce_Settings {
 				if ( array_key_exists( 'custom_attributes', $value ) ) {
 					foreach ( $value['custom_attributes'] as $attribute_name => $attribute_val ) {
 						echo esc_html( $attribute_name );
-						echo "=$attribute_val";//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						$allowed_tags = $this->mwb_wpr_allowed_html();
+						echo wp_kses( "=$attribute_val", $allowed_tags );
 					}
 				}
 				?>
@@ -239,7 +266,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 				name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" 
 				id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
 				type="color" 
-				value="<?php echo $mwb_color_value;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+				value="<?php echo esc_html( $mwb_color_value ); ?>">
 			</label>
 		<?php
 	}
@@ -265,14 +292,14 @@ class Points_Rewards_For_WooCommerce_Settings {
 				if ( array_key_exists( 'custom_attributes', $value ) ) {
 					foreach ( $value['custom_attributes'] as $attribute_name => $attribute_val ) {
 						echo esc_html( $attribute_name );
-						echo "=$attribute_val";//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						$allowed_tags = $this->mwb_wpr_allowed_html();
+						echo wp_kses( "=$attribute_val", $allowed_tags );
 
 					}
 				}
 				?>
 				  name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
-				class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php echo trim( $mwb_signup_value );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-			</textarea>
+				class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php echo wp_kses( ( $mwb_signup_value ), $this->mwb_wpr_allowed_html() ); ?></textarea>
 		</label>
 		<p class="description"><?php echo esc_html( $value['desc2'] ); ?></p>
 		<?php
@@ -299,26 +326,35 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 * This function is used for the saving and filtering the input.
 	 *
 	 * @name mwb_rwpr_save_notification_settings
-	 * @param array  $POST  array of the saved settings.
+	 * @param array  $post  array of the saved settings.
 	 * @param string $name  name the setting.
 	 * @since 1.0.0
 	 */
-	public function mwb_rwpr_filter_checkbox_notification_settings( $POST, $name ) {//phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
-		$_POST[ $name ] = isset( $_POST[ $name ] ) ? 1 : 0;//phpcs:ignore WordPress.Security.NonceVerification.Missing
+	public function mwb_rwpr_filter_checkbox_notification_settings( $post, $name ) {
+		if ( isset( $_POST['mwb-wpr-nonce'] ) ) {
+			$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+			if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
+				$_POST[ $name ] = isset( $_POST[ $name ] ) ? 1 : 0;
+			}
+		}
 	}
 
 	/**
 	 * This function is used for the saving and filtering the input.
 	 *
 	 * @name mwb_rwpr_save_notification_settings
-	 * @param array  $POST  array of the saved settings.
+	 * @param array  $post  array of the saved settings.
 	 * @param string $name  name the setting.
 	 * @since 1.0.0
 	 */
-	public function mwb_rwpr_filter_subj_email_notification_settings( $POST, $name ) {//phpcs:disable
-		$_POST[ $name ] = ( isset( $_POST[ $name ] ) && ! empty( $_POST[ $name ] ) ) ? $_POST[ $name ] : '';//phpcs:disable
-        return $_POST[ $name ];//phpcs:disable
-        //phpcs:enable
+	public function mwb_rwpr_filter_subj_email_notification_settings( $post, $name ) {
+		if ( isset( $_POST['mwb-wpr-nonce'] ) ) {
+			$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+			if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
+				$_POST[ $name ] = ( isset( $_POST[ $name ] ) && ! empty( $_POST[ $name ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $name ] ) ) : '';
+				return sanitize_text_field( wp_unslash( $_POST[ $name ] ) );
+			}
+		}
 	}
 
 	/**
@@ -379,7 +415,12 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 * @since 1.0.0
 	 */
 	public function mwb_wpr_check_numberbox( $value, $postdata ) {
-		$postdata[ $value['id'] ] = ( isset( $_POST[ $value['id'] ] ) && ! empty( $_POST[ $value['id'] ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $value['id'] ] ) ) : 1;//phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['mwb-wpr-nonce'] ) ) {
+			$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+			if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
+				$postdata[ $value['id'] ] = ( isset( $_POST[ $value['id'] ] ) && ! empty( $_POST[ $value['id'] ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $value['id'] ] ) ) : 1;
+			}
+		}
 		return $postdata[ $value['id'] ];
 	}
 	/**
@@ -405,6 +446,9 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 * @since 1.0.0
 	 */
 	public function mwb_wpr_check_textarea( $value, $postdata ) {
+		if ( ! array_key_exists( 'default', $value ) ) {
+			$value['default'] = '';
+		}
 		$postdata[ $value['id'] ] = ( isset( $postdata[ $value['id'] ] ) && ! empty( $postdata[ $value['id'] ] ) ) ? stripcslashes( $postdata[ $value['id'] ] ) : $value['default'];
 		return $postdata[ $value['id'] ];
 	}

@@ -270,7 +270,7 @@ endif;
 					<div class="mwb_wpr_general_row_wrap">
 						<?php $settings_obj->mwb_rwpr_generate_heading( $value ); ?>
 					<?php } ?>
-					<?php if ( $value['type'] != 'title' && $value['type'] != 'sectionend' ) { //phpcs:ignore WordPress.PHP.YodaConditions.NotYoda ?>
+					<?php if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) { ?>
 				<div class="mwb_wpr_general_row">
 						<?php $settings_obj->mwb_rwpr_generate_label( $value ); ?>
 					<div class="mwb_wpr_general_content">
@@ -301,7 +301,7 @@ endif;
 								}
 								if ( 'number' == $val['type'] ) {
 									$settings_obj->mwb_rwpr_generate_number_html( $val, $general_settings );
-									echo get_woocommerce_currency_symbol();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									echo esc_html( get_woocommerce_currency_symbol() );
 								}
 							}
 						}
