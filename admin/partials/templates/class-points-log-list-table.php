@@ -77,7 +77,7 @@ class Points_Log_List_Table extends WP_List_Table {
 			case 'user_points':
 				return '<b>' . $item[ $column_name ] . '</b>';
 			case 'sign':
-				$html = '<select id="mwb_sign' . $item['id'] . '" style="width:35%;"><option value="+">+</option><option value="-">-</option></select>';
+				$html = '<select id="mwb_sign' . $item['id'] . '" ><option value="+">+</option><option value="-">-</option></select>';
 				return $html;
 			case 'add_sub_points':
 				$html = '<input style="width:75%;" type="number" min="0" id="add_sub_points' . $item['id'] . '" value="">';
