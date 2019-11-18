@@ -346,7 +346,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		$user_log_id = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
 		$user_log    = get_user_meta( $user_log_id, 'mwb_wpr_user_log', true );
 		?>
-		<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Coupon Details', 'points-rewards-for-woocommerce' ); ?></h1>
+		<h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Coupon Details', 'points-rewards-for-woocommerce' ); ?></h3>
 		<?php
 		if ( isset( $user_log ) && is_array( $user_log ) && null != $user_log ) {
 			?>
@@ -417,7 +417,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		$point_log    = get_user_meta( $user_id, 'points_details', true );
 		$total_points = get_user_meta( $user_id, 'mwb_wpr_points', true )
 		?>
-		<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Point Log Details', 'points-rewards-for-woocommerce' ); ?></h1>
+		<h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Point Log Details', 'points-rewards-for-woocommerce' ); ?></h3>
 		<?php
 		if ( isset( $point_log ) && is_array( $point_log ) && null != $point_log ) {
 			?>
@@ -979,7 +979,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	}
 } else {
 	?>
-	<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-rewards-for-woocommerce' ); ?></h1>
+	<h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-rewards-for-woocommerce' ); ?></h3>
 	<?php
 	$general_settings  = get_option( 'mwb_wpr_settings_gallery', true );
 	$enable_mwb_signup = isset( $general_settings['enable_mwb_signup'] ) ? intval( $general_settings['enable_mwb_signup'] ) : 0;
