@@ -12,10 +12,6 @@
  */
 
 $mwb_wpr_setting_tab = array(
-	'overview_setting' => array(
-		'title'     => __( 'OverView', 'points-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-rwpr-overview-setting.php',
-	),
 	'general-setting' => array(
 		'title'     => __( 'General', 'points-rewards-for-woocommerce' ),
 		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-generral-settings2.php',
@@ -67,7 +63,7 @@ $mwb_wpr_setting_tab = array(
 						<span class="dashicons dashicons-phone"></span>
 					</a>
 				</li>
-				<li><a href="https://docs.makewebbetter.com/woocommerce-gift-cards-lite/" target="_blank">
+				<li><a href="https://docs.makewebbetter.com/points-rewards-for-woocommerce/" target="_blank">
 					<span class="dashicons dashicons-media-document"></span>
 				</a>
 			</li>
@@ -93,7 +89,7 @@ $mwb_wpr_setting_tab = array(
 							</div>
 							<?php
 						} else {
-							if ( empty( $_GET['tab'] ) && 'overview_setting' == $key ) {
+							if ( empty( $_GET['tab'] ) && 'general-setting' == $key ) {
 								?>
 								<div class="mwb_rwpr_tabs">
 									<a class="mwb_gw_nav_tab nav-tab nav-tab-active" href="?page=mwb-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $mwb_tab['title'] ); ?></a>
@@ -128,7 +124,7 @@ $mwb_wpr_setting_tab = array(
 						<?php include_once $include_tab; ?>
 					</div>
 					<?php
-				} elseif ( empty( $_GET['tab'] ) && 'overview_setting' == $key ) {
+				} elseif ( empty( $_GET['tab'] ) && 'general-setting' == $key ) {
 					?>
 					<div class="mwb_rwpr_content_template">
 						<?php include_once $mwb_file['file_path']; ?>
