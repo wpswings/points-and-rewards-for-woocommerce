@@ -229,8 +229,11 @@ class Points_Rewards_For_Woocommerce {
 	 */
 	public function mwb_rwpr_is_plugin_enable() {
 		$is_enable = false;
+		$mwb_wpr_enable = '';
 		$general_settings = get_option( 'mwb_wpr_settings_gallery', true );
-		$mwb_wpr_enable = $general_settings['mwb_wpr_general_setting_enable'];
+		if ( isset( $general_settings['mwb_wpr_general_setting_enable'] ) ) {
+			$mwb_wpr_enable = $general_settings['mwb_wpr_general_setting_enable'];
+		}
 		if ( ! empty( $mwb_wpr_enable ) && 1 == $mwb_wpr_enable ) {
 			$is_enable = true;
 		}
