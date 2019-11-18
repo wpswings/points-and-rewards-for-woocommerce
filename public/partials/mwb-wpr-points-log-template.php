@@ -10,10 +10,10 @@
  */
 
 $user_id = $user_ID;
-if ( isset( $user_id ) && $user_id != '' && is_numeric( $user_id ) ) { //phpcs:ignore WordPress.PHP.YodaConditions.NotYoda 
+if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 	$point_log    = get_user_meta( $user_id, 'points_details', true );
 	$total_points = get_user_meta( $user_id, 'mwb_wpr_points', true );
-	if ( isset( $point_log ) && is_array( $point_log ) && $point_log != null ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+	if ( isset( $point_log ) && is_array( $point_log ) && null != $point_log ) {
 		?>
 		<h2><?php esc_html_e( ' Point Log Table', 'points-rewards-for-woocommerce' ); ?></h2>
 		<table class="woocommerce-MyAccount-points shop_table my_account_points account-points-table mwb_wpr_table_view_log">
@@ -41,12 +41,12 @@ if ( isset( $user_id ) && $user_id != '' && is_numeric( $user_id ) ) { //phpcs:i
 			  <p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Signup Event', 'points-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
 				  <td>
 					<?php
-					echo esc_html( mwb_wpr_set_the_wordpress_date_format( $point_log['registration']['0']['date'] ) );// phpcs:ignore WordPress.Security.EscapeOutput
+					echo esc_html( mwb_wpr_set_the_wordpress_date_format( $point_log['registration']['0']['date'] ) );
 					?>
 				   </td>
 				  <td>
 					<?php
-					echo '+' . ( $point_log['registration']['0']['registration'] ); // phpcs:ignore WordPress.Security.EscapeOutput
+					echo '+' . esc_html( $point_log['registration']['0']['registration'] );
 					?>
 				  </td>
 				  <td><?php esc_html_e( 'Registration Points', 'points-rewards-for-woocommerce' ); ?></td>

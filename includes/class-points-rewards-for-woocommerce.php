@@ -34,7 +34,7 @@ class Points_Rewards_For_Woocommerce {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Rewardeem_woocommerce_Points_Rewards_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Points_Rewards_For_Woocommerce_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -89,7 +89,7 @@ class Points_Rewards_For_Woocommerce {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Rewardeem_woocommerce_Points_Rewards_Loader. Orchestrates the hooks of the plugin.
+	 * - Points_Rewards_For_Woocommerce_Loader. Orchestrates the hooks of the plugin.
 	 * - Rewardeem_woocommerce_Points_Rewards_i18n. Defines internationalization functionality.
 	 * - Rewardeem_woocommerce_Points_Rewards_Admin. Defines all hooks for the admin area.
 	 * - Points_Rewards_For_WooCommerce_Public. Defines all hooks for the public side of the site.
@@ -125,7 +125,7 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-points-rewards-for-woocommerce-public.php';
 
-		$this->loader = new Rewardeem_woocommerce_Points_Rewards_Loader();
+		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
 	}
 
@@ -231,7 +231,7 @@ class Points_Rewards_For_Woocommerce {
 		$is_enable = false;
 		$general_settings = get_option( 'mwb_wpr_settings_gallery', true );
 		$mwb_wpr_enable = $general_settings['mwb_wpr_general_setting_enable'];
-		if ( ! empty( $mwb_wpr_enable ) && $mwb_wpr_enable == 1 ) {
+		if ( ! empty( $mwb_wpr_enable ) && 1 == $mwb_wpr_enable ) {
 			$is_enable = true;
 		}
 		return $is_enable;

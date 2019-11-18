@@ -328,6 +328,49 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
+	 * This is function is used for the validating the data.
+	 *
+	 * @name mwb_wpr_allowed_html
+	 * @since 1.0.0
+	 */
+	public function mwb_wpr_allowed_html() {
+		$allowed_tags = array(
+			'span' => array(
+				'class' => array(),
+				'title' => array(),
+				'style' => array(),
+				'data-tip' => array(),
+			),
+			'min' => array(),
+			'max' => array(),
+			'class' => array(),
+			'style' => array(),
+			'<br>'  => array(),
+			'div'   => array(
+				'class' => array(),
+				'id'    => 'fb-root',
+				'data-href' => array(),
+				'data-size' => array(),
+				'data-mobile-iframe' => array(),
+				'data-layount' => array( 'button_count' ),
+
+			),
+			'script' => '(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.9"; fjs.parentNode.insertBefore(js, fjs); }(document, "script", "facebook-jssdk"))',
+			'a'     => array(
+				'class' => array(),
+				'target' => array(),
+				'href'  => array(),
+				'src'   => array(),
+			),
+			'img' => array(
+				'src' => array(),
+			),
+		);
+		return $allowed_tags;
+
+	}
+
+	/**
 	 * This function used to display the social sharing
 	 *
 	 * @name mwb_wpr_get_social_shraing_section
@@ -370,7 +413,8 @@ class Points_Rewards_For_WooCommerce_Public {
 				$content = $content . $mail;
 			}
 			$content = $content . '</div>';
-			echo $content;// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$allowed_tags = $this->mwb_wpr_allowed_html();
+			echo wp_kses( $content, $allowed_tags );
 		}
 	}
 
@@ -950,9 +994,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to add the html boxes for "Redemption on Cart sub-total"
 	 *
 	 * @name mwb_wgm_woocommerce_cart_coupon
-	 * @author m<IfModule mod_rewrite.c>
-	RewriteEngine On
-akewebbetter<webmaster@makewebbetter.com>
+	 * @author <webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_woocommerce_cart_coupon() {
@@ -1061,7 +1103,8 @@ akewebbetter<webmaster@makewebbetter.com>
 				<ul>
 					<li>
 					<?php
-					echo wc_price( $mwb_wpr_cart_price_rate ) . ' = ' . $mwb_wpr_cart_points_rate . esc_html__( ' Points', 'points-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$allowed_tags = $this->mwb_wpr_allowed_html();
+					echo wp_kses( wc_price( $mwb_wpr_cart_price_rate ), $allowed_tags ) . ' = ' . esc_html( $mwb_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-rewards-for-woocommerce' );
 					?>
 					</li>
 				</ul>
@@ -1084,7 +1127,8 @@ akewebbetter<webmaster@makewebbetter.com>
 				">
 				<?php
 				esc_html_e( 'Conversion Rate: ', 'points-rewards-for-woocommerce' );
-				echo wc_price( $order_conversion_rate['Value'] ) . ' = ' . $order_conversion_rate['Points']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$allowed_tags = $this->mwb_wpr_allowed_html();
+				echo wp_kses( wc_price( $order_conversion_rate['Value'] ), $allowed_tags ) . ' = ' . esc_html( $order_conversion_rate['Points'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				 esc_html_e( ' Points', 'points-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				</p>
@@ -1621,29 +1665,29 @@ akewebbetter<webmaster@makewebbetter.com>
 			$cart = WC()->session->get( 'cart' );
 			$user_id = get_current_user_ID();
 			$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
-			if ( isset( $_POST['cart'] ) && null != $_POST['cart'] && isset( $cart ) && null != $cart ) { // phpcs:ignore WordPress.Security.NonceVerification
-				$cart_update = sanitize_text_field( wp_unslash( $_POST['cart'] ) );// phpcs:ignore WordPress.Security.NonceVerification
+			// if ( isset( $_POST['cart'] ) && null != $_POST['cart'] && isset( $cart ) && null != $cart ) { // phpcs:ignore WordPress.Security.NonceVerification.
+				// $cart_update = sanitize_text_field( wp_unslash( $_POST['cart'] ) );// phpcs:ignore WordPress.Security.NonceVerification.
 
-				foreach ( $cart_update as $key => $value ) {
-					if ( isset( WC()->cart->cart_contents[ $key ]['product_meta'] ) ) {
-						if ( isset( WC()->cart->cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] ) ) {
-							$product = wc_get_product( $cart[ $key ]['product_id'] );
-							if ( isset( $product ) && ! empty( $product ) ) {
-								if ( $this->mwb_wpr_check_whether_product_is_variable( $product ) ) {
-									if ( isset( $cart[ $key ]['variation_id'] ) && ! empty( $cart[ $key ]['variation_id'] ) ) {
-										$get_product_points = get_post_meta( $cart[ $key ]['variation_id'], 'mwb_wpr_variable_points', 1 );
-									}
-								} else {
-									if ( isset( $cart[ $key ]['product_id'] ) && ! empty( $cart[ $key ]['product_id'] ) ) {
-										$get_product_points = get_post_meta( $cart[ $key ]['product_id'], 'mwb_points_product_value', 1 );
-									}
+			foreach ( $cart_update as $key => $value ) {
+				if ( isset( WC()->cart->cart_contents[ $key ]['product_meta'] ) ) {
+					if ( isset( WC()->cart->cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] ) ) {
+						$product = wc_get_product( $cart[ $key ]['product_id'] );
+						if ( isset( $product ) && ! empty( $product ) ) {
+							if ( $this->mwb_wpr_check_whether_product_is_variable( $product ) ) {
+								if ( isset( $cart[ $key ]['variation_id'] ) && ! empty( $cart[ $key ]['variation_id'] ) ) {
+									$get_product_points = get_post_meta( $cart[ $key ]['variation_id'], 'mwb_wpr_variable_points', 1 );
+								}
+							} else {
+								if ( isset( $cart[ $key ]['product_id'] ) && ! empty( $cart[ $key ]['product_id'] ) ) {
+									$get_product_points = get_post_meta( $cart[ $key ]['product_id'], 'mwb_points_product_value', 1 );
 								}
 							}
-							WC()->cart->cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) $value['qty'];
 						}
+						WC()->cart->cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) $value['qty'];
 					}
 				}
 			}
+			// }
 		}
 		return $cart_updated;
 	}

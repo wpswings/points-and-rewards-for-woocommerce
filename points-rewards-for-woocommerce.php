@@ -87,7 +87,7 @@ if ( $activated ) {
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_coupon_generator( $length = 5 ) {
-		if ( $length == '' ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+		if ( '' == $length ) {
 			$length = 5;
 		}
 		$password = '';

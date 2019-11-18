@@ -14,6 +14,23 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+/**
+ * Check the allowed the html in for the html.
+ *
+ * @name mwb_wpr_allowed_html
+ */
+function mwb_wpr_allowed_html() {
+	$allowed_tags = array(
+		'span' => array(
+			'class' => array(),
+			'title' => array(),
+			'style' => array(),
+			'data-tip' => array(),
+		),
+	);
+	return $allowed_tags;
+}
+
 include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
 $settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 /*  This is the setting array */
@@ -77,7 +94,8 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) && isset( $_POST['mwb-w
 			   </th>
 			<td class="forminp forminp-text">
 				   <?php
-					echo array_key_exists( 'desc_tip', $value ) ? wc_help_tip( $value['desc_tip'] ) : '';//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$allowed_tags = mwb_wpr_allowed_html();
+					echo array_key_exists( 'desc_tip', $value ) ? wp_kses( wc_help_tip( $value['desc_tip'] ), $allowed_tags ) : '';
 					if ( 'checkbox' == $value['type'] ) {
 						$settings_obj->mwb_rwpr_generate_checkbox_html( $value, $mwb_get_order_total_settings );
 					}

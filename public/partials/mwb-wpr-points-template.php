@@ -19,43 +19,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 Declarations
 */
 
-if ( isset( $_POST['mwb_wpr_save_level'] ) ) {// phpcs:ignore WordPress.Security.NonceVerification
-	$selected_role = isset( $_POST['mwb_wpr_membership_roles'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) ) : '';// phpcs:ignore WordPress.Security.NonceVerification
-	$user_id = get_current_user_id();
-	$user = get_user_by( 'ID', $user_id );
-	$user_email = $user->user_email;// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-	$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
-	$membership_detail = get_user_meta( $user_id, 'points_details', true );
-	$today_date = date_i18n( 'Y-m-d h:i:sa' );
-	$expiration_date = '';
-	$membership_settings_array = get_option( 'mwb_wpr_membership_settings', true );
-	$mwb_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
-	foreach ( $mwb_wpr_membership_roles as $roles => $values ) {
-		if ( $selected_role == $roles && ( $values['Points'] == $get_points || $values['Points'] < $get_points ) ) {
-			/*Calculate the points*/
-			$remaining_points = $get_points - $values['Points'];
-			/*Update points log*/
-			$data = array();
-			$this->mwb_wpr_update_points_details( $user_id, 'membership', $values['Points'], $data );
+if ( isset( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-level'] ) ) {
+	$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['membership-save-level'] ) );
+	if ( wp_verify_nonce( $mwb_wpr_nonce, 'membership-save-level' ) ) {
+		$selected_role = isset( $_POST['mwb_wpr_membership_roles'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) ) : '';// phpcs:ignore WordPress.Security.NonceVerification
+		$user_id = get_current_user_id();
+		$user = get_user_by( 'ID', $user_id );
+		$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
+		$membership_detail = get_user_meta( $user_id, 'points_details', true );
+		$today_date = date_i18n( 'Y-m-d h:i:sa' );
+		$expiration_date = '';
+		$membership_settings_array = get_option( 'mwb_wpr_membership_settings', true );
+		$mwb_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
+		foreach ( $mwb_wpr_membership_roles as $roles => $values ) {
+			if ( $selected_role == $roles && ( $values['Points'] == $get_points || $values['Points'] < $get_points ) ) {
+				/*Calculate the points*/
+				$remaining_points = $get_points - $values['Points'];
+				/*Update points log*/
+				$data = array();
+				$this->mwb_wpr_update_points_details( $user_id, 'membership', $values['Points'], $data );
 
-			if ( isset( $values['Exp_Number'] ) && ! empty( $values['Exp_Number'] ) && isset( $values['Exp_Days'] ) && ! empty( $values['Exp_Days'] ) ) {
-				$expiration_date = date_i18n( 'Y-m-d', strtotime( $today_date . ' +' . $values['Exp_Number'] . ' ' . $values['Exp_Days'] ) );
+				if ( isset( $values['Exp_Number'] ) && ! empty( $values['Exp_Number'] ) && isset( $values['Exp_Days'] ) && ! empty( $values['Exp_Days'] ) ) {
+					$expiration_date = date_i18n( 'Y-m-d', strtotime( $today_date . ' +' . $values['Exp_Number'] . ' ' . $values['Exp_Days'] ) );
+				}
+				update_user_meta( $user_id, 'mwb_wpr_points', $remaining_points );
+				update_user_meta( $user_id, 'membership_level', $selected_role );
+				update_user_meta( $user_id, 'membership_expiration', $expiration_date );
+				/*Send mail*/
+				$user = get_user_by( 'ID', $user_id );
+				$mwb_wpr_shortcode = array(
+					'[USERLEVEL]' => $selected_role,
+					'[USERNAME]'  => $user->user_login,
+				);
+
+				$mwb_wpr_subject_content = array(
+					'mwb_wpr_subject' => 'mwb_wpr_membership_email_subject',
+					'mwb_wpr_content' => 'mwb_wpr_membership_email_discription_custom_id',
+				);
+				$this->mwb_wpr_send_notification_mail_product( $user_id, $values['Points'], $mwb_wpr_shortcode, $mwb_wpr_subject_content );
 			}
-			update_user_meta( $user_id, 'mwb_wpr_points', $remaining_points );
-			update_user_meta( $user_id, 'membership_level', $selected_role );
-			update_user_meta( $user_id, 'membership_expiration', $expiration_date );
-			/*Send mail*/
-			$user = get_user_by( 'ID', $user_id );
-			$mwb_wpr_shortcode = array(
-				'[USERLEVEL]' => $selected_role,
-				'[USERNAME]'  => $user->user_login,
-			);
-
-			$mwb_wpr_subject_content = array(
-				'mwb_wpr_subject' => 'mwb_wpr_membership_email_subject',
-				'mwb_wpr_content' => 'mwb_wpr_membership_email_discription_custom_id',
-			);
-			$this->mwb_wpr_send_notification_mail_product( $user_id, $values['Points'], $mwb_wpr_shortcode, $mwb_wpr_subject_content );
 		}
 	}
 }
@@ -64,7 +66,7 @@ $user_id = get_current_user_id();
 /* Get points of the User*/
 $get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 /* Get points of the Membership Level*/
-$user_level = get_user_meta( $user_id, 'membership_level', true );// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+$mwb_user_level = get_user_meta( $user_id, 'membership_level', true );
 /* Get the General Settings*/
 $general_settings = get_option( 'mwb_wpr_settings_gallery', true );
 $enable_mwb_refer = isset( $general_settings['mwb_wpr_general_refer_enable'] ) ? intval( $general_settings['mwb_wpr_general_refer_enable'] ) : 0;
@@ -78,8 +80,8 @@ $membership_settings_array = get_option( 'mwb_wpr_membership_settings', true );
 $mwb_wpr_mem_enable = isset( $membership_settings_array['mwb_wpr_membership_setting_enable'] ) ? intval( $membership_settings_array['mwb_wpr_membership_setting_enable'] ) : 0;
 $coupon_settings = get_option( 'mwb_wpr_coupons_gallery', true );
 $get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
-$coupon_redeem_price = ( isset( $coupon_settings['coupon_redeem_price'] ) && $coupon_settings['coupon_redeem_price'] != null ) ? $coupon_settings['coupon_redeem_price'] : 1;//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
-$coupon_redeem_points = ( isset( $coupon_settings['coupon_redeem_points'] ) && $coupon_settings['coupon_redeem_points'] != null ) ? intval( $coupon_settings['coupon_redeem_points'] ) : 1;//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+$coupon_redeem_price = ( isset( $coupon_settings['coupon_redeem_price'] ) && null != $coupon_settings['coupon_redeem_price'] ) ? $coupon_settings['coupon_redeem_price'] : 1;
+$coupon_redeem_points = ( isset( $coupon_settings['coupon_redeem_points'] ) && null != $coupon_settings['coupon_redeem_points'] ) ? intval( $coupon_settings['coupon_redeem_points'] ) : 1;
 
 $mwb_per_currency_spent_price = isset( $coupon_settings['mwb_wpr_coupon_conversion_price'] ) ? intval( $coupon_settings['mwb_wpr_coupon_conversion_price'] ) : 1;
 $mwb_per_currency_spent_points = isset( $coupon_settings['mwb_wpr_coupon_conversion_points'] ) ? intval( $coupon_settings['mwb_wpr_coupon_conversion_points'] ) : 1;
@@ -102,7 +104,7 @@ if ( ! is_array( $coupon_settings ) ) {
 		?>
 		<span class="mwb_wpr_heading" id="mwb_wpr_points_only">
 			<?php
-			echo ( isset( $get_points ) && $get_points != null ) ? esc_html( $get_points ) : 0;//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+			echo ( isset( $get_points ) && null != $get_points ) ? esc_html( $get_points ) : 0;
 			?>
 		</span>
 	</div>
@@ -114,7 +116,7 @@ if ( ! is_array( $coupon_settings ) ) {
 			$date_format = get_option( 'date_format' );
 			$expiry_date_timestamp = strtotime( $mwb_user_point_expiry );
 			$expirydate_format = date_i18n( $date_format, $expiry_date_timestamp );
-			echo '<p class=mwb_wpr_points_expiry> ' . esc_html_e( 'Get Expired: ', 'points-rewards-for-woocommerce' ) . $expirydate_format . '</p>';// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<p class=mwb_wpr_points_expiry> ' . esc_html_e( 'Get Expired: ', 'points-rewards-for-woocommerce' ) . esc_html( $expirydate_format ) . '</p>';
 		}
 	}
 	?>
@@ -153,12 +155,12 @@ if ( $mwb_wpr_mem_enable ) {
 		
 	<p class="mwb_wpr_heading"><?php esc_html_e( 'Membership List', 'points-rewards-for-woocommerce' ); ?></p>
 		<?php
-		if ( isset( $user_level ) && ! empty( $user_level ) ) {
+		if ( isset( $mwb_user_level ) && ! empty( $mwb_user_level ) ) {
 			?>
 			<span class="mwb_wpr_upgrade_level">
 			<?php
 			esc_html_e( 'Your level has been upgraded to ', 'points-rewards-for-woocommerce' );
-			echo esc_html( $user_level );
+			echo esc_html( $mwb_user_level );
 			?>
 			</span>
 			<?php
@@ -179,15 +181,15 @@ if ( $mwb_wpr_mem_enable ) {
 				<tbody>
 				<?php
 				if ( is_array( $mwb_wpr_membership_roles ) && ! empty( $mwb_wpr_membership_roles ) ) {
-					foreach ( $mwb_wpr_membership_roles as $role => $values ) {//phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+					foreach ( $mwb_wpr_membership_roles as $mwb_role => $values ) {//phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 						?>
 				<tr>
 					<td>
 						<?php
-							echo esc_html( $role ) . '<br/><a class = "mwb_wpr_level_benefits" data-id = "' . esc_html( $role ) . '" href="javascript:;">' . esc_html__( 'View Benefits', 'points-rewards-for-woocommerce' ) . '</a>'; //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited,WordPress.WP.I18n.NonSingularStringLiteralText
+							echo esc_html( $mwb_role ) . '<br/><a class = "mwb_wpr_level_benefits" data-id = "' . esc_html( $mwb_role ) . '" href="javascript:;">' . esc_html__( 'View Benefits', 'points-rewards-for-woocommerce' ) . '</a>'; //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited,WordPress.WP.I18n.NonSingularStringLiteralText
 						?>
 						</td>
-						<div class="mwb_wpr_popup_wrapper" style="display: none;" id="mwb_wpr_popup_wrapper_<?php echo esc_html( $role ); ?>">
+						<div class="mwb_wpr_popup_wrapper" style="display: none;" id="mwb_wpr_popup_wrapper_<?php echo esc_html( $mwb_role ); ?>">
 							<div class="mwb_wpr_popup_content_section">
 								<div class="mwb_wpr_popup_content">
 									<div class="mwb_wpr_popup_notice_section">					
@@ -222,7 +224,7 @@ if ( $mwb_wpr_mem_enable ) {
 													<a href="<?php echo esc_url( $pro_url ); ?>">
 														<span class="mwb_wpr_thumbnail_img_wrap"><img src="<?php echo esc_url( $pro_img[0] ); ?>" alt=""></span>
 														<span class="mwb_wpr_thumbnail_product_name"><?php echo esc_html( $product_name ); ?></span>
-														<span class="mwb_wpr_thumbnail_price_wrap"><?php echo wc_price( $price ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+														<span class="mwb_wpr_thumbnail_price_wrap"><?php echo wp_kses( wc_price( $price ), $this->mwb_wpr_allowed_html() ); ?></span>
 													</a>
 												</li>		
 												<?php
@@ -236,16 +238,16 @@ if ( $mwb_wpr_mem_enable ) {
 												<div class="mwb_wpr_popup_cat">
 
 													<?php
-													foreach ( $values['Prod_Categ'] as $key => $cat_id ) {//phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+													foreach ( $values['Prod_Categ'] as $key => $mwb_cat_id ) {//phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 														if ( WC()->version < '3.6.0' ) {
 
-															$thumbnail_id = get_woocommerce_term_meta( $cat_id, 'thumbnail_id', true );
+															$thumbnail_id = get_woocommerce_term_meta( $mwb_cat_id, 'thumbnail_id', true );
 														} else {
-															$thumbnail_id = get_term_meta( $cat_id, 'thumbnail_id', true );
+															$thumbnail_id = get_term_meta( $mwb_cat_id, 'thumbnail_id', true );
 														}
 														$cat_img = wp_get_attachment_url( $thumbnail_id );
-														$category_title = get_term( $cat_id, 'product_cat' );
-														$category_link = get_category_link( $cat_id );
+														$category_title = get_term( $mwb_cat_id, 'product_cat' );
+														$category_link = get_category_link( $mwb_cat_id );
 														if ( empty( $cat_img ) ) {
 															$cat_img = MWB_RWPR_DIR_URL . 'public/images/placeholder.png';
 														}
@@ -271,7 +273,7 @@ if ( $mwb_wpr_mem_enable ) {
 					<td>
 						<?php
 						echo esc_html( $values['Points'] );
-						if ( $role == $user_level ) {
+						if ( $mwb_role == $mwb_user_level ) {
 							echo '<img class="mwb_wpr_tick" src = "' . esc_url( MWB_RWPR_DIR_URL ) . 'public/images/tick.png">';
 						}
 						?>
@@ -290,8 +292,8 @@ if ( $mwb_wpr_mem_enable ) {
 	<?php
 }
 if ( isset( $enable_drop ) && $enable_drop ) {
-	if ( isset( $user_level ) && ! empty( $user_level ) && array_key_exists( $user_level, $mwb_wpr_membership_roles ) ) {
-		unset( $mwb_wpr_membership_roles[ $user_level ] );
+	if ( isset( $mwb_user_level ) && ! empty( $mwb_user_level ) && array_key_exists( $mwb_user_level, $mwb_wpr_membership_roles ) ) {
+		unset( $mwb_wpr_membership_roles[ $mwb_user_level ] );
 	}
 	if ( ! empty( $mwb_wpr_membership_roles ) && is_array( $mwb_wpr_membership_roles ) ) {
 		?>
@@ -299,17 +301,18 @@ if ( isset( $enable_drop ) && $enable_drop ) {
 			<fieldset class="mwb_wpr_each_section">	
 				<span class="mwb_wpr_membership_message"><?php echo esc_html_e( 'Upgrade Your User Level: ', 'points-rewards-for-woocommerce' ); ?></span>
 				<form action="" method="post" id="mwb_wpr_membership">
+					<?php wp_nonce_field( 'membership-save-level', 'membership-save-level' ); ?>
 					<select id="mwb_wpr_membership_roles" class="mwb_wpr_membership_roles" name="mwb_wpr_membership_roles">
 						<option><?php echo esc_html__( 'Select Level', 'points-rewards-for-woocommerce' ); ?></option>
 					<?php
-					foreach ( $mwb_wpr_membership_roles as $role => $values ) { //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+					foreach ( $mwb_wpr_membership_roles as $mwb_role => $values ) {
 						if ( $values['Points'] == $get_points
 							|| $values['Points'] < $get_points ) {
 							?>
 										
-									<option value="<?php echo esc_html( $role ); ?>">
+									<option value="<?php echo esc_html( $mwb_role ); ?>">
 									<?php
-									echo esc_html( $role );
+									echo esc_html( $mwb_role );
 									?>
 									</option>
 									<?php

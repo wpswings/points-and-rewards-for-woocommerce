@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! class_exists( 'WP_List_Table' ) ) {
-	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
 /**
@@ -39,14 +39,14 @@ class Points_Log_List_Table extends WP_List_Table {
 	public function get_columns() {
 
 		$columns = array(
-			'cb'            => '<input type="checkbox" />',
-			'user_name'     => __( 'User Name', 'points-rewards-for-woocommerce' ),
-			'user_email'    => __( 'User Email', 'points-rewards-for-woocommerce' ),
-			'user_points'   => __( 'Total Points', 'points-rewards-for-woocommerce' ),
-			'sign'          => __( 'Choose +/-', 'points-rewards-for-woocommerce' ),
+			'cb'             => '<input type="checkbox" />',
+			'user_name'      => __( 'User Name', 'points-rewards-for-woocommerce' ),
+			'user_email'     => __( 'User Email', 'points-rewards-for-woocommerce' ),
+			'user_points'    => __( 'Total Points', 'points-rewards-for-woocommerce' ),
+			'sign'           => __( 'Choose +/-', 'points-rewards-for-woocommerce' ),
 			'add_sub_points' => __( 'Enter Points', 'points-rewards-for-woocommerce' ),
-			'reason'        => __( 'Enter Remark', 'points-rewards-for-woocommerce' ),
-			'details'       => __( 'Action', 'points-rewards-for-woocommerce' ),
+			'reason'         => __( 'Enter Remark', 'points-rewards-for-woocommerce' ),
+			'details'        => __( 'Action', 'points-rewards-for-woocommerce' ),
 
 		);
 		return $columns;
@@ -117,12 +117,16 @@ class Points_Log_List_Table extends WP_List_Table {
 	public function process_bulk_action() {
 
 		if ( 'bulk-delete' === $this->current_action() ) {
+			if ( isset( $_POST['points-log'] ) ) {
+				$mwb_membership_nonce = sanitize_text_field( wp_unslash( $_POST['points-log'] ) );
+				if ( wp_verify_nonce( $mwb_membership_nonce, 'points-log' ) ) {
+					if ( isset( $_POST['mpr_points_ids'] ) && ! empty( $_POST['mpr_points_ids'] ) ) {
+						$all_id = map_deep( wp_unslash( $_POST['mpr_points_ids'] ), 'sanitize_text_field' );
+						foreach ( $all_id as $key => $value ) {
 
-			if ( isset( $_POST['mpr_points_ids'] ) && ! empty( $_POST['mpr_points_ids'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
-				$all_id = map_deep( wp_unslash( $_POST['mpr_points_ids'] ), 'sanitize_text_field' );//phpcs:ignore WordPress.Security.NonceVerification.Missing
-				foreach ( $all_id as $key => $value ) {
-
-					delete_user_meta( $value, 'mwb_wpr_points' );
+							delete_user_meta( $value, 'mwb_wpr_points' );
+						}
+					}
 				}
 			}
 		}
@@ -152,9 +156,9 @@ class Points_Log_List_Table extends WP_List_Table {
 	 */
 	public function get_sortable_columns() {
 		$sortable_columns = array(
-			'user_name'    => array( 'user_name', false ),
+			'user_name'   => array( 'user_name', false ),
 			'user_email'  => array( 'user_email', false ),
-			'user_points'  => array( 'user_points', false ),
+			'user_points' => array( 'user_points', false ),
 		);
 		return $sortable_columns;
 	}
@@ -167,22 +171,22 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function prepare_items() {
-		$per_page = 10;
-		$columns = $this->get_columns();
-		$hidden = array();
-		$sortable = $this->get_sortable_columns();
+		$per_page              = 10;
+		$columns               = $this->get_columns();
+		$hidden                = array();
+		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 		$this->process_bulk_action();
 
 		$this->example_data = $this->get_users_points();
-		$data = $this->example_data;
+		$data               = $this->example_data;
 
 		usort( $data, array( $this, 'mwb_wpr_usort_reorder' ) );
 
 		$current_page = $this->get_pagenum();
-		$total_items = count( $data );
-		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
-		$this->items = $data;
+		$total_items  = count( $data );
+		$data         = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
+		$this->items  = $data;
 		$this->set_pagination_args(
 			array(
 				'total_items' => $total_items,
@@ -205,20 +209,20 @@ class Points_Log_List_Table extends WP_List_Table {
 	 */
 	public function mwb_wpr_usort_reorder( $cloumna, $cloumnb ) {
 		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'id';
-		$order = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'desc';
+		$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'desc';
 		if ( is_numeric( $cloumna[ $orderby ] ) && is_numeric( $cloumnb[ $orderby ] ) ) {
 			if ( $cloumna[ $orderby ] == $cloumnb[ $orderby ] ) {
 				return 0;
-			} elseif ( $cloumna[ $orderby ] < $cloumnb[ $orderby ] ) { //phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+			} elseif ( $cloumna[ $orderby ] < $cloumnb[ $orderby ] ) {
 				$result = -1;
-				return ( $order === 'asc' ) ? $result : -$result;//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+				return ( 'asc' === $order ) ? $result : -$result;
 			} elseif ( $cloumna[ $orderby ] > $cloumnb[ $orderby ] ) {
 				$result = 1;
-				return ( $order === 'asc' ) ? $result : -$result;//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+				return ( 'asc' === $order ) ? $result : -$result;
 			}
 		} else {
 			$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
-			return ( $order === 'asc' ) ? $result : -$result;//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+			return ( 'asc' === $order ) ? $result : -$result;
 		}
 	}
 
@@ -250,11 +254,11 @@ class Points_Log_List_Table extends WP_List_Table {
 		$args['meta_query'] = array(
 			'relation' => 'OR',
 			array(
-				'key' => 'mwb_wpr_points',
+				'key'     => 'mwb_wpr_points',
 				'compare' => 'EXISTS',
 			),
 			array(
-				'key' => 'mwb_wpr_points',
+				'key'     => 'mwb_wpr_points',
 				'compare' => 'NOT EXISTS',
 
 			),
@@ -262,19 +266,19 @@ class Points_Log_List_Table extends WP_List_Table {
 
 		if ( isset( $_REQUEST['s'] ) ) {
 			$mwb_request_search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
-			$args['search'] = '*' . $mwb_request_search . '*';
+			$args['search']     = '*' . $mwb_request_search . '*';
 		}
 		$args['role__in'] = array( 'subscriber', 'customer' );
-		$user_data = new WP_User_Query( $args );
-		$user_data = $user_data->get_results();
-		$points_data = array();
+		$user_data        = new WP_User_Query( $args );
+		$user_data        = $user_data->get_results();
+		$points_data      = array();
 		foreach ( $user_data as $key => $value ) {
-			$user_points = get_user_meta( $value->data->ID, 'mwb_wpr_points', true );
-			$user_points = ( empty( $user_points ) ) ? 0 : $user_points;
+			$user_points   = get_user_meta( $value->data->ID, 'mwb_wpr_points', true );
+			$user_points   = ( empty( $user_points ) ) ? 0 : $user_points;
 			$points_data[] = array(
-				'id' => $value->data->ID,
-				'user_name' => $value->data->user_nicename,
-				'user_email' => $value->data->user_email,
+				'id'          => $value->data->ID,
+				'user_name'   => $value->data->user_nicename,
+				'user_email'  => $value->data->user_email,
 				'user_points' => $user_points,
 			);
 		}
@@ -282,68 +286,69 @@ class Points_Log_List_Table extends WP_List_Table {
 	}
 }
 
-if ( isset( $_POST['mwb_wpr_import_user'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
+if ( isset( $_POST['mwb_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
+	$mwb_membership_nonce = sanitize_text_field( wp_unslash( $_POST['points-log'] ) );
+	$import_user          = get_option( 'mwb_wpr_user_imported', false );
+	if ( wp_verify_nonce( $mwb_membership_nonce, 'points-log' ) ) {
+		if ( false == $import_user ) {
+			$user_data = get_users();
 
-	$import_user = get_option( 'mwb_wpr_user_imported', false );
+			$points_data           = array();
+			$flag                  = false;
+			$general_settings      = get_option( 'mwb_wpr_settings_gallery', true );
+			$coupon_settings_array = get_option( 'mwb_wpr_coupons_gallery', array() );
+			foreach ( $user_data as $key => $value ) {
+				$check_user = get_user_meta( $value->data->ID, 'mwb_wpr_points', false );
 
-	if ( false == $import_user ) {
-		$user_data = get_users();
+				if ( false == $check_user ) {
 
-		$points_data = array();
-		$flag = false;
-		$general_settings = get_option( 'mwb_wpr_settings_gallery', true );
-		$coupon_settings_array = get_option( 'mwb_wpr_coupons_gallery', array() );
-		foreach ( $user_data as $key => $value ) {
-			$check_user = get_user_meta( $value->data->ID, 'mwb_wpr_points', false );
+					if ( in_array( 'subscriber', $value->roles ) || in_array( 'customer', $value->roles ) ) {
+						$today_date                       = date_i18n( 'Y-m-d h:i:sa' );
+						$mwb_signup_value                 = isset( $general_settings['mwb_signup_value'] ) ? intval( $general_settings['mwb_signup_value'] ) : 1;
+						$import_points['import_points'][] = array(
+							'import_points' => $mwb_signup_value,
+							'date'          => $today_date,
+						);
 
-			if ( false == $check_user ) {
-
-				if ( in_array( 'subscriber', $value->roles ) || in_array( 'customer', $value->roles ) ) {
-					$today_date = date_i18n( 'Y-m-d h:i:sa' );
-					$mwb_signup_value = isset( $general_settings['mwb_signup_value'] ) ? intval( $general_settings['mwb_signup_value'] ) : 1;
-					$import_points['import_points'][] = array(
-						'import_points' => $mwb_signup_value,
-						'date' => $today_date,
-					);
-
-					update_user_meta( $value->data->ID, 'mwb_wpr_points', $mwb_signup_value );
-					update_user_meta( $value->data->ID, 'points_details', $import_points );
-					$flag = true;
-					$mwb_wpr_notificatin_array = get_option( 'mwb_wpr_notificatin_array', true );
-					if ( is_array( $mwb_wpr_notificatin_array ) && ! empty( $mwb_wpr_notificatin_array ) ) {
-						$mwb_per_currency_spent_value = isset( $coupon_settings_array['mwb_wpr_coupon_conversion_points'] ) ? intval( $coupon_settings_array['mwb_wpr_coupon_conversion_points'] ) : 1;
-						$mwb_comment_value = isset( $general_settings['mwb_comment_value'] ) ? intval( $general_settings['mwb_comment_value'] ) : 1;
-						$mwb_refer_value = isset( $general_settings['mwb_refer_value'] ) ? intval( $general_settings['mwb_refer_value'] ) : 1;
-						$mwb_wpr_notificatin_enable = isset( $mwb_wpr_notificatin_array['mwb_wpr_notificatin_enable'] ) ? intval( $mwb_wpr_notificatin_array['mwb_wpr_notificatin_enable'] ) : 0;
-						$mwb_wpr_email_subject = isset( $mwb_wpr_notificatin_array['mwb_wpr_signup_email_subject'] ) ? $mwb_wpr_notificatin_array['mwb_wpr_signup_email_subject'] : '';
-						$mwb_wpr_email_discription = isset( $mwb_wpr_notificatin_array['mwb_wpr_signup_email_discription_custom_id'] ) ? $mwb_wpr_notificatin_array['mwb_wpr_signup_email_discription_custom_id'] : '';
-						$mwb_wpr_email_discription = str_replace( '[Points]', $mwb_signup_value, $mwb_wpr_email_discription );
-						$mwb_wpr_email_discription = str_replace( '[Total Points]', $mwb_signup_value, $mwb_wpr_email_discription );
-						$mwb_wpr_email_discription = str_replace( '[Comment Points]', $mwb_comment_value, $mwb_wpr_email_discription );
-						$mwb_wpr_email_discription = str_replace( '[Refer Points]', $mwb_refer_value, $mwb_wpr_email_discription );
-						$mwb_wpr_email_discription = str_replace( '[Per Currency Spent Points]', $mwb_per_currency_spent_value, $mwb_wpr_email_discription );
-						if ( $mwb_wpr_notificatin_enable ) {
-							$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-							wc_mail( $value->data->user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+						update_user_meta( $value->data->ID, 'mwb_wpr_points', $mwb_signup_value );
+						update_user_meta( $value->data->ID, 'points_details', $import_points );
+						$flag                      = true;
+						$mwb_wpr_notificatin_array = get_option( 'mwb_wpr_notificatin_array', true );
+						if ( is_array( $mwb_wpr_notificatin_array ) && ! empty( $mwb_wpr_notificatin_array ) ) {
+							$mwb_per_currency_spent_value = isset( $coupon_settings_array['mwb_wpr_coupon_conversion_points'] ) ? intval( $coupon_settings_array['mwb_wpr_coupon_conversion_points'] ) : 1;
+							$mwb_comment_value            = isset( $general_settings['mwb_comment_value'] ) ? intval( $general_settings['mwb_comment_value'] ) : 1;
+							$mwb_refer_value              = isset( $general_settings['mwb_refer_value'] ) ? intval( $general_settings['mwb_refer_value'] ) : 1;
+							$mwb_wpr_notificatin_enable   = isset( $mwb_wpr_notificatin_array['mwb_wpr_notificatin_enable'] ) ? intval( $mwb_wpr_notificatin_array['mwb_wpr_notificatin_enable'] ) : 0;
+							$mwb_wpr_email_subject        = isset( $mwb_wpr_notificatin_array['mwb_wpr_signup_email_subject'] ) ? $mwb_wpr_notificatin_array['mwb_wpr_signup_email_subject'] : '';
+							$mwb_wpr_email_discription    = isset( $mwb_wpr_notificatin_array['mwb_wpr_signup_email_discription_custom_id'] ) ? $mwb_wpr_notificatin_array['mwb_wpr_signup_email_discription_custom_id'] : '';
+							$mwb_wpr_email_discription    = str_replace( '[Points]', $mwb_signup_value, $mwb_wpr_email_discription );
+							$mwb_wpr_email_discription    = str_replace( '[Total Points]', $mwb_signup_value, $mwb_wpr_email_discription );
+							$mwb_wpr_email_discription    = str_replace( '[Comment Points]', $mwb_comment_value, $mwb_wpr_email_discription );
+							$mwb_wpr_email_discription    = str_replace( '[Refer Points]', $mwb_refer_value, $mwb_wpr_email_discription );
+							$mwb_wpr_email_discription    = str_replace( '[Per Currency Spent Points]', $mwb_per_currency_spent_value, $mwb_wpr_email_discription );
+							if ( $mwb_wpr_notificatin_enable ) {
+								$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+								wc_mail( $value->data->user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+							}
 						}
 					}
 				}
 			}
-		}
-		if ( $flag ) {
+			if ( $flag ) {
 
-			update_option( 'mwb_wpr_user_imported', true );
+				update_option( 'mwb_wpr_user_imported', true );
+			}
 		}
 	}
 }
 if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	if ( 'view' == $_GET['action'] ) {
 		$user_log_id = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
-		$user_log = get_user_meta( $user_log_id, 'mwb_wpr_user_log', true );
+		$user_log    = get_user_meta( $user_log_id, 'mwb_wpr_user_log', true );
 		?>
 		<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Coupon Details', 'points-rewards-for-woocommerce' ); ?></h1>
 		<?php
-		if ( isset( $user_log ) && is_array( $user_log ) && $user_log != null ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+		if ( isset( $user_log ) && is_array( $user_log ) && null != $user_log ) {
 			?>
 			<table class="form-table mwp_wpr_settings mwb_wpr_points_view" >
 				<thead>
@@ -373,22 +378,22 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								<td class="forminp forminp-text">
 									<?php
 									if ( 'left' == $column_id ) {
-										$mwb_split = explode( '#', $key );
+										$mwb_split   = explode( '#', $key );
 										$column_name = get_post_meta( $mwb_split[1], 'coupon_amount', true );
-										echo get_woocommerce_currency_symbol() . $column_name;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+										echo esc_html( get_woocommerce_currency_symbol() ) . esc_html( $column_name );
 									} elseif ( 'expiry' == $column_id ) {
 										if ( WC()->version < '3.0.6' ) {
 
 											$column_name = get_post_meta( $mwb_split[1], 'expiry_date', true );
-											echo $column_name;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+											echo esc_html( $column_name );
 										} else {
 											$column_name = get_post_meta( $mwb_split[1], 'date_expires', true );
-											$dt = new DateTime( "@$column_name" );
-											echo $dt->format( 'Y-m-d' );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+											$dt          = new DateTime( "@$column_name" );
+											echo esc_html( $dt->format( 'Y-m-d' ) );
 
 										}
 									} else {
-										echo $column_name;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+										echo esc_html( $column_name );
 									}
 									?>
 								</td>
@@ -407,14 +412,14 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		<a  href="<?php echo esc_url( MWB_RWPR_HOME_URL ); ?>admin.php?page=mwb-rwpr-setting&tab=points-table" style="line-height: 2" class="button button-primary mwb_wpr_save_changes"><?php esc_html_e( 'Go Back', 'points-rewards-for-woocommerce' ); ?></a> 
 							 <?php
 
-	} else if ( $_GET['action'] == 'view_point_log' ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
-		$user_id = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
-		$point_log = get_user_meta( $user_id, 'points_details', true );
+	} elseif ( 'view_point_log' == $_GET['action'] ) {
+		$user_id      = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
+		$point_log    = get_user_meta( $user_id, 'points_details', true );
 		$total_points = get_user_meta( $user_id, 'mwb_wpr_points', true )
 		?>
 		<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Point Log Details', 'points-rewards-for-woocommerce' ); ?></h1>
 		<?php
-		if ( isset( $point_log ) && is_array( $point_log ) && $point_log != null ) {//phpcs:ignore WordPress.PHP.YodaConditions.NotYoda
+		if ( isset( $point_log ) && is_array( $point_log ) && null != $point_log ) {
 			?>
 			  
 			<div class="mwb_wpr_wrapper_div">
@@ -445,8 +450,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					  <div class="mwb_wpr_points_view"> 
 						  <table class="form-table mwp_wpr_settings mwb_wpr_common_table" >
 								<tr valign="top">
-								<td class="forminp forminp-text"><?php echo( $point_log['registration']['0']['date'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
-								<td class="forminp forminp-text"><?php echo '+' . ( $point_log['registration']['0']['registration'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
+								<td class="forminp forminp-text"><?php echo( esc_html( $point_log['registration']['0']['date'] ) ); ?></td>
+								<td class="forminp forminp-text"><?php echo '+' . esc_html( $point_log['registration']['0']['registration'] ); ?></td>
 								<td class="forminp forminp-text"><?php esc_html_e( 'Registration Points', 'points-rewards-for-woocommerce' ); ?></td>
 								</tr>
 							</table>
@@ -463,8 +468,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					  <div class="mwb_wpr_points_view">  
 					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
 						<tr valign="top">
-							<td class="forminp forminp-text"><?php echo( $point_log['import_points']['0']['date'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
-							<td class="forminp forminp-text"><?php echo '+' . ( $point_log['import_points']['0']['import_points'] );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
+							<td class="forminp forminp-text"><?php echo esc_html( $point_log['import_points']['0']['date'] ); ?></td>
+							<td class="forminp forminp-text"><?php echo '+' . esc_html( $point_log['import_points']['0']['import_points'] ); ?></td>
 							<td class="forminp forminp-text"><?php esc_html_e( 'Registration Points', 'points-rewards-for-woocommerce' ); ?></td>
 						</tr>
 					</table></div></div>
@@ -614,7 +619,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['reference_details'] as $key => $value ) {
 						$user_name = '';
 						if ( isset( $value['refered_user'] ) && ! empty( $value['refered_user'] ) ) {
-							$user = get_user_by( 'ID', $value['refered_user'] );
+							$user      = get_user_by( 'ID', $value['refered_user'] );
 							$user_name = $user->user_nicename;
 						}
 						?>
@@ -666,12 +671,12 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 					<?php
 					foreach ( $point_log['admin_points'] as $key => $value ) {
-						$value['sign'] = isset( $value['sign'] ) ? $value['sign'] : '+/-';
+						$value['sign']   = isset( $value['sign'] ) ? $value['sign'] : '+/-';
 						$value['reason'] = isset( $value['reason'] ) ? $value['reason'] : __( 'Updated By Admin', 'points-rewards-for-woocommerce' );
 						?>
 				<tr valign="top">
 					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-					<td class="forminp forminp-text"><?php echo $value['sign'] . $value['admin_points']; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
+					<td class="forminp forminp-text"><?php echo esc_html( $value['sign'] ) . esc_html( $value['admin_points'] ); ?></td>
 					<td class="forminp forminp-text"><?php echo esc_html( $value['reason'] ); ?></td>
 				</tr>
 						<?php
@@ -779,7 +784,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['Sender_point_details'] as $key => $value ) {
 						$user_name = '';
 						if ( isset( $value['give_to'] ) && ! empty( $value['give_to'] ) ) {
-							$user = get_user_by( 'ID', $value['give_to'] );
+							$user      = get_user_by( 'ID', $value['give_to'] );
 							$user_name = $user->user_nicename;
 						}
 						?>
@@ -810,7 +815,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $point_log['Receiver_point_details'] as $key => $value ) {
 						$user_name = '';
 						if ( isset( $value['received_by'] ) && ! empty( $value['received_by'] ) ) {
-							$user = get_user_by( 'ID', $value['received_by'] );
+							$user      = get_user_by( 'ID', $value['received_by'] );
 							$user_name = $user->user_nicename;
 						}
 						?>
@@ -976,7 +981,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	?>
 	<h1 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-rewards-for-woocommerce' ); ?></h1>
 	<?php
-	$general_settings = get_option( 'mwb_wpr_settings_gallery', true );
+	$general_settings  = get_option( 'mwb_wpr_settings_gallery', true );
 	$enable_mwb_signup = isset( $general_settings['enable_mwb_signup'] ) ? intval( $general_settings['enable_mwb_signup'] ) : 0;
 	if ( $enable_mwb_signup ) {
 		$import_user = get_option( 'mwb_wpr_user_imported', false );
@@ -997,10 +1002,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		} else {
 			$args['role__in'] = array( 'subscriber', 'customer' );
 
-			$user_data = get_users( $args );
+			$user_data  = get_users( $args );
 			$guest_flag = false;
 			foreach ( $user_data as $key => $value ) {
-				$user_id = $value->data->ID;
+				$user_id      = $value->data->ID;
 				$guest_points = get_user_meta( $value->data->ID, 'mwb_wpr_points', false );
 
 				if ( false == $guest_points ) {
@@ -1027,6 +1032,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	?>
 	<form method="post">
 		<input type="hidden" name="page" value="<?php esc_html_e( 'points_log_list_table', 'points-rewards-for-woocommerce' ); ?>">
+		<?php wp_nonce_field( 'points-log', 'points-log' ); ?>
 		<?php
 		$mylisttable = new Points_Log_List_Table();
 		$mylisttable->prepare_items();

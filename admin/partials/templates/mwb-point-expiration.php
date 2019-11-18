@@ -14,34 +14,52 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+/**
+ * Check the allowed the html in for the html.
+ *
+ * @name mwb_wpr_allowed_html
+ */
+function mwb_wpr_allowed_html() {
+	$allowed_tags = array(
+		'span' => array(
+			'class' => array(),
+			'title' => array(),
+			'style' => array(),
+			'data-tip' => array(),
+		),
+	);
+	return $allowed_tags;
+}
 
 $current_tab = 'mwb_wpr_point_expiration_tab';
-
-if ( isset( $_POST['mwb_wpr_save_point_expiration'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Missing
-	if ( isset( $_POST['mwb_wpr_points_expiration_enable'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$_POST['mwb_wpr_points_expiration_enable'] = 'on';
-	} else {
-		$_POST['mwb_wpr_points_expiration_enable'] = 'off';
+if ( isset( $_POST['mwb_wpr_save_point_expiration'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
+	$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+	if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
+		if ( isset( $_POST['mwb_wpr_points_expiration_enable'] ) ) {
+			$_POST['mwb_wpr_points_expiration_enable'] = 'on';
+		} else {
+			$_POST['mwb_wpr_points_expiration_enable'] = 'off';
+		}
+		if ( isset( $_POST['mwb_wpr_points_exp_onmyaccount'] ) ) {
+			$_POST['mwb_wpr_points_exp_onmyaccount'] = 'on';
+		} else {
+			$_POST['mwb_wpr_points_exp_onmyaccount'] = 'off';
+		}
+		$postdata = $_POST;
+		foreach ( $postdata as $key => $value ) {
+			$value = stripcslashes( $value );
+			$value = sanitize_text_field( $value );
+			update_option( $key, $value );
+		}
+		?>
+		<div class="notice notice-success is-dismissible">
+			<p><strong><?php esc_html_e( 'Settings saved.', 'points-rewards-for-woocommerce' ); ?></strong></p>
+			<button type="button" class="notice-dismiss">
+				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-rewards-for-woocommerce' ); ?></span>
+			</button>
+		</div>
+		<?php
 	}
-	if ( isset( $_POST['mwb_wpr_points_exp_onmyaccount'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$_POST['mwb_wpr_points_exp_onmyaccount'] = 'on';
-	} else {
-		$_POST['mwb_wpr_points_exp_onmyaccount'] = 'off';
-	}
-	$postdata = $_POST;//phpcs:ignore WordPress.Security.NonceVerification.Missing
-	foreach ( $postdata as $key => $value ) {
-		$value = stripcslashes( $value );
-		$value = sanitize_text_field( $value );
-		update_option( $key, $value );
-	}
-	?>
-	<div class="notice notice-success is-dismissible">
-		<p><strong><?php esc_html_e( 'Settings saved.', 'points-rewards-for-woocommerce' ); ?></strong></p>
-		<button type="button" class="notice-dismiss">
-			<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-rewards-for-woocommerce' ); ?></span>
-		</button>
-	</div>
-	<?php
 }
 $mwb_wpr_points_expiration_enable = get_option( 'mwb_wpr_points_expiration_enable', 'off' );
 $mwb_wpr_points_exp_onmyaccount = get_option( 'mwb_wpr_points_exp_onmyaccount', 'off' );
@@ -62,8 +80,9 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 				</th>
 				<td class="forminp forminp-text">
 					<?php
+					$allowed_tags = mwb_wpr_allowed_html();
 					$attribute_description = __( 'Check this, If you want to set the expiration period for the Rewarded Points', 'points-rewards-for-woocommerce' );
-					echo wc_help_tip( $attribute_description ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 					?>
 					<label for="mwb_wpr_points_expiration_enable">
 						<input type="checkbox" <?php echo ( 'on' == $mwb_wpr_points_expiration_enable ) ? "checked='checked'" : ''; ?> name="mwb_wpr_points_expiration_enable" id="mwb_wpr_points_expiration_enable" class="input-text"> <?php esc_html_e( 'Enable Point Expiration', 'points-rewards-for-woocommerce' ); ?>
@@ -76,8 +95,9 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 				</th>
 				<td class="forminp forminp-text">
 					<?php
+					$allowed_tags = mwb_wpr_allowed_html();
 					$attribute_description = __( 'Check this, If you want to show the expiration period for the Rewarded Points on Myaccount Page', 'points-rewards-for-woocommerce' );
-					echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 					?>
 					<label for="mwb_wpr_points_exp_onmyaccount">
 						<input type="checkbox" <?php echo ( 'on' == $mwb_wpr_points_exp_onmyaccount ) ? "checked='checked'" : ''; ?> name="mwb_wpr_points_exp_onmyaccount" id="mwb_wpr_points_exp_onmyaccount" class="input-text"> <?php esc_html_e( 'Expiartion willl get displayed just below the Total Point', 'points-rewards-for-woocommerce' ); ?>
@@ -90,8 +110,9 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 				</th>
 				<td class="forminp forminp-text">
 					<?php
+					$allowed_tags = mwb_wpr_allowed_html();
 					$attribute_description = esc_html__( 'Set the threshold for points expiration, The expiration period will be calculated when the threshold has been reached', 'points-rewards-for-woocommerce' );
-					echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 					?>
 					<label for="mwb_wpr_points_expiration_threshold">
 						<input type="number" min="1" name="mwb_wpr_points_expiration_threshold" id="mwb_wpr_points_expiration_threshold" value="<?php echo esc_html( $mwb_wpr_points_expiration_threshold ); ?>" class="input-text mwb_wpr_common_width">
@@ -104,8 +125,9 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 				</th>
 				<td class="forminp forminp-text">
 					<?php
+					$allowed_tags = mwb_wpr_allowed_html();
 					$attribute_description = __( 'Set the Time-Period for "When the points needs to get expired?" It will calculated over the above Threshold Time', 'points-rewards-for-woocommerce' );
-					echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 					?>
 						<input type="number" min="1" value="<?php echo esc_html( $mwb_wpr_points_expiration_time_num ); ?>" name="mwb_wpr_points_expiration_time_num" id="mwb_wpr_points_expiration_time_num" class="input-text mwb_wpr_common_width">
 						<select id="mwb_wpr_points_expiration_time_drop" name="mwb_wpr_points_expiration_time_drop" style="width: 10%;">
@@ -162,8 +184,9 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 				</th>
 				<td class="forminp forminp-text">
 					<?php
+					$allowed_tags = mwb_wpr_allowed_html();
 					$attribute_description = __( 'Set the number of days beofre the Email will get sent out', 'points-rewards-for-woocommerce' );
-					echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 					?>
 					<label for="mwb_wpr_points_expiration_email">
 						<input type="number" min="1" name="mwb_wpr_points_expiration_email" id="mwb_wpr_points_expiration_email" value="<?php echo esc_html( $mwb_wpr_points_expiration_email ); ?>" class="input-text mwb_wpr_common_width">  Days
@@ -176,8 +199,9 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 				</th>
 				<td class="forminp forminp-text">
 					<?php
+					$allowed_tags = mwb_wpr_allowed_html();
 					$attribute_description = __( 'Entered Message will appears inside the Email Template for notifying the Customer that they have reached the Threshold now they should redeem their Points before it will get expired', 'points-rewards-for-woocommerce' );
-					echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 					?>
 					<textarea cols="35" rows="5" name="mwb_wpr_threshold_notif" id="mwb_wpr_threshold_notif" class="input-text" ><?php echo esc_html( $mwb_wpr_threshold_notif ); ?></textarea>
 					<p class="description"><?php esc_html_e( 'Use these shortcodes for providing an appropriate message for your customers ', 'points-rewards-for-woocommerce' ); ?>
@@ -196,8 +220,9 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 				</th>
 				<td class="forminp forminp-text">
 					<?php
+					$allowed_tags = mwb_wpr_allowed_html();
 					$attribute_description = __( 'Entered Message will appears inside the Email Template for notifying the Customer that they have left just some days more before the expiration', 'points-rewards-for-woocommerce' );
-					echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 					?>
 					<textarea cols="35" rows="5" name="mwb_wpr_re_notification" id="mwb_wpr_re_notification" class="input-text" ><?php echo esc_html( $mwb_wpr_re_notification ); ?></textarea>
 					<p class="description"><?php esc_html_e( 'Use these shortcodes for providing an appropriate message for your customers ', 'points-rewards-for-woocommerce' ); ?>
@@ -216,8 +241,9 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 				</th>
 				<td class="forminp forminp-text">
 					<?php
+					$allowed_tags = mwb_wpr_allowed_html();
 					$attribute_description = __( 'Entered Message will appears inside the Email Template for notifying the Customer that the Points has been expired', 'points-rewards-for-woocommerce' );
-					echo wc_help_tip( $attribute_description );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 					?>
 					<textarea cols="35" rows="5" name="mwb_wpr_expired_notification" id="mwb_wpr_expired_notification" class="input-text" ><?php echo esc_html( $mwb_wpr_expired_notification ); ?></textarea>
 				</td>
