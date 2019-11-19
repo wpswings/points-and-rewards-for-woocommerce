@@ -413,8 +413,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$content = $content . $mail;
 			}
 			$content = $content . '</div>';
-			$allowed_tags = $this->mwb_wpr_allowed_html();
-			echo wp_kses( $content, $allowed_tags );
+			echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
