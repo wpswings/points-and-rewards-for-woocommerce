@@ -112,6 +112,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$args_cat   = array( 'taxonomy' => 'product_cat' );
 				$categories = get_terms( $args_cat );
 				$option_arr = array();
+				$option_categ = array();
 				if ( isset( $categories ) && ! empty( $categories ) ) {
 					foreach ( $categories as $category ) {
 						$catid   = $category->term_id;
