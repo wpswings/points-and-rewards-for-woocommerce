@@ -180,7 +180,6 @@
 				'click',
 				'.mwb_wpr_remove_button',
 				function(){
-					// $('.parent_of_div .mwb_wpr_repeat:last').remove();
 					var curr_div = $( this ).attr( 'id' );
 					if (curr_div == 0) {
 						$( document ).find( '.mwb_wpr_repeat_button' ).hide();

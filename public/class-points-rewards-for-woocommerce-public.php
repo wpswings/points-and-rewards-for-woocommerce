@@ -88,7 +88,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			'mwb_wpr_nonce' => wp_create_nonce( 'mwb-wpr-verify-nonce' ),
 			'mwb_wpr_cart_points_rate' => $mwb_wpr_cart_points_rate,
 			'mwb_wpr_cart_price_rate' => $mwb_wpr_cart_price_rate,
-			// 'make_readonly' => $mwb_wpr_make_readonly,
 			'not_allowed' => __( 'Please enter some valid points!', 'points-rewards-for-woocommerce' ),
 			'not_suffient' => __( 'You do not have suffient amount of points', 'points-rewards-for-woocommerce' ),
 		);

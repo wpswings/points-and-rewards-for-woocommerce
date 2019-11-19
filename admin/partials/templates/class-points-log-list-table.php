@@ -68,7 +68,6 @@ class Points_Log_List_Table extends WP_List_Table {
 			case 'user_name':
 				$actions = array(
 					'view_point_log' => '<a href="' . MWB_RWPR_HOME_URL . 'admin.php?page=mwb-rwpr-setting&tab=points-table&user_id=' . $item['id'] . '&action=view_point_log">' . __( 'View Point Log', 'points-rewards-for-woocommerce' ) . '</a>',
-					// 'view_coupon_detail' => '<a href="' . MWB_RWPR_HOME_URL . 'admin.php?page=mwb-rwpr-setting&tab=points-table&user_id=' . $item['id'] . '&action=view">' . __( 'View Coupon Detail', 'points-rewards-for-woocommerce' ) . '</a>',
 				);
 				$actions = apply_filters( 'mwb_add_coupon_details', $actions, $item['id'] );
 				return $item[ $column_name ] . $this->row_actions( $actions );

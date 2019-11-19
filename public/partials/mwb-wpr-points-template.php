@@ -71,7 +71,6 @@ $mwb_user_level = get_user_meta( $user_id, 'membership_level', true );
 $general_settings = get_option( 'mwb_wpr_settings_gallery', true );
 $enable_mwb_refer = isset( $general_settings['mwb_wpr_general_refer_enable'] ) ? intval( $general_settings['mwb_wpr_general_refer_enable'] ) : 0;
 $mwb_refer_value = isset( $general_settings['mwb_wpr_general_refer_value'] ) ? intval( $general_settings['mwb_wpr_general_refer_value'] ) : 1;
-// $mwb_refer_min = isset($general_settings['mwb_refer_min']) ? intval($general_settings['mwb_refer_min']) : 1;
 $mwb_text_points_value = isset( $general_settings['mwb_wpr_general_text_points'] ) ? $general_settings['mwb_wpr_general_text_points'] : esc_html__( 'My Points', 'points-rewards-for-woocommerce' );
 $mwb_ways_to_gain_points_value = isset( $general_settings['mwb_wpr_general_ways_to_gain_points'] ) ? $general_settings['mwb_wpr_general_ways_to_gain_points'] : '';
 // End Section of the Setings.
