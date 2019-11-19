@@ -8,8 +8,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Rewardeem_woocommerce_Points_Rewards
- * @subpackage Rewardeem_woocommerce_Points_Rewards/includes
+ * @package    points-and-rewards-for-wooCommerce
+ * @subpackage points-and-rewards-for-wooCommerce/includes
  */
 
 /**
@@ -22,8 +22,8 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Rewardeem_woocommerce_Points_Rewards
- * @subpackage Rewardeem_woocommerce_Points_Rewards/includes
+ * @package    points-and-rewards-for-wooCommerce
+ * @subpackage points-and-rewards-for-wooCommerce/includes
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
 class Points_Rewards_For_Woocommerce {

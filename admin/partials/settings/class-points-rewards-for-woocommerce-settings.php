@@ -5,8 +5,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Rewardeem_woocommerce_Points_Rewards
- * @subpackage Rewardeem_woocommerce_Points_Rewards/admin
+ * @package    points-and-rewards-for-wooCommerce
+ * @subpackage points-and-rewards-for-wooCommerce/admin
  */
 
 /**
@@ -15,8 +15,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Rewardeem_woocommerce_Points_Rewards
- * @subpackage Rewardeem_woocommerce_Points_Rewards/admin
+ * @package    points-and-rewards-for-wooCommerce
+ * @subpackage points-and-rewards-for-wooCommerce/admin
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
 class Points_Rewards_For_WooCommerce_Settings {

@@ -2,8 +2,8 @@
 /**
  * Exit if accessed directly
  *
- * @package    Rewardeem_woocommerce_Points_Rewards
- * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
+ * @package    points-and-rewards-for-wooCommerce
+ * @subpackage points-and-rewards-for-wooCommerce/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

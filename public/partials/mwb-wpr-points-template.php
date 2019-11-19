@@ -8,7 +8,7 @@
  * @since      1.0.0
  *
  * @package    mwb_wpr_points_template.php
- * @subpackage Rewardeem_woocommerce_Points_Rewards/public/partials
+ * @subpackage points-and-rewards-for-wooCommerce/public/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
