@@ -9,12 +9,12 @@
  *
  * @link              https://makewebbetter.com/
  * @since             1.0.0
- * @package           Rewardeem_woocommerce_Points_Rewards
+ * @package           points-and-rewards-for-wooCommerce
  *
  * @wordpress-plugin
- * Plugin Name:       Points and Rewards for WooCommerce Lite
+ * Plugin Name:       Points and Rewards for WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/points-rewards-for-woocommerce/
- * Description:       This woocommerce extension allow merchants to reward their customers with loyalty points..
+ * Description:       This woocommerce extension allow merchants to reward their customers with loyalty points.
  * Version:           1.0.0
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
@@ -22,7 +22,9 @@
  * Domain Path:       /languages
  *
  * Requires at least: 4.6
- * Tested up to:      4.9.5
+ * Tested up to:      5.3
+ * WC requires at least: 3.0
+ * WC tested up to: 3.8.0
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html

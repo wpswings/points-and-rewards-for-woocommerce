@@ -6,7 +6,7 @@
  * @since      1.0.0
  *
  * @package    mwb-wpr-points-log-template
- * @subpackage Rewardeem_woocommerce_Points_Rewards/public/partials
+ * @subpackage points-and-rewards-for-wooCommerce/public/partials
  */
 
 $user_id = $user_ID;

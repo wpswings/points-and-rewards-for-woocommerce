@@ -5,8 +5,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Rewardeem_woocommerce_Points_Rewards
- * @subpackage Rewardeem_woocommerce_Points_Rewards/includes
+ * @package    points-and-rewards-for-wooCommerce
+ * @subpackage points-and-rewards-for-wooCommerce/includes
  */
 
 /**
@@ -16,8 +16,8 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Rewardeem_woocommerce_Points_Rewards
- * @subpackage Rewardeem_woocommerce_Points_Rewards/includes
+ * @package    points-and-rewards-for-wooCommerce
+ * @subpackage points-and-rewards-for-wooCommerce/includes
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
 class Points_Rewards_For_Woocommerce_Loader {
