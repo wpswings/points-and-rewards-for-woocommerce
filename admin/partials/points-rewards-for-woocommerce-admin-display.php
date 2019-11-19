@@ -110,7 +110,7 @@ $mwb_wpr_setting_tab = array(
 					
 			</div>
 		</div>
-		<div style="display:none;" class="loading-style-bg" id="mwb_wpr_loader">
+		<div class="loading-style-bg mwb_rwpr_settings_display_none" id="mwb_wpr_loader">
 			<img src="<?php echo esc_url( MWB_RWPR_DIR_URL ); ?>public/images/loading.gif">
 		</div>
 		<?php

@@ -130,7 +130,7 @@ $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'You
 					echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 					?>
 						<input type="number" min="1" value="<?php echo esc_html( $mwb_wpr_points_expiration_time_num ); ?>" name="mwb_wpr_points_expiration_time_num" id="mwb_wpr_points_expiration_time_num" class="input-text mwb_wpr_common_width">
-						<select id="mwb_wpr_points_expiration_time_drop" name="mwb_wpr_points_expiration_time_drop" style="width: 10%;">
+						<select id="mwb_wpr_points_expiration_time_drop" name="mwb_wpr_points_expiration_time_drop" class="mwb_rwpr_width_ten">
 							<option value="days"
 							<?php
 							if ( isset( $mwb_wpr_points_expiration_time_drop ) ) {

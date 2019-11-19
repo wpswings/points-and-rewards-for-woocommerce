@@ -110,14 +110,27 @@
 									}
 								);
 							} else {
-								$( 'html, body' ).animate(
-									{
-										scrollTop: $( ".woocommerce-cart-form" ).offset().top
-									},
-									800
-								);
-								var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
-								$( assing_message ).insertBefore( $( '.woocommerce-cart-form' ) );
+								if ($(".woocommerce-cart-form").offset() ) {
+									
+									$( 'html, body' ).animate(
+										{
+											scrollTop: $( ".woocommerce-cart-form" ).offset().top
+										},
+										800
+									);
+									var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
+									$( assing_message ).insertBefore( $( '.woocommerce-cart-form' ) );
+								}
+								else {
+									$('html, body').animate(
+										{
+											scrollTop: $(".custom_point_checkout").offset().top
+										},
+										800
+									);
+									var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
+									$(assing_message).insertBefore($('.custom_point_checkout'));
+								}
 							}
 						}
 					}

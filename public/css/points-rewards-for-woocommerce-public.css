@@ -25,6 +25,12 @@
   right: 0;
   top: 40%;
 }
+.mwb_rwpr_settings_display_none{
+  display: none;
+}
+#mwb_wpr_membership .mwb_rwpr_settings_display_none {
+    display: none;
+}
  .mwb_account_wrapper .input-number {
   width: 48%;
   padding: 5px;

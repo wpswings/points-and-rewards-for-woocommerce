@@ -37,6 +37,25 @@
 #mwb_rwpr_setting_wrapper{
   font-family: 'Lato', sans-serif;
 }
+.mwb_rwpr_settings_display_none{
+  display: none;
+}
+.mwb_rwpr_width_seventyfive {
+  width:75%;
+}
+.mwb_rwpr_width_hundred {
+  width:100%;
+}
+.mwb_rwpr_width_ten {
+  width:10%;
+}
+.mwb_wpr_width_height{
+  height: 100px;
+  width: 100px;
+}
+.mwb_points_log_list_table_line_height{
+  line-height: 2
+}
 .button-primary.woocommerce-save-button.mwb_wpr_save_changes {
   background: #ffffff;
   color: #555555;
