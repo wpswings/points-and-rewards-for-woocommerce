@@ -55,11 +55,6 @@ if ( $activated ) {
 		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.0.0' );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
-		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_Domain', 'points-rewards-for-woocommerce' );
-		/* For License Validation. */
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_SPECIAL_SECRET_KEY', '59f32ad2f20102.74284991' );
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_SERVER_URL', 'https://makewebbetter.com' );
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_ITEM_REFERENCE', 'Rewardeem-Woocommerce Points Rewards' );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_HOME_URL', admin_url() );
 	}
 
@@ -79,30 +74,6 @@ if ( $activated ) {
 		}
 	}
 
-	/**
-	 * Dynamically Generate Coupon Code
-	 *
-	 * @name mwb_wpr_coupon_generator
-	 * @param number $length length of the coupon.
-	 * @return string
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	function mwb_wpr_coupon_generator( $length = 5 ) {
-		if ( '' == $length ) {
-			$length = 5;
-		}
-		$password = '';
-		$alphabets = range( 'A', 'Z' );
-		$numbers = range( '0', '9' );
-		$final_array = array_merge( $alphabets, $numbers );
-		while ( $length-- ) {
-			$key = array_rand( $final_array );
-			$password .= $final_array[ $key ];
-		}
-
-		return $password;
-	}
 	/**
 	 * Dynamically Generate referral Code
 	 *
