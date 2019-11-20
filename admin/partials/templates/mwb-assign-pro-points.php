@@ -102,8 +102,6 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) && isset( $_POST['mwb-wpr-no
 		}
 	}
 }
-// $mwb_wpr_global_product_enable = get_option('mwb_wpr_global_product_enable','off');
-// $mwb_wpr_pro_points_to_all = get_option('mwb_wpr_pro_points_to_all','');
 $mwb_wpr_assing_product_points = get_option( 'mwb_wpr_assign_products_points', array() );
 
 ?>

@@ -59,7 +59,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -76,7 +76,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$mwb_wpr_cart_price_rate = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_price_rate' );
 		$mwb_wpr_make_readonly   = $this->mwb_wpr_get_other_settings_num( 'mwb_wpr_cart_price_rate' );
 
-		wp_enqueue_script( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.min.js', array( 'jquery' ), $this->version, false );
 		wp_register_script( 'mwb_wpr_clipboard', MWB_RWPR_DIR_URL . 'public/js/dist/clipboard.min.js', array( 'jquery' ), $this->version, false );
 		$mwb_wpr = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -88,7 +88,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			'mwb_wpr_nonce' => wp_create_nonce( 'mwb-wpr-verify-nonce' ),
 			'mwb_wpr_cart_points_rate' => $mwb_wpr_cart_points_rate,
 			'mwb_wpr_cart_price_rate' => $mwb_wpr_cart_price_rate,
-			// 'make_readonly' => $mwb_wpr_make_readonly,
 			'not_allowed' => __( 'Please enter some valid points!', 'points-rewards-for-woocommerce' ),
 			'not_suffient' => __( 'You do not have suffient amount of points', 'points-rewards-for-woocommerce' ),
 		);
@@ -1108,8 +1107,8 @@ class Points_Rewards_For_WooCommerce_Public {
 					</li>
 				</ul>
 			</div>
-			<div class="woocommerce-error" id="mwb_wpr_cart_points_notice" style="display: none;"></div>
-			<div class="woocommerce-message" id="mwb_wpr_cart_points_success" style="display: none;"></div>
+			<div class="woocommerce-error mwb_rwpr_settings_display_none" id="mwb_wpr_cart_points_notice" ></div>
+			<div class="woocommerce-message mwb_rwpr_settings_display_none" id="mwb_wpr_cart_points_success"></div>
 			<?php
 		}
 		if ( $this->is_order_conversion_enabled() ) {
@@ -1664,9 +1663,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			$cart = WC()->session->get( 'cart' );
 			$user_id = get_current_user_ID();
 			$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
-			// if ( isset( $_POST['cart'] ) && null != $_POST['cart'] && isset( $cart ) && null != $cart ) { // phpcs:ignore WordPress.Security.NonceVerification.
-				// $cart_update = sanitize_text_field( wp_unslash( $_POST['cart'] ) );// phpcs:ignore WordPress.Security.NonceVerification.
-
 			foreach ( $cart_update as $key => $value ) {
 				if ( isset( WC()->cart->cart_contents[ $key ]['product_meta'] ) ) {
 					if ( isset( WC()->cart->cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] ) ) {
@@ -1686,7 +1682,6 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 				}
 			}
-			// }
 		}
 		return $cart_updated;
 	}

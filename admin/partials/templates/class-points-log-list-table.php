@@ -68,7 +68,7 @@ class Points_Log_List_Table extends WP_List_Table {
 			case 'user_name':
 				$actions = array(
 					'view_point_log' => '<a href="' . MWB_RWPR_HOME_URL . 'admin.php?page=mwb-rwpr-setting&tab=points-table&user_id=' . $item['id'] . '&action=view_point_log">' . __( 'View Point Log', 'points-rewards-for-woocommerce' ) . '</a>',
-					// 'view_coupon_detail' => '<a href="' . MWB_RWPR_HOME_URL . 'admin.php?page=mwb-rwpr-setting&tab=points-table&user_id=' . $item['id'] . '&action=view">' . __( 'View Coupon Detail', 'points-rewards-for-woocommerce' ) . '</a>',
+
 				);
 				$actions = apply_filters( 'mwb_add_coupon_details', $actions, $item['id'] );
 				return $item[ $column_name ] . $this->row_actions( $actions );
@@ -80,10 +80,10 @@ class Points_Log_List_Table extends WP_List_Table {
 				$html = '<select id="mwb_sign' . $item['id'] . '" ><option value="+">+</option><option value="-">-</option></select>';
 				return $html;
 			case 'add_sub_points':
-				$html = '<input style="width:75%;" type="number" min="0" id="add_sub_points' . $item['id'] . '" value="">';
+				$html = '<input class="mwb_rwpr_width_seventyfive" type="number" min="0" id="add_sub_points' . $item['id'] . '" value="">';
 				return $html;
 			case 'reason':
-				$html = '<input style="width: 100%;" type="text" id="mwb_remark' . $item['id'] . '" min="0" value="">';
+				$html = '<input class="mwb_rwpr_width_hundred" type="text" id="mwb_remark' . $item['id'] . '" min="0" value="">';
 				return $html;
 			case 'details':
 				return $this->view_html( $item['id'] );
@@ -409,7 +409,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		}
 		?>
 		<br> 
-		<a  href="<?php echo esc_url( MWB_RWPR_HOME_URL ); ?>admin.php?page=mwb-rwpr-setting&tab=points-table" style="line-height: 2" class="button button-primary mwb_wpr_save_changes"><?php esc_html_e( 'Go Back', 'points-rewards-for-woocommerce' ); ?></a> 
+		<a  href="<?php echo esc_url( MWB_RWPR_HOME_URL ); ?>admin.php?page=mwb-rwpr-setting&tab=points-table" class="button mwb_points_log_list_table_line_height button-primary mwb_wpr_save_changes"><?php esc_html_e( 'Go Back', 'points-rewards-for-woocommerce' ); ?></a> 
 							 <?php
 
 	} elseif ( 'view_point_log' == $_GET['action'] ) {

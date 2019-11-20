@@ -71,7 +71,6 @@ $mwb_user_level = get_user_meta( $user_id, 'membership_level', true );
 $general_settings = get_option( 'mwb_wpr_settings_gallery', true );
 $enable_mwb_refer = isset( $general_settings['mwb_wpr_general_refer_enable'] ) ? intval( $general_settings['mwb_wpr_general_refer_enable'] ) : 0;
 $mwb_refer_value = isset( $general_settings['mwb_wpr_general_refer_value'] ) ? intval( $general_settings['mwb_wpr_general_refer_value'] ) : 1;
-// $mwb_refer_min = isset($general_settings['mwb_refer_min']) ? intval($general_settings['mwb_refer_min']) : 1;
 $mwb_text_points_value = isset( $general_settings['mwb_wpr_general_text_points'] ) ? $general_settings['mwb_wpr_general_text_points'] : esc_html__( 'My Points', 'points-rewards-for-woocommerce' );
 $mwb_ways_to_gain_points_value = isset( $general_settings['mwb_wpr_general_ways_to_gain_points'] ) ? $general_settings['mwb_wpr_general_ways_to_gain_points'] : '';
 // End Section of the Setings.
@@ -189,7 +188,7 @@ if ( $mwb_wpr_mem_enable ) {
 							echo esc_html( $mwb_role ) . '<br/><a class = "mwb_wpr_level_benefits" data-id = "' . esc_html( $mwb_role ) . '" href="javascript:;">' . esc_html__( 'View Benefits', 'points-rewards-for-woocommerce' ) . '</a>'; //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited,WordPress.WP.I18n.NonSingularStringLiteralText
 						?>
 						</td>
-						<div class="mwb_wpr_popup_wrapper" style="display: none;" id="mwb_wpr_popup_wrapper_<?php echo esc_html( $mwb_role ); ?>">
+						<div class="mwb_wpr_popup_wrapper mwb_rwpr_settings_display_none" id="mwb_wpr_popup_wrapper_<?php echo esc_html( $mwb_role ); ?>">
 							<div class="mwb_wpr_popup_content_section">
 								<div class="mwb_wpr_popup_content">
 									<div class="mwb_wpr_popup_notice_section">					
@@ -253,7 +252,7 @@ if ( $mwb_wpr_mem_enable ) {
 														}
 														?>
 															<div class="mwb_wpr_cat_wrapper">
-																<img src="<?php echo esc_url( $cat_img ); ?>" alt="" style="height: 100px;width: 100px;">
+																<img src="<?php echo esc_url( $cat_img ); ?>" alt="" class="mwb_wpr_width_height">
 																<a href="<?php echo esc_url( $category_link ); ?>" class="mwb_wpr_cat_list"><?php echo esc_html( $category_title->name ); ?></a>
 															</div>
 														<?php
@@ -320,7 +319,7 @@ if ( isset( $enable_drop ) && $enable_drop ) {
 					}
 					?>
 						</select>
-						<input style="display:none;"type="submit" id = "mwb_wpr_upgrade_level" value='<?php esc_html_e( 'Upgrade Level', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_level">
+						<input type="submit" id = "mwb_wpr_upgrade_level" value='<?php esc_html_e( 'Upgrade Level', 'points-rewards-for-woocommerce' ); ?>' class="mwb_rwpr_settings_display_none button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_level">
 						<input type="button" id = "mwb_wpr_upgrade_level_click" value='<?php esc_html_e( 'Upgrade Level', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_level_click">
 				</form>
 			</fieldset>	

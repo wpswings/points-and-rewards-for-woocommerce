@@ -47,14 +47,14 @@ function mwb_wpr_allowed_html() {
 	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_coupon_message', __( 'Have a coupon?', 'woocommerce' ) . ' <a href="#" class="showcoupon">' . __( 'Click here to enter your code', 'woocommerce' ) . '</a>' ), 'notice' ); ?>
 </div>
 <!-- /*MWB CUSTOM CODE*/ -->
-<div class="woocommerce-error" id="mwb_wpr_cart_points_notice" style="display: none;">
+<div class="woocommerce-error mwb_rwpr_settings_display_none" id="mwb_wpr_cart_points_notice" >
 	
 </div>
-<div class="woocommerce-message" id="mwb_wpr_cart_points_success" style="display: none;">
+<div class="woocommerce-message mwb_rwpr_settings_display_none" id="mwb_wpr_cart_points_success" >
 	
 </div>
 <!-- /*END OF MWB CUSTOM CODE*/ -->
-<form class="checkout_coupon woocommerce-form-coupon" method="post" style="display:none">
+<form class="checkout_coupon woocommerce-form-coupon mwb_rwpr_settings_display_none" method="post">
 
 	<p><?php esc_html_e( 'If you have a coupon code, please apply it below.', 'woocommerce' ); ?></p>
 

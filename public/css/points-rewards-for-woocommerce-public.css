@@ -25,15 +25,17 @@
   right: 0;
   top: 40%;
 }
-/*.mwb_account_wrapper p {
- margin: 0 !important;
- }*/
+.mwb_rwpr_settings_display_none{
+  display: none;
+}
+#mwb_wpr_membership .mwb_rwpr_settings_display_none {
+    display: none;
+}
  .mwb_account_wrapper .input-number {
   width: 48%;
   padding: 5px;
 }
 .mwb_account_wrapper .mwb_wpr_custom_coupon.button {
- /*padding: 13px 0;*/
  width: 48%;
  margin-right: 0;
 }
@@ -355,18 +357,6 @@ html,body{
   transition: all 0.3s ease 0s;
 }
 /*=====  End of Category Wise Link CSS  ======*/
-/* Portrait */
-/*@media only screen and (max-width: 500px) {
-	.mwb_wpr_popup_thumbnail_section ul li{
-	  float: none;
-	  display: block;
-	  width: 100%;
-	  margin: 10px 0 0;
-	}
-	}*/
-/*=================================
-=            Front end            =
-=================================*/
 @media screen and (max-width: 600px) and (min-width: 320px) {
   .points_log table.shop_table.my_account_points.account-points-table thead th{
 	width: 100px;
@@ -605,13 +595,9 @@ max-width: 170px;
   width: 150px;
 }
 .shop_table.cart .mwb_wpr_apply_custom_points #mwb_cart_points {
-  /*height: 42px;*/
   width: 170px;
   border-radius:0 !important;
-  /*border: 2px solid #CCCCCC;*/
   border-radius: 4px;
-/*  font-size: 14px;*/
-  /*background: #ffffff;*/
 }
 .shop_table.cart .mwb_wpr_apply_custom_points .button
 {
