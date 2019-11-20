@@ -1663,9 +1663,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			$cart = WC()->session->get( 'cart' );
 			$user_id = get_current_user_ID();
 			$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
-			// if ( isset( $_POST['cart'] ) && null != $_POST['cart'] && isset( $cart ) && null != $cart ) { // phpcs:ignore WordPress.Security.NonceVerification.
-				// $cart_update = sanitize_text_field( wp_unslash( $_POST['cart'] ) );// phpcs:ignore WordPress.Security.NonceVerification.
-
 			foreach ( $cart_update as $key => $value ) {
 				if ( isset( WC()->cart->cart_contents[ $key ]['product_meta'] ) ) {
 					if ( isset( WC()->cart->cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] ) ) {
@@ -1685,7 +1682,6 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 				}
 			}
-			// }
 		}
 		return $cart_updated;
 	}
