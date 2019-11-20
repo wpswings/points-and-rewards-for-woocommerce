@@ -233,7 +233,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 			),
 		);
 		if ( isset( $_REQUEST['s'] ) ) {
-			$data           = sanitize_text_field( wp_unslash( $data ) );
+			$data           = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
 			$args['search'] = '*' . $data . '*';
 		}
 		$args['role__in'] = array( 'subscriber', 'customer' );
