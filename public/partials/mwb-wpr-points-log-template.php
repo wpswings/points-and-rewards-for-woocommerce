@@ -177,7 +177,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 						$user_name = '';
 						if ( isset( $value['refered_user'] ) && ! empty( $value['refered_user'] ) ) {
 							 $user      = get_user_by( 'ID', $value['refered_user'] );
-							 $user_name = $user->user_nicename;
+							if ( isset( $user ) && ! empty( $user ) ) {
+								$user_name = $user->user_login;
+							} else {
+								$user_name = esc_html__( 'This user doesn\'t exists', 'points-rewards-for-woocommerce' );
+							}
 						}
 						?>
 				  <tr>
@@ -185,8 +189,12 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 					<td><?php echo '+' . esc_html( $value['reference_details'] ); ?></td>
 					<td>
 						<?php
-						esc_html_e( 'Reference Points by ', 'points-rewards-for-woocommerce' );
-						echo esc_html( $user_name );
+						if ( isset( $user ) && ! empty( $user ) ) {
+							esc_html_e( 'Reference Points by ', 'points-rewards-for-woocommerce' );
+							echo esc_html( $user_name );
+						} else {
+							echo esc_html( $user_name );
+						}
 						?>
 					</td>
 				  </tr>
