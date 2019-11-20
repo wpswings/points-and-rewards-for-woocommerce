@@ -127,6 +127,16 @@
 }
 
 
+/*new-css*/
+.mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper
+{
+  display: inline-block;
+  margin: 0 8px;
+  width: 21.777%;
+  text-align: center;
+  vertical-align: top;
+}
+
 @media screen and (max-width: 768px) {
   .mwb_account_wrapper .input-number {
    width: 50%;
@@ -134,6 +144,9 @@
  .mwb_account_wrapper .mwb_wpr_custom_coupon.button {
    width: 50%;
  }
+ .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
+    width: 21.5%;
+  }
 }
 .points_log {
   overflow-x: auto;
@@ -364,6 +377,9 @@ html,body{
   #points_form .mwb_wpr_custom_coupon.button,#mwb_custom_point_num{
 	width: 100%;
   }
+  .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
+    width: 29%;
+  }
 }
 @media screen and (max-width: 768px) and (min-width: 320px) {
   .mwb_wpr_table_view_log thead{
@@ -386,11 +402,21 @@ html,body{
 	margin-top: 10px;
   }
 }
+@media screen and (max-width: 500px) {
+.mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
+    width: 28%;
+    font-size:14px;
+  }
+  }
 @media screen and (max-width: 387px) and (min-width: 320px) {
   #mwb_wpr_upgrade_level {
 	float: none;
 	margin-top: 10px;
 	font-size: 12px;
+  }
+  .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
+    margin: 10px 8px;
+    width: 42.777%;
   }
 }
 /*=====  End of Front end  ======*/
