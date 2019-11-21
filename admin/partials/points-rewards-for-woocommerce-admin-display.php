@@ -54,7 +54,7 @@ $mwb_wpr_setting_tab = array(
 	 <form enctype="multipart/form-data" action="" id="mainform" method="post">		<div class="mwb_rwpr_header">
 			<div class="mwb_rwpr_header_content_left">
 				<div>
-					<h3 class="mwb_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce Lite', 'points-rewards-for-woocommerce' ); ?></h3>
+					<h3 class="mwb_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce', 'points-rewards-for-woocommerce' ); ?></h3>
 				</div>
 			</div>
 			<div class="mwb_rwpr_header_content_right">
