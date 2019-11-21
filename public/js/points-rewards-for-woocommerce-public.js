@@ -32,8 +32,8 @@
 		function() {
 				/*create clipboard */
 				var btns = document.querySelectorAll( 'button' );
-				var clipboard = new Clipboard( btns );
 				var message = '';
+			    var clipboard = new ClipboardJS( btns );
 				/*View Benefits of the Membership Role*/
 				$( '.mwb_wpr_level_benefits' ).click(
 					function(){

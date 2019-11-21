@@ -75,9 +75,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		$mwb_wpr_cart_price_rate = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_price_rate' );
 		$mwb_wpr_make_readonly   = $this->mwb_wpr_get_other_settings_num( 'mwb_wpr_cart_price_rate' );
-
-		wp_enqueue_script( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.min.js', array( 'jquery' ), $this->version, false );
-		wp_register_script( 'mwb_wpr_clipboard', MWB_RWPR_DIR_URL . 'public/js/dist/clipboard.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.js', array( 'jquery', 'clipboard' ), $this->version, false );
 		$mwb_wpr = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'message' => esc_html__( 'Please enter valid points', 'points-rewards-for-woocommerce' ),
@@ -91,8 +89,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			'not_allowed' => __( 'Please enter some valid points!', 'points-rewards-for-woocommerce' ),
 			'not_suffient' => __( 'You do not have suffient amount of points', 'points-rewards-for-woocommerce' ),
 		);
-		wp_localize_script( 'mwb_wpr_clipboard', 'mwb_wpr', $mwb_wpr );
-		wp_enqueue_script( 'mwb_wpr_clipboard' );
+		wp_localize_script( $this->plugin_name, 'mwb_wpr', $mwb_wpr );
 	}
 
 	/**
