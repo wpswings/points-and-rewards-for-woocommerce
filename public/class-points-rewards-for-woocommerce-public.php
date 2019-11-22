@@ -976,7 +976,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$enable_mwb_signup    = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_signup' );
 		if ( $enable_mwb_signup ) {
 			?>
-			<div class="woocommerce-message">
+			<div class="woocommerce-message" style="background-color<?php echo esc_attr( $mwb_wpr_notification_color ); ?>">
 				<?php
 				echo esc_html__( 'You will get ', 'points-rewards-for-woocommerce' ) . esc_html( $mwb_wpr_signup_value ) . esc_html__( ' points for SignUp', 'points-rewards-for-woocommerce' )
 				?>
