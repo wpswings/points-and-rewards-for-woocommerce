@@ -113,13 +113,13 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				if ( array_key_exists( 'pro_conversion_points', $point_log ) ) {
 					?>
 			   <div class="mwb_wpr_slide_toggle">
-				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Points earned on Order Total', 'points-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
+				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Per Currency Spent Points', 'points-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
 				  <table class="mwb_wpr_common_table">
 					<?php foreach ( $point_log['pro_conversion_points'] as $key => $value ) { ?>
 				  <tr>
 					<td><?php echo esc_html( mwb_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
 					<td><?php echo '+' . esc_html( $value['pro_conversion_points'] ); ?></td>
-					<td><?php esc_html_e( 'Product Conversion Points', 'points-rewards-for-woocommerce' ); ?></td>
+					<td><?php esc_html_e( 'Per Currency Points Conversion', 'points-rewards-for-woocommerce' ); ?></td>
 				  </tr>
 						<?php
 					}
@@ -131,13 +131,13 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				if ( array_key_exists( 'points_on_order', $point_log ) ) {
 					?>
 			   <div class="mwb_wpr_slide_toggle">
-				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Points on Order', 'points-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
+				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Points earned on Order Total', 'points-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
 				  <table class="mwb_wpr_common_table">
 					  <?php foreach ( $point_log['points_on_order'] as $key => $value ) { ?>
 				  <tr>
 					<td><?php echo esc_html( mwb_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
 					<td><?php echo '+' . esc_html( $value['points_on_order'] ); ?></td>
-					<td><?php esc_html_e( 'Points earned on Order Total', 'points-rewards-for-woocommerce' ); ?></td>
+					<td><?php esc_html_e( 'Points earned on Order Total Range', 'points-rewards-for-woocommerce' ); ?></td>
 				  </tr>
 							<?php
 					  }

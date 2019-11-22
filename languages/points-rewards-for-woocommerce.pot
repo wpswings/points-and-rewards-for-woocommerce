@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Points and Rewards for WooCommerce 1.0.0\n"
-"POT-Creation-Date: 2019-11-21 14:23+0530\n"
-"PO-Revision-Date: 2019-11-21 14:23+0530\n"
+"POT-Creation-Date: 2019-11-22 16:05+0530\n"
+"PO-Revision-Date: 2019-11-22 16:05+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter <webmaster@makewebbetter.com>\n"
 "Language: English\n"
@@ -10,7 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
-"X-Poedit-KeywordsList: _e;esc_html__;esc_html_e;__\n"
+"X-Poedit-KeywordsList: _e;__;esc_html_e;esc_html__\n"
+"X-Poedit-Basepath: /opt/lampp/htdocs/wordpress16/wp-content/plugins/points-"
+"and-rewards-for-woocommerce/\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -259,19 +261,20 @@ msgid "Product purchase Points"
 msgstr ""
 
 #: public/partials/mwb-wpr-points-log-template.php:116
-#: public/partials/mwb-wpr-points-log-template.php:140
+msgid "Per Currency Spent Points"
+msgstr ""
+
+#: public/partials/mwb-wpr-points-log-template.php:122
+msgid "Per Currency Points Conversion"
+msgstr ""
+
+#: public/partials/mwb-wpr-points-log-template.php:134
 #: admin/partials/templates/class-points-log-list-table.php:514
 msgid "Points earned on Order Total"
 msgstr ""
 
-#: public/partials/mwb-wpr-points-log-template.php:122
-#: admin/partials/templates/class-points-log-list-table.php:558
-msgid "Product Conversion Points"
-msgstr ""
-
-#: public/partials/mwb-wpr-points-log-template.php:134
-#: admin/partials/templates/class-points-log-list-table.php:503
-msgid "Points on Order"
+#: public/partials/mwb-wpr-points-log-template.php:140
+msgid "Points earned on Order Total Range"
 msgstr ""
 
 #: public/partials/mwb-wpr-points-log-template.php:152
@@ -1301,8 +1304,16 @@ msgstr ""
 msgid "Coupon Generation"
 msgstr ""
 
+#: admin/partials/templates/class-points-log-list-table.php:503
+msgid "Points on Order"
+msgstr ""
+
 #: admin/partials/templates/class-points-log-list-table.php:525
 msgid "Assigned Product Point"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:558
+msgid "Product Conversion Points"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:569
