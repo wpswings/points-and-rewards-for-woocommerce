@@ -827,7 +827,8 @@ class Points_Rewards_For_WooCommerce_Public {
 								if ( 'set' == $itempointsset ) {
 									continue;
 								}
-								$item_points += (int) $mwb_wpr_value->value;
+								$mwb_wpr_points = (int) $item->get_quantity() * (int) $mwb_wpr_value->value;
+								$item_points += (int) $mwb_wpr_points;
 								$mwb_wpr_one_email = true;
 								$product_id = $item->get_product_id();
 								$check_enable = get_post_meta( $product_id, 'mwb_product_points_enable', 'no' );
