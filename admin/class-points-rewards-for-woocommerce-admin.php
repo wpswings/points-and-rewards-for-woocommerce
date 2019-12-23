@@ -60,7 +60,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function enqueue_styles( $hook ) {
 		if ( 'woocommerce_page_mwb-rwpr-setting' == $hook ) {
-			wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'select2' );
 		}
 	}

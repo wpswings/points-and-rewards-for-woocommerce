@@ -388,9 +388,12 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 											echo esc_html( $column_name );
 										} else {
 											$column_name = get_post_meta( $mwb_split[1], 'date_expires', true );
-											$dt          = new DateTime( "@$column_name" );
-											echo esc_html( $dt->format( 'Y-m-d' ) );
-
+											if ( ! empty( $column_name ) ) {
+												$dt = new DateTime( "@$column_name" );
+												echo esc_html( $dt->format( 'Y-m-d' ) );
+											} else {
+												esc_html_e( 'No Expiry', 'points-rewards-for-woocommerce' );
+											}
 										}
 									} else {
 										echo esc_html( $column_name );

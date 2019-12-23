@@ -303,7 +303,6 @@
 .mwb_rwpr_body_template {
   background: #ffffff;
   display: flex;
-  flex-wrap: wrap;
   width: 100%;
 }
 .mwb_rwpr_mobile_nav {
@@ -326,7 +325,7 @@
   flex: 0 0 20%;
 }
 .mwb_rwpr_content_template {
-  box-shadow: -1px -5px 4px 2px rgba(0,0,0,.05);
+  box-shadow: -2px 0px 5px -1px rgba(0,0,0,.05);
   color: #555d66;
   font-size: 16px;
   flex: 0 0 80%;

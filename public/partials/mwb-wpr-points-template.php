@@ -108,15 +108,11 @@ if ( ! is_array( $coupon_settings ) ) {
 		</span>
 	</div>
 	<?php
-
 	if ( isset( $mwb_user_point_expiry ) && ! empty( $mwb_user_point_expiry ) && $get_points > 0 ) {
-		$mwb_wpr_points_exp_onmyaccount = get_option( 'mwb_wpr_points_exp_onmyaccount', 'off' );
-		if ( 'on' == $mwb_wpr_points_exp_onmyaccount ) {
 			$date_format = get_option( 'date_format' );
 			$expiry_date_timestamp = strtotime( $mwb_user_point_expiry );
 			$expirydate_format = date_i18n( $date_format, $expiry_date_timestamp );
 			echo '<p class=mwb_wpr_points_expiry> ' . esc_html_e( 'Get Expired: ', 'points-rewards-for-woocommerce' ) . esc_html( $expirydate_format ) . '</p>';
-		}
 	}
 	?>
 </div>		
