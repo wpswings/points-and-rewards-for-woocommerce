@@ -33,7 +33,7 @@
 				/*create clipboard */
 				var btns = document.querySelectorAll( 'button' );
 				var message = '';
-			    var clipboard = new ClipboardJS( btns );
+				var clipboard = new ClipboardJS( btns );
 				/*View Benefits of the Membership Role*/
 				$( '.mwb_wpr_level_benefits' ).click(
 					function(){
@@ -110,8 +110,8 @@
 									}
 								);
 							} else {
-								if ($(".woocommerce-cart-form").offset() ) {
-									
+								if ($( ".woocommerce-cart-form" ).offset() ) {
+
 									$( 'html, body' ).animate(
 										{
 											scrollTop: $( ".woocommerce-cart-form" ).offset().top
@@ -120,16 +120,15 @@
 									);
 									var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
 									$( assing_message ).insertBefore( $( '.woocommerce-cart-form' ) );
-								}
-								else {
-									$('html, body').animate(
+								} else {
+									$( 'html, body' ).animate(
 										{
-											scrollTop: $(".custom_point_checkout").offset().top
+											scrollTop: $( ".custom_point_checkout" ).offset().top
 										},
 										800
 									);
 									var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
-									$(assing_message).insertBefore($('.custom_point_checkout'));
+									$( assing_message ).insertBefore( $( '.custom_point_checkout' ) );
 								}
 							}
 						}

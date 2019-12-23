@@ -85,7 +85,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 * @since 1.0.0
 	 */
 	public function mwb_rwpr_generate_number_html( $value, $general_settings ) {
-			
+
 		$default_val      = array_key_exists( 'default', $value ) ? $value['default'] : 1;
 		$mwb_signup_value = isset( $general_settings[ $value['id'] ] ) ? intval( $general_settings[ $value['id'] ] ) : $default_val;
 		?>

@@ -29,7 +29,7 @@
   display: none;
 }
 #mwb_wpr_membership .mwb_rwpr_settings_display_none {
-    display: none;
+	display: none;
 }
  .mwb_account_wrapper .input-number {
   width: 48%;
@@ -145,7 +145,7 @@
    width: 50%;
  }
  .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-    width: 21.5%;
+	width: 21.5%;
   }
 }
 .points_log {
@@ -378,7 +378,7 @@ html,body{
 	width: 100%;
   }
   .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-    width: 29%;
+	width: 29%;
   }
 }
 @media screen and (max-width: 768px) and (min-width: 320px) {
@@ -404,8 +404,8 @@ html,body{
 }
 @media screen and (max-width: 500px) {
 .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-    width: 28%;
-    font-size:14px;
+	width: 28%;
+	font-size:14px;
   }
   }
 @media screen and (max-width: 387px) and (min-width: 320px) {
@@ -415,8 +415,8 @@ html,body{
 	font-size: 12px;
   }
   .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-    margin: 10px 8px;
-    width: 42.777%;
+	margin: 10px 8px;
+	width: 42.777%;
   }
 }
 /*=====  End of Front end  ======*/
