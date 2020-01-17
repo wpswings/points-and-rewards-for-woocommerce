@@ -26,10 +26,10 @@
   top: 40%;
 }
 .mwb_rwpr_settings_display_none{
-  display: none;
+  display: none !important;
 }
 #mwb_wpr_membership .mwb_rwpr_settings_display_none {
-	display: none;
+  display: none;
 }
  .mwb_account_wrapper .input-number {
   width: 48%;
@@ -145,7 +145,7 @@
    width: 50%;
  }
  .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-	width: 21.5%;
+  width: 21.5%;
   }
 }
 .points_log {
@@ -372,51 +372,51 @@ html,body{
 /*=====  End of Category Wise Link CSS  ======*/
 @media screen and (max-width: 600px) and (min-width: 320px) {
   .points_log table.shop_table.my_account_points.account-points-table thead th{
-	width: 100px;
+  width: 100px;
   }
   #points_form .mwb_wpr_custom_coupon.button,#mwb_custom_point_num{
-	width: 100%;
+  width: 100%;
   }
   .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-	width: 29%;
+  width: 29%;
   }
 }
 @media screen and (max-width: 768px) and (min-width: 320px) {
   .mwb_wpr_table_view_log thead{
-	display: table-header-group !important;
+  display: table-header-group !important;
   }
   .mwb_wpr_table_view_log td{
-	padding-left: 6px 25px !important;
-	display:table-cell  !important;
+  padding-left: 6px 25px !important;
+  display:table-cell  !important;
   }
   .mwb_wpr_table_view_log td:before{
-	content: "" !important;
+  content: "" !important;
   }
   .mwb_wpr_table_view_log tr{
-	display: table-row !important;
+  display: table-row !important;
   }
   .woocommerce-MyAccount-points.mwb_wpr_table_view_log tbody tr td{
-	text-align: left !important;
+  text-align: left !important;
   }
   #points_form .mwb_wpr_custom_coupon.button {
-	margin-top: 10px;
+  margin-top: 10px;
   }
 }
 @media screen and (max-width: 500px) {
 .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-	width: 28%;
-	font-size:14px;
+  width: 28%;
+  font-size:14px;
   }
   }
 @media screen and (max-width: 387px) and (min-width: 320px) {
   #mwb_wpr_upgrade_level {
-	float: none;
-	margin-top: 10px;
-	font-size: 12px;
+  float: none;
+  margin-top: 10px;
+  font-size: 12px;
   }
   .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-	margin: 10px 8px;
-	width: 42.777%;
+  margin: 10px 8px;
+  width: 42.777%;
   }
 }
 /*=====  End of Front end  ======*/
@@ -552,10 +552,11 @@ html,body{
   content: none;
 }
 .mwb_wpr_apply_custom_points {
-	/*display: inline-block;*/
-  display: block;
+  display: inline-block;
+  width:100%;
   text-align:left;
   margin-top:10px;
+  clear:both;
 }
 /* reward notice */
 
@@ -613,21 +614,44 @@ html,body{
 }
 .shop_table.cart .coupon .input-text
 {
-width: auto;
-max-width: 170px;
+  width: auto;
+  max-width: 170px;
 }
-.shop_table.cart .coupon .button
+/*.shop_table.cart .coupon .button
 {
   width: 150px;
-}
+}*/
 .shop_table.cart .mwb_wpr_apply_custom_points #mwb_cart_points {
   width: 170px;
-  border-radius:0 !important;
   border-radius: 4px;
+  height:40px !important;;
+  padding:5px 12px;
+  background-color: #f2f2f2;
+  box-shadow: none!important;
+  border: 0;
+  font-size: 18px;
+  vertical-align: top;
+  margin:0;
+  max-width: 170px;
+  margin-right: 5px;
 }
 .shop_table.cart .mwb_wpr_apply_custom_points .button
 {
-  width:150px !important;
+  /*width:150px !important;
+  vertical-align: top;
+  height:40px;
+  line-height: 0.4 !important;
+  padding:10px;*/
+
+}
+.theme-Divi .custom_point_checkout #mwb_cart_points_apply {
+  background: #fff;
+}
+.theme-storefront .custom_point_checkout #mwb_cart_points_apply {
+    background-color: #eeeeee;
+    border-color: #eeeeee;
+    color: #333333;
+    padding: 8px 20px;
 }
 .mwb_wpr_reward {
   padding: 20px;
@@ -635,18 +659,18 @@ max-width: 170px;
 .custom_point_checkout #mwb_cart_points_apply {
    float: left;
    margin-left: 10px;
-	background: #fff;
-	color:#3D9CD2;
-	width: auto;
-	display: inline-block;
-	border-radius: 46px;
-	font-size: 14px;
-	padding: 9px 20px;
-	border: none;
-	border-left-color: currentcolor;
-	line-height: normal;
-	font-weight: 600;
-	text-transform: uppercase;
+  /*background: #fff;
+  color:#3D9CD2;
+  width: auto;
+  display: inline-block;
+  border-radius: 46px;
+  font-size: 14px;
+  padding: 9px 20px;
+  border: none;
+  border-left-color: currentcolor;
+  line-height: normal;
+  font-weight: 600;
+  text-transform: uppercase;*/
 }
 .mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section li
 {
@@ -668,41 +692,41 @@ max-width: 170px;
 }
 @media screen and (max-width: 997px) {
    #mwb_wpr_order_notice:after{
-	border: none;
+  border: none;
    }
   }
 @media screen and (max-width: 768px) {
   .mwb_wpr_reward{
-	display: none;
+  display: none;
   }
   #mwb_wpr_order_notice{
-	padding:20px;
-	display: block;
+  padding:20px;
+  display: block;
   }
   #mwb_wpr_order_notice p{
-	margin-left: 0;
-	margin-top: 20px;
+  margin-left: 0;
+  margin-top: 20px;
   }
   .shop_table.cart .coupon .input-text
   {
-	width: 100% !important;
-	max-width:100% !important;
+  width: 100% !important;
+  max-width:100% !important;
   }
   .shop_table.cart .coupon .button
   {
-	width: 100%;
+  width: 100%;
   }
   .shop_table.cart .actions .button
   {
-	 width: 100%;
+   width: 100%;
   }
   .shop_table.cart .mwb_wpr_apply_custom_points #mwb_cart_points
   {
-	width: 100% !important;
+  width: 100% !important;
   }
   .shop_table.cart .mwb_wpr_apply_custom_points .button
   {
-	width:100% !important;
+  width:100% !important;
   }
 
 }
@@ -711,12 +735,12 @@ max-width: 170px;
 {
   .custom_point_checkout #mwb_cart_points_apply
   {
-	margin-top:10px;
-	margin-left:0;
-	width:100%;
+  margin-top:10px;
+  margin-left:0;
+  width:100%;
   }
   .custom_point_checkout #mwb_cart_points{
-	width:100% !important;
+  width:100% !important;
   }
 }
 /* ===== CUSTOM CODE FOR TABLE ======= */
@@ -728,12 +752,23 @@ max-width: 170px;
    table-layout: fixed;
 }
 .custom_point_checkout.woocommerce-info p {
-	float: left;
-	width: 100%;
-	margin-bottom: 0;
+  float: left;
+  width: 100%;
+  margin-bottom: 0;
+  text-align: left;
 }
 .custom_point_checkout #mwb_cart_points {
-	padding: 4px 10px;
-	width: 135px;
-	float: left;
+  padding: 10px 10px;
+  width: 135px;
+  float: left;
+}
+.mwb_wpr_avada_wrap .custom_point_checkout.woocommerce-info:before {
+    content: none;
+}
+.mwb_wpr_avada_wrap .custom_point_checkout.woocommerce-info {
+    margin: 0;
+    padding: 0;
+}
+.mwb_wpr_avada_wrap button#mwb_cart_points_apply {
+    line-height: 1.8;
 }

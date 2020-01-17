@@ -985,7 +985,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 </div>
 			<?php
 		} else {
-			echo '<h2>' . esc_html__( 'No Points Generated Yet.', 'points-rewards-for-woocommerce' ) . '<h2>';
+			echo '<h3>' . esc_html__( 'No Points Generated Yet.', 'points-rewards-for-woocommerce' ) . '<h3>';
 		}
 	}
 } else {

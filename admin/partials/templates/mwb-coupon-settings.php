@@ -92,7 +92,7 @@ if ( ! is_array( $coupon_settings ) ) :
 	$coupon_settings = array();
 endif;
 ?>
-<div class="mwb_table">
+<div class="mwb_wpr_table">
 		<div class="mwb_wpr_general_wrapper">
 		<?php
 		foreach ( $mwb_wpr_coupon_settings as $key => $value ) {

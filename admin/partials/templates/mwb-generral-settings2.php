@@ -261,7 +261,7 @@ if ( isset( $_POST['mwb_wpr_save_general'] ) && isset( $_POST['mwb-wpr-nonce'] )
 		$general_settings = array();
 endif;
 	?>
-	<div class="mwb_table">
+	<div class="mwb_wpr_table">
 		<div class="mwb_wpr_general_wrapper">
 				<?php
 				foreach ( $mwb_wpr_general_settings as $key => $value ) {
