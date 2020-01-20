@@ -1,774 +1,829 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
- #mwb_wpr_loader {
-  background-color: rgba(255, 255, 255, 0.6);
-  bottom: 0;
-  height: 100%;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-  width: 100%;
-  z-index: 99999;
+#mwb_wpr_loader {
+    background-color: rgba(255, 255, 255, .6);
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 99999
 }
+
 .mwb_wpr_heading {
-  margin-bottom: 10px !important;
-  padding: 0;
+    margin-bottom: 10px!important;
+    padding: 0
 }
+
 #mwb_wpr_loader img {
-  display: block;
-  left: 0;
-  margin: 0 auto;
-  position: absolute;
-  right: 0;
-  top: 40%;
+    display: block;
+    left: 0;
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    top: 40%
 }
-.mwb_rwpr_settings_display_none{
-  display: none !important;
+
+.mwb_rwpr_settings_display_none {
+    display: none!important
 }
+
 #mwb_wpr_membership .mwb_rwpr_settings_display_none {
-  display: none;
+    display: none
 }
- .mwb_account_wrapper .input-number {
-  width: 48%;
-  padding: 5px;
+
+.mwb_account_wrapper .input-number {
+    width: 48%;
+    padding: 5px
 }
+
 .mwb_account_wrapper .mwb_wpr_custom_coupon.button {
- width: 48%;
- margin-right: 0;
+    width: 48%;
+    margin-right: 0
 }
-.comment-mwb-wpr-points-signup
-{
-  text-align: center;
-  color: green;
+
+.comment-mwb-wpr-points-signup {
+    text-align: center;
+    color: green
 }
+
 .mwb_wpr_wrapper_button .google {
-  line-height: 1px;
+    line-height: 1px
 }
-.comment-mwb-wpr-points-comment
-{
-  color: green;
+
+.comment-mwb-wpr-points-comment {
+    color: green
 }
+
 .mwb_wpr_wrapper_button .twitter-share-button {
-  background: #3399ff none repeat scroll 0 0;
-  border-radius: 5px;
-  color: #ffffff;
-  font-size: 12px;
-  padding: 1px 12px;
-  text-decoration: none;
-  vertical-align: top;
-  display: inline-block;
+    background: #39f none repeat scroll 0 0;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 12px;
+    padding: 1px 12px;
+    text-decoration: none;
+    vertical-align: top;
+    display: inline-block
 }
-.mwb_wpr_wrapper_button  .fb-share-button {
- background: #4867AA none repeat scroll 0 0;
- border-radius: 5px;
- color: #fff;
- padding: 1px 12px;
- font-size: 12px;
- text-decoration: none;
- vertical-align: top;
+
+.mwb_wpr_wrapper_button .fb-share-button {
+    background: #4867aa none repeat scroll 0 0;
+    border-radius: 5px;
+    color: #fff;
+    padding: 1px 12px;
+    font-size: 12px;
+    text-decoration: none;
+    vertical-align: top
 }
-.mwb_wpr_btn .twitter-share-button > img {
- display: inline-block;
- margin-right: 4px;
- margin-top: 3px;
- vertical-align: top;
- width: 19px;
+
+.mwb_wpr_btn .twitter-share-button>img {
+    display: inline-block;
+    margin-right: 4px;
+    margin-top: 3px;
+    vertical-align: top;
+    width: 19px
 }
-.mwb_wpr_wrapper_button .google{
- display: inline-block;
- vertical-align: top;
+
+.mwb_wpr_wrapper_button .google {
+    display: inline-block;
+    vertical-align: top
 }
+
 .mwb_wpr_wrapper_button .mwb_wpr_common_class {
- display: inline-block;
- margin: 0 7px;
+    display: inline-block;
+    margin: 0 7px
 }
+
 .mwb_wpr_wrapper_button .mwb_wpr_mail_button {
-  background-color: #575757;
-  border-radius: 3px;
-  display: inline-block;
-  height: 21px;
-  padding: 0;
-  text-align: center;
-  vertical-align: top;
-  width: 50px;
-  box-shadow: none;
+    background-color: #575757;
+    border-radius: 3px;
+    display: inline-block;
+    height: 21px;
+    padding: 0;
+    text-align: center;
+    vertical-align: top;
+    width: 50px;
+    box-shadow: none
 }
+
 .mwb_wpr_wrapper_button .mwb_wpr_mail_button img {
- box-shadow: none;
- display: inline-block;
- margin: 3px auto 0;
- vertical-align: top;
- width: 18px;
+    box-shadow: none;
+    display: inline-block;
+    margin: 3px auto 0;
+    vertical-align: top;
+    width: 18px
 }
+
 .mwb_wpr_wrapper_button .mwb_wpr_mail_button .mwb_wpr_common_class {
- margin-left: 12px;
+    margin-left: 12px
 }
+
 .button-primary.woocommerce-save-button.mwb_wpr_save_changes {
- background: #ebe9eb none repeat scroll 0 0;
- color: #515151 ;
- float: right;
+    background: #ebe9eb none repeat scroll 0 0;
+    color: #515151;
+    float: right
 }
+
 .button-primary.woocommerce-save-button.mwb_wpr_save_changes:hover {
- background: #dad8da none repeat scroll 0 0;
+    background: #dad8da none repeat scroll 0 0
 }
+
 .mwb_wpr_upgrade_level {
- color: #008000 ;
+    color: green
 }
 
-/*style*/
-.mwb_wpr_enter_some_points > input {
-  width: 50% !important;
+.mwb_wpr_enter_some_points>input {
+    width: 50%!important
 }
+
 .mwb_wpr_enter_some_points {
-  padding-bottom: 15px;
+    padding-bottom: 15px
 }
 
-
-/*new-css*/
-.mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper
-{
-  display: inline-block;
-  margin: 0 8px;
-  width: 21.777%;
-  text-align: center;
-  vertical-align: top;
+.mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
+    display: inline-block;
+    margin: 0 8px;
+    width: 21.777%;
+    text-align: center;
+    vertical-align: top
 }
 
-@media screen and (max-width: 768px) {
-  .mwb_account_wrapper .input-number {
-   width: 50%;
- }
- .mwb_account_wrapper .mwb_wpr_custom_coupon.button {
-   width: 50%;
- }
- .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-  width: 21.5%;
-  }
+@media screen and (max-width:768px) {
+    .mwb_account_wrapper .input-number {
+        width: 50%
+    }
+    .mwb_account_wrapper .mwb_wpr_custom_coupon.button {
+        width: 50%
+    }
+    .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
+        width: 21.5%
+    }
 }
+
 .points_log {
-  overflow-x: auto;
+    overflow-x: auto
 }
+
 .mwb_wpr_cat_wrapper {
-  display: inline-block;
-  margin: 0 8px;
+    display: inline-block;
+    margin: 0 8px
 }
+
 .mwb_wpr_cat_wrapper .mwb_wpr_cat_list {
-  display: block;
-  margin-top: 5px;
+    display: block;
+    margin-top: 5px
 }
+
 .mwb_wpr_heading {
-  font-size: 20px;
-  font-weight: bold;
+    font-size: 20px;
+    font-weight: 700
 }
+
 #mwb_wpr_heading_id {
- margin-bottom: 0px;
- text-align: right;
+    margin-bottom: 0;
+    text-align: right
 }
+
 .mwb_wpr_view_log {
- float: right;
+    float: right
 }
+
 .mwb_wpr_refrral_code_copy::after {
-  clear: both;
-  content: "";
-  display: block;
+    clear: both;
+    content: "";
+    display: block
 }
+
 .mwb_wpr_btn_copy {
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  float: left;
-  padding: 6px;
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    float: left;
+    padding: 6px
 }
+
 #mwb_wpr_copy {
-  float: left;
-  width: calc(100% - 44px);
+    float: left;
+    width: calc(100% - 44px)
 }
+
 #mwb_wpr_copy code {
- background: #ebe9eb none repeat scroll 0 0;
- display: block;
- padding: 0 3px;
- word-break: break-all;
+    background: #ebe9eb none repeat scroll 0 0;
+    display: block;
+    padding: 0 3px;
+    word-break: break-all
 }
-.mwb_wpr_btn_copy:hover ,.mwb_wpr_btn_copy:focus,.mwb_wpr_btn_copy:active {
- background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+
+.mwb_wpr_btn_copy:active,
+.mwb_wpr_btn_copy:focus,
+.mwb_wpr_btn_copy:hover {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0
 }
+
 .mwb_wpr_message {
-  font-size: 13px;
+    font-size: 13px
 }
+
 .mwb_wpr_tick {
-  float: right;
+    float: right
 }
-.mwb_wpr_membership_with_img thead{
-  display:table-header-group !important;
+
+.mwb_wpr_membership_with_img thead {
+    display: table-header-group!important
 }
-.mwb_wpr_membership_with_img th,.mwb_wpr_membership_with_img td {
- display: table-cell !important;
+
+.mwb_wpr_membership_with_img td,
+.mwb_wpr_membership_with_img th {
+    display: table-cell!important
 }
-.mwb_wpr_membership_with_img tr{
-  display:table-row !important;
+
+.mwb_wpr_membership_with_img tr {
+    display: table-row!important
 }
+
 .mwb_wpr_membership_with_img tr td:before {
-  content: "" !important;
+    content: ""!important
 }
+
 .mwb_tooltip {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block
 }
 
 .mwb_account_wrapper .mwb_tooltip .mwb_tooltiptext {
- background-color: #000000;
- border-radius: 6px;
- bottom: -30px;
- color: #ffffff ;
- font-size: 11px;
- left: -19px;
- padding: 5px 0;
- position: absolute;
- text-align: center;
- visibility: hidden;
- width: 80px;
- z-index: 1;
+    background-color: #000;
+    border-radius: 6px;
+    bottom: -30px;
+    color: #fff;
+    font-size: 11px;
+    left: -19px;
+    padding: 5px 0;
+    position: absolute;
+    text-align: center;
+    visibility: hidden;
+    width: 80px;
+    z-index: 1
 }
+
 .mwb_account_wrapper .mwb_tooltip .mwb_tooltiptext::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent black transparent;
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #000 transparent
 }
 
 .mwb_tooltip:hover .mwb_tooltiptext {
-  visibility: visible;
+    visibility: visible
 }
-html,body{
-  margin: 0;
-  padding: 0;
+
+body,
+html {
+    margin: 0;
+    padding: 0
 }
-/*==================================
-=            Pop Up CSS            =
-==================================*/
+
 .mwb_wpr_popup_wrapper {
-  background-color: rgba(0, 0, 0, 0.41);
-  height: 100%;
-  position: fixed;
-  width: 100%;
-  z-index: 2147483646;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+    background-color: rgba(0, 0, 0, .41);
+    height: 100%;
+    position: fixed;
+    width: 100%;
+    z-index: 2147483646;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0
 }
+
 .mwb_wpr_popup_content_section {
-  background: #ffffff none repeat scroll 0 0;
-  border-bottom: 5px solid #7f527d;
-  border-radius: 5px;
-  bottom: 0;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-  left: 0;
-  margin: 0 auto;
-  max-width: 600px;
-  overflow-wrap: break-word;
-  overflow-y: auto;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 95%;
-  z-index: 9;
+    background: #fff none repeat scroll 0 0;
+    border-bottom: 5px solid #7f527d;
+    border-radius: 5px;
+    bottom: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    left: 0;
+    margin: 0 auto;
+    max-width: 600px;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 95%;
+    z-index: 9
 }
+
 .mwb_wpr_intro_text {
-  width: calc(100% - 80px);
+    width: calc(100% - 80px)
 }
+
 .mwb_wpr_close {
-  text-align: right;
-  width: 60px;
+    text-align: right;
+    width: 60px
 }
-.mwb_wpr_close > a {
-  box-shadow: none !important;
-  float: right;
-  text-decoration: none;
+
+.mwb_wpr_close>a {
+    box-shadow: none!important;
+    float: right;
+    text-decoration: none
 }
+
 .mwb_wpr_popup_notice_section span {
-  display: inline-block;
-  vertical-align: top;
+    display: inline-block;
+    vertical-align: top
 }
+
 .mwb_wpr_close img {
-  border-radius: 50%;
-  width: 30px;
+    border-radius: 50%;
+    width: 30px
 }
+
 .mwb_wpr_popup_content_section .mwb_wpr_popup_content .mwb_wpr_popup_notice_section {
-  background: #7f527d none repeat scroll 0 0;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  color: #ffffff;
-  padding: 10px;
-  text-align: center;
+    background: #7f527d none repeat scroll 0 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #fff;
+    padding: 10px;
+    text-align: center
 }
-.mwb_wpr_popup_content_section .mwb_wpr_popup_content .mwb_wpr_popup_notice_section > p{
-  margin: 0;
-  font-size: 15px;
-  display: block;
+
+.mwb_wpr_popup_content_section .mwb_wpr_popup_content .mwb_wpr_popup_notice_section>p {
+    margin: 0;
+    font-size: 15px;
+    display: block
 }
+
 .mwb_wpr_popup_thumbnail_section {
-  padding: 10px;
-  height: 333px;
-  overflow-y: auto;
+    padding: 10px;
+    height: 333px;
+    overflow-y: auto
 }
+
 .mwb_wpr_popup_thumbnail_section::after {
-  clear: both;
-  content: "";
-  display: block;
+    clear: both;
+    content: "";
+    display: block
 }
+
 .mwb_wpr_popup_thumbnail_section ul {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0
 }
+
 .mwb_wpr_popup_thumbnail_section ul li {
-  display: inline-block;
-  list-style: outside none none;
-  margin-bottom: 10px;
-  text-align: center;
-  width: 137px;
+    display: inline-block;
+    list-style: outside none none;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 137px
 }
-.mwb_wpr_popup_thumbnail_section ul li a{
-  text-decoration: none;
-  color: #ddd;
+
+.mwb_wpr_popup_thumbnail_section ul li a {
+    text-decoration: none;
+    color: #ddd
 }
+
 .mwb_wpr_popup_thumbnail_section .mwb_wpr_thumbnail_img_wrap {
-  display: block;
-  max-width: 100%;
+    display: block;
+    max-width: 100%
 }
+
 .mwb_wpr_thumbnail_price_wrap {
-  color: #7f527d;
-  display: inline-block;
-  font-size: 15px;
-  margin-top: 5px;
+    color: #7f527d;
+    display: inline-block;
+    font-size: 15px;
+    margin-top: 5px
 }
-.mwb_wpr_popup_thumbnail_section .mwb_wpr_thumbnail_img_wrap img{
-  max-width: 100%;
+
+.mwb_wpr_popup_thumbnail_section .mwb_wpr_thumbnail_img_wrap img {
+    max-width: 100%
 }
-/*=====  End of Pop Up CSS  ======*/
-/*==============================================
-=            Category Wise Link CSS            =
-==============================================*/
+
 .mwb_wpr_cat_list {
-  border: 1px solid #7f527d;
-  border-radius: 5px;
-  color: #7f527d;
-  display: inline-block;
-  margin-bottom: 5px;
-  padding: 5px 10px;
-  text-decoration: none;
-  transition: all 0.3s linear 0s;
+    border: 1px solid #7f527d;
+    border-radius: 5px;
+    color: #7f527d;
+    display: inline-block;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    transition: all .3s linear 0s
 }
+
 .mwb_wpr_cat_list:hover {
-  background: #7f527d none repeat scroll 0 0;
-  color: #ffffff;
-  transition: all 0.3s ease 0s;
+    background: #7f527d none repeat scroll 0 0;
+    color: #fff;
+    transition: all .3s ease 0s
 }
-/*=====  End of Category Wise Link CSS  ======*/
-@media screen and (max-width: 600px) and (min-width: 320px) {
-  .points_log table.shop_table.my_account_points.account-points-table thead th{
-  width: 100px;
-  }
-  #points_form .mwb_wpr_custom_coupon.button,#mwb_custom_point_num{
-  width: 100%;
-  }
-  .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-  width: 29%;
-  }
+
+@media screen and (max-width:600px) and (min-width:320px) {
+    .points_log table.shop_table.my_account_points.account-points-table thead th {
+        width: 100px
+    }
+    #mwb_custom_point_num,
+    #points_form .mwb_wpr_custom_coupon.button {
+        width: 100%
+    }
+    .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
+        width: 29%
+    }
 }
-@media screen and (max-width: 768px) and (min-width: 320px) {
-  .mwb_wpr_table_view_log thead{
-  display: table-header-group !important;
-  }
-  .mwb_wpr_table_view_log td{
-  padding-left: 6px 25px !important;
-  display:table-cell  !important;
-  }
-  .mwb_wpr_table_view_log td:before{
-  content: "" !important;
-  }
-  .mwb_wpr_table_view_log tr{
-  display: table-row !important;
-  }
-  .woocommerce-MyAccount-points.mwb_wpr_table_view_log tbody tr td{
-  text-align: left !important;
-  }
-  #points_form .mwb_wpr_custom_coupon.button {
-  margin-top: 10px;
-  }
+
+@media screen and (max-width:768px) and (min-width:320px) {
+    .mwb_wpr_table_view_log thead {
+        display: table-header-group!important
+    }
+    .mwb_wpr_table_view_log td {
+        padding-left: 6px 25px!important;
+        display: table-cell!important
+    }
+    .mwb_wpr_table_view_log td:before {
+        content: ""!important
+    }
+    .mwb_wpr_table_view_log tr {
+        display: table-row!important
+    }
+    .woocommerce-MyAccount-points.mwb_wpr_table_view_log tbody tr td {
+        text-align: left!important
+    }
+    #points_form .mwb_wpr_custom_coupon.button {
+        margin-top: 10px
+    }
 }
-@media screen and (max-width: 500px) {
-.mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-  width: 28%;
-  font-size:14px;
-  }
-  }
-@media screen and (max-width: 387px) and (min-width: 320px) {
-  #mwb_wpr_upgrade_level {
-  float: none;
-  margin-top: 10px;
-  font-size: 12px;
-  }
-  .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
-  margin: 10px 8px;
-  width: 42.777%;
-  }
+
+@media screen and (max-width:500px) {
+    .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
+        width: 28%;
+        font-size: 14px
+    }
 }
-/*=====  End of Front end  ======*/
-/*====================================
-=            fieldset css            =
-====================================*/
-.mwb_wpr_each_section, .mwb_wpr_membership_with_img, .points_log {
-  border: 1px solid #d1d1d1 !important;
-  margin-bottom: 30px !important;
-  padding: 20px;
-  box-shadow: 0px 0 10px -1px #d1d1d1;
-  border-collapse: separate;
+
+@media screen and (max-width:387px) and (min-width:320px) {
+    #mwb_wpr_upgrade_level {
+        float: none;
+        margin-top: 10px;
+        font-size: 12px
+    }
+    .mwb_wpr_popup_thumbnail_section .mwb_wpr_popup_cat .mwb_wpr_cat_wrapper {
+        margin: 10px 8px;
+        width: 42.777%
+    }
 }
+
+.mwb_wpr_each_section,
+.mwb_wpr_membership_with_img,
+.points_log {
+    border: 1px solid #d1d1d1!important;
+    margin-bottom: 30px!important;
+    padding: 20px;
+    box-shadow: 0 0 10px -1px #d1d1d1;
+    border-collapse: separate
+}
+
 .mwb_wpr_each_section .mwb_wpr_membership_message {
-  display: block;
-  margin-bottom: 5px;
+    display: block;
+    margin-bottom: 5px
 }
-.mwb_wpr_each_section > #mwb_wpr_membership{
-  margin-bottom: 0;
+
+.mwb_wpr_each_section>#mwb_wpr_membership {
+    margin-bottom: 0
 }
-.mwb_wpr_each_section > #mwb_wpr_membership::after {
-  clear: both;
-  content: "";
-  display: block;
+
+.mwb_wpr_each_section>#mwb_wpr_membership::after {
+    clear: both;
+    content: "";
+    display: block
 }
-.mwb_wpr_each_section #mwb_wpr_membership_roles{
-  padding: 9px;
-  width: 160px;
-  float: left;
+
+.mwb_wpr_each_section #mwb_wpr_membership_roles {
+    padding: 9px;
+    width: 160px;
+    float: left
 }
+
 .mwb_wpr_each_section .mwb_wpr_btn_copy {
-  border: medium none;
-  display: inline-block;
-  opacity: 1;
-  width: 44px;
+    border: medium none;
+    display: inline-block;
+    opacity: 1;
+    width: 44px
 }
+
 .mwb_ways_to_gain_points_section .mwb_wpr_each_section {
-  white-space: pre-line;
+    white-space: pre-line
 }
+
 .mwb_wpr_coupon_details {
-  border: none !important;
-  margin-bottom: 0 !important;
+    border: none!important;
+    margin-bottom: 0!important
 }
-/*=====  End of fieldset css  ======*/
+
 .mwb_wpr_product_point {
-  display: inline-block;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-  background-color: #55B3A5;
-  position: relative;
-  width: 260px;
-  padding: 4px 8px 4px 0px;
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 20px;
-  font-family: Montserrat;
+    display: inline-block;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    background-color: #55b3a5;
+    position: relative;
+    width: 260px;
+    padding: 4px 8px 4px 0;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+    font-family: Montserrat
 }
+
 .mwb_wpr_product_point img {
-  max-width: 20px;
-  margin-left: 12px;
-  width: 100%;
+    max-width: 20px;
+    margin-left: 12px;
+    width: 100%
 }
-.mwb_wpr_item_meta img{
-  max-width: 20px;
-  width: 100%;
+
+.mwb_wpr_item_meta img {
+    max-width: 20px;
+    width: 100%
 }
+
 #mwb_wpr_share_point {
-  background: #ebe9eb none repeat scroll 0 0;
-  color: #515151;
+    background: #ebe9eb none repeat scroll 0 0;
+    color: #515151
 }
-#mwb_wpr_share_point:hover{
-  background-color: #dad8da;
+
+#mwb_wpr_share_point:hover {
+    background-color: #dad8da
 }
+
 #mwb_wpr_shared_points_notification {
-  margin-bottom: 4px;
+    margin-bottom: 4px
 }
 
 .mwb_wpr_heading_para {
-  display: inline-block;
-  margin-bottom: 0;
+    display: inline-block;
+    margin-bottom: 0
 }
+
 .mwb_wpr_points_expiry {
-  color: #666666;
-  font-size: 12px;
-  margin-bottom: 10px;
-  margin-top: 0;
-  vertical-align: middle;
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 10px;
+    margin-top: 0;
+    vertical-align: middle
 }
+
 .mwb_wpr_points_wrapper_with_exp {
-  float: left;
+    float: left
 }
+
 .mwb_wpr_heading {
-  clear: both;
+    clear: both
 }
+
 .mwb_wpr_view_log_notice {
-  background-color: #e3e3e3;
-  color: #444;
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 0;
-  padding: 10px 20px 10px 10px;
-  position: relative;
-  cursor: pointer;
-  line-height: 1.5;
+    background-color: #e3e3e3;
+    color: #444;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 0;
+    padding: 10px 20px 10px 10px;
+    position: relative;
+    cursor: pointer;
+    line-height: 1.5
 }
+
 .mwb_wpr_slide_toggle {
-  margin-bottom: 15px;
+    margin-bottom: 15px
 }
-.mwb_wpr_view_log_notice.mwb_wpr_common_slider .mwb_wpr_open_toggle{
-  position: absolute;
-  right: 23px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
+
+.mwb_wpr_view_log_notice.mwb_wpr_common_slider .mwb_wpr_open_toggle {
+    position: absolute;
+    right: 23px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer
 }
+
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider .mwb_wpr_open_toggle:after {
-  position: absolute;
-  content: "";
-  height: 2px;
-  width: 15px;
-  background:  #444444;
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: 15px;
+    background: #444
 }
+
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider .mwb_wpr_open_toggle:before {
-  background: #444444;
-  content: "";
-  height: 15px;
-  left: 7px;
-  position: absolute;
-  top: -6px;
-  width: 2px;
+    background: #444;
+    content: "";
+    height: 15px;
+    left: 7px;
+    position: absolute;
+    top: -6px;
+    width: 2px
 }
+
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider .mwb_wpr_plus_icon:before {
-  content: none;
+    content: none
 }
+
 .mwb_wpr_apply_custom_points {
-  display: inline-block;
-  width:100%;
-  text-align:left;
-  margin-top:10px;
-  clear:both;
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    margin-top: 10px;
+    clear: both
 }
-/* reward notice */
 
 .mwb_wpr_product_point::after {
-  border-color: rgba(0, 0, 0, 0) #ffffff rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
-  border-style: solid;
-  border-width: 20px;
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+    border-color: transparent #fff transparent transparent;
+    border-style: solid;
+    border-width: 20px;
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%)
 }
+
 .high {
-  font-weight: bold;
-  margin-right: 5px;
+    font-weight: 700;
+    margin-right: 5px
 }
+
 .mwb_wpr_purchase_pro_point {
-  display: inline-block;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-  background-color: #437a8f;
-  position: relative;
-  padding: 4px 8px 4px 20px;
-  color: #ffffff;
-  font-weight: bold;
-  margin-top: 20px;
-  font-family: Montserrat;
-  font-size: 15px;
+    display: inline-block;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    background-color: #437a8f;
+    position: relative;
+    padding: 4px 8px 4px 20px;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 20px;
+    font-family: Montserrat;
+    font-size: 15px
 }
+
 #mwb_wpr_order_notice::before {
-  content: "";
+    content: ""
 }
+
 #mwb_wpr_order_notice {
-  border-top: 0;
-  padding: 0;
-  position: relative;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 12px;
-  color: #fff;
-  background-color: #55B3A5;
-  font-family: Montserrat;
-  width: 100%;
-  margin-top: 30px;
-  text-align: center;
-  padding: 20px 0;
+    border-top: 0;
+    padding: 0;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #fff;
+    background-color: #55b3a5;
+    width: 100%;
+    margin-top: 30px;
+    text-align: center;
+    padding: 20px 0
 }
+
 #mwb_wpr_order_notice p {
-  display: inline-block;
-  margin-left: 20px;
-  background-color: #76D4C6;
-  padding: 5px;
-  margin-bottom: 0;
+    display: inline-block;
+    margin-left: 20px;
+    background-color: #76d4c6;
+    padding: 5px;
+    margin-bottom: 0
 }
-.shop_table.cart .coupon .input-text
-{
-  width: auto;
-  max-width: 170px;
+
+.shop_table.cart .coupon .input-text {
+    width: auto;
+    max-width: 170px
 }
-/*.shop_table.cart .coupon .button
-{
-  width: 150px;
-}*/
+
 .shop_table.cart .mwb_wpr_apply_custom_points #mwb_cart_points {
-  width: 170px;
-  border-radius: 4px;
-  height:40px !important;;
-  padding:5px 12px;
-  background-color: #f2f2f2;
-  box-shadow: none!important;
-  border: 0;
-  font-size: 18px;
-  vertical-align: top;
-  margin:0;
-  max-width: 170px;
-  margin-right: 5px;
+    width: 170px;
+    border-radius: 4px;
+    height: 40px!important;
+    padding: 5px 12px;
+    background-color: #f2f2f2;
+    box-shadow: none!important;
+    border: 0;
+    font-size: 18px;
+    vertical-align: top;
+    margin: 0;
+    max-width: 170px;
+    margin-right: 5px
 }
-.shop_table.cart .mwb_wpr_apply_custom_points .button
-{
-  /*width:150px !important;
-  vertical-align: top;
-  height:40px;
-  line-height: 0.4 !important;
-  padding:10px;*/
 
-}
 .theme-Divi .custom_point_checkout #mwb_cart_points_apply {
-  background: #fff;
+    background: #fff
 }
+
 .theme-storefront .custom_point_checkout #mwb_cart_points_apply {
-    background-color: #eeeeee;
-    border-color: #eeeeee;
-    color: #333333;
-    padding: 8px 20px;
+    background-color: #eee;
+    border-color: #eee;
+    color: #333;
+    padding: 8px 20px
 }
+
 .mwb_wpr_reward {
-  padding: 20px;
+    padding: 20px
 }
+
 .custom_point_checkout #mwb_cart_points_apply {
-   float: left;
-   margin-left: 10px;
-  /*background: #fff;
-  color:#3D9CD2;
-  width: auto;
-  display: inline-block;
-  border-radius: 46px;
-  font-size: 14px;
-  padding: 9px 20px;
-  border: none;
-  border-left-color: currentcolor;
-  line-height: normal;
-  font-weight: 600;
-  text-transform: uppercase;*/
-}
-.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section li
-{
-  vertical-align: top;
-}
-.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section li a{
-  color:#000;
-  font-weight:600;
-  text-decoration: none !important;
-}
-.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section .mwb_wpr_thumbnail_product_name
-{
-  display: block;
-  margin-top:5px;
-}
-.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section .mwb_wpr_thumbnail_price_wrap
-{
-  display: block;
-}
-@media screen and (max-width: 997px) {
-   #mwb_wpr_order_notice:after{
-  border: none;
-   }
-  }
-@media screen and (max-width: 768px) {
-  .mwb_wpr_reward{
-  display: none;
-  }
-  #mwb_wpr_order_notice{
-  padding:20px;
-  display: block;
-  }
-  #mwb_wpr_order_notice p{
-  margin-left: 0;
-  margin-top: 20px;
-  }
-  .shop_table.cart .coupon .input-text
-  {
-  width: 100% !important;
-  max-width:100% !important;
-  }
-  .shop_table.cart .coupon .button
-  {
-  width: 100%;
-  }
-  .shop_table.cart .actions .button
-  {
-   width: 100%;
-  }
-  .shop_table.cart .mwb_wpr_apply_custom_points #mwb_cart_points
-  {
-  width: 100% !important;
-  }
-  .shop_table.cart .mwb_wpr_apply_custom_points .button
-  {
-  width:100% !important;
-  }
-
+    float: left;
+    margin-left: 10px
 }
 
-@media screen and (max-width: 376px)
-{
-  .custom_point_checkout #mwb_cart_points_apply
-  {
-  margin-top:10px;
-  margin-left:0;
-  width:100%;
-  }
-  .custom_point_checkout #mwb_cart_points{
-  width:100% !important;
-  }
+.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section li {
+    vertical-align: top
 }
-/* ===== CUSTOM CODE FOR TABLE ======= */
+
+.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section li a {
+    color: #000;
+    font-weight: 600;
+    text-decoration: none!important
+}
+
+.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section .mwb_wpr_thumbnail_product_name {
+    display: block;
+    margin-top: 5px
+}
+
+.mwb_wpr_popup_content_section .mwb_wpr_popup_thumbnail_section .mwb_wpr_thumbnail_price_wrap {
+    display: block
+}
+
+@media screen and (max-width:997px) {
+    #mwb_wpr_order_notice:after {
+        border: none
+    }
+}
+
+@media screen and (max-width:768px) {
+    .mwb_wpr_reward {
+        display: none
+    }
+    #mwb_wpr_order_notice {
+        padding: 20px;
+        display: block
+    }
+    #mwb_wpr_order_notice p {
+        margin-left: 0;
+        margin-top: 20px
+    }
+    .shop_table.cart .coupon .input-text {
+        width: 100%!important;
+        max-width: 100%!important
+    }
+    .shop_table.cart .coupon .button {
+        width: 100%
+    }
+    .shop_table.cart .actions .button {
+        width: 100%
+    }
+    .shop_table.cart .mwb_wpr_apply_custom_points #mwb_cart_points {
+        width: 100%!important
+    }
+    .shop_table.cart .mwb_wpr_apply_custom_points .button {
+        width: 100%!important
+    }
+}
+
+@media screen and (max-width:376px) {
+    .custom_point_checkout #mwb_cart_points_apply {
+        margin-top: 10px;
+        margin-left: 0;
+        width: 100%
+    }
+    .custom_point_checkout #mwb_cart_points {
+        width: 100%!important
+    }
+}
+
 .mwb_wpr_common_table {
-   table-layout: fixed;
-   width: 100%;
+    table-layout: fixed;
+    width: 100%
 }
+
 .mwb_wpr_table_view_log {
-   table-layout: fixed;
+    table-layout: fixed
 }
+
 .custom_point_checkout.woocommerce-info p {
-  float: left;
-  width: 100%;
-  margin-bottom: 0;
-  text-align: left;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+    text-align: left
 }
+
 .custom_point_checkout #mwb_cart_points {
-  padding: 10px 10px;
-  width: 135px;
-  float: left;
+    padding: 10px 10px;
+    width: 135px;
+    float: left
 }
+
 .mwb_wpr_avada_wrap .custom_point_checkout.woocommerce-info:before {
-    content: none;
+    content: none
 }
+
 .mwb_wpr_avada_wrap .custom_point_checkout.woocommerce-info {
     margin: 0;
-    padding: 0;
+    padding: 0
 }
+
 .mwb_wpr_avada_wrap button#mwb_cart_points_apply {
-    line-height: 1.8;
+    line-height: 1.8
 }
