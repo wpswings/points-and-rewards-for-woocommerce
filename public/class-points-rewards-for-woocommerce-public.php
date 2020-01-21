@@ -1754,7 +1754,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$mwb_wpr_cart_price_rate = ( 0 == $mwb_wpr_cart_price_rate ) ? 1 : $mwb_wpr_cart_price_rate;
 			$conversion              = ( $get_points * $mwb_wpr_cart_price_rate / $mwb_wpr_cart_points_rate );
 			?>
-			<div class="custom_point_checkout woocommerce-info">
+			<div class="custom_point_checkout woocommerce-info mwb_wpr_checkout_points_class">
 				<input type="number" min="0" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>
 
 				<button class="button mwb_cart_points_apply" name="mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>"><?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?></button>
