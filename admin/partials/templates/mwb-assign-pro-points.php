@@ -133,7 +133,7 @@ $mwb_wpr_assign_product_table_settings = array(
 );
 	$mwb_wpr_assign_product_table_settings = apply_filters( 'mwb_wpr_assign_product_points_settings', $mwb_wpr_assign_product_table_settings );
 ?>
-<div class="mwb_table">
+<div class="mwb_wpr_table">
 	<div class="mwb_wpr_general_wrapper">
 	<?php
 	foreach ( $mwb_wpr_assign_product_table_settings as $key => $value ) {

@@ -1006,7 +1006,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				?>
 				<div class="mwb_wpr_apply_custom_points">
 					<input type="number" min="0" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>
-					<input type="button" name="mwb_cart_points_apply" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" class="button mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?>"/>
+					<button class="button mwb_cart_points_apply" name="mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>"><?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?></button>
 					<p><?php esc_html_e( 'Your available points:', 'points-rewards-for-woocommerce' ); ?>
 					<?php echo esc_html( $get_points ); ?></p>
 				</div>	
@@ -1217,6 +1217,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Check is apply points on the cart is enable or not*/
 		$mwb_wpr_custom_points_on_checkout = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_apply_points_checkout' );
 		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
+
 		if ( 1 == $mwb_wpr_custom_points_on_checkout && 1 == $mwb_wpr_custom_points_on_cart ) {
 			if ( 'checkout/form-coupon.php' == $template_name ) {
 				return MWB_RWPR_DIR_PATH . 'public/woocommerce/checkout/form-coupon.php';
@@ -1701,5 +1702,66 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 		return $fee_taxes;
+	}
+
+	/**
+	 * This function is used for adding the template.
+	 *
+	 * @name mwb_wpr_add_coupon_form
+	 * @since 1.0.1
+	 * @param array $checkout  Array of the checkout.
+	 * @author MakeWebBetter
+	 * @link https://makewebbetter.com
+	 */
+	public function mwb_wpr_add_coupon_form( $checkout ) {
+		$mwb_wpr_custom_points_on_checkout = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_apply_points_checkout' );
+		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
+
+		if ( 1 == $mwb_wpr_custom_points_on_checkout && 1 == $mwb_wpr_custom_points_on_cart ) {
+			if ( 'Avada' == wp_get_theme()->Name ) {
+				?>
+				<div class="mwb_wpr_avada_wrap checkout_coupon">
+					<h2 class="promo-code-heading fusion-alignleft"><?php esc_html_e( 'Have A Points?', 'points-rewards-for-woocommerce' ); ?></h2>
+					<?php $this->mwb_wpr_display_apply_points_checkout(); ?>
+				</div>
+				<?php
+			}
+		}
+
+	}
+
+	/**
+	 * THis function is used for display the apply points Setting.
+	 *
+	 * @since 1.0.1
+	 * @name mwb_wpr_display_apply_points_checkout
+	 * @author MakeWebBetter
+	 * @link https://makewebbetter.com
+	 */
+	public function mwb_wpr_display_apply_points_checkout() {
+		$user_id = get_current_user_ID();
+		if ( isset( $user_id ) && ! empty( $user_id ) ) {
+			if ( class_exists( 'Points_Rewards_For_WooCommerce_Public' ) ) {
+				$public_obj = new Points_Rewards_For_WooCommerce_Public( 'points-rewards-for-woocommerce', '1.0.0' );
+			}
+
+			$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
+			/* Points Rate*/
+			$mwb_wpr_cart_points_rate = $public_obj->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_points_rate' );
+			$mwb_wpr_cart_points_rate = ( 0 == $mwb_wpr_cart_points_rate ) ? 1 : $mwb_wpr_cart_points_rate;
+			/* Points Rate*/
+			$mwb_wpr_cart_price_rate = $public_obj->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_price_rate' );
+			$mwb_wpr_cart_price_rate = ( 0 == $mwb_wpr_cart_price_rate ) ? 1 : $mwb_wpr_cart_price_rate;
+			$conversion              = ( $get_points * $mwb_wpr_cart_price_rate / $mwb_wpr_cart_points_rate );
+			?>
+			<div class="custom_point_checkout woocommerce-info mwb_wpr_checkout_points_class">
+				<input type="number" min="0" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>
+
+				<button class="button mwb_cart_points_apply" name="mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>"><?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?></button>
+				<p><?php echo esc_html( $get_points ) . esc_html__( ' Points', 'points-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( $conversion ), $this->mwb_wpr_allowed_html() ); ?></p>
+			</div>
+
+			<?php
+		}
 	}
 }

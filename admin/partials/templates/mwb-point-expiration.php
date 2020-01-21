@@ -71,7 +71,7 @@ $mwb_wpr_threshold_notif = get_option( 'mwb_wpr_threshold_notif', 'You have reac
 $mwb_wpr_re_notification = get_option( 'mwb_wpr_re_notification', 'Do not forget to redeem your points([TOTALPOINT]) before it will get expired on [EXPIRYDATE]' );
 $mwb_wpr_expired_notification = get_option( 'mwb_wpr_expired_notification', 'Your Points has been expired, you may earn more Points and use the benefit more' );
 ?>
-<div class="mwb_table">
+<div class="mwb_wpr_table">
 	<table class="form-table mwb_wpr_points_expiration mwp_wpr_settings">
 		<tbody>
 			<tr valign="top">

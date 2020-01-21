@@ -155,6 +155,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'mwb_wpr_nonce'      => wp_create_nonce( 'mwb-wpr-verify-nonce' ),
 					'check_pro_activate' => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
 					'pro_text'           => __( 'Please Purchase the Pro Plugin.', 'points-rewards-for-woocommerce' ),
+					'pro_link_text'      => __( 'Click here', 'points-rewards-for-woocommerce' ),
+					'pro_link'       => 'https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org',
 					'success_update'     => __( 'Points are updated successfully', 'points-rewards-for-woocommerce' ),
 				);
 
@@ -522,9 +524,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 						$allowed_tags = $this->mwb_wpr_allowed_html();
 						$attribute_description = __( 'Entered points need to be reached for this level', 'points-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
+
 						?>
 						<label for="mwb_wpr_membership_level_value">
-						<input type="number" min="1" value="<?php echo esc_html( $this->check_is_not_empty( $value['Points'] ) ); ?>" name="mwb_wpr_membership_level_value_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_level_value_<?php echo esc_html( $count ); ?>" class="input-text" required>
+						<input type="number" min="1" value="<?php echo esc_html( $this->check_is_not_empty( isset( $value['Points'] ) ? $value['Points'] : '' ) ); ?>" name="mwb_wpr_membership_level_value_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_level_value_<?php echo esc_html( $count ); ?>" class="input-text" required>
 						</label>			
 					</td>
 				</tr>
@@ -642,7 +645,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 							$tax_queries           = array();
 							$tax_query['taxonomy'] = 'product_cat';
 							$tax_query['field']    = 'id';
-							$tax_query['terms']    = $value['Prod_Categ'];
+							$tax_query['terms']    = isset( $value['Prod_Categ'] ) ? $value['Prod_Categ'] : '';
 							$tax_queries[]         = $tax_query;
 							$args                  = array(
 								'post_type'      => 'product',
@@ -683,7 +686,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="mwb_wpr_membership_discount">
-						<input type="number" min="1" value="<?php echo esc_html( $this->check_is_not_empty( $value['Discount'] ) ); ?>" name="mwb_wpr_membership_discount_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_discount_<?php echo esc_html( $count ); ?>" class="input-text" required>
+						<input type="number" min="1" value="<?php echo esc_html( $this->check_is_not_empty( isset( $value['Discount'] ) ? $value['Discount'] : '' ) ); ?>" name="mwb_wpr_membership_discount_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_discount_<?php echo esc_html( $count ); ?>" class="input-text" required>
 						</label>			
 					</td>
 					<input type = "hidden" value="<?php echo esc_html( $count ); ?>" name="hidden_count">

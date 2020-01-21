@@ -95,7 +95,7 @@ $mwb_wpr_pro_points_to_all = get_option( 'mwb_wpr_pro_points_to_all', '' );
 
 <!-- Category Listing -->
 
-<div class="mwb_table">
+<div class="mwb_wpr_table">
 	<p class="mwb_wpr_section_notice"><?php esc_html_e( 'This is the category wise setting for purchase product from points only, enter some valid points for assigning, leave blank fields for removing assigned points', 'points-rewards-for-woocommerce' ); ?></p>
 	<div class="mwb_wpr_categ_details">
 		<table class="form-table mwb_wpr_pro_points_setting mwp_wpr_settings">

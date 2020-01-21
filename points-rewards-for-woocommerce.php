@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       This woocommerce extension allow merchants to reward their customers with loyalty points.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Plugin URI:        https://wordpress.org/plugins/points-rewards-for-woocommerce/
@@ -24,7 +24,7 @@
  * Requires at least: 4.6
  * Tested up to:      5.3
  * WC requires at least: 3.0
- * WC tested up to: 3.8.0
+ * WC tested up to: 3.8.1
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -52,7 +52,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.0.0' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.0.2' );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_HOME_URL', admin_url() );
@@ -72,6 +72,33 @@ if ( $activated ) {
 
 			define( $key, $value );
 		}
+	}
+
+	add_filter( 'plugin_row_meta', 'mwb_wpr_doc_and_premium_link', 10, 2 );
+
+	/**
+	 * Callable function for adding plugin row meta.
+	 *
+	 * @name mwb_wpr_doc_and_premium_link.
+	 * @param string $links link of the constant.
+	 * @param array  $file name of the plugin.
+	 */
+	function mwb_wpr_doc_and_premium_link( $links, $file ) {
+
+		if ( strpos( $file, 'points-rewards-for-woocommerce.php' ) !== false ) {
+
+			$row_meta = array(
+				'docs'    => '<a target="_blank" href="https://docs.makewebbetter.com/points-rewards-for-woocommerce?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org">' . esc_html__( 'Go to Docs', 'points-rewards-for-woocommerce' ) . '</a>',
+
+				'support' => '<a target="_blank" href="https://makewebbetter.freshdesk.com/a/tickets/new">' . esc_html__( 'Support', 'points-rewards-for-woocommerce' ) . '</a>',
+
+				'demo' => '<a target="_blank" href="https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/my-account?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org">' . esc_html__( 'Premium Demo', 'points-rewards-for-woocommerce' ) . '</a>',
+			);
+
+			return array_merge( $links, $row_meta );
+		}
+
+		return (array) $links;
 	}
 
 	/**
@@ -193,8 +220,14 @@ if ( $activated ) {
 	function rewardeem_woocommerce_points_rewards_settings_link( $links ) {
 
 		$my_link = array(
-			'<a href="' . admin_url( 'admin.php?page=mwb-rwpr-setting' ) . '">' . esc_html__( 'Settings', 'points-rewards-for-woocommerce' ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'admin.php?page=mwb-rwpr-setting' ) . '">' . esc_html__( 'Settings', 'points-rewards-for-woocommerce' ) . '</a>',
 		);
+
+		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+
+			$my_link['goPro'] = '<a target="_blank" href="https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org">' . esc_html__( 'Get Premium', 'points-rewards-for-woocommerce' ) . '</a>';
+		}
+
 		return array_merge( $my_link, $links );
 	}
 
@@ -265,7 +298,7 @@ if ( $activated ) {
 		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to activate Ultimate WooCommerce Points and Rewards.', 'points-rewards-for-woocommerce' ); ?></p>
+				<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to activate Points and Rewards for WooCommerce.', 'points-rewards-for-woocommerce' ); ?></p>
 			</div>
 
 			<?php
@@ -273,9 +306,3 @@ if ( $activated ) {
 
 	}
 }
-
-
-
-
-
-

@@ -12,6 +12,10 @@
  */
 
 $mwb_wpr_setting_tab = array(
+	'overview-setting' => array(
+		'title'     => __( 'Overview', 'points-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-wpr-overview-settings.php',
+	),
 	'general-setting' => array(
 		'title'     => __( 'General', 'points-rewards-for-woocommerce' ),
 		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-generral-settings2.php',
@@ -63,10 +67,17 @@ $mwb_wpr_setting_tab = array(
 						<span class="dashicons dashicons-phone"></span>
 					</a>
 				</li>
-				<li><a href="https://docs.makewebbetter.com/points-rewards-for-woocommerce/" target="_blank">
+				<li><a href="https://docs.makewebbetter.com/points-rewards-for-woocommerce?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org" target="_blank">
 					<span class="dashicons dashicons-media-document"></span>
 				</a>
 			</li>
+			<?php
+			if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+				?>
+						<li class="mwb_wpr_get_pro"><a  href="https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-rewards-for-woocommerce' ); ?></a></li>
+					<?php
+			}
+			?>
 		</ul>
 	</div>
 </div>
@@ -89,7 +100,7 @@ $mwb_wpr_setting_tab = array(
 							</div>
 							<?php
 						} else {
-							if ( empty( $_GET['tab'] ) && 'general-setting' == $key ) {
+							if ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
 								?>
 								<div class="mwb_rwpr_tabs">
 									<a class="mwb_gw_nav_tab nav-tab nav-tab-active" href="?page=mwb-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $mwb_tab['title'] ); ?></a>
@@ -124,7 +135,7 @@ $mwb_wpr_setting_tab = array(
 						<?php include_once $include_tab; ?>
 					</div>
 					<?php
-				} elseif ( empty( $_GET['tab'] ) && 'general-setting' == $key ) {
+				} elseif ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
 					?>
 					<div class="mwb_rwpr_content_template">
 						<?php include_once $mwb_file['file_path']; ?>

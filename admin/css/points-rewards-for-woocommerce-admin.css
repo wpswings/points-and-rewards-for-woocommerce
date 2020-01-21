@@ -427,6 +427,31 @@
   text-transform: uppercase;
   font-size: 14px;
 }
+/*Added css for get pro link*/
+.mwb_rwpr_header_content_right ul li.mwb_wpr_get_pro a {
+  display: inline-block;
+  background-color: #ef5350;
+  font-weight: 600;
+  padding: 7px 20px;
+  border-radius: 4px;
+  color: #ffffff !important;
+}
+/*overview settings*/
+.mwb_wpr_overview_heading {
+    font-size: 28px;
+    font-weight: 400;
+    text-align: left;
+}
+.mwb_wpr_overview_content p {
+  font-size: 16px;
+}
+.mwb_wpr_video_wrapper iframe {
+  width: 100%;
+}
+.mwb_wpr_object_purchase p a {
+  color: #131113 !important;
+}
+
 /*member css*/
 .mwb_wpr_membership_setting,.mwb_wpr_general_setting.mwp_wpr_settings{
   border: 1px solid #cccccc;

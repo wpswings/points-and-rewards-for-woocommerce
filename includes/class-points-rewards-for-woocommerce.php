@@ -72,7 +72,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '1.0.0';
+			$this->version = '1.0.2';
 		}
 
 		$this->plugin_name = 'points-rewards-for-woocommerce';
@@ -217,6 +217,7 @@ class Points_Rewards_For_Woocommerce {
 
 			/*Make Tax calculation 0 on the fees applied on the points*/
 			$this->loader->add_filter( 'woocommerce_cart_totals_get_fees_from_cart_taxes', $plugin_public, 'mwb_wpr_fee_tax_calculation', 10, 3 );
+			$this->loader->add_action( 'woocommerce_before_checkout_form', $plugin_public, 'mwb_wpr_add_coupon_form', 10, 1 );
 
 		}
 	}
