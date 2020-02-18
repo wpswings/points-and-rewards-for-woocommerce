@@ -393,8 +393,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			}(document, "script", "facebook-jssdk"));</script>
 			<div class="fb-share-button mwb_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">' . __( 'Share', 'points-rewards-for-woocommerce' ) . '</a></div>';
 			$mail = '<a class="mwb_wpr_mail_button mwb_wpr_common_class" href="mailto:enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . MWB_RWPR_DIR_URL . 'public/images/email.png"></a>';
-
-			$google = '<div class="google mwb_wpr_common_class"><script src="https://apis.google.com/js/platform.js" async defer></script><div class="g-plus google-plus-button" data-action="share" data-height="24" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '"></div></div>';//phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+			$whatsapp = '<a target="_blank" class="mwb_whatsapp_share" href="https://wa.me/?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . MWB_RWPR_DIR_URL . 'public/images/whatsapp.png"></a>';
 
 			if ( $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_facebook' ) == 1 ) {
 
@@ -407,6 +406,10 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_email' ) == 1 ) {
 
 				$content = $content . $mail;
+			}
+			if ( $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_whatsapp' ) == 1 ) {
+
+				$content = $content . $whatsapp;
 			}
 			$content = $content . '</div>';
 			echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -453,8 +456,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			$enable_mwb_signup = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_signup' );
 			if ( $enable_mwb_signup ) {
 				$mwb_signup_value = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_signup_value' );
-				$mwb_refer_value = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_refer_value' );
-				$mwb_refer_value = ( 0 == $mwb_refer_value ) ? 1 : $mwb_refer_value;
 				/*Update User Points*/
 				update_user_meta( $customer_id, 'mwb_wpr_points', $mwb_signup_value );
 				/*Update the points Details of the users*/
@@ -466,6 +467,8 @@ class Points_Rewards_For_WooCommerce_Public {
 			$enable_mwb_refer = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_refer_enable' );
 			/*Check for the Referral*/
 			if ( $enable_mwb_refer ) {
+				$mwb_refer_value = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_refer_value' );
+				$mwb_refer_value = ( 0 == $mwb_refer_value ) ? 1 : $mwb_refer_value;
 				/*Get Data from the Cookies*/
 				$cookie_val = isset( $_COOKIE['mwb_wpr_cookie_set'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['mwb_wpr_cookie_set'] ) ) : '';
 				$retrive_data = $cookie_val;

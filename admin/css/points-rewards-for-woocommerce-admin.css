@@ -265,12 +265,6 @@
   line-height: 1.3;
   font-weight: 600;
 }
-.form-table td {
-  margin-bottom: 9px;
-  padding: 5px 0px;
-  line-height: 1.3;
-  vertical-align: middle;
-}
 #mwb_rwpr_other_setting_giftcard_html {
   width: 100%;
 }
@@ -525,15 +519,17 @@
 =            points table            =
 ====================================*/
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider {
-  background-color: #eeeeee;
+  background-color: #ef5350;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
   position: relative;
+  color: #ffffff;
 }
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider.active {
-  background-color: #ef5350;
-  color: #ffffff;
+  background-color: #eeeeee;
+  color:#23282d;
+ 
 }
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider::after {
   content: "\f460";
@@ -650,3 +646,11 @@ a.mwb_gw_nav_tab.nav-tab {
   #mwb_wpr_settings_wrapper #mainform .mwb_wpr_email_wrapper .mwb_wpr_email_wrapper_text h2 {
    text-align: left!important;
  }
+.mwb_wpr_common_table thead th {
+    padding: 0px 10px;
+}
+.form-table.mwp_wpr_settings.mwb_wpr_points_view_total {
+    background-color: #4F3154;
+    font-size: 16px;
+    color: #ffffff;
+}

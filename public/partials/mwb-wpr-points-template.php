@@ -212,7 +212,7 @@ if ( $mwb_wpr_mem_enable ) {
 												$product_name = $_product->get_title();
 												$pro_url = get_permalink( $pro_id );
 												if ( empty( $pro_img[0] ) ) {
-														$pro_img[0] = MWB_WPR_URL . '/assets/images/placeholder.png';
+													$pro_img[0] = MWB_RWPR_DIR_URL . 'public/images/placeholder.png';
 												}
 												?>
 												<li>

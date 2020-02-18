@@ -133,6 +133,7 @@ endif;
 							}
 						}
 					}
+					do_action( 'mwb_wpr_additional_coupon_settings', $value, $coupon_settings );
 					?>
 						</div>
 				</div>

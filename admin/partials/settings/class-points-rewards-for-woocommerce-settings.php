@@ -281,29 +281,36 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 * @since 1.0.0
 	 */
 	public function mwb_rwpr_generate_textarea_html( $value, $general_settings ) {
-		$mwb_signup_value = isset( $general_settings[ $value['id'] ] ) ? ( $general_settings[ $value['id'] ] ) : '';
-		if ( empty( $mwb_signup_value ) ) {
-			$mwb_signup_value = array_key_exists( 'default', $value ) ? esc_html( $value['default'] ) : '';
+		$mwb_get_textarea_id = isset( $value['id'] ) ? $value['id'] : '';
+		$mwb_show_text_area = false;
+		if( isset( $mwb_get_textarea_id ) && '' !== $mwb_get_textarea_id ) {
+			$mwb_show_text_area = apply_filters( 'mwb_wpr_remove_text_area_in_pro', $mwb_show_text_area, $value, $general_settings );
 		}
-		?>
-		<span class="description"><?php echo array_key_exists( 'desc', $value ) ? esc_html( $value['desc'] ) : ''; ?></span>	
-		<label for="mwb_wpr_general_text_points" class="mwb_wpr_label">
-			<textarea 
-				<?php
-				if ( array_key_exists( 'custom_attributes', $value ) ) {
-					foreach ( $value['custom_attributes'] as $attribute_name => $attribute_val ) {
-						echo esc_html( $attribute_name );
-						$allowed_tags = $this->mwb_wpr_allowed_html();
-						echo wp_kses( "=$attribute_val", $allowed_tags );
+		if( false == $mwb_show_text_area ) {
+			$mwb_signup_value = isset( $general_settings[ $value['id'] ] ) ? ( $general_settings[ $value['id'] ] ) : '';
+			if ( empty( $mwb_signup_value ) ) {
+				$mwb_signup_value = array_key_exists( 'default', $value ) ? esc_html( $value['default'] ) : '';
+			}
+			?>
+			<span class="description"><?php echo array_key_exists( 'desc', $value ) ? esc_html( $value['desc'] ) : ''; ?></span>	
+			<label for="mwb_wpr_general_text_points" class="mwb_wpr_label">
+				<textarea 
+					<?php
+					if ( array_key_exists( 'custom_attributes', $value ) ) {
+						foreach ( $value['custom_attributes'] as $attribute_name => $attribute_val ) {
+							echo esc_html( $attribute_name );
+							$allowed_tags = $this->mwb_wpr_allowed_html();
+							echo wp_kses( "=$attribute_val", $allowed_tags );
 
+						}
 					}
-				}
-				?>
-				  name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
-				class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php echo wp_kses( ( $mwb_signup_value ), $this->mwb_wpr_allowed_html() ); ?></textarea>
-		</label>
-		<p class="description"><?php echo esc_html( $value['desc2'] ); ?></p>
-		<?php
+					?>
+					  name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
+					class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php echo wp_kses( ( $mwb_signup_value ), $this->mwb_wpr_allowed_html() ); ?></textarea>
+			</label>
+			<p class="description"><?php echo esc_html( $value['desc2'] ); ?></p>
+			<?php
+		}
 	}
 
 	/**

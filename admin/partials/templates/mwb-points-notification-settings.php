@@ -318,6 +318,7 @@ foreach ( $mwb_settings as $key => $value ) {
 				if ( 'text' == $value['type'] ) {
 					$settings_obj->mwb_rwpr_generate_text_html( $value, $mwb_wpr_notification_settings );
 				}
+				do_action( 'mwb_wpr_additional_points_notification_settings', $value, $mwb_wpr_notification_settings );
 				?>
 						</div>
 					</div>

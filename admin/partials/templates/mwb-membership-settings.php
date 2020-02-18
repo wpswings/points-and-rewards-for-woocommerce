@@ -158,6 +158,7 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 								<p class= "description"><?php esc_html_e( 'Please do not change the "Level Name" once it will be saved, as it become the key for the Membership User', 'points-rewards-for-woocommerce' ); ?></p>
 								<?php
 							}
+							do_action( 'mwb_wpr_additional_membership_settings', $value, $membership_settings_array );
 							?>
 							
 						</td>
