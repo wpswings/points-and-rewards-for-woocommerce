@@ -432,9 +432,9 @@
 }
 /*overview settings*/
 .mwb_wpr_overview_heading {
-    font-size: 28px;
-    font-weight: 400;
-    text-align: left;
+	font-size: 28px;
+	font-weight: 400;
+	text-align: left;
 }
 .mwb_wpr_overview_content p {
   font-size: 16px;
@@ -529,7 +529,7 @@
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider.active {
   background-color: #eeeeee;
   color:#23282d;
- 
+
 }
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider::after {
   content: "\f460";
@@ -647,10 +647,10 @@ a.mwb_gw_nav_tab.nav-tab {
    text-align: left!important;
  }
 .mwb_wpr_common_table thead th {
-    padding: 0px 10px;
+	padding: 0px 10px;
 }
 .form-table.mwp_wpr_settings.mwb_wpr_points_view_total {
-    background-color: #4F3154;
-    font-size: 16px;
-    color: #ffffff;
+	background-color: #4F3154;
+	font-size: 16px;
+	color: #ffffff;
 }

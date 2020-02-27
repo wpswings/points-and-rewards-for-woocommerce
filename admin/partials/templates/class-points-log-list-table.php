@@ -435,7 +435,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					  </p>
 					  <div class="mwb_wpr_points_view"> 
 						  <table class="form-table mwp_wpr_settings mwb_wpr_common_table" >
-							  	<thead>
+								  <thead>
 									<tr valign="top">
 										<th scope="row" class="titledesc">
 											<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -462,7 +462,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					  </p> 
 					  <div class="mwb_wpr_points_view">  
 					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
-				  		<thead>
+						  <thead>
 							<tr valign="top">
 								<th scope="row" class="titledesc">
 									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -487,7 +487,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					  </p> 
 					  <div class="mwb_wpr_points_view"> 
 					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">  
-					  	<thead>
+						  <thead>
 							<tr valign="top">
 								<th scope="row" class="titledesc">
 									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -514,11 +514,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					?>
 				<div class="mwb_wpr_slide_toggle">
 					<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Points earned on Order Total', 'points-rewards-for-woocommerce' ); ?>
-					 	<a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
-				  	</p>
+						 <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
+					  </p>
 				   <div class="mwb_wpr_points_view"> 
 					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
-					  	<thead>
+						  <thead>
 							<tr valign="top">
 								<th scope="row" class="titledesc">
 									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -549,7 +549,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				  </p>
 					<div class="mwb_wpr_points_view"> 
 				  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
-				  		<thead>
+						  <thead>
 							<tr valign="top">
 								<th scope="row" class="titledesc">
 									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -580,7 +580,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				  </p>
 				  <div class="mwb_wpr_points_view"> 
 				  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
-					  	<thead>
+						  <thead>
 							<tr valign="top">
 								<th scope="row" class="titledesc">
 									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -597,7 +597,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 							<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 							<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['pro_conversion_points'] ); ?></td>
 						</tr>
-						<?php
+							<?php
 						}
 						?>
 				</table></div></div> 
@@ -611,7 +611,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
-		  		<thead>
+				  <thead>
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -652,29 +652,29 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					</th>
 				</tr>
 			</thead>
-			<?php
-			foreach ( $point_log['membership'] as $key => $value ) {
-			?>
+					<?php
+					foreach ( $point_log['membership'] as $key => $value ) {
+						?>
 			<tr valign="top">
 				<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 				<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['membership'] ); ?></td>
 			</tr>
-				<?php
-			}
-			?>
+						<?php
+					}
+					?>
 		</table></div></div>
-		<?php
-		}
-	
-		if ( array_key_exists( 'ref_product_detail', $point_log ) ) {
-			?>
+					<?php
+				}
+
+				if ( array_key_exists( 'ref_product_detail', $point_log ) ) {
+					?>
 		<div class="mwb_wpr_slide_toggle">
 			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Referral Purchase Point', 'points-rewards-for-woocommerce' ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
-		  	<thead>
+			  <thead>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
 						<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -684,14 +684,14 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					</th>
 				</tr>
 			</thead>
-			<?php
-			foreach ( $point_log['ref_product_detail'] as $key => $value ) {
-				?>
+					<?php
+					foreach ( $point_log['ref_product_detail'] as $key => $value ) {
+						?>
 				<tr valign="top">
 					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 					<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['ref_product_detail'] ); ?></td>
 				</tr>
-				<?php
+						<?php
 					}
 					?>
 		</table></div></div>
@@ -705,7 +705,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
 		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
-		  	<thead>
+			  <thead>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
 						<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -715,9 +715,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					</th>
 				</tr>
 			</thead>
-				<?php
-				foreach ( $point_log['pur_by_points'] as $key => $value ) {
-					?>
+					<?php
+					foreach ( $point_log['pur_by_points'] as $key => $value ) {
+						?>
 				<tr valign="top">
 					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 					<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['pur_by_points'] ); ?></td>
@@ -736,7 +736,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			  </p>
 			  <div class="mwb_wpr_points_view"> 
 			  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
-			  	<thead>
+				  <thead>
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -767,7 +767,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
-		  	  	<thead>
+					<thead>
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -798,7 +798,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table"> 
-		  	  	<thead>
+					<thead>
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -828,7 +828,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
-	  	<thead>
+		  <thead>
 			<tr valign="top">
 				<th scope="row" class="titledesc">
 					<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -838,9 +838,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				</th>
 			</tr>
 		</thead>
-		<?php
-		foreach ( $point_log['cart_subtotal_point'] as $key => $value ) {
-			?>
+					<?php
+					foreach ( $point_log['cart_subtotal_point'] as $key => $value ) {
+						?>
 		<tr valign="top">
 			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 			<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['cart_subtotal_point'] ); ?> </td>
@@ -858,7 +858,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
-  	<thead>
+	  <thead>
 			<tr valign="top">
 				<th scope="row" class="titledesc">
 					<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -888,7 +888,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
-	  	<thead>
+		  <thead>
 			<tr valign="top">
 				<th scope="row" class="titledesc">
 					<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -898,9 +898,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				</th>
 			</tr>
 		</thead>
-		<?php
-		foreach ( $point_log['deduct_currency_pnt_cancel'] as $key => $value ) {
-			?>
+					<?php
+					foreach ( $point_log['deduct_currency_pnt_cancel'] as $key => $value ) {
+						?>
 		<tr valign="top">
 			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 			<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduct_currency_pnt_cancel'] ); ?></td>
@@ -918,7 +918,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
-  	<thead>
+	  <thead>
 		<tr valign="top">
 			<th scope="row" class="titledesc">
 				<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -948,7 +948,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
-  	<thead>
+	  <thead>
 			<tr valign="top">
 				<th scope="row" class="titledesc">
 					<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -958,9 +958,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				</th>
 			</tr>
 		</thead>
-		<?php
-		foreach ( $point_log['pur_points_cancel'] as $key => $value ) {
-			?>
+					<?php
+					foreach ( $point_log['pur_points_cancel'] as $key => $value ) {
+						?>
 		<tr valign="top">
 			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 			<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['pur_points_cancel'] ); ?></td>
@@ -978,7 +978,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
-  	<thead>
+	  <thead>
 		<tr valign="top">
 			<th scope="row" class="titledesc">
 				<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -1001,15 +1001,15 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 </table></div>
 					<?php
 				}
-					if ( array_key_exists( 'reference_details', $point_log ) ) {
-			?>
+				if ( array_key_exists( 'reference_details', $point_log ) ) {
+					?>
 		<div class="mwb_wpr_slide_toggle">
 			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Referral SignUp', 'points-rewards-for-woocommerce' ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
 		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
-		  	<thead>
+			  <thead>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
 						<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -1022,18 +1022,18 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					</th>
 				</tr>
 			</thead>
-			<?php
-			foreach ( $point_log['reference_details'] as $key => $value ) {
-				$user_name = '';
-				if ( isset( $value['refered_user'] ) && ! empty( $value['refered_user'] ) ) {
-					$user      = get_user_by( 'ID', $value['refered_user'] );
-					if ( isset( $user ) && ! empty( $user ) ) {
-						$user_name = $user->user_login;
-					} else {
-						$user_name = esc_html__( 'This user doesn\'t exists', 'points-rewards-for-woocommerce' );
-					}
-				}
-				?>
+					<?php
+					foreach ( $point_log['reference_details'] as $key => $value ) {
+						$user_name = '';
+						if ( isset( $value['refered_user'] ) && ! empty( $value['refered_user'] ) ) {
+							$user      = get_user_by( 'ID', $value['refered_user'] );
+							if ( isset( $user ) && ! empty( $user ) ) {
+								$user_name = $user->user_login;
+							} else {
+								$user_name = esc_html__( 'This user doesn\'t exists', 'points-rewards-for-woocommerce' );
+							}
+						}
+						?>
 				<tr valign="top">
 					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 					<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['reference_details'] ); ?></td>
@@ -1061,7 +1061,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
-			  	<thead>
+				  <thead>
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -1074,11 +1074,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						</th>
 					</tr>
 				</thead>
-				<?php
-				foreach ( $point_log['admin_points'] as $key => $value ) {
-					$value['sign']   = isset( $value['sign'] ) ? $value['sign'] : '+/-';
-					$value['reason'] = isset( $value['reason'] ) ? $value['reason'] : __( 'Updated By Admin', 'points-rewards-for-woocommerce' );
-					?>
+					<?php
+					foreach ( $point_log['admin_points'] as $key => $value ) {
+						$value['sign']   = isset( $value['sign'] ) ? $value['sign'] : '+/-';
+						$value['reason'] = isset( $value['reason'] ) ? $value['reason'] : __( 'Updated By Admin', 'points-rewards-for-woocommerce' );
+						?>
 				<tr valign="top">
 					<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 					<td class="forminp forminp-text"><?php echo esc_html( $value['sign'] ) . esc_html( $value['admin_points'] ); ?></td>
@@ -1097,7 +1097,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 	  </p>
 	  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
-	  		<thead>
+			  <thead>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
 						<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -1110,14 +1110,14 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					</th>
 				</tr>
 			</thead> 
-			<?php
-			foreach ( $point_log['Sender_point_details'] as $key => $value ) {
-				$user_name = '';
-				if ( isset( $value['give_to'] ) && ! empty( $value['give_to'] ) ) {
-					$user      = get_user_by( 'ID', $value['give_to'] );
-					$user_name = $user->user_nicename;
-				}
-				?>
+					<?php
+					foreach ( $point_log['Sender_point_details'] as $key => $value ) {
+						$user_name = '';
+						if ( isset( $value['give_to'] ) && ! empty( $value['give_to'] ) ) {
+							$user      = get_user_by( 'ID', $value['give_to'] );
+							$user_name = $user->user_nicename;
+						}
+						?>
 			<tr valign="top">
 				<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 				<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['Sender_point_details'] ); ?></td>
@@ -1140,7 +1140,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
-  	<thead>
+	  <thead>
 		<tr valign="top">
 			<th scope="row" class="titledesc">
 				<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
@@ -1153,14 +1153,14 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			</th>
 		</tr>
 	</thead>
-		<?php
-		foreach ( $point_log['Receiver_point_details'] as $key => $value ) {
-			$user_name = '';
-			if ( isset( $value['received_by'] ) && ! empty( $value['received_by'] ) ) {
-				$user      = get_user_by( 'ID', $value['received_by'] );
-				$user_name = $user->user_nicename;
-			}
-			?>
+					<?php
+					foreach ( $point_log['Receiver_point_details'] as $key => $value ) {
+						$user_name = '';
+						if ( isset( $value['received_by'] ) && ! empty( $value['received_by'] ) ) {
+							$user      = get_user_by( 'ID', $value['received_by'] );
+							$user_name = $user->user_nicename;
+						}
+						?>
 		<tr valign="top">
 			<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 			<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['Receiver_point_details'] ); ?> </td>

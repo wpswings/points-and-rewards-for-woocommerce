@@ -283,10 +283,10 @@ class Points_Rewards_For_WooCommerce_Settings {
 	public function mwb_rwpr_generate_textarea_html( $value, $general_settings ) {
 		$mwb_get_textarea_id = isset( $value['id'] ) ? $value['id'] : '';
 		$mwb_show_text_area = false;
-		if( isset( $mwb_get_textarea_id ) && '' !== $mwb_get_textarea_id ) {
+		if ( isset( $mwb_get_textarea_id ) && '' !== $mwb_get_textarea_id ) {
 			$mwb_show_text_area = apply_filters( 'mwb_wpr_remove_text_area_in_pro', $mwb_show_text_area, $value, $general_settings );
 		}
-		if( false == $mwb_show_text_area ) {
+		if ( false == $mwb_show_text_area ) {
 			$mwb_signup_value = isset( $general_settings[ $value['id'] ] ) ? ( $general_settings[ $value['id'] ] ) : '';
 			if ( empty( $mwb_signup_value ) ) {
 				$mwb_signup_value = array_key_exists( 'default', $value ) ? esc_html( $value['default'] ) : '';

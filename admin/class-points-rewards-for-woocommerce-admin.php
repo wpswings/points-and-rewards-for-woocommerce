@@ -782,4 +782,67 @@ class Points_Rewards_For_WooCommerce_Admin {
 		</table>
 		<?php
 	}
+
+	/**
+	 * Show plugin changes from upgrade notice
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param  string $args Holds the arguments.
+	 * @param  string $response Holds the response.
+	 */
+	public function in_plugin_update_message( $args, $response ) {
+		$transient_name = 'points_rewards_upgrade_notice_' . $args['Version'];
+		$upgrade_notice = get_transient( $transient_name );
+		if ( ! $upgrade_notice ) {
+			$response = wp_safe_remote_get( 'https://plugins.svn.wordpress.org/points-and-rewards-for-woocommerce/trunk/README.txt' );
+			if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
+				$upgrade_notice = $this->parse_update_notice( $response['body'], $args['new_version'] );
+				set_transient( $transient_name, $upgrade_notice, DAY_IN_SECONDS );
+			}
+		}
+		echo wp_kses_post( $upgrade_notice );
+	}
+	/**
+	 * Parse upgrade notice from readme.txt file.
+	 *
+	 * @since 2.5.8
+	 *
+	 * @param  string $content Holds the content.
+	 * @param  string $new_version Holds the new version.
+	 * @return string
+	 */
+	public function parse_update_notice( $content, $new_version ) {
+		// Output Upgrade Notice.
+		$matches        = null;
+		$regexp         = '~==\s*Upgrade Notice\s*==\s*=\s*(.*)\s*=(.*)(=\s*' . preg_quote( $this->version ) . '\s*=|$)~Uis';
+		$upgrade_notice = '';
+
+		if ( preg_match( $regexp, $content, $matches ) ) {
+			$notices = (array) preg_split( '~[\r\n]+~', trim( $matches[2] ) );
+
+			// Convert the full version strings to minor versions.
+			$notice_version_parts  = explode( '.', trim( $matches[1] ) );
+			$current_version_parts = explode( '.', $this->version );
+
+			if ( 3 !== count( $notice_version_parts ) ) {
+				return;
+			}
+
+			$notice_version  = $notice_version_parts[0] . '.' . $notice_version_parts[1] . '.' . $notice_version_parts[2];
+			$current_version = $current_version_parts[0] . '.' . $current_version_parts[1] . '.' . $current_version_parts[2];
+
+			// Check the latest stable version and ignore trunk.
+			if ( version_compare( $current_version, $notice_version, '<' ) ) {
+
+				$upgrade_notice .= '</p><p class="poins-rewards-plugin-upgrade-notice" style="padding: 14px 10px !important;background: #1a4251 !important;color: #fff !important;">';
+
+				foreach ( $notices as $index => $line ) {
+					$upgrade_notice .= preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
+				}
+			}
+		}
+
+		return wp_kses_post( $upgrade_notice );
+	}
 }
