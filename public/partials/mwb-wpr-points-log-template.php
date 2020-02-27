@@ -623,7 +623,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 									if ( array_key_exists( 'admin_points', $point_log ) ) {
 										?>
 										<div class="mwb_wpr_slide_toggle">
-											<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Free rewards you earned becuase of loyality', 'points-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
+											<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Updated By Admin', 'points-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
 											<table class="mwb_wpr_common_table">
 												<thead>
 													<tr>
@@ -657,7 +657,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 										if ( array_key_exists( 'reference_details', $point_log ) ) {
 										?>
 										<div class="mwb_wpr_slide_toggle">
-											<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Points earned via referring someone', 'points-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
+											<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Referral Sign Up', 'points-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
 											<table class="mwb_wpr_common_table">
 												<thead>
 													<tr>
@@ -668,7 +668,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 															<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-rewards-for-woocommerce' ); ?></span>
 														</th>
 														<th class="view-log-Activity">
-															<span class="nobr"><?php echo esc_html__( 'Reference Points by', 'points-rewards-for-woocommerce' ); ?></span>
+															<span class="nobr"><?php echo esc_html__( 'Sign Up by', 'points-rewards-for-woocommerce' ); ?></span>
 														</th>
 													</tr>
 												</thead>

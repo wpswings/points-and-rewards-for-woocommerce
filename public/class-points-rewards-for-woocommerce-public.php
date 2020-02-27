@@ -377,7 +377,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function mwb_wpr_get_social_shraing_section( $user_id ) {
 		$enable_mwb_social  = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_social_media_enable' );
 		$user_reference_key = get_user_meta( $user_id, 'mwb_points_referral', true );
-		$page_permalink     = wc_get_page_permalink( 'myaccount' );
+		$page_permalink     = site_url();
+
 		if ( $enable_mwb_social ) {
 			$content = '';
 			$content = $content . '<div class="mwb_wpr_wrapper_button">';

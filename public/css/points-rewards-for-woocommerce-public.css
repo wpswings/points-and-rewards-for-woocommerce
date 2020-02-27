@@ -849,9 +849,11 @@ html {
     box-shadow: none;
 }
 .mwb_whatsapp_share img {
-    margin-left: 7px;
-    display: inline-block;
     max-width: 16px;
+    display: inline-block;
+    margin: 2px auto 0;
+    vertical-align: top;
+    width: 18px;
 }
 .mwb_wpr_common_table thead th {
     padding: 0px 24px;

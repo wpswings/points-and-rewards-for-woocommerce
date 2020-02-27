@@ -1004,7 +1004,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					if ( array_key_exists( 'reference_details', $point_log ) ) {
 			?>
 		<div class="mwb_wpr_slide_toggle">
-			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Referral Earns', 'points-rewards-for-woocommerce' ); ?>
+			<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Referral SignUp', 'points-rewards-for-woocommerce' ); ?>
 			  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 		  </p>
 		  <div class="mwb_wpr_points_view"> 
@@ -1018,7 +1018,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-rewards-for-woocommerce' ); ?></span>
 					</th>
 					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Reference Points by', 'points-rewards-for-woocommerce' ); ?></span>
+						<span class="nobr"><?php echo esc_html__( 'Reference Sign Up by', 'points-rewards-for-woocommerce' ); ?></span>
 					</th>
 				</tr>
 			</thead>
