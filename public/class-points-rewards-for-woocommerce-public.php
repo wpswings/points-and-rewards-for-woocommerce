@@ -653,6 +653,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$mwb_wpr_email_discription = str_replace( '[Points]', $mwb_refer_value, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[Total Points]', $total_points, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[Refer Points]', $mwb_refer_value, $mwb_wpr_email_discription );
+				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				/*check is mail notification is enable or not*/
 				if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
 					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
