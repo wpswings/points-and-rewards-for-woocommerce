@@ -807,16 +807,16 @@ class Points_Rewards_For_WooCommerce_Public {
 			$user_id = absint( $order->get_user_id() );
 			$user = get_user_by( 'ID', $user_id );
 			$user_email = $user->user_email;
-			if ( isset( $user_id ) && ! empty( $user_id ) ) {
-				$mwb_wpr_ref_noof_order = (int) get_user_meta( $user_id, 'mwb_wpr_no_of_orders', true );
-				if ( isset( $mwb_wpr_ref_noof_order ) && ! empty( $mwb_wpr_ref_noof_order ) ) {
-					$mwb_wpr_ref_noof_order++;
-					update_user_meta( $user_id, 'mwb_wpr_no_of_orders', $mwb_wpr_ref_noof_order );
-				} else {
-					update_user_meta( $user_id, 'mwb_wpr_no_of_orders', 1 );
-				}
-			}
 			if ( 'completed' == $new_status ) {
+				if ( isset( $user_id ) && ! empty( $user_id ) ) {
+					$mwb_wpr_ref_noof_order = (int) get_user_meta( $user_id, 'mwb_wpr_no_of_orders', true );
+					if ( isset( $mwb_wpr_ref_noof_order ) && ! empty( $mwb_wpr_ref_noof_order ) ) {
+						$mwb_wpr_ref_noof_order++;
+						update_user_meta( $user_id, 'mwb_wpr_no_of_orders', $mwb_wpr_ref_noof_order );
+					} else {
+						update_user_meta( $user_id, 'mwb_wpr_no_of_orders', 1 );
+					}
+				}
 				/*Order total points*/
 				if ( $this->check_enable_offer() ) {
 					$this->calculate_points( $order_id, $user_id );
@@ -1007,14 +1007,20 @@ class Points_Rewards_For_WooCommerce_Public {
 				$get_points = 0;
 			}
 			if ( isset( $user_id ) && ! empty( $user_id ) ) {
-				?>
-				<div class="mwb_wpr_apply_custom_points">
-					<input type="number" min="0" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>
-					<button class="button mwb_cart_points_apply" name="mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>"><?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?></button>
-					<p><?php esc_html_e( 'Your available points:', 'points-rewards-for-woocommerce' ); ?>
-					<?php echo esc_html( $get_points ); ?></p>
-				</div>	
-				<?php
+				$mwb_wpr_order_points = apply_filters( 'mwb_wpr_enable_points_on_order_total', false );
+				if( $mwb_wpr_order_points ) {
+					do_action( 'mwb_wpr_points_on_order_total', $get_points, $user_id );
+				} else{
+					?>
+					<div class="mwb_wpr_apply_custom_points">
+						<input type="number" min="0" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>
+						<input type="button" class="button mwb_cart_points_apply" name="mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>">
+						<p><?php esc_html_e( 'Your available points:', 'points-rewards-for-woocommerce' ); ?>
+						<?php echo esc_html( $get_points ); ?></p>
+					</div>	
+					<?php
+				}
+				
 			}
 		}
 	}
