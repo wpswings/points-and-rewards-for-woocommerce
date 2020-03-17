@@ -1192,10 +1192,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		}
 	}
 } else {
+	do_action("mwb_wpr_add_additional_import_points");
 	?>
 	<h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-rewards-for-woocommerce' ); ?></h3>
 	<?php
-	do_action("mwb_wpr_add_additional_import_points");
 	$general_settings  = get_option( 'mwb_wpr_settings_gallery', true );
 	$enable_mwb_signup = isset( $general_settings['mwb_wpr_signup'] ) ? intval( $general_settings['mwb_wpr_signup'] ) : 0;
 	if ( $enable_mwb_signup ) {

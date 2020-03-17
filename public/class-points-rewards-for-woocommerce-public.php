@@ -88,7 +88,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			'mwb_wpr_cart_price_rate' => $mwb_wpr_cart_price_rate,
 			'not_allowed' => __( 'Please enter some valid points!', 'points-rewards-for-woocommerce' ),
 			'not_suffient' => __( 'You do not have sufficient amount of points', 'points-rewards-for-woocommerce' ),
-			'above_order_limit' => __( 'Entered point is not applicable on this order.', 'points-rewards-for-woocommerce' ),
+			'above_order_limit' => __( 'Entered points are not applicable on this order.', 'points-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'mwb_wpr', $mwb_wpr );
 	}
