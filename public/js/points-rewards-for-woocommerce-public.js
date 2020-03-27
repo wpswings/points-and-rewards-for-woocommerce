@@ -66,6 +66,7 @@
 					function(){
 						var user_id = $( this ).data( 'id' );
 						var user_total_point = $( this ).data( 'point' );
+						var order_limit = $( this ).data( 'order-limit' );
 						var message = ''; var html = '';
 						var mwb_wpr_cart_points_rate = mwb_wpr.mwb_wpr_cart_points_rate;
 						var mwb_wpr_cart_price_rate = mwb_wpr.mwb_wpr_cart_price_rate;
@@ -110,25 +111,47 @@
 									}
 								);
 							} else {
-								if ($( ".woocommerce-cart-form" ).offset() ) {
+								if( order_limit !== 'undefined' && order_limit !== '' && order_limit !== null && order_limit > 0 ){
+									if ($( ".woocommerce-cart-form" ).offset() ) {
+										$( 'html, body' ).animate(
+											{
+												scrollTop: $( ".woocommerce-cart-form" ).offset().top
+											},
+											800
+										);
+										var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.above_order_limit + '</li></ul>';
+										$( assing_message ).insertBefore( $( '.woocommerce-cart-form' ) );
+									} else {
+										$( 'html, body' ).animate(
+											{
+												scrollTop: $( ".custom_point_checkout" ).offset().top
+											},
+											800
+										);
+										var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.above_order_limit + '</li></ul>';
+										$( assing_message ).insertBefore( $( '.custom_point_checkout' ) );
+									}
 
-									$( 'html, body' ).animate(
-										{
-											scrollTop: $( ".woocommerce-cart-form" ).offset().top
-										},
-										800
-									);
-									var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
-									$( assing_message ).insertBefore( $( '.woocommerce-cart-form' ) );
-								} else {
-									$( 'html, body' ).animate(
-										{
-											scrollTop: $( ".custom_point_checkout" ).offset().top
-										},
-										800
-									);
-									var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
-									$( assing_message ).insertBefore( $( '.custom_point_checkout' ) );
+								} else{
+									if ($( ".woocommerce-cart-form" ).offset() ) {
+										$( 'html, body' ).animate(
+											{
+												scrollTop: $( ".woocommerce-cart-form" ).offset().top
+											},
+											800
+										);
+										var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
+										$( assing_message ).insertBefore( $( '.woocommerce-cart-form' ) );
+									} else {
+										$( 'html, body' ).animate(
+											{
+												scrollTop: $( ".custom_point_checkout" ).offset().top
+											},
+											800
+										);
+										var assing_message = '<ul class="woocommerce-error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
+										$( assing_message ).insertBefore( $( '.custom_point_checkout' ) );
+									}
 								}
 							}
 						}

@@ -243,21 +243,21 @@ class Points_Rewards_For_WooCommerce_Admin {
 					$total_points = $get_points - $points;
 				} else {
 					$points = $get_points;
+					$total_points = $get_points - $points;
 				}
-				$total_points = $get_points - $points;
 			}
 			$data = array(
 				'sign'   => $sign,
 				'reason' => $reason,
 			);
 			/* Update user points*/
-			if ( ! empty( $total_points ) ) {
+			if ( isset( $total_points ) && $total_points >= 0 ) {
 				update_user_meta( $user_id, 'mwb_wpr_points', $total_points );
 			}
 			/* Update user points*/
 			self::mwb_wpr_update_points_details( $user_id, 'admin_points', $points, $data );
 			/* Send Mail to the user*/
-			$this->mwb_wpr_send_mail_details( $user_id, 'admin_notification' );
+			$this->mwb_wpr_send_mail_details( $user_id, 'admin_notification', $points );
 			wp_die();
 		}
 	}
@@ -318,7 +318,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param int    $user_id user id of the user.
 	 * @param string $type type of the points details.
 	 */
-	public function mwb_wpr_send_mail_details( $user_id, $type ) {
+	public function mwb_wpr_send_mail_details( $user_id, $type, $point ) {
 		$user                      = get_user_by( 'ID', $user_id );
 		$user_email                = $user->user_email;
 		$user_name                 = $user->user_login;
@@ -334,6 +334,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$total_points              = $this->mwb_wpr_get_user_points( $user_id );
 				$mwb_wpr_email_discription = str_replace( '[Total Points]', $total_points, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
+				$mwb_wpr_email_discription = str_replace( '[Points]', $point, $mwb_wpr_email_discription );
 				if ( self::mwb_wpr_check_mail_notfication_is_enable() ) {
 					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 					wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
@@ -542,7 +543,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						$exp_num = isset( $value['Exp_Number'] ) ? $value['Exp_Number'] : '';
 						?>
-						<input type="number" min="1" value="<?php echo esc_html( $exp_num ); ?>" name="mwb_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" class="input-text">
+						<input type="number" min="1" value="<?php echo esc_html( $exp_num ); ?>" name="mwb_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" class="input-text" required>
 						<select id="mwb_wpr_membership_expiration_days_<?php echo esc_html( $count ); ?>" name="mwb_wpr_membership_expiration_days_<?php echo esc_html( $count ); ?>">
 						<option value="days"
 						<?php
@@ -781,5 +782,5 @@ class Points_Rewards_For_WooCommerce_Admin {
 			</tbody>
 		</table>
 		<?php
-	}
+	}	
 }

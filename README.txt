@@ -5,8 +5,8 @@ Tags: points and rewards , points , rewards , loyalty , woocommerce
 Requires at least: 4.6
 Tested up to: 5.3
 WC requires at least: 3.0
-WC tested up to: 3.8.1
-Stable tag: 1.0.1
+WC tested up to: 3.9.2
+Stable tag: 1.0.3
 Requires PHP: 5.6
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -105,7 +105,7 @@ Easily turn occasional website visitors into loyal customers with Premium featur
 👉 **Multilevel Order Total Points** - The admin can set the points for the order total within the multiple dedicated ranges. 
 
 
-[Pro Plugin Demo](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) | [Get Pro](https://makewebbetter.com/product/woocommerce-points-and-rewards/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
+[Pro Plugin Demo](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/my-account/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) | [Get Pro](https://makewebbetter.com/product/woocommerce-points-and-rewards/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
 
 
@@ -200,6 +200,12 @@ Please make sure that you had Enabled the Settings from **"General Tab"** and se
 
 
 == Changelog ==
+= 1.0.3 =
+* New: Share Referral link on WhatsApp
+* Fix: Minor Issues
+
+= 1.0.2 =
+* Fix: Designing Issues
 
 = 1.0.1 =
 * Minor Fixes
@@ -209,5 +215,6 @@ Please make sure that you had Enabled the Settings from **"General Tab"** and se
 
 == Upgrade Notice ==
 
-= 1.0.1 =
-* Minor Fixes
+= 1.0.3 =
+* New: Share Referral link on WhatsApp
+* Fix: Minor Issues

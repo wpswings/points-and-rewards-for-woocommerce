@@ -121,6 +121,12 @@ $mwb_wpr_general_settings = array(
 				'class'   => 'input-text',
 				'desc'  => __( 'Email', 'points-rewards-for-woocommerce' ),
 			),
+			array(
+				'type'  => 'checkbox',
+				'id'    => 'mwb_wpr_whatsapp',
+				'class'   => 'input-text',
+				'desc'  => __( 'Whatsapp', 'points-rewards-for-woocommerce' ),
+			),
 		),
 	),
 	array(
@@ -305,6 +311,7 @@ endif;
 								}
 							}
 						}
+						do_action( 'mwb_wpr_additional_general_settings', $value, $general_settings );
 						?>
 					</div>
 				</div>

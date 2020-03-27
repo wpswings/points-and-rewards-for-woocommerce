@@ -109,6 +109,7 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) && isset( $_POST['mwb-w
 					<input type="button" value="<?php esc_html_e( 'Add More', 'points-rewards-for-woocommerce' ); ?>" class="mwb_wpr_add_more button" id="mwb_wpr_add_more">
 						<?php
 					}
+					do_action( 'mwb_wpr_additional_order_total', $value, $mwb_get_order_total_settings )
 					?>
 			</td>
 		</tr>

@@ -177,6 +177,7 @@ $mwb_wpr_assign_product_table_settings = array(
 								}
 							}
 						}
+						do_action( 'mwb_wpr_additional_assign_product_points', $value, $mwb_wpr_assing_product_points );
 						?>
 					</div>
 				</div>
