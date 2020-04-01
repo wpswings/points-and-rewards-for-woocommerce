@@ -158,9 +158,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'pro_link_text'      => __( 'Click here', 'points-rewards-for-woocommerce' ),
 					'pro_link'       => 'https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org',
 					'success_update'     => __( 'Points are updated successfully', 'points-rewards-for-woocommerce' ),
+					'support_confirm'     => __( 'Email sent successfully', 'points-rewards-for-woocommerce' ),
 				);
 
-				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2' ), $this->version, false );
+				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2' ), $this->version, false );
 
 				wp_localize_script( $this->plugin_name . 'admin-js', 'mwb_wpr_object', $mwb_wpr );
 
@@ -713,7 +714,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
-	 * This function
+	 * This function is used to add order total points.
 	 *
 	 * @name mwb_wpr_add_order_total_points.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
@@ -734,7 +735,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
-	 * This function
+	 * This function is used to add rule for order total.
 	 *
 	 * @name mwb_wpr_add_rule_for_membership.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
@@ -783,4 +784,58 @@ class Points_Rewards_For_WooCommerce_Admin {
 		</table>
 		<?php
 	}	
+
+	/**
+	 * This function is used to show support popup.
+	 *
+	 * @name mwb_wpr_support_popup.
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wpr_support_popup(){
+		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
+		if( current_user_can('administrator') ) { 
+			$status = get_option( 'mwb_wpr_suggestions_sent', false );
+			if( ! $status ){
+				$current_user = wp_get_current_user();
+				if( !empty( $current_user ) ){
+					$message  = 'Plugin : points-and-rewards-for-woocommerce<br/>';
+					$message .= 'Email Id : ' . $current_user->user_email . '<br/>';
+					$message .= 'First Name : ' . $current_user->user_firstname . '<br/>';
+					$message .= 'Last Name : ' . $current_user->user_lastname . '<br/>';
+					$message .= 'Site URL : ' . site_url() . '<br/>';
+					$message .= 'Wordpress Version : ' . get_bloginfo( 'version' ) . '<br/>';
+					$message .= 'Plugin Version : ' . REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION . '<br/>';
+					$message .= 'Woocommerce Version : ' . WC()->version . '<br/>';
+
+					$to      = 'plugins@makewebbetter.com';
+					$subject = 'Points And Rewards Customers Details';
+					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+					$status  = wp_mail( $to, $subject, $message, $headers );
+				}
+				if( $status){
+		    		update_option('mwb_wpr_suggestions_sent', true );
+		    	}
+			}
+    	}
+    	wp_die();
+	}
+
+	/**
+	 * This function is used to save data if user is not interested in support .
+	 *
+	 * @name mwb_wpr_support_popup_later.
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wpr_support_popup_later(){
+		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
+		if( current_user_can('administrator') ) { 
+			$status = get_option( 'mwb_wpr_suggestions_later', false );
+			if( ! $status ){
+				update_option('mwb_wpr_suggestions_later', true );
+			}
+    	}
+    	wp_die();
+	}
 }

@@ -189,7 +189,57 @@
 
 				}
 			);
-
+			/*support popup form */
+			$( '.mwb_wpr_accept' ).click(
+				function(){
+					jQuery( "#mwb_wpr_loader" ).show();
+					var data = {
+						action:'mwb_wpr_support_popup',
+						mwb_nonce:mwb_wpr_object.mwb_wpr_nonce,
+					};
+					$.ajax(
+						{
+							url: mwb_wpr_object.ajaxurl,
+							type: "POST",
+							data: data,
+							success: function(response)
+							{
+								jQuery( "#mwb_wpr_loader" ).hide();
+								jQuery( ".mwb_wpr_pop_up_wrap" ).hide();
+								// $( 'html, body' ).animate(
+								// 	{
+								// 		scrollTop: $( ".mwb_rwpr_header" ).offset().top
+								// 	},
+								// 	800
+								// );
+								//var assing_message = '<div class="notice notice-success is-dismissible"><p><strong>' + mwb_wpr_object.support_confirm + '</strong></p></div>';
+								//$( assing_message ).insertAfter( $( '.mwb_rwpr_header' ) );
+							}
+						}
+					);
+				}
+			);
+			$( '.mwb_wpr_later' ).click(
+				function(){
+					jQuery( "#mwb_wpr_loader" ).show();
+					var data = {
+						action:'mwb_wpr_support_popup_later',
+						mwb_nonce:mwb_wpr_object.mwb_wpr_nonce,
+					};
+					$.ajax(
+						{
+							url: mwb_wpr_object.ajaxurl,
+							type: "POST",
+							data: data,
+							success: function(response)
+							{
+								jQuery( "#mwb_wpr_loader" ).hide();
+								jQuery( ".mwb_wpr_pop_up_wrap" ).hide();
+							}
+						}
+					);
+				}
+			);
 		}
 	);
 

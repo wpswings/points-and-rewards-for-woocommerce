@@ -3,9 +3,9 @@ Contributors: MakeWebBetter
 Donate link: https://makewebbetter.com/
 Tags: points and rewards , points , rewards , loyalty , woocommerce 
 Requires at least: 4.6
-Tested up to: 5.3
+Tested up to: 5.4
 WC requires at least: 3.0
-WC tested up to: 3.9.2
+WC tested up to: 4.0.1
 Stable tag: 1.0.3
 Requires PHP: 5.6
 License: GPLv3 or later 
@@ -200,6 +200,10 @@ Please make sure that you had Enabled the Settings from **"General Tab"** and se
 
 
 == Changelog ==
+= 1.0.4 =
+* New: Effective chat support
+* Fix: Minor Issues
+
 = 1.0.3 =
 * New: Share Referral link on WhatsApp
 * Fix: Minor Issues
@@ -215,6 +219,6 @@ Please make sure that you had Enabled the Settings from **"General Tab"** and se
 
 == Upgrade Notice ==
 
-= 1.0.3 =
-* New: Share Referral link on WhatsApp
+= 1.0.4 =
+* New: Effective chat support
 * Fix: Minor Issues

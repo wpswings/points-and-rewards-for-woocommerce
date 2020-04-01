@@ -22,7 +22,7 @@
  * Domain Path:       /languages
  *
  * Requires at least: 4.6
- * Tested up to:      5.3.2
+ * Tested up to:      5.4
  * WC requires at least: 3.0
  * WC tested up to: 4.0.1
  *
@@ -52,7 +52,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.0.3' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.0.4' );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_HOME_URL', admin_url() );
