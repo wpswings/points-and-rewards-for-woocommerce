@@ -206,14 +206,6 @@
 							{
 								jQuery( "#mwb_wpr_loader" ).hide();
 								jQuery( ".mwb_wpr_pop_up_wrap" ).hide();
-								// $( 'html, body' ).animate(
-								// 	{
-								// 		scrollTop: $( ".mwb_rwpr_header" ).offset().top
-								// 	},
-								// 	800
-								// );
-								//var assing_message = '<div class="notice notice-success is-dismissible"><p><strong>' + mwb_wpr_object.support_confirm + '</strong></p></div>';
-								//$( assing_message ).insertAfter( $( '.mwb_rwpr_header' ) );
 							}
 						}
 					);
