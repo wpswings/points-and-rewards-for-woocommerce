@@ -109,24 +109,30 @@ if ( ! is_array( $coupon_settings ) ) {
 	</div>
 	<?php
 	if ( isset( $mwb_user_point_expiry ) && ! empty( $mwb_user_point_expiry ) && $get_points > 0 ) {
+		$expiration_settings = get_option( 'mwb_wpr_points_expiration_settings', true );
+		if ( ! empty( $expiration_settings['mwb_wpr_points_exp_onmyaccount'] ) ) {
+			$mwb_wpr_points_exp_onmyaccount = $expiration_settings['mwb_wpr_points_exp_onmyaccount'];
+		}
+		if ( isset( $mwb_wpr_points_exp_onmyaccount ) && ! empty( $mwb_wpr_points_exp_onmyaccount ) ) {
 			$date_format = get_option( 'date_format' );
 			$expiry_date_timestamp = strtotime( $mwb_user_point_expiry );
 			$expirydate_format = date_i18n( $date_format, $expiry_date_timestamp );
 			echo '<p class=mwb_wpr_points_expiry> ' . esc_html_e( 'Get Expired: ', 'points-rewards-for-woocommerce' ) . esc_html( $expirydate_format ) . '</p>';
+		}
 	}
 	?>
 </div>		
-	<span class="mwb_wpr_view_log">
-		<a href="
-		<?php
-		echo esc_url( get_permalink() . 'view-log/' . $user_id );
-		?>
-		">
-		<?php
-		esc_html_e( 'View Point Log', 'points-rewards-for-woocommerce' );
-		?>
-		</a>
-	</span>
+<span class="mwb_wpr_view_log">
+	<a href="
+	<?php
+	echo esc_url( get_permalink() . 'view-log/' . $user_id );
+	?>
+	">
+	<?php
+	esc_html_e( 'View Point Log', 'points-rewards-for-woocommerce' );
+	?>
+	</a>
+</span>
 <?php
 if ( isset( $mwb_ways_to_gain_points_value ) && ! empty( $mwb_ways_to_gain_points_value ) ) {
 	?>
@@ -212,7 +218,7 @@ if ( $mwb_wpr_mem_enable ) {
 												$product_name = $_product->get_title();
 												$pro_url = get_permalink( $pro_id );
 												if ( empty( $pro_img[0] ) ) {
-														$pro_img[0] = MWB_WPR_URL . '/assets/images/placeholder.png';
+													$pro_img[0] = MWB_RWPR_DIR_URL . 'public/images/placeholder.png';
 												}
 												?>
 												<li>
@@ -322,7 +328,6 @@ if ( isset( $enable_drop ) && $enable_drop ) {
 		<?php
 	}
 }
-
 do_action( 'mwb_wpr_add_coupon_generation', $user_id );
 ?>
 <br>
@@ -337,6 +342,3 @@ if ( $enable_mwb_refer ) {
 /* of the Referral Section*/
 do_action( 'mwb_wpr_add_share_points', $user_id );
 $mwb_wpr_user_can_send_point = get_option( 'mwb_wpr_user_can_send_point', 0 );
-?>
-	
-</div>

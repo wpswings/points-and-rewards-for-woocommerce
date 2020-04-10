@@ -265,12 +265,6 @@
   line-height: 1.3;
   font-weight: 600;
 }
-.form-table td {
-  margin-bottom: 9px;
-  padding: 5px 0px;
-  line-height: 1.3;
-  vertical-align: middle;
-}
 #mwb_rwpr_other_setting_giftcard_html {
   width: 100%;
 }
@@ -438,9 +432,9 @@
 }
 /*overview settings*/
 .mwb_wpr_overview_heading {
-    font-size: 28px;
-    font-weight: 400;
-    text-align: left;
+	font-size: 28px;
+	font-weight: 400;
+	text-align: left;
 }
 .mwb_wpr_overview_content p {
   font-size: 16px;
@@ -525,15 +519,17 @@
 =            points table            =
 ====================================*/
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider {
-  background-color: #eeeeee;
+  background-color: #ef5350;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
   position: relative;
+  color: #ffffff;
 }
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider.active {
-  background-color: #ef5350;
-  color: #ffffff;
+  background-color: #eeeeee;
+  color:#23282d;
+
 }
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider::after {
   content: "\f460";
@@ -650,3 +646,80 @@ a.mwb_gw_nav_tab.nav-tab {
   #mwb_wpr_settings_wrapper #mainform .mwb_wpr_email_wrapper .mwb_wpr_email_wrapper_text h2 {
    text-align: left!important;
  }
+.mwb_wpr_common_table thead th {
+	padding: 0px 10px;
+}
+.form-table.mwp_wpr_settings.mwb_wpr_points_view_total {
+	background-color: #4F3154;
+	font-size: 16px;
+	color: #ffffff;
+}
+
+/*chat now on skype*/
+#mwb-wpr-skype-link img {
+margin-right: 5px;
+vertical-align: text-bottom;
+}
+#mwb-wpr-skype-link {
+color: #00AAF2;
+background: #fff;
+border-radius: 4px;
+display: inline-block;
+padding: 7px 8px;
+font-weight: bold;
+}
+
+/*popup for lead*/
+.mwb_wpr_pop_up_wrap {
+background-color: rgba(0, 0, 0, 0.55);
+bottom: 0;
+height: 100%;
+left: 0;
+position: fixed;
+right: 0;
+top: 0;
+width: 100%;
+z-index: 9999;
+}
+.mwb_wpr_pop_up_wrap p {
+color: #232323;
+font-size: 17px;
+text-align: center;
+}
+.mwb_wpr_pop_up_wrap .pop_up_sub_wrap {
+background-color: #fff;
+border-radius: 3px;
+box-shadow: 0 6px 5px rgba(0, 0, 0, 0.4);
+box-sizing: border-box;
+left: 0;
+margin: 0 auto;
+max-width: 595px;
+min-height: 228px;
+padding: 16px;
+position: absolute;
+right: 0;
+top: 50%;
+transform: translateY(-50%);
+}
+.mwb_wpr_pop_up_wrap .pop_up_sub_wrap .button_wrap {
+margin-top: 35px;
+text-align: center;
+}
+.mwb_wpr_pop_up_wrap .pop_up_sub_wrap .button_wrap a {
+border-radius: 3px;
+box-sizing: border-box;
+color: #fff;
+display: block;
+font-size: 17px;
+padding: 10px;
+text-decoration: none;
+width: 80%;
+margin: 0 auto 15px;
+}
+.mwb_wpr_pop_up_wrap .pop_up_sub_wrap .button_wrap a:nth-child(1) {
+background-color: #26488f;
+}
+.mwb_wpr_pop_up_wrap .pop_up_sub_wrap .button_wrap a:nth-child(2) {
+text-decoration: underline;
+color: #252525;
+}

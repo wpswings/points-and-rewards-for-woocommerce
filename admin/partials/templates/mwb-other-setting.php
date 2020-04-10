@@ -150,6 +150,7 @@ $other_settings = get_option( 'mwb_wpr_other_settings', array() );
 								}
 							}
 						}
+						do_action( 'mwb_wpr_additional_other_settings', $value, $other_settings );
 						?>
 					</div>
 				</div>

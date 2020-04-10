@@ -157,7 +157,7 @@
 					function(){
 						var html = '';
 						$( document ).find( '.mwb_wpr_object_purchase' ).remove();
-						html = '<div class="mwb_wpr_object_purchase"><p>' + mwb_wpr_object.pro_text +' <a target="_blanck" href="'+mwb_wpr_object.pro_link+'">' + mwb_wpr_object.pro_link_text+'</a></p></div>';
+						html = '<div class="mwb_wpr_object_purchase"><p>' + mwb_wpr_object.pro_text + ' <a target="_blanck" href="' + mwb_wpr_object.pro_link + '">' + mwb_wpr_object.pro_link_text + '</a></p></div>';
 						$( '.parent_of_div' ).append( html );
 					}
 				);
@@ -171,7 +171,7 @@
 					function() {
 						var html = '';
 						$( document ).find( '.mwb_wpr_object_purchase' ).remove();
-						html = '<div class="mwb_wpr_object_purchase"><p>' + mwb_wpr_object.pro_text +' <a target="_blanck" href="'+mwb_wpr_object.pro_link+'">' + mwb_wpr_object.pro_link_text+'</a></p></div>';
+						html = '<div class="mwb_wpr_object_purchase"><p>' + mwb_wpr_object.pro_text + ' <a target="_blanck" href="' + mwb_wpr_object.pro_link + '">' + mwb_wpr_object.pro_link_text + '</a></p></div>';
 						$( html ).insertAfter( '.wp-list-table' );
 					}
 				);
@@ -189,7 +189,49 @@
 
 				}
 			);
-
+			/*support popup form */
+			$( '.mwb_wpr_accept' ).click(
+				function(){
+					jQuery( "#mwb_wpr_loader" ).show();
+					var data = {
+						action:'mwb_wpr_support_popup',
+						mwb_nonce:mwb_wpr_object.mwb_wpr_nonce,
+					};
+					$.ajax(
+						{
+							url: mwb_wpr_object.ajaxurl,
+							type: "POST",
+							data: data,
+							success: function(response)
+							{
+								jQuery( "#mwb_wpr_loader" ).hide();
+								jQuery( ".mwb_wpr_pop_up_wrap" ).hide();
+							}
+						}
+					);
+				}
+			);
+			$( '.mwb_wpr_later' ).click(
+				function(){
+					jQuery( "#mwb_wpr_loader" ).show();
+					var data = {
+						action:'mwb_wpr_support_popup_later',
+						mwb_nonce:mwb_wpr_object.mwb_wpr_nonce,
+					};
+					$.ajax(
+						{
+							url: mwb_wpr_object.ajaxurl,
+							type: "POST",
+							data: data,
+							success: function(response)
+							{
+								jQuery( "#mwb_wpr_loader" ).hide();
+								jQuery( ".mwb_wpr_pop_up_wrap" ).hide();
+							}
+						}
+					);
+				}
+			);
 		}
 	);
 

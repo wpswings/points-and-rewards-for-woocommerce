@@ -25,11 +25,11 @@
 }
 
 .mwb_rwpr_settings_display_none {
-    display: none!important
+    display: none;
 }
 
 #mwb_wpr_membership .mwb_rwpr_settings_display_none {
-    display: none
+    display: none;
 }
 
 .mwb_account_wrapper .input-number {
@@ -616,13 +616,15 @@ html {
     left: 7px;
     position: absolute;
     top: -6px;
-    width: 2px
+    width: 2px;
 }
 
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider .mwb_wpr_plus_icon:before {
-    content: none
+    content:none;
 }
-
+.mwb_wpr_common_table {
+    display: none;
+}
 .mwb_wpr_apply_custom_points {
     display: inline-block;
     width: 100%;
@@ -645,20 +647,6 @@ html {
 .high {
     font-weight: 700;
     margin-right: 5px
-}
-
-.mwb_wpr_purchase_pro_point {
-    display: inline-block;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-    background-color: #437a8f;
-    position: relative;
-    padding: 4px 8px 4px 20px;
-    color: #fff;
-    font-weight: 700;
-    margin-top: 20px;
-    font-family: Montserrat;
-    font-size: 15px
 }
 
 #mwb_wpr_order_notice::before {
@@ -834,4 +822,25 @@ html {
 
 .mwb_wpr_avada_wrap button#mwb_cart_points_apply {
     line-height: 1.8
+}
+.mwb_whatsapp_share {
+    background: #25d366;
+    border-radius: 3px;
+    display: inline-block;
+    height: 21px;
+    padding: 0;
+    text-align: center;
+    vertical-align: top;
+    width: 50px;
+    box-shadow: none;
+}
+.mwb_whatsapp_share img {
+    max-width: 16px;
+    display: inline-block;
+    margin: 2px auto 0;
+    vertical-align: top;
+    width: 18px;
+}
+.mwb_wpr_common_table thead th {
+    padding: 0px 24px;
 }

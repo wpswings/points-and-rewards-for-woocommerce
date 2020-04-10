@@ -165,6 +165,11 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_mwb_wpr_select_category', $plugin_admin, 'mwb_wpr_select_category' );
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_select_category', $plugin_admin, 'mwb_wpr_select_category' );
 		$this->loader->add_action( 'admin_head', $plugin_admin, 'mwb_wpr_add_membership_rule' );
+		/*popup*/
+		$this->loader->add_action( 'wp_ajax_mwb_wpr_support_popup', $plugin_admin, 'mwb_wpr_support_popup' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_support_popup', $plugin_admin, 'mwb_wpr_support_popup' );
+		$this->loader->add_action( 'wp_ajax_mwb_wpr_support_popup_later', $plugin_admin, 'mwb_wpr_support_popup_later' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_support_popup_later', $plugin_admin, 'mwb_wpr_support_popup_later' );
 	}
 
 	/**

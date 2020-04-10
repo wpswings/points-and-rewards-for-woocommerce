@@ -158,6 +158,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'pro_link_text'      => __( 'Click here', 'points-rewards-for-woocommerce' ),
 					'pro_link'       => 'https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org',
 					'success_update'     => __( 'Points are updated successfully', 'points-rewards-for-woocommerce' ),
+					'support_confirm'     => __( 'Email sent successfully', 'points-rewards-for-woocommerce' ),
 				);
 
 				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2' ), $this->version, false );
@@ -243,21 +244,21 @@ class Points_Rewards_For_WooCommerce_Admin {
 					$total_points = $get_points - $points;
 				} else {
 					$points = $get_points;
+					$total_points = $get_points - $points;
 				}
-				$total_points = $get_points - $points;
 			}
 			$data = array(
 				'sign'   => $sign,
 				'reason' => $reason,
 			);
 			/* Update user points*/
-			if ( ! empty( $total_points ) ) {
+			if ( isset( $total_points ) && $total_points >= 0 ) {
 				update_user_meta( $user_id, 'mwb_wpr_points', $total_points );
 			}
 			/* Update user points*/
 			self::mwb_wpr_update_points_details( $user_id, 'admin_points', $points, $data );
 			/* Send Mail to the user*/
-			$this->mwb_wpr_send_mail_details( $user_id, 'admin_notification' );
+			$this->mwb_wpr_send_mail_details( $user_id, 'admin_notification', $points );
 			wp_die();
 		}
 	}
@@ -318,7 +319,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param int    $user_id user id of the user.
 	 * @param string $type type of the points details.
 	 */
-	public function mwb_wpr_send_mail_details( $user_id, $type ) {
+	public function mwb_wpr_send_mail_details( $user_id, $type, $point ) {
 		$user                      = get_user_by( 'ID', $user_id );
 		$user_email                = $user->user_email;
 		$user_name                 = $user->user_login;
@@ -334,6 +335,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$total_points              = $this->mwb_wpr_get_user_points( $user_id );
 				$mwb_wpr_email_discription = str_replace( '[Total Points]', $total_points, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
+				$mwb_wpr_email_discription = str_replace( '[Points]', $point, $mwb_wpr_email_discription );
 				if ( self::mwb_wpr_check_mail_notfication_is_enable() ) {
 					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 					wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
@@ -542,7 +544,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						$exp_num = isset( $value['Exp_Number'] ) ? $value['Exp_Number'] : '';
 						?>
-						<input type="number" min="1" value="<?php echo esc_html( $exp_num ); ?>" name="mwb_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" class="input-text">
+						<input type="number" min="1" value="<?php echo esc_html( $exp_num ); ?>" name="mwb_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" id="mwb_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" class="input-text" required>
 						<select id="mwb_wpr_membership_expiration_days_<?php echo esc_html( $count ); ?>" name="mwb_wpr_membership_expiration_days_<?php echo esc_html( $count ); ?>">
 						<option value="days"
 						<?php
@@ -712,7 +714,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
-	 * This function
+	 * This function is used to add order total points.
 	 *
 	 * @name mwb_wpr_add_order_total_points.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
@@ -733,7 +735,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
-	 * This function
+	 * This function is used to add rule for order total.
 	 *
 	 * @name mwb_wpr_add_rule_for_membership.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
@@ -781,5 +783,59 @@ class Points_Rewards_For_WooCommerce_Admin {
 			</tbody>
 		</table>
 		<?php
+	}
+
+	/**
+	 * This function is used to show support popup.
+	 *
+	 * @name mwb_wpr_support_popup.
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wpr_support_popup() {
+		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
+		if ( current_user_can( 'administrator' ) ) {
+			$status = get_option( 'mwb_wpr_suggestions_sent', false );
+			if ( ! $status ) {
+				$current_user = wp_get_current_user();
+				if ( ! empty( $current_user ) ) {
+					$message  = 'Plugin : points-and-rewards-for-woocommerce<br/>';
+					$message .= 'Email Id : ' . $current_user->user_email . '<br/>';
+					$message .= 'First Name : ' . $current_user->user_firstname . '<br/>';
+					$message .= 'Last Name : ' . $current_user->user_lastname . '<br/>';
+					$message .= 'Site URL : ' . site_url() . '<br/>';
+					$message .= 'Wordpress Version : ' . get_bloginfo( 'version' ) . '<br/>';
+					$message .= 'Plugin Version : ' . REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION . '<br/>';
+					$message .= 'Woocommerce Version : ' . WC()->version . '<br/>';
+
+					$to      = 'plugins@makewebbetter.com';
+					$subject = 'Points And Rewards Customers Details';
+					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+					$status  = wp_mail( $to, $subject, $message, $headers );
+				}
+				if ( $status ) {
+					update_option( 'mwb_wpr_suggestions_sent', true );
+				}
+			}
+		}
+		wp_die();
+	}
+
+	/**
+	 * This function is used to save data if user is not interested in support .
+	 *
+	 * @name mwb_wpr_support_popup_later.
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wpr_support_popup_later() {
+		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
+		if ( current_user_can( 'administrator' ) ) {
+			$status = get_option( 'mwb_wpr_suggestions_later', false );
+			if ( ! $status ) {
+				update_option( 'mwb_wpr_suggestions_later', true );
+			}
+		}
+		wp_die();
 	}
 }

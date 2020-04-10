@@ -78,6 +78,11 @@ $mwb_wpr_setting_tab = array(
 					<?php
 			}
 			?>
+			<li>
+				<a id="mwb-wpr-skype-link" href="<?php echo esc_url( 'https://join.skype.com/invite/IKVeNkLHebpC' ); ?>" target="_blank">
+					<img src="<?php echo esc_url( MWB_RWPR_DIR_URL . 'admin/images/skype_logo.png' ); ?>" style="height: 15px;width: 15px;" ><?php esc_html_e( 'CHAT NOW', 'points-rewards-for-woocommerce' ); ?>
+				</a>
+			</li>
 		</ul>
 	</div>
 </div>
