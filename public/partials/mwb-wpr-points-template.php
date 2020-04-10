@@ -111,9 +111,9 @@ if ( ! is_array( $coupon_settings ) ) {
 	if ( isset( $mwb_user_point_expiry ) && ! empty( $mwb_user_point_expiry ) && $get_points > 0 ) {
 		$expiration_settings = get_option( 'mwb_wpr_points_expiration_settings', true );
 		if ( ! empty( $expiration_settings['mwb_wpr_points_exp_onmyaccount'] ) ) {
-			$mwb_wpr_points_exp_onmyaccount = $expiration_settings[ 'mwb_wpr_points_exp_onmyaccount' ];
+			$mwb_wpr_points_exp_onmyaccount = $expiration_settings['mwb_wpr_points_exp_onmyaccount'];
 		}
-		if( isset( $mwb_wpr_points_exp_onmyaccount ) && !empty( $mwb_wpr_points_exp_onmyaccount ) ) {
+		if ( isset( $mwb_wpr_points_exp_onmyaccount ) && ! empty( $mwb_wpr_points_exp_onmyaccount ) ) {
 			$date_format = get_option( 'date_format' );
 			$expiry_date_timestamp = strtotime( $mwb_user_point_expiry );
 			$expirydate_format = date_i18n( $date_format, $expiry_date_timestamp );

@@ -525,7 +525,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 *
 	 * @since 1.0.0
 	 */
-	public function mwb_wrp_show_support_popup(){
+	public function mwb_wrp_show_support_popup() {
 		$display = 'none';
 		if ( $this->is_display_suggestion_popup() ) {
 			$display = 'block';

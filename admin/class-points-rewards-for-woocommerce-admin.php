@@ -783,7 +783,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			</tbody>
 		</table>
 		<?php
-	}	
+	}
 
 	/**
 	 * This function is used to show support popup.
@@ -792,13 +792,13 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wpr_support_popup(){
+	public function mwb_wpr_support_popup() {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
-		if( current_user_can('administrator') ) { 
+		if ( current_user_can( 'administrator' ) ) {
 			$status = get_option( 'mwb_wpr_suggestions_sent', false );
-			if( ! $status ){
+			if ( ! $status ) {
 				$current_user = wp_get_current_user();
-				if( !empty( $current_user ) ){
+				if ( ! empty( $current_user ) ) {
 					$message  = 'Plugin : points-and-rewards-for-woocommerce<br/>';
 					$message .= 'Email Id : ' . $current_user->user_email . '<br/>';
 					$message .= 'First Name : ' . $current_user->user_firstname . '<br/>';
@@ -813,12 +813,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 					$status  = wp_mail( $to, $subject, $message, $headers );
 				}
-				if( $status){
-		    		update_option('mwb_wpr_suggestions_sent', true );
-		    	}
+				if ( $status ) {
+					update_option( 'mwb_wpr_suggestions_sent', true );
+				}
 			}
-    	}
-    	wp_die();
+		}
+		wp_die();
 	}
 
 	/**
@@ -828,14 +828,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	public function mwb_wpr_support_popup_later(){
+	public function mwb_wpr_support_popup_later() {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
-		if( current_user_can('administrator') ) { 
+		if ( current_user_can( 'administrator' ) ) {
 			$status = get_option( 'mwb_wpr_suggestions_later', false );
-			if( ! $status ){
-				update_option('mwb_wpr_suggestions_later', true );
+			if ( ! $status ) {
+				update_option( 'mwb_wpr_suggestions_later', true );
 			}
-    	}
-    	wp_die();
+		}
+		wp_die();
 	}
 }

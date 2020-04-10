@@ -813,16 +813,16 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( isset( $user_id ) && ! empty( $user_id ) ) {
 					$mwb_wpr_ref_noof_order = (int) get_user_meta( $user_id, 'mwb_wpr_no_of_orders', true );
 					if ( isset( $mwb_wpr_ref_noof_order ) && ! empty( $mwb_wpr_ref_noof_order ) ) {
-						$order_limit =  get_post_meta($order_id, "$order_id#$mwb_wpr_ref_noof_order", true );
-						if ( isset( $order_limit ) && $order_limit == 'set') {
+						$order_limit = get_post_meta( $order_id, "$order_id#$mwb_wpr_ref_noof_order", true );
+						if ( isset( $order_limit ) && $order_limit == 'set' ) {
 							return;
-						} else{
+						} else {
 							$mwb_wpr_ref_noof_order++;
 							update_user_meta( $user_id, 'mwb_wpr_no_of_orders', $mwb_wpr_ref_noof_order );
 						}
 					} else {
 						update_user_meta( $user_id, 'mwb_wpr_no_of_orders', 1 );
-					}					
+					}
 				}
 				/*Order total points*/
 				if ( $this->check_enable_offer() ) {
@@ -1016,9 +1016,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 			if ( isset( $user_id ) && ! empty( $user_id ) ) {
 				$mwb_wpr_order_points = apply_filters( 'mwb_wpr_enable_points_on_order_total', false );
-				if( $mwb_wpr_order_points ) {
+				if ( $mwb_wpr_order_points ) {
 					do_action( 'mwb_wpr_points_on_order_total', $get_points, $user_id );
-				} else{
+				} else {
 					?>
 					<div class="mwb_wpr_apply_custom_points">
 						<input type="number" min="0" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>
@@ -1028,7 +1028,6 @@ class Points_Rewards_For_WooCommerce_Public {
 					</div>	
 					<?php
 				}
-				
 			}
 		}
 	}
@@ -1773,9 +1772,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			$conversion              = ( $get_points * $mwb_wpr_cart_price_rate / $mwb_wpr_cart_points_rate );
 
 			$mwb_wpr_order_points = apply_filters( 'mwb_wpr_enable_points_on_order_total', false );
-			if( $mwb_wpr_order_points ) {
+			if ( $mwb_wpr_order_points ) {
 				do_action( 'mwb_wpr_point_limit_on_order_checkout', $get_points, $user_id );
-			} else{
+			} else {
 				?>
 				<div class="custom_point_checkout woocommerce-info mwb_wpr_checkout_points_class">
 					<input type="number" min="0" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-rewards-for-woocommerce' ); ?>"/>

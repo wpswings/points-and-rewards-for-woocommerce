@@ -254,7 +254,7 @@ if ( isset( $_POST['mwb_wpr_save_general'] ) && isset( $_POST['mwb-wpr-nonce'] )
 			if ( is_array( $general_settings_array ) && ! empty( $general_settings_array ) ) {
 				$general_settings_array = apply_filters( 'mwb_wpr_general_settings_save_option', $general_settings_array );
 				update_option( 'mwb_wpr_settings_gallery', $general_settings_array );
-				$settings_obj->mwb_wrp_show_support_popup();		
+				$settings_obj->mwb_wrp_show_support_popup();
 			}
 			$settings_obj->mwb_wpr_settings_saved();
 			do_action( 'mwb_wpr_general_settings_save_option', $general_settings_array );
@@ -328,4 +328,4 @@ endif;
 		<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_general">
 	</p>
 	<?php
-	
+
