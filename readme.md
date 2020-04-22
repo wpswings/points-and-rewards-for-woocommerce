@@ -34,7 +34,7 @@ Customers with this Woocommerce points and rewards plugin have the opportunity t
 - **Referral Program** – The customer can earn points by sharing the referral link with their family and friends. Also, the customer can share their referral link on social platforms like Facebook, Twitter and/or Email(only if enabled by the admin/merchant).
 
 
- Note:// The points for the referral program will only be credited to the referrer&#39;s account when the referred sign-ups using the shared referral link. The signup points will be credited to the referral link user&#39;s account.
+ > Note:// The points for the referral program will only be credited to the referrer&#39;s account when the referred sign-ups using the shared referral link. The signup points will be credited to the referral link user&#39;s account.
 
 
 - **Amount Spent** – The customer can earn points against the amount they&#39;ll spend on buying. The admin/merchant can set the points to be credited to the customer&#39;s account against each penny spend via the Conversion feature
@@ -44,7 +44,7 @@ Customers with this Woocommerce points and rewards plugin have the opportunity t
 - **Points On Order Total** – The customer can earn points defined by the admin on the order total value only when the order total lies within the dedicated range of &quot;the amount spent&quot; set by the admin.
 
 
- Note:// The admin/merchant can enable/disable the awarding points allowances and count as per their business model.
+> Note:// The admin/merchant can enable/disable the awarding points allowances and count as per their business model.
 
 
 ### 2)Redeem Points
@@ -77,7 +77,7 @@ With Points And Reward For WooCommerce, the admin can enable the settings to not
 
 ## WANT TO DO MORE WITH POINTS AND REWARDS FOR WOOCOMMERCE?
 
-Note:// Get[**Points and Rewards for WooCommerce Pro**](https://makewebbetter.com/product/WooCommerce-points-and-rewards/?utm_source=MWB-PAR-org&amp;utm_medium=MWB-org-page&amp;utm_campaign=MWB-PAR-org)
+> Note:// Get [**Points and Rewards for WooCommerce Pro**](https://makewebbetter.com/product/WooCommerce-points-and-rewards/?utm_source=MWB-PAR-org&amp;utm_medium=MWB-org-page&amp;utm_campaign=MWB-PAR-org)
 
 ### 1)Multilevel Membership
 
