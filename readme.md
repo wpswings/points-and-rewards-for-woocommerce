@@ -14,6 +14,8 @@ _Are you an online store owner who wants to grow customer engagement? Do you wan
 
 **Points And Rewards For WooCommerce** is a customer retention solution which aims to engage customers by offering them points for activities they perform on your store like signup, purchase, referrals, etc. Customers can redeem points with on-purchase discounts and participate in the membership program. Using Points and Rewards System in WooCommerce Store can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV) and referral marketing scope.
 
+[![Watch the video](https://shorturl.at/hyW38)](https://youtu.be/WWktrnAI88U)
+
 ## POINTS AND REWARDS FOR WOOCOMMERCE HELPS MERCHANT ACHIEVE
 
 - Engage customers with points and rewards with every action they perform.
