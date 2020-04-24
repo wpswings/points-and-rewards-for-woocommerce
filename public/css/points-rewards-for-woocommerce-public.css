@@ -649,20 +649,6 @@ html {
     margin-right: 5px
 }
 
-.mwb_wpr_purchase_pro_point {
-    display: inline-block;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-    background-color: #437a8f;
-    position: relative;
-    padding: 4px 8px 4px 20px;
-    color: #fff;
-    font-weight: 700;
-    margin-top: 20px;
-    font-family: Montserrat;
-    font-size: 15px
-}
-
 #mwb_wpr_order_notice::before {
     content: ""
 }

@@ -299,12 +299,11 @@ if ( isset( $_POST['mwb_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
 			$coupon_settings_array = get_option( 'mwb_wpr_coupons_gallery', array() );
 			foreach ( $user_data as $key => $value ) {
 				$check_user = get_user_meta( $value->data->ID, 'mwb_wpr_points', false );
-
 				if ( false == $check_user ) {
 
 					if ( in_array( 'subscriber', $value->roles ) || in_array( 'customer', $value->roles ) ) {
 						$today_date                       = date_i18n( 'Y-m-d h:i:sa' );
-						$mwb_signup_value                 = isset( $general_settings['mwb_signup_value'] ) ? intval( $general_settings['mwb_signup_value'] ) : 1;
+						$mwb_signup_value                 = isset( $general_settings['mwb_wpr_general_signup_value'] ) ? intval( $general_settings['mwb_wpr_general_signup_value'] ) : 1;
 						$import_points['import_points'][] = array(
 							'import_points' => $mwb_signup_value,
 							'date'          => $today_date,
@@ -1093,7 +1092,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'Sender_point_details', $point_log ) ) {
 					?>
 	<div class="mwb_wpr_slide_toggle">
-		<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Shared with', 'points-rewards-for-woocommerce' ); ?>
+		<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Points Shared with', 'points-rewards-for-woocommerce' ); ?>
 		  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
 	  </p>
 	  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
@@ -1113,8 +1112,8 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					<?php
 					foreach ( $point_log['Sender_point_details'] as $key => $value ) {
 						$user_name = '';
-						if ( isset( $value['give_to'] ) && ! empty( $value['give_to'] ) ) {
-							$user      = get_user_by( 'ID', $value['give_to'] );
+						if ( isset( $value['given_to'] ) && ! empty( $value['given_to'] ) ) {
+							$user      = get_user_by( 'ID', $value['given_to'] );
 							$user_name = $user->user_nicename;
 						}
 						?>
@@ -1196,8 +1195,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	?>
 	<h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-rewards-for-woocommerce' ); ?></h3>
 	<?php
+	do_action("mwb_wpr_add_additional_import_points");
 	$general_settings  = get_option( 'mwb_wpr_settings_gallery', true );
-	$enable_mwb_signup = isset( $general_settings['enable_mwb_signup'] ) ? intval( $general_settings['enable_mwb_signup'] ) : 0;
+	$enable_mwb_signup = isset( $general_settings['mwb_wpr_signup'] ) ? intval( $general_settings['mwb_wpr_signup'] ) : 0;
 	if ( $enable_mwb_signup ) {
 		$import_user = get_option( 'mwb_wpr_user_imported', false );
 

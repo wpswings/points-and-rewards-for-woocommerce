@@ -561,8 +561,8 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 					<?php
 					foreach ( $point_log['Sender_point_details'] as $key => $value ) {
 						$user_name = '';
-						if ( isset( $value['give_to'] ) && ! empty( $value['give_to'] ) ) {
-							$user      = get_user_by( 'ID', $value['give_to'] );
+						if ( isset( $value['given_to'] ) && ! empty( $value['given_to'] ) ) {
+							$user      = get_user_by( 'ID', $value['given_to'] );
 							$user_name = $user->user_nicename;
 						}
 						?>

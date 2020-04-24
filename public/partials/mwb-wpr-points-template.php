@@ -122,17 +122,17 @@ if ( ! is_array( $coupon_settings ) ) {
 	}
 	?>
 </div>		
-	<span class="mwb_wpr_view_log">
-		<a href="
-		<?php
-		echo esc_url( get_permalink() . 'view-log/' . $user_id );
-		?>
-		">
-		<?php
-		esc_html_e( 'View Point Log', 'points-rewards-for-woocommerce' );
-		?>
-		</a>
-	</span>
+<span class="mwb_wpr_view_log">
+	<a href="
+	<?php
+	echo esc_url( get_permalink() . 'view-log/' . $user_id );
+	?>
+	">
+	<?php
+	esc_html_e( 'View Point Log', 'points-rewards-for-woocommerce' );
+	?>
+	</a>
+</span>
 <?php
 if ( isset( $mwb_ways_to_gain_points_value ) && ! empty( $mwb_ways_to_gain_points_value ) ) {
 	?>
@@ -328,7 +328,6 @@ if ( isset( $enable_drop ) && $enable_drop ) {
 		<?php
 	}
 }
-
 do_action( 'mwb_wpr_add_coupon_generation', $user_id );
 ?>
 <br>
@@ -343,6 +342,3 @@ if ( $enable_mwb_refer ) {
 /* of the Referral Section*/
 do_action( 'mwb_wpr_add_share_points', $user_id );
 $mwb_wpr_user_can_send_point = get_option( 'mwb_wpr_user_can_send_point', 0 );
-?>
-	
-</div>
