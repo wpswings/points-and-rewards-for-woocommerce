@@ -90,16 +90,16 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
 				$params  = array(
 					/* translators: %s: decimal */
-					'i18n_decimal_error'               => sprintf( __( 'Please enter in decimal (%s) format without thousand separators.', 'points-rewards-for-woocommerce' ), $decimal ),
+					'i18n_decimal_error'               => sprintf( __( 'Please enter in decimal (%s) format without thousand separators.', 'points-and-rewards-for-woocommerce' ), $decimal ),
 					/* translators: %s: price decimal separator */
-					'i18n_mon_decimal_error'           => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.', 'points-rewards-for-woocommerce' ), wc_get_price_decimal_separator() ),
-					'i18n_country_iso_error'           => __( 'Please enter in country code with two capital letters.', 'points-rewards-for-woocommerce' ),
-					'i18_sale_less_than_regular_error' => __( 'Please enter in a value less than the regular price.', 'points-rewards-for-woocommerce' ),
+					'i18n_mon_decimal_error'           => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.', 'points-and-rewards-for-woocommerce' ), wc_get_price_decimal_separator() ),
+					'i18n_country_iso_error'           => __( 'Please enter in country code with two capital letters.', 'points-and-rewards-for-woocommerce' ),
+					'i18_sale_less_than_regular_error' => __( 'Please enter in a value less than the regular price.', 'points-and-rewards-for-woocommerce' ),
 					'decimal_point'                    => $decimal,
 					'mon_decimal_point'                => wc_get_price_decimal_separator(),
 					'strings'                          => array(
-						'import_products' => __( 'Import', 'points-rewards-for-woocommerce' ),
-						'export_products' => __( 'Export', 'points-rewards-for-woocommerce' ),
+						'import_products' => __( 'Import', 'points-and-rewards-for-woocommerce' ),
+						'export_products' => __( 'Export', 'points-and-rewards-for-woocommerce' ),
 					),
 					'urls'                             => array(
 						'import_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_importer' ) ),
@@ -127,38 +127,38 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$url     = admin_url( 'admin.php?page=mwb-wpr-setting' );
 				$mwb_wpr = array(
 					'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-					'validpoint'         => __( 'Please enter valid points', 'points-rewards-for-woocommerce' ),
-					'Labelname'          => __( 'Enter the Name of the Level', 'points-rewards-for-woocommerce' ),
-					'Labeltext'          => __( 'Enter Level', 'points-rewards-for-woocommerce' ),
-					'Points'             => __( 'Enter Points', 'points-rewards-for-woocommerce' ),
-					'Categ_text'         => __( 'Select Product Category', 'points-rewards-for-woocommerce' ),
-					'Remove_text'        => __( 'Remove', 'points-rewards-for-woocommerce' ),
+					'validpoint'         => __( 'Please enter valid points', 'points-and-rewards-for-woocommerce' ),
+					'Labelname'          => __( 'Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
+					'Labeltext'          => __( 'Enter Level', 'points-and-rewards-for-woocommerce' ),
+					'Points'             => __( 'Enter Points', 'points-and-rewards-for-woocommerce' ),
+					'Categ_text'         => __( 'Select Product Category', 'points-and-rewards-for-woocommerce' ),
+					'Remove_text'        => __( 'Remove', 'points-and-rewards-for-woocommerce' ),
 					'Categ_option'       => $option_categ,
-					'Prod_text'          => __( 'Select Product', 'points-rewards-for-woocommerce' ),
-					'Discounttext'       => __( 'Enter Discount (%)', 'points-rewards-for-woocommerce' ),
-					'error_notice'       => __( 'Fields cannot be empty', 'points-rewards-for-woocommerce' ),
-					'LevelName_notice'   => __( 'Please Enter the Name of the Level', 'points-rewards-for-woocommerce' ),
-					'LevelValue_notice'  => __( 'Please Enter valid Points', 'points-rewards-for-woocommerce' ),
-					'CategValue_notice'  => __( 'Please select a category', 'points-rewards-for-woocommerce' ),
-					'ProdValue_notice'   => __( 'Please select a product', 'points-rewards-for-woocommerce' ),
-					'Discount_notice'    => __( 'Please enter valid discount', 'points-rewards-for-woocommerce' ),
-					'success_assign'     => __( 'Points are assigned successfully!', 'points-rewards-for-woocommerce' ),
-					'error_assign'       => __( 'Enter Some Valid Points!', 'points-rewards-for-woocommerce' ),
-					'success_remove'     => __( 'Points are removed successfully!', 'points-rewards-for-woocommerce' ),
-					'Days'               => __( 'Days', 'points-rewards-for-woocommerce' ),
-					'Weeks'              => __( 'Weeks', 'points-rewards-for-woocommerce' ),
-					'Months'             => __( 'Months', 'points-rewards-for-woocommerce' ),
-					'Years'              => __( 'Years', 'points-rewards-for-woocommerce' ),
-					'Exp_period'         => __( 'Expiration Period', 'points-rewards-for-woocommerce' ),
+					'Prod_text'          => __( 'Select Product', 'points-and-rewards-for-woocommerce' ),
+					'Discounttext'       => __( 'Enter Discount (%)', 'points-and-rewards-for-woocommerce' ),
+					'error_notice'       => __( 'Fields cannot be empty', 'points-and-rewards-for-woocommerce' ),
+					'LevelName_notice'   => __( 'Please Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
+					'LevelValue_notice'  => __( 'Please Enter valid Points', 'points-and-rewards-for-woocommerce' ),
+					'CategValue_notice'  => __( 'Please select a category', 'points-and-rewards-for-woocommerce' ),
+					'ProdValue_notice'   => __( 'Please select a product', 'points-and-rewards-for-woocommerce' ),
+					'Discount_notice'    => __( 'Please enter valid discount', 'points-and-rewards-for-woocommerce' ),
+					'success_assign'     => __( 'Points are assigned successfully!', 'points-and-rewards-for-woocommerce' ),
+					'error_assign'       => __( 'Enter Some Valid Points!', 'points-and-rewards-for-woocommerce' ),
+					'success_remove'     => __( 'Points are removed successfully!', 'points-and-rewards-for-woocommerce' ),
+					'Days'               => __( 'Days', 'points-and-rewards-for-woocommerce' ),
+					'Weeks'              => __( 'Weeks', 'points-and-rewards-for-woocommerce' ),
+					'Months'             => __( 'Months', 'points-and-rewards-for-woocommerce' ),
+					'Years'              => __( 'Years', 'points-and-rewards-for-woocommerce' ),
+					'Exp_period'         => __( 'Expiration Period', 'points-and-rewards-for-woocommerce' ),
 					'mwb_wpr_url'        => $url,
-					'reason'             => __( 'Please enter Remark', 'points-rewards-for-woocommerce' ),
+					'reason'             => __( 'Please enter Remark', 'points-and-rewards-for-woocommerce' ),
 					'mwb_wpr_nonce'      => wp_create_nonce( 'mwb-wpr-verify-nonce' ),
 					'check_pro_activate' => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
-					'pro_text'           => __( 'Please Purchase the Pro Plugin.', 'points-rewards-for-woocommerce' ),
-					'pro_link_text'      => __( 'Click here', 'points-rewards-for-woocommerce' ),
+					'pro_text'           => __( 'Please Purchase the Pro Plugin.', 'points-and-rewards-for-woocommerce' ),
+					'pro_link_text'      => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
 					'pro_link'       => 'https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org',
-					'success_update'     => __( 'Points are updated successfully', 'points-rewards-for-woocommerce' ),
-					'support_confirm'     => __( 'Email sent successfully', 'points-rewards-for-woocommerce' ),
+					'success_update'     => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
+					'support_confirm'     => __( 'Email sent successfully', 'points-and-rewards-for-woocommerce' ),
 				);
 
 				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2' ), $this->version, false );
@@ -179,7 +179,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_rwpr_admin_menu() {
-		add_submenu_page( 'woocommerce', __( 'Points and Rewards', 'points-rewards-for-woocommerce' ), __( 'Points and Rewards', 'points-rewards-for-woocommerce' ), 'manage_options', 'mwb-rwpr-setting', array( $this, 'mwb_rwpr_admin_setting' ) );
+		add_submenu_page( 'woocommerce', __( 'Points and Rewards', 'points-and-rewards-for-woocommerce' ), __( 'Points and Rewards', 'points-and-rewards-for-woocommerce' ), 'manage_options', 'mwb-rwpr-setting', array( $this, 'mwb_rwpr_admin_setting' ) );
 	}
 
 	/**
@@ -419,7 +419,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $_POST['mwb_wpr_categ_list'] ) && ! empty( $_POST['mwb_wpr_categ_list'] ) ) {
 			$mwb_wpr_categ_list = map_deep( wp_unslash( $_POST['mwb_wpr_categ_list'] ), 'sanitize_text_field' );
 		}
-		$response['result'] = __( 'Fail due to an error', 'points-rewards-for-woocommerce' );
+		$response['result'] = __( 'Fail due to an error', 'points-and-rewards-for-woocommerce' );
 		if ( isset( $mwb_wpr_categ_list ) ) {
 			$products              = array();
 			$selected_cat          = $mwb_wpr_categ_list;
@@ -501,30 +501,30 @@ class Points_Rewards_For_WooCommerce_Admin {
 			<table class="mwb_wpr_repeatable_section">
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_level_name"><?php esc_html_e( 'Enter Level', 'points-rewards-for-woocommerce' ); ?></label>
+						<label for="mwb_wpr_membership_level_name"><?php esc_html_e( 'Enter Level', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Entered text will be name of the level for membership', 'points-rewards-for-woocommerce' );
+						$attribute_description = __( 'Entered text will be name of the level for membership', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="mwb_wpr_membership_level_name">
-							<input type="text" name="mwb_wpr_membership_level_name_<?php echo esc_html( $count ); ?>" value="<?php echo esc_html( $this->check_is_not_empty( $key ) ); ?>" id="mwb_wpr_membership_level_name_<?php echo esc_html( $count ); ?>" class="text_points" required><?php esc_html_e( 'Enter the Name of the Level', 'points-rewards-for-woocommerce' ); ?>
+							<input type="text" name="mwb_wpr_membership_level_name_<?php echo esc_html( $count ); ?>" value="<?php echo esc_html( $this->check_is_not_empty( $key ) ); ?>" id="mwb_wpr_membership_level_name_<?php echo esc_html( $count ); ?>" class="text_points" required><?php esc_html_e( 'Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ); ?>
 						</label>
 						<?php if ( ! empty( $value ) ) : ?>
-						<input type="button" value='<?php esc_html_e( 'Remove', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo esc_html( $count ); ?>">	
+						<input type="button" value='<?php esc_html_e( 'Remove', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_remove_button" id="<?php echo esc_html( $count ); ?>">	
 						<?php endif; ?> 			
 					</td>
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_level_value"><?php esc_html_e( 'Enter Points', 'points-rewards-for-woocommerce' ); ?></label>
+						<label for="mwb_wpr_membership_level_value"><?php esc_html_e( 'Enter Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Entered points need to be reached for this level', 'points-rewards-for-woocommerce' );
+						$attribute_description = __( 'Entered points need to be reached for this level', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 
 						?>
@@ -535,12 +535,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_expiration"><?php esc_html_e( 'Expiration Period', 'points-rewards-for-woocommerce' ); ?></label>
+						<label for="mwb_wpr_membership_expiration"><?php esc_html_e( 'Expiration Period', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Select the days,week,month or year for expiartion of current level', 'points-rewards-for-woocommerce' );
+						$attribute_description = __( 'Select the days,week,month or year for expiartion of current level', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						$exp_num = isset( $value['Exp_Number'] ) ? $value['Exp_Number'] : '';
 						?>
@@ -557,7 +557,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						}
 						?>
 						>
-						<?php esc_html_e( 'Days', 'points-rewards-for-woocommerce' ); ?>
+						<?php esc_html_e( 'Days', 'points-and-rewards-for-woocommerce' ); ?>
 						</option>
 						<option value="weeks"
 						<?php
@@ -569,7 +569,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 							}
 						}
 						?>
-						><?php esc_html_e( 'Weeks', 'points-rewards-for-woocommerce' ); ?>
+						><?php esc_html_e( 'Weeks', 'points-and-rewards-for-woocommerce' ); ?>
 						</option>
 						<option value="months"
 						<?php
@@ -581,7 +581,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 							}
 						}
 						?>
-						><?php esc_html_e( 'Months', 'points-rewards-for-woocommerce' ); ?>
+						><?php esc_html_e( 'Months', 'points-and-rewards-for-woocommerce' ); ?>
 						</option>
 						<option value="years"
 						<?php
@@ -593,19 +593,19 @@ class Points_Rewards_For_WooCommerce_Admin {
 							}
 						}
 						?>
-						><?php esc_html_e( 'Years', 'points-rewards-for-woocommerce' ); ?>
+						><?php esc_html_e( 'Years', 'points-and-rewards-for-woocommerce' ); ?>
 						</option>	
 						</select>		
 					</td>
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_category_list"><?php esc_html_e( 'Select Product Category', 'points-rewards-for-woocommerce' ); ?></label>
+						<label for="mwb_wpr_membership_category_list"><?php esc_html_e( 'Select Product Category', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Select', 'points-rewards-for-woocommerce' );
+						$attribute_description = __( 'Select', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<select id="mwb_wpr_membership_category_list_<?php echo esc_html( $count ); ?>" required="true" multiple="multiple" class="mwb_wpr_common_class_categ" data-id="<?php echo esc_html( $count ); ?>" name="mwb_wpr_membership_category_list_<?php echo esc_html( $count ); ?>[]">
@@ -634,12 +634,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_product_list"><?php esc_html_e( 'Select Product', 'points-rewards-for-woocommerce' ); ?></label>
+						<label for="mwb_wpr_membership_product_list"><?php esc_html_e( 'Select Product', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Product of selected category will get displayed in Select Product Section', 'points-rewards-for-woocommerce' );
+						$attribute_description = __( 'Product of selected category will get displayed in Select Product Section', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<select id="mwb_wpr_membership_product_list_<?php echo esc_html( $count ); ?>" multiple="multiple" name="mwb_wpr_membership_product_list_<?php echo esc_html( $count ); ?>[]">
@@ -679,12 +679,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_discount"><?php esc_html_e( 'Enter Discount (%)', 'points-rewards-for-woocommerce' ); ?></label>
+						<label for="mwb_wpr_membership_discount"><?php esc_html_e( 'Enter Discount (%)', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Entered Discount will be applied on above selected products', 'points-rewards-for-woocommerce' );
+						$attribute_description = __( 'Entered Discount will be applied on above selected products', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="mwb_wpr_membership_discount">
@@ -750,12 +750,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 		<table class="form-table wp-list-table widefat fixed striped">
 			<tbody class="mwb_wpr_thankyouorder_tbody"> 
 				<tr valign="top">
-					<th><?php esc_html_e( 'Minimum', 'points-rewards-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Maximum', 'points-rewards-for-woocommerce' ); ?></th>
+					<th><?php esc_html_e( 'Minimum', 'points-and-rewards-for-woocommerce' ); ?></th>
+					<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
 
-					<th><?php esc_html_e( 'Points', 'points-rewards-for-woocommerce' ); ?></th>
+					<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
 					<?php if ( ! empty( $key ) ) : ?> 
-					<th class="mwb_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'points-rewards-for-woocommerce' ); ?></th>
+					<th class="mwb_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'points-and-rewards-for-woocommerce' ); ?></th>
 					<?php endif; ?>
 				</tr>
 				<tr valign="top">
@@ -776,7 +776,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</td>    
 					<?php if ( ! empty( $key ) ) : ?>                       
 						<td class="mwb_wpr_remove_thankyouorder_content forminp forminp-text">
-							<input type="button" value="<?php esc_html_e( 'Remove', 'points-rewards-for-woocommerce' ); ?>" class="mwb_wpr_remove_thankyouorder button" >
+							<input type="button" value="<?php esc_html_e( 'Remove', 'points-and-rewards-for-woocommerce' ); ?>" class="mwb_wpr_remove_thankyouorder button" >
 						</td>
 					<?php endif; ?>
 				</tr>
@@ -815,6 +815,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				}
 				if ( $status ) {
 					update_option( 'mwb_wpr_suggestions_sent', true );
+					do_action( 'mwb_wpr_set_cron_for_notification' );
 				}
 			}
 		}
@@ -837,5 +838,174 @@ class Points_Rewards_For_WooCommerce_Admin {
 			}
 		}
 		wp_die();
+	}
+
+	/**
+	 * Show plugin changes from upgrade notice
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param  string $args Holds the arguments.
+	 * @param  string $response Holds the response.
+	 */
+	public function mwb_wpr_in_plugin_update_message( $args, $response ) {
+		$transient_name = 'points_and_rewards_for_wooCommerce_upgrade_notice_' . $args['Version'];
+		$upgrade_notice = get_transient( $transient_name );
+		if ( ! $upgrade_notice ) {
+			$response = wp_safe_remote_get( 'https://plugins.svn.wordpress.org/points-and-rewards-for-woocommerce/trunk/README.txt' );
+			if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
+				$upgrade_notice = $this->parse_update_notice( $response['body'], $args['new_version'] );
+				set_transient( $transient_name, $upgrade_notice, DAY_IN_SECONDS );
+			}
+		}
+		echo wp_kses_post( $upgrade_notice );
+	}
+	/**
+	 * Parse upgrade notice from readme.txt file.
+	 *
+	 * @since 2.5.8
+	 *
+	 * @param  string $content Holds the content.
+	 * @param  string $new_version Holds the new version.
+	 * @return string
+	 */
+	public function parse_update_notice( $content, $new_version ) {
+		// Output Upgrade Notice.
+		$matches        = null;
+		$regexp         = '~==\s*Upgrade Notice\s*==\s*=\s*(.*)\s*=(.*)(=\s*' . preg_quote( $this->version ) . '\s*=|$)~Uis';
+		$upgrade_notice = '';
+
+		if ( preg_match( $regexp, $content, $matches ) ) {
+			$notices = (array) preg_split( '~[\r\n]+~', trim( $matches[2] ) );
+			// Convert the full version strings to minor versions.
+			$notice_version_parts  = explode( '.', trim( $matches[1] ) );
+			$current_version_parts = explode( '.', $this->version );
+			
+			if ( 3 !== count( $notice_version_parts ) ) {
+				return;
+			}
+			$notice_version_sub_parts  = explode( '-', trim( $notice_version_parts[2]) );
+			$notice_version  = $notice_version_parts[0] . '.' . $notice_version_parts[1] . '.' . $notice_version_sub_parts[0];
+			$current_version = $current_version_parts[0] . '.' . $current_version_parts[1] . '.' . $current_version_parts[2];
+
+
+			// Check the latest stable version and ignore trunk.
+			if ( version_compare( $current_version, $notice_version, '<' ) ) {
+
+				$upgrade_notice .= '</p><p class="wpr-plugin-upgrade-notice" style="padding: 14px 10px !important;background: #1a4251 !important;color: #fff !important;">';
+
+				foreach ( $notices as $index => $line ) {
+					$upgrade_notice .= preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
+				}
+			}
+		}
+
+		return wp_kses_post( $upgrade_notice );
+	}
+
+	/**
+	 * This function is used to set cron if user want to get support.
+	 */
+	public function mwb_wpr_check_for_notification_daily() {
+		$status = get_option( 'mwb_wpr_suggestions_sent', false );
+		if ( $status ) {
+			$offset = get_option( 'gmt_offset' );
+			$time = time() + $offset * 60 * 60;
+			if ( ! wp_next_scheduled( 'mwb_wpr_check_for_notification_update' ) ) {
+				wp_schedule_event( $time, 'daily', 'mwb_wpr_check_for_notification_update' );
+			}
+		}
+	}
+
+	/**
+	 * This function is used to save notification message with notification id.
+	 */
+	public function mwb_wpr_save_notice_message() {
+		$mwb_notification_data = $this->mwb_wpr_get_update_notification_data();
+		if ( is_array( $mwb_notification_data ) && ! empty( $mwb_notification_data ) ) {
+			$notification_id = array_key_exists( 'notification_id', $mwb_notification_data[0] ) ? $mwb_notification_data[0]['notification_id'] : '';
+			$notification_message = array_key_exists( 'notification_message', $mwb_notification_data[0] ) ? $mwb_notification_data[0]['notification_message'] : '';
+			update_option( 'mwb_wpr_notify_new_msg_id', $notification_id );
+			update_option( 'mwb_wpr_notify_new_message', $notification_message );
+		}
+	}
+
+
+	/**
+	 * This function is used to get notification data from server.
+	 */
+	public function mwb_wpr_get_update_notification_data() {
+		$mwb_notification_data = array();
+		$url = 'https://demo.makewebbetter.com/client-notification/points-and-rewards-for-woocommerce/mwb-client-notify.php';
+		$attr = array(
+			'action' => 'mwb_notification_fetch',
+			'plugin_version' => REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION,
+		);
+		$query = esc_url_raw( add_query_arg( $attr, $url ) );
+		$response = wp_remote_get(
+			$query,
+			array(
+				'timeout' => 20,
+				'sslverify' => false,
+			)
+		);
+		if ( is_wp_error( $response ) ) {
+			$error_message = $response->get_error_message();
+			echo '<p><strong>' . 'Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+		} else {
+			$mwb_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
+		}
+		return $mwb_notification_data;
+	}
+
+	/**
+	 * This function is used to display notoification bar at admin.
+	 */
+	public function mwb_wpr_display_notification_bar() {
+		$screen = get_current_screen();
+		if ( isset( $screen->id ) ) {
+			$pagescreen = $screen->id;
+			if ( isset( $_GET['page'] ) && 'mwb-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
+				$notification_id = get_option( 'mwb_wpr_notify_new_msg_id', false );
+				if ( isset( $notification_id ) && '' !== $notification_id ) {
+					$hidden_id = get_option( 'mwb_wpr_notify_hide_notification', false );
+					$notification_message = get_option( 'mwb_wpr_notify_new_message', '' );
+					if ( isset( $hidden_id ) && $hidden_id < $notification_id ) {
+						if ( '' !== $notification_message ) {
+							?>
+							<div class="notice is-dismissible notice-info" id="dismiss_notice">
+								<div class="notice-container">
+									<div class="notice-image">
+										<img src="<?php echo esc_url( MWB_RWPR_DIR_URL . 'admin/images/mwb.png' ); ?>" alt="MakeWebBetter">
+									</div> 
+									<div class="notice-content">
+										<?php echo wp_kses_post( $notification_message ); ?>
+									</div>				
+								</div>
+								<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							</div>
+							<?php
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to dismiss admin notices.
+	 *
+	 * @name mwb_wpr_dismiss_notice
+	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	public function mwb_wpr_dismiss_notice() {
+		if ( isset( $_REQUEST['mwb_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['mwb_nonce'] ) ), 'mwb-wpr-verify-nonce' ) ) { // WPCS: input var ok, sanitization ok.
+			$notification_id = get_option( 'mwb_wpr_notify_new_msg_id', false );
+			if ( isset( $notification_id ) && '' !== $notification_id ) {
+				update_option( 'mwb_wpr_notify_hide_notification', $notification_id );
+			}
+			wp_send_json_success();
+		}
 	}
 }

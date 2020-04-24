@@ -232,6 +232,28 @@
 					);
 				}
 			);
+			$( document ).on(
+			'click',
+			'#dismiss_notice',
+			function(e){
+				e.preventDefault();
+				var data = {
+					action:'mwb_wpr_dismiss_notice',
+					mwb_nonce:mwb_wpr_object.mwb_wpr_nonce,
+				};
+				$.ajax(
+					{
+						url: mwb_wpr_object.ajaxurl,
+						type: "POST",
+						data: data,
+						success: function(response)
+					{
+							window.location.reload();
+						}
+					}
+				);
+			}
+		);
 		}
 	);
 

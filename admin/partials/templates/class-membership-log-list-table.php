@@ -42,10 +42,10 @@ class Membership_Log_List_Table extends WP_List_Table {
 
 		$columns = array(
 			'cb'          => '<input type="checkbox" />',
-			'user_name'   => __( 'User Name', 'points-rewards-for-woocommerce' ),
-			'user_email'  => __( 'User Email', 'points-rewards-for-woocommerce' ),
-			'user_points' => __( 'User Points', 'points-rewards-for-woocommerce' ),
-			'user_level'  => __( 'Level', 'points-rewards-for-woocommerce' ),
+			'user_name'   => __( 'User Name', 'points-and-rewards-for-woocommerce' ),
+			'user_email'  => __( 'User Email', 'points-and-rewards-for-woocommerce' ),
+			'user_points' => __( 'User Points', 'points-and-rewards-for-woocommerce' ),
+			'user_level'  => __( 'Level', 'points-and-rewards-for-woocommerce' ),
 
 		);
 		return $columns;
@@ -115,7 +115,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
-			'bulk-delete' => __( 'Delete', 'points-rewards-for-woocommerce' ),
+			'bulk-delete' => __( 'Delete', 'points-and-rewards-for-woocommerce' ),
 		);
 		return $actions;
 	}
@@ -254,15 +254,15 @@ class Membership_Log_List_Table extends WP_List_Table {
 }
 ?>
 <h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading">
-	<?php esc_html_e( 'Membership Log', 'points-rewards-for-woocommerce' ); ?></h3>
+	<?php esc_html_e( 'Membership Log', 'points-and-rewards-for-woocommerce' ); ?></h3>
 <form method="post">
 	<input type="hidden" name="page"
-		value="<?php esc_html_e( 'points_log_list_table', 'points-rewards-for-woocommerce' ); ?>">
+		value="<?php esc_html_e( 'points_log_list_table', 'points-and-rewards-for-woocommerce' ); ?>">
 	<?php wp_nonce_field( 'membership-log', 'membership-log' ); ?>
 	<?php
 	$mylisttable = new Membership_Log_List_Table();
 	$mylisttable->prepare_items();
-	$mylisttable->search_box( __( 'Search Users', 'points-rewards-for-woocommerce' ), 'mwb-wpr-user' );
+	$mylisttable->search_box( __( 'Search Users', 'points-and-rewards-for-woocommerce' ), 'mwb-wpr-user' );
 	$mylisttable->display();
 	?>
 </form>

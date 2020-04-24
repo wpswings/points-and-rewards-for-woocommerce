@@ -76,9 +76,9 @@ if ( isset( $_POST['mwb_wpr_save_membership'] ) && isset( $_POST['mwb-wpr-nonce'
 		}
 		?>
 		<div class="notice notice-success is-dismissible">
-			<p><strong><?php esc_html_e( 'Settings saved.', 'points-rewards-for-woocommerce' ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'Settings saved.', 'points-and-rewards-for-woocommerce' ); ?></strong></p>
 			<button type="button" class="notice-dismiss">
-				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-rewards-for-woocommerce' ); ?></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</button>
 		</div>
 		<?php
@@ -103,24 +103,24 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 
 	$mwb_wpr_settings = array(
 		array(
-			'title' => __( 'Enable Membership', 'points-rewards-for-woocommerce' ),
+			'title' => __( 'Enable Membership', 'points-and-rewards-for-woocommerce' ),
 			'id'  => 'mwb_wpr_membership_setting_enable',
 			'type' => 'checkbox',
 			'class' => 'input-text',
-			'desc' => __( 'Enable Membership', 'points-rewards-for-woocommerce' ),
-			'desc_tip' => __( 'Check this box to enable the Membership Feature', 'points-rewards-for-woocommerce' ),
+			'desc' => __( 'Enable Membership', 'points-and-rewards-for-woocommerce' ),
+			'desc_tip' => __( 'Check this box to enable the Membership Feature', 'points-and-rewards-for-woocommerce' ),
 			'memebrship_log' => true,
 		),
 		array(
-			'title' => __( 'Exclude Sale Products', 'points-rewards-for-woocommerce' ),
+			'title' => __( 'Exclude Sale Products', 'points-and-rewards-for-woocommerce' ),
 			'id'  => 'exclude_sale_product',
 			'type' => 'checkbox',
 			'class' => 'input-text',
-			'desc' => __( 'Exclude Sale Products for Membership Discount', 'points-rewards-for-woocommerce' ),
-			'desc_tip' => __( 'Check this box to do not apply the membership discount on sale products', 'points-rewards-for-woocommerce' ),
+			'desc' => __( 'Exclude Sale Products for Membership Discount', 'points-and-rewards-for-woocommerce' ),
+			'desc_tip' => __( 'Check this box to do not apply the membership discount on sale products', 'points-and-rewards-for-woocommerce' ),
 		),
 		array(
-			'title' => __( 'Create Member', 'points-rewards-for-woocommerce' ),
+			'title' => __( 'Create Member', 'points-and-rewards-for-woocommerce' ),
 			'id'  => 'mwb_wpr_membership_create_section',
 			'type' => 'create_member',
 			'class' => 'parent_of_div',
@@ -148,14 +148,14 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 							}
 							if ( array_key_exists( 'memebrship_log', $value ) ) {
 								?>
-								<a href="<?php echo esc_url( admin_url( 'admin.php?page=mwb-rwpr-setting&tab=membership&action=view_membership_log' ) ); ?>" class="mwb_wpr_membership_log"><?php esc_html_e( 'Membership Log', 'points-rewards-for-woocommerce' ); ?></a>
+								<a href="<?php echo esc_url( admin_url( 'admin.php?page=mwb-rwpr-setting&tab=membership&action=view_membership_log' ) ); ?>" class="mwb_wpr_membership_log"><?php esc_html_e( 'Membership Log', 'points-and-rewards-for-woocommerce' ); ?></a>
 								<?php
 							}
 							if ( 'create_member' == $value['type'] ) {
 								do_action( 'mwb_wpr_add_membership_rule', $mwb_wpr_membership_roles );
 								?>
-								<input type="button" value='<?php esc_html_e( 'Add Another', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_repeat_button">
-								<p class= "description"><?php esc_html_e( 'Please do not change the "Level Name" once it will be saved, as it become the key for the Membership User', 'points-rewards-for-woocommerce' ); ?></p>
+								<input type="button" value='<?php esc_html_e( 'Add Another', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_repeat_button">
+								<p class= "description"><?php esc_html_e( 'Please do not change the "Level Name" once it will be saved, as it become the key for the Membership User', 'points-and-rewards-for-woocommerce' ); ?></p>
 								<?php
 							}
 							do_action( 'mwb_wpr_additional_membership_settings', $value, $membership_settings_array );
@@ -168,7 +168,7 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 			</table>
 		</div>
 		<p class="submit">
-			<input type="submit" value='<?php esc_attr_e( 'Save changes', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_membership">
+			<input type="submit" value='<?php esc_attr_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_membership">
 		</p>
 		<?php
 }

@@ -14,11 +14,11 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       This woocommerce extension allow merchants to reward their customers with loyalty points.
- * Version:           1.0.4
+ * Version:           1.0.5
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Plugin URI:        https://wordpress.org/plugins/points-rewards-for-woocommerce/
- * Text Domain:       points-rewards-for-woocommerce
+ * Text Domain:       points-and-rewards-for-woocommerce
  * Domain Path:       /languages
  *
  * Requires at least: 4.6
@@ -52,7 +52,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.0.4' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.0.5' );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_HOME_URL', admin_url() );
@@ -88,11 +88,11 @@ if ( $activated ) {
 		if ( strpos( $file, 'points-rewards-for-woocommerce.php' ) !== false ) {
 
 			$row_meta = array(
-				'docs'    => '<a target="_blank" href="https://docs.makewebbetter.com/points-rewards-for-woocommerce?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org">' . esc_html__( 'Go to Docs', 'points-rewards-for-woocommerce' ) . '</a>',
+				'docs'    => '<a target="_blank" href="https://docs.makewebbetter.com/points-rewards-for-woocommerce?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org">' . esc_html__( 'Go to Docs', 'points-and-rewards-for-woocommerce' ) . '</a>',
 
-				'support' => '<a target="_blank" href="https://makewebbetter.freshdesk.com/a/tickets/new">' . esc_html__( 'Support', 'points-rewards-for-woocommerce' ) . '</a>',
+				'support' => '<a target="_blank" href="https://makewebbetter.freshdesk.com/a/tickets/new">' . esc_html__( 'Support', 'points-and-rewards-for-woocommerce' ) . '</a>',
 
-				'demo' => '<a target="_blank" href="https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/my-account?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org">' . esc_html__( 'Premium Demo', 'points-rewards-for-woocommerce' ) . '</a>',
+				'demo' => '<a target="_blank" href="https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/my-account?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org">' . esc_html__( 'Premium Demo', 'points-and-rewards-for-woocommerce' ) . '</a>',
 			);
 
 			return array_merge( $links, $row_meta );
@@ -142,7 +142,7 @@ if ( $activated ) {
 		if ( ! empty( $mwb_wpr_other_settings['mwb_wpr_other_shortcode_text'] ) ) {
 			$mwb_wpr_shortcode_text_point = $mwb_wpr_other_settings['mwb_wpr_other_shortcode_text'];
 		} else {
-			$mwb_wpr_shortcode_text_point = __( 'Your Current Point', 'points-rewards-for-woocommerce' );
+			$mwb_wpr_shortcode_text_point = __( 'Your Current Point', 'points-and-rewards-for-woocommerce' );
 		}
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
 			$get_points = (int) get_user_meta( $user_ID, 'mwb_wpr_points', true );
@@ -163,7 +163,7 @@ if ( $activated ) {
 		if ( ! empty( $mwb_wpr_other_settings['mwb_wpr_shortcode_text_membership'] ) ) {
 			$mwb_wpr_shortcode_text_membership = $mwb_wpr_other_settings['mwb_wpr_shortcode_text_membership'];
 		} else {
-			$mwb_wpr_shortcode_text_membership = __( 'Your Current Level', 'points-rewards-for-woocommerce' );
+			$mwb_wpr_shortcode_text_membership = __( 'Your Current Level', 'points-and-rewards-for-woocommerce' );
 		}
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
 			$user_level = get_user_meta( $user_ID, 'membership_level', true );
@@ -186,7 +186,7 @@ if ( $activated ) {
 		if ( $enable_mwb_signup && ! is_user_logged_in() ) {
 			$mwb_wpr_signup_value = isset( $general_settings['mwb_wpr_general_signup_value'] ) ? intval( $general_settings['mwb_wpr_general_signup_value'] ) : 1;
 
-			 return '<div class="woocommerce-message">' . esc_html__( 'You will get ', 'points-rewards-for-woocommerce' ) . esc_html( $mwb_wpr_signup_value ) . esc_html__( ' points for SignUp', 'points-rewards-for-woocommerce' ) . '</div>';
+			 return '<div class="woocommerce-message">' . esc_html__( 'You will get ', 'points-and-rewards-for-woocommerce' ) . esc_html( $mwb_wpr_signup_value ) . esc_html__( ' points for SignUp', 'points-and-rewards-for-woocommerce' ) . '</div>';
 		}
 	}
 
@@ -220,12 +220,12 @@ if ( $activated ) {
 	function rewardeem_woocommerce_points_rewards_settings_link( $links ) {
 
 		$my_link = array(
-			'settings' => '<a href="' . admin_url( 'admin.php?page=mwb-rwpr-setting' ) . '">' . esc_html__( 'Settings', 'points-rewards-for-woocommerce' ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'admin.php?page=mwb-rwpr-setting' ) . '">' . esc_html__( 'Settings', 'points-and-rewards-for-woocommerce' ) . '</a>',
 		);
 
 		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 
-			$my_link['goPro'] = '<a target="_blank" href="https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org">' . esc_html__( 'Get Premium', 'points-rewards-for-woocommerce' ) . '</a>';
+			$my_link['goPro'] = '<a target="_blank" href="https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org">' . esc_html__( 'Get Premium', 'points-and-rewards-for-woocommerce' ) . '</a>';
 		}
 
 		return array_merge( $my_link, $links );
@@ -298,7 +298,7 @@ if ( $activated ) {
 		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to activate Points and Rewards for WooCommerce.', 'points-rewards-for-woocommerce' ); ?></p>
+				<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to activate Points and Rewards for WooCommerce.', 'points-and-rewards-for-woocommerce' ); ?></p>
 			</div>
 
 			<?php

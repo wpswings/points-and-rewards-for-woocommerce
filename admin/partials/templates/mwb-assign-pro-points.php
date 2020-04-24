@@ -56,20 +56,20 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) && isset( $_POST['mwb-wpr-no
 					<p><strong>
 					<?php
 					echo esc_html( $mwb_wpr_pro_points_to_all );
-					esc_html_e( ' Point Assigned Successfully to All Products', 'points-rewards-for-woocommerce' );
+					esc_html_e( ' Point Assigned Successfully to All Products', 'points-and-rewards-for-woocommerce' );
 					?>
 					</strong></p>
 					<button type="button" class="notice-dismiss">
-						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-rewards-for-woocommerce' ); ?></span>
+						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</button>
 				</div>
 				<?php
 			} else {
 				?>
 				<div class="notice notice-error is-dismissible">
-					<p><strong><?php esc_html_e( ' Please enter some points !', 'points-rewards-for-woocommerce' ); ?></strong></p>
+					<p><strong><?php esc_html_e( ' Please enter some points !', 'points-and-rewards-for-woocommerce' ); ?></strong></p>
 					<button type="button" class="notice-dismiss">
-						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-rewards-for-woocommerce' ); ?></span>
+						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</button>
 				</div>
 				<?php
@@ -93,9 +93,9 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) && isset( $_POST['mwb-wpr-no
 			wp_reset_query();
 			?>
 			<div class="notice notice-success is-dismissible">
-				<p><strong><?php esc_html_e( 'Points are removed Successfully from All Products', 'points-rewards-for-woocommerce' ); ?></strong></p>
+				<p><strong><?php esc_html_e( 'Points are removed Successfully from All Products', 'points-and-rewards-for-woocommerce' ); ?></strong></p>
 				<button type="button" class="notice-dismiss">
-					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-rewards-for-woocommerce' ); ?></span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</button>
 			</div>
 			<?php
@@ -108,22 +108,22 @@ $mwb_wpr_assing_product_points = get_option( 'mwb_wpr_assign_products_points', a
 <?php
 $mwb_wpr_assign_product_table_settings = array(
 	array(
-		'title' => __( 'Global setting for assigning points to all products at once', 'points-rewards-for-woocommerce' ),
+		'title' => __( 'Global setting for assigning points to all products at once', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Global Assign Product Points', 'points-rewards-for-woocommerce' ),
+		'title' => __( 'Global Assign Product Points', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'checkbox',
-		'desc'  => __( 'Enable Assign Global Product Points', 'points-rewards-for-woocommerce' ),
+		'desc'  => __( 'Enable Assign Global Product Points', 'points-and-rewards-for-woocommerce' ),
 		'id'    => 'mwb_wpr_global_product_enable',
-		'desc_tip' => __( 'This is the global setting for Product Purchase Points, check this if you want to assign points to all products at once or uncheck if you want to remove assigned points from all products at once.', 'points-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'This is the global setting for Product Purchase Points, check this if you want to assign points to all products at once or uncheck if you want to remove assigned points from all products at once.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title' => __( 'Enter Assign Global Product Points', 'points-rewards-for-woocommerce' ),
+		'title' => __( 'Enter Assign Global Product Points', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'number',
-		'desc'  => __( 'Enter Global Product Points', 'points-rewards-for-woocommerce' ),
+		'desc'  => __( 'Enter Global Product Points', 'points-and-rewards-for-woocommerce' ),
 		'id'    => 'mwb_wpr_pro_points_to_all',
-		'desc_tip' => __( 'Entered Points are assigned to All Products .', 'points-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Entered Points are assigned to All Products .', 'points-and-rewards-for-woocommerce' ),
 		'custom_attribute' => array( 'min' => '"1"' ),
 		'class' => 'input-text mwb_wpr_common_width',
 	),
@@ -191,6 +191,6 @@ $mwb_wpr_assign_product_table_settings = array(
 </div>
 <div class="clear"></div>
 	<p class="submit">
-		<input type="submit" value='<?php esc_attr_e( 'Save changes', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_select_all_products">
+		<input type="submit" value='<?php esc_attr_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_select_all_products">
 	</p>
 	<?php do_action( 'mwb_wpr_product_assign_points' ); ?>

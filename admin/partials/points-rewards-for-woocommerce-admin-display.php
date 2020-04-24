@@ -13,41 +13,41 @@
 
 $mwb_wpr_setting_tab = array(
 	'overview-setting' => array(
-		'title'     => __( 'Overview', 'points-rewards-for-woocommerce' ),
+		'title'     => __( 'Overview', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-wpr-overview-settings.php',
 	),
 	'general-setting' => array(
-		'title'     => __( 'General', 'points-rewards-for-woocommerce' ),
+		'title'     => __( 'General', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-generral-settings2.php',
 	),
 	'coupon-setting' => array(
 
-		'title'     => apply_filters( 'mwb_coupon_tab_text', __( 'Per Currency Points Settings', 'points-rewards-for-woocommerce' ) ),
+		'title'     => apply_filters( 'mwb_coupon_tab_text', __( 'Per Currency Points Settings', 'points-and-rewards-for-woocommerce' ) ),
 		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-coupon-settings.php',
 	),
 	'points-table' => array(
-		'title'     => __( 'Points Table', 'points-rewards-for-woocommerce' ),
+		'title'     => __( 'Points Table', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/class-points-log-list-table.php',
 	),
 	'points-notification' => array(
-		'title'     => __( 'Points Notification', 'points-rewards-for-woocommerce' ),
+		'title'     => __( 'Points Notification', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-points-notification-settings.php',
 	),
 	'membership' => array(
-		'title' => __( 'Membership', 'points-rewards-for-woocommerce' ),
+		'title' => __( 'Membership', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-membership-settings.php',
 	),
 	'assign-product-points' => array(
-		'title' => __( 'Assign Product Points', 'points-rewards-for-woocommerce' ),
+		'title' => __( 'Assign Product Points', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-assign-pro-points.php',
 	),
 
 	'other-setting' => array(
-		'title' => __( 'Other Settings', 'points-rewards-for-woocommerce' ),
+		'title' => __( 'Other Settings', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-other-setting.php',
 	),
 	'order-total-points' => array(
-		'title' => __( 'Order Total Points', 'points-rewards-for-woocommerce' ),
+		'title' => __( 'Order Total Points', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-order-total.php',
 	),
 );
@@ -58,7 +58,7 @@ $mwb_wpr_setting_tab = array(
 	 <form enctype="multipart/form-data" action="" id="mainform" method="post">		<div class="mwb_rwpr_header">
 			<div class="mwb_rwpr_header_content_left">
 				<div>
-					<h3 class="mwb_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce', 'points-rewards-for-woocommerce' ); ?></h3>
+					<h3 class="mwb_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ); ?></h3>
 				</div>
 			</div>
 			<div class="mwb_rwpr_header_content_right">
@@ -74,13 +74,13 @@ $mwb_wpr_setting_tab = array(
 			<?php
 			if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 				?>
-						<li class="mwb_wpr_get_pro"><a  href="https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-rewards-for-woocommerce' ); ?></a></li>
+						<li class="mwb_wpr_get_pro"><a  href="https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
 					<?php
 			}
 			?>
 			<li>
 				<a id="mwb-wpr-skype-link" href="<?php echo esc_url( 'https://join.skype.com/invite/IKVeNkLHebpC' ); ?>" target="_blank">
-					<img src="<?php echo esc_url( MWB_RWPR_DIR_URL . 'admin/images/skype_logo.png' ); ?>" style="height: 15px;width: 15px;" ><?php esc_html_e( 'CHAT NOW', 'points-rewards-for-woocommerce' ); ?>
+					<img src="<?php echo esc_url( MWB_RWPR_DIR_URL . 'admin/images/skype_logo.png' ); ?>" style="height: 15px;width: 15px;" ><?php esc_html_e( 'CHAT NOW', 'points-and-rewards-for-woocommerce' ); ?>
 				</a>
 			</li>
 		</ul>
