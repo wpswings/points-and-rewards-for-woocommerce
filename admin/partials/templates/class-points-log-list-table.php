@@ -422,7 +422,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	} elseif ( 'view_point_log' == $_GET['action'] ) {
 		$user_id      = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
 		$point_log    = get_user_meta( $user_id, 'points_details', true );
-		$total_points = get_user_meta( $user_id, 'mwb_wpr_points', true )
+		$total_points = get_user_meta( $user_id, 'mwb_wpr_points', true );
 		?>
 		<h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Point Log Details', 'points-rewards-for-woocommerce' ); ?></h3>
 		<?php
@@ -538,6 +538,68 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 							<tr valign="top">
 								<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 								<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['points_on_order'] ); ?></td>
+							</tr>
+							<?php
+						}
+						?>
+					</table></div></div>
+					<?php
+				}
+				if ( array_key_exists( 'refund_points_on_order', $point_log ) ) {
+					?>
+				<div class="mwb_wpr_slide_toggle">
+					<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Deducted Points earned on Order Total on Order Refund', 'points-rewards-for-woocommerce' ); ?>
+						 <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
+					  </p>
+				   <div class="mwb_wpr_points_view"> 
+					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
+						  <thead>
+							<tr valign="top">
+								<th scope="row" class="titledesc">
+									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
+								</th>
+								<th scope="row" class="titledesc">
+									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-rewards-for-woocommerce' ); ?></span>
+								</th>
+							</tr>
+						</thead>
+						<?php
+						foreach ( $point_log['refund_points_on_order'] as $key => $value ) {
+							?>
+							<tr valign="top">
+								<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+								<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['refund_points_on_order'] ); ?></td>
+							</tr>
+							<?php
+						}
+						?>
+					</table></div></div>
+					<?php
+				}
+				if ( array_key_exists( 'cancel_points_on_order_total', $point_log ) ) {
+					?>
+				<div class="mwb_wpr_slide_toggle">
+					<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Deducted Points earned on Order Total on Order Cancellation', 'points-rewards-for-woocommerce' ); ?>
+						 <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
+					  </p>
+				   <div class="mwb_wpr_points_view"> 
+					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
+						  <thead>
+							<tr valign="top">
+								<th scope="row" class="titledesc">
+									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-rewards-for-woocommerce' ); ?></span>
+								</th>
+								<th scope="row" class="titledesc">
+									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-rewards-for-woocommerce' ); ?></span>
+								</th>
+							</tr>
+						</thead>
+						<?php
+						foreach ( $point_log['cancel_points_on_order_total'] as $key => $value ) {
+							?>
+							<tr valign="top">
+								<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+								<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['cancel_points_on_order_total'] ); ?></td>
 							</tr>
 							<?php
 						}
@@ -978,7 +1040,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'pur_pro_pnt_only', $point_log ) ) {
 					?>
 <div class="mwb_wpr_slide_toggle">
-	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Points Applied on Cart', 'points-rewards-for-woocommerce' ); ?>
+	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Points deducted for purchasing the product', 'points-rewards-for-woocommerce' ); ?>
 	  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
   </p>
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">

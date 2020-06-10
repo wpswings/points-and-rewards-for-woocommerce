@@ -177,6 +177,60 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 			</div>
 			<?php
 		}
+		if ( array_key_exists( 'refund_points_on_order', $point_log ) ) {
+			?>
+			<div class="mwb_wpr_slide_toggle">
+				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Deducted Points earned on Order Total on Order Refund', 'points-and-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
+				<table class="mwb_wpr_common_table">
+					<thead>
+						<tr>
+							<th class="view-log-Date">
+								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							</th>
+							<th class="view-log-Status">
+								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							</th>
+						</tr>
+					</thead>
+					<?php foreach ( $point_log['refund_points_on_order'] as $key => $value ) { ?>
+						<tr>
+							<td><?php echo esc_html( mwb_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
+							<td><?php echo '-' . esc_html( $value['refund_points_on_order'] ); ?></td>
+						</tr>
+						<?php
+					}
+					?>
+				</table>
+			</div>
+			<?php
+		}
+		if ( array_key_exists( 'cancel_points_on_order_total', $point_log ) ) {
+			?>
+			<div class="mwb_wpr_slide_toggle">
+				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Deducted Points earned on Order Total on Order Cancellation', 'points-and-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
+				<table class="mwb_wpr_common_table">
+					<thead>
+						<tr>
+							<th class="view-log-Date">
+								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							</th>
+							<th class="view-log-Status">
+								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							</th>
+						</tr>
+					</thead>
+					<?php foreach ( $point_log['cancel_points_on_order_total'] as $key => $value ) { ?>
+						<tr>
+							<td><?php echo esc_html( mwb_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
+							<td><?php echo '-' . esc_html( $value['cancel_points_on_order_total'] ); ?></td>
+						</tr>
+						<?php
+					}
+					?>
+				</table>
+			</div>
+			<?php
+		}
 		if ( array_key_exists( 'comment', $point_log ) ) {
 			?>
 			<div class="mwb_wpr_slide_toggle">

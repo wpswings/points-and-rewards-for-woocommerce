@@ -395,7 +395,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			}(document, "script", "facebook-jssdk"));</script>
 			<div class="fb-share-button mwb_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">' . __( 'Share', 'points-and-rewards-for-woocommerce' ) . '</a></div>';
 			$mail = '<a class="mwb_wpr_mail_button mwb_wpr_common_class" href="mailto:enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . MWB_RWPR_DIR_URL . 'public/images/email.png"></a>';
-			$whatsapp = '<a target="_blank" class="mwb_whatsapp_share" href="https://wa.me/?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . MWB_RWPR_DIR_URL . 'public/images/whatsapp.png"></a>';
+			$whatsapp = '<a target="_blank" class="mwb_whatsapp_share" href="https://api.whatsapp.com/send?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . MWB_RWPR_DIR_URL . 'public/images/whatsapp.png"></a>';
 
 			if ( $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_facebook' ) == 1 ) {
 
@@ -450,10 +450,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 * @param int    $customer_id  user id of the customer.
-	 * @param array  $new_customer_data  All data of the customer.
-	 * @param string $password_generated  Generated password of the customer.
 	 */
-	public function mwb_wpr_new_customer_registerd( $customer_id, $new_customer_data, $password_generated ) {
+	public function mwb_wpr_new_customer_registerd( $customer_id ) {
 		if ( get_user_by( 'ID', $customer_id ) ) {
 			$enable_mwb_signup = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_signup' );
 			if ( $enable_mwb_signup ) {
@@ -1681,22 +1679,25 @@ class Points_Rewards_For_WooCommerce_Public {
 			$cart = WC()->session->get( 'cart' );
 			$user_id = get_current_user_ID();
 			$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
-			foreach ( $cart_update as $key => $value ) {
-				if ( isset( WC()->cart->cart_contents[ $key ]['product_meta'] ) ) {
-					if ( isset( WC()->cart->cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] ) ) {
-						$product = wc_get_product( $cart[ $key ]['product_id'] );
-						if ( isset( $product ) && ! empty( $product ) ) {
-							if ( $this->mwb_wpr_check_whether_product_is_variable( $product ) ) {
-								if ( isset( $cart[ $key ]['variation_id'] ) && ! empty( $cart[ $key ]['variation_id'] ) ) {
-									$get_product_points = get_post_meta( $cart[ $key ]['variation_id'], 'mwb_wpr_variable_points', 1 );
-								}
-							} else {
-								if ( isset( $cart[ $key ]['product_id'] ) && ! empty( $cart[ $key ]['product_id'] ) ) {
-									$get_product_points = get_post_meta( $cart[ $key ]['product_id'], 'mwb_points_product_value', 1 );
+			$contents = WC()->cart->get_cart();
+			if( is_array( $contents ) && !empty( $contents ) ) {
+				foreach ( $contents as $key => $value ) {
+					if ( isset( WC()->cart->cart_contents[ $key ]['product_meta'] ) ) {
+						if ( isset( WC()->cart->cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] ) ) {
+							$product = wc_get_product( $cart[ $key ]['product_id'] );
+							if ( isset( $product ) && ! empty( $product ) ) {
+								if ( $this->mwb_wpr_check_whether_product_is_variable( $product ) ) {
+									if ( isset( $cart[ $key ]['variation_id'] ) && ! empty( $cart[ $key ]['variation_id'] ) ) {
+										$get_product_points = get_post_meta( $cart[ $key ]['variation_id'], 'mwb_wpr_variable_points', 1 );
+									}
+								} else {
+									if ( isset( $cart[ $key ]['product_id'] ) && ! empty( $cart[ $key ]['product_id'] ) ) {
+										$get_product_points = get_post_meta( $cart[ $key ]['product_id'], 'mwb_points_product_value', 1 );
+									}
 								}
 							}
+							WC()->cart->cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) $value['quantity'];
 						}
-						WC()->cart->cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) $value['qty'];
 					}
 				}
 			}

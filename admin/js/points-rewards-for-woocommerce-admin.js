@@ -41,6 +41,10 @@
 
 	$( document ).ready(
 		function() {
+			$( document ).find( '.notice-image img' ).css( "max-width", "50px" );
+			$( document ).find( '.notice-content' ).css( "margin-left", "15px" );
+			$( document ).find( '.notice-container' ).css( { "padding-top": "5px", "padding-bottom": "5px", "display": "flex", "justify-content": "left", "align-items": "center" } );
+
 			$( document ).on(
 				'click',
 				'.mwb_wpr_common_slider',

@@ -78,6 +78,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 
+
 			if ( isset( $_GET['page'] ) && 'mwb-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
 				wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
