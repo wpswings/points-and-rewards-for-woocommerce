@@ -27,7 +27,7 @@ if ( isset( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 		$user = get_user_by( 'ID', $user_id );
 		$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 		$membership_detail = get_user_meta( $user_id, 'points_details', true );
-		$today_date = date_i18n( 'Y-m-d h:i:sa' );
+		$today_date = date( 'Y-m-d h:i:sa', current_time( 'timestamp', 0 ) );
 		$expiration_date = '';
 		$membership_settings_array = get_option( 'mwb_wpr_membership_settings', true );
 		$mwb_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
