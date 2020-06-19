@@ -27,7 +27,7 @@ $mwb_wpr_other_settings = array(
 		'title' => __( 'Shortcodes', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'shortcode',
 		'desc'  => array(
-			'desc1' => __( 'Use shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level of Users', 'points-and-rewards-for-woocommerce' ),
+			'desc1' => __( 'Use the shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level', 'points-and-rewards-for-woocommerce' ),
 			'desc2' => __( 'Use shortcode [MYCURRENTPOINT] for displaying current Points of Users', 'points-and-rewards-for-woocommerce' ),
 			'desc3' => __( 'Use shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ),
 		),

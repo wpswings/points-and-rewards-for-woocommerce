@@ -507,7 +507,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Entered text will be name of the level for membership', 'points-and-rewards-for-woocommerce' );
+						$attribute_description = __( 'Entered text will be the name of the level for membership', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="mwb_wpr_membership_level_name">
@@ -541,7 +541,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Select the days,week,month or year for expiartion of current level', 'points-and-rewards-for-woocommerce' );
+						$attribute_description = __( 'Select the days, week, month or year for  expiration of current level', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						$exp_num = isset( $value['Exp_Number'] ) ? $value['Exp_Number'] : '';
 						?>
@@ -640,7 +640,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Product of selected category will get displayed in Select Product Section', 'points-and-rewards-for-woocommerce' );
+						$attribute_description = __( 'Product of selected category will get displayed in the Select Product Section', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<select id="mwb_wpr_membership_product_list_<?php echo esc_html( $count ); ?>" multiple="multiple" name="mwb_wpr_membership_product_list_<?php echo esc_html( $count ); ?>[]">
@@ -685,7 +685,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Entered Discount will be applied on above selected products', 'points-and-rewards-for-woocommerce' );
+						$attribute_description = __( 'Entered Discount will be applied on the above-selected products', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="mwb_wpr_membership_discount">

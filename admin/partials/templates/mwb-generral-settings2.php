@@ -79,7 +79,7 @@ $mwb_wpr_general_settings = array(
 		'id'    => 'mwb_wpr_general_refer_value',
 		'custom_attributes'   => array( 'min' => '1' ),
 		'class'   => 'input-text mwb_wpr_new_woo_ver_style_text',
-		'desc_tip' => __( 'The points which the customer will get when they successfully invites given number of customers.', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'The points which the customer will get when they successfully invite given number of customers.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type'  => 'sectionend',
@@ -156,7 +156,7 @@ $mwb_wpr_general_settings = array(
 		'class' => 'input-text',
 		'desc_tip' => __( 'Entered text will append before the Total Number of Point', 'points-and-rewards-for-woocommerce' ),
 		'desc2' => '[Refer Points]' . __( ' for Referral Points', 'points-and-rewards-for-woocommerce' ) . '[Per Currency Spent Points]' . __( ' for Per currency spent points and', 'points-and-rewards-for-woocommerce' ) . '[Per Currency Spent Price]' . __( ' for per currency spent price', 'points-and-rewards-for-woocommerce' ),
-		'desc'  => __( 'Use these shortcodes for providing ways to gain points at front end.', 'points-and-rewards-for-woocommerce' ),
+		'desc'  => __( 'Use these shortcodes for providing ways to gain points at the front end.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'title' => __( 'Points Tab Text', 'points-and-rewards-for-woocommerce' ),
@@ -172,8 +172,8 @@ $mwb_wpr_general_settings = array(
 		'type'  => 'text',
 		'id'    => 'mwb_wpr_assign_pro_text',
 		'class' => 'text_points mwb_wpr_new_woo_ver_style_text',
-		'desc'  => __( 'Product Point text can be replaced with entered text', 'points-and-rewards-for-woocommerce' ),
-		'desc_tip' => __( 'Enter the message you want to display for those product who have assigned with some of the Points', 'points-and-rewards-for-woocommerce' ),
+		'desc'  => __( 'Product Point text can be replaced with the entered text', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Enter the message you want to display for those products who have assigned with some of the Points', 'points-and-rewards-for-woocommerce' ),
 		'default' => __( 'Product Points', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
@@ -187,7 +187,7 @@ $mwb_wpr_general_settings = array(
 		'title' => __( 'Redemption Over Cart Sub-Total', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'checkbox',
 		'id'    => 'mwb_wpr_custom_points_on_cart',
-		'desc_tip' => __( 'Check this box if you want to let your customers to redeem their earned points for the cart subtotal.', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Check this box if you want to let your customers redeem their earned points for the cart subtotal.', 'points-and-rewards-for-woocommerce' ),
 		'class' => 'input-text',
 		'desc'  => __( 'Allow customers to apply points during Cart.', 'points-and-rewards-for-woocommerce' ),
 	),
@@ -201,7 +201,7 @@ $mwb_wpr_general_settings = array(
 				'class'   => 'input-text wc_input_price mwb_wpr_new_woo_ver_style_text',
 				'custom_attributes' => array( 'min' => '"1"' ),
 				'desc_tip' => __(
-					'Entered point will assign to that user by which another user reffered from refrral link and purchase some products.',
+					'Entered point will assign to that user by which another user referred from referral link and purchase some products.',
 					'points-and-rewards-for-woocommerce'
 				),
 				'desc' => __( 'Points =', 'points-and-rewards-for-woocommerce' ),
@@ -212,7 +212,7 @@ $mwb_wpr_general_settings = array(
 				'class'   => 'input-text mwb_wpr_new_woo_ver_style_text wc_input_price',
 				'custom_attributes' => array( 'min' => '"1"' ),
 				'desc_tip' => __(
-					'Entered point will assign to that user by which another user reffered from refrral link and purchase some products.',
+					'Entered point will assign to that user by which another user referred from referral link and purchase some products.',
 					'points-and-rewards-for-woocommerce'
 				),
 				'default' => '1',

@@ -88,7 +88,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			'mwb_wpr_cart_price_rate' => $mwb_wpr_cart_price_rate,
 			'not_allowed' => __( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' ),
 			'not_suffient' => __( 'You do not have sufficient amount of points', 'points-and-rewards-for-woocommerce' ),
-			'above_order_limit' => __( 'Entered points are not applicable on this order.', 'points-and-rewards-for-woocommerce' ),
+			'above_order_limit' => __( 'Entered points are not applicable to this order.', 'points-and-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'mwb_wpr', $mwb_wpr );
 	}
@@ -321,7 +321,8 @@ class Points_Rewards_For_WooCommerce_Public {
 				$this->mwb_wpr_get_social_shraing_section( $user_id );
 				?>
 			</fieldset>
-			<?php
+		</div>
+		<?php
 	}
 
 	/**
@@ -1212,11 +1213,11 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function mwb_wpr_remove_cart_point() {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
 		$response['result'] = false;
-		$response['message'] = __( 'Failed to Remove Cart Disocunt', 'points-and-rewards-for-woocommerce' );
+		$response['message'] = __( 'Failed to Remove Cart Discount', 'points-and-rewards-for-woocommerce' );
 		if ( ! empty( WC()->session->get( 'mwb_cart_points' ) ) ) {
 			WC()->session->__unset( 'mwb_cart_points' );
 			$response['result'] = true;
-			$response['message'] = __( 'Successfully Removed Cart Disocunt', 'points-and-rewards-for-woocommerce' );
+			$response['message'] = __( 'Successfully Removed Cart Discount', 'points-and-rewards-for-woocommerce' );
 		}
 		wp_send_json( $response );
 	}

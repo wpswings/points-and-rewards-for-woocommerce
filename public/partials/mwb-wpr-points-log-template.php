@@ -775,7 +775,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		if ( array_key_exists( 'ref_product_detail', $point_log ) ) {
 			?>
 			<div class="mwb_wpr_slide_toggle">
-				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Points earned by the puchase has been made by referrals', 'points-and-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
+				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Points earned by the purchase has been made by referrals', 'points-and-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
@@ -786,7 +786,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 							<th class="view-log-Activity">
-								<span class="nobr"><?php echo esc_html__( 'Product purchase by Reffered User Points', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<span class="nobr"><?php echo esc_html__( 'Product purchase by Referred User Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>

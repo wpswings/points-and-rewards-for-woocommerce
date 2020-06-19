@@ -32,7 +32,7 @@ $mwb_wpr_coupon_settings = array(
 	),
 	array(
 		'title' => __( 'Per ', 'points-and-rewards-for-woocommerce' ) . get_woocommerce_currency_symbol() . __( 'Points Conversion', 'points-and-rewards-for-woocommerce' ),
-		'desc_tip'  => __( 'Enter the redeem price for points.(i.e., how much amounts will be equivalent to the points)', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip'  => __( 'Enter the redeem price for points. (i.e. how much amounts will be equivalent to the points)', 'points-and-rewards-for-woocommerce' ),
 		'type'    => 'number_text',
 		'number_text' => array(
 			array(

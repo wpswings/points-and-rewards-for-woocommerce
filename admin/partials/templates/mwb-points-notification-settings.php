@@ -89,7 +89,7 @@ $mwb_settings = array(
 		'id'            => 'mwb_wpr_email_discription_custom_id',
 		'class'             => 'input-text',
 		'desc_tip'      => __( 'Enter Email Description for user.', 'points-and-rewards-for-woocommerce' ),
-		'desc'          => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points, ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username and ', 'points-and-rewards-for-woocommerce' ) . __( 'in this section donot use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode ', 'points-and-rewards-for-woocommerce' ),
+		'desc'          => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points, ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username and ', 'points-and-rewards-for-woocommerce' ) . __( 'in this section do not use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode ', 'points-and-rewards-for-woocommerce' ),
 		'default'   => __( 'Your points are updated and your total points are ', 'points-and-rewards-for-woocommerce' ) . '[Total Points].',
 	),
 	array(
@@ -286,7 +286,7 @@ $mwb_settings = array(
 		'id'            => 'mwb_wpr_point_on_order_total_range_desc',
 		'class'             => 'input-text',
 		'desc_tip'      => __( 'Enter Email Description for user.', 'points-and-rewards-for-woocommerce' ),
-		'default'   => __( 'Your [ORDERTOTALPOINT] Points has been added in now your Total Point are [Total Points].', 'points-and-rewards-for-woocommerce' ),
+		'default'   => __( 'Your [ORDERTOTALPOINT] Points has been added in now your Total Points are [Total Points].', 'points-and-rewards-for-woocommerce' ),
 		'desc'          => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[ORDERTOTALPOINT]' . __( ' shortcode in place of points which has been added ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
