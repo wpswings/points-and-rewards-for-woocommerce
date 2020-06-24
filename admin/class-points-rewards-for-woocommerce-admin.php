@@ -78,7 +78,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 
-
 			if ( isset( $_GET['page'] ) && 'mwb-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
 				wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
@@ -881,14 +880,13 @@ class Points_Rewards_For_WooCommerce_Admin {
 			// Convert the full version strings to minor versions.
 			$notice_version_parts  = explode( '.', trim( $matches[1] ) );
 			$current_version_parts = explode( '.', $this->version );
-			
+
 			if ( 3 !== count( $notice_version_parts ) ) {
 				return;
 			}
-			$notice_version_sub_parts  = explode( '-', trim( $notice_version_parts[2]) );
+			$notice_version_sub_parts  = explode( '-', trim( $notice_version_parts[2] ) );
 			$notice_version  = $notice_version_parts[0] . '.' . $notice_version_parts[1] . '.' . $notice_version_sub_parts[0];
 			$current_version = $current_version_parts[0] . '.' . $current_version_parts[1] . '.' . $current_version_parts[2];
-
 
 			// Check the latest stable version and ignore trunk.
 			if ( version_compare( $current_version, $notice_version, '<' ) ) {
