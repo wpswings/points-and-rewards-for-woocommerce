@@ -723,3 +723,25 @@ background-color: #26488f;
 text-decoration: underline;
 color: #252525;
 }
+/*notification bar*/
+
+.notice-container {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.notice-image img {
+    max-width: 50px;
+}
+img {
+    border: none;
+}
+.notice-content {
+    margin-left: 15px;
+}
+div#dismiss_notice {
+    margin-left: 2px;
+    margin-right: 20px;
+}

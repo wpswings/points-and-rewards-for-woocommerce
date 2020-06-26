@@ -823,7 +823,7 @@ html {
 .mwb_wpr_avada_wrap button#mwb_cart_points_apply {
     line-height: 1.8
 }
-.mwb_whatsapp_share {
+.mwb_wpr_whatsapp_share {
     background: #25d366;
     border-radius: 3px;
     display: inline-block;
@@ -834,7 +834,7 @@ html {
     width: 50px;
     box-shadow: none;
 }
-.mwb_whatsapp_share img {
+.mwb_wpr_whatsapp_share img {
     max-width: 16px;
     display: inline-block;
     margin: 2px auto 0;

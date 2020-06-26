@@ -41,6 +41,10 @@
 
 	$( document ).ready(
 		function() {
+			$( document ).find( '.notice-image img' ).css( "max-width", "50px" );
+			$( document ).find( '.notice-content' ).css( "margin-left", "15px" );
+			$( document ).find( '.notice-container' ).css( { "padding-top": "5px", "padding-bottom": "5px", "display": "flex", "justify-content": "left", "align-items": "center" } );
+
 			$( document ).on(
 				'click',
 				'.mwb_wpr_common_slider',
@@ -232,6 +236,28 @@
 					);
 				}
 			);
+			$( document ).on(
+			'click',
+			'#dismiss_notice',
+			function(e){
+				e.preventDefault();
+				var data = {
+					action:'mwb_wpr_dismiss_notice',
+					mwb_nonce:mwb_wpr_object.mwb_wpr_nonce,
+				};
+				$.ajax(
+					{
+						url: mwb_wpr_object.ajaxurl,
+						type: "POST",
+						data: data,
+						success: function(response)
+					{
+							window.location.reload();
+						}
+					}
+				);
+			}
+		);
 		}
 	);
 

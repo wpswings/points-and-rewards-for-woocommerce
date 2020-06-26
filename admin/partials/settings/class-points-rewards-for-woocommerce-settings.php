@@ -69,9 +69,9 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 */
 	public function mwb_wpr_genrate_label_for_shortcode( $value ) {
 		?>
-		<p class="description"><?php esc_html_e( 'Use shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level of Users', 'points-rewards-for-woocommerce' ); ?></p>
-		<p class="description"><?php esc_html_e( 'Use shortcode [MYCURRENTPOINT] for displaying current Points of Users', 'points-rewards-for-woocommerce' ); ?></p>
-		<p class="description"><?php esc_html_e( 'Use shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-rewards-for-woocommerce' ); ?></p>	
+		<p class="description"><?php esc_html_e( 'Use shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level of Users', 'points-and-rewards-for-woocommerce' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Use shortcode [MYCURRENTPOINT] for displaying current Points of Users', 'points-and-rewards-for-woocommerce' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Use shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ); ?></p>	
 		<?php
 
 	}
@@ -322,9 +322,9 @@ class Points_Rewards_For_WooCommerce_Settings {
 	public function mwb_wpr_settings_saved() {
 		?>
 		<div class="notice notice-success is-dismissible">
-			<p><strong><?php esc_html_e( 'Settings saved.', 'points-rewards-for-woocommerce' ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'Settings saved.', 'points-and-rewards-for-woocommerce' ); ?></strong></p>
 			<button type="button" class="notice-dismiss">
-				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-rewards-for-woocommerce' ); ?></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</button>
 		</div>
 		<?php
@@ -534,14 +534,14 @@ class Points_Rewards_For_WooCommerce_Settings {
 		<div class="mwb_wpr_pop_up_wrap" style="display: <?php echo esc_attr( $display ); ?>">
 			<div class="pop_up_sub_wrap">
 				<p>
-					<strong><?php esc_html_e( ' Help improve Points and Rewards For WooCommerce by proving your name and email only once, for better assistance and support.', 'points-rewards-for-woocommerce' ); ?></strong>
+					<strong><?php esc_html_e( ' Help improve Points and Rewards For WooCommerce by proving your name and email only once, for better assistance and support.', 'points-and-rewards-for-woocommerce' ); ?></strong>
 				</p>
 				<p>
-					<?php esc_html_e( 'We don\'t spam or market. Your information is safe with us.', 'points-rewards-for-woocommerce' ); ?>
+					<?php esc_html_e( 'We don\'t spam or market. Your information is safe with us.', 'points-and-rewards-for-woocommerce' ); ?>
 				</p>
 				<div class="button_wrap">
-					<a href="javascript:void(0);" class="mwb_wpr_accept"><?php esc_html_e( 'Yes support it', 'points-rewards-for-woocommerce' ); ?></a>
-					<a href="javascript:void(0);" class="mwb_wpr_later"><?php esc_html_e( "I'll decide later", 'points-rewards-for-woocommerce' ); ?></a>
+					<a href="javascript:void(0);" class="mwb_wpr_accept"><?php esc_html_e( 'Yes support it', 'points-and-rewards-for-woocommerce' ); ?></a>
+					<a href="javascript:void(0);" class="mwb_wpr_later"><?php esc_html_e( "I'll decide later", 'points-and-rewards-for-woocommerce' ); ?></a>
 				</div>
 			</div>
 		</div>

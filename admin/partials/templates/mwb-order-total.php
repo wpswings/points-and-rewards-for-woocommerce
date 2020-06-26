@@ -36,16 +36,16 @@ $settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 /*  This is the setting array */
 $mwb_wpr_order_total_points_settings = array(
 	array(
-		'title' => __( 'Enable the settings for the orders', 'points-rewards-for-woocommerce' ),
+		'title' => __( 'Enable the settings for the orders', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'checkbox',
 		'id' => 'mwb_wpr_thankyouorder_enable',
-		'desc_tip' => __( 'Check this box to enable gift coupon for those customers who had placed orders in your site', 'points-rewards-for-woocommerce' ),
-		'desc' => __( 'Enable Points on order total.', 'points-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Check this box to enable gift coupon for those customers who had placed orders in your site', 'points-and-rewards-for-woocommerce' ),
+		'desc' => __( 'Enable Points on order total.', 'points-and-rewards-for-woocommerce' ),
 		'class' => 'input-text',
 	),
 	array(
 		'type' => 'create_order_total_points',
-		'title' => __( 'Enter Points  within Order Range', 'points-rewards-for-woocommerce' ),
+		'title' => __( 'Enter Points  within Order Range', 'points-and-rewards-for-woocommerce' ),
 	),
 );
 if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
@@ -106,7 +106,7 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) && isset( $_POST['mwb-w
 							 do_action( 'mwb_wpr_order_total_points', $thankyouorder_min, $thankyouorder_max, $thankyouorder_value );
 							?>
 						
-					<input type="button" value="<?php esc_html_e( 'Add More', 'points-rewards-for-woocommerce' ); ?>" class="mwb_wpr_add_more button" id="mwb_wpr_add_more">
+					<input type="button" value="<?php esc_html_e( 'Add More', 'points-and-rewards-for-woocommerce' ); ?>" class="mwb_wpr_add_more button" id="mwb_wpr_add_more">
 						<?php
 					}
 					do_action( 'mwb_wpr_additional_order_total', $value, $mwb_get_order_total_settings )
@@ -118,5 +118,5 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) && isset( $_POST['mwb-w
 	</table>
 </div>
 <p class="submit">
-	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_order_totalsettings">
+	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_save_changes" name="mwb_wpr_save_order_totalsettings">
 </p>

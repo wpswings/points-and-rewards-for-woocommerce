@@ -72,10 +72,10 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '1.0.2';
+			$this->version = '1.0.5';
 		}
 
-		$this->plugin_name = 'points-rewards-for-woocommerce';
+		$this->plugin_name = 'points-and-rewards-for-woocommerce';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -170,6 +170,13 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_support_popup', $plugin_admin, 'mwb_wpr_support_popup' );
 		$this->loader->add_action( 'wp_ajax_mwb_wpr_support_popup_later', $plugin_admin, 'mwb_wpr_support_popup_later' );
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_support_popup_later', $plugin_admin, 'mwb_wpr_support_popup_later' );
+		/*Update_Notice on plugin dashboard*/
+		$this->loader->add_action( 'in_plugin_update_message-points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php', $plugin_admin, 'mwb_wpr_in_plugin_update_message', 10, 2 );
+		/*cron for notification*/
+		$this->loader->add_action( 'mwb_wpr_set_cron_for_notification', $plugin_admin, 'mwb_wpr_check_for_notification_daily' );
+		$this->loader->add_action( 'mwb_wpr_check_for_notification_update', $plugin_admin, 'mwb_wpr_save_notice_message' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'mwb_wpr_display_notification_bar' );
+		$this->loader->add_action( 'wp_ajax_mwb_wpr_dismiss_notice', $plugin_admin, 'mwb_wpr_dismiss_notice' );
 	}
 
 	/**
@@ -195,7 +202,7 @@ class Points_Rewards_For_Woocommerce {
 			/*Set the referral key in the woocommerce*/
 			$this->loader->add_action( 'wp_loaded', $plugin_public, 'mwb_wpr_referral_link_using_cookie' );
 			/*Assign signup points and referral points in woocommerce*/
-			$this->loader->add_action( 'woocommerce_created_customer', $plugin_public, 'mwb_wpr_new_customer_registerd', 10, 3 );
+			$this->loader->add_action( 'user_register', $plugin_public, 'mwb_wpr_new_customer_registerd', 10, 1 );
 			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'mwb_wpr_woocommerce_order_status_changed', 10, 3 );
 
 			$this->loader->add_action( 'woocommerce_before_customer_login_form', $plugin_public, 'mwb_wpr_woocommerce_signup_point' );
