@@ -17,7 +17,7 @@
  * Version:           1.0.5
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
- * Plugin URI:        https://wordpress.org/plugins/points-rewards-for-woocommerce/
+ * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
  * Text Domain:       points-and-rewards-for-woocommerce
  * Domain Path:       /languages
  *

@@ -247,4 +247,8 @@ This plugin is a potential product and is sustainable to be used by any eCommerc
 
 
 == Upgrade Notice ==
-*Text Domain of the plugin gets changed according to WordPress standards. Take a proper backup of the language files before the update.*
+= 1.0.5 - Released on 24 June 2020 =
+* Tweak: **Changed Text Domain from points-rewards-for-woocommerce with points-and-rewards-for-woocommerce**
+* Tweak: Changed hook from woocommerce_customer_created with user_register
+* Fix: Resolve conflict of referral purchase with order per currency spend points
+* Fix: Assigned points product quantity calculation 
