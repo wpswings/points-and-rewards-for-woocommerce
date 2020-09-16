@@ -27,6 +27,9 @@
 .mwb_rwpr_settings_display_none {
     display: none;
 }
+.mwb_rwpr_settings_display_none_notice{
+    display: none !important;
+}
 
 #mwb_wpr_membership .mwb_rwpr_settings_display_none {
     display: none;

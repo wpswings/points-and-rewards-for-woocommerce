@@ -270,7 +270,7 @@ class Points_Log_List_Table extends WP_List_Table {
 			$mwb_request_search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
 			$args['search']     = '*' . $mwb_request_search . '*';
 		}
-		$args['role__in'] = array( 'subscriber', 'customer' );
+
 		$user_data        = new WP_User_Query( $args );
 		$total_count = $user_data->get_total();
 		$user_data        = $user_data->get_results();
@@ -305,7 +305,7 @@ if ( isset( $_POST['mwb_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
 				$check_user = get_user_meta( $value->data->ID, 'mwb_wpr_points', false );
 				if ( false == $check_user ) {
 
-					if ( in_array( 'subscriber', $value->roles ) || in_array( 'customer', $value->roles ) ) {
+					// if ( in_array( 'subscriber', $value->roles ) || in_array( 'customer', $value->roles ) ) {
 						$today_date                       = date_i18n( 'Y-m-d h:i:sa' );
 						$mwb_signup_value                 = isset( $general_settings['mwb_wpr_general_signup_value'] ) ? intval( $general_settings['mwb_wpr_general_signup_value'] ) : 1;
 						$import_points['import_points'][] = array(
@@ -334,7 +334,7 @@ if ( isset( $_POST['mwb_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
 								wc_mail( $value->data->user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
 							}
 						}
-					}
+						// }
 				}
 			}
 			if ( $flag ) {
@@ -1281,7 +1281,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			
 			<?php
 		} else {
-			$args['role__in'] = array( 'subscriber', 'customer' );
+			// $args['role__in'] = array( 'subscriber', 'customer' );
 
 			$user_data  = get_users( $args );
 			$guest_flag = false;

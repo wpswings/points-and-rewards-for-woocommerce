@@ -59,8 +59,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles( $hook ) {
-		if ( 'woocommerce_page_mwb-rwpr-setting' == $hook ) {
-			wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.css', array(), $this->version, 'all' );
+		$screen = get_current_screen();
+		if ( isset( $screen->id ) ) {
+			$pagescreen = $screen->id;
+		}
+		if ( 'woocommerce_page_mwb-rwpr-setting' == $hook || ( isset( $pagescreen ) && 'plugins' === $pagescreen ) ) {
+			wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'select2' );
 		}
 	}
@@ -154,14 +158,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'reason'             => __( 'Please enter Remark', 'points-and-rewards-for-woocommerce' ),
 					'mwb_wpr_nonce'      => wp_create_nonce( 'mwb-wpr-verify-nonce' ),
 					'check_pro_activate' => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
-					'pro_text'           => __( 'Please Purchase the Pro Plugin.', 'points-and-rewards-for-woocommerce' ),
+					'pro_text'           => __( 'Please purchase the pro plugin to add multiple membership.', 'points-and-rewards-for-woocommerce' ),
 					'pro_link_text'      => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
 					'pro_link'       => 'https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org',
 					'success_update'     => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
 					'support_confirm'     => __( 'Email sent successfully', 'points-and-rewards-for-woocommerce' ),
 				);
 
-				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2' ), $this->version, false );
+				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
 
 				wp_localize_script( $this->plugin_name . 'admin-js', 'mwb_wpr_object', $mwb_wpr );
 
@@ -605,7 +609,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->mwb_wpr_allowed_html();
-						$attribute_description = __( 'Select', 'points-and-rewards-for-woocommerce' );
+						$attribute_description = __( 'Select Product Category', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<select id="mwb_wpr_membership_category_list_<?php echo esc_html( $count ); ?>" required="true" multiple="multiple" class="mwb_wpr_common_class_categ" data-id="<?php echo esc_html( $count ); ?>" name="mwb_wpr_membership_category_list_<?php echo esc_html( $count ); ?>[]">
@@ -613,6 +617,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 							$args       = array( 'taxonomy' => 'product_cat' );
 							$categories = get_terms( $args );
 							if ( isset( $categories ) && ! empty( $categories ) ) {
+
 								foreach ( $categories as $category ) {
 									$catid     = $category->term_id;
 									$catname   = $category->name;
@@ -630,11 +635,15 @@ class Points_Rewards_For_WooCommerce_Admin {
 							}
 							?>
 						</select>
+						<br />
+						<a href="#" id="mwb_wpr_membership_select_all_category_<?php echo esc_html( $count ); ?>" class="mwb_wpr_membership_select_all_category_common button" data-id="<?php echo esc_html( $count ); ?>"><?php esc_html_e( 'Select all', 'points-and-rewards-for-woocommerce' ); ?></a>
+
+						<a href="#" id="mwb_wpr_membership_select_none_category_<?php echo esc_html( $count ); ?>" class="mwb_wpr_membership_select_none_category_common button" data-id="<?php echo esc_html( $count ); ?>"><?php esc_html_e( 'Select none', 'points-and-rewards-for-woocommerce' ); ?></a>
 					</td>
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="titledesc">
-						<label for="mwb_wpr_membership_product_list"><?php esc_html_e( 'Select Product', 'points-and-rewards-for-woocommerce' ); ?></label>
+						<label for="mwb_wpr_membership_product_list"><?php esc_html_e( 'Select Products', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
@@ -675,6 +684,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 							?>
 						</select>
+						<br/>
+						<span class="mwb_wpr_select_product"><?php esc_html_e( 'Select the products if you want to provide a discount on the specific products of the selected category. Leave empty to select all the products of the selected category.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</td>
 				</tr>
 				<tr valign="top">
@@ -786,61 +797,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
-	 * This function is used to show support popup.
-	 *
-	 * @name mwb_wpr_support_popup.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	public function mwb_wpr_support_popup() {
-		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
-		if ( current_user_can( 'administrator' ) ) {
-			$status = get_option( 'mwb_wpr_suggestions_sent', false );
-			if ( ! $status ) {
-				$current_user = wp_get_current_user();
-				if ( ! empty( $current_user ) ) {
-					$message  = 'Plugin : points-and-rewards-for-woocommerce<br/>';
-					$message .= 'Email Id : ' . $current_user->user_email . '<br/>';
-					$message .= 'First Name : ' . $current_user->user_firstname . '<br/>';
-					$message .= 'Last Name : ' . $current_user->user_lastname . '<br/>';
-					$message .= 'Site URL : ' . site_url() . '<br/>';
-					$message .= 'Wordpress Version : ' . get_bloginfo( 'version' ) . '<br/>';
-					$message .= 'Plugin Version : ' . REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION . '<br/>';
-					$message .= 'Woocommerce Version : ' . WC()->version . '<br/>';
-
-					$to      = 'plugins@makewebbetter.com';
-					$subject = 'Points And Rewards Customers Details';
-					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-					$status  = wp_mail( $to, $subject, $message, $headers );
-				}
-				if ( $status ) {
-					update_option( 'mwb_wpr_suggestions_sent', true );
-					do_action( 'mwb_wpr_set_cron_for_notification' );
-				}
-			}
-		}
-		wp_die();
-	}
-
-	/**
-	 * This function is used to save data if user is not interested in support .
-	 *
-	 * @name mwb_wpr_support_popup_later.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 */
-	public function mwb_wpr_support_popup_later() {
-		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
-		if ( current_user_can( 'administrator' ) ) {
-			$status = get_option( 'mwb_wpr_suggestions_later', false );
-			if ( ! $status ) {
-				update_option( 'mwb_wpr_suggestions_later', true );
-			}
-		}
-		wp_die();
-	}
-
-	/**
 	 * Show plugin changes from upgrade notice
 	 *
 	 * @since 2.0.0
@@ -906,12 +862,13 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to set cron if user want to get support.
 	 */
 	public function mwb_wpr_check_for_notification_daily() {
-		$status = get_option( 'mwb_wpr_suggestions_sent', false );
-		if ( $status ) {
+		$is_already_sent = get_option( 'onboarding-data-sent', false );
+		// Already submitted the data.
+		if ( ! empty( $is_already_sent ) && 'sent' == $is_already_sent ) {
 			$offset = get_option( 'gmt_offset' );
 			$time = time() + $offset * 60 * 60;
-			if ( ! wp_next_scheduled( 'mwb_wpr_check_for_notification_update' ) ) {
-				wp_schedule_event( $time, 'daily', 'mwb_wpr_check_for_notification_update' );
+			if ( ! wp_next_scheduled( 'mwb_wgm_check_for_notification_update' ) ) {
+				wp_schedule_event( $time, 'daily', 'mwb_wgm_check_for_notification_update' );
 			}
 		}
 	}
@@ -1007,4 +964,36 @@ class Points_Rewards_For_WooCommerce_Admin {
 			wp_send_json_success();
 		}
 	}
+
+	/**
+	 * Get all valid screens to add scripts and templates.
+	 *
+	 * @since    1.0.7
+	 */
+	public function add_mwb_frontend_screens( $valid_screens = array() ) {
+
+		if ( is_array( $valid_screens ) ) {
+
+			// Push your screen here.
+			array_push( $valid_screens, 'woocommerce_page_mwb-rwpr-setting' );
+		}
+		return $valid_screens;
+	}
+
+	/**
+	 * Get all valid slugs to add deactivate popup.
+	 *
+	 * @since    1.0.7
+	 */
+	public function add_mwb_deactivation_screens( $valid_screens = array() ) {
+
+		if ( is_array( $valid_screens ) ) {
+
+			// Push your screen here.
+			array_push( $valid_screens, 'points-and-rewards-for-woocommerce' );
+		}
+		return $valid_screens;
+	}
+
+
 }

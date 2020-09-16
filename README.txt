@@ -1,151 +1,100 @@
 === Points and Rewards for WooCommerce ===
 Contributors: MakeWebBetter
 Donate link: https://makewebbetter.com/
-Tags: points, rewards, loyalty, points plugin, rewards plugin, loyalty program, referral program, customer rewards, points and rewards, woocommerce points and rewards,
-Requires at least: 5.3.2
-Tested up to: 5.4
+Tags: points, Rewards, Points and Rewards, Loyalty, woocommerce
+Requires at least: 5.0.0
+Tested up to: 5.5
 WC requires at least: 3.9.0
-WC tested up to: 4.2
-Stable tag: 1.0.5
+WC tested up to: 4.4
+Stable tag: 1.0.7
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
+Points And Rewards for WooCommerce offers reward points to your customers for their activities & increase customer loyalty
 
-Points And Rewards for WooCommerce allow customers to earn points on activities performed & redeem points on purchase and membership.
-
- 
 == Description ==
-*Are you an online store owner who wants to grow customer engagement? Do you want your customers to be loyal and purchase from you repeatedly? Do you want your customers to promote your brand? So reward them and you'll notice improved customer retention.*
 
-**Points And Rewards For WooCommerce** is a customer retention solution that aims to engage customers by offering them points for activities they perform on your store like signup, purchase, referrals, etc. Customers can redeem points with on-purchase discounts and participate in the membership program. Using Points and Rewards System in WooCommerce Store can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope.
+TOP-RATED POINTS AND REWARDS SYSTEM FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS
+
+Points And Rewards For WooCommerce is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem these points to buy products at your store or participate in your membership program. With the reward program at your WooCommerce Store, you can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope.
 
 [youtube https://www.youtube.com/watch?v=WWktrnAI88U&t=333s]
-  
-== POINTS AND REWARDS FOR WOOCOMMERCE HELPS MERCHANT ACHIEVE ==
-* Engage customers with a reward plugin with every action they perform.
-* Builds a strong customer base by providing loyalty rewards to your regular and top shoppers.
-* Motivates the customers to shop more in exchange for loyalty points.
-* It makes your loyal customers feel more special and attached to the brand.
-* Loyalty system drives repeatable buying actions.
-* Enhance brand value.
- 
 
- 
+== With the Points And Rewards for WooCommerce plugin you can: ==
+* Offer points on signup, referrals, purchase, etc. to engage your customers
+* Create a membership program to reward loyal customers with exclusive offers
+* Track the points transaction of every customer with point log report
+* Manually update the points of your customers from the points table feature
+* Notify customers through email for every point’s transaction
+* Offer reward points in different languages with WPML Multilingual support
+* Change the point value for the order total and cart redemption
+* Assign a similar point value to all simple products with global point assign feature
+* Offer a specific number of points for a set price range of the order value
 
-== FREE POINTS AND REWARDS FOR WOOCOMMERCE FEATURES: ==
+== WHAT’S INCLUDED IN OUR FREE POINTS AND REWARDS FOR WOOCOMMERCE PLUGIN == 
 
 **1)** **Reward Points on Actions**
-Customers with Woocommerce Points and rewards plugin have the opportunity to earn points through various activities like:-
+With Woocommerce Points and rewards plugin, customers have the opportunity to earn points through various activities like:
 
-* **Sign Up**– The admin/merchant credit loyalty points on customers’ unique sign up.
+* **Sign Up**– Merchants can offer points on unique customer sign-ups.
+* **Referrals**– When user A shares his referral link and user B signs up using user A’s referral link, user A receives reward points. With this plugin, users can share their referral link on Facebook, Twitter, Email, and WhatsApp directly from their account.
+* **Total Amount Spent**– Merchants can set the points to be credited to the customer’s account against each penny they spend on their store via the conversion feature.
+* **On Purchase Of Product**– Merchants can assign a global point value to all simple products of their store so the customer gets the same number of points on the purchase of any product.
+* **On A Set Range Of Order Total**– Merchant can set the number of points the customer will get if his order value lies within a set range.
 
-* **Referral Program** – The customer can earn points by sharing the referral link with their family and friends. Also, the customer can share their referral link on social platforms like Facebook, Twitter, and/or Email(only if enabled by the admin/merchant).
-> Note:// The points for the referral program will only be credited to the referrer's account when the referred sign-ups using the shared referral link. The signup points will be credited to the referral link user’s account.
+**2)** **Easy Point Redemption**
+Customers can redeem their points either on the cart or at the checkout page by entering the points in the “Apply Points” field. Merchant can select where he wants to show the “Apply Points” field, on a cart or the checkout page. He can also set the conversion rule to determine the value of every point using the conversion table feature.
 
-* **Amount Spent** – The customer can earn points against the amount they’ll spend on buying. The admin/merchant can set the points to be credited to the customer’s account against each penny spend via the Conversion feature
+**For Example:** If the order costs $20 and the customer has 10 points in his account, the merchant can determine whether the customer will get a discount of 10, 5, or 2 dollars by redeeming those 10 points.
 
-* **Points Assigned to Specific Product** – Through this feature, the admin/merchant can assign points on specific products. Customers can earn points on the purchase of that product from the e-store.
+**3)** **Membership System For Exclusive Offers**
+Merchants can create their own membership system based on rewards points. This helps them offer exclusive discounts to the customers based on the points they collect. Merchants can add rewards discounts on some categories and their products. If the customer subscribes to the membership, he can purchase those discounted products.
 
-* **Points On Order Total** – The customer can earn points defined by the admin on the order total value only when the order total lies within the dedicated range of “the amount spent” set by the admin.
-> Note:// The admin/merchant can enable/disable the awarding points allowances and count as per their business model.
-
-**2)** **Redeem Points**
-The customers can redeem earned point value on either cart page or checkout page through the **“Apply Points”** feature available.
-> Note:// The admin/merchant can set the conversion rule to calculate points against each currency value using the conversion table feature.
-
-**3)** **Create your own Membership System**
-Create your own Membership System based on rewards points. Create membership levels based on points the customer collects. Merchants can apply rewards discounts on some categories and/or their products. A percentage discount for products and categories based on membership can be set.
- 
 **4)** **Points Log Report**
-Points Log Report feature is available for both customers and admin:-
+Points Log Report feature is available for both customers and admin:
 
-* **For Customers** – They can check and monitor each point transaction that they have done so far. The log table shows the details for each point earned from and points redeemed on.
+* For Customers – They can check and monitor each point transaction they have done so far. The log table shows the details for each point they earned and redeemed.
+* For Merchant – They can view the user points history to track the points transaction for each customer. Along with it, they can add or deduct points from any customer’s account using this feature.
 
-* **For Admin/Merchant** – They can view the user points history to track the points transaction for each customer.
+**5)** **Customer Notification Feature**
+With Points and Rewards for WooCommerce plugin, merchants can notify their customers for each point transaction. Merchants can customize the email subject and message for different notification types. The notification is sent to the registered email of the customer.
 
-**5)** **Custom Points Updation**
-The admin can update the loyalty reward points for customers manually through the “custom points update” feature.
- 
-**6)** **Notify your Customers**
-The admin can enable the settings to notify their customers for each point transaction. The notification is sent to the registered email of the customer.
+**6)** **WPML Multilingual Compatibility**
+The WooCommerce rewards plugin is compatible with the WPML Multilingual plugin that allows you to reward your customers in your local language.
 
 [**Free demo of Points and Rewards for WooCommerce**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce-lite/my-account/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
+Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.makewebbetter.com/points-rewards-for-WooCommerce/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) and learn more about the features and working of the plugin.
 
-== PLUGIN MEETS YOUR REQUIREMENT, SO  ==
-[**Download Now**](https://downloads.wordpress.org/plugin/points-and-rewards-for-woocommerce.zip)
+== WHAT PREMIUM VERSION OF POINTS AND REWARDS FOR WOOCOMMERCE OFFERS == 
 
- 
-== WANT TO DO MORE WITH POINTS AND REWARDS FOR WOOCOMMERCE? ==
+* Multilevel Membership
+* Generate Coupons Using The Points
+* Referral Purchase Points
+* Review/Comments Points
+* Assign points to the selected category
+* Points Sharing
+* Purchase Products through Points
+* Points Expiration
+* Multilevel Order Total Points
+* Points Adjustments On Order Refund & Cancellation
+* Points On Referral Order Total
 
-> Note:// Get [**Points and Rewards for WooCommerce Pro**](https://makewebbetter.com/product/woocommerce-points-and-rewards/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
+== TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE LOYALTY POINTS AND REWARDS PLUGIN ==
 
-**1)** **Multilevel Membership**
-The merchant can now design their own multilevel model for their membership program and provide different benefits for each membership level. For example, **Level 1**=Silver, **Level 2**=Gold, **Level 3**=Platinum, etc.
- 
-**2)** **Generate Coupons Using The Points**
-The customers can generate a unique coupon code to redeem earned points. The coupon is generated considering the monetary value associated with each point used.
- 
-**3)** **Referral Purchase Points**
-The admin can allow customers to earn points when their referred users make a purchase.
- 
-**4)** **Review/Comments Points**
-Customers can earn points by sharing their experiences and feedback via reviews or posting comments.
- 
-**5)** **Assign points to the selected category**
-The admin can also provide points to customers on purchasing products from the selected categories also along with the selected products.
- 
-**6)** **Points Sharing**
-The customers can share the earned points with their friends and family too. The points count shared will be deducted from the customer’s account
-
-**7)** **Purchase Products through Points**
-Using this feature, customers can redeem their points for purchasing products rather than applying points on the overall cart total.
- 
-**8)** **Points Expiration**
-The admin can set up the threshold period for using the points. If the points are not redeemed within the given duration, it will expire.
- 
-**9)** **Multilevel Order Total Points**
-The admin can set the points for the order total within the multiple dedicated ranges.
+> Note://  Get [**Points and Rewards for WooCommerce Pro**](https://makewebbetter.com/product/woocommerce-points-and-rewards/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
 
-== KNOW THE DIFFERENCES ==
-Check the [**Difference between Free Vs Pro**](https://pinterest.com/pin/677299231451347930/) Version of Points And Rewards For WooCommerce.
- 
-
-
-
-
- 
 == LIVE DEMO OF PREMIUM VERSION ==
+
 * [ **Points and Rewards Frontend demo**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/my-account/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
 * [ **Points and Rewards Backend demo**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/get-personal-demo/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
 
-== WANT HELP! ==
-
-* You can check our [**Points And Rewards Plugin Documentation**](https://docs.makewebbetter.com/points-rewards-for-WooCommerce/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
-
-* Check out more [**WordPress WooCommerce Plugins by MakeWebBetter**](https://makewebbetter.com/wordpress-plugins/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) 
-
-
 == SUPPORT ==
-
-If you want to connect with us then [**Generate a ticket**](https://makewebbetter.freshdesk.com/support/tickets/new)
-
-
-
-
-== MORE ABOUT MAKEWEBBETTER ==
-
-* [**Our Official Website**](https://makewebbetter.com/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
-* [**Follow us on Facebook Page**](https://www.facebook.com/makewebbetter)
-* [**Tweet us on @MakeWebBetter**](https://twitter.com/makewebbetter)
-* [**Visit our LinkedIn Account**](https://www.linkedin.com/company/makewebbetter)
-* [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
-* [**Follow Our SlideShare**](https://www.slideshare.net/MakeWebBetter)
-
+If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
 
 == Installation ==
@@ -161,66 +110,79 @@ The manual installation method involves downloading our Points And Rewards For W
 = Updating =
 Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
 
-
-
 == Screenshots ==
-
 1. **General Settings** - Basic settings which are required to run the plugin
-2. **Signup Points** - Customer will get notified points after signup
-3. **Customer's Earned Points Log Table** - After Earn/Redeem points by the customer log will be listed here
-4. **Referral Link** - Customers will use the link for referring other users on the site.
-5. **Share Referral Link Using Social Media** - Customers can also share the referral link on social sites as well.
-6. **Customized Text** - Admin can modify/add the text according to the need. It will get display on the My Account > Points page
-7. **Redeem Points On Cart Page** - Customer can redeem their points on the cart page and get the discount
-8. **Redeem Points On Checkout Page** - Customer can also redeem their points on the cart page
-9. **Earn Points Per Currency Setting** - Allow customer to earn on every currency spent
-10. **Points Table** - Admin can Add/Subtract/View customers points from here
-11. **Membership Setting** - Add membership level and provide a discount on membership
-12. **Upgrade User Level** - Customers can upgrade their membership and get the benefits.
-13. **Assign Product Points** - Customers can purchase and get the assigned points.
-14. **Order Total Point** - Can provide points to the customer on the basis of their order total
-
-
+2. **Customer's Earned Points Log Table** - After Earn/Redeem points by the customer log will be listed here
+3. **Share Referral Link Using Social Media** - Customers can also share the referral link on social sites as well.
+4. **Customized Text** - Admin can modify/add the text according to the need. It will get display on the My Account > Points page
+5. **Redeem Points On Cart Page** - Customer can redeem their points on the cart page and get the discount
+6. **Redeem Points On Checkout Page** - Customer can also redeem their points on the cart page
+7. **Earn Points Per Currency Setting** - Allow customer to earn on every currency spent
+8. **Points Table** - Admin can Add/Subtract/View customers points from here
+9. **Membership Setting** - Add membership level and provide a discount on membership
+10. **Upgrade User Level** - Customers can upgrade their membership and get the benefits.
+11. **Assign Product Points** - Customers can purchase and get the assigned points.
+12. **Order Total Point** - Can provide points to the customer on the basis of their order total
 
 
 == Frequently Asked Questions ==
 
-=What are the requirements to install this plugin?=
-To install the plugin, your website must have -
-WordPress.org version 5.3.2 or higher. (We recommend using the latest version)
-WooCommerce version 3.9.0 or higher.
-
-=Can we assign points to specific products so that on product purchase customers would get assigned points?=
-To assign product points or points for each product, you must enable the following setting - 
-Go to the plugin setting>Assign product point tab>Enable Assign Global Product Points>Enter Global Product Points.
-
-
-=How and where can we add, remove or view the points for the user, manually?=
-The admin can view and show the user points on the Points Table tab. The admin can also add or remove the user points manually under the Point Table tab. Upon selecting this setting, the admin can view the list of all the users along with their points.
-
-
-=How can point be redeemed using this plugin?=
-The points can be redeemed, using this plugin by directly applying the point in cart as well as on the checkout page.
-
-=Is there any feature in the plugin by which we can give the points on the order total?=
-Yes. The plugin offers the following setting for the order total. Enabling the setting, the user gets the points on his/her order total. To enable this setting, go to the plugin setting>order total points tab>Enable the settings for the orders>Enter Points within Order Range.
-
-
 =How does this plugin work?=
-It is a reward point-management system to build loyalty programs Where customers earn the points by doing different activities such as on purchase, review, signup, referral and many more. Customers can further redeem the earned points as a discount for their purchase.
-By using Points, customers upgrade their membership level and use the benefits of that level. The merchant has additional rights to allow loyalty points to its loyal customers.
-
-
-=Are coding skills required for using this plugin?=
-No. Coding skills are not required for this plugin. It is easy to install and activate to start working seamlessly with your WordPress site.
+Merchants can create a reward point management system using this plugin. In this point reward system, customers get rewarded with loyalty points for their store activities like purchase, signup, referral, and many more. Customers can further redeem earned point value as a discount for their purchase.
 
 =Who can use this plugin?=
-This plugin is a potential product and is sustainable to be used by any eCommerce store manager on their site with the objective to reward points and to build an easily manageable loyalty program.
+Any WooCommerce store owner who wants to build a loyalty rewards program for their customers can use this plugin.
 
+=How can point be redeemed using this plugin?=
+The plugin allows merchants to let their users redeem earned points either on the cart or the checkout page. Customers need to add the points in the “Apply Points” field and the points will be redeemed.
+
+=How and where can we add, remove, or view the points for the user, manually?=
+You can view, add, or remove the users’ points manually through the points table section. To do this, go to your WordPress Dashboard then navigate to WooCommerce > Points and Rewards, and in the plugin, go to the Points Table section. Under that section, you can select whether you want to add or deduct points for a specific user, add your remarks for updating the points and click on Update and you’re done.
+
+=Is there any feature in the plugin by which we can give the points on the order total?=
+Yes. Through the “Order Total Points” setting, the admin can offer points on the order total. Merchant can set the number of points a customer will receive if his order value lies within a set price range. **For example** Merchants can offer 100 points whenever a customer spends an amount between 100 to 300 dollars. So you can add 100 in as the minimum and 300 as the maximum price and the customer will receive 100 points whenever they spend this much amount.
+
+To enable this feature, go to your WordPress Dashboard > WooCommerce > Points and Rewards > Order Total Points and click on the checkbox that says “Enable the settings for the orders”. Then set the maximum and minimum price on which you want to offer points to your customers. And enter the number of points you will offer if a customer spends the set amount at your store. Save Changes and your customers will receive points if they shop within the set range of amounts.
+
+
+
+Admins can also create memberships using this plugin to offer exclusive discounts to the customers. Customers can join the membership using the earned points.
+
+=Are coding skills required for using this plugin?=
+No. Coding skills are not required to use this plugin. You can easily install, activate, and use this plugin.
+
+=Can I provide points to the customer for signup?=
+Yes, you can offer points on Signup by enabling the Signup points feature. To do this, go to your WordPress dashboard and navigate to WooCommerce > Points and Rewards > General. In the General tab, you’ll see the Signup section. Enable the checkbox that says “Enable Signup Points for Rewards” and enter the number of points you want to offer to customers on every unique sign up. Save changes once you’re done and the customers will receive rewards for their signup.
+
+=How will customers get the benefit of the membership feature?=
+Admin can create the membership and set a specific number of points to join the membership. When a customer collects the set number of points, he/she can spend that amount of points to join the membership program.
+
+=Do customers receive an email notification about the reward points they have earned?=
+Yes. You can notify the customers about the transaction of their loyalty points through emails. There are different scenarios to notify customers of their points transactions. You can create a different subject line and message for every notification. The email will be sent to the registered email of the customer.
+
+=How can a customer or admin check the points transaction history?=
+Our WooCommerce Points and Rewards plugin offers a points log report feature that allows both customers and admins to check the points transaction history.
+**For customers:** Customers can check their points transaction history on your online store by going to My Account > Points > View Point Log. All the points transactions are shown in that report.
+
+**For admins:** Admins can check the points transaction history of each customer by going to their WordPress Dashboard and then navigating to WooCommerce > Points and Rewards > Points Table. In the points table, admin can click on the View Point Log to checkpoints transactions of every customer.
+
+
+=Can customers earn the points on the referral signup?=
+Yes. The admin can enable this feature to offer loyalty points on referral signup. To do this, go to your WordPress dashboard and navigate to WooCommerce > Points and Rewards > General. In the General tab, you’ll see the Referral section. Enable the checkbox that says “Enable Referral Points for Rewards” and enter the number of loyalty points you want to offer to customers on every referral sign up. Save changes once you’re done and the referrer will receive the loyalty points whenever a referee signs up to your website using the referrer’s referral link.
+
+=How do I see my points balance?=
+Customers can see their points balance in the Points tab under the Account section.
 
 
 
 == Changelog ==
+
+= 1.0.7 - Released on 26 August 2020 =
+* New: Compatibility with WooCommerce 4.4 and WordPress 5.5
+* New: Points feature for all user role
+
+= 1.0.6 - Released on 18 July 2020 =
+* New: Compatibility with WooCommerce version 4.3
 
 = 1.0.5 - Released on 24 June 2020 =
 * Tweak: **Changed Text Domain from points-rewards-for-woocommerce with points-and-rewards-for-woocommerce**
@@ -247,8 +209,6 @@ This plugin is a potential product and is sustainable to be used by any eCommerc
 
 
 == Upgrade Notice ==
-= 1.0.5 - Released on 24 June 2020 =
-* Tweak: **Changed Text Domain from points-rewards-for-woocommerce with points-and-rewards-for-woocommerce**
-* Tweak: Changed hook from woocommerce_customer_created with user_register
-* Fix: Resolve conflict of referral purchase with order per currency spend points
-* Fix: Assigned points product quantity calculation 
+= 1.0.7 - Released on 26 August 2020 =
+* New: Compatibility with WooCommerce 4.4 and WordPress 5.5
+* New: Points feature for all user role

@@ -151,7 +151,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 	public function mwb_rwpr_generate_label( $value ) {
 		?>
 		<div class="mwb_wpr_general_label">
-			<label for="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"><?php echo ( array_key_exists( 'title', $value ) ) ? esc_html( $value['title'] ) : ''; ?></label>
+			<label for="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" ><?php echo ( array_key_exists( 'title', $value ) ) ? esc_html( $value['title'] ) : ''; ?></label>
 			<?php if ( array_key_exists( 'pro', $value ) ) { ?>
 			<span class="mwb_wpr_general_pro">Pro</span>
 			<?php } ?>
@@ -519,51 +519,4 @@ class Points_Rewards_For_WooCommerce_Settings {
 		}
 		return $_postdata;
 	}
-
-	/**
-	 * Plugin developement show suggestion popup
-	 *
-	 * @since 1.0.0
-	 */
-	public function mwb_wrp_show_support_popup() {
-		$display = 'none';
-		if ( $this->is_display_suggestion_popup() ) {
-			$display = 'block';
-		}
-		?>
-		<div class="mwb_wpr_pop_up_wrap" style="display: <?php echo esc_attr( $display ); ?>">
-			<div class="pop_up_sub_wrap">
-				<p>
-					<strong><?php esc_html_e( ' Help improve Points and Rewards For WooCommerce by proving your name and email only once, for better assistance and support.', 'points-and-rewards-for-woocommerce' ); ?></strong>
-				</p>
-				<p>
-					<?php esc_html_e( 'We don\'t spam or market. Your information is safe with us.', 'points-and-rewards-for-woocommerce' ); ?>
-				</p>
-				<div class="button_wrap">
-					<a href="javascript:void(0);" class="mwb_wpr_accept"><?php esc_html_e( 'Yes support it', 'points-and-rewards-for-woocommerce' ); ?></a>
-					<a href="javascript:void(0);" class="mwb_wpr_later"><?php esc_html_e( "I'll decide later", 'points-and-rewards-for-woocommerce' ); ?></a>
-				</div>
-			</div>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Plugin developement suggestion popup
-	 *
-	 * @since 1.0.0
-	 */
-	public function is_display_suggestion_popup() {
-		$success = get_option( 'mwb_wpr_suggestions_sent', false );
-		if ( ! $success ) {
-			$later = get_option( 'mwb_wpr_suggestions_later', false );
-
-			if ( ! $later ) {
-
-				return true;
-			}
-		}
-		return false;
-	}
 }
-

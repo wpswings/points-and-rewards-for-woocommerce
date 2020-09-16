@@ -154,8 +154,9 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 							if ( 'create_member' == $value['type'] ) {
 								do_action( 'mwb_wpr_add_membership_rule', $mwb_wpr_membership_roles );
 								?>
-								<input type="button" value='<?php esc_html_e( 'Add Another', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_repeat_button">
 								<p class= "description"><?php esc_html_e( 'Please do not change the "Level Name" once it will be saved, as it became the key for the Membership User', 'points-and-rewards-for-woocommerce' ); ?></p>
+								<p class="mwb_wpr_repeat_button_wrap"><input type="button" value='<?php esc_html_e( 'Add Another Level', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button mwb_wpr_repeat_button"></p>
+								
 								<?php
 							}
 							do_action( 'mwb_wpr_additional_membership_settings', $value, $membership_settings_array );

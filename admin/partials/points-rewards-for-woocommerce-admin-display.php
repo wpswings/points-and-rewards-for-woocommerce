@@ -51,6 +51,12 @@ $mwb_wpr_setting_tab = array(
 		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-order-total.php',
 	),
 );
+if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+	$mwb_wpr_setting_tab['premium_plugin'] = array(
+		'title' => esc_html__( 'Premium Features', 'points-and-rewards-for-woocommerce' ),
+		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-wpr-premium-features.php',
+	);
+}
   $mwb_wpr_setting_tab = apply_filters( 'mwb_rwpr_add_setting_tab', $mwb_wpr_setting_tab );
 
 ?>
@@ -63,12 +69,14 @@ $mwb_wpr_setting_tab = array(
 			</div>
 			<div class="mwb_rwpr_header_content_right">
 				<ul>
-					<li><a href="https://makewebbetter.com/contact-us/" target="_blank">
+					<li class="mwb_wpr_get_pro"><a href="https://makewebbetter.com/contact-us/" target="_blank">
 						<span class="dashicons dashicons-phone"></span>
+						<span class="mwb_wpr_contact_doc_text"><?php esc_html_e( 'Contact us', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</a>
 				</li>
-				<li><a href="https://docs.makewebbetter.com/points-rewards-for-woocommerce?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org" target="_blank">
+				<li class="mwb_wpr_get_pro"><a href="https://docs.makewebbetter.com/points-rewards-for-woocommerce?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org" target="_blank">
 					<span class="dashicons dashicons-media-document"></span>
+					<span class="mwb_wpr_contact_doc_text"><?php esc_html_e( 'Doc', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</a>
 			</li>
 			<?php

@@ -127,6 +127,13 @@ class Points_Rewards_For_Woocommerce {
 
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
+		/**
+		 * The class responsible for defining all actions that occur in the onboarding the site data
+		 * in the admin side of the site.
+		 */
+		! class_exists( 'Makewebbetter_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-makewebbetter-onboarding-helper.php';
+		$this->onboard = new Makewebbetter_Onboarding_Helper();
+
 	}
 
 	/**
@@ -165,18 +172,19 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_mwb_wpr_select_category', $plugin_admin, 'mwb_wpr_select_category' );
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_select_category', $plugin_admin, 'mwb_wpr_select_category' );
 		$this->loader->add_action( 'admin_head', $plugin_admin, 'mwb_wpr_add_membership_rule' );
-		/*popup*/
-		$this->loader->add_action( 'wp_ajax_mwb_wpr_support_popup', $plugin_admin, 'mwb_wpr_support_popup' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_support_popup', $plugin_admin, 'mwb_wpr_support_popup' );
-		$this->loader->add_action( 'wp_ajax_mwb_wpr_support_popup_later', $plugin_admin, 'mwb_wpr_support_popup_later' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_support_popup_later', $plugin_admin, 'mwb_wpr_support_popup_later' );
+
 		/*Update_Notice on plugin dashboard*/
 		$this->loader->add_action( 'in_plugin_update_message-points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php', $plugin_admin, 'mwb_wpr_in_plugin_update_message', 10, 2 );
 		/*cron for notification*/
-		$this->loader->add_action( 'mwb_wpr_set_cron_for_notification', $plugin_admin, 'mwb_wpr_check_for_notification_daily' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_wpr_check_for_notification_daily' );
 		$this->loader->add_action( 'mwb_wpr_check_for_notification_update', $plugin_admin, 'mwb_wpr_save_notice_message' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'mwb_wpr_display_notification_bar' );
 		$this->loader->add_action( 'wp_ajax_mwb_wpr_dismiss_notice', $plugin_admin, 'mwb_wpr_dismiss_notice' );
+
+		// Add your screen.
+		$this->loader->add_filter( 'mwb_helper_valid_frontend_screens', $plugin_admin, 'add_mwb_frontend_screens' );
+		// Add Deactivation screen.
+		$this->loader->add_filter( 'mwb_deactivation_supported_slug', $plugin_admin, 'add_mwb_deactivation_screens' );
 	}
 
 	/**

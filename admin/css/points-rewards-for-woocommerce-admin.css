@@ -79,7 +79,7 @@
   width: 16px;
   height: 16px;
   position: relative;
-  z-index: 111;
+  /*z-index: 111;*/
 }
 
 #mwb_rwpr_setting_wrapper .mwb_rwpr_pro_version_wrapper .mwb_rwpr_about_pro_version {
@@ -141,11 +141,11 @@
 .mwb_rwpr_header_content_left {
   align-items: center;
   display: flex;
-  flex: 0 0 60%;
+  flex: 0 0 45%;
   padding: 20px 15px;
 }
 .mwb_rwpr_header_content_right {
-  flex: 0 0 40%;
+  flex: 0 0 55%;
   padding: 20px 15px;
 }
 .mwb_rwpr_header_content_left .mwb_rwpr_setting_title {
@@ -549,10 +549,10 @@
 a.mwb_gw_nav_tab.nav-tab {
 	white-space: unset;
 }
-.woocommerce table.form-table .mwb_wpr_repeatable_section .select2-container {
+/*.woocommerce table.form-table .mwb_wpr_repeatable_section .select2-container {
 	min-width: auto !important;
 	width: auto !important;
-}
+}*/
 
 @media screen and (max-width: 675px) {
   .mwb_rwpr_header_content_left,
@@ -669,60 +669,7 @@ padding: 7px 8px;
 font-weight: bold;
 }
 
-/*popup for lead*/
-.mwb_wpr_pop_up_wrap {
-background-color: rgba(0, 0, 0, 0.55);
-bottom: 0;
-height: 100%;
-left: 0;
-position: fixed;
-right: 0;
-top: 0;
-width: 100%;
-z-index: 9999;
-}
-.mwb_wpr_pop_up_wrap p {
-color: #232323;
-font-size: 17px;
-text-align: center;
-}
-.mwb_wpr_pop_up_wrap .pop_up_sub_wrap {
-background-color: #fff;
-border-radius: 3px;
-box-shadow: 0 6px 5px rgba(0, 0, 0, 0.4);
-box-sizing: border-box;
-left: 0;
-margin: 0 auto;
-max-width: 595px;
-min-height: 228px;
-padding: 16px;
-position: absolute;
-right: 0;
-top: 50%;
-transform: translateY(-50%);
-}
-.mwb_wpr_pop_up_wrap .pop_up_sub_wrap .button_wrap {
-margin-top: 35px;
-text-align: center;
-}
-.mwb_wpr_pop_up_wrap .pop_up_sub_wrap .button_wrap a {
-border-radius: 3px;
-box-sizing: border-box;
-color: #fff;
-display: block;
-font-size: 17px;
-padding: 10px;
-text-decoration: none;
-width: 80%;
-margin: 0 auto 15px;
-}
-.mwb_wpr_pop_up_wrap .pop_up_sub_wrap .button_wrap a:nth-child(1) {
-background-color: #26488f;
-}
-.mwb_wpr_pop_up_wrap .pop_up_sub_wrap .button_wrap a:nth-child(2) {
-text-decoration: underline;
-color: #252525;
-}
+
 /*notification bar*/
 
 .notice-container {
@@ -745,3 +692,110 @@ div#dismiss_notice {
     margin-left: 2px;
     margin-right: 20px;
 }
+/*New CSS*/
+.mwb_wpr_membership_select_all_category_common{
+  margin-left: 25px !important;
+}
+.mwb_wpr_contact_doc_text{
+  text-transform: uppercase;
+}
+.mwb_wpr_repeat_button_wrap{
+  text-align: right;
+}
+a.mwb-wpr-go-pro {
+    background: #05d5d8;
+    color: white;
+    font-weight: 700;
+    padding: 2px 5px;
+    border: 1px solid #05d5d8;
+    border-radius: 5px;
+}
+
+
+/*=====================================
+=            PREMIUM SECTION            =
+=====================================*/
+.mwb_wpr_premium__wrapper {
+  margin: 0 auto;
+  max-width: 1270px;
+  width: 100%;
+
+}
+.mwb_wpr_premium__container {
+  width: 100%;
+  
+}
+.mwb_wpr_premium__row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 0 40px 0;
+}
+.mwb_wpr_premium__column {
+  border-bottom: 4px solid #ef5350;
+  box-shadow: -1px -5px 4px 2px rgba(0,0,0,.05);
+  box-shadow: 0 5px 20px rgba(0,0,0,.15);
+  color: #555d66;
+  flex: 0 0 80%;
+  font-size: 16px;
+  line-height: 28px;
+  margin: 0 4% 0 0;
+  max-width: 48%;
+  padding: 10px 30px 10px 40px;
+  word-wrap: break-word;
+    border-radius: 4px;
+}
+.mwb_wpr_premium__column:nth-child(2n) {
+  margin-right: 0;
+}
+.mwb_wpr_premium__content {
+    width: 100%;
+}
+
+.mwb_wpr_premium_upgrade {
+    background: #ffffff;
+    padding: 50px 0;
+}
+
+.mwb_wpr_premium_upgrade__wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.mwb_wpr_premium_upgrade_btn {
+    padding-left: 20px;
+}
+
+a.mwb_wpr_premium--cta {
+    background: #ef5350;
+    border-radius: 50px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 8px 50px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+/*=====================================
+=            MEDIA QUERIES            =
+=====================================*/
+
+@media only screen and (max-width: 767px) {
+  .mwb_wpr_premium__column {
+    flex-direction: column;
+    flex:0 0 100%;
+    margin: 0 0 80px 0;
+    max-width: 100%;
+  }
+  .mwb_wpr_premium__row {
+    margin: 0;
+  }
+
+}
+
+/*=====  End of MEDIA QUERIES  ======*/
+/*=====================================
+=            END OF PREMIUM SECTION    =
+=====================================*/

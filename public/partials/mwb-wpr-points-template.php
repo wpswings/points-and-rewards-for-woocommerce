@@ -125,7 +125,7 @@ if ( ! is_array( $coupon_settings ) ) {
 <span class="mwb_wpr_view_log">
 	<a href="
 	<?php
-	echo esc_url( get_permalink() . 'view-log/' . $user_id );
+	echo esc_url( wc_get_endpoint_url( 'view-log' ) );
 	?>
 	">
 	<?php
