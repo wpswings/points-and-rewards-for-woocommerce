@@ -236,7 +236,6 @@ class Membership_Log_List_Table extends WP_List_Table {
 			$data           = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
 			$args['search'] = '*' . $data . '*';
 		}
-		$args['role__in'] = array( 'subscriber', 'customer' );
 		$user_data        = new WP_User_Query( $args );
 		$user_data        = $user_data->get_results();
 		$points_data      = array();

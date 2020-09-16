@@ -25,10 +25,10 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_coupon_message', __( 'Have a coupon?', 'points-and-rewards-for-woocommerce' ) . ' <a href="#" class="showcoupon">' . __( 'Click here to enter your code', 'points-and-rewards-for-woocommerce' ) . '</a>' ), 'notice' ); ?>
 </div>
 <!-- /*MWB CUSTOM CODE*/ -->
-<div class="woocommerce-error mwb_rwpr_settings_display_none" id="mwb_wpr_cart_points_notice" >
+<div class="woocommerce-error mwb_rwpr_settings_display_none_notice" id="mwb_wpr_cart_points_notice" >
 	
 </div>
-<div class="woocommerce-message mwb_rwpr_settings_display_none" id="mwb_wpr_cart_points_success" >
+<div class="woocommerce-message mwb_rwpr_settings_display_none_notice" id="mwb_wpr_cart_points_success" >
 	
 </div>
 <!-- /*END OF MWB CUSTOM CODE*/ -->

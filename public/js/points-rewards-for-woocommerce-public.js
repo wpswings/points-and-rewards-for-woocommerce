@@ -94,11 +94,13 @@
 											if (response.result == true) {
 												message = response.message;
 												html = message;
+												$( "#mwb_wpr_cart_points_success" ).removeClass( 'mwb_rwpr_settings_display_none_notice' );
 												$( "#mwb_wpr_cart_points_success" ).html( html );
 												$( "#mwb_wpr_cart_points_success" ).show();
 											} else {
 												message = response.message;
 												html = message;
+												$( "#mwb_wpr_cart_points_notice" ).removeClass( 'mwb_rwpr_settings_display_none_notice' );
 												$( "#mwb_wpr_cart_points_notice" ).html( html );
 												$( "#mwb_wpr_cart_points_notice" ).show();
 											}

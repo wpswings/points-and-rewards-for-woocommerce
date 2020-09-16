@@ -41,6 +41,30 @@
 
 	$( document ).ready(
 		function() {
+			/*This will hide/show membership*/
+			if(jQuery(document).find('#mwb_wpr_membership_setting_enable').prop("checked") == true){
+				
+				jQuery(document).find('.parent_of_div').closest('tr').show();
+			}
+			else{
+				jQuery(document).find('.parent_of_div').closest('tr').hide();
+				mwb_wpr_remove_validation();
+			}
+
+			jQuery(document).find('.mwb_wpr_membership_select_all_category_common').click(function(e){
+				e.preventDefault();
+				var count = $( this ).data( 'id' );
+				 jQuery(document).find("#mwb_wpr_membership_category_list_"+count+" option").prop("selected","selected");
+		         jQuery(document).find("#mwb_wpr_membership_category_list_"+count).trigger("change");
+			});
+
+			jQuery(document).find('.mwb_wpr_membership_select_none_category_common').click(function(e){
+				e.preventDefault();
+				var count = $( this ).data( 'id' );
+				 jQuery(document).find("#mwb_wpr_membership_category_list_"+count+" option").removeAttr( 'selected' );
+		         jQuery(document).find("#mwb_wpr_membership_category_list_"+count).trigger("change");
+			});
+			
 			$( document ).find( '.notice-image img' ).css( "max-width", "50px" );
 			$( document ).find( '.notice-content' ).css( "margin-left", "15px" );
 			$( document ).find( '.notice-container' ).css( { "padding-top": "5px", "padding-bottom": "5px", "display": "flex", "justify-content": "left", "align-items": "center" } );
@@ -109,6 +133,19 @@
 					$( this ).siblings( '.mwb_wpr_email_wrapper_content' ).slideToggle();
 				}
 			);
+
+
+			
+			$(document).on('change','#mwb_wpr_membership_setting_enable',function() {
+				if($(this).prop("checked") == true) {			
+					jQuery(document).find('.parent_of_div').closest('tr').show();
+					mwb_wpr_add_validation();
+				}
+				else{
+					jQuery(document).find('.parent_of_div').closest('tr').hide();
+					mwb_wpr_remove_validation();
+				}
+			});	
 			/*This will add new setting*/
 			$( document ).on(
 				"change",
@@ -193,49 +230,7 @@
 
 				}
 			);
-			/*support popup form */
-			$( '.mwb_wpr_accept' ).click(
-				function(){
-					jQuery( "#mwb_wpr_loader" ).show();
-					var data = {
-						action:'mwb_wpr_support_popup',
-						mwb_nonce:mwb_wpr_object.mwb_wpr_nonce,
-					};
-					$.ajax(
-						{
-							url: mwb_wpr_object.ajaxurl,
-							type: "POST",
-							data: data,
-							success: function(response)
-							{
-								jQuery( "#mwb_wpr_loader" ).hide();
-								jQuery( ".mwb_wpr_pop_up_wrap" ).hide();
-							}
-						}
-					);
-				}
-			);
-			$( '.mwb_wpr_later' ).click(
-				function(){
-					jQuery( "#mwb_wpr_loader" ).show();
-					var data = {
-						action:'mwb_wpr_support_popup_later',
-						mwb_nonce:mwb_wpr_object.mwb_wpr_nonce,
-					};
-					$.ajax(
-						{
-							url: mwb_wpr_object.ajaxurl,
-							type: "POST",
-							data: data,
-							success: function(response)
-							{
-								jQuery( "#mwb_wpr_loader" ).hide();
-								jQuery( ".mwb_wpr_pop_up_wrap" ).hide();
-							}
-						}
-					);
-				}
-			);
+			/*support popup form */			
 			$( document ).on(
 			'click',
 			'#dismiss_notice',
@@ -260,6 +255,25 @@
 		);
 		}
 	);
+
+var mwb_wpr_remove_validation = function(){
+	jQuery(document).find('.mwb_wpr_repeat').each(function(index,element){
+		jQuery(document).find('#mwb_wpr_membership_level_name_'+index).attr( 'required',false );
+		jQuery(document).find('#mwb_wpr_membership_level_value_'+index).attr( 'required',false );
+		jQuery(document).find('#mwb_wpr_membership_expiration_days_'+index).attr( 'required',false );
+		jQuery(document).find('#mwb_wpr_membership_category_list_'+index).attr( 'required',false );
+		jQuery(document).find('#mwb_wpr_membership_discount_'+index).attr( 'required',false );
+	});
+};
+var mwb_wpr_add_validation = function(){
+	jQuery(document).find('.mwb_wpr_repeat').each(function(index,element){
+		jQuery(document).find('#mwb_wpr_membership_level_name_'+index).attr( 'required',true );
+		jQuery(document).find('#mwb_wpr_membership_level_value_'+index).attr( 'required',true );
+		jQuery(document).find('#mwb_wpr_membership_expiration_days_'+index).attr( 'required',true );
+		jQuery(document).find('#mwb_wpr_membership_category_list_'+index).attr( 'required',true );
+		jQuery(document).find('#mwb_wpr_membership_discount_'+index).attr( 'required',true );
+	});
+};
 
 })( jQuery );
 /*======================================
