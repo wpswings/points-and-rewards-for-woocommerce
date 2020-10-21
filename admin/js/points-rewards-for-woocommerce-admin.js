@@ -78,6 +78,7 @@
 				}
 			);
 			$( document ).find( '#mwb_wpr_restrictions_for_purchasing_cat' ).select2();
+			
 			/* Update user Points in the points Table*/
 			$( '.mwb_points_update' ).click(
 				function(){
@@ -261,6 +262,7 @@ var mwb_wpr_remove_validation = function(){
 		jQuery(document).find('#mwb_wpr_membership_level_name_'+index).attr( 'required',false );
 		jQuery(document).find('#mwb_wpr_membership_level_value_'+index).attr( 'required',false );
 		jQuery(document).find('#mwb_wpr_membership_expiration_days_'+index).attr( 'required',false );
+		jQuery(document).find('#mwb_wpr_membership_expiration_'+index).attr( 'required',false );
 		jQuery(document).find('#mwb_wpr_membership_category_list_'+index).attr( 'required',false );
 		jQuery(document).find('#mwb_wpr_membership_discount_'+index).attr( 'required',false );
 	});
@@ -270,6 +272,7 @@ var mwb_wpr_add_validation = function(){
 		jQuery(document).find('#mwb_wpr_membership_level_name_'+index).attr( 'required',true );
 		jQuery(document).find('#mwb_wpr_membership_level_value_'+index).attr( 'required',true );
 		jQuery(document).find('#mwb_wpr_membership_expiration_days_'+index).attr( 'required',true );
+		jQuery(document).find('#mwb_wpr_membership_expiration_'+index).attr( 'required',true );
 		jQuery(document).find('#mwb_wpr_membership_category_list_'+index).attr( 'required',true );
 		jQuery(document).find('#mwb_wpr_membership_discount_'+index).attr( 'required',true );
 	});

@@ -359,8 +359,8 @@ class Points_Rewards_For_WooCommerce_Settings {
 		if ( isset( $_POST['mwb-wpr-nonce'] ) ) {
 			$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
 			if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
-				$_POST[ $name ] = ( isset( $_POST[ $name ] ) && ! empty( $_POST[ $name ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $name ] ) ) : '';
-				return sanitize_text_field( wp_unslash( $_POST[ $name ] ) );
+				$_POST[ $name ] = ( isset( $_POST[ $name ] ) && ! empty( $_POST[ $name ] ) ) ? wp_kses_post( wp_unslash( $_POST[ $name ] ) ) : '';
+					return wp_kses_post( wp_unslash( $_POST[ $name ] ) ); // PHPCS:Ignore WordPress.Security.EscapeIutput.IutputNotEscaped
 			}
 		}
 	}

@@ -322,6 +322,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.makewebbetter.com/
 	 * @param int    $user_id user id of the user.
 	 * @param string $type type of the points details.
+	 * @param int    $point points.
 	 */
 	public function mwb_wpr_send_mail_details( $user_id, $type, $point ) {
 		$user                      = get_user_by( 'ID', $user_id );
@@ -341,8 +342,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[Points]', $point, $mwb_wpr_email_discription );
 				if ( self::mwb_wpr_check_mail_notfication_is_enable() ) {
-					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-					wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+
+					$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+					$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 				}
 			}
 		}
@@ -968,6 +970,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * Get all valid screens to add scripts and templates.
 	 *
+	 * @param  array $valid_screens valid screen.
 	 * @since    1.0.7
 	 */
 	public function add_mwb_frontend_screens( $valid_screens = array() ) {
@@ -983,6 +986,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * Get all valid slugs to add deactivate popup.
 	 *
+	 * @param  array $valid_screens valid screen.
 	 * @since    1.0.7
 	 */
 	public function add_mwb_deactivation_screens( $valid_screens = array() ) {

@@ -248,8 +248,9 @@ class Points_Rewards_For_WooCommerce_Public {
 		$items['points'] = $mwb_wpr_points_tab_text;
 		$items['customer-logout'] = $logout;
 
-		return $items;
+		return apply_filters( 'mwb_wpr_allowed_user_roles_points', $items );
 	}
+
 
 	/**
 	 * This function is used to get user_id to get points in MY ACCOUNT Page Points Tab.
@@ -259,6 +260,11 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link http://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_account_points() {
+
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
+
 		$user_ID = get_current_user_ID();
 		$user = new WP_User( $user_ID );
 
@@ -301,7 +307,8 @@ class Points_Rewards_For_WooCommerce_Public {
 		do_action( 'mwb_wpr_before_add_referral_section', $user_id );
 		$get_referral        = get_user_meta( $user_id, 'mwb_points_referral', true );
 		$get_referral_invite = get_user_meta( $user_id, 'mwb_points_referral_invite', true );
-		$site_url = site_url();
+
+		$site_url = apply_filters( 'mwb_wpr_referral_link_url', site_url() );
 		?>
 		<div class="mwb_account_wrapper">
 			<p class="mwb_wpr_heading"><?php echo esc_html__( 'Referral Link', 'points-and-rewards-for-woocommerce' ); ?></p>
@@ -376,7 +383,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function mwb_wpr_get_social_shraing_section( $user_id ) {
 		$enable_mwb_social  = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_social_media_enable' );
 		$user_reference_key = get_user_meta( $user_id, 'mwb_points_referral', true );
-		$page_permalink     = site_url();
+		$page_permalink = apply_filters( 'mwb_wpr_referral_link_url', site_url() );
 
 		if ( $enable_mwb_social ) {
 			$content = '';
@@ -412,7 +419,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$content = $content . $whatsapp;
 			}
 			$content = $content . '</div>';
-			echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $content; // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -450,6 +457,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param int $customer_id  user id of the customer.
 	 */
 	public function mwb_wpr_new_customer_registerd( $customer_id ) {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		if ( get_user_by( 'ID', $customer_id ) ) {
 			$enable_mwb_signup = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_signup' );
 			if ( $enable_mwb_signup ) {
@@ -633,9 +644,10 @@ class Points_Rewards_For_WooCommerce_Public {
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				/*check is mail notification is enable or not*/
 				if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
-					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
 					/*Send the email to user related to the signup*/
-					wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+					$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+					$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 				}
 			}  if ( 'referral_notification' == $type ) {
 				$mwb_wpr_email_subject = self::mwb_wpr_get_email_notification_description( 'mwb_wpr_referral_email_subject' );
@@ -653,9 +665,10 @@ class Points_Rewards_For_WooCommerce_Public {
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				/*check is mail notification is enable or not*/
 				if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
-					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
 					/*Send the email to user related to the signup*/
-					wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+					$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+					$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 				}
 			}
 		}
@@ -793,6 +806,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param string $new_status  new status of the order.
 	 */
 	public function mwb_wpr_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		if ( $old_status != $new_status ) {
 			$points_key_priority_high = false;
 			$mwb_wpr_one_email = false;
@@ -807,6 +824,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			$order = wc_get_order( $order_id );
 			$user_id = absint( $order->get_user_id() );
 			$user = get_user_by( 'ID', $user_id );
+			if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features_order', false, $user ) ) {
+				return;
+			}
 			$user_email = $user->user_email;
 			if ( 'completed' == $new_status ) {
 				if ( isset( $user_id ) && ! empty( $user_id ) ) {
@@ -862,6 +882,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								/*Get*/
 								$item_conversion_id_set = get_post_meta( $order_id, "$order_id#item_conversion_id", true );
 								if ( 'set' != $item_conversion_id_set ) {
+
 									$user_id = $order->get_user_id();
 									$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 									/*total calculation of the points*/
@@ -872,8 +893,10 @@ class Points_Rewards_For_WooCommerce_Public {
 									$mwb_wpr_coupon_conversion_price = ( 0 == $mwb_wpr_coupon_conversion_price ) ? 1 : $mwb_wpr_coupon_conversion_price;
 									/*Calculat points of the order*/
 									$points_calculation = ceil( ( $order_total * $mwb_wpr_coupon_conversion_points ) / $mwb_wpr_coupon_conversion_price );
+
 									/*Total Point of the order*/
 									$total_points = intval( $points_calculation + $get_points );
+									// $total_points = wc_format_decimal( $points_calculation + $get_points );
 									$data = array();
 									/*Update points details in woocommerce*/
 									$this->mwb_wpr_update_points_details( $user_id, 'pro_conversion_points', $points_calculation, $data );
@@ -967,9 +990,10 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 			/*check is mail notification is enable or not*/
 			if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
-				$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
 				/*Send the email to user related to the signup*/
-				wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+				$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+				$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 			}
 		}
 
@@ -1008,6 +1032,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link http://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_woocommerce_cart_coupon() {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		/*Get the value of the custom points*/
 		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
 		if ( 1 == $mwb_wpr_custom_points_on_cart ) {
@@ -1108,6 +1136,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link http://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_woocommerce_before_cart_contents() {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		/*Check is custom points on cart is enable*/
 		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
 		/*Get the Notification*/
@@ -1340,9 +1372,10 @@ class Points_Rewards_For_WooCommerce_Public {
 			$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 			/*check is mail notification is enable or not*/
 			if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
-				$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
 				/*Send the email to user related to the signup*/
-				 wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+				$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+				$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 			}
 		}
 	}
@@ -1423,6 +1456,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link http://www.makewebbetter.com/
 	 */
 	public function mwb_display_product_points() {
+
 		global $post;
 		/*Get the color of the*/
 		$mwb_wpr_notification_color = $this->mwb_wpr_get_other_settings( 'mwb_wpr_notification_color' );
@@ -1517,6 +1551,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param array $product_data product data of the product.
 	 */
 	public function mwb_wpr_user_level_discount_on_price( $price, $product_data ) {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		$today_date                = date_i18n( 'Y-m-d' );
 		$user_id                   = get_current_user_ID();
 		$new_price                 = '';
@@ -1592,7 +1630,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param array $cart array of the cart.
 	 */
 	public function mwb_wpr_woocommerce_before_calculate_totals( $cart ) {
-
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		$woo_ver = WC()->version;
 		/*Get the current user id*/
 		$user_id = get_current_user_ID();
@@ -1729,7 +1770,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param array $object  object of the add fee.
 	 */
 	public function mwb_wpr_fee_tax_calculation( $fee_taxes, $fee, $object ) {
-		if ( 'point-discount' == $fee->object->id || 'cart-discount' == $fee->object->id ) {
+		$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+		if ( 'point-discount' == $fee->object->id || $cart_discount == $fee->object->id ) {
 			foreach ( $fee_taxes as $key => $value ) {
 				$fee_taxes[ $key ] = 0;
 			}
@@ -1747,6 +1789,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://makewebbetter.com
 	 */
 	public function mwb_wpr_add_coupon_form( $checkout ) {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		$mwb_wpr_custom_points_on_checkout = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_apply_points_checkout' );
 		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
 
@@ -1772,6 +1818,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://makewebbetter.com
 	 */
 	public function mwb_wpr_display_apply_points_checkout() {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		$user_id = get_current_user_ID();
 		if ( isset( $user_id ) && ! empty( $user_id ) ) {
 			if ( class_exists( 'Points_Rewards_For_WooCommerce_Public' ) ) {
