@@ -519,4 +519,20 @@ class Points_Rewards_For_WooCommerce_Settings {
 		}
 		return $_postdata;
 	}
+
+
+	/**
+	 * This function is used for showing shortcode description.
+	 *
+	 * @name mwb_wpr_display_shortcode
+	 * @since 1.0.8
+	 */
+	public function mwb_wpr_display_shortcode(){
+		$shortcode_array = array(
+			'desc1' => __( 'Use the shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level', 'points-and-rewards-for-woocommerce' ),
+			'desc2' => __( 'Use shortcode [MYCURRENTPOINT] for displaying current Points of Users', 'points-and-rewards-for-woocommerce' ),
+			'desc3' => __( 'Use shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ),
+		);
+		return apply_filters( 'mwb_wpr_show_shortcoe_text', $shortcode_array );
+	}
 }

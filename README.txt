@@ -177,6 +177,10 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
+= 1.0.8 - Released on 22 October 2020 =
+* New: Compatibility with WooCommerce 4.5
+* Fix: Minor issues 
+
 = 1.0.7 - Released on 26 August 2020 =
 * New: Compatibility with WooCommerce 4.4 and WordPress 5.5
 * New: Points feature for all user role
@@ -209,6 +213,6 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Upgrade Notice ==
-= 1.0.7 - Released on 26 August 2020 =
-* New: Compatibility with WooCommerce 4.4 and WordPress 5.5
-* New: Points feature for all user role
+= 1.0.8 - Released on 22 October 2020 =
+* New: Compatibility with WooCommerce 4.5
+* Fix: Minor issues
