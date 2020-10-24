@@ -15,9 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 /**
- * Check the allowed the html in for the html.
+ * Check the allowed the html.
  *
  * @name mwb_wpr_allowed_html
+ * @since      1.0.0
  */
 function mwb_wpr_allowed_html() {
 	$allowed_tags = array(
@@ -89,7 +90,7 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) && isset( $_POST['mwb-w
 			foreach ( $mwb_wpr_order_total_points_settings as $key => $value ) {
 				?>
 			<tr valign="top">
-			   <th scope="row" class="titledesc">
+			   <th scope="row" class="mwb-wpr-titledesc">
 				 <?php $settings_obj->mwb_wpr_generate_label_for_order_total_settings( $value ); ?>
 			   </th>
 			<td class="forminp forminp-text">

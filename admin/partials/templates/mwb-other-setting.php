@@ -76,7 +76,7 @@ if ( isset( $_POST['mwb_wpr_save_othersetting'] ) && isset( $_POST['mwb-wpr-nonc
 	if ( wp_verify_nonce( $mwb_par_nonce, 'mwb-wpr-nonce' ) ) {
 		unset( $_POST['mwb_wpr_save_othersetting'] );
 		$other_settings = array();
-		/* Check is input is not empty if empty then assign them default value*/
+		/* Check if input is not empty, if empty then assign them default value*/
 		$postdata = $settings_obj->check_is_settings_is_not_empty( $mwb_wpr_other_settings, $_POST );
 
 		foreach ( $postdata as $key => $value ) {

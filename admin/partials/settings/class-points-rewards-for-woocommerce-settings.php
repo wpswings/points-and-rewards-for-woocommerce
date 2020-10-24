@@ -15,6 +15,7 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
+ * @since      1.0.0
  * @package    points-and-rewards-for-wooCommerce
  * @subpackage points-and-rewards-for-wooCommerce/admin
  * @author     makewebbetter <webmaster@makewebbetter.com>

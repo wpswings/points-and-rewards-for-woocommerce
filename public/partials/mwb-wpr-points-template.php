@@ -98,7 +98,6 @@ if ( ! is_array( $coupon_settings ) ) {
 	<div class="mwb_wpr_points_only"><p class="mwb_wpr_heading_para" >
 		<span class="mwb_wpr_heading"><?php echo esc_html( $mwb_text_points_value ) . ':'; ?></span></p>
 		<?php
-		// $get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 		$get_points = get_user_meta( $user_id, 'mwb_wpr_points', true );
 		$get_point = get_user_meta( $user_id, 'points_details', true );
 		?>
@@ -172,11 +171,11 @@ if ( $mwb_wpr_mem_enable ) {
 			<table class="woocommerce-MyAccount-points shop_table my_account_points account-points-table mwb_wpr_membership_with_img">
 				<thead>
 					<tr>
-						<th class="points-points">
-							<span class="nobr"><?php echo esc_html__( 'Level', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th class="mwb-wpr-points-points">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Level', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th class="points-code">
-							<span class="nobr"><?php echo esc_html__( 'Required Points', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th class="mwb-wpr-points-code">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Required Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
 					</tr>
 				</thead>

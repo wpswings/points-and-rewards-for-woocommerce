@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file is used to include email template.
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.8
+ *
+ * @package    points-and-rewards-for-wooCommerce
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -29,7 +37,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		/**
 		 * Get email subject.
 		 *
-		 * @since  3.1.0
+		* @since      1.0.8
 		 * @return string
 		 */
 		public function get_default_subject() {
@@ -40,7 +48,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		/**
 		 * Get email heading.
 		 *
-		 * @since  3.1.0
+		* @since      1.0.8
 		 * @return string
 		 */
 		public function get_default_heading() {
@@ -50,6 +58,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		/**
 		 * Trigger the sending of this email.
 		 *
+		 * @since      1.0.8
 		 * @param int $transaction_id.
 		 */
 		public function trigger( $user_id, $email_content, $mwb_wpr_email_subject ) {
@@ -77,6 +86,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		/**
 		 * Get content html.
 		 *
+		 * @since      1.0.8
 		 * @access public
 		 * @return string
 		 */
@@ -99,6 +109,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		/**
 		 * Get content plain.
 		 *
+		 * @since      1.0.8
 		 * @access public
 		 * @return string
 		 */
@@ -120,6 +131,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 
 		/**
 		 * Initialise settings form fields.
+		 * @since      1.0.8
 		 */
 		public function init_form_fields() {
 			$this->form_fields = array(

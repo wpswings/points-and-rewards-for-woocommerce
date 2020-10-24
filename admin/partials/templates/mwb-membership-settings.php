@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Check the allowed the html in for the html.
  *
  * @name mwb_wpr_allowed_html
+ * @since      1.0.0
  */
 function mwb_wpr_allowed_html() {
 	$allowed_tags = array(
@@ -134,7 +135,7 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 				<tbody>
 					<?php foreach ( $mwb_wpr_settings as $key => $value ) { ?>
 					<tr valign="top">
-						<th scope="row" class="titledesc">
+						<th scope="row" class="mwb-wpr-titledesc">
 							<?php
 							$settings_obj->mwb_rwpr_generate_label( $value );
 							?>

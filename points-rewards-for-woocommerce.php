@@ -56,7 +56,6 @@ if ( $activated ) {
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_HOME_URL', admin_url() );
-		// rewardeem_woocommerce_points_rewards_constants( 'MWB_WPR_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
 	}
 
 
@@ -107,7 +106,7 @@ if ( $activated ) {
 	 * Dynamically Generate referral Code
 	 *
 	 * @name mwb_wpr_create_referral_code
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_create_referral_code() {
@@ -135,7 +134,7 @@ if ( $activated ) {
 	 * Shortcode for the total points
 	 *
 	 * @name mwb_wpr_mytotalpoint_shortcode
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_mytotalpoint_shortcode() {
@@ -156,7 +155,7 @@ if ( $activated ) {
 	 * Display your Current Level by using shortcode
 	 *
 	 * @name mwb_wpr_mycurrentlevel_shortcode
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_mycurrentlevel_shortcode() {
@@ -179,7 +178,7 @@ if ( $activated ) {
 	 * Display the SIgnup Notification by using shortcode
 	 *
 	 * @name mwb_wpr_signupnotif_shortcode
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_signupnotif_shortcode() {
@@ -238,7 +237,7 @@ if ( $activated ) {
 	 *
 	 * @name mwb_wpr_set_the_wordpress_date_format
 	 * @param string $saved_date saved data in the wordpress formet.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_set_the_wordpress_date_format( $saved_date ) {
@@ -256,7 +255,7 @@ if ( $activated ) {
 		 *
 		 * @name array_key_first
 		 * @param array $arr optional parameter.
-		 * @author makewebbetter<webmaster@makewebbetter.com>
+		 * @author makewebbetter<ticket@makewebbetter.com>
 		 * @link https://www.makewebbetter.com/
 		 */
 		function array_key_first( array $arr ) {
@@ -276,7 +275,7 @@ if ( $activated ) {
 	 * This function is used to deactivate plugin.
 	 *
 	 * @name rewardeem_woocommerce_points_rewards_activation_failure
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure() {
@@ -291,11 +290,11 @@ if ( $activated ) {
 	 * This function is used to deactivate plugin.
 	 *
 	 * @name rewardeem_woocommerce_points_rewards_activation_failure
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure_admin_notice() {
-			// to hide Plugin activated notice.
+			// hide Plugin activated notice.
 		unset( $_GET['activate'] );
 		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			?>

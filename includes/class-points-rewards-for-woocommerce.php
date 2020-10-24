@@ -24,7 +24,7 @@
  * @since      1.0.0
  * @package    points-and-rewards-for-wooCommerce
  * @subpackage points-and-rewards-for-wooCommerce/includes
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     makewebbetter <ticket@makewebbetter.com>
  */
 class Points_Rewards_For_Woocommerce {
 
@@ -72,7 +72,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '1.0.5';
+			$this->version = '1.0.8';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -273,10 +273,10 @@ class Points_Rewards_For_Woocommerce {
 	}
 
 	/**
-	 * Initialiation function to include mail teplate.
+	 * Initialization function to include mail template.
 	 *
 	 * @param array $emails email templates.
-	 * @since    1.0.0
+	 * @since    1.0.8
 	 */
 	public function mwb_wpr_woocommerce_email_classes( $emails ) {
 		$emails['mwb_wpr_email_notification'] = include MWB_RWPR_DIR_PATH . 'emails/class-mwb-wpr-emails-notification.php';
