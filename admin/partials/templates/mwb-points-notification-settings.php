@@ -29,11 +29,10 @@ if ( isset( $_POST['mwb_wpr_save_notification'] ) && isset( $_POST['mwb-wpr-nonc
 			if ( ! empty( $mwb_wpr_post_data ) && is_array( $mwb_wpr_post_data ) ) {
 				foreach ( $mwb_wpr_post_data as $key => $value ) {
 					$value = $settings_obj->mwb_rwpr_filter_subj_email_notification_settings( $mwb_wpr_post_data, $key );
-					$value = stripcslashes( $value );
-					$value = sanitize_text_field( $value );
 					$mwb_wpr_notificatin_array[ $key ] = $value;
 				}
 			}
+
 			/* Filter for saving*/
 			$mwb_wpr_notificatin_array = apply_filters( 'mwb_wpr_notification_settings_saved', $mwb_wpr_notificatin_array );
 			/* Save the Notification settings in the database*/

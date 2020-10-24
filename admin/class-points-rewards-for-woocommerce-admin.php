@@ -17,7 +17,7 @@
  *
  * @package    points-and-rewards-for-wooCommerce
  * @subpackage points-and-rewards-for-wooCommerce/admin
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     makewebbetter <ticket@makewebbetter.com>
  */
 class Points_Rewards_For_WooCommerce_Admin {
 
@@ -179,7 +179,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_rwpr_admin_menu()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_rwpr_admin_menu() {
@@ -215,7 +215,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name mwb_rwpr_admin_setting()
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_rwpr_admin_setting() {
@@ -226,7 +226,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function update points
 	 *
 	 * @name mwb_wpr_points_update
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_points_update() {
@@ -271,7 +272,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is use to update points details
 	 *
 	 * @name mwb_wpr_update_points_details
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @param int    $user_id user id of the user.
 	 * @param string $type type of the points details.
 	 * @param int    $points points.
@@ -318,10 +320,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is use to send mail to the user of points details
 	 *
 	 * @name mwb_wpr_update_points_details
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param int    $user_id user id of the user.
 	 * @param string $type type of the points details.
+	 * @param int    $point points.
 	 */
 	public function mwb_wpr_send_mail_details( $user_id, $type, $point ) {
 		$user                      = get_user_by( 'ID', $user_id );
@@ -341,8 +345,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[Points]', $point, $mwb_wpr_email_discription );
 				if ( self::mwb_wpr_check_mail_notfication_is_enable() ) {
-					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-					wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+
+					$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+					$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 				}
 			}
 		}
@@ -352,7 +357,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is use to check is notification setting is enable or not
 	 *
 	 * @name mwb_wpr_check_mail_notfication_is_enable
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public static function mwb_wpr_check_mail_notfication_is_enable() {
@@ -369,7 +375,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to get the subject
 	 *
 	 * @name mwb_wpr_check_mail_notfication_is_enable
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param int $id of the database array.
 	 */
@@ -383,7 +390,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to get the Email descriptiion
 	 *
 	 * @name mwb_wpr_check_mail_notfication_is_enable
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param int $id of the database array.
 	 */
@@ -397,7 +405,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to get user points
 	 *
 	 * @name mwb_wpr_get_user_points
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param int $user_id user id of the user.
 	 */
@@ -414,7 +423,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function append the option field after selecting Product category through ajax
 	 *
 	 * @name mwb_wpr_select_category.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_select_category() {
@@ -457,7 +467,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function append the rule in the membership
 	 *
 	 * @name mwb_wpr_add_rule_for_membership.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param array $mwb_wpr_membership_roles array of the user roles.
 	 */
@@ -481,7 +492,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used for checking is not empty the value
 	 *
 	 * @name check_is_not_empty.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param array $value value of the database.
 	 */
@@ -493,7 +505,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used for adding the membership
 	 *
 	 * @name mwb_wpr_membership_role.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param int   $count count of the membership.
 	 * @param int   $key key of the array.
@@ -504,7 +517,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		<div id ="mwb_wpr_parent_repeatable_<?php echo esc_html( $count ); ?>" data-id="<?php echo esc_html( $count ); ?>" class="mwb_wpr_repeat">
 			<table class="mwb_wpr_repeatable_section">
 				<tr valign="top">
-					<th scope="row" class="titledesc">
+					<th scope="row" class="mwb-wpr-titledesc">
 						<label for="mwb_wpr_membership_level_name"><?php esc_html_e( 'Enter Level', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
@@ -522,7 +535,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scope="row" class="titledesc">
+					<th scope="row" class="mwb-wpr-titledesc">
 						<label for="mwb_wpr_membership_level_value"><?php esc_html_e( 'Enter Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
@@ -538,7 +551,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scope="row" class="titledesc">
+					<th scope="row" class="mwb-wpr-titledesc">
 						<label for="mwb_wpr_membership_expiration"><?php esc_html_e( 'Expiration Period', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
@@ -603,7 +616,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scope="row" class="titledesc">
+					<th scope="row" class="mwb-wpr-titledesc">
 						<label for="mwb_wpr_membership_category_list"><?php esc_html_e( 'Select Product Category', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
@@ -642,7 +655,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scope="row" class="titledesc">
+					<th scope="row" class="mwb-wpr-titledesc">
 						<label for="mwb_wpr_membership_product_list"><?php esc_html_e( 'Select Products', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
@@ -689,7 +702,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scope="row" class="titledesc">
+					<th scope="row" class="mwb-wpr-titledesc">
 						<label for="mwb_wpr_membership_discount"><?php esc_html_e( 'Enter Discount (%)', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
@@ -714,7 +727,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is ised for adding actions
 	 *
 	 * @name mwb_wpr_add_membership_rule.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_add_membership_rule() {
@@ -728,7 +742,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to add order total points.
 	 *
 	 * @name mwb_wpr_add_order_total_points.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param array $thankyouorder_min  array of the min satements.
 	 * @param array $thankyouorder_max array of the max rules.
@@ -749,7 +764,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to add rule for order total.
 	 *
 	 * @name mwb_wpr_add_rule_for_membership.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param array $thankyouorder_min  array of the min satements.
 	 * @param array $thankyouorder_max array of the max rules.
@@ -799,8 +815,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * Show plugin changes from upgrade notice
 	 *
-	 * @since 2.0.0
-	 *
+	 * @since 1.0.7
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param  string $args Holds the arguments.
 	 * @param  string $response Holds the response.
 	 */
@@ -819,8 +836,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * Parse upgrade notice from readme.txt file.
 	 *
-	 * @since 2.5.8
-	 *
+	 * @since 1.0.7
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param  string $content Holds the content.
 	 * @param  string $new_version Holds the new version.
 	 * @return string
@@ -860,6 +878,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 	/**
 	 * This function is used to set cron if user want to get support.
+	 * @since 1.0.7
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_check_for_notification_daily() {
 		$is_already_sent = get_option( 'onboarding-data-sent', false );
@@ -867,14 +888,17 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( ! empty( $is_already_sent ) && 'sent' == $is_already_sent ) {
 			$offset = get_option( 'gmt_offset' );
 			$time = time() + $offset * 60 * 60;
-			if ( ! wp_next_scheduled( 'mwb_wgm_check_for_notification_update' ) ) {
-				wp_schedule_event( $time, 'daily', 'mwb_wgm_check_for_notification_update' );
+			if ( ! wp_next_scheduled( 'mwb_wpr_check_for_notification_update' ) ) {
+				wp_schedule_event( $time, 'daily', 'mwb_wpr_check_for_notification_update' );
 			}
 		}
 	}
 
 	/**
 	 * This function is used to save notification message with notification id.
+	 * @since 1.0.7
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_save_notice_message() {
 		$mwb_notification_data = $this->mwb_wpr_get_update_notification_data();
@@ -889,6 +913,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 	/**
 	 * This function is used to get notification data from server.
+	 * @since 1.0.7
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_get_update_notification_data() {
 		$mwb_notification_data = array();
@@ -916,6 +943,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 	/**
 	 * This function is used to display notoification bar at admin.
+	 * @since 1.0.7
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_display_notification_bar() {
 		$screen = get_current_screen();
@@ -952,7 +982,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to dismiss admin notices.
 	 *
 	 * @name mwb_wpr_dismiss_notice
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since 1.0.7
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_dismiss_notice() {
@@ -968,7 +999,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * Get all valid screens to add scripts and templates.
 	 *
+	 * @param  array $valid_screens valid screen.
 	 * @since    1.0.7
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_mwb_frontend_screens( $valid_screens = array() ) {
 
@@ -983,7 +1017,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * Get all valid slugs to add deactivate popup.
 	 *
+	 * @param  array $valid_screens valid screen.
 	 * @since    1.0.7
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function add_mwb_deactivation_screens( $valid_screens = array() ) {
 

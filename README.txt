@@ -6,7 +6,7 @@ Requires at least: 5.0.0
 Tested up to: 5.5
 WC requires at least: 3.9.0
 WC tested up to: 4.4
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -15,7 +15,7 @@ Points And Rewards for WooCommerce offers reward points to your customers for th
 
 == Description ==
 
-TOP-RATED POINTS AND REWARDS SYSTEM FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS
+**TOP-RATED POINTS AND REWARDS SYSTEM FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS**
 
 Points And Rewards For WooCommerce is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem these points to buy products at your store or participate in your membership program. With the reward program at your WooCommerce Store, you can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope.
 
@@ -83,7 +83,7 @@ Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.makewe
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE LOYALTY POINTS AND REWARDS PLUGIN ==
 
-> Note://  Get [**Points and Rewards for WooCommerce Pro**](https://makewebbetter.com/product/woocommerce-points-and-rewards/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
+> Note:  Get [**Points and Rewards for WooCommerce Pro**](https://makewebbetter.com/product/woocommerce-points-and-rewards/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
 
 == LIVE DEMO OF PREMIUM VERSION ==
@@ -164,7 +164,7 @@ Yes. You can notify the customers about the transaction of their loyalty points 
 Our WooCommerce Points and Rewards plugin offers a points log report feature that allows both customers and admins to check the points transaction history.
 **For customers:** Customers can check their points transaction history on your online store by going to My Account > Points > View Point Log. All the points transactions are shown in that report.
 
-**For admins:** Admins can check the points transaction history of each customer by going to their WordPress Dashboard and then navigating to WooCommerce > Points and Rewards > Points Table. In the points table, admin can click on the View Point Log to checkpoints transactions of every customer.
+**For admins:** Admins can check the points transaction history of each customer by going to their WordPress Dashboard and then navigating to WooCommerce > Points and Rewards > Points Table. In the points table, the admin can click on the View Point Log to checkpoints transactions of every customer.
 
 
 =Can customers earn the points on the referral signup?=
@@ -176,6 +176,10 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Changelog ==
+
+= 1.0.8 - Released on 23 October 2020 =
+* New: Compatibility with WooCommerce 4.5
+* Fix: Minor issues 
 
 = 1.0.7 - Released on 26 August 2020 =
 * New: Compatibility with WooCommerce 4.4 and WordPress 5.5
@@ -209,6 +213,6 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Upgrade Notice ==
-= 1.0.7 - Released on 26 August 2020 =
-* New: Compatibility with WooCommerce 4.4 and WordPress 5.5
-* New: Points feature for all user role
+= 1.0.8 - Released on 23 October 2020 =
+* New: Compatibility with WooCommerce 4.5
+* Fix: Minor issues

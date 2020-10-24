@@ -2,6 +2,7 @@
 /**
  * Exit if accessed directly
  *
+ * @since      1.0.0
  * @package    points-and-rewards-for-wooCommerce
  * @subpackage points-and-rewards-for-wooCommerce/admin/partials
  */
@@ -17,8 +18,9 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * This is construct of class where all users point listed.
  *
  * @name Points_Log_List_Table
+ * @since      1.0.0
  * @category Class
- * @author makewebbetter<webmaster@makewebbetter.com>
+ * @author makewebbetter<ticket@makewebbetter.com>
  * @link https://www.makewebbetter.com/
  */
 class Points_Log_List_Table extends WP_List_Table {
@@ -26,6 +28,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * This is variable which is used for the store all the data.
 	 *
 	 * @var array $example_data variable for store data.
+	 * @var array $mwb_total_count variable for store data.
 	 */
 	public $example_data;
 	public $mwb_total_count;
@@ -35,7 +38,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * This construct colomns in point table.
 	 *
 	 * @name get_columns.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function get_columns() {
@@ -58,7 +62,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * This show points table list.
 	 *
 	 * @name column_default.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param array  $item  array of the items.
 	 * @param string $column_name name of the colmn.
@@ -99,7 +104,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * This construct update button on points table.
 	 *
 	 * @name view_html.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param int $user_id  user id of the user.
 	 */
@@ -113,7 +119,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * Perform admin bulk action setting for points table.
 	 *
 	 * @name process_bulk_action.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function process_bulk_action() {
@@ -131,28 +137,32 @@ class Points_Log_List_Table extends WP_List_Table {
 				}
 			}
 		}
+		do_action( 'mwb_wpr_process_bulk_reset_option', $this->current_action(), $_POST );
+
 	}
 	/**
 	 * Returns an associative array containing the bulk action
 	 *
 	 * @name process_bulk_action.
+	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
 			'bulk-delete' => __( 'Delete', 'points-and-rewards-for-woocommerce' ),
 		);
-		return $actions;
+		return apply_filters( 'mwb_wpr_points_log_bulk_option', $actions );
 	}
 
 	/**
 	 * Returns an associative array containing the bulk action for sorting.
 	 *
 	 * @name get_sortable_columns.
+	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function get_sortable_columns() {
@@ -168,7 +178,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * Prepare items for sorting.
 	 *
 	 * @name prepare_items.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function prepare_items() {
@@ -184,10 +195,8 @@ class Points_Log_List_Table extends WP_List_Table {
 		$data               = $this->example_data;
 
 		usort( $data, array( $this, 'mwb_wpr_usort_reorder' ) );
-
-		// $total_items  = count( $data );
+		
 		$total_items = $this->mwb_total_count;
-		// $data         = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
 		$this->items  = $data;
 		$this->set_pagination_args(
 			array(
@@ -202,8 +211,9 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * Return sorted associative array.
 	 *
 	 * @name mwb_wpr_usort_reorder.
+	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param array $cloumna column of the points.
 	 * @param array $cloumnb column of the points.
@@ -231,8 +241,9 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * THis function is used for the add the checkbox.
 	 *
 	 * @name column_cb.
+	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param array $item array of the items.
 	 */
@@ -247,9 +258,12 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * This function gives points to user if he doesnot get points.
 	 *
 	 * @name get_users_points.
+	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
+	 * @param int $current_page current page.
+	 * @param int $per_page no of pages.
 	 */
 	public function get_users_points( $current_page, $per_page ) {
 		$args['meta_query'] = array(
@@ -304,8 +318,6 @@ if ( isset( $_POST['mwb_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
 			foreach ( $user_data as $key => $value ) {
 				$check_user = get_user_meta( $value->data->ID, 'mwb_wpr_points', false );
 				if ( false == $check_user ) {
-
-					// if ( in_array( 'subscriber', $value->roles ) || in_array( 'customer', $value->roles ) ) {
 						$today_date                       = date_i18n( 'Y-m-d h:i:sa' );
 						$mwb_signup_value                 = isset( $general_settings['mwb_wpr_general_signup_value'] ) ? intval( $general_settings['mwb_wpr_general_signup_value'] ) : 1;
 						$import_points['import_points'][] = array(
@@ -330,11 +342,10 @@ if ( isset( $_POST['mwb_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
 							$mwb_wpr_email_discription    = str_replace( '[Refer Points]', $mwb_refer_value, $mwb_wpr_email_discription );
 							$mwb_wpr_email_discription    = str_replace( '[Per Currency Spent Points]', $mwb_per_currency_spent_value, $mwb_wpr_email_discription );
 							if ( $mwb_wpr_notificatin_enable ) {
-								$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-								wc_mail( $value->data->user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+								$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+								$email_status = $customer_email->trigger( $value->data->ID, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 							}
 						}
-						// }
 				}
 			}
 			if ( $flag ) {
@@ -352,29 +363,36 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		<h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Coupon Details', 'points-and-rewards-for-woocommerce' ); ?></h3>
 		<?php
 		if ( isset( $user_log ) && is_array( $user_log ) && null != $user_log ) {
+
 			?>
-			<table class="form-table mwp_wpr_settings mwb_wpr_points_view" >
+			<table class="form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_admin_coupon_view">
 				<thead>
 					<tr valign="top">
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Points', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Coupon Code', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Coupon Code', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Coupon Amount', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Coupon Amount', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Amount Left', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Amount Left', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Expiry', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Expiry', 'points-and-rewards-for-woocommerce' ); ?></span>
+						</th>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Action', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ( $user_log as $key => $mwb_user_log ) : ?>
+					<?php
+					foreach ( $user_log as $key => $mwb_user_log ) :
+						$mwb_user_log['delete'] = 'delete';
+						?>
 
 						<tr valign="top">
 							<?php foreach ( $mwb_user_log as $column_id => $column_name ) : ?>
@@ -390,6 +408,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 											$column_name = get_post_meta( $mwb_split[1], 'expiry_date', true );
 											echo esc_html( $column_name );
 										} else {
+
 											$column_name = get_post_meta( $mwb_split[1], 'date_expires', true );
 											if ( ! empty( $column_name ) ) {
 												$dt = new DateTime( "@$column_name" );
@@ -398,9 +417,12 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 												esc_html_e( 'No Expiry', 'points-and-rewards-for-woocommerce' );
 											}
 										}
+									} elseif ( 'delete' == $column_name ) {
+										echo '<a href="#" class="mwb_wpr_delete_user_coupon" data-id="' . esc_html( $mwb_split[1] ) . '" data-user_id="' . esc_html( $user_log_id ) . '">' . esc_html__( 'Delete', 'points-and-rewards-for-woocommerce' ) . '</a>';
 									} else {
 										echo esc_html( $column_name );
 									}
+
 									?>
 								</td>
 							<?php endforeach; ?>
@@ -440,11 +462,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 						  <table class="form-table mwp_wpr_settings mwb_wpr_common_table" >
 								  <thead>
 									<tr valign="top">
-										<th scope="row" class="titledesc">
-											<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+										<th scope="row" class="mwb_wpr_head_titledesc">
+											<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 										</th>
-										<th scope="row" class="titledesc">
-											<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+										<th scope="row" class="mwb_wpr_head_titledesc">
+											<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 										</th>
 									</tr>
 								</thead>
@@ -467,11 +489,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
 						  <thead>
 							<tr valign="top">
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
 							</tr>
 						</thead>
@@ -492,11 +514,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">  
 						  <thead>
 							<tr valign="top">
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
 							</tr>
 						</thead>
@@ -523,11 +545,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
 						  <thead>
 							<tr valign="top">
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
 							</tr>
 						</thead>
@@ -554,11 +576,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
 						  <thead>
 							<tr valign="top">
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
 							</tr>
 						</thead>
@@ -585,11 +607,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
 						  <thead>
 							<tr valign="top">
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
 							</tr>
 						</thead>
@@ -616,11 +638,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table"> 
 						  <thead>
 							<tr valign="top">
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
 							</tr>
 						</thead>
@@ -647,11 +669,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
 						  <thead>
 							<tr valign="top">
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
-								<th scope="row" class="titledesc">
-									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th scope="row" class="mwb_wpr_head_titledesc">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
 							</tr>
 						</thead>
@@ -678,11 +700,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 				  <thead>
 					<tr valign="top">
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
 					</tr>
 				</thead>
@@ -709,11 +731,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		<table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 			<thead>
 				<tr valign="top">
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
 				</tr>
 			</thead>
@@ -741,11 +763,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 			  <thead>
 				<tr valign="top">
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
 				</tr>
 			</thead>
@@ -772,11 +794,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 			  <thead>
 				<tr valign="top">
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
 				</tr>
 			</thead>
@@ -803,11 +825,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			  <table class = "form-table mwp_wpr_settings mwb_wpr_common_table">
 				  <thead>
 					<tr valign="top">
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
 					</tr>
 				</thead>
@@ -834,11 +856,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 					<thead>
 					<tr valign="top">
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
 					</tr>
 				</thead>
@@ -865,11 +887,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table"> 
 					<thead>
 					<tr valign="top">
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
 					</tr>
 				</thead>
@@ -895,11 +917,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 		  <thead>
 			<tr valign="top">
-				<th scope="row" class="titledesc">
-					<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<th scope="row" class="mwb_wpr_head_titledesc">
+					<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</th>
-				<th scope="row" class="titledesc">
-					<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<th scope="row" class="mwb_wpr_head_titledesc">
+					<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</th>
 			</tr>
 		</thead>
@@ -925,11 +947,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 	  <thead>
 			<tr valign="top">
-				<th scope="row" class="titledesc">
-					<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<th scope="row" class="mwb_wpr_head_titledesc">
+					<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</th>
-				<th scope="row" class="titledesc">
-					<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<th scope="row" class="mwb_wpr_head_titledesc">
+					<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</th>
 			</tr>
 		</thead>
@@ -955,11 +977,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 		  <thead>
 			<tr valign="top">
-				<th scope="row" class="titledesc">
-					<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<th scope="row" class="mwb_wpr_head_titledesc">
+					<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</th>
-				<th scope="row" class="titledesc">
-					<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<th scope="row" class="mwb_wpr_head_titledesc">
+					<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</th>
 			</tr>
 		</thead>
@@ -985,11 +1007,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 	  <thead>
 		<tr valign="top">
-			<th scope="row" class="titledesc">
-				<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<th scope="row" class="mwb_wpr_head_titledesc">
+				<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</th>
-			<th scope="row" class="titledesc">
-				<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<th scope="row" class="mwb_wpr_head_titledesc">
+				<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</th>
 		</tr>
 	</thead>
@@ -1015,11 +1037,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 	  <thead>
 			<tr valign="top">
-				<th scope="row" class="titledesc">
-					<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<th scope="row" class="mwb_wpr_head_titledesc">
+					<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</th>
-				<th scope="row" class="titledesc">
-					<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<th scope="row" class="mwb_wpr_head_titledesc">
+					<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</th>
 			</tr>
 		</thead>
@@ -1045,11 +1067,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 	  <thead>
 		<tr valign="top">
-			<th scope="row" class="titledesc">
-				<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<th scope="row" class="mwb_wpr_head_titledesc">
+				<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</th>
-			<th scope="row" class="titledesc">
-				<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<th scope="row" class="mwb_wpr_head_titledesc">
+				<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</th>
 		</tr>
 	</thead>
@@ -1076,14 +1098,14 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 			  <thead>
 				<tr valign="top">
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Reference Sign Up by', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Reference Sign Up by', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
 				</tr>
 			</thead>
@@ -1128,14 +1150,14 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		  <table class = "form-table mwp_wpr_settings  mwb_wpr_common_table">
 				  <thead>
 					<tr valign="top">
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<th scope="row" class="titledesc">
-							<span class="nobr"><?php echo esc_html__( 'Reason', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<th scope="row" class="mwb_wpr_head_titledesc">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Reason', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
 					</tr>
 				</thead>
@@ -1164,14 +1186,14 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	  <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 			  <thead>
 				<tr valign="top">
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
-					<th scope="row" class="titledesc">
-						<span class="nobr"><?php echo esc_html__( 'Shared to ', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<th scope="row" class="mwb_wpr_head_titledesc">
+						<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Shared to ', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</th>
 				</tr>
 			</thead> 
@@ -1207,14 +1229,14 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
   <table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
 	  <thead>
 		<tr valign="top">
-			<th scope="row" class="titledesc">
-				<span class="nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<th scope="row" class="mwb_wpr_head_titledesc">
+				<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</th>
-			<th scope="row" class="titledesc">
-				<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<th scope="row" class="mwb_wpr_head_titledesc">
+				<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</th>
-			<th scope="row" class="titledesc">
-				<span class="nobr"><?php echo esc_html__( 'Received Points by', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<th scope="row" class="mwb_wpr_head_titledesc">
+				<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Received Points by', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</th>
 		</tr>
 	</thead>
@@ -1281,8 +1303,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			
 			<?php
 		} else {
-			// $args['role__in'] = array( 'subscriber', 'customer' );
-
+			
 			$user_data  = get_users( $args );
 			$guest_flag = false;
 			foreach ( $user_data as $key => $value ) {

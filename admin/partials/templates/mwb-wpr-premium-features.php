@@ -2,6 +2,7 @@
 /**
  * Exit if accessed directly
  *
+ * @since      1.0.7
  * @package    points-and-rewards-for-wooCommerce
  * @subpackage points-and-rewards-for-wooCommerce/admin/partials
  */

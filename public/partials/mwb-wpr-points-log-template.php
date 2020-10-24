@@ -21,11 +21,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -71,11 +71,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -101,11 +101,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -130,11 +130,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -157,11 +157,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -184,11 +184,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -211,11 +211,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -239,11 +239,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 							<tr>
-								<th class="view-log-Date">
-									<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th class="mwb-wpr-view-log-Date">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
-								<th class="view-log-Status">
-									<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								<th class="mwb-wpr-view-log-Status">
+									<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</th>
 							</tr>
 						</thead> 
@@ -269,11 +269,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -299,11 +299,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -329,11 +329,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -359,11 +359,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -389,11 +389,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -419,11 +419,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -449,11 +449,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -479,11 +479,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -509,11 +509,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -539,11 +539,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -570,11 +570,11 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -601,14 +601,14 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Activity">
-								<span class="nobr"><?php echo esc_html__( 'Shared to', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Activity">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Shared to', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -648,14 +648,14 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Activity">
-								<span class="nobr"><?php echo esc_html__( 'Received Points via ', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Activity">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Received Points via ', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -694,14 +694,14 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Activity">
-								<span class="nobr"><?php echo esc_html__( 'Reason', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Activity">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Reason', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -729,14 +729,14 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Activity">
-								<span class="nobr"><?php echo esc_html__( 'Sign Up by', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Activity">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Sign Up by', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>
@@ -779,14 +779,14 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
-							<th class="view-log-Date">
-								<span class="nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Date">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Status">
-								<span class="nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Status">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
-							<th class="view-log-Activity">
-								<span class="nobr"><?php echo esc_html__( 'Product purchase by Referred User Points', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<th class="mwb-wpr-view-log-Activity">
+								<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Product purchase by Referred User Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 						</tr>
 					</thead>

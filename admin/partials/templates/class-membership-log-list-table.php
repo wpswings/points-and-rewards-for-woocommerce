@@ -17,6 +17,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * This is construct of class where all users point listed.
  *
  * @name Membership_Log_List_Table
+ * @since      1.0.0
  * @category Class
  * @author makewebbetter<webmaster@makewebbetter.com>
  * @link http://www.makewebbetter.com/
@@ -35,6 +36,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * This construct colomns in point table.
 	 *
 	 * @name get_columns.
+	 * @since      1.0.0
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
@@ -55,6 +57,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 *
 	 * @name column_default.
 	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since      1.0.0
 	 * @link http://www.makewebbetter.com/
 	 * @param array  $item array of the row.
 	 * @param string $column_name column name of the Table.
@@ -83,6 +86,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * Perform admin bulk action setting for points table.
 	 *
 	 * @name process_bulk_action.
+	 * @since      1.0.0
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
@@ -109,6 +113,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * Returns an associative array containing the bulk action
 	 *
 	 * @name process_bulk_action.
+	 * @since      1.0.0
 	 * @return array
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
@@ -124,6 +129,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * Returns an associative array containing the bulk action for sorting.
 	 *
 	 * @name get_sortable_columns.
+	 * @since      1.0.0
 	 * @return array
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
@@ -141,6 +147,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * Prepare items for sorting.
 	 *
 	 * @name prepare_items.
+	 * @since      1.0.0
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
@@ -173,6 +180,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * Return sorted associative array.
 	 *
 	 * @name mwb_wpr_usort_reorder.
+	 * @since      1.0.0
 	 * @return array
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
@@ -202,6 +210,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * Print the checkobox in the Table.
 	 *
 	 * @name column_cb.
+	 * @since      1.0.0
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 * @param array $item array of the items.
@@ -216,6 +225,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * This function gives points to user if he doesnot get points.
 	 *
 	 * @name get_users_points.
+	 * @since      1.0.0
 	 * @return array
 	 * @author makewebbetter<webmaster@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/

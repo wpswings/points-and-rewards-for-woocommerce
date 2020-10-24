@@ -17,7 +17,7 @@
  *
  * @package    points-and-rewards-for-wooCommerce
  * @subpackage points-and-rewards-for-wooCommerce/public
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     makewebbetter <ticket@makewebbetter.com>
  */
 class Points_Rewards_For_WooCommerce_Public {
 
@@ -98,8 +98,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used get the general settings.
 	 *
 	 * @name mwb_wpr_get_general_settings
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since    1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param string $id of the array.
 	 */
 	public function mwb_wpr_get_general_settings( $id ) {
@@ -115,9 +116,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used get the other settings.
 	 *
 	 * @name mwb_wpr_get_other_settings
+	 * @since    1.0.0
 	 * @param string $id id of the settings.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_get_other_settings( $id ) {
 		$mwb_wpr_value = '';
@@ -132,8 +134,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used get the general settings
 	 *
 	 * @name mwb_wpr_get_general_settings
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since    1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param string $id  id of the general settings.
 	 */
 	public function mwb_wpr_get_general_settings_num( $id ) {
@@ -149,8 +152,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used get the coupon settings
 	 *
 	 * @name mwb_wpr_get_general_settings
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since    1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param string $id name of the settings.
 	 */
 	public function mwb_wpr_get_coupon_settings_num( $id ) {
@@ -166,9 +170,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used get the other settings
 	 *
 	 * @name mwb_wpr_get_other_settings_num
+	 * @since    1.0.0
 	 * @param string $id name of the settings.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_get_other_settings_num( $id ) {
 		$mwb_wpr_value = 0;
@@ -183,9 +188,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used get the order total settings
 	 *
 	 * @name mwb_wpr_get_order_total_settings
+	 * @since    1.0.0
 	 * @param string $id name of the settings.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_get_order_total_settings( $id ) {
 		$mwb_wpr_value = array();
@@ -200,9 +206,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used get the order total settings
 	 *
 	 * @name mwb_wpr_get_order_total_settings
+	 * @since    1.0.0
 	 * @param string $id name of the settings.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_get_order_total_settings_num( $id ) {
 		$mwb_wpr_value = 0;
@@ -214,10 +221,11 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * This function is used to cunstruct Points Tab in MY ACCOUNT Page.
+	 * This function is used to construct Points Tab in MY ACCOUNT Page.
 	 *
 	 * @name mwb_wpr_add_my_account_endpoint
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since    1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link http://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_add_my_account_endpoint() {
@@ -231,8 +239,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to set User Role to see Points Tab in MY ACCOUNT Page.
 	 *
 	 * @name mwb_wpr_points_dashboard
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since    1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param array $items array of the items.
 	 */
 	public function mwb_wpr_points_dashboard( $items ) {
@@ -248,17 +257,24 @@ class Points_Rewards_For_WooCommerce_Public {
 		$items['points'] = $mwb_wpr_points_tab_text;
 		$items['customer-logout'] = $logout;
 
-		return $items;
+		return apply_filters( 'mwb_wpr_allowed_user_roles_points', $items );
 	}
+
 
 	/**
 	 * This function is used to get user_id to get points in MY ACCOUNT Page Points Tab.
 	 *
 	 * @name mwb_wpr_account_points
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since    1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_account_points() {
+
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
+
 		$user_ID = get_current_user_ID();
 		$user = new WP_User( $user_ID );
 
@@ -271,8 +287,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to include the working of View_point_log
 	 *
 	 * @name mwb_wpr_account_viewlog
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since    1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_account_viewlog() {
 		$user_ID = get_current_user_ID();
@@ -285,8 +302,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to display the referral link
 	 *
 	 * @name mwb_wpr_get_referral_section
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since    1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param int $user_id of the user.
 	 */
 	public function mwb_wpr_get_referral_section( $user_id ) {
@@ -301,7 +319,8 @@ class Points_Rewards_For_WooCommerce_Public {
 		do_action( 'mwb_wpr_before_add_referral_section', $user_id );
 		$get_referral        = get_user_meta( $user_id, 'mwb_points_referral', true );
 		$get_referral_invite = get_user_meta( $user_id, 'mwb_points_referral_invite', true );
-		$site_url = site_url();
+
+		$site_url = apply_filters( 'mwb_wpr_referral_link_url', site_url() );
 		?>
 		<div class="mwb_account_wrapper">
 			<p class="mwb_wpr_heading"><?php echo esc_html__( 'Referral Link', 'points-and-rewards-for-woocommerce' ); ?></p>
@@ -327,6 +346,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name mwb_wpr_allowed_html
 	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_allowed_html() {
 		$allowed_tags = array(
@@ -369,14 +390,15 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function used to display the social sharing
 	 *
 	 * @name mwb_wpr_get_social_shraing_section
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param int $user_id userid of the customer.
 	 */
 	public function mwb_wpr_get_social_shraing_section( $user_id ) {
 		$enable_mwb_social  = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_social_media_enable' );
 		$user_reference_key = get_user_meta( $user_id, 'mwb_points_referral', true );
-		$page_permalink     = site_url();
+		$page_permalink = apply_filters( 'mwb_wpr_referral_link_url', site_url() );
 
 		if ( $enable_mwb_social ) {
 			$content = '';
@@ -412,7 +434,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$content = $content . $whatsapp;
 			}
 			$content = $content . '</div>';
-			echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $content; // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -420,8 +442,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * The function is used for set the cookie for referee
 	 *
 	 * @name mwb_wpr_referral_link_using_cookie
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_referral_link_using_cookie() {
 		if ( ! is_admin() ) {
@@ -445,11 +468,16 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * Points update in time of new user registeration.
 	 *
 	 * @name mwb_wpr_new_customer_registerd
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param int $customer_id  user id of the customer.
 	 */
 	public function mwb_wpr_new_customer_registerd( $customer_id ) {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		if ( get_user_by( 'ID', $customer_id ) ) {
 			$enable_mwb_signup = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_signup' );
 			if ( $enable_mwb_signup ) {
@@ -517,8 +545,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * Update points details in the public section.
 	 *
 	 * @name mwb_wpr_update_points_details
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param int    $user_id  User id of the user.
 	 * @param string $type type of description.
 	 * @param int    $points  No. of points.
@@ -603,8 +632,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * Send mail to the users
 	 *
 	 * @name mwb_wpr_update_points_details
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param int    $user_id    User id of the user.
 	 * @param string $type    Type of the mail.
 	 */
@@ -614,7 +644,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$user_name = $user->user_login;
 		$mwb_wpr_notificatin_array = get_option( 'mwb_wpr_notificatin_array', true );
 		$total_points = get_user_meta( $user_id, 'mwb_wpr_points', true );
-		/*check is not empty the notification array*/
+		/*check if not empty the notification array*/
 		if ( ! empty( $mwb_wpr_notificatin_array ) && is_array( $mwb_wpr_notificatin_array ) ) {
 			/*Get the Email Subject*/
 			if ( 'signup_notification' == $type ) {
@@ -633,9 +663,10 @@ class Points_Rewards_For_WooCommerce_Public {
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				/*check is mail notification is enable or not*/
 				if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
-					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
 					/*Send the email to user related to the signup*/
-					wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+					$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+					$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 				}
 			}  if ( 'referral_notification' == $type ) {
 				$mwb_wpr_email_subject = self::mwb_wpr_get_email_notification_description( 'mwb_wpr_referral_email_subject' );
@@ -653,9 +684,10 @@ class Points_Rewards_For_WooCommerce_Public {
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				/*check is mail notification is enable or not*/
 				if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
-					$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
 					/*Send the email to user related to the signup*/
-					wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+					$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+					$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 				}
 			}
 		}
@@ -665,7 +697,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to get the Email descriptiion
 	 *
 	 * @name mwb_wpr_check_mail_notfication_is_enable
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param string $id  key of the settings.
 	 */
@@ -679,8 +712,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * The function is used for destroy the cookie
 	 *
 	 * @name mwb_wpr_destroy_cookie
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_destroy_cookie() {
 		if ( isset( $_COOKIE['mwb_wpr_cookie_set'] ) && ! empty( $_COOKIE['mwb_wpr_cookie_set'] ) ) {
@@ -692,8 +726,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * The function is check is order total setting is enable or not
 	 *
 	 * @name check_enable_offer
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function check_enable_offer() {
 		$is_enable = false;
@@ -708,10 +743,11 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used for calculate points in the order settings
 	 *
 	 * @name calculate_points
+	 * @since 1.0.0
 	 * @param int $order_id  order id of the order.
 	 * @param int $user_id   user id of the user.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function calculate_points( $order_id, $user_id ) {
 		$points_on_order = get_post_meta( $order_id, "$order_id#points_assignedon_order_total", true );
@@ -759,11 +795,11 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 				}
 			}
-			/*is is not empty the total points*/
+			/*if not empty the total points*/
 			if ( ! empty( $total_points ) ) {
 				update_user_meta( $user_id, 'mwb_wpr_points', $total_points );
 			}
-			/*is is not empty the total points*/
+			/*if not empty the total points*/
 			if ( ! empty( $mwb_wpr_point ) ) {
 				$data = array();
 				$this->mwb_wpr_update_points_details( $user_id, 'points_on_order', $mwb_wpr_point, $data );
@@ -786,13 +822,18 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to give product points to user if order status of Product is complete and processing.
 	 *
 	 * @name mwb_wpr_woocommerce_order_status_changed
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param int    $order_id order  id of the order.
 	 * @param string $old_status  old status of the order.
 	 * @param string $new_status  new status of the order.
 	 */
 	public function mwb_wpr_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		if ( $old_status != $new_status ) {
 			$points_key_priority_high = false;
 			$mwb_wpr_one_email = false;
@@ -807,6 +848,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			$order = wc_get_order( $order_id );
 			$user_id = absint( $order->get_user_id() );
 			$user = get_user_by( 'ID', $user_id );
+			if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features_order', false, $user ) ) {
+				return;
+			}
 			$user_email = $user->user_email;
 			if ( 'completed' == $new_status ) {
 				if ( isset( $user_id ) && ! empty( $user_id ) ) {
@@ -862,6 +906,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								/*Get*/
 								$item_conversion_id_set = get_post_meta( $order_id, "$order_id#item_conversion_id", true );
 								if ( 'set' != $item_conversion_id_set ) {
+
 									$user_id = $order->get_user_id();
 									$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 									/*total calculation of the points*/
@@ -872,8 +917,10 @@ class Points_Rewards_For_WooCommerce_Public {
 									$mwb_wpr_coupon_conversion_price = ( 0 == $mwb_wpr_coupon_conversion_price ) ? 1 : $mwb_wpr_coupon_conversion_price;
 									/*Calculat points of the order*/
 									$points_calculation = ceil( ( $order_total * $mwb_wpr_coupon_conversion_points ) / $mwb_wpr_coupon_conversion_price );
+
 									/*Total Point of the order*/
 									$total_points = intval( $points_calculation + $get_points );
+									// $total_points = wc_format_decimal( $points_calculation + $get_points );
 									$data = array();
 									/*Update points details in woocommerce*/
 									$this->mwb_wpr_update_points_details( $user_id, 'pro_conversion_points', $points_calculation, $data );
@@ -942,8 +989,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to send mail to the client regarding the updatoon of the points.
 	 *
 	 * @name mwb_wpr_send_notification_mail_product
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param int    $user_id  user id of the user.
 	 * @param int    $points  points of the user.
 	 * @param string $shortcode  shotcode of the plugins.
@@ -953,7 +1001,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$user = get_user_by( 'ID', $user_id );
 		$user_email = $user->user_email;
 		$mwb_wpr_notificatin_array = get_option( 'mwb_wpr_notificatin_array', true );
-		/*check is not empty the notification array*/
+		/*check if not empty the notification array*/
 		if ( ! empty( $mwb_wpr_notificatin_array ) && is_array( $mwb_wpr_notificatin_array ) ) {
 			/*Get the Email Subject*/
 			$mwb_wpr_email_subject = self::mwb_wpr_get_email_notification_description( $mwb_wpr_subject_content['mwb_wpr_subject'] );
@@ -967,9 +1015,10 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 			/*check is mail notification is enable or not*/
 			if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
-				$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
 				/*Send the email to user related to the signup*/
-				wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+				$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+				$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 			}
 		}
 
@@ -979,8 +1028,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to edit comment template for points
 	 *
 	 * @name mwb_wpr_woocommerce_signup_point
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_woocommerce_signup_point() {
 		/*Get the color of the*/
@@ -1004,10 +1054,15 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to add the html boxes for "Redemption on Cart sub-total"
 	 *
 	 * @name mwb_wgm_woocommerce_cart_coupon
-	 * @author <webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author <ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_woocommerce_cart_coupon() {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		/*Get the value of the custom points*/
 		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
 		if ( 1 == $mwb_wpr_custom_points_on_cart ) {
@@ -1038,8 +1093,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to apply fee on cart total
 	 *
 	 * @name mwb_wpr_apply_fee_on_cart_subtotal
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_apply_fee_on_cart_subtotal() {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
@@ -1068,8 +1124,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to apply custom points on Cart Total.
 	 *
 	 * @name mwb_wpr_woocommerce_cart_custom_points
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param array $cart  array of the cart.
 	 */
 	public function mwb_wpr_woocommerce_cart_custom_points( $cart ) {
@@ -1104,10 +1161,15 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to add notices over cart page.
 	 *
 	 * @name mwb_wpr_woocommerce_before_cart_contents
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_woocommerce_before_cart_contents() {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		/*Check is custom points on cart is enable*/
 		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
 		/*Get the Notification*/
@@ -1165,8 +1227,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to check the order conversion feature is enabled or not
 	 *
 	 * @name is_order_conversion_enabled
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function is_order_conversion_enabled() {
 		$enable = false;
@@ -1181,8 +1244,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to return you the conversion rate of Order Total
 	 *
 	 * @name order_conversion_rate
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function order_conversion_rate() {
 		$order_conversion_rate_value = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_price' );
@@ -1198,8 +1262,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to add Remove button along with Cart Discount Fee
 	 *
 	 * @name mwb_wpr_woocommerce_cart_totals_fee_html
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param string $cart_totals_fee_html html of the fees.
 	 * @param array  $fee array of the fees.
 	 */
@@ -1218,8 +1283,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to Remove Cart Discount Fee.
 	 *
 	 * @name mwb_wpr_remove_cart_point
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_wpr_remove_cart_point() {
 		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
@@ -1237,8 +1303,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to allow customer can apply points during checkout.
 	 *
 	 * @name mwb_overwrite_form_temp
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param string $path path of the templates.
 	 * @param string $template_name name of the file.
 	 */
@@ -1258,8 +1325,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	/**
 	 * This function will update the user points as they purchased products through points
 	 *
-	 * @name mwb_wpr_woocommerce_checkout_update_order_meta.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @name mwb_wpr_woocommerce_checkout_update_order_meta..
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param int   $order_id id of the order.
 	 * @param array $data data of the order.
@@ -1317,7 +1385,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function will send deducted mail to the user
 	 *
 	 * @name mwb_wpr_woocommerce_checkout_update_order_meta.
-	 * @author makewebbetter<webmaster@makewebbetter.com>
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 * @param int    $user_id user id of the user.
 	 * @param string $type type of the mail.
@@ -1328,7 +1397,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$user_email = $user->user_email;
 		$user_name = $user->user_login;
 		$mwb_wpr_notificatin_array = get_option( 'mwb_wpr_notificatin_array', true );
-		/*check is not empty the notification array*/
+		/*check if not empty the notification array*/
 		if ( ! empty( $mwb_wpr_notificatin_array ) && is_array( $mwb_wpr_notificatin_array ) ) {
 			$mwb_wpr_total_points = get_user_meta( $user_id, 'mwb_wpr_points', true );
 			/*Get the Email Subject*/
@@ -1340,9 +1409,10 @@ class Points_Rewards_For_WooCommerce_Public {
 			$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 			/*check is mail notification is enable or not*/
 			if ( Points_Rewards_For_WooCommerce_Admin::mwb_wpr_check_mail_notfication_is_enable() ) {
-				$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
 				/*Send the email to user related to the signup*/
-				 wc_mail( $user_email, $mwb_wpr_email_subject, $mwb_wpr_email_discription, $headers );
+				$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
+				$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 			}
 		}
 	}
@@ -1351,8 +1421,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to save points in add to cart session.
 	 *
 	 * @name mwb_wpr_woocommerce_add_cart_item_data
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param array $the_cart_data array of the cart data.
 	 * @param int   $product_id id of the product.
 	 * @param int   $variation_id id of the variation.
@@ -1391,8 +1462,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to show item poits in time of order .
 	 *
 	 * @name mwb_wpr_woocommerce_get_item_data
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param array $item_meta array of the meta item.
 	 * @param array $existing_item_meta array of the existing meta.
 	 */
@@ -1419,10 +1491,12 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to show item points in product discription page.   .
 	 *
 	 * @name mwb_display_product_points
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_display_product_points() {
+
 		global $post;
 		/*Get the color of the*/
 		$mwb_wpr_notification_color = $this->mwb_wpr_get_other_settings( 'mwb_wpr_notification_color' );
@@ -1453,8 +1527,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * The function is used for checking the product is variable or not?
 	 *
 	 * @name mwb_wpr_check_whether_product_is_variable
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param array $product arry of the whole product.
 	 */
 	public function mwb_wpr_check_whether_product_is_variable( $product ) {
@@ -1471,8 +1546,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * The function is for let the meta keys translatable
 	 *
 	 * @name mwb_wpr_woocommerce_order_item_display_meta_key
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param string $display_key display key in the cart.
 	 */
 	public function mwb_wpr_woocommerce_order_item_display_meta_key( $display_key ) {
@@ -1486,8 +1562,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to save item points in time of order according to woocommerce 3.0.
 	 *
 	 * @name mwb_wpr_woocommerce_add_order_item_meta_version_3
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param array  $item  array of the items.
 	 * @param string $cart_key  key of the cart.
 	 * @param array  $values  array of the cart meta data.
@@ -1511,12 +1588,17 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function will add discounted price for selected products in any     Membership Level.
 	 *
 	 * @name mwb_wpr_user_level_discount_on_price
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param int   $price price of the product.
 	 * @param array $product_data product data of the product.
 	 */
 	public function mwb_wpr_user_level_discount_on_price( $price, $product_data ) {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		$today_date                = date_i18n( 'Y-m-d' );
 		$user_id                   = get_current_user_ID();
 		$new_price                 = '';
@@ -1567,8 +1649,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to check whether the exclude product is enable or not for Membership Discount { if enable then sale product will not be having the membership discount anymore as they are already having some discounts }
 	 *
 	 * @name check_exclude_sale_products
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param array $products array of the products all details.
 	 */
 	public function check_exclude_sale_products( $products ) {
@@ -1587,12 +1670,16 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function will add discounted price in cart page.
 	 *
 	 * @name mwb_wpr_woocommerce_before_calculate_totals
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param array $cart array of the cart.
 	 */
 	public function mwb_wpr_woocommerce_before_calculate_totals( $cart ) {
-
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		$woo_ver = WC()->version;
 		/*Get the current user id*/
 		$user_id = get_current_user_ID();
@@ -1682,9 +1769,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to update cart points.
 	 *
 	 * @name mwb_update_cart_points
+	 * @since 1.0.0
 	 * @return array
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param array $cart_updated array of the update cart.
 	 */
 	public function mwb_update_cart_points( $cart_updated ) {
@@ -1722,14 +1810,16 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to handle the tax calculation when Fee is applying on Cart
 	 *
 	 * @name mwb_wpr_fee_tax_calculation
-	 * @author makewebbetter<webmaster@makewebbetter.com>
-	 * @link http://www.makewebbetter.com/
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
 	 * @param array $fee_taxes   taxes array.
 	 * @param array $fee   object array of the fee.
 	 * @param array $object  object of the add fee.
 	 */
 	public function mwb_wpr_fee_tax_calculation( $fee_taxes, $fee, $object ) {
-		if ( 'point-discount' == $fee->object->id || 'cart-discount' == $fee->object->id ) {
+		$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+		if ( 'point-discount' == $fee->object->id || $cart_discount == $fee->object->id ) {
 			foreach ( $fee_taxes as $key => $value ) {
 				$fee_taxes[ $key ] = 0;
 			}
@@ -1747,6 +1837,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://makewebbetter.com
 	 */
 	public function mwb_wpr_add_coupon_form( $checkout ) {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		$mwb_wpr_custom_points_on_checkout = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_apply_points_checkout' );
 		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
 
@@ -1772,6 +1866,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://makewebbetter.com
 	 */
 	public function mwb_wpr_display_apply_points_checkout() {
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		$user_id = get_current_user_ID();
 		if ( isset( $user_id ) && ! empty( $user_id ) ) {
 			if ( class_exists( 'Points_Rewards_For_WooCommerce_Public' ) ) {

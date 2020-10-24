@@ -241,14 +241,12 @@ if ( isset( $_POST['mwb_wpr_save_general'] ) && isset( $_POST['mwb-wpr-nonce'] )
 		if ( 'mwb_wpr_general_setting' == $current_tab ) {
 
 			/* Save Settings and check is not empty*/
-			$postdata = $settings_obj->check_is_settings_is_not_empty( $mwb_wpr_general_settings, $_POST );
+			$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
+			$postdata = $settings_obj->check_is_settings_is_not_empty( $mwb_wpr_general_settings, $postdata );
 			/* End of the save Settings and check is not empty*/
 			$general_settings_array = array();
 
 			foreach ( $postdata as $key => $value ) {
-					$value = stripcslashes( $value );
-					$value = trim( $value );
-					$value = sanitize_text_field( $value );
 				$general_settings_array[ $key ] = $value;
 			}
 			if ( is_array( $general_settings_array ) && ! empty( $general_settings_array ) ) {

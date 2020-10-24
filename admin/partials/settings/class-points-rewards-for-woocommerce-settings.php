@@ -15,6 +15,7 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
+ * @since      1.0.0
  * @package    points-and-rewards-for-wooCommerce
  * @subpackage points-and-rewards-for-wooCommerce/admin
  * @author     makewebbetter <webmaster@makewebbetter.com>
@@ -359,8 +360,8 @@ class Points_Rewards_For_WooCommerce_Settings {
 		if ( isset( $_POST['mwb-wpr-nonce'] ) ) {
 			$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
 			if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
-				$_POST[ $name ] = ( isset( $_POST[ $name ] ) && ! empty( $_POST[ $name ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $name ] ) ) : '';
-				return sanitize_text_field( wp_unslash( $_POST[ $name ] ) );
+				$_POST[ $name ] = ( isset( $_POST[ $name ] ) && ! empty( $_POST[ $name ] ) ) ? wp_kses_post( wp_unslash( $_POST[ $name ] ) ) : '';
+					return wp_kses_post( wp_unslash( $_POST[ $name ] ) ); // PHPCS:Ignore WordPress.Security.EscapeIutput.IutputNotEscaped
 			}
 		}
 	}
@@ -518,5 +519,21 @@ class Points_Rewards_For_WooCommerce_Settings {
 			do_action( 'mwb_wpr_add_custom_type_settings', $value, $mwb_wpr_general_settings, $_postdata );
 		}
 		return $_postdata;
+	}
+
+
+	/**
+	 * This function is used for showing shortcode description.
+	 *
+	 * @name mwb_wpr_display_shortcode
+	 * @since 1.0.8
+	 */
+	public function mwb_wpr_display_shortcode(){
+		$shortcode_array = array(
+			'desc1' => __( 'Use the shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level', 'points-and-rewards-for-woocommerce' ),
+			'desc2' => __( 'Use shortcode [MYCURRENTPOINT] for displaying current Points of Users', 'points-and-rewards-for-woocommerce' ),
+			'desc3' => __( 'Use shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ),
+		);
+		return apply_filters( 'mwb_wpr_show_shortcoe_text', $shortcode_array );
 	}
 }

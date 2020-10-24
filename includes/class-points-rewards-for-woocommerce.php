@@ -24,7 +24,7 @@
  * @since      1.0.0
  * @package    points-and-rewards-for-wooCommerce
  * @subpackage points-and-rewards-for-wooCommerce/includes
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     makewebbetter <ticket@makewebbetter.com>
  */
 class Points_Rewards_For_Woocommerce {
 
@@ -72,7 +72,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '1.0.5';
+			$this->version = '1.0.8';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -81,6 +81,7 @@ class Points_Rewards_For_Woocommerce {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->init();
 
 	}
 
@@ -134,6 +135,15 @@ class Points_Rewards_For_Woocommerce {
 		! class_exists( 'Makewebbetter_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-makewebbetter-onboarding-helper.php';
 		$this->onboard = new Makewebbetter_Onboarding_Helper();
 
+	}
+
+	/**
+	 * Initialiation function to include mail teplate.
+	 *
+	 * @since    1.0.0
+	 */
+	public function init() {
+		add_filter( 'woocommerce_email_classes', array( $this, 'mwb_wpr_woocommerce_email_classes' ) );
 	}
 
 	/**
@@ -249,6 +259,7 @@ class Points_Rewards_For_Woocommerce {
 	 * @since    1.0.0
 	 */
 	public function mwb_rwpr_is_plugin_enable() {
+
 		$is_enable = false;
 		$mwb_wpr_enable = '';
 		$general_settings = get_option( 'mwb_wpr_settings_gallery', true );
@@ -259,6 +270,17 @@ class Points_Rewards_For_Woocommerce {
 			$is_enable = true;
 		}
 		return $is_enable;
+	}
+
+	/**
+	 * Initialization function to include mail template.
+	 *
+	 * @param array $emails email templates.
+	 * @since    1.0.8
+	 */
+	public function mwb_wpr_woocommerce_email_classes( $emails ) {
+		$emails['mwb_wpr_email_notification'] = include MWB_RWPR_DIR_PATH . 'emails/class-mwb-wpr-emails-notification.php';
+		return $emails;
 	}
 
 	/**

@@ -26,11 +26,7 @@ $mwb_wpr_other_settings = array(
 		'id' => 'mwb_wpr_other_shortcodes',
 		'title' => __( 'Shortcodes', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'shortcode',
-		'desc'  => array(
-			'desc1' => __( 'Use the shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level', 'points-and-rewards-for-woocommerce' ),
-			'desc2' => __( 'Use shortcode [MYCURRENTPOINT] for displaying current Points of Users', 'points-and-rewards-for-woocommerce' ),
-			'desc3' => __( 'Use shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ),
-		),
+		'desc'  => $settings_obj->mwb_wpr_display_shortcode(),
 	),
 	array(
 		'id'    => 'mwb_wpr_other_shortcode_text',
@@ -80,7 +76,7 @@ if ( isset( $_POST['mwb_wpr_save_othersetting'] ) && isset( $_POST['mwb-wpr-nonc
 	if ( wp_verify_nonce( $mwb_par_nonce, 'mwb-wpr-nonce' ) ) {
 		unset( $_POST['mwb_wpr_save_othersetting'] );
 		$other_settings = array();
-		/* Check is input is not empty if empty then assign them default value*/
+		/* Check if input is not empty, if empty then assign them default value*/
 		$postdata = $settings_obj->check_is_settings_is_not_empty( $mwb_wpr_other_settings, $_POST );
 
 		foreach ( $postdata as $key => $value ) {
