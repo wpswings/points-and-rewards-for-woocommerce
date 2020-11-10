@@ -1819,7 +1819,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function mwb_wpr_fee_tax_calculation( $fee_taxes, $fee, $object ) {
 		$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
-		if ( 'point-discount' == $fee->object->id || $cart_discount == $fee->object->id ) {
+		if ( $cart_discount == $fee->object->name ) {
 			foreach ( $fee_taxes as $key => $value ) {
 				$fee_taxes[ $key ] = 0;
 			}

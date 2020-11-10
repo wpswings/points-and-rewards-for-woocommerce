@@ -5,8 +5,8 @@ Tags: points, Rewards, Points and Rewards, Loyalty, woocommerce
 Requires at least: 5.0.0
 Tested up to: 5.5
 WC requires at least: 3.9.0
-WC tested up to: 4.4
-Stable tag: 1.0.8
+WC tested up to: 4.6
+Stable tag: 1.0.9
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -21,7 +21,7 @@ Points And Rewards For WooCommerce is a points management plugin that engages cu
 
 [youtube https://www.youtube.com/watch?v=WWktrnAI88U&t=333s]
 
-== With the Points And Rewards for WooCommerce plugin you can: ==
+== WITH THE POINTS AND REWARDS FOR WOOCOMMERCE PLUGIN YOU CAN: ==
 * Offer points on signup, referrals, purchase, etc. to engage your customers
 * Create a membership program to reward loyal customers with exclusive offers
 * Track the points transaction of every customer with point log report
@@ -31,6 +31,8 @@ Points And Rewards For WooCommerce is a points management plugin that engages cu
 * Change the point value for the order total and cart redemption
 * Assign a similar point value to all simple products with global point assign feature
 * Offer a specific number of points for a set price range of the order value
+
+
 
 == WHAT’S INCLUDED IN OUR FREE POINTS AND REWARDS FOR WOOCOMMERCE PLUGIN == 
 
@@ -67,7 +69,7 @@ The WooCommerce rewards plugin is compatible with the WPML Multilingual plugin t
 
 Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.makewebbetter.com/points-rewards-for-WooCommerce/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) and learn more about the features and working of the plugin.
 
-== WHAT PREMIUM VERSION OF POINTS AND REWARDS FOR WOOCOMMERCE OFFERS == 
+== WHAT PREMIUM VERSION OF WOOCOMMERCE POINTS AND REWARDS OFFERS == 
 
 * Multilevel Membership
 * Generate Coupons Using The Points
@@ -177,6 +179,9 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
+= 1.0.9 - Released on 10 November 2020 =
+* Fix: Not apply points on tax
+
 = 1.0.8 - Released on 23 October 2020 =
 * New: Compatibility with WooCommerce 4.5
 * Fix: Minor issues 
@@ -213,6 +218,5 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Upgrade Notice ==
-= 1.0.8 - Released on 23 October 2020 =
-* New: Compatibility with WooCommerce 4.5
-* Fix: Minor issues
+= 1.0.9 - Released on 10 November 2020 =
+* Fix: Not apply points on tax
