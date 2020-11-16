@@ -5,8 +5,8 @@ Tags: points, Rewards, Points and Rewards, Loyalty, woocommerce
 Requires at least: 5.0.0
 Tested up to: 5.5
 WC requires at least: 3.9.0
-WC tested up to: 4.6
-Stable tag: 1.0.9
+WC tested up to: 4.7
+Stable tag: 1.0.10
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -179,6 +179,9 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
+= 1.0.10 - Released on 13 November 2020 =
+* Fix: Minor issues
+
 = 1.0.9 - Released on 10 November 2020 =
 * Fix: Not apply points on tax
 
@@ -218,5 +221,5 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Upgrade Notice ==
-= 1.0.9 - Released on 10 November 2020 =
-* Fix: Not apply points on tax
+= 1.0.10 - Released on 13 November 2020 =
+* Fix: Minor issues

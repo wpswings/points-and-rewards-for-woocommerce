@@ -139,7 +139,7 @@ jQuery(document).ready( function($) {
 	/* Add deactivate id in all the plugins links. */
 	function embed_id_to_deactivation_urls() {
 		jQuery( 'a' ).each(function(){
-		    if ( 'Deactivate' == jQuery(this).text() || 0 < jQuery(this).attr( 'href' ).search( 'action=deactivate' ) ) {
+		    if ( 'Deactivate' == jQuery(this).text() && 0 < jQuery(this).attr( 'href' ).search( 'action=deactivate' ) ) {
 		    	if( 'undefined' == typeof jQuery(this).attr( 'id' ) ) {
 			    	var slug = jQuery(this).closest( 'tr' ).attr( 'data-slug' );
 			    	jQuery(this).attr( 'id', 'deactivate-' + slug );

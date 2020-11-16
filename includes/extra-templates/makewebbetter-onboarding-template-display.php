@@ -8,11 +8,14 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package    Makewebbetter_Onboarding
- * @subpackage Makewebbetter_Onboarding/admin/onboarding
+ * @package    points-and-rewards-for-wooCommerce
+ * @subpackage points-and-rewards-for-wooCommerce/includes/extra-template
  */
 ?>
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 	$screen = get_current_screen();
 	$is_valid = in_array( $screen->id, apply_filters( 'mwb_helper_valid_frontend_screens', array() ) );

@@ -195,7 +195,7 @@ class Points_Log_List_Table extends WP_List_Table {
 		$data               = $this->example_data;
 
 		usort( $data, array( $this, 'mwb_wpr_usort_reorder' ) );
-		
+
 		$total_items = $this->mwb_total_count;
 		$this->items  = $data;
 		$this->set_pagination_args(
@@ -1303,7 +1303,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			
 			<?php
 		} else {
-			
+
 			$user_data  = get_users( $args );
 			$guest_flag = false;
 			foreach ( $user_data as $key => $value ) {

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 1.0.8\n"
-"POT-Creation-Date: 2020-11-10 14:07+0530\n"
-"PO-Revision-Date: 2020-11-10 14:08+0530\n"
+"Project-Id-Version: Points and Rewards for WooCommerce 1.0.10\n"
+"POT-Creation-Date: 2020-11-13 17:53+0530\n"
+"PO-Revision-Date: 2020-11-13 17:54+0530\n"
 "Last-Translator: \n"
 "Language-Team: makewebbetter\n"
 "Language: en_US\n"
@@ -242,77 +242,77 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:965
+#: admin/class-points-rewards-for-woocommerce-admin.php:969
 msgid "admin/images/mwb.png"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:16
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:24
 msgid "Overview"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:20
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:28
 msgid "General"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:25
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:33
 msgid "Per Currency Points Settings"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:29
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:37
 #: admin/partials/templates/class-points-log-list-table.php:1285
 msgid "Points Table"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:33
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:41
 msgid "Points Notification"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:37
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:45
 msgid "Membership"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:41
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:49
 msgid "Assign Product Points"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:46
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:54
 #: admin/partials/templates/mwb-other-setting.php:53
 msgid "Other Settings"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:50
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:58
 msgid "Order Total Points"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:56
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:64
 msgid "Premium Features"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:67
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:75
 msgid "Points and Rewards for WooCommerce"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:74
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:82
 msgid "Contact us"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:79
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:87
 msgid "Doc"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:85
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:93
 msgid "GO PRO NOW"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:90
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:98
 msgid "https://join.skype.com/invite/IKVeNkLHebpC"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:91
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:99
 msgid "admin/images/skype_logo.png"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:91
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:99
 msgid "CHAT NOW"
 msgstr ""
 
@@ -1516,187 +1516,187 @@ msgstr ""
 msgid "Points and rewards notification"
 msgstr ""
 
-#: emails/class-mwb-wpr-emails-notification.php:139
+#: emails/class-mwb-wpr-emails-notification.php:140
 msgid "Enable/Disable"
 msgstr ""
 
-#: emails/class-mwb-wpr-emails-notification.php:141
+#: emails/class-mwb-wpr-emails-notification.php:142
 msgid "Enable this email notification"
 msgstr ""
 
-#: emails/class-mwb-wpr-emails-notification.php:145
+#: emails/class-mwb-wpr-emails-notification.php:146
 msgid "Email heading"
 msgstr ""
 
-#: emails/class-mwb-wpr-emails-notification.php:149
+#: emails/class-mwb-wpr-emails-notification.php:150
 #, php-format
 msgid "Available placeholders: %s"
 msgstr ""
 
-#: emails/class-mwb-wpr-emails-notification.php:154
+#: emails/class-mwb-wpr-emails-notification.php:155
 msgid "Email type"
 msgstr ""
 
-#: emails/class-mwb-wpr-emails-notification.php:156
+#: emails/class-mwb-wpr-emails-notification.php:157
 msgid "Choose which format of email to send."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:302
+#: includes/class-makewebbetter-onboarding-helper.php:306
 msgid "What is your monthly revenue?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:319
+#: includes/class-makewebbetter-onboarding-helper.php:323
 msgid "What industry defines your business?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:327
+#: includes/class-makewebbetter-onboarding-helper.php:331
 msgid "Agency"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:328
+#: includes/class-makewebbetter-onboarding-helper.php:332
 msgid "Consumer Services"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:329
+#: includes/class-makewebbetter-onboarding-helper.php:333
 msgid "Ecommerce"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:330
+#: includes/class-makewebbetter-onboarding-helper.php:334
 msgid "Financial Services"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:331
+#: includes/class-makewebbetter-onboarding-helper.php:335
 msgid "Healthcare"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:332
+#: includes/class-makewebbetter-onboarding-helper.php:336
 msgid "Manufacturing"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:333
+#: includes/class-makewebbetter-onboarding-helper.php:337
 msgid "Nonprofit and Education"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:334
+#: includes/class-makewebbetter-onboarding-helper.php:338
 msgid "Professional Services"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:335
+#: includes/class-makewebbetter-onboarding-helper.php:339
 msgid "Real Estate"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:336
+#: includes/class-makewebbetter-onboarding-helper.php:340
 msgid "Software"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:337
+#: includes/class-makewebbetter-onboarding-helper.php:341
 msgid "Startups"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:338
+#: includes/class-makewebbetter-onboarding-helper.php:342
 msgid "Restaurant"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:339
+#: includes/class-makewebbetter-onboarding-helper.php:343
 msgid "Fitness"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:340
+#: includes/class-makewebbetter-onboarding-helper.php:344
 msgid "Jewelry"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:341
+#: includes/class-makewebbetter-onboarding-helper.php:345
 msgid "Beauty"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:342
+#: includes/class-makewebbetter-onboarding-helper.php:346
 msgid "Celebrity"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:343
+#: includes/class-makewebbetter-onboarding-helper.php:347
 msgid "Gaming"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:344
+#: includes/class-makewebbetter-onboarding-helper.php:348
 msgid "Government"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:345
+#: includes/class-makewebbetter-onboarding-helper.php:349
 msgid "Sports"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:346
+#: includes/class-makewebbetter-onboarding-helper.php:350
 msgid "Retail Store"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:347
+#: includes/class-makewebbetter-onboarding-helper.php:351
 msgid "Travel"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:348
+#: includes/class-makewebbetter-onboarding-helper.php:352
 msgid "Political Campaign"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:354
+#: includes/class-makewebbetter-onboarding-helper.php:358
 msgid "What is the best email address to contact you?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:364
+#: includes/class-makewebbetter-onboarding-helper.php:368
 msgid "What is your contact number?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:450
+#: includes/class-makewebbetter-onboarding-helper.php:463
 msgid "It is a temporary deactivation. I am just debugging an issue."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:451
+#: includes/class-makewebbetter-onboarding-helper.php:464
 msgid "The plugin broke my layout or some functionality."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:452
+#: includes/class-makewebbetter-onboarding-helper.php:465
 msgid "The plugin is too complicated to configure."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:453
+#: includes/class-makewebbetter-onboarding-helper.php:466
 msgid "I no longer need the plugin"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:454
+#: includes/class-makewebbetter-onboarding-helper.php:467
 msgid "I found a better plugin"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:455
+#: includes/class-makewebbetter-onboarding-helper.php:468
 msgid "Other"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:595
+#: includes/class-makewebbetter-onboarding-helper.php:608
 msgid "Select Any One Option..."
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-deactivation-template-display.php:37
+#: includes/extra-templates/makewebbetter-deactivation-template-display.php:40
 msgid "May we have a little info about why you are deactivating?"
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-deactivation-template-display.php:47
+#: includes/extra-templates/makewebbetter-deactivation-template-display.php:50
 msgid "Skip and Deactivate Now"
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-onboarding-template-display.php:40
+#: includes/extra-templates/makewebbetter-onboarding-template-display.php:43
 msgid "Welcome to MakeWebBetter"
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-onboarding-template-display.php:41
+#: includes/extra-templates/makewebbetter-onboarding-template-display.php:44
 msgid ""
 "We love making new friends! Subscribe below and we promise to keep you up-to-"
 "date with our latest new plugins, updates, awesome deals and a few special "
 "offers."
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-onboarding-template-display.php:48
+#: includes/extra-templates/makewebbetter-onboarding-template-display.php:51
 msgid "Send Us"
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-onboarding-template-display.php:51
+#: includes/extra-templates/makewebbetter-onboarding-template-display.php:54
 msgid "Skip For Now"
 msgstr ""
 

@@ -528,7 +528,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 * @name mwb_wpr_display_shortcode
 	 * @since 1.0.8
 	 */
-	public function mwb_wpr_display_shortcode(){
+	public function mwb_wpr_display_shortcode() {
 		$shortcode_array = array(
 			'desc1' => __( 'Use the shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level', 'points-and-rewards-for-woocommerce' ),
 			'desc2' => __( 'Use shortcode [MYCURRENTPOINT] for displaying current Points of Users', 'points-and-rewards-for-woocommerce' ),
