@@ -475,7 +475,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function mwb_wpr_new_customer_registerd( $customer_id ) {
 		// check allowed user for points features.
-		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features_signup',false,$customer_id ) ) {
 			return;
 		}
 		if ( get_user_by( 'ID', $customer_id ) ) {
@@ -1496,7 +1496,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_display_product_points() {
-
+		// check allowed user for points features.
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 		global $post;
 		/*Get the color of the*/
 		$mwb_wpr_notification_color = $this->mwb_wpr_get_other_settings( 'mwb_wpr_notification_color' );
@@ -1597,7 +1600,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function mwb_wpr_user_level_discount_on_price( $price, $product_data ) {
 		// check allowed user for points features.
 		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
-			return;
+			return $price;
 		}
 		$today_date                = date_i18n( 'Y-m-d' );
 		$user_id                   = get_current_user_ID();
@@ -1824,6 +1827,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$fee_taxes[ $key ] = 0;
 			}
 		}
+		$fee_taxes = apply_filters('mwb_wpr_fee_tax_calculation_points', $fee_taxes, $fee, $object );
 		return $fee_taxes;
 	}
 
