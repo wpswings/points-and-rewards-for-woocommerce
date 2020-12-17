@@ -878,6 +878,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 	/**
 	 * This function is used to set cron if user want to get support.
+	 *
 	 * @since 1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
@@ -896,6 +897,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 	/**
 	 * This function is used to save notification message with notification id.
+	 *
 	 * @since 1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
@@ -913,6 +915,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 	/**
 	 * This function is used to get notification data from server.
+	 *
 	 * @since 1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
@@ -943,6 +946,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 	/**
 	 * This function is used to display notoification bar at admin.
+	 *
 	 * @since 1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/

@@ -15,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
 * This hooks use for emaail header
+ *
  * @hooked WC_Emails::email_header() Output the email header
  */
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
@@ -42,6 +43,7 @@ echo wp_kses_post( html_entity_decode( $template ) ); // PHPCS:Ignore WordPress.
 
 /**
 * This hooks use for emaail footer
+ *
  * @hooked WC_Emails::email_footer() Output the email footer
  */
 do_action( 'woocommerce_email_footer', $email );

@@ -8,11 +8,14 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package    Makewebbetter_Onboarding
- * @subpackage Makewebbetter_Onboarding/admin/onboarding
+ * @package    points-and-rewards-for-wooCommerce
+ * @subpackage points-and-rewards-for-wooCommerce/includes/extra-template
  */
 ?>
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 	global $pagenow;
 if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {

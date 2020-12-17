@@ -10,6 +10,14 @@
  * @package    Rewardeem_woocommerce_Points_Rewards
  * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+define( 'ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
+
+if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
+	$this->onboard = new Makewebbetter_Onboarding_Helper();
+}
 
 $mwb_wpr_setting_tab = array(
 	'overview-setting' => array(

@@ -37,7 +37,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		/**
 		 * Get email subject.
 		 *
-		* @since      1.0.8
+		 * @since      1.0.8
 		 * @return string
 		 */
 		public function get_default_subject() {
@@ -48,7 +48,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		/**
 		 * Get email heading.
 		 *
-		* @since      1.0.8
+		 * @since      1.0.8
 		 * @return string
 		 */
 		public function get_default_heading() {
@@ -131,6 +131,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 
 		/**
 		 * Initialise settings form fields.
+		 *
 		 * @since      1.0.8
 		 */
 		public function init_form_fields() {
