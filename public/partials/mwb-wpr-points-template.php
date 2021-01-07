@@ -177,6 +177,7 @@ if ( $mwb_wpr_mem_enable ) {
 						<th class="mwb-wpr-points-code">
 							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Required Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
+						<?php do_action('mwb_wpr_membership_expiry_for_user_html');?>
 					</tr>
 				</thead>
 				<tbody>
@@ -274,6 +275,11 @@ if ( $mwb_wpr_mem_enable ) {
 					<td>
 						<?php
 						echo esc_html( $values['Points'] );
+						?>
+					</td>
+					<td>
+						<?php
+						do_action('mwb_wpr_membership_expiry_date_for_user',$user_id,$values,$mwb_role);
 						if ( $mwb_role == $mwb_user_level ) {
 							echo '<img class="mwb_wpr_tick" src = "' . esc_url( MWB_RWPR_DIR_URL ) . 'public/images/tick.png">';
 						}

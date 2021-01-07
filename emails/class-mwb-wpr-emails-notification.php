@@ -75,7 +75,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 					$this->placeholders['{email_content}'] = $email_content;
 
 					if ( $this->is_enabled() && $this->get_recipient() ) {
-						$this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
+						$this->send( $this->get_recipient(), $mwb_wpr_email_subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
 					}
 				}
 				$this->restore_locale();

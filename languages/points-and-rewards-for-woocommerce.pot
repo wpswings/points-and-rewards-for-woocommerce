@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 1.0.10\n"
-"POT-Creation-Date: 2020-11-13 17:53+0530\n"
+"Project-Id-Version: Points and Rewards for WooCommerce 1.0.11\n"
+"POT-Creation-Date: 2020-12-17 17:17+0530\n"
 "PO-Revision-Date: 2020-02-27 17:47+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
@@ -233,9 +233,9 @@ msgstr ""
 #: public/class-points-rewards-for-woocommerce-public.php:252
 #: public/class-points-rewards-for-woocommerce-public.php:1081
 #: public/class-points-rewards-for-woocommerce-public.php:1478
-#: public/class-points-rewards-for-woocommerce-public.php:1515
-#: public/class-points-rewards-for-woocommerce-public.php:1556
-#: public/class-points-rewards-for-woocommerce-public.php:1894
+#: public/class-points-rewards-for-woocommerce-public.php:1518
+#: public/class-points-rewards-for-woocommerce-public.php:1559
+#: public/class-points-rewards-for-woocommerce-public.php:1898
 msgid "Points"
 msgstr ""
 
@@ -1796,7 +1796,7 @@ msgid "Share"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1082
-#: public/class-points-rewards-for-woocommerce-public.php:1896
+#: public/class-points-rewards-for-woocommerce-public.php:1900
 msgid "Apply Points"
 msgstr ""
 
@@ -1815,7 +1815,7 @@ msgstr ""
 #: public/class-points-rewards-for-woocommerce-public.php:1147
 #: public/class-points-rewards-for-woocommerce-public.php:1274
 #: public/class-points-rewards-for-woocommerce-public.php:1361
-#: public/class-points-rewards-for-woocommerce-public.php:1821
+#: public/class-points-rewards-for-woocommerce-public.php:1824
 msgid "Cart Discount"
 msgstr ""
 
@@ -1825,8 +1825,8 @@ msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1193
 #: public/class-points-rewards-for-woocommerce-public.php:1218
-#: public/class-points-rewards-for-woocommerce-public.php:1520
-#: public/class-points-rewards-for-woocommerce-public.php:1897
+#: public/class-points-rewards-for-woocommerce-public.php:1523
+#: public/class-points-rewards-for-woocommerce-public.php:1901
 msgid " Points"
 msgstr ""
 
@@ -1850,7 +1850,7 @@ msgstr ""
 msgid "Successfully Removed Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1851
+#: public/class-points-rewards-for-woocommerce-public.php:1855
 msgid "Have A Points?"
 msgstr ""
 
