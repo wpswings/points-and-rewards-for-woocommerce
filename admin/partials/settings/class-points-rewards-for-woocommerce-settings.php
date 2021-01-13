@@ -442,6 +442,9 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 * @since 1.0.0
 	 */
 	public function mwb_wpr_check_textbox( $value, $postdata ) {
+		if ( ! array_key_exists( 'default', $value ) ) {
+			$value['default'] = '';
+		}
 		$mwb_textarea_text = '';
 		$mwb_textarea_text = ( isset( $postdata[ $value['id'] ] ) && ! empty( $postdata[ $value['id'] ] ) ) ? sanitize_post( $postdata[ $value['id'] ] ) : $value['default'];
 		return $mwb_textarea_text;
