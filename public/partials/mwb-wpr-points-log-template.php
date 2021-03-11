@@ -814,10 +814,16 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 						<?php
 					}
 					?>
+
 				</table>
 			</div> 
+			
 			<?php
+
 		}
+		
+		do_action( 'mwb_points_on_first_order', $point_log );
+	
 		?>
 		<div class="mwb_wpr_slide_toggle">
 			<table class="mwb_wpr_total_points">
@@ -827,10 +833,12 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 					<td></td>
 				</tr>        
 			</table>
-		</div>
+</div>
 		<?php
 	} else {
 		echo '<h3>' . esc_html__( 'No Points Generated Yet.', 'points-and-rewards-for-woocommerce' ) . '<h3>';
 	}
 }
 ?>
+
+

@@ -3,10 +3,10 @@ Contributors: MakeWebBetter
 Donate link: https://makewebbetter.com/
 Tags: points, Rewards, Points and Rewards, Loyalty, woocommerce
 Requires at least: 5.0.0
-Tested up to: 5.5
+Tested up to: 5.6
 WC requires at least: 3.9.0
-WC tested up to: 4.7
-Stable tag: 1.0.10
+WC tested up to: 4.8
+Stable tag: 1.0.11
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -179,6 +179,9 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
+= 1.0.11 - Released on 17 December 2020 =
+* New: Compatibility with WooCommerce 4.8 and WordPress 5.6
+
 = 1.0.10 - Released on 13 November 2020 =
 * Fix: Minor issues
 
@@ -221,5 +224,5 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Upgrade Notice ==
-= 1.0.10 - Released on 13 November 2020 =
-* Fix: Minor issues
+= 1.0.11 - Released on 17 December 2020 =
+* New: Compatibility with WooCommerce 4.8 and WordPress 5.6

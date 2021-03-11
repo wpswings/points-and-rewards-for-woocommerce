@@ -191,7 +191,7 @@ class Points_Log_List_Table extends WP_List_Table {
 		$this->process_bulk_action();
 		$current_page = $this->get_pagenum();
 
-		$this->example_data = $this->get_users_points( $current_page, $per_page );
+		$this->example_data = $this->get_users_points( $current_page, -1 );
 		$data               = $this->example_data;
 
 		usort( $data, array( $this, 'mwb_wpr_usort_reorder' ) );
@@ -205,6 +205,7 @@ class Points_Log_List_Table extends WP_List_Table {
 				'total_pages' => ceil( $total_items / $per_page ),
 			)
 		);
+		$this->items = array_slice( $data, (( $current_page - 1 ) * $per_page ), $per_page );
 	}
 
 	/**
@@ -290,13 +291,12 @@ class Points_Log_List_Table extends WP_List_Table {
 		$user_data        = $user_data->get_results();
 		$points_data      = array();
 		foreach ( $user_data as $key => $value ) {
-			$user_points   = get_user_meta( $value->data->ID, 'mwb_wpr_points', true );
-			$user_points   = ( empty( $user_points ) ) ? 0 : $user_points;
+			$poin =	! empty( get_user_meta( $value->ID, 'mwb_wpr_points', true ) ) ? get_user_meta( $value->ID, 'mwb_wpr_points', true ) : 0;
 			$points_data[] = array(
 				'id'          => $value->data->ID,
 				'user_name'   => $value->data->user_nicename,
 				'user_email'  => $value->data->user_email,
-				'user_points' => $user_points,
+				'user_points' => $poin,
 			);
 		}
 		$this->mwb_total_count = $total_count;
@@ -1258,11 +1258,15 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			</td>
 		</tr>
 						<?php
+						
 					}
+					
 					?>
 </table></div>
 					<?php
+
 				}
+				do_action( 'mwb_points_admin_table_log', $point_log);
 				?>
 
 <table class = "form-table mwp_wpr_settings mwb_wpr_points_view_total">

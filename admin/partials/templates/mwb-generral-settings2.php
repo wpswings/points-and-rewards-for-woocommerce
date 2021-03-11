@@ -127,6 +127,7 @@ $mwb_wpr_general_settings = array(
 				'class'   => 'input-text',
 				'desc'  => __( 'Whatsapp', 'points-and-rewards-for-woocommerce' ),
 			),
+
 		),
 	),
 	array(
@@ -218,7 +219,7 @@ $mwb_wpr_general_settings = array(
 				'default' => '1',
 			),
 		),
-	),
+	), 
 	array(
 		'title' => __( 'Enable apply points during checkout', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'checkbox',

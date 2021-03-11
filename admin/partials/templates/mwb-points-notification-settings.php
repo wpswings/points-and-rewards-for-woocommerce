@@ -16,44 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
 $settings_obj = new Points_Rewards_For_WooCommerce_Settings();
-$current_tab = 'mwb_wpr_notificatin_tab';
-if ( isset( $_POST['mwb_wpr_save_notification'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
-	$mwb_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
-	if ( wp_verify_nonce( $mwb_nonce, 'mwb-wpr-nonce' ) ) {
-		if ( 'mwb_wpr_notificatin_tab' == $current_tab ) {
 
-			$mwb_wpr_notificatin_array = array();
-			/* Enable Settings*/
-			$settings_obj->mwb_rwpr_filter_checkbox_notification_settings( $_POST, 'mwb_wpr_notification_setting_enable' );
-			$mwb_wpr_post_data = $_POST;
-			if ( ! empty( $mwb_wpr_post_data ) && is_array( $mwb_wpr_post_data ) ) {
-				foreach ( $mwb_wpr_post_data as $key => $value ) {
-					$value = $settings_obj->mwb_rwpr_filter_subj_email_notification_settings( $mwb_wpr_post_data, $key );
-					$mwb_wpr_notificatin_array[ $key ] = $value;
-				}
-			}
-
-			/* Filter for saving*/
-			$mwb_wpr_notificatin_array = apply_filters( 'mwb_wpr_notification_settings_saved', $mwb_wpr_notificatin_array );
-			/* Save the Notification settings in the database*/
-			if ( is_array( $mwb_wpr_notificatin_array ) ) {
-				update_option( 'mwb_wpr_notificatin_array', $mwb_wpr_notificatin_array );
-			}
-		}
-		/* Show Notification When Settings Get Saved*/
-		$settings_obj->mwb_wpr_settings_saved();
-	}
-}
-?>
-<?php $mwb_wpr_notification_settings = get_option( 'mwb_wpr_notificatin_array', true ); ?>
-<?php
-if ( ! is_array( $mwb_wpr_notification_settings ) ) :
-	$mwb_wpr_notification_settings = array();
-endif;
-?>
-<div class="mwb_wpr_table">
-	<div class="mwb_wpr_general_wrapper">
-<?php
 $mwb_settings = array(
 	array(
 		'title' => __( 'Enable Points Notification Settings', 'points-and-rewards-for-woocommerce' ),
@@ -292,7 +255,48 @@ $mwb_settings = array(
 		'type'  => 'sectionend',
 	),
 );
-	$mwb_settings = apply_filters( 'mwb_wpr_email_notification_settings', $mwb_settings );
+$mwb_settings = apply_filters( 'mwb_wpr_email_notification_settings', $mwb_settings );
+$current_tab = 'mwb_wpr_notificatin_tab';
+if ( isset( $_POST['mwb_wpr_save_notification'] ) && isset( $_POST['mwb-wpr-nonce'] ) ) {
+	$mwb_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
+	if ( wp_verify_nonce( $mwb_nonce, 'mwb-wpr-nonce' ) ) {
+		if ( 'mwb_wpr_notificatin_tab' == $current_tab ) {
+
+			$mwb_wpr_notificatin_array = array();
+			/* Enable Settings*/
+			$settings_obj->mwb_rwpr_filter_checkbox_notification_settings( $_POST, 'mwb_wpr_notification_setting_enable' );
+			$mwb_wpr_post_data = $_POST;
+			$mwb_wpr_post_data = apply_filters('mwb_wpr_notification_posted_data', $mwb_wpr_post_data, $mwb_settings );
+			
+			if ( ! empty( $mwb_wpr_post_data ) && is_array( $mwb_wpr_post_data ) ) {
+				foreach ( $mwb_wpr_post_data as $key => $value ) {
+					$value = $settings_obj->mwb_rwpr_filter_subj_email_notification_settings( $mwb_wpr_post_data, $key );
+					$mwb_wpr_notificatin_array[ $key ] = $value;
+				}
+			}
+
+			/* Filter for saving*/
+			$mwb_wpr_notificatin_array = apply_filters( 'mwb_wpr_notification_settings_saved', $mwb_wpr_notificatin_array );
+			/* Save the Notification settings in the database*/
+			if ( is_array( $mwb_wpr_notificatin_array ) ) {
+				
+				update_option( 'mwb_wpr_notificatin_array', $mwb_wpr_notificatin_array );
+			}
+		}
+		/* Show Notification When Settings Get Saved*/
+		$settings_obj->mwb_wpr_settings_saved();
+	}
+}
+	
+$mwb_wpr_notification_settings = get_option( 'mwb_wpr_notificatin_array', true );
+
+if ( ! is_array( $mwb_wpr_notification_settings ) ) :
+	$mwb_wpr_notification_settings = array();
+endif;
+?>
+<div class="mwb_wpr_table">
+	<div class="mwb_wpr_general_wrapper">
+<?php
 foreach ( $mwb_settings as $key => $value ) {
 	if ( 'title' == $value['type'] ) {
 		?>
@@ -325,7 +329,7 @@ foreach ( $mwb_settings as $key => $value ) {
 	}
 	if ( 'sectionend' == $value['type'] ) {
 		?>
-				 </div> 
+</div> 
 			<?php
 	}
 }

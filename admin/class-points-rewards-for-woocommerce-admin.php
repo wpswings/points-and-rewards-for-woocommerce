@@ -166,6 +166,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				);
 
 				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
+				
 
 				wp_localize_script( $this->plugin_name . 'admin-js', 'mwb_wpr_object', $mwb_wpr );
 
@@ -344,8 +345,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$mwb_wpr_email_discription = str_replace( '[Total Points]', $total_points, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[Points]', $point, $mwb_wpr_email_discription );
-				if ( self::mwb_wpr_check_mail_notfication_is_enable() ) {
+				
+				$check_enable = apply_filters('mwb_wpr_check_custom_points_notification_enable', true,'admin_notification');
 
+				if ( self::mwb_wpr_check_mail_notfication_is_enable() && $check_enable ) {
 					$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
 					$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 				}
