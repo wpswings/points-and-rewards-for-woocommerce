@@ -1154,9 +1154,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function mwb_wpr_woocommerce_cart_custom_points( $cart ) {
 		/*Get the current user id*/
-		//tiwari
+	$my_cart_change_return = 0;
 $my_cart_change_return = apply_filters( 'mwb_cart_content_check_for_sale_item', $cart );
-if($my_cart_change_return == true){
+if($my_cart_change_return == '1'){
 
 	return;
 }else{
