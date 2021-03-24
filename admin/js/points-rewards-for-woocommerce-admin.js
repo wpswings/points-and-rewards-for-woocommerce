@@ -40,7 +40,9 @@
 	 */
 
 	$( document ).ready(
+		
 		function() {
+		
 			/*This will hide/show membership*/
 			if(jQuery(document).find('#mwb_wpr_membership_setting_enable').prop("checked") == true){
 				
@@ -254,6 +256,7 @@
 				);
 			}
 		);
+	
 		}
 	);
 
@@ -305,5 +308,22 @@ jQuery( document ).ready(
 					jQuery( ".mwb_rwpr_navigator_template" ).toggleClass( "open-btn" );
 				}
 			);
+	}
+);
+
+jQuery( document ).on(
+	"change",'input',
+	'#mwb_wpr_coupon_conversion_price',
+	function(){
+		var count = jQuery( this ).attr('id');
+		var value1 = jQuery(this).val();
+	
+		if(value1<0 && count =='mwb_wpr_coupon_conversion_price'){
+			alert('Negative values not allowed');
+			jQuery(this).val("1");
+		
+			
+		}
+		
 	}
 );

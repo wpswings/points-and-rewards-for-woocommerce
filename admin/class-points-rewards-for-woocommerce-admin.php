@@ -82,6 +82,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 
+
+			if ( $pagescreen == 'woocommerce_page_mwb-rwpr-setting' ) {
+				wp_enqueue_script( 'my_sticky_js', MWB_RWPR_DIR_URL . '/admin/js/points-rewards-for-woocommerce-admin.js', array( 'jquery' ), WC_VERSION, true);
+			}
+
 			if ( isset( $_GET['page'] ) && 'mwb-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
 				wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
@@ -791,17 +796,17 @@ class Points_Rewards_For_WooCommerce_Admin {
 				<tr valign="top">
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_minimum">
-							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price" required="" placeholder = "No minimum" value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? esc_html( $thankyouorder_min[ $key ] ) : ''; ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price"  placeholder = "No minimum"  value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? esc_html( $thankyouorder_min[ $key ] ) : ''; ?>">
 						</label>
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_maximum">
-							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum" value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum"  value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>" required>
 						</label>
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_current_type">
-							<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price" required=""  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? esc_html( $thankyouorder_value[ $key ] ) : ''; ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price"  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? esc_html( $thankyouorder_value[ $key ] ) : ''; ?>">
 						</label>
 					</td>    
 					<?php if ( ! empty( $key ) ) : ?>                       
