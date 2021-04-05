@@ -22,9 +22,9 @@
  * Domain Path:       /languages
  *
  * Requires at least: 5.0.0
- * Tested up to:      5.5
+ * Tested up to:      5.7
  * WC requires at least: 4.0
- * WC tested up to: 4.7
+ * WC tested up to: 5.1
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
