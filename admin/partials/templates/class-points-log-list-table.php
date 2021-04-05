@@ -27,10 +27,15 @@ class Points_Log_List_Table extends WP_List_Table {
 	/**
 	 * This is variable which is used for the store all the data.
 	 *
-	 * @var array $example_data variable for store data.
-	 * @var array $mwb_total_count variable for store data.
+	 * @var array $example_data variable for store data, $mwb_total_count.
+	 * var array $mwb_total_count variable for store data.
 	 */
 	public $example_data;
+	/**
+	 * $mwb_total_count variable
+	 *
+	 * @var int
+	 */
 	public $mwb_total_count;
 
 
@@ -205,7 +210,7 @@ class Points_Log_List_Table extends WP_List_Table {
 				'total_pages' => ceil( $total_items / $per_page ),
 			)
 		);
-		$this->items = array_slice( $data, (( $current_page - 1 ) * $per_page ), $per_page );
+		$this->items = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
 	}
 
 	/**
@@ -291,7 +296,7 @@ class Points_Log_List_Table extends WP_List_Table {
 		$user_data        = $user_data->get_results();
 		$points_data      = array();
 		foreach ( $user_data as $key => $value ) {
-			$poin =	! empty( get_user_meta( $value->ID, 'mwb_wpr_points', true ) ) ? get_user_meta( $value->ID, 'mwb_wpr_points', true ) : 0;
+			$poin = ! empty( get_user_meta( $value->ID, 'mwb_wpr_points', true ) ) ? get_user_meta( $value->ID, 'mwb_wpr_points', true ) : 0;
 			$points_data[] = array(
 				'id'          => $value->data->ID,
 				'user_name'   => $value->data->user_nicename,
@@ -1258,15 +1263,15 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			</td>
 		</tr>
 						<?php
-						
+
 					}
-					
+
 					?>
 </table></div>
 					<?php
 
 				}
-				do_action( 'mwb_points_admin_table_log', $point_log);
+				do_action( 'mwb_points_admin_table_log', $point_log );
 				?>
 
 <table class = "form-table mwp_wpr_settings mwb_wpr_points_view_total">

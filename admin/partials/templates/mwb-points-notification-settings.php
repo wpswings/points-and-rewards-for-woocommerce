@@ -266,8 +266,8 @@ if ( isset( $_POST['mwb_wpr_save_notification'] ) && isset( $_POST['mwb-wpr-nonc
 			/* Enable Settings*/
 			$settings_obj->mwb_rwpr_filter_checkbox_notification_settings( $_POST, 'mwb_wpr_notification_setting_enable' );
 			$mwb_wpr_post_data = $_POST;
-			$mwb_wpr_post_data = apply_filters('mwb_wpr_notification_posted_data', $mwb_wpr_post_data, $mwb_settings );
-			
+			$mwb_wpr_post_data = apply_filters( 'mwb_wpr_notification_posted_data', $mwb_wpr_post_data, $mwb_settings );
+
 			if ( ! empty( $mwb_wpr_post_data ) && is_array( $mwb_wpr_post_data ) ) {
 				foreach ( $mwb_wpr_post_data as $key => $value ) {
 					$value = $settings_obj->mwb_rwpr_filter_subj_email_notification_settings( $mwb_wpr_post_data, $key );
@@ -279,7 +279,7 @@ if ( isset( $_POST['mwb_wpr_save_notification'] ) && isset( $_POST['mwb-wpr-nonc
 			$mwb_wpr_notificatin_array = apply_filters( 'mwb_wpr_notification_settings_saved', $mwb_wpr_notificatin_array );
 			/* Save the Notification settings in the database*/
 			if ( is_array( $mwb_wpr_notificatin_array ) ) {
-				
+
 				update_option( 'mwb_wpr_notificatin_array', $mwb_wpr_notificatin_array );
 			}
 		}
@@ -287,7 +287,7 @@ if ( isset( $_POST['mwb_wpr_save_notification'] ) && isset( $_POST['mwb-wpr-nonc
 		$settings_obj->mwb_wpr_settings_saved();
 	}
 }
-	
+
 $mwb_wpr_notification_settings = get_option( 'mwb_wpr_notificatin_array', true );
 
 if ( ! is_array( $mwb_wpr_notification_settings ) ) :

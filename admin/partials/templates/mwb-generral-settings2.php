@@ -219,7 +219,7 @@ $mwb_wpr_general_settings = array(
 				'default' => '1',
 			),
 		),
-	), 
+	),
 	array(
 		'title' => __( 'Enable apply points during checkout', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'checkbox',

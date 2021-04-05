@@ -143,7 +143,7 @@ if ( isset( $mwb_ways_to_gain_points_value ) && ! empty( $mwb_ways_to_gain_point
 				$mwb_ways_to_gain_points_value = str_replace( '[Refer Points]', $mwb_refer_value, $mwb_ways_to_gain_points_value );
 				$mwb_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $mwb_per_currency_spent_points, $mwb_ways_to_gain_points_value );
 				$mwb_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $mwb_per_currency_spent_price, $mwb_ways_to_gain_points_value );
-		echo '<fieldset class="mwb_wpr_each_section">' . esc_html( $mwb_ways_to_gain_points_value ) . '</fieldset>';
+			echo '<fieldset class="mwb_wpr_each_section">' . esc_html( $mwb_ways_to_gain_points_value ) . '</fieldset>';
 			?>
 
 	</div>
@@ -177,7 +177,7 @@ if ( $mwb_wpr_mem_enable ) {
 						<th class="mwb-wpr-points-code">
 							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Required Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
-						<?php do_action('mwb_wpr_membership_expiry_for_user_html');?>
+						<?php do_action( 'mwb_wpr_membership_expiry_for_user_html' ); ?>
 					</tr>
 				</thead>
 				<tbody>
@@ -279,7 +279,7 @@ if ( $mwb_wpr_mem_enable ) {
 					</td>
 					<td>
 						<?php
-						do_action('mwb_wpr_membership_expiry_date_for_user',$user_id,$values,$mwb_role);
+						do_action( 'mwb_wpr_membership_expiry_date_for_user', $user_id, $values, $mwb_role );
 						if ( $mwb_role == $mwb_user_level ) {
 							echo '<img class="mwb_wpr_tick" src = "' . esc_url( MWB_RWPR_DIR_URL ) . 'public/images/tick.png">';
 						}

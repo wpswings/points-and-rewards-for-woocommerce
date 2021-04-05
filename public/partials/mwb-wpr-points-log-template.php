@@ -821,9 +821,9 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 			<?php
 
 		}
-		
+
 		do_action( 'mwb_points_on_first_order', $point_log );
-	
+
 		?>
 		<div class="mwb_wpr_slide_toggle">
 			<table class="mwb_wpr_total_points">
@@ -840,5 +840,3 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 	}
 }
 ?>
-
-

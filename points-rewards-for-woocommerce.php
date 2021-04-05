@@ -282,7 +282,6 @@ if ( $activated ) {
 		add_rewrite_endpoint( 'view-log', EP_PAGES );
 		flush_rewrite_rules();
 	}
-
 } else {
 
 

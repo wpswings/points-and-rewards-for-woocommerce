@@ -344,7 +344,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 			$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['mwb-wpr-nonce'] ) );
 			if ( wp_verify_nonce( $mwb_wpr_nonce, 'mwb-wpr-nonce' ) ) {
 				$_POST[ $name ] = isset( $_POST[ $name ] ) ? 1 : 0;
-				
+
 			}
 		}
 	}

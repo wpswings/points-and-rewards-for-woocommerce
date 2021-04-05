@@ -33,6 +33,11 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since   1.0.0
 	 */
+	/**
+	 * $_instance variable
+	 *
+	 * @var boolean $_instance
+	 */
 	protected static $_instance = null;
 
 	/**
@@ -57,7 +62,14 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since 1.0.0
 	 * @var string Form id.
 	 */
+
+
 	private static $onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
+	/**
+	 * $deactivation_form_id variable
+	 *
+	 * @var string
+	 */
 	private static $deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
 
 
@@ -66,9 +78,23 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since 1.0.0
 	 */
-	
+		/**
+		 * $plugin_name variable
+		 *
+		 * @var int
+		 */
 	private static $plugin_name;
+	/**
+	 * $store_name variable
+	 *
+	 * @var string
+	 */
 	private static $store_name;
+	/**
+	 * $store_url variable
+	 *
+	 * @var string
+	 */
 	private static $store_url;
 
 	/**
@@ -79,7 +105,7 @@ class Makewebbetter_Onboarding_Helper {
 	public function __construct() {
 
 		self::$store_name = get_bloginfo( 'name' );
-		self::$store_url = home_url();
+		self::$store_url  = home_url();
 
 		if ( defined( 'ONBOARD_PLUGIN_NAME' ) ) {
 			self::$plugin_name = ONBOARD_PLUGIN_NAME;
@@ -410,7 +436,7 @@ class Makewebbetter_Onboarding_Helper {
 				'value' => self::$plugin_name,
 				'required' => '',
 				'extra-class' => '',
-				),
+			),
 		);
 
 		return $fields;
@@ -810,7 +836,8 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Handle Hubspot form submission.
 	 *
-	 * @param      string $result       The result of this validation.
+	 * @param  boolean $submission is submission.
+	 * @param string  $action_type is defining action.
 	 * @since    1.0.0
 	 */
 	protected function handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
@@ -838,6 +865,8 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Handle Hubspot GET api calls.
 	 *
+	 * @param  boolean $endpoint defining endpoint.
+	 * @param string  $headers defining header.
 	 * @since    1.0.0
 	 */
 	private function hic_get( $endpoint, $headers ) {
@@ -867,6 +896,9 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Handle Hubspot POST api calls.
 	 *
+	 * @param mixed $endpoint defining endpoint.
+	 * @param mixed $post_params defining post_params.
+	 * @param mixed $headers defining headers.
 	 * @since    1.0.0
 	 */
 	private function hic_post( $endpoint, $post_params, $headers ) {
@@ -889,14 +921,15 @@ class Makewebbetter_Onboarding_Helper {
 		return array(
 			'status_code' => $status_code,
 			'response' => $response,
-			'errors' => $curl_errors,
+			'errors'   => $curl_errors,
 		);
 	}
 
 	/**
 	 *  Hubwoo Onboarding Submission :: Get a form.
 	 *
-	 * @param           $form_id    form ID.
+	 * @param mixed $form_data      defining form_data.
+	 * @param mixed $action_type      defining action.
 	 * @since       1.0.0
 	 */
 	protected function hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {

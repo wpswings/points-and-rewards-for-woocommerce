@@ -82,9 +82,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 
-
-			if ( $pagescreen == 'woocommerce_page_mwb-rwpr-setting' ) {
-				wp_enqueue_script( 'my_sticky_js', MWB_RWPR_DIR_URL . '/admin/js/points-rewards-for-woocommerce-admin.js', array( 'jquery' ), WC_VERSION, true);
+			if ( 'woocommerce_page_mwb-rwpr-setting' === $pagescreen ) {
+				wp_enqueue_script( 'my_sticky_js', MWB_RWPR_DIR_URL . '/admin/js/points-rewards-for-woocommerce-admin.js', array( 'jquery' ), WC_VERSION, true );
 			}
 
 			if ( isset( $_GET['page'] ) && 'mwb-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
@@ -171,7 +170,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 				);
 
 				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
-				
 
 				wp_localize_script( $this->plugin_name . 'admin-js', 'mwb_wpr_object', $mwb_wpr );
 
@@ -350,8 +348,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$mwb_wpr_email_discription = str_replace( '[Total Points]', $total_points, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[Points]', $point, $mwb_wpr_email_discription );
-				
-				$check_enable = apply_filters('mwb_wpr_check_custom_points_notification_enable', true,'admin_notification');
+
+				$check_enable = apply_filters( 'mwb_wpr_check_custom_points_notification_enable', true, 'admin_notification' );
 
 				if ( self::mwb_wpr_check_mail_notfication_is_enable() && $check_enable ) {
 					$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
