@@ -13,28 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
-	/**
-	 * Inheriting the properties of WC_Email.
-	 * Mwb_Wpr_Emails_Notification class
-	 *
-	 * @since      1.0.8
-	 */
+
 	class Mwb_Wpr_Emails_Notification extends WC_Email {
-		/**
-		 *  $email_content variable
-		 *
-		 * @var int
-		 */
 		public $email_content;
-		/**
-		 * $mwb_wpr_email_subject variable
-		 *
-		 * @var int
-		 */
 		public $mwb_wpr_email_subject;
-		/**
-		 * Constructor function
-		 */
 		public function __construct() {
 			$this->id             = 'mwb_wpr_email_notification';
 			$this->title          = __( 'Points and rewards email', 'points-and-rewards-for-woocommerce' );
@@ -48,7 +30,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 				'{email_content}' => '',
 			);
 
-			// Call parent constructor.
+			// Call parent constructor
 			parent::__construct();
 		}
 
@@ -74,19 +56,16 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		}
 
 		/**
-		 * Trigger the sending of this email function
+		 * Trigger the sending of this email.
 		 *
-		 * @param mixed $user_id defining userid.
-		 * @param mixed $email_content defining emailcontent.
-		 * @param mixed $mwb_wpr_email_subject defining mwb_wpr_email_subject.
 		 * @since      1.0.8
-		 *  int $transaction_id.
+		 * @param int $transaction_id.
 		 */
 		public function trigger( $user_id, $email_content, $mwb_wpr_email_subject ) {
 			if ( $user_id ) {
 				$this->setup_locale();
 
-				$user      = new WP_User( $user_id );
+				$user = new WP_User( $user_id );
 				$user_info = get_userdata( $user_id );
 				if ( is_a( $user, 'WP_User' ) ) {
 					$this->object = $user;
@@ -106,11 +85,8 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		/**
 		 * Trigger the sending of this email.
 		 *
-		 * @param mixed $user_id defining userid.
-		 * @param mixed $email_content defining emailcontent.
-		 * @param mixed $mwb_wpr_email_subject defining mwb_wpr_email_subject.
-		 * @param mixed $mwb_reciever_email defining mwb_reciever_email.
 		 * @since      1.0.8
+		 * @param int $transaction_id.
 		 */
 		public function trigger_test( $user_id, $email_content, $mwb_wpr_email_subject, $mwb_reciever_email ) {
 			if ( $user_id ) {

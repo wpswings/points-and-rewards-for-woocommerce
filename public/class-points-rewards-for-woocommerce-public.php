@@ -869,7 +869,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					$mwb_wpr_ref_noof_order = (int) get_user_meta( $user_id, 'mwb_wpr_no_of_orders', true );
 					if ( isset( $mwb_wpr_ref_noof_order ) && ! empty( $mwb_wpr_ref_noof_order ) ) {
 						$order_limit = get_post_meta( $order_id, "$order_id#$mwb_wpr_ref_noof_order", true );
-						if ( isset( $order_limit ) && 'set' === $order_limit ) {
+						if ( isset( $order_limit ) && $order_limit == 'set' ) {
 							return;
 						} else {
 							$mwb_wpr_ref_noof_order++;
@@ -1154,7 +1154,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Get the current user id*/
 		$my_cart_change_return = 0;
 		$my_cart_change_return = apply_filters( 'mwb_cart_content_check_for_sale_item', $cart );
-		if ( '1' == $my_cart_change_return ) {
+		if ( $my_cart_change_return == '1' ) {
 
 			return;
 		} else {
@@ -1956,7 +1956,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @since 1.1.3
 	 * @name mwb_wpr_custom_endpoint_query_vars
-	 * @param array $vars array.
+	 * @param array $var array.
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://makewebbetter.com
 	 */
@@ -1998,18 +1998,17 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function mwb_wpr_endpoint_permalink_filter( $endpoint, $key ) {
 
-		if ( 'points' == $key  ) {
+		if ( $key == 'points' ) {
 			return 'points';
 		}
-		if ( 'view-log' == $key ) {
+		if ( $key == 'view-log' ) {
 			return 'view-log';
 		}
 		return $endpoint;
 	}
 		  /**
 		   * This function updates cart contents before adding into the cart.
-		   * 
-		   * @since 1.1.3
+		   *
 		   * @param [mixed] $cart_contents
 		   * @return $cart_contents.
 		   */

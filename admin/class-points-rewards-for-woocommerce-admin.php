@@ -82,7 +82,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 
-			if ( 'woocommerce_page_mwb-rwpr-setting' === $pagescreen ) {
+			if ( $pagescreen == 'woocommerce_page_mwb-rwpr-setting' ) {
 				wp_enqueue_script( 'my_sticky_js', MWB_RWPR_DIR_URL . '/admin/js/points-rewards-for-woocommerce-admin.js', array( 'jquery' ), WC_VERSION, true );
 			}
 

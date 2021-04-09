@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Provide a admin area view for the plugin
  *
@@ -10,7 +11,6 @@
  * @package    points-and-rewards-for-wooCommerce
  * @subpackage points-and-rewards-for-wooCommerce/includes/extra-template
  */
-
 ?>
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
