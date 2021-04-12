@@ -445,22 +445,22 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		$point_log    = get_user_meta( $user_id, 'points_details', true );
 		$total_points = get_user_meta( $user_id, 'mwb_wpr_points', true );
 		?>
-		<h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Point Log Details', 'points-and-rewards-for-woocommerce' ); ?></h3>
+		<h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'Points Earned on Order Total Listed on Points Table', 'points-and-rewards-for-woocommerce' ); ?></h3>
 		<?php
 		if ( isset( $point_log ) && is_array( $point_log ) && null != $point_log ) {
 			?>
-			  
+ 
 			<div class="mwb_wpr_wrapper_div">
 				<?php
 				if ( array_key_exists( 'registration', $point_log ) ) {
 					?>
 					<div class="mwb_wpr_slide_toggle">
 						<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Signup Event', 'points-and-rewards-for-woocommerce' ); ?>
-						  <a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
-					  </p>
-					  <div class="mwb_wpr_points_view"> 
-						  <table class="form-table mwp_wpr_settings mwb_wpr_common_table" >
-								  <thead>
+						<a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<div class="mwb_wpr_points_view"> 
+							<table class="form-table mwp_wpr_settings mwb_wpr_common_table" >
+									<thead>
 									<tr valign="top">
 										<th scope="row" class="mwb_wpr_head_titledesc">
 											<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>

@@ -164,7 +164,7 @@ if ( $activated ) {
 		if ( ! empty( $mwb_wpr_other_settings['mwb_wpr_shortcode_text_membership'] ) ) {
 			$mwb_wpr_shortcode_text_membership = $mwb_wpr_other_settings['mwb_wpr_shortcode_text_membership'];
 		} else {
-			$mwb_wpr_shortcode_text_membership = __( 'Your Current Level', 'points-and-rewards-for-woocommerce' );
+			$mwb_wpr_shortcode_text_membership = __( 'Your Current Membership Level is', 'points-and-rewards-for-woocommerce' );
 		}
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
 			$user_level = get_user_meta( $user_ID, 'membership_level', true );

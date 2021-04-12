@@ -160,7 +160,7 @@ if ( $mwb_wpr_mem_enable ) {
 			?>
 			<span class="mwb_wpr_upgrade_level">
 			<?php
-			esc_html_e( 'Your level has been upgraded to ', 'points-and-rewards-for-woocommerce' );
+			esc_html_e( 'Your membership level has been upgraded to ', 'points-and-rewards-for-woocommerce' );
 			echo esc_html( $mwb_user_level );
 			?>
 			</span>

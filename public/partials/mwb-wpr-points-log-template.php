@@ -153,7 +153,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		if ( array_key_exists( 'points_on_order', $point_log ) ) {
 			?>
 			<div class="mwb_wpr_slide_toggle">
-				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Points earned on Order Total', 'points-and-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
+				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Points Log Table With Points Earned Each time on Order Total', 'points-and-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>
@@ -725,7 +725,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		if ( array_key_exists( 'reference_details', $point_log ) ) {
 			?>
 			<div class="mwb_wpr_slide_toggle">
-				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Referral Sign Up', 'points-and-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
+				<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( ' Check Number of Points Earned by Referring Others ', 'points-and-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
 				<table class="mwb_wpr_common_table">
 					<thead>
 						<tr>

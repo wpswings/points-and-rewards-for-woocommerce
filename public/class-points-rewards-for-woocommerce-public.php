@@ -1064,7 +1064,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			?>
 			<div class="woocommerce-message" style="background-color<?php echo esc_attr( $mwb_wpr_notification_color ); ?>">
 				<?php
-				echo esc_html__( 'You will get ', 'points-and-rewards-for-woocommerce' ) . esc_html( $mwb_wpr_signup_value ) . esc_html__( ' points for SignUp', 'points-and-rewards-for-woocommerce' )
+				echo esc_html__( 'You will Get ', 'points-and-rewards-for-woocommerce' ) . esc_html( $mwb_wpr_signup_value ) . esc_html__( ' Points on a successful Sign Up', 'points-and-rewards-for-woocommerce' )
 				?>
 			</div>
 			<?php
@@ -1214,7 +1214,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$user_id = get_current_user_ID();
 		if ( 1 == $mwb_wpr_custom_points_on_cart && isset( $user_id ) && ! empty( $user_id ) ) {
 			?>
-			<div class="woocommerce-message"><?php esc_html_e( 'Here is the Discount Rule for applying your points to Cart sub-total', 'points-and-rewards-for-woocommerce' ); ?>
+			<div class="woocommerce-message"><?php esc_html_e( 'Here is the Discount Rule for Applying your Points to Cart Total', 'points-and-rewards-for-woocommerce' ); ?>
 				<ul>
 					<li>
 					<?php
@@ -1233,7 +1233,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			?>
 			<div class="woocommerce-message" id="mwb_wpr_order_notice" style="background-color: <?php echo esc_html( $mwb_wpr_notification_color ); ?>">
 				<?php
-				 esc_html_e( 'Place Order And Earn Something in Return', 'points-and-rewards-for-woocommerce' );
+				 esc_html_e( 'Place Order and Earn Reward Points in Return.', 'points-and-rewards-for-woocommerce' );
 				?>
 				<p style="background-color: 
 				<?php
@@ -1583,7 +1583,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * The function is for let the meta keys translatable.
+	 * The function is for let the meta keys translatable
 	 *
 	 * @name mwb_wpr_woocommerce_order_item_display_meta_key
 	 * @since 1.0.0
