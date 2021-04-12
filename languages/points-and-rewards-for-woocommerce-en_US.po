@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: points-and-rewards-for-woocommerce 1.0.12\n"
-"POT-Creation-Date: 2021-04-08 12:11+0530\n"
-"PO-Revision-Date: 2021-04-08 13:06+0530\n"
+"POT-Creation-Date: 2021-04-12 17:25+0530\n"
+"PO-Revision-Date: 2021-04-12 17:26+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: ../points-and-rewards-for-woocommerce\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -244,6 +244,10 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
+#: admin/class-points-rewards-for-woocommerce-admin.php:975
+msgid "admin/images/mwb.png"
+msgstr ""
+
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:24
 msgid "Overview"
 msgstr ""
@@ -300,6 +304,14 @@ msgstr ""
 
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:93
 msgid "GO PRO NOW"
+msgstr ""
+
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:98
+msgid "https://join.skype.com/invite/IKVeNkLHebpC"
+msgstr ""
+
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:99
+msgid "admin/images/skype_logo.png"
 msgstr ""
 
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:99
@@ -439,7 +451,7 @@ msgid "Go Back"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:448
-msgid "User Point Log Details"
+msgid "Points Earned on Order Total Listed on Points Table"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:458
@@ -534,7 +546,6 @@ msgid "Coupon Generation"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:541
-#: public/partials/mwb-wpr-points-log-template.php:156
 msgid "Points earned on Order Total"
 msgstr ""
 
@@ -1077,7 +1088,6 @@ msgid ""
 msgstr ""
 
 #: admin/partials/templates/mwb-other-setting.php:47
-#: points-rewards-for-woocommerce.php:167
 msgid "Your Current Level"
 msgstr ""
 
@@ -1702,14 +1712,16 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
+#: points-rewards-for-woocommerce.php:167
+msgid "Your Current Membership Level is"
+msgstr ""
+
 #: points-rewards-for-woocommerce.php:190
-#: public/class-points-rewards-for-woocommerce-public.php:1067
 #: public/partials/mwb-wpr-points-template.php:201
 msgid "You will get "
 msgstr ""
 
 #: points-rewards-for-woocommerce.php:190
-#: public/class-points-rewards-for-woocommerce-public.php:1067
 msgid " points for SignUp"
 msgstr ""
 
@@ -1762,8 +1774,16 @@ msgstr ""
 msgid "Referral Link"
 msgstr ""
 
+#: public/class-points-rewards-for-woocommerce-public.php:328
+msgid "?pkey="
+msgstr ""
+
 #: public/class-points-rewards-for-woocommerce-public.php:330
 msgid "Copy"
+msgstr ""
+
+#: public/class-points-rewards-for-woocommerce-public.php:331
+msgid "public/images/copy.png"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:407
@@ -1772,6 +1792,14 @@ msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:417
 msgid "Share"
+msgstr ""
+
+#: public/class-points-rewards-for-woocommerce-public.php:1067
+msgid "You will Get "
+msgstr ""
+
+#: public/class-points-rewards-for-woocommerce-public.php:1067
+msgid " Points on a successful Sign Up"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1103
@@ -1799,7 +1827,7 @@ msgid "Cart Discount"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1217
-msgid "Here is the Discount Rule for applying your points to Cart sub-total"
+msgid "Here is the Discount Rule for Applying your Points to Cart Total"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1222
@@ -1810,7 +1838,7 @@ msgid " Points"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1236
-msgid "Place Order And Earn Something in Return"
+msgid "Place Order and Earn Reward Points in Return."
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1244
@@ -1876,6 +1904,10 @@ msgstr ""
 msgid "Per Currency Spent Points"
 msgstr ""
 
+#: public/partials/mwb-wpr-points-log-template.php:156
+msgid "Points Log Table With Points Earned Each time on Order Total"
+msgstr ""
+
 #: public/partials/mwb-wpr-points-log-template.php:237
 msgid "Points earned via giving review/comment"
 msgstr ""
@@ -1921,7 +1953,7 @@ msgid "Received Points via "
 msgstr ""
 
 #: public/partials/mwb-wpr-points-log-template.php:728
-msgid "Referral Sign Up"
+msgid " Check Number of Points Earned by Referring Others "
 msgstr ""
 
 #: public/partials/mwb-wpr-points-log-template.php:739
@@ -1949,7 +1981,7 @@ msgid "Membership List"
 msgstr ""
 
 #: public/partials/mwb-wpr-points-template.php:163
-msgid "Your level has been upgraded to "
+msgid "Your membership level has been upgraded to "
 msgstr ""
 
 #: public/partials/mwb-wpr-points-template.php:178
