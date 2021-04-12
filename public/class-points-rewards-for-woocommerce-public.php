@@ -1583,7 +1583,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * The function is for let the meta keys translatable
+	 * The function is for let the meta keys translatable.
 	 *
 	 * @name mwb_wpr_woocommerce_order_item_display_meta_key
 	 * @since 1.0.0
