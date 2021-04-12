@@ -1510,7 +1510,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( isset( $existing_item_meta ['product_meta']['meta_data'] ) ) {
 			if ( $existing_item_meta ['product_meta']['meta_data'] ) {
 				foreach ( $existing_item_meta['product_meta'] ['meta_data'] as $key => $val ) {
-					if ( 'mwb_wpm_points' == $key ) {
+					if ( 'mwb_wpm_points' == $key && !empty( $val ) ) {
 						$item_meta [] = array(
 							'name' => __( 'Points', 'points-and-rewards-for-woocommerce' ),
 							'value' => stripslashes( $val ),
