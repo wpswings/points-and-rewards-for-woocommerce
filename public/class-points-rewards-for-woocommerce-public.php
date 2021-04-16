@@ -844,7 +844,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param string $new_status  new status of the order.
 	 */
 	public function mwb_wpr_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
+	
 		// check allowed user for points features.
+	
 
 		if ( $old_status != $new_status ) {
 			$points_key_priority_high = false;
@@ -865,6 +867,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 			$user_email = $user->user_email;
 			if ( 'completed' == $new_status ) {
+
 				if ( isset( $user_id ) && ! empty( $user_id ) ) {
 					$mwb_wpr_ref_noof_order = (int) get_user_meta( $user_id, 'mwb_wpr_no_of_orders', true );
 					if ( isset( $mwb_wpr_ref_noof_order ) && ! empty( $mwb_wpr_ref_noof_order ) ) {
@@ -884,6 +887,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					/*Order total points*/
 					if ( $this->check_enable_offer() ) {
 						$this->calculate_points( $order_id, $user_id );
+
 					}
 					foreach ( $order->get_items() as $item_id => $item ) {
 						/*Get The item meta data*/
@@ -929,15 +933,9 @@ class Points_Rewards_For_WooCommerce_Public {
 									$mwb_wpr_coupon_conversion_price = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_price' );
 									$mwb_wpr_coupon_conversion_price = ( 0 == $mwb_wpr_coupon_conversion_price ) ? 1 : $mwb_wpr_coupon_conversion_price;
 									/*Calculat points of the order*/
-									$round_down  = apply_filters( 'mwb_round_down_cart_total_value', $order_total, $mwb_wpr_coupon_conversion_points, $mwb_wpr_coupon_conversion_price );
-									if ( ! empty( $round_down ) ) {
 
-										$points_calculation = $round_down;
-
-									} else {
-
-										$points_calculation = ceil( ( $order_total * $mwb_wpr_coupon_conversion_points ) / $mwb_wpr_coupon_conversion_price );
-									}
+									$points_calculation = ceil( ( $order_total * $mwb_wpr_coupon_conversion_points ) / $mwb_wpr_coupon_conversion_price );
+									$points_calculation  = apply_filters( 'mwb_round_down_cart_total_value', $points_calculation, $order_total, $mwb_wpr_coupon_conversion_points, $mwb_wpr_coupon_conversion_price );
 									/*Total Point of the order*/
 									$total_points = intval( $points_calculation + $get_points );
 

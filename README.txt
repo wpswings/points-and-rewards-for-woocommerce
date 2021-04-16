@@ -179,7 +179,7 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
-= 1.1.0 - Released on 13 April 2021 =
+= 1.1.0 - Released on 15 April 2021 =
 * Fix: Minor issues
 * Fix: Product assigned point
 * Fix: Shorting issue in Points Table
@@ -231,7 +231,7 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Upgrade Notice ==
 
-= 1.1.0 - Released on 13 April 2021 =
+= 1.1.0 - Released on 15 April 2021 =
 * Fix: Minor issues
 * Fix: Product assigned point
 * Fix: Shorting issue in Points Table
