@@ -6,7 +6,7 @@ Requires at least: 5.0.0
 Tested up to: 5.7
 WC requires at least: 4.0
 WC tested up to: 5.2
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -179,6 +179,9 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
+= 1.1.1 - Released on 16 April 2021 =
+* Fix: Per currency Point
+
 = 1.1.0 - Released on 15 April 2021 =
 * Fix: Minor issues
 * Fix: Product assigned point
@@ -231,8 +234,5 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Upgrade Notice ==
 
-= 1.1.0 - Released on 15 April 2021 =
-* Fix: Minor issues
-* Fix: Product assigned point
-* Fix: Shorting issue in Points Table
-* New: Compatibility with WooCommerce 5.2 and WordPress 5.7
+= 1.1.1 - Released on 16 April 2021 =
+* Fix: Per currency Point

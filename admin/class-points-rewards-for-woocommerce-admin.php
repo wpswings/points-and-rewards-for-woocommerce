@@ -81,11 +81,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
-
-			if ( $pagescreen == 'woocommerce_page_mwb-rwpr-setting' ) {
-				wp_enqueue_script( 'my_sticky_js', MWB_RWPR_DIR_URL . '/admin/js/points-rewards-for-woocommerce-admin.js', array( 'jquery' ), WC_VERSION, true );
-			}
-
+			
 			if ( isset( $_GET['page'] ) && 'mwb-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
 				wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
@@ -167,10 +163,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'pro_link'       => 'https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org',
 					'success_update'     => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
 					'support_confirm'     => __( 'Email sent successfully', 'points-and-rewards-for-woocommerce' ),
+					'negative'			=>  __('Negative Values Not Allowed', 'points-and-rewards-for-woocommerce'),
 				);
 
+		
 				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
-
 				wp_localize_script( $this->plugin_name . 'admin-js', 'mwb_wpr_object', $mwb_wpr );
 
 			}

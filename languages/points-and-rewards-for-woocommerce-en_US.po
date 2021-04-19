@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: points-and-rewards-for-woocommerce 1.0.12\n"
-"POT-Creation-Date: 2021-04-12 17:25+0530\n"
-"PO-Revision-Date: 2021-04-12 17:26+0530\n"
+"Project-Id-Version: points-and-rewards-for-woocommerce 1.1.1\n"
+"POT-Creation-Date: 2021-04-16 14:33+0530\n"
+"PO-Revision-Date: 2021-04-16 14:33+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -230,11 +230,11 @@ msgstr ""
 #: admin/partials/templates/class-points-log-list-table.php:372
 #: admin/partials/templates/mwb-generral-settings2.php:169
 #: public/class-points-rewards-for-woocommerce-public.php:251
-#: public/class-points-rewards-for-woocommerce-public.php:1102
-#: public/class-points-rewards-for-woocommerce-public.php:1515
-#: public/class-points-rewards-for-woocommerce-public.php:1555
-#: public/class-points-rewards-for-woocommerce-public.php:1596
-#: public/class-points-rewards-for-woocommerce-public.php:1944
+#: public/class-points-rewards-for-woocommerce-public.php:1100
+#: public/class-points-rewards-for-woocommerce-public.php:1513
+#: public/class-points-rewards-for-woocommerce-public.php:1553
+#: public/class-points-rewards-for-woocommerce-public.php:1594
+#: public/class-points-rewards-for-woocommerce-public.php:1942
 msgid "Points"
 msgstr ""
 
@@ -306,15 +306,15 @@ msgstr ""
 msgid "GO PRO NOW"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:98
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:102
 msgid "https://join.skype.com/invite/IKVeNkLHebpC"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:99
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:103
 msgid "admin/images/skype_logo.png"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:99
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:103
 msgid "CHAT NOW"
 msgstr ""
 
@@ -1754,7 +1754,7 @@ msgid "Number of Point you had entered will get deducted from your Account"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:89
-#: public/class-points-rewards-for-woocommerce-public.php:1138
+#: public/class-points-rewards-for-woocommerce-public.php:1136
 msgid "Please enter some valid points!"
 msgstr ""
 
@@ -1794,70 +1794,70 @@ msgstr ""
 msgid "Share"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1067
+#: public/class-points-rewards-for-woocommerce-public.php:1065
 msgid "You will Get "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1067
+#: public/class-points-rewards-for-woocommerce-public.php:1065
 msgid " Points on a successful Sign Up"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1103
-#: public/class-points-rewards-for-woocommerce-public.php:1946
+#: public/class-points-rewards-for-woocommerce-public.php:1101
+#: public/class-points-rewards-for-woocommerce-public.php:1944
 msgid "Apply Points"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1104
+#: public/class-points-rewards-for-woocommerce-public.php:1102
 msgid "Your available points:"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1124
+#: public/class-points-rewards-for-woocommerce-public.php:1122
 msgid "Can not redeem!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1135
+#: public/class-points-rewards-for-woocommerce-public.php:1133
 msgid "Custom Point has been applied Successfully!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1173
-#: public/class-points-rewards-for-woocommerce-public.php:1303
-#: public/class-points-rewards-for-woocommerce-public.php:1390
-#: public/class-points-rewards-for-woocommerce-public.php:1870
+#: public/class-points-rewards-for-woocommerce-public.php:1171
+#: public/class-points-rewards-for-woocommerce-public.php:1301
+#: public/class-points-rewards-for-woocommerce-public.php:1388
+#: public/class-points-rewards-for-woocommerce-public.php:1868
 msgid "Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1217
+#: public/class-points-rewards-for-woocommerce-public.php:1215
 msgid "Here is the Discount Rule for Applying your Points to Cart Total"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1222
-#: public/class-points-rewards-for-woocommerce-public.php:1247
-#: public/class-points-rewards-for-woocommerce-public.php:1560
-#: public/class-points-rewards-for-woocommerce-public.php:1947
+#: public/class-points-rewards-for-woocommerce-public.php:1220
+#: public/class-points-rewards-for-woocommerce-public.php:1245
+#: public/class-points-rewards-for-woocommerce-public.php:1558
+#: public/class-points-rewards-for-woocommerce-public.php:1945
 msgid " Points"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1236
+#: public/class-points-rewards-for-woocommerce-public.php:1234
 msgid "Place Order and Earn Reward Points in Return."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1244
+#: public/class-points-rewards-for-woocommerce-public.php:1242
 msgid "Conversion Rate: "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1305
+#: public/class-points-rewards-for-woocommerce-public.php:1303
 msgid "[Remove]"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1322
+#: public/class-points-rewards-for-woocommerce-public.php:1320
 msgid "Failed to Remove Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1326
+#: public/class-points-rewards-for-woocommerce-public.php:1324
 msgid "Successfully Removed Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1901
+#: public/class-points-rewards-for-woocommerce-public.php:1899
 msgid "Have A Points?"
 msgstr ""
 

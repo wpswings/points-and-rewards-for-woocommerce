@@ -8,7 +8,7 @@
  * @subpackage points-and-rewards-for-wooCommerce/admin
  */
 
-(function( $ ) {
+ (function( $ ) {
 	'use strict';
 
 	/**
@@ -82,8 +82,9 @@
 			$( document ).find( '#mwb_wpr_restrictions_for_purchasing_cat' ).select2();
 			
 			/* Update user Points in the points Table*/
-			$( '.mwb_points_update' ).click(
+			$( '.mwb_points_update' ).click( 
 				function(){
+				
 					var user_id = $( this ).data( 'id' );
 					var user_points = $( document ).find( "#add_sub_points" + user_id ).val();
 					var sign = $( document ).find( "#mwb_sign" + user_id ).val();
@@ -311,6 +312,7 @@ jQuery( document ).ready(
 	}
 );
 
+
 jQuery( document ).on(
 	"change",'input',
 	'#mwb_wpr_coupon_conversion_price',
@@ -319,7 +321,7 @@ jQuery( document ).on(
 		var value1 = jQuery(this).val();
 	
 		if(value1<0 && count =='mwb_wpr_coupon_conversion_price'){
-			alert('Negative values not allowed');
+			alert(mwb_wpr_object.negative);
 			jQuery(this).val("1");
 		
 			
