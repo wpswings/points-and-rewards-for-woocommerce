@@ -94,16 +94,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 					<?php
 			}
 			?>
-			<?php
-			if (  is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
-				?>
-			<li>
-
-				<a id="mwb-wpr-skype-link" href="<?php echo esc_url( 'https://join.skype.com/invite/IKVeNkLHebpC' ); ?>" target="_blank">
-					<img src="<?php echo esc_url( MWB_RWPR_DIR_URL . 'admin/images/skype_logo.png' ); ?>" style="height: 15px;width: 15px;" ><?php esc_html_e( 'CHAT NOW', 'points-and-rewards-for-woocommerce' ); ?>
-				</a>
-			</li>
-			<?php } ?>
+			
 		</ul>
 	</div>
 </div>

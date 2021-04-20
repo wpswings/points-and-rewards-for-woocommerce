@@ -63,20 +63,20 @@
     border-radius: 5px;
     color: #fff;
     font-size: 12px;
-    padding: 1px 12px;
+    padding: 6px 13px;
     text-decoration: none;
-    vertical-align: top;
-    display: inline-block
+    vertical-align: text-bottom;
+    display: inline-block;
 }
 
 .mwb_wpr_wrapper_button .fb-share-button {
-    background: #4867aa none repeat scroll 0 0;
+    background: #1877f2 none repeat scroll 0 0;
     border-radius: 5px;
     color: #fff;
-    padding: 1px 12px;
+    padding: 5px 0;
     font-size: 12px;
     text-decoration: none;
-    vertical-align: top
+    vertical-align: top;
 }
 
 .mwb_wpr_btn .twitter-share-button>img {
@@ -100,21 +100,22 @@
 .mwb_wpr_wrapper_button .mwb_wpr_mail_button {
     background-color: #575757;
     border-radius: 3px;
-    display: inline-block;
-    height: 21px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 30px;
     padding: 0;
     text-align: center;
     vertical-align: top;
-    width: 50px;
-    box-shadow: none
+    width: 77px;
+    box-shadow: none;
 }
 
 .mwb_wpr_wrapper_button .mwb_wpr_mail_button img {
     box-shadow: none;
     display: inline-block;
-    margin: 3px auto 0;
-    vertical-align: top;
-    width: 18px
+    margin: 0 auto 0;
+    width: 18px;
 }
 
 .mwb_wpr_wrapper_button .mwb_wpr_mail_button .mwb_wpr_common_class {
@@ -826,24 +827,28 @@ html {
 .mwb_wpr_avada_wrap button#mwb_cart_points_apply {
     line-height: 1.8
 }
+
 .mwb_wpr_whatsapp_share {
     background: #25d366;
     border-radius: 3px;
-    display: inline-block;
-    height: 21px;
+    height: 30px;
     padding: 0;
     text-align: center;
-    vertical-align: top;
-    width: 50px;
+    width: 77px;
     box-shadow: none;
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin: 0 7px;
+    align-items: center;
 }
+
 .mwb_wpr_whatsapp_share img {
     max-width: 16px;
     display: inline-block;
-    margin: 2px auto 0;
-    vertical-align: top;
+    margin: 0px auto 0;
     width: 18px;
 }
+
 .mwb_wpr_common_table thead th {
     padding: 0px 24px;
 }

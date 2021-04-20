@@ -1389,13 +1389,9 @@ class Points_Rewards_For_WooCommerce_Public {
 					if ( isset( $fee_name ) && ! empty( $fee_name ) && $cart_discount == $fee_name ) {
 						update_post_meta( $order_id, 'mwb_cart_discount#$fee_id', $fee_amount );
 						$fee_amount = -( $fee_amount );
-						$round_down_amt  = apply_filters( 'mwb_round_down_cart_total_value_amount', $mwb_wpr_cart_points_rate, $fee_amount, $mwb_wpr_cart_price_rate );
-						if ( ! empty( $round_down_amt ) ) {
-
-							$fee_to_point = $round_down_amt;
-						} else {
-							$fee_to_point = ceil( ( $mwb_wpr_cart_points_rate * $fee_amount ) / $mwb_wpr_cart_price_rate );
-						}
+						$fee_to_point = ceil( ( $mwb_wpr_cart_points_rate * $fee_amount ) / $mwb_wpr_cart_price_rate );
+						$fee_to_point  = apply_filters( 'mwb_round_down_cart_total_value_amount', $fee_to_point, $mwb_wpr_cart_points_rate, $fee_amount, $mwb_wpr_cart_price_rate );
+						
 
 						$remaining_point = $get_points - $fee_to_point;
 						/*update the users points in the*/

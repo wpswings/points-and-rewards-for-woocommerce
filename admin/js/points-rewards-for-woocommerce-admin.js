@@ -329,3 +329,14 @@ jQuery( document ).on(
 		
 	}
 );
+jQuery( document ).ready(
+	function(){
+	
+			jQuery( '.notice-dismiss' ).click(
+				function(){
+			
+					jQuery( ".notice-success" ).remove();
+				}
+			);
+	}
+);
