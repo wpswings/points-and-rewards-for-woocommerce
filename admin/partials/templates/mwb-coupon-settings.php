@@ -14,7 +14,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 include_once MWB_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
 $settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 $mwb_wpr_coupon_settings = array(

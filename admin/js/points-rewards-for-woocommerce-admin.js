@@ -8,7 +8,7 @@
  * @subpackage points-and-rewards-for-wooCommerce/admin
  */
 
-(function( $ ) {
+ (function( $ ) {
 	'use strict';
 
 	/**
@@ -40,7 +40,9 @@
 	 */
 
 	$( document ).ready(
+		
 		function() {
+		
 			/*This will hide/show membership*/
 			if(jQuery(document).find('#mwb_wpr_membership_setting_enable').prop("checked") == true){
 				
@@ -80,8 +82,9 @@
 			$( document ).find( '#mwb_wpr_restrictions_for_purchasing_cat' ).select2();
 			
 			/* Update user Points in the points Table*/
-			$( '.mwb_points_update' ).click(
+			$( '.mwb_points_update' ).click( 
 				function(){
+				
 					var user_id = $( this ).data( 'id' );
 					var user_points = $( document ).find( "#add_sub_points" + user_id ).val();
 					var sign = $( document ).find( "#mwb_sign" + user_id ).val();
@@ -254,6 +257,7 @@
 				);
 			}
 		);
+	
 		}
 	);
 
@@ -303,6 +307,35 @@ jQuery( document ).ready(
 			jQuery( ".dashicons.dashicons-menu" ).click(
 				function(){
 					jQuery( ".mwb_rwpr_navigator_template" ).toggleClass( "open-btn" );
+				}
+			);
+	}
+);
+
+
+jQuery( document ).on(
+	"change",'input',
+	'#mwb_wpr_coupon_conversion_price',
+	function(){
+		var count = jQuery( this ).attr('id');
+		var value1 = jQuery(this).val();
+	
+		if(value1<0 && count =='mwb_wpr_coupon_conversion_price'){
+			alert(mwb_wpr_object.negative);
+			jQuery(this).val("1");
+		
+			
+		}
+		
+	}
+);
+jQuery( document ).ready(
+	function(){
+	
+			jQuery( '.notice-dismiss' ).click(
+				function(){
+			
+					jQuery( ".notice-success" ).remove();
 				}
 			);
 	}

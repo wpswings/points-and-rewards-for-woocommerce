@@ -75,7 +75,34 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 					$this->placeholders['{email_content}'] = $email_content;
 
 					if ( $this->is_enabled() && $this->get_recipient() ) {
-						$this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
+						$this->send( $this->get_recipient(), $mwb_wpr_email_subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
+					}
+				}
+				$this->restore_locale();
+			}
+
+		}
+		/**
+		 * Trigger the sending of this email.
+		 *
+		 * @since      1.0.8
+		 * @param int $transaction_id.
+		 */
+		public function trigger_test( $user_id, $email_content, $mwb_wpr_email_subject, $mwb_reciever_email ) {
+			if ( $user_id ) {
+				$this->setup_locale();
+
+				$user = new WP_User( $user_id );
+				$user_info = get_userdata( $user_id );
+				if ( is_a( $user, 'WP_User' ) ) {
+					$this->object = $user;
+					$this->email_content = $email_content;
+					$this->mwb_wpr_email_subject = $mwb_wpr_email_subject;
+					$this->recipient = $mwb_reciever_email;
+					$this->placeholders['{email_content}'] = $email_content;
+
+					if ( $this->is_enabled() && $this->get_recipient() ) {
+						$this->send( $this->get_recipient(), $mwb_wpr_email_subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
 					}
 				}
 				$this->restore_locale();

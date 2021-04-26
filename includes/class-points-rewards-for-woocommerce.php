@@ -249,6 +249,12 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_cart_totals_get_fees_from_cart_taxes', $plugin_public, 'mwb_wpr_fee_tax_calculation', 10, 3 );
 			$this->loader->add_action( 'woocommerce_before_checkout_form', $plugin_public, 'mwb_wpr_add_coupon_form', 10, 1 );
 
+			$this->loader->add_filter( 'query_vars', $plugin_public, 'mwb_wpr_custom_endpoint_query_vars' );
+			// wmpl.
+			$this->loader->add_filter( 'wcml_register_endpoints_query_vars', $plugin_public, 'mwb_wpr_wpml_register_endpoint', 10, 3 );
+			$this->loader->add_filter( 'wcml_endpoint_permalink_filter', $plugin_public, 'mwb_wpr_endpoint_permalink_filter', 10, 2 );
+			$this->loader->add_filter( 'woocommerce_cart_contents_changed', $plugin_public, 'mwb_wpr_woocommerce_content_change' );
+
 		}
 	}
 

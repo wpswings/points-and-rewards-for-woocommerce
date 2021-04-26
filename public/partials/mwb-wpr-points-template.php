@@ -143,9 +143,9 @@ if ( isset( $mwb_ways_to_gain_points_value ) && ! empty( $mwb_ways_to_gain_point
 				$mwb_ways_to_gain_points_value = str_replace( '[Refer Points]', $mwb_refer_value, $mwb_ways_to_gain_points_value );
 				$mwb_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $mwb_per_currency_spent_points, $mwb_ways_to_gain_points_value );
 				$mwb_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $mwb_per_currency_spent_price, $mwb_ways_to_gain_points_value );
-				 echo '<fieldset class="mwb_wpr_each_section">' . esc_html( $mwb_ways_to_gain_points_value ) . '</fieldset>';
+			echo '<fieldset class="mwb_wpr_each_section">' . esc_html( $mwb_ways_to_gain_points_value ) . '</fieldset>';
 			?>
-		
+
 	</div>
 	<?php
 }
@@ -153,21 +153,21 @@ if ( $mwb_wpr_mem_enable ) {
 	$enable_drop = false;
 	$mwb_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
 	?>
-		
+
 	<p class="mwb_wpr_heading"><?php esc_html_e( 'Membership List', 'points-and-rewards-for-woocommerce' ); ?></p>
 		<?php
 		if ( isset( $mwb_user_level ) && ! empty( $mwb_user_level ) ) {
 			?>
 			<span class="mwb_wpr_upgrade_level">
 			<?php
-			esc_html_e( 'Your level has been upgraded to ', 'points-and-rewards-for-woocommerce' );
+			esc_html_e( 'Your membership level has been upgraded to ', 'points-and-rewards-for-woocommerce' );
 			echo esc_html( $mwb_user_level );
 			?>
 			</span>
 			<?php
 		}
 		?>
-			
+
 			<table class="woocommerce-MyAccount-points shop_table my_account_points account-points-table mwb_wpr_membership_with_img">
 				<thead>
 					<tr>
@@ -177,6 +177,7 @@ if ( $mwb_wpr_mem_enable ) {
 						<th class="mwb-wpr-points-code">
 							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Required Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
+						<?php do_action( 'mwb_wpr_membership_expiry_for_user_html' ); ?>
 					</tr>
 				</thead>
 				<tbody>
@@ -274,6 +275,11 @@ if ( $mwb_wpr_mem_enable ) {
 					<td>
 						<?php
 						echo esc_html( $values['Points'] );
+						?>
+					</td>
+					<td>
+						<?php
+						do_action( 'mwb_wpr_membership_expiry_date_for_user', $user_id, $values, $mwb_role );
 						if ( $mwb_role == $mwb_user_level ) {
 							echo '<img class="mwb_wpr_tick" src = "' . esc_url( MWB_RWPR_DIR_URL ) . 'public/images/tick.png">';
 						}

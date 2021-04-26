@@ -66,7 +66,7 @@ class Makewebbetter_Onboarding_Helper {
 	 *
 	 * @since 1.0.0
 	 */
-	
+
 	private static $plugin_name;
 	private static $store_name;
 	private static $store_url;
@@ -410,7 +410,7 @@ class Makewebbetter_Onboarding_Helper {
 				'value' => self::$plugin_name,
 				'required' => '',
 				'extra-class' => '',
-				),
+			),
 		);
 
 		return $fields;

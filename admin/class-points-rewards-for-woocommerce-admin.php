@@ -81,7 +81,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
-
+			
 			if ( isset( $_GET['page'] ) && 'mwb-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
 				wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
@@ -163,10 +163,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'pro_link'       => 'https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org',
 					'success_update'     => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
 					'support_confirm'     => __( 'Email sent successfully', 'points-and-rewards-for-woocommerce' ),
+					'negative'			=>  __('Negative Values Not Allowed', 'points-and-rewards-for-woocommerce'),
 				);
 
+		
 				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
-
 				wp_localize_script( $this->plugin_name . 'admin-js', 'mwb_wpr_object', $mwb_wpr );
 
 			}
@@ -344,8 +345,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$mwb_wpr_email_discription = str_replace( '[Total Points]', $total_points, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $mwb_wpr_email_discription );
 				$mwb_wpr_email_discription = str_replace( '[Points]', $point, $mwb_wpr_email_discription );
-				if ( self::mwb_wpr_check_mail_notfication_is_enable() ) {
 
+				$check_enable = apply_filters( 'mwb_wpr_check_custom_points_notification_enable', true, 'admin_notification' );
+
+				if ( self::mwb_wpr_check_mail_notfication_is_enable() && $check_enable ) {
 					$customer_email = WC()->mailer()->emails['mwb_wpr_email_notification'];
 					$email_status = $customer_email->trigger( $user_id, $mwb_wpr_email_discription, $mwb_wpr_email_subject );
 				}
@@ -788,17 +791,17 @@ class Points_Rewards_For_WooCommerce_Admin {
 				<tr valign="top">
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_minimum">
-							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price" required="" placeholder = "No minimum" value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? esc_html( $thankyouorder_min[ $key ] ) : ''; ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_minimum[]" class="mwb_wpr_thankyouorder_minimum input-text wc_input_price"  placeholder = "No minimum"  value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? esc_html( $thankyouorder_min[ $key ] ) : ''; ?>">
 						</label>
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_maximum">
-							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum" value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum"  value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>" required>
 						</label>
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_current_type">
-							<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price" required=""  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? esc_html( $thankyouorder_value[ $key ] ) : ''; ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_current_type[]" class="mwb_wpr_thankyouorder_current_type input-text wc_input_price"  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? esc_html( $thankyouorder_value[ $key ] ) : ''; ?>">
 						</label>
 					</td>    
 					<?php if ( ! empty( $key ) ) : ?>                       

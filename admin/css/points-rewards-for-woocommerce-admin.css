@@ -526,11 +526,6 @@
   position: relative;
   color: #ffffff;
 }
-.mwb_wpr_view_log_notice.mwb_wpr_common_slider.active {
-  background-color: #eeeeee;
-  color:#23282d;
-
-}
 .mwb_wpr_view_log_notice.mwb_wpr_common_slider::after {
   content: "\f460";
   font-family: 'dashicons';

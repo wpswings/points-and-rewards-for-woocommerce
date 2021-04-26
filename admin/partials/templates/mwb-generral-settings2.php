@@ -127,6 +127,7 @@ $mwb_wpr_general_settings = array(
 				'class'   => 'input-text',
 				'desc'  => __( 'Whatsapp', 'points-and-rewards-for-woocommerce' ),
 			),
+
 		),
 	),
 	array(

@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=MWB-PAR-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>
- * Version:           1.0.11
+ * Version:           1.1.2
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Plugin URI:        https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org
@@ -22,9 +22,9 @@
  * Domain Path:       /languages
  *
  * Requires at least: 5.0.0
- * Tested up to:      5.5
+ * Tested up to:      5.7
  * WC requires at least: 4.0
- * WC tested up to: 4.7
+ * WC tested up to: 5.2
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -52,7 +52,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.0.11' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.1.2' );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_HOME_URL', admin_url() );
@@ -164,7 +164,7 @@ if ( $activated ) {
 		if ( ! empty( $mwb_wpr_other_settings['mwb_wpr_shortcode_text_membership'] ) ) {
 			$mwb_wpr_shortcode_text_membership = $mwb_wpr_other_settings['mwb_wpr_shortcode_text_membership'];
 		} else {
-			$mwb_wpr_shortcode_text_membership = __( 'Your Current Level', 'points-and-rewards-for-woocommerce' );
+			$mwb_wpr_shortcode_text_membership = __( 'Your Current Membership Level is', 'points-and-rewards-for-woocommerce' );
 		}
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
 			$user_level = get_user_meta( $user_ID, 'membership_level', true );
@@ -264,6 +264,23 @@ if ( $activated ) {
 			}
 			return null;
 		}
+	}
+
+	register_activation_hook( __FILE__, 'mwb_wpr_flush_rewrite_rules' );
+	register_deactivation_hook( __FILE__, 'mwb_wpr_flush_rewrite_rules' );
+
+	/**
+	 * This function is used to create tabs
+	 *
+	 * @name mwb_wpr_flush_rewrite_rules
+	 * @since 1.1.0.
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	function mwb_wpr_flush_rewrite_rules() {
+		add_rewrite_endpoint( 'points', EP_PAGES );
+		add_rewrite_endpoint( 'view-log', EP_PAGES );
+		flush_rewrite_rules();
 	}
 } else {
 
