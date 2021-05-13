@@ -753,13 +753,51 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param array $thankyouorder_value array of the points value.
 	 */
 	public function mwb_wpr_add_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value ) {
+		
 		if ( isset( $thankyouorder_min ) && null != $thankyouorder_min && isset( $thankyouorder_max ) && null != $thankyouorder_max && isset( $thankyouorder_value ) && null != $thankyouorder_value ) {
 			$mwb_wpr_no = 1;
 			if ( count( $thankyouorder_min ) == count( $thankyouorder_max ) && count( $thankyouorder_max ) == count( $thankyouorder_value ) ) {
+				?>
+				<table class="form-table wp-list-table widefat fixed striped">
+					<thead> 
+						<tr valign="top">
+							<th><?php esc_html_e( 'Minimum', 'points-and-rewards-for-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
+
+							<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
+							
+							<?php if ( count( $thankyouorder_min ) > 1 ) { ?>
+							<th class="mwb_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'points-and-rewards-for-woocommerce' ); ?></th>
+							<?php } ?>
+							
+						</tr>
+					</thead>
+					<tbody  class="mwb_wpr_thankyouorder_tbody">
+				<?php
 				$this->mwb_wpr_add_rule_for_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value, '0' );
+				?>
+					</tbody>
+				</table>
+				<?php
 			}
 		} else {
+			?>
+			<table class="form-table wp-list-table widefat fixed striped">
+				<thead> 
+					<tr valign="top">
+						<th><?php esc_html_e( 'Minimum', 'points-and-rewards-for-woocommerce' ); ?></th>
+						<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
+						<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
+		
+					</tr>
+				</thead>
+			<tbody  class="mwb_wpr_thankyouorder_tbody">
+			<?php
 			$this->mwb_wpr_add_rule_for_order_total_points( array(), array(), array(), '' );
+			?>
+			</tbody>
+			</table>
+			<?php
 		}
 	}
 
@@ -777,17 +815,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function mwb_wpr_add_rule_for_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value, $key ) {
 		?>
-		<table class="form-table wp-list-table widefat fixed striped">
-			<tbody class="mwb_wpr_thankyouorder_tbody"> 
-				<tr valign="top">
-					<th><?php esc_html_e( 'Minimum', 'points-and-rewards-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
-
-					<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
-					<?php if ( ! empty( $key ) ) : ?> 
-					<th class="mwb_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'points-and-rewards-for-woocommerce' ); ?></th>
-					<?php endif; ?>
-				</tr>
+			
 				<tr valign="top">
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_minimum">
@@ -810,8 +838,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						</td>
 					<?php endif; ?>
 				</tr>
-			</tbody>
-		</table>
+		
 		<?php
 	}
 

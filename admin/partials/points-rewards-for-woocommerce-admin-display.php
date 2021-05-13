@@ -69,7 +69,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 
 ?>
 <div class="wrap woocommerce" id="mwb_rwpr_setting_wrapper">
-	 <form enctype="multipart/form-data" action="" id="mainform" method="post">		<div class="mwb_rwpr_header">
+	 <form enctype="multipart/form-data" action="" id="mainform"  method="post">		<div class="mwb_rwpr_header">
 			<div class="mwb_rwpr_header_content_left">
 				<div>
 					<h3 class="mwb_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ); ?></h3>
@@ -149,7 +149,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 					$include_tab = $mwb_file['file_path'];
 					?>
 					<div class="mwb_rwpr_content_template">
-						<?php include_once $include_tab; ?>
+						<?php include_once $include_tab;?>
 					</div>
 					<?php
 				} elseif ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
