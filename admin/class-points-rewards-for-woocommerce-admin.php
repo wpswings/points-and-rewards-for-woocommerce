@@ -824,7 +824,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</td>
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_maximum">
-							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum"  value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>">
+							<input type="text" name="mwb_wpr_thankyouorder_maximum[]" class="mwb_wpr_thankyouorder_maximum"  placeholder = "No maximum"  value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>" required>
 						</label>
 					</td>
 					<td class="forminp forminp-text">

@@ -139,6 +139,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 * @param string $id  id of the general settings.
 	 */
+	//tiwario
 	public function mwb_wpr_get_general_settings_num( $id ) {
 		$mwb_wpr_value = 0;
 		$general_settings = get_option( 'mwb_wpr_settings_gallery', true );
@@ -524,11 +525,12 @@ class Points_Rewards_For_WooCommerce_Public {
 					$get_referral = get_user_meta( $refere_id, 'mwb_points_referral', true );
 					$get_referral_invite = get_user_meta( $refere_id, 'mwb_points_referral_invite', true );
 					$custom_ref_pnt = get_user_meta( $refere_id, 'mwb_custom_points_referral_invite', true );
-					/*Check */
+					//tiwariii/*Check */
 					$get_points = (int) get_user_meta( $refere_id, 'mwb_wpr_points', true );
 					if ( empty( $get_points ) ) {
 						$get_points = 0;
 					}
+					//tiwari
 					$mwb_wpr_referral_program = true;
 					/*filter that will add restriction*/
 					$mwb_wpr_referral_program = apply_filters( 'mwb_wpr_referral_points', $mwb_wpr_referral_program, $customer_id, $refere_id );
@@ -540,6 +542,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							'referr_id' => $customer_id,
 						);
 						/*Update the points Details of the users*/
+						//akash
 						$this->mwb_wpr_update_points_details( $refere_id, 'reference_details', $mwb_refer_value, $data );
 						/*Send Email to user For the signup*/
 						$this->mwb_wpr_send_notification_mail( $refere_id, 'referral_notification' );
@@ -1390,7 +1393,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						update_post_meta( $order_id, 'mwb_cart_discount#$fee_id', $fee_amount );
 						$fee_amount = -( $fee_amount );
 						$fee_to_point = ceil( ( $mwb_wpr_cart_points_rate * $fee_amount ) / $mwb_wpr_cart_price_rate );
-						$fee_to_point  = apply_filters( 'mwb_round_down_cart_total_value_amount', $fee_to_point, $mwb_wpr_cart_points_rate, $fee_amount, $mwb_wpr_cart_price_rate );
+						 $fee_to_point  = apply_filters( 'mwb_round_down_cart_total_value_amount', $fee_to_point, $mwb_wpr_cart_points_rate, $fee_amount, $mwb_wpr_cart_price_rate );
 						
 
 						$remaining_point = $get_points - $fee_to_point;
@@ -2029,7 +2032,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 						$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
 					}
-				}
+				 }
 			}
 			return $cart_contents;
 

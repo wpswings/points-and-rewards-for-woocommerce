@@ -18,10 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /*
 Declarations
 */
-$user_id = get_current_user_id();
-$my_new_role = get_user_meta( $user_id, 'membership_level', true );
 
-if ( isset( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-level'] ) && $my_new_role != sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) ) ) {
+if ( isset( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-level'] ) ) {
 	$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['membership-save-level'] ) );
 	if ( wp_verify_nonce( $mwb_wpr_nonce, 'membership-save-level' ) ) {
 		$selected_role = isset( $_POST['mwb_wpr_membership_roles'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) ) : '';// phpcs:ignore WordPress.Security.NonceVerification
