@@ -1739,12 +1739,6 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Get the total points of the user*/
 		$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 		foreach ( $cart->cart_contents as $key => $value ) {
-			$product_id = $value['product_id'];
-			$pro_quant = $value['quantity'];
-			$_product = wc_get_product( $product_id );
-			$product_is_variable = $this->mwb_wpr_check_whether_product_is_variable( $_product );
-			$reg_price = $_product->get_price();
-
 			if ( isset( $value['variation_id'] ) && ! empty( $value['variation_id'] ) ) {
 				$variation_id = $value['variation_id'];
 				$variable_product = wc_get_product( $variation_id );
@@ -2003,36 +1997,50 @@ class Points_Rewards_For_WooCommerce_Public {
 		}
 		return $endpoint;
 	}
-		  /**
-		   * This function updates cart contents before adding into the cart.
-		   *
-		   * @param [mixed] $cart_contents
-		   * @return $cart_contents.
-		   */
-	public function mwb_wpr_woocommerce_content_change( $cart_contents ) {
+		/**
+		 * This function updates cart contents before adding into the cart.
+		 *
+		 * @param [mixed] $cart_contents
+		 * @return $cart_contents.
+		 */
+		public function mwb_wpr_woocommerce_content_change( $cart_contents ) {
 
 		if ( ! empty( $cart_contents ) ) {
 
 			foreach ( $cart_contents as $key => $value ) {
 
 				$product = wc_get_product( $cart_contents[ $key ]['product_id'] );
+				
+				$product_id = wc_get_product( $cart_contents[ $key ]['product_id'] );
+				
+				$check_enable = get_post_meta( $product_id, 'mwb_product_points_enable', 'no' );
+			$global_enable = get_option('mwb_wpr_assign_products_points', true);
 
-				if ( $product->get_type() == 'variable' ) {
+		
+		
+				if ( 'yes' == $check_enable ) {
+					if ( $product->get_type() == 'variable' ) {
 
-					if ( isset( $cart_contents[ $key ]['variation_id'] ) && ! empty( $cart_contents[ $key ]['variation_id'] ) ) {
+						if ( isset( $cart_contents[ $key ]['variation_id'] ) && ! empty( $cart_contents[ $key ]['variation_id'] ) ) {
 
-						$get_product_points = get_post_meta( $cart_contents[ $key ]['variation_id'], 'mwb_wpr_variable_points', 1 );
+							$get_product_points = get_post_meta( $cart_contents[ $key ]['variation_id'], 'mwb_wpr_variable_points', 1 );
 
-						$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
+							$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
+						}
+					} else {
+						if ( isset( $cart_contents[ $key ]['product_id'] ) && ! empty( $cart_contents[ $key ]['product_id'] ) ) {
+							$get_product_points = get_post_meta( $cart_contents[ $key ]['product_id'], 'mwb_points_product_value', 1 );
 
+							$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
+
+						}
 					}
-				} else {
-					if ( isset( $cart_contents[ $key ]['product_id'] ) && ! empty( $cart_contents[ $key ]['product_id'] ) ) {
-						$get_product_points = get_post_meta( $cart_contents[ $key ]['product_id'], 'mwb_points_product_value', 1 );
+				}
+				if( $global_enable['mwb_wpr_global_product_enable'] == '0' ) {
 
-						$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
-					}
-				 }
+					unset( $cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points']);
+				}
+
 			}
 			return $cart_contents;
 
