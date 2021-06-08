@@ -2003,43 +2003,46 @@ class Points_Rewards_For_WooCommerce_Public {
 		 */
 		public function mwb_wpr_woocommerce_content_change( $cart_contents ) {
 
-		if ( ! empty( $cart_contents ) ) {
-
-			foreach ( $cart_contents as $key => $value ) {
-
-				$product    = wc_get_product( $cart_contents[ $key ]['product_id'] );
-
+			if ( ! empty( $cart_contents ) ) {
+	
+				foreach ( $cart_contents as $key => $value ) {
+	
+					$product    = wc_get_product( $cart_contents[ $key ]['product_id'] );
+	
+	
+					$global_enable = get_option( 'mwb_wpr_assign_products_points', true );
+	
 				
+						if ( $product->get_type() == 'variable' ) {
+	
+							if ( isset( $cart_contents[ $key ]['variation_id'] ) && ! empty( $cart_contents[ $key ]['variation_id'] ) ) {
+	
+								$get_product_points = get_post_meta( $cart_contents[ $key ]['variation_id'], 'mwb_wpr_variable_points', 1 );
+								$check_enable       = get_post_meta( $cart_contents[ $key ]['product_id'], 'mwb_product_points_enable', 'no' );
+	
+								$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
+								if ( $global_enable['mwb_wpr_global_product_enable'] == '0' && 'no' == $check_enable ) {
+									unset( $cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points']);
+								}
+								if( !is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php') ) {
 
-				$global_enable = get_option( 'mwb_wpr_assign_products_points', true );
+									unset( $cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points']);
 
-				//if ( $check_enable == 'yes' ) {
-					if ( $product->get_type() == 'variable' ) {
-
-						if ( isset( $cart_contents[ $key ]['variation_id'] ) && ! empty( $cart_contents[ $key ]['variation_id'] ) ) {
-
-							$get_product_points = get_post_meta( $cart_contents[ $key ]['variation_id'], 'mwb_wpr_variable_points', 1 );
-							$check_enable       = get_post_meta( $cart_contents[ $key ]['variation_id'], 'mwb_product_points_enable', 'no' );
-
-							$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
-							if ( $global_enable['mwb_wpr_global_product_enable'] == '0' && 'no' == $check_enable ) {
+								}
+							}
+						} else {
+							if ( isset( $cart_contents[ $key ]['product_id'] ) && ! empty( $cart_contents[ $key ]['product_id'] ) ) {
+								$get_product_points = get_post_meta( $cart_contents[ $key ]['product_id'], 'mwb_points_product_value', 1 );
+								$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );	
+							}
+							$check_enable = get_post_meta( $cart_contents[ $key ]['product_id'], 'mwb_product_points_enable', 'no' );
+							if ( $global_enable['mwb_wpr_global_product_enable'] == '0' && ('no' == $check_enable ) ) {
 								unset( $cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points']);
 							}
 						}
-					} else {
-						if ( isset( $cart_contents[ $key ]['product_id'] ) && ! empty( $cart_contents[ $key ]['product_id'] ) ) {
-							$get_product_points = get_post_meta( $cart_contents[ $key ]['product_id'], 'mwb_points_product_value', 1 );
-							$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );	
-						}
-						$check_enable = get_post_meta( $cart_contents[ $key ]['product_id'], 'mwb_product_points_enable', 'no' );
-						if ( $global_enable['mwb_wpr_global_product_enable'] == '0' && ('no' == $check_enable ) ) {
-							unset( $cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points']);
-						}
-					}
-				//}
+				}
+				return $cart_contents;
+	
 			}
-			return $cart_contents;
-
 		}
-	}
 }
