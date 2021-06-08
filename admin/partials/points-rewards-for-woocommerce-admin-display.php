@@ -13,8 +13,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
-
+if ( ! defined( 'ONBOARD_PLUGIN_NAME' ) ) {
+	define( 'ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
+}
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	$this->onboard = new Makewebbetter_Onboarding_Helper();
 }
