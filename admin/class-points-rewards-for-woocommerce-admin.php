@@ -282,6 +282,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public static function mwb_wpr_update_points_details( $user_id, $type, $points, $data ) {
+		
 		/* Get the points of the points details*/
 		$today_date = date_i18n( 'Y-m-d h:i:sa' );
 		$admin_points = get_user_meta( $user_id, 'points_details', true );

@@ -567,6 +567,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param array  $data  Data of the points details.
 	 */
 	public function mwb_wpr_update_points_details( $user_id, $type, $points, $data ) {
+		//idddd
+		
+		//pro_conversion_points
 		$today_date = date_i18n( 'Y-m-d h:i:sa' );
 		/*Create the Referral Signup*/
 		if ( 'reference_details' == $type || 'ref_product_detail' == $type ) {
@@ -589,6 +592,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					'refered_user' => $data['referr_id'],
 				);
 			}
+			
 			/*Update the user meta for the points details*/
 			update_user_meta( $user_id, 'points_details', $get_referral_detail );
 		}
