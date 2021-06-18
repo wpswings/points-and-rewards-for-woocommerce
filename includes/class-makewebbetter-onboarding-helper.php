@@ -81,8 +81,8 @@ class Makewebbetter_Onboarding_Helper {
 		self::$store_name = get_bloginfo( 'name' );
 		self::$store_url = home_url();
 
-		if ( defined( 'ONBOARD_PLUGIN_NAME' ) ) {
-			self::$plugin_name = ONBOARD_PLUGIN_NAME;
+		if ( defined( 'MWB_PAR_ONBOARD_PLUGIN_NAME' ) ) {
+			self::$plugin_name = MWB_PAR_ONBOARD_PLUGIN_NAME;
 		}
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -667,8 +667,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		check_ajax_referer( 'mwb_onboarding_nonce', 'nonce' );
 
-		$form_data = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
-
+		$form_data = ! empty( $_POST['form_data'] ) ? map_deep( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ), 'sanitize_text_field' ) : '';
 		$formatted_data = array();
 
 		if ( ! empty( $form_data ) && is_array( $form_data ) ) {
@@ -835,33 +834,7 @@ class Makewebbetter_Onboarding_Helper {
 	}
 
 
-	/**
-	 * Handle Hubspot GET api calls.
-	 *
-	 * @since    1.0.0
-	 */
-	private function hic_get( $endpoint, $headers ) {
 
-		$url = $this->base_url . $endpoint;
-
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, false );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
-
-		return array(
-			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
-		);
-	}
 
 
 	/**
@@ -872,24 +845,35 @@ class Makewebbetter_Onboarding_Helper {
 	private function hic_post( $endpoint, $post_params, $headers ) {
 
 		$url = $this->base_url . $endpoint;
+		$request = array(
+			'httpversion' => '1.0',
+			'sslverify'   => false,
+			'method'      => 'POST',
+			'timeout'     => 45,
+			'headers'     => $headers,
+			'body'        => $post_params,
+			'cookies'     => array(),
+		);
 
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, true );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_params );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
+		$response = wp_remote_post( $url, $request );
+
+		if ( is_wp_error( $response ) ) {
+
+			$status_code = 500;
+			$response    = esc_html__( 'Unexpected Error Occured', 'points-and-rewards-for-woocommerce' );
+			$errors      = $response;
+
+		} else {
+
+			$status_code = wp_remote_retrieve_response_code( $response );
+			$response    = wp_remote_retrieve_body( $response );
+			$errors      = $response;
+		}
 
 		return array(
 			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
+			'response'    => $response,
+			'errors'      => $errors,
 		);
 	}
 
@@ -910,7 +894,7 @@ class Makewebbetter_Onboarding_Helper {
 		$url = 'submissions/v3/integration/submit/' . self::$portal_id . '/' . $form_id;
 
 		$headers = array(
-			'Content-Type: application/json',
+			'Content-Type' => 'application/json',
 		);
 
 		$form_data = json_encode(
@@ -925,7 +909,6 @@ class Makewebbetter_Onboarding_Helper {
 		);
 
 		$response = $this->hic_post( $url, $form_data, $headers );
-
 		if ( $response['status_code'] == 200 ) {
 			$result = json_decode( $response['response'], true );
 			$result['success'] = true;

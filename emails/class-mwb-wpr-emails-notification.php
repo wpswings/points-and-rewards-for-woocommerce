@@ -13,7 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
-
+		/**
+		 * Mwb_Wpr_Emails_Notification function
+		 *
+		 * @param [int] $email_content
+		 * @param [mixed] $mwb_wpr_email_subject
+		 * @return void
+		 */
 	class Mwb_Wpr_Emails_Notification extends WC_Email {
 		public $email_content;
 		public $mwb_wpr_email_subject;
@@ -30,7 +36,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 				'{email_content}' => '',
 			);
 
-			// Call parent constructor
+			// Call parent constructor.
 			parent::__construct();
 		}
 
@@ -56,10 +62,13 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		}
 
 		/**
-		 * Trigger the sending of this email.
+		 * Trigger function
 		 *
-		 * @since      1.0.8
-		 * @param int $transaction_id.
+		 * @param [int] $user_id
+		 * @param [int] $email_content
+		 * @param [int] $mwb_wpr_email_subject
+		 * @since  1.0.8
+		 * @return void
 		 */
 		public function trigger( $user_id, $email_content, $mwb_wpr_email_subject ) {
 			if ( $user_id ) {

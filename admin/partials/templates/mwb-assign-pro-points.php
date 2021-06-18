@@ -35,7 +35,7 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) && isset( $_POST['mwb-wpr-no
 				$args = array(
 					'post_type' => 'product',
 					'posts_per_page' => -1,
-				); 
+				);
 				$loop = new WP_Query( $args );
 				foreach ( $loop->posts as $key => $value ) {
 					$product = wc_get_product( $value->ID );
@@ -44,13 +44,13 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) && isset( $_POST['mwb-wpr-no
 						$parent_id = $product->get_id();
 						$parent_product = wc_get_product( $parent_id );
 						foreach ( $parent_product->get_children() as $child_id ) {
-				
-				
-					
+
+
+
 							update_post_meta( $parent_id, 'mwb_product_points_enable', 'yes' );
 							update_post_meta( $child_id, 'mwb_wpr_variable_points', $mwb_wpr_pro_points_to_all );
-					
-							
+
+
 						}
 					} else {
 						update_post_meta( $value->ID, 'mwb_product_points_enable', 'yes' );

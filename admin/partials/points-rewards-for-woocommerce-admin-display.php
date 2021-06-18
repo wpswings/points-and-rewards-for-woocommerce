@@ -13,8 +13,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-if ( ! defined( 'ONBOARD_PLUGIN_NAME' ) ) {
-	define( 'ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
+if ( ! defined( 'MWB_PAR_ONBOARD_PLUGIN_NAME' ) ) {
+	define( 'MWB_PAR_ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
 }
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	$this->onboard = new Makewebbetter_Onboarding_Helper();
@@ -150,7 +150,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 					$include_tab = $mwb_file['file_path'];
 					?>
 					<div class="mwb_rwpr_content_template">
-						<?php include_once $include_tab;?>
+						<?php include_once $include_tab; ?>
 					</div>
 					<?php
 				} elseif ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
