@@ -20,7 +20,7 @@ Declarations
 */
 $user_id = get_current_user_id();
 $my_role = ! empty( get_user_meta( $user_id, 'membership_level', true ) ) ? get_user_meta( $user_id, 'membership_level', true ) : '';
-if ( isset( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-level'] ) && isset( $_POST['mwb_wpr_membership_roles'] ) && sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) != $my_role ) ) {
+if ( isset( $_POST['mwb_wpr_save_level'] ) && ! empty( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-level'] ) && ! empty( $_POST['membership-save-level'] ) && isset( $_POST['mwb_wpr_membership_roles'] ) && ! empty( sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) ) ) && sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) ) != $my_role ) {
 	$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['membership-save-level'] ) );
 	if ( wp_verify_nonce( $mwb_wpr_nonce, 'membership-save-level' ) ) {
 		$selected_role = isset( $_POST['mwb_wpr_membership_roles'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) ) : '';// phpcs:ignore WordPress.Security.NonceVerification
@@ -157,11 +157,14 @@ if ( $mwb_wpr_mem_enable ) {
 
 	<p class="mwb_wpr_heading"><?php esc_html_e( 'Membership List', 'points-and-rewards-for-woocommerce' ); ?></p>
 		<?php
-		if ( isset( $mwb_user_level ) && ! empty( $mwb_user_level ) ) {
+
+
+		if ( isset( $mwb_user_level ) && ! empty( $mwb_user_level ) && array_key_exists( $mwb_user_level, $mwb_wpr_membership_roles ) ) {
 			?>
 			<span class="mwb_wpr_upgrade_level">
 			<?php
 			esc_html_e( 'Your membership level has been upgraded to ', 'points-and-rewards-for-woocommerce' );
+
 			echo esc_html( $mwb_user_level );
 			?>
 			</span>
@@ -317,7 +320,7 @@ if ( isset( $enable_drop ) && $enable_drop ) {
 						if ( $values['Points'] == $get_points
 							|| $values['Points'] < $get_points ) {
 							?>
-										
+	
 									<option value="<?php echo esc_html( $mwb_role ); ?>">
 									<?php
 									echo esc_html( $mwb_role );
