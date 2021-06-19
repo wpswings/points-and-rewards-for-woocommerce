@@ -92,6 +92,11 @@ class Points_Rewards_For_WooCommerce_Public {
 			'points_empty' => __( 'Please enter points.', 'points-and-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'mwb_wpr', $mwb_wpr );
+
+		if ( is_account_page() ) {
+			wp_enqueue_script( 'mwb_wpr_fb_js', MWB_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public-fb.js', array(), $this->version, false );
+		}
+
 	}
 
 	/**
@@ -381,7 +386,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				'src' => array(),
 			),
 		);
-		return $allowed_tags;
+		return apply_filters( 'mwb_wpr_allowed_html', $allowed_tags );
 
 	}
 
@@ -407,13 +412,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$share_button = '<div class="mwb_wpr_btn mwb_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . MWB_RWPR_DIR_URL . '/public/images/twitter.png">' . __( 'Tweet', 'points-and-rewards-for-woocommerce' ) . '</a></div>';
 
 			$fb_button = '<div id="fb-root"></div>
-			<script>(function(d, s, id) {
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) return;
-				js = d.createElement(s); js.id = id;
-				js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.9";
-				fjs.parentNode.insertBefore(js, fjs);
-			}(document, "script", "facebook-jssdk"));</script>
+			
 			<div class="fb-share-button mwb_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">' . __( 'Share', 'points-and-rewards-for-woocommerce' ) . '</a></div>';
 
 			$mail = '<a class="mwb_wpr_mail_button mwb_wpr_common_class" href="mailto:enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . MWB_RWPR_DIR_URL . 'public/images/email.png"></a>';
@@ -444,7 +443,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 
 			$content = $content . '</div>';
-			echo $content; // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $content;
+
 		}
 	}
 

@@ -1341,7 +1341,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	}
 	?>
 	<form method="post">
-		<input type="hidden" name="page" value="<?php esc_html_e( 'points_log_list_table', 'points-and-rewards-for-woocommerce' ); ?>">
+		<input type="hidden" name="page" value="points_log_list_table">
 		<?php wp_nonce_field( 'points-log', 'points-log' ); ?>
 		<?php
 		$mylisttable = new Points_Log_List_Table();
