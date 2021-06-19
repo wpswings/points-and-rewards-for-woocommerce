@@ -904,7 +904,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		);
 		if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
-			echo '<p><strong>' . 'Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+			echo '<p><strong>Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
 		} else {
 			$mwb_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
 		}

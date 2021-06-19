@@ -20,7 +20,7 @@ Declarations
 */
 $user_id = get_current_user_id();
 $my_role = ! empty( get_user_meta( $user_id, 'membership_level', true ) ) ? get_user_meta( $user_id, 'membership_level', true ) : '';
-if ( isset( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-level'] ) && $my_role != sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) ) ) {
+if ( isset( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-level'] ) && isset( $_POST['mwb_wpr_membership_roles'] ) && sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) != $my_role ) ) {
 	$mwb_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['membership-save-level'] ) );
 	if ( wp_verify_nonce( $mwb_wpr_nonce, 'membership-save-level' ) ) {
 		$selected_role = isset( $_POST['mwb_wpr_membership_roles'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_wpr_membership_roles'] ) ) : '';// phpcs:ignore WordPress.Security.NonceVerification
@@ -28,7 +28,7 @@ if ( isset( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 		$user = get_user_by( 'ID', $user_id );
 		$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 		$membership_detail = get_user_meta( $user_id, 'points_details', true );
-		$today_date = date( 'Y-m-d h:i:sa', current_time( 'timestamp', 0 ) );
+		$today_date = date_i18n( 'Y-m-d h:i:sa', current_time( 'timestamp', 0 ) );
 		$expiration_date = '';
 		$membership_settings_array = get_option( 'mwb_wpr_membership_settings', true );
 		$mwb_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();

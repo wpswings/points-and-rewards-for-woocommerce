@@ -25,12 +25,16 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  */
 class Points_Log_List_Table extends WP_List_Table {
 	/**
-	 * This is variable which is used for the store all the data.
+	 * Example_data variable
 	 *
-	 * @var array $example_data variable for store data.
-	 * @var array $mwb_total_count variable for store data.
+	 * @var [int]
 	 */
 	public $example_data;
+	/**
+	 * Mwb_total_count variable
+	 *
+	 * @var [int]
+	 */
 	public $mwb_total_count;
 
 

@@ -539,8 +539,10 @@ class Points_Rewards_For_WooCommerce_Public {
 						$data = array(
 							'referr_id' => $customer_id,
 						);
+
 						/*
-						Update the points Details of the users*/
+						Update the points Details of the users
+						*/
 						$this->mwb_wpr_update_points_details( $refere_id, 'reference_details', $mwb_refer_value, $data );
 						/*Send Email to user For the signup*/
 						$this->mwb_wpr_send_notification_mail( $refere_id, 'referral_notification' );
@@ -565,9 +567,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param array  $data  Data of the points details.
 	 */
 	public function mwb_wpr_update_points_details( $user_id, $type, $points, $data ) {
-		// idddd
 
-		// pro_conversion_points
 		$today_date = date_i18n( 'Y-m-d h:i:sa' );
 		/*Create the Referral Signup*/
 		if ( 'reference_details' == $type || 'ref_product_detail' == $type ) {
@@ -876,7 +876,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					$mwb_wpr_ref_noof_order = (int) get_user_meta( $user_id, 'mwb_wpr_no_of_orders', true );
 					if ( isset( $mwb_wpr_ref_noof_order ) && ! empty( $mwb_wpr_ref_noof_order ) ) {
 						$order_limit = get_post_meta( $order_id, "$order_id#$mwb_wpr_ref_noof_order", true );
-						if ( isset( $order_limit ) && $order_limit == 'set' ) {
+						if ( isset( $order_limit ) && 'set' == $order_limit ) {
 							return;
 						} else {
 							$mwb_wpr_ref_noof_order++;
@@ -1156,7 +1156,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Get the current user id*/
 		$my_cart_change_return = 0;
 		$my_cart_change_return = apply_filters( 'mwb_cart_content_check_for_sale_item', $cart );
-		if ( $my_cart_change_return == '1' ) {
+		if ( '1' == $my_cart_change_return ) {
 
 			return;
 		} else {
@@ -1987,10 +1987,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function mwb_wpr_endpoint_permalink_filter( $endpoint, $key ) {
 
-		if ( $key == 'points' ) {
+		if ( 'points' == $key ) {
 			return 'points';
 		}
-		if ( $key == 'view-log' ) {
+		if ( 'view-log' == $key ) {
 			return 'view-log';
 		}
 		return $endpoint;
@@ -1998,7 +1998,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		/**
 		 * This function updates cart contents before adding into the cart.
 		 *
-		 * @param [mixed] $cart_contents
+		 * @param [mixed] $cart_contents due to cart contents.
 		 * @return $cart_contents.
 		 */
 	public function mwb_wpr_woocommerce_content_change( $cart_contents ) {
@@ -2019,7 +2019,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						$check_enable       = get_post_meta( $cart_contents[ $key ]['product_id'], 'mwb_product_points_enable', 'no' );
 
 						$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
-						if ( $global_enable['mwb_wpr_global_product_enable'] == '0' && 'no' == $check_enable ) {
+						if ( '0' == $global_enable['mwb_wpr_global_product_enable'] && 'no' == $check_enable ) {
 							unset( $cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] );
 						}
 						if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
@@ -2034,7 +2034,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						$cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
 					}
 					$check_enable = get_post_meta( $cart_contents[ $key ]['product_id'], 'mwb_product_points_enable', 'no' );
-					if ( $global_enable['mwb_wpr_global_product_enable'] == '0' && ( 'no' == $check_enable ) ) {
+					if ( '0' == $global_enable['mwb_wpr_global_product_enable'] && ( 'no' == $check_enable ) ) {
 						unset( $cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] );
 					}
 				}

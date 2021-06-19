@@ -29,11 +29,12 @@ if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 class Makewebbetter_Onboarding_Helper {
 
 	/**
-	 * The single instance of the class.
+	 * Instance variable.
 	 *
-	 * @since   1.0.0
+	 * @since 1.0.0
+	 * @var string instance
 	 */
-	protected static $_instance = null;
+	protected static $mwb_wpr_instance = null;
 
 	/**
 	 * Base url of hubspot api.
@@ -58,17 +59,31 @@ class Makewebbetter_Onboarding_Helper {
 	 * @var string Form id.
 	 */
 	private static $onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
+	/**
+	 * Deactivation variable
+	 *
+	 * @var string
+	 */
 	private static $deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
 
 
 	/**
-	 * Plugin Name.
+	 * Plugin_name variable
 	 *
-	 * @since 1.0.0
+	 * @var [int]
 	 */
-
 	private static $plugin_name;
+	/**
+	 * Store_name variable
+	 *
+	 * @var [int]
+	 */
 	private static $store_name;
+	/**
+	 * Store_url variable
+	 *
+	 * @var [int]
+	 */
 	private static $store_url;
 
 	/**
@@ -111,12 +126,12 @@ class Makewebbetter_Onboarding_Helper {
 	 */
 	public static function get_instance() {
 
-		if ( is_null( self::$_instance ) ) {
+		if ( is_null( self::$mwb_wpr_instance ) ) {
 
-			self::$_instance = new self();
+			self::$mwb_wpr_instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$mwb_wpr_instance;
 	}
 
 	/**
@@ -807,10 +822,11 @@ class Makewebbetter_Onboarding_Helper {
 	}
 
 	/**
-	 * Handle Hubspot form submission.
+	 * Handle_form_submission_for_hubspot function
 	 *
-	 * @param      string $result       The result of this validation.
-	 * @since    1.0.0
+	 * @param boolean $submission used for submission.
+	 * @param string  $action_type used for string.
+	 * @return boolean
 	 */
 	protected function handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
 
@@ -832,15 +848,12 @@ class Makewebbetter_Onboarding_Helper {
 			return false;
 		}
 	}
-
-
-
-
-
 	/**
-	 * Handle Hubspot POST api calls.
+	 * Hic_post function
 	 *
-	 * @since    1.0.0
+	 * @param [mixed] $endpoint for endpoints.
+	 * @param [mixed] $post_params for post params.
+	 * @param [mixed] $headers for headers.
 	 */
 	private function hic_post( $endpoint, $post_params, $headers ) {
 
@@ -876,12 +889,11 @@ class Makewebbetter_Onboarding_Helper {
 			'errors'      => $errors,
 		);
 	}
-
 	/**
-	 *  Hubwoo Onboarding Submission :: Get a form.
+	 * Hubwoo_submit_form function
 	 *
-	 * @param           $form_id    form ID.
-	 * @since       1.0.0
+	 * @param array  $form_data for form data.
+	 * @param string $action_type for action type.
 	 */
 	protected function hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
 
@@ -909,7 +921,7 @@ class Makewebbetter_Onboarding_Helper {
 		);
 
 		$response = $this->hic_post( $url, $form_data, $headers );
-		if ( $response['status_code'] == 200 ) {
+		if ( 200 == $response['status_code'] ) {
 			$result = json_decode( $response['response'], true );
 			$result['success'] = true;
 		} else {
@@ -921,8 +933,12 @@ class Makewebbetter_Onboarding_Helper {
 	}
 
 
-	// Function to get the client IP address
-	function get_client_ip() {
+	/**
+	 * Get_client_ip function
+	 *
+	 * @return ipaddress
+	 */
+	private function get_client_ip() {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );

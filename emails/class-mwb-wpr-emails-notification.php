@@ -21,8 +21,21 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		 * @return void
 		 */
 	class Mwb_Wpr_Emails_Notification extends WC_Email {
+		/**
+		 * Email_content variable
+		 *
+		 * @var [int]
+		 */
 		public $email_content;
+		/**
+		 * Mwb_wpr_email_subject variable
+		 *
+		 * @var [int]
+		 */
 		public $mwb_wpr_email_subject;
+		/**
+		 * __construct function
+		 */
 		public function __construct() {
 			$this->id             = 'mwb_wpr_email_notification';
 			$this->title          = __( 'Points and rewards email', 'points-and-rewards-for-woocommerce' );
@@ -60,14 +73,12 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		public function get_default_heading() {
 			return __( 'Points and rewards notification', 'points-and-rewards-for-woocommerce' );
 		}
-
 		/**
 		 * Trigger function
 		 *
-		 * @param [int] $user_id
-		 * @param [int] $email_content
-		 * @param [int] $mwb_wpr_email_subject
-		 * @since  1.0.8
+		 * @param  [int]    $user_id Used for id.
+		 * @param [String] $email_content used for email content.
+		 * @param [String] $mwb_wpr_email_subject used for email subject.
 		 * @return void
 		 */
 		public function trigger( $user_id, $email_content, $mwb_wpr_email_subject ) {
@@ -77,10 +88,10 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 				$user = new WP_User( $user_id );
 				$user_info = get_userdata( $user_id );
 				if ( is_a( $user, 'WP_User' ) ) {
-					$this->object = $user;
-					$this->email_content = $email_content;
-					$this->mwb_wpr_email_subject = $mwb_wpr_email_subject;
-					$this->recipient = $user_info->user_email;
+					$this->object                          = $user;
+					$this->email_content                   = $email_content;
+					$this->mwb_wpr_email_subject           = $mwb_wpr_email_subject;
+					$this->recipient                       = $user_info->user_email;
 					$this->placeholders['{email_content}'] = $email_content;
 
 					if ( $this->is_enabled() && $this->get_recipient() ) {
@@ -92,22 +103,25 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 
 		}
 		/**
-		 * Trigger the sending of this email.
+		 * Trigger_test function
 		 *
-		 * @since      1.0.8
-		 * @param int $transaction_id.
+		 * @param [int]    $user_id for userid.
+		 * @param [string] $email_content used for email content .
+		 * @param [String] $mwb_wpr_email_subject used for email subject.
+		 * @param [String] $mwb_reciever_email used for email.
+		 * @return void
 		 */
 		public function trigger_test( $user_id, $email_content, $mwb_wpr_email_subject, $mwb_reciever_email ) {
 			if ( $user_id ) {
 				$this->setup_locale();
 
-				$user = new WP_User( $user_id );
+				$user      = new WP_User( $user_id );
 				$user_info = get_userdata( $user_id );
 				if ( is_a( $user, 'WP_User' ) ) {
-					$this->object = $user;
-					$this->email_content = $email_content;
-					$this->mwb_wpr_email_subject = $mwb_wpr_email_subject;
-					$this->recipient = $mwb_reciever_email;
+					$this->object                          = $user;
+					$this->email_content                   = $email_content;
+					$this->mwb_wpr_email_subject           = $mwb_wpr_email_subject;
+					$this->recipient                       = $mwb_reciever_email;
 					$this->placeholders['{email_content}'] = $email_content;
 
 					if ( $this->is_enabled() && $this->get_recipient() ) {
@@ -131,7 +145,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 				$this->template_html,
 				array(
 					'user'          => $this->object,
-					'email_content'   => $this->email_content,
+					'email_content' => $this->email_content,
 					'email_heading' => $this->get_heading(),
 					'sent_to_admin' => false,
 					'plain_text'    => false,
@@ -154,11 +168,11 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 				$this->template_plain,
 				array(
 					'user'          => $this->object,
-					'email_content'   => $this->email_content,
+					'email_content' => $this->email_content,
 					'email_heading' => $this->get_heading(),
 					'sent_to_admin' => false,
 					'plain_text'    => true,
-					'email' => $this,
+					'email'         => $this,
 				),
 				'points-and-rewards-for-woocommerce',
 				$this->template_base

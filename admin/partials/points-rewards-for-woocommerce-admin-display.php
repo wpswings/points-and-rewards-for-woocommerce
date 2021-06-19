@@ -10,6 +10,7 @@
  * @package    Rewardeem_woocommerce_Points_Rewards
  * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
