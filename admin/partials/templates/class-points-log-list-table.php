@@ -25,16 +25,12 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  */
 class Points_Log_List_Table extends WP_List_Table {
 	/**
-	 * Example_data variable
+	 * This is variable which is used for the store all the data.
 	 *
-	 * @var [int]
+	 * @var array $example_data variable for store data.
+	 * @var array $mwb_total_count variable for store data.
 	 */
 	public $example_data;
-	/**
-	 * Mwb_total_count variable
-	 *
-	 * @var [int]
-	 */
 	public $mwb_total_count;
 
 
@@ -195,7 +191,7 @@ class Points_Log_List_Table extends WP_List_Table {
 		$this->process_bulk_action();
 		$current_page = $this->get_pagenum();
 
-		$this->example_data = $this->get_users_points( $current_page, -1 );
+		$this->example_data = $this->get_users_points( $current_page, $per_page );
 		$data               = $this->example_data;
 
 		usort( $data, array( $this, 'mwb_wpr_usort_reorder' ) );
@@ -209,7 +205,7 @@ class Points_Log_List_Table extends WP_List_Table {
 				'total_pages' => ceil( $total_items / $per_page ),
 			)
 		);
-		$this->items = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
+
 	}
 
 	/**
@@ -1341,7 +1337,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	}
 	?>
 	<form method="post">
-		<input type="hidden" name="page" value="points_log_list_table">
+		<input type="hidden" name="page" value="<?php esc_html_e( 'points_log_list_table', 'points-and-rewards-for-woocommerce' ); ?>">
 		<?php wp_nonce_field( 'points-log', 'points-log' ); ?>
 		<?php
 		$mylisttable = new Points_Log_List_Table();

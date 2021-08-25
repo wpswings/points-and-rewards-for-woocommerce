@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=MWB-PAR-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>
- * Version:           1.1.4
+ * Version:           1.1.5
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Plugin URI:        https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org
@@ -52,7 +52,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.1.4' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.1.5' );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_HOME_URL', admin_url() );
@@ -241,6 +241,9 @@ if ( $activated ) {
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_set_the_wordpress_date_format( $saved_date ) {
+		if( get_locale() == 'zh_TW' ) {
+			return $saved_date;
+		}
 		$saved_date = strtotime( $saved_date );
 		$date_format = get_option( 'date_format', 'Y-m-d' );
 		$time_format = get_option( 'time_format', 'g:i a' );
@@ -278,9 +281,11 @@ if ( $activated ) {
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_flush_rewrite_rules() {
+		
 		add_rewrite_endpoint( 'points', EP_PAGES );
 		add_rewrite_endpoint( 'view-log', EP_PAGES );
 		flush_rewrite_rules();
+		
 	}
 } else {
 
