@@ -1004,5 +1004,18 @@ class Points_Rewards_For_WooCommerce_Admin {
 		return $valid_screens;
 	}
 
+	
+	public function mwb_wpr_org_add_lock_custom_fields_ids( $ids ) {
 
+		$ids[] = '_mwb_sfw_product';
+		$ids[] = 'mwb_sfw_subscription_number';
+		$ids[] = 'mwb_sfw_subscription_interval';
+		$ids[] = 'mwb_sfw_subscription_expiry_number';
+		$ids[] = 'mwb_sfw_subscription_expiry_interval';
+		$ids[] = 'mwb_sfw_subscription_initial_signup_price';
+		$ids[] = 'mwb_sfw_subscription_free_trial_number';
+		$ids[] = 'mwb_sfw_subscription_free_trial_interval';
+
+		return apply_filters( 'mwb_sfw_add_lock_fields_ids_pro', $ids );
+	}
 }
