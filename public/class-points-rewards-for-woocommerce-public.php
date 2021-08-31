@@ -253,7 +253,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$user = new WP_User( $user_ID );
 		$mwb_wpr_points_tab_text = $this->mwb_wpr_get_general_settings( 'mwb_wpr_points_tab_text' );
 		if ( empty( $mwb_wpr_points_tab_text ) ) {
-			$mwb_wpr_points_tab_text = __( 'Poin', 'points-and-rewards-for-woocommerce' );
+			$mwb_wpr_points_tab_text = __( 'Points', 'points-and-rewards-for-woocommerce' );
 		}
 
 		$logout = $items['customer-logout'];
