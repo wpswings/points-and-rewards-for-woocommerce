@@ -328,4 +328,94 @@ if ( $activated ) {
 		}
 
 	}
+	// Check if function exists.
+	if ( ! function_exists( 'mwb_par_points_per_pos_order_currency' ) ) {
+	function mwb_par_points_per_pos_order_currency( $user_id, $order_id, $new_status  ) {
+
+	  if( $new_status  == 'completed') {
+
+	
+						$order = wc_get_order( $order_id );
+						if( ! empty ( $order ) ) {
+							$order_total = $order->get_total();
+						}
+						
+		
+						/*Get*/
+						$item_conversion_id_set = get_post_meta( $order_id, "$order_id#item_conversion_id_pos", true );
+						if ( 'set' != $item_conversion_id_set ) {
+
+							$user_id = $order->get_user_id();
+							$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
+							/*total calculation of the points*/
+							$mwb_wpr_coupon_conversion_points = $this->mwb_wpr_get_coupon_settings_num_pos( 'mwb_wpr_coupon_conversion_points' );
+							$mwb_wpr_coupon_conversion_points = ( 0 == $mwb_wpr_coupon_conversion_points ) ? 1 : $mwb_wpr_coupon_conversion_points;
+							/*Get the value of the price*/
+							$mwb_wpr_coupon_conversion_price = $this->mwb_wpr_get_coupon_settings_num_pos( 'mwb_wpr_coupon_conversion_price' );
+							$mwb_wpr_coupon_conversion_price = ( 0 == $mwb_wpr_coupon_conversion_price ) ? 1 : $mwb_wpr_coupon_conversion_price;
+							/*Calculat points of the order*/
+
+							$points_calculation = ceil( ( $order_total * $mwb_wpr_coupon_conversion_points ) / $mwb_wpr_coupon_conversion_price );
+							$points_calculation  = apply_filters( 'mwb_round_down_cart_total_value', $points_calculation, $order_total, $mwb_wpr_coupon_conversion_points, $mwb_wpr_coupon_conversion_price );
+							/*Total Point of the order*/
+							$total_points = intval( $points_calculation + $get_points );
+
+							$data = array();
+							/*Update points details in woocommerce*/
+							$this->mwb_wpr_update_points_details_pos( $user_id, 'pro_conversion_points_through_pos', $points_calculation, $data );
+							/*update users totoal points*/
+							update_user_meta( $user_id, 'mwb_wpr_points', $total_points );
+							/*update that user has get the rewards points*/
+							update_post_meta( $order_id, "$order_id#item_conversion_id_pos", 'set' );
+
+							/*Prepare Array to send mail*/
+							return true;
+					}
+				} else {
+				return false;
+				}
+			}
+		}
+ function mwb_wpr_get_coupon_settings_num_pos( $id ) {
+	$mwb_wpr_value = 0;
+	$general_settings = get_option( 'mwb_wpr_coupons_gallery', true );
+	if ( ! empty( $general_settings[ $id ] ) ) {
+		$mwb_wpr_value = (int) $general_settings[ $id ];
+	}
+	return $mwb_wpr_value;
 }
+/**
+	 * Update points details in the public section.
+	 *
+	 * @name mwb_wpr_update_points_details
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @param int    $user_id  User id of the user.
+	 * @param string $type type of description.
+	 * @param int    $points  No. of points.
+	 * @param array  $data  Data of the points details.
+	 */
+	function mwb_wpr_update_points_details_pos( $user_id, $type, $points, $data ) {
+
+		$cart_subtotal_point_arr = get_user_meta( $user_id, 'points_details', true );
+		if ( isset( $cart_subtotal_point_arr[ $type ] ) && ! empty( $cart_subtotal_point_arr[ $type ] ) ) {
+			$cart_array = array(
+				$type => $points,
+				'date' => $today_date,
+			);
+			$cart_subtotal_point_arr[ $type ][] = $cart_array;
+		} else {
+			if ( ! is_array( $cart_subtotal_point_arr ) ) {
+				$cart_subtotal_point_arr = array();
+			}
+			$cart_array = array(
+				$type => $points,
+				'date' => $today_date,
+			);
+			$cart_subtotal_point_arr[ $type ][] = $cart_array;
+		}
+		/*Update the user meta for the points details*/
+		update_user_meta( $user_id, 'points_details', $cart_subtotal_point_arr );
+			}
+		}

@@ -849,7 +849,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param string $new_status  new status of the order.
 	 */
 	public function mwb_wpr_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
-
+//mypos
 		// check allowed user for points features.
 
 		if ( $old_status != $new_status ) {
@@ -1166,6 +1166,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 * @param array $cart  array of the cart.
 	 */
+	
 	public function mwb_wpr_woocommerce_cart_custom_points( $cart ) {
 		/*Get the current user id*/
 		$my_cart_change_return = 0;
@@ -1195,7 +1196,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 						$mwb_fee_on_cart = $subtotal;
 					}
-					 do_action( 'mwb_change_amount_cart', $mwb_fee_on_cart, $cart, $cart_discount );
+					  do_action( 'mwb_change_amount_cart', $mwb_fee_on_cart, $cart, $cart_discount );
 					  $cart->add_fee( $cart_discount, -$mwb_fee_on_cart, true, '' );
 				}
 			}

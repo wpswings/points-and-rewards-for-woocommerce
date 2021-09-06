@@ -252,7 +252,8 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'wcml_register_endpoints_query_vars', $plugin_public, 'mwb_wpr_wpml_register_endpoint', 10, 3 );
 			$this->loader->add_filter( 'wcml_endpoint_permalink_filter', $plugin_public, 'mwb_wpr_endpoint_permalink_filter', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_cart_contents_changed', $plugin_public, 'mwb_wpr_woocommerce_content_change' );
-
+//hook
+			// $this->loader->add_action( 'woocommerce_update_cart_action_cart_updated', $plugin_public, 'mwb_wpr_woocommerce_cart_custom_points', 20, 1 );
 		}
 	}
 

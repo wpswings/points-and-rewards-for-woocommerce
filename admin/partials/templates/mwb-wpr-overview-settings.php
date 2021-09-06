@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<li><?php esc_html_e( 'Engage customers by awarding points to shoppers on signup, referrals, and purchase', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Create membership programs for loyal customers to reward them with exclusive offers', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Set conversion rule to determine the value of each point', 'points-and-rewards-for-woocommerce' ); ?></li>
-				<li><?php esc_html_e( 'Allow points referral via social media platforms like Whatsapp, Instagram, email, Facebook, Twitter, etc.', 'points-and-rewards-for-woocommerce' ); ?></li>
+				<li><?php esc_html_e( 'Allow points referral via social media platforms like Whatsapp, email, Facebook, Twitter, etc.', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Track points transaction of each customer with point log report', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Update customers point manually from the points table.', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Email notification for customers point transactions', 'points-and-rewards-for-woocommerce' ); ?></li>
