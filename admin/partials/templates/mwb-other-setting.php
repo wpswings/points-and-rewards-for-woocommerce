@@ -35,7 +35,6 @@ $mwb_wpr_other_settings = array(
 		'desc_tip'  => __( 'Entered text will get displayed along with [MYCURRENTPOINT] shortcode', 'points-and-rewards-for-woocommerce' ),
 		'class' => 'text_points mwb_wpr_new_woo_ver_style_text',
 		'desc'  => __( 'Entered text will get displayed along with [MYCURRENTPOINT] shortcode', 'points-and-rewards-for-woocommerce' ),
-		'default'   => __( 'Your Current Point', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'id'    => 'mwb_wpr_shortcode_text_membership',
@@ -44,7 +43,7 @@ $mwb_wpr_other_settings = array(
 		'desc_tip'  => __( 'Entered text will get displayed along with [MYCURRENTUSERLEVEL] shortcode', 'points-and-rewards-for-woocommerce' ),
 		'class' => 'text_points mwb_wpr_new_woo_ver_style_text',
 		'desc'  => __( 'Entered text will get displayed along with [MYCURRENTUSERLEVEL] shortcode', 'points-and-rewards-for-woocommerce' ),
-		'default'   => __( 'Your Current Level', 'points-and-rewards-for-woocommerce' ),
+
 	),
 	array(
 		'type'  => 'sectionend',

@@ -39,12 +39,18 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) && isset( $_POST['mwb-wpr-no
 				$loop = new WP_Query( $args );
 				foreach ( $loop->posts as $key => $value ) {
 					$product = wc_get_product( $value->ID );
-					if ( $product->is_type( 'variable' ) && $product->has_child() ) {
+					if ( apply_filters( 'mwb_wpr_is_variable_product', false, $product ) ) {
+
 						$parent_id = $product->get_id();
 						$parent_product = wc_get_product( $parent_id );
 						foreach ( $parent_product->get_children() as $child_id ) {
+
+
+
 							update_post_meta( $parent_id, 'mwb_product_points_enable', 'yes' );
 							update_post_meta( $child_id, 'mwb_wpr_variable_points', $mwb_wpr_pro_points_to_all );
+
+
 						}
 					} else {
 						update_post_meta( $value->ID, 'mwb_product_points_enable', 'yes' );
@@ -87,8 +93,18 @@ if ( isset( $_POST['mwb_wpr_select_all_products'] ) && isset( $_POST['mwb-wpr-no
 			);
 			$loop = new WP_Query( $args );
 			foreach ( $loop->posts as $key => $value ) {
-				update_post_meta( $value->ID, 'mwb_product_points_enable', 'no' );
-				update_post_meta( $value->ID, 'mwb_points_product_value', '' );
+				$product = wc_get_product( $value->ID );
+				if ( $product->is_type( 'variable' ) && $product->has_child() ) {
+					$parent_id = $product->get_id();
+					$parent_product = wc_get_product( $parent_id );
+					foreach ( $parent_product->get_children() as $child_id ) {
+						update_post_meta( $parent_id, 'mwb_product_points_enable', 'no' );
+						update_post_meta( $child_id, 'mwb_wpr_variable_points', '' );
+					}
+				} else {
+					update_post_meta( $value->ID, 'mwb_product_points_enable', 'no' );
+					update_post_meta( $value->ID, 'mwb_points_product_value', '' );
+				}
 			}
 			wp_reset_query();
 			?>

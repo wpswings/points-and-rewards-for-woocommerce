@@ -191,7 +191,7 @@ class Points_Log_List_Table extends WP_List_Table {
 		$this->process_bulk_action();
 		$current_page = $this->get_pagenum();
 
-		$this->example_data = $this->get_users_points( $current_page, -1 );
+		$this->example_data = $this->get_users_points( $current_page, $per_page );
 		$data               = $this->example_data;
 
 		usort( $data, array( $this, 'mwb_wpr_usort_reorder' ) );
@@ -205,7 +205,7 @@ class Points_Log_List_Table extends WP_List_Table {
 				'total_pages' => ceil( $total_items / $per_page ),
 			)
 		);
-		$this->items = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
+
 	}
 
 	/**

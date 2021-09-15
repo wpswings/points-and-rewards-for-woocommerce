@@ -34,19 +34,22 @@ $mwb_wpr_coupon_settings = array(
 		'desc_tip'  => __( 'Enter the redeem price for points. (i.e. how much amounts will be equivalent to the points)', 'points-and-rewards-for-woocommerce' ),
 		'type'    => 'number_text',
 		'number_text' => array(
+
 			array(
-				'type'  => 'number',
+				'type'  => 'text',
 				'id'    => 'mwb_wpr_coupon_conversion_points',
 				'class'   => 'input-text wc_input_price mwb_wpr_new_woo_ver_style_text',
 				'custom_attributes' => array( 'min' => '"1"' ),
-				'desc' => __( 'Points =', 'points-and-rewards-for-woocommerce' ),
+				'desc' => __( ' = ', 'points-and-rewards-for-woocommerce' ),
+				
 			),
 			array(
-				'type'  => 'text',
+				'type'  => 'number',
 				'id'    => 'mwb_wpr_coupon_conversion_price',
 				'class'   => 'input-text mwb_wpr_new_woo_ver_style_text wc_input_price',
 				'default'  => '1',
 				'custom_attributes' => array( 'min' => '"1"' ),
+				'desc' => __( ' Points ', 'points-and-rewards-for-woocommerce' ),
 			),
 		),
 	),
@@ -115,6 +118,7 @@ endif;
 						$settings_obj->mwb_rwpr_generate_number_html( $value, $coupon_settings );
 					}
 					if ( 'text' == $value['type'] ) {
+						
 						$settings_obj->mwb_rwpr_generate_text_html( $value, $coupon_settings );
 					}
 					if ( 'textarea' == $value['type'] ) {
@@ -123,12 +127,14 @@ endif;
 					if ( 'number_text' == $value['type'] ) {
 						foreach ( $value['number_text'] as $k => $val ) {
 							if ( 'text' == $val['type'] ) {
+								echo esc_html( get_woocommerce_currency_symbol() );
 								$settings_obj->mwb_rwpr_generate_text_html( $val, $coupon_settings );
 
 							}
 							if ( 'number' == $val['type'] ) {
+								
 								$settings_obj->mwb_rwpr_generate_number_html( $val, $coupon_settings );
-								echo esc_html( get_woocommerce_currency_symbol() );
+
 							}
 						}
 					}

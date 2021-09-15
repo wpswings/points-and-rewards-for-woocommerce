@@ -81,7 +81,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
-			
+
 			if ( isset( $_GET['page'] ) && 'mwb-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
 				wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
@@ -163,10 +163,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'pro_link'       => 'https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org',
 					'success_update'     => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
 					'support_confirm'     => __( 'Email sent successfully', 'points-and-rewards-for-woocommerce' ),
-					'negative'			=>  __('Negative Values Not Allowed', 'points-and-rewards-for-woocommerce'),
+					'negative'          => __( 'Negative Values Not Allowed', 'points-and-rewards-for-woocommerce' ),
 				);
 
-		
 				wp_enqueue_script( $this->plugin_name . 'admin-js', MWB_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
 				wp_localize_script( $this->plugin_name . 'admin-js', 'mwb_wpr_object', $mwb_wpr );
 
@@ -282,6 +281,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public static function mwb_wpr_update_points_details( $user_id, $type, $points, $data ) {
+
 		/* Get the points of the points details*/
 		$today_date = date_i18n( 'Y-m-d h:i:sa' );
 		$admin_points = get_user_meta( $user_id, 'points_details', true );
@@ -753,13 +753,51 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param array $thankyouorder_value array of the points value.
 	 */
 	public function mwb_wpr_add_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value ) {
+
 		if ( isset( $thankyouorder_min ) && null != $thankyouorder_min && isset( $thankyouorder_max ) && null != $thankyouorder_max && isset( $thankyouorder_value ) && null != $thankyouorder_value ) {
 			$mwb_wpr_no = 1;
 			if ( count( $thankyouorder_min ) == count( $thankyouorder_max ) && count( $thankyouorder_max ) == count( $thankyouorder_value ) ) {
+				?>
+				<table class="form-table wp-list-table widefat fixed striped">
+					<thead> 
+						<tr valign="top">
+							<th><?php esc_html_e( 'Minimum', 'points-and-rewards-for-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
+
+							<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
+							
+							<?php if ( count( $thankyouorder_min ) > 1 ) { ?>
+							<th class="mwb_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'points-and-rewards-for-woocommerce' ); ?></th>
+							<?php } ?>
+							
+						</tr>
+					</thead>
+					<tbody  class="mwb_wpr_thankyouorder_tbody">
+				<?php
 				$this->mwb_wpr_add_rule_for_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value, '0' );
+				?>
+					</tbody>
+				</table>
+				<?php
 			}
 		} else {
+			?>
+			<table class="form-table wp-list-table widefat fixed striped">
+				<thead> 
+					<tr valign="top">
+						<th><?php esc_html_e( 'Minimum', 'points-and-rewards-for-woocommerce' ); ?></th>
+						<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
+						<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
+		
+					</tr>
+				</thead>
+			<tbody  class="mwb_wpr_thankyouorder_tbody">
+			<?php
 			$this->mwb_wpr_add_rule_for_order_total_points( array(), array(), array(), '' );
+			?>
+			</tbody>
+			</table>
+			<?php
 		}
 	}
 
@@ -777,17 +815,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function mwb_wpr_add_rule_for_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value, $key ) {
 		?>
-		<table class="form-table wp-list-table widefat fixed striped">
-			<tbody class="mwb_wpr_thankyouorder_tbody"> 
-				<tr valign="top">
-					<th><?php esc_html_e( 'Minimum', 'points-and-rewards-for-woocommerce' ); ?></th>
-					<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
-
-					<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
-					<?php if ( ! empty( $key ) ) : ?> 
-					<th class="mwb_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'points-and-rewards-for-woocommerce' ); ?></th>
-					<?php endif; ?>
-				</tr>
+			
 				<tr valign="top">
 					<td class="forminp forminp-text">
 						<label for="mwb_wpr_thankyouorder_minimum">
@@ -810,74 +838,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 						</td>
 					<?php endif; ?>
 				</tr>
-			</tbody>
-		</table>
+		
 		<?php
 	}
 
-	/**
-	 * Show plugin changes from upgrade notice
-	 *
-	 * @since 1.0.7
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 * @param  string $args Holds the arguments.
-	 * @param  string $response Holds the response.
-	 */
-	public function mwb_wpr_in_plugin_update_message( $args, $response ) {
-		$transient_name = 'points_and_rewards_for_wooCommerce_upgrade_notice_' . $args['Version'];
-		$upgrade_notice = get_transient( $transient_name );
-		if ( ! $upgrade_notice ) {
-			$response = wp_safe_remote_get( 'https://plugins.svn.wordpress.org/points-and-rewards-for-woocommerce/trunk/README.txt' );
-			if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
-				$upgrade_notice = $this->parse_update_notice( $response['body'], $args['new_version'] );
-				set_transient( $transient_name, $upgrade_notice, DAY_IN_SECONDS );
-			}
-		}
-		echo wp_kses_post( $upgrade_notice );
-	}
-	/**
-	 * Parse upgrade notice from readme.txt file.
-	 *
-	 * @since 1.0.7
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
-	 * @param  string $content Holds the content.
-	 * @param  string $new_version Holds the new version.
-	 * @return string
-	 */
-	public function parse_update_notice( $content, $new_version ) {
-		// Output Upgrade Notice.
-		$matches        = null;
-		$regexp         = '~==\s*Upgrade Notice\s*==\s*=\s*(.*)\s*=(.*)(=\s*' . preg_quote( $this->version ) . '\s*=|$)~Uis';
-		$upgrade_notice = '';
-
-		if ( preg_match( $regexp, $content, $matches ) ) {
-			$notices = (array) preg_split( '~[\r\n]+~', trim( $matches[2] ) );
-			// Convert the full version strings to minor versions.
-			$notice_version_parts  = explode( '.', trim( $matches[1] ) );
-			$current_version_parts = explode( '.', $this->version );
-
-			if ( 3 !== count( $notice_version_parts ) ) {
-				return;
-			}
-			$notice_version_sub_parts  = explode( '-', trim( $notice_version_parts[2] ) );
-			$notice_version  = $notice_version_parts[0] . '.' . $notice_version_parts[1] . '.' . $notice_version_sub_parts[0];
-			$current_version = $current_version_parts[0] . '.' . $current_version_parts[1] . '.' . $current_version_parts[2];
-
-			// Check the latest stable version and ignore trunk.
-			if ( version_compare( $current_version, $notice_version, '<' ) ) {
-
-				$upgrade_notice .= '</p><p class="wpr-plugin-upgrade-notice" style="padding: 14px 10px !important;background: #1a4251 !important;color: #fff !important;">';
-
-				foreach ( $notices as $index => $line ) {
-					$upgrade_notice .= preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
-				}
-			}
-		}
-
-		return wp_kses_post( $upgrade_notice );
-	}
 
 	/**
 	 * This function is used to set cron if user want to get support.
@@ -940,7 +904,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 		);
 		if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
-			echo '<p><strong>' . 'Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+			/* translators: %s: for error message */
+			echo '<p><strong>' . sprintf( esc_html__( ' Something went wrong: %s ', 'subscriptions-for-woocommerce' ), esc_html( stripslashes( $error_message ) ) ) . '</strong></p>';
 		} else {
 			$mwb_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
 		}
@@ -1039,5 +1004,18 @@ class Points_Rewards_For_WooCommerce_Admin {
 		return $valid_screens;
 	}
 
+	
+	public function mwb_wpr_org_add_lock_custom_fields_ids( $ids ) {
 
+		$ids[] = '_mwb_sfw_product';
+		$ids[] = 'mwb_sfw_subscription_number';
+		$ids[] = 'mwb_sfw_subscription_interval';
+		$ids[] = 'mwb_sfw_subscription_expiry_number';
+		$ids[] = 'mwb_sfw_subscription_expiry_interval';
+		$ids[] = 'mwb_sfw_subscription_initial_signup_price';
+		$ids[] = 'mwb_sfw_subscription_free_trial_number';
+		$ids[] = 'mwb_sfw_subscription_free_trial_interval';
+
+		return apply_filters( 'mwb_sfw_add_lock_fields_ids_pro', $ids );
+	}
 }

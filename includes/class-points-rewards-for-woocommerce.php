@@ -183,8 +183,6 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_select_category', $plugin_admin, 'mwb_wpr_select_category' );
 		$this->loader->add_action( 'admin_head', $plugin_admin, 'mwb_wpr_add_membership_rule' );
 
-		/*Update_Notice on plugin dashboard*/
-		$this->loader->add_action( 'in_plugin_update_message-points-and-rewards-for-woocommerce/points-rewards-for-woocommerce.php', $plugin_admin, 'mwb_wpr_in_plugin_update_message', 10, 2 );
 		/*cron for notification*/
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_wpr_check_for_notification_daily' );
 		$this->loader->add_action( 'mwb_wpr_check_for_notification_update', $plugin_admin, 'mwb_wpr_save_notice_message' );
@@ -254,7 +252,6 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'wcml_register_endpoints_query_vars', $plugin_public, 'mwb_wpr_wpml_register_endpoint', 10, 3 );
 			$this->loader->add_filter( 'wcml_endpoint_permalink_filter', $plugin_public, 'mwb_wpr_endpoint_permalink_filter', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_cart_contents_changed', $plugin_public, 'mwb_wpr_woocommerce_content_change' );
-
 		}
 	}
 
