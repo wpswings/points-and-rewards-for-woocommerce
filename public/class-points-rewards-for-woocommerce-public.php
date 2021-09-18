@@ -1178,7 +1178,8 @@ class Points_Rewards_For_WooCommerce_Public {
 				$user_id = get_current_user_ID();
 				/*Check is custom points on cart is enable*/
 				$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
-			if ( isset( $user_id ) && ! empty( $user_id ) && 1 == $mwb_wpr_custom_points_on_cart ) {
+				$mwb_wpr_custom_points_on_checkout = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_apply_points_checkout' );
+			if ( isset( $user_id ) && ! empty( $user_id ) && ( 1 == $mwb_wpr_custom_points_on_cart || 1 == $mwb_wpr_custom_points_on_checkout ) ) {
 				/*Get the cart point rate*/
 				$mwb_wpr_cart_points_rate = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_points_rate' );
 				$mwb_wpr_cart_points_rate = ( 0 == $mwb_wpr_cart_points_rate ) ? 1 : $mwb_wpr_cart_points_rate;
@@ -1217,6 +1218,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			return;
 		}
 		/*Check is custom points on cart is enable*/
+		$mwb_wpr_custom_points_on_checkout = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_apply_points_checkout' );
 		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
 		/*Get the Notification*/
 		$mwb_wpr_notification_color = $this->mwb_wpr_get_other_settings( 'mwb_wpr_notification_color' );
@@ -1229,14 +1231,14 @@ class Points_Rewards_For_WooCommerce_Public {
 		$mwb_wpr_cart_price_rate = ( 0 == $mwb_wpr_cart_price_rate ) ? 1 : $mwb_wpr_cart_price_rate;
 		/*Get current user id*/
 		$user_id = get_current_user_ID();
-		if ( 1 == $mwb_wpr_custom_points_on_cart && isset( $user_id ) && ! empty( $user_id ) ) {
+		if ( ( 1 == $mwb_wpr_custom_points_on_cart || 1 === $mwb_wpr_custom_points_on_checkout ) && isset( $user_id ) && ! empty( $user_id ) ) {
 			?>
 			<div class="woocommerce-message"><?php esc_html_e( 'Here is the Discount Rule for Applying your Points to Cart Total', 'points-and-rewards-for-woocommerce' ); ?>
 				<ul>
 					<li>
 					<?php
 					$allowed_tags = $this->mwb_wpr_allowed_html();
-					echo wp_kses( wc_price( $mwb_wpr_cart_price_rate ), $allowed_tags ) . ' = ' . esc_html( $mwb_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' );
+					echo  esc_html( $mwb_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ). ' = ' .wp_kses( wc_price( $mwb_wpr_cart_price_rate ), $allowed_tags );
 					?>
 					</li>
 				</ul>
@@ -1360,7 +1362,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$mwb_wpr_custom_points_on_checkout = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_apply_points_checkout' );
 		$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
 
-		if ( 1 == $mwb_wpr_custom_points_on_checkout && 1 == $mwb_wpr_custom_points_on_cart ) {
+		if ( 1 == $mwb_wpr_custom_points_on_checkout ) {
 			if ( 'checkout/form-coupon.php' == $template_name ) {
 				return MWB_RWPR_DIR_PATH . 'public/woocommerce/checkout/form-coupon.php';
 			}

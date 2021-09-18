@@ -196,19 +196,6 @@ $mwb_wpr_general_settings = array(
 		'title' => __( 'Conversion rate for Cart Sub-Total Redemption', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'number_text',
 		'number_text' => array(
-			
-			array(
-				'type'  => 'text',
-				'id'    => 'mwb_wpr_cart_price_rate',
-				'class'   => 'input-text mwb_wpr_new_woo_ver_style_text wc_input_price',
-				'custom_attributes' => array( 'min' => '"1"' ),
-				'desc_tip' => __(
-					'Entered point will assign to that user by which another user referred from referral link and purchase some products.',
-					'points-and-rewards-for-woocommerce'
-				),
-				'desc' => __(' = ', 'points-and-rewards-for-woocommerce'),
-				'default' => '1',
-			),
 			array(
 				'type'  => 'number',
 				'id'    => 'mwb_wpr_cart_points_rate',
@@ -218,7 +205,18 @@ $mwb_wpr_general_settings = array(
 					'Entered point will assign to that user by which another user referred from referral link and purchase some products.',
 					'points-and-rewards-for-woocommerce'
 				),
-				'desc' => __(' Points ', 'points-and-rewards-for-woocommerce'),
+				'desc' => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),
+			),
+			array(
+				'type'  => 'text',
+				'id'    => 'mwb_wpr_cart_price_rate',
+				'class'   => 'input-text mwb_wpr_new_woo_ver_style_text wc_input_price',
+				'custom_attributes' => array( 'min' => '"1"' ),
+				'desc_tip' => __(
+					'Entered point will assign to that user by which another user referred from referral link and purchase some products.',
+					'points-and-rewards-for-woocommerce'
+				),
+				'default' => '1',
 			),
 		),
 	),
