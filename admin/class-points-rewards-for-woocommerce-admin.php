@@ -67,6 +67,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			wp_enqueue_style( $this->plugin_name, MWB_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'select2' );
 		}
+		wp_enqueue_style( 'mwb_admin_overview', MWB_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin-overview.css', array(), $this->version, 'all' );
 	}
 
 	/**
