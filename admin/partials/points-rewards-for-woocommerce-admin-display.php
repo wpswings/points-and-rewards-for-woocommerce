@@ -100,7 +100,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 		</ul>
 	</div>
 </div>
-<?php do_action( 'mwb_wpr_add_notice' ); ?>
+<?php //do_action( 'mwb_wpr_add_notice' ); ?>
 <?php wp_nonce_field( 'mwb-wpr-nonce', 'mwb-wpr-nonce' ); ?>
 <div class="mwb_rwpr_main_template">
 	<div class="mwb_rwpr_body_template">

@@ -48,7 +48,7 @@ if ( isset( $_POST['mwb_wpr_save_membership'] ) && isset( $_POST['mwb-wpr-nonce'
 			if ( isset( $mwb_wpr_no_of_section ) ) {
 				$count = $mwb_wpr_no_of_section;
 				$mwb_wpr_membersip_roles = isset( $_POST[ 'mwb_wpr_membership_level_name_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_level_name_' . $count ] ) ) : '';
-				$mwb_wpr_membersip_roles = preg_replace( '/\s+/', '', $mwb_wpr_membersip_roles );
+				// $mwb_wpr_membersip_roles = preg_replace( '/\s+/', '', $mwb_wpr_membersip_roles );
 				$mwb_wpr_membersip_points = isset( $_POST[ 'mwb_wpr_membership_level_value_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_wpr_membership_level_value_' . $count ] ) ) : '';
 				$mwb_wpr_categ_list = ( isset( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ) ) ? map_deep( wp_unslash( $_POST[ 'mwb_wpr_membership_category_list_' . $count ] ), 'sanitize_text_field' ) : '';
 				$mwb_wpr_prod_list = ( isset( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) && ! empty( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ) ) ? map_deep( wp_unslash( $_POST[ 'mwb_wpr_membership_product_list_' . $count ] ), 'sanitize_text_field' ) : '';
