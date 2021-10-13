@@ -95,6 +95,7 @@ if ( isset( $_POST['mwb_wpr_save_othersetting'] ) && isset( $_POST['mwb-wpr-nonc
 /* Get Saved settings*/
 $other_settings = get_option( 'mwb_wpr_other_settings', array() );
 ?>
+<?php do_action( 'mwb_wpr_add_notice' ); ?>
 <div class="mwb_wpr_table">
 		<div class="mwb_wpr_general_wrapper">
 				<?php

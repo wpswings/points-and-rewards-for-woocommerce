@@ -294,6 +294,7 @@ if ( ! is_array( $mwb_wpr_notification_settings ) ) :
 	$mwb_wpr_notification_settings = array();
 endif;
 ?>
+<?php do_action( 'mwb_wpr_add_notice' ); ?>
 <div class="mwb_wpr_table">
 	<div class="mwb_wpr_general_wrapper">
 <?php

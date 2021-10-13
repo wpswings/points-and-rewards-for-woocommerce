@@ -299,7 +299,7 @@ input#s2id_autogen1 {
   overflow: hidden;
 }
 span.select2.select2-container.select2-container--default {
-    width: 100% !important;
+    /* width: 100% !important; */
 }
 input.select2-search__field {
     width: 100% !important;

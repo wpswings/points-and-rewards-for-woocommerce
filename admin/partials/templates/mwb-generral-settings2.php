@@ -266,6 +266,7 @@ if ( isset( $_POST['mwb_wpr_save_general'] ) && isset( $_POST['mwb-wpr-nonce'] )
 		$general_settings = array();
 endif;
 	?>
+	<?php do_action( 'mwb_wpr_add_notice' ); ?>
 	<div class="mwb_wpr_table">
 		<div class="mwb_wpr_general_wrapper">
 				<?php

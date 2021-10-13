@@ -94,6 +94,7 @@ if ( ! is_array( $coupon_settings ) ) :
 	$coupon_settings = array();
 endif;
 ?>
+<?php do_action( 'mwb_wpr_add_notice' ); ?>
 <div class="mwb_wpr_table">
 		<div class="mwb_wpr_general_wrapper">
 		<?php

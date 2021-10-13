@@ -83,6 +83,7 @@ if ( isset( $_POST['mwb_wpr_save_order_totalsettings'] ) && isset( $_POST['mwb-w
 
 	$mwb_wpr_order_total_points_settings = apply_filters( 'mwb_wpr_order_total_points_settings', $mwb_wpr_order_total_points_settings );
 ?>
+<?php do_action( 'mwb_wpr_add_notice' ); ?>
 <div class="mwb_wpr_wrap_table">
 	<table class="form-table mwb_wpr_general_setting mwp_wpr_settings">
 	<input type="hidden" id="mwb_order_ttol" value = 1 />

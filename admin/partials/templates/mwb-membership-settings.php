@@ -130,6 +130,7 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 	);
 
 	?>
+		<?php do_action( 'mwb_wpr_add_notice' ); ?>
 		<div class="mwb_wpr_wrap_table">
 			<table class="form-table mwb_wpr_membership_setting mwp_wpr_settings">
 				<tbody>
