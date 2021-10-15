@@ -849,7 +849,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param string $new_status  new status of the order.
 	 */
 	public function mwb_wpr_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
-//mypos
+		// mypos
 		// check allowed user for points features.
 
 		if ( $old_status != $new_status ) {
@@ -1083,22 +1083,22 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function mwb_wpr_woocommerce_cart_coupon() {
 			// check allowed user for points features.
-			if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
-				return;
-			}
+		if ( apply_filters( 'mwb_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
 			/*Get the value of the custom points*/
 			$mwb_wpr_custom_points_on_cart = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_custom_points_on_cart' );
-			if ( 1 == $mwb_wpr_custom_points_on_cart ) {
-				$user_id = get_current_user_ID();
-				$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
-				$get_min_redeem_req = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_apply_points_value' );
-				if ( empty( $get_points ) ) {
-					$get_points = 0;
-				}
-				if ( isset( $user_id ) && ! empty( $user_id ) ) {
-					$mwb_wpr_order_points = apply_filters( 'mwb_wpr_enable_points_on_order_total', false );
-					if ( $mwb_wpr_order_points ) {
-						do_action( 'mwb_wpr_points_on_order_total', $get_points, $user_id );
+		if ( 1 == $mwb_wpr_custom_points_on_cart ) {
+			$user_id = get_current_user_ID();
+			$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
+			$get_min_redeem_req = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_apply_points_value' );
+			if ( empty( $get_points ) ) {
+				$get_points = 0;
+			}
+			if ( isset( $user_id ) && ! empty( $user_id ) ) {
+				$mwb_wpr_order_points = apply_filters( 'mwb_wpr_enable_points_on_order_total', false );
+				if ( $mwb_wpr_order_points ) {
+					do_action( 'mwb_wpr_points_on_order_total', $get_points, $user_id );
 				} else {
 					?>
 						<?php
@@ -1166,7 +1166,6 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 * @param array $cart  array of the cart.
 	 */
-	
 	public function mwb_wpr_woocommerce_cart_custom_points( $cart ) {
 		/*Get the current user id*/
 		$my_cart_change_return = 0;
@@ -1238,7 +1237,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					<li>
 					<?php
 					$allowed_tags = $this->mwb_wpr_allowed_html();
-					echo  esc_html( $mwb_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ). ' = ' .wp_kses( wc_price( $mwb_wpr_cart_price_rate ), $allowed_tags );
+					echo esc_html( $mwb_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( $mwb_wpr_cart_price_rate ), $allowed_tags );
 					?>
 					</li>
 				</ul>
@@ -1262,7 +1261,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				<?php
 				esc_html_e( 'Conversion Rate: ', 'points-and-rewards-for-woocommerce' );
 				$allowed_tags = $this->mwb_wpr_allowed_html();
-				echo  wc_price( $order_conversion_rate['Points'] ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wc_price( $order_conversion_rate['Points'] ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				 esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				</p>
@@ -2040,7 +2039,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							if ( '0' == $global_enable['mwb_wpr_global_product_enable'] && 'no' == $check_enable ) {
 								unset( $cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] );
 							}
-					}
+						}
 						if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 
 							unset( $cart_contents[ $key ]['product_meta']['meta_data']['mwb_wpm_points'] );

@@ -28,9 +28,14 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * This is variable which is used for the store all the data.
 	 *
 	 * @var array $example_data variable for store data.
-	 * @var array $mwb_total_count variable for store data.
 	 */
 	public $example_data;
+
+	/**
+	 * This is variable which is used for the store all the data.
+	 *
+	 * @var array $mwb_total_counta variable for store data.
+	 */
 	public $mwb_total_count;
 
 

@@ -236,12 +236,12 @@ if ( $activated ) {
 	 * This function is used to return the date format as per WP settings
 	 *
 	 * @name mwb_wpr_set_the_wordpress_date_format
-	 * @param string $saved_date saved data in the wordpress formet.
+	 * @param string $saved_date saved data in the WordPress formet.
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_set_the_wordpress_date_format( $saved_date ) {
-		if( get_locale() == 'zh_TW' ) {
+		if ( get_locale() == 'zh_TW' ) {
 			return $saved_date;
 		}
 		$saved_date = strtotime( $saved_date );
@@ -281,11 +281,11 @@ if ( $activated ) {
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_flush_rewrite_rules() {
-		
+
 		add_rewrite_endpoint( 'points', EP_PAGES );
 		add_rewrite_endpoint( 'view-log', EP_PAGES );
 		flush_rewrite_rules();
-		
+
 	}
 } else {
 
@@ -330,61 +330,78 @@ if ( $activated ) {
 	}
 	// Check if function exists.
 	if ( ! function_exists( 'mwb_par_points_per_pos_order_currency' ) ) {
-	function mwb_par_points_per_pos_order_currency( $user_id, $order_id, $new_status  ) {
+		/**
+		 * This function is used to return order status settings
+		 *
+		 * @name mwb_par_points_per_pos_order_currency().
+		 * @param int    $user_id user id.
+		 * @param int    $order_id order id.
+		 * @param string $new_status order status.
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
+		 */
+		function mwb_par_points_per_pos_order_currency( $user_id, $order_id, $new_status ) {
 
-	  if( $new_status  == 'completed') {
+			if ( 'completed' == $new_status ) {
 
-	
 						$order = wc_get_order( $order_id );
-						if( ! empty ( $order ) ) {
-							$order_total = $order->get_total();
-						}
-						
-		
+				if ( ! empty( $order ) ) {
+					$order_total = $order->get_total();
+				}
+
 						/*Get*/
 						$item_conversion_id_set = get_post_meta( $order_id, "$order_id#item_conversion_id_pos", true );
-						if ( 'set' != $item_conversion_id_set ) {
+				if ( 'set' != $item_conversion_id_set ) {
 
-							$user_id = $order->get_user_id();
-							$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
-							/*total calculation of the points*/
-							$mwb_wpr_coupon_conversion_points = $this->mwb_wpr_get_coupon_settings_num_pos( 'mwb_wpr_coupon_conversion_points' );
-							$mwb_wpr_coupon_conversion_points = ( 0 == $mwb_wpr_coupon_conversion_points ) ? 1 : $mwb_wpr_coupon_conversion_points;
-							/*Get the value of the price*/
-							$mwb_wpr_coupon_conversion_price = $this->mwb_wpr_get_coupon_settings_num_pos( 'mwb_wpr_coupon_conversion_price' );
-							$mwb_wpr_coupon_conversion_price = ( 0 == $mwb_wpr_coupon_conversion_price ) ? 1 : $mwb_wpr_coupon_conversion_price;
-							/*Calculat points of the order*/
+					$user_id = $order->get_user_id();
+					$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
+					/*total calculation of the points*/
+					$mwb_wpr_coupon_conversion_points = $this->mwb_wpr_get_coupon_settings_num_pos( 'mwb_wpr_coupon_conversion_points' );
+					$mwb_wpr_coupon_conversion_points = ( 0 == $mwb_wpr_coupon_conversion_points ) ? 1 : $mwb_wpr_coupon_conversion_points;
+					/*Get the value of the price*/
+					$mwb_wpr_coupon_conversion_price = $this->mwb_wpr_get_coupon_settings_num_pos( 'mwb_wpr_coupon_conversion_price' );
+					$mwb_wpr_coupon_conversion_price = ( 0 == $mwb_wpr_coupon_conversion_price ) ? 1 : $mwb_wpr_coupon_conversion_price;
+					/*Calculat points of the order*/
 
-							$points_calculation = ceil( ( $order_total * $mwb_wpr_coupon_conversion_points ) / $mwb_wpr_coupon_conversion_price );
-							$points_calculation  = apply_filters( 'mwb_round_down_cart_total_value', $points_calculation, $order_total, $mwb_wpr_coupon_conversion_points, $mwb_wpr_coupon_conversion_price );
-							/*Total Point of the order*/
-							$total_points = intval( $points_calculation + $get_points );
+					$points_calculation = ceil( ( $order_total * $mwb_wpr_coupon_conversion_points ) / $mwb_wpr_coupon_conversion_price );
+					$points_calculation  = apply_filters( 'mwb_round_down_cart_total_value', $points_calculation, $order_total, $mwb_wpr_coupon_conversion_points, $mwb_wpr_coupon_conversion_price );
+					/*Total Point of the order*/
+					$total_points = intval( $points_calculation + $get_points );
 
-							$data = array();
-							/*Update points details in woocommerce*/
-							$this->mwb_wpr_update_points_details_pos( $user_id, 'pro_conversion_points_through_pos', $points_calculation, $data );
-							/*update users totoal points*/
-							update_user_meta( $user_id, 'mwb_wpr_points', $total_points );
-							/*update that user has get the rewards points*/
-							update_post_meta( $order_id, "$order_id#item_conversion_id_pos", 'set' );
+					$data = array();
+					/*Update points details in woocommerce*/
+					$this->mwb_wpr_update_points_details_pos( $user_id, 'pro_conversion_points_through_pos', $points_calculation, $data );
+					/*update users totoal points*/
+					update_user_meta( $user_id, 'mwb_wpr_points', $total_points );
+					/*update that user has get the rewards points*/
+					update_post_meta( $order_id, "$order_id#item_conversion_id_pos", 'set' );
 
-							/*Prepare Array to send mail*/
-							return true;
-					}
-				} else {
-				return false;
+					/*Prepare Array to send mail*/
+					return true;
 				}
+			} else {
+				return false;
 			}
 		}
- function mwb_wpr_get_coupon_settings_num_pos( $id ) {
-	$mwb_wpr_value = 0;
-	$general_settings = get_option( 'mwb_wpr_coupons_gallery', true );
-	if ( ! empty( $general_settings[ $id ] ) ) {
-		$mwb_wpr_value = (int) $general_settings[ $id ];
 	}
-	return $mwb_wpr_value;
-}
-/**
+
+	/**
+	 * This function is coupon settings.
+	 *
+	 * @name mwb_wpr_get_coupon_settings_num_pos().
+	 * @param int $id id of the coupon.
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	function mwb_wpr_get_coupon_settings_num_pos( $id ) {
+		$mwb_wpr_value = 0;
+		$general_settings = get_option( 'mwb_wpr_coupons_gallery', true );
+		if ( ! empty( $general_settings[ $id ] ) ) {
+			$mwb_wpr_value = (int) $general_settings[ $id ];
+		}
+		return $mwb_wpr_value;
+	}
+	/**
 	 * Update points details in the public section.
 	 *
 	 * @name mwb_wpr_update_points_details
@@ -417,5 +434,5 @@ if ( $activated ) {
 		}
 		/*Update the user meta for the points details*/
 		update_user_meta( $user_id, 'points_details', $cart_subtotal_point_arr );
-			}
-		}
+	}
+}

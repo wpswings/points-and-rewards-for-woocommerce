@@ -906,7 +906,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
 			/* translators: %s: for error message */
-			echo '<p><strong>' . sprintf( esc_html__( ' Something went wrong: %s ', 'subscriptions-for-woocommerce' ), esc_html( stripslashes( $error_message ) ) ) . '</strong></p>';
+			echo '<p><strong>' . sprintf( esc_html__( ' Something went wrong: %s ', 'points-and-rewards-for-woocommerce' ), esc_html( stripslashes( $error_message ) ) ) . '</strong></p>';
 		} else {
 			$mwb_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
 		}
@@ -1005,7 +1005,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 		return $valid_screens;
 	}
 
-	
+	/**
+	 * Get all custom field.
+	 *
+	 * @param  array $ids valid data.
+	 * @since    1.0.7
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
 	public function mwb_wpr_org_add_lock_custom_fields_ids( $ids ) {
 
 		$ids[] = '_mwb_sfw_product';
