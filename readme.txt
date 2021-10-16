@@ -1,12 +1,12 @@
-=== Points and Rewards for WooCommerce ===
+=== Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, Referral Points & Redemptions   ===
 Contributors: MakeWebBetter
 Donate link: https://makewebbetter.com/
 Tags: points, rewards, points and rewards, loyalty, loyalty program, woocommerce points and rewards
 Requires at least: 5.0.0
-Tested up to: 5.7
+Tested up to: 5.8.1
 WC requires at least: 4.0
-WC tested up to: 5.4
-Stable tag: 1.1.4
+WC tested up to: 5.7.1
+Stable tag: 2.0.0
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -15,9 +15,9 @@ Points and Rewards for WooCommerce offers reward points to your customers for th
 
 == Description ==
 
-**TOP-RATED POINTS AND REWARDS SYSTEM FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS**
+**TOP-RATED POINTS AND REWARDS SYSTEM FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS. REWARD CUSTOMERS FOR PURCHASES AND CREATE  WOOCOMMERCE LOYALTY PROGRAMS TO REWARD REFERRAL POINTS, SIGN UP POINTS ETC. ALLOW REDEEMING POINTS, POINTS LOG REPORT FOR ADMIN AND USER AND BUILD MEMBERSHIP WITH PROPER EMAIL NOTIFICATIONS**
 
-Points and Rewards for WooCommerce is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem these points to buy products at your store or participate in your membership program with the WordPress loyalty points plugin. With the reward program at your WooCommerce Store, you can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope.
+Points and Rewards for WooCommerce is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem these points to buy products at your store or participate in your membership program with the WordPress loyalty points plugin. With the [**Points and rewards program**](https://makewebbetter.com/blog/points-reward-system-woocommerce/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) at your WooCommerce Store, you can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope.
 
 [youtube https://www.youtube.com/watch?v=WWktrnAI88U&t=333s&w=560&h=315&rel=0]
 
@@ -32,6 +32,9 @@ Points and Rewards for WooCommerce is a points management plugin that engages cu
 * Assign a similar point value to all simple products with global point assign feature
 * Offer a specific number of points for a set price range of the order value
 
+PLUGIN MEETS YOUR REQUIREMENT, SO
+
+[**Download Now!!**](https://downloads.wordpress.org/plugin/points-and-rewards-for-woocommerce.zip)
 
 
 == WHAT’S INCLUDED IN OUR FREE POINTS AND REWARDS FOR WOOCOMMERCE PLUGIN == 
@@ -85,7 +88,8 @@ Check out [**Points and Rewards plugin knowledge base**](https://support.makeweb
 * Points On Referral Order Total
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE LOYALTY POINTS AND REWARDS PLUGIN ==
-Points and Rewards for WooCommerce help merchants create a points-based loyalty program to reward customers.
+Points and Rewards for WooCommerce help merchants create a points-based loyalty program to reward customers. This reward system involves earning and redeeming store credits as points and discount coupons on activities performed by the customers.
+
 > Note:  Get [**Points and Rewards for WooCommerce Pro**](https://makewebbetter.com/product/woocommerce-points-and-rewards/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
 
@@ -98,6 +102,8 @@ Points and Rewards for WooCommerce help merchants create a points-based loyalty 
 
 == SUPPORT ==
 If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
+
+> If our documentation doesn’t contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) with your question.
 
 
 == Installation ==
@@ -120,7 +126,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 4. **Customized Text** - Admin can modify/add the text according to the need. It will get display on the My Account > Points page
 5. **Redeem Points On Cart Page** - Customer can redeem their points on the cart page and get the discount
 6. **Redeem Points On Checkout Page** - Customer can also redeem their points on the cart page
-7. **Earn Points Per Currency Setting** - Allow customer to earn on every currency spent
+7. **Earn Points Per Currency Setting** - Allow customers to earn on every currency spent
 8. **Points Table** - Admin can Add/Subtract/View customers points from here
 9. **Membership Setting** - Add membership level and provide a discount on membership
 10. **Upgrade User Level** - Customers can upgrade their membership and get the benefits.
@@ -178,6 +184,13 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
+= 2.0.0 - Released on 16 October 2021 =
+* Fixed: Designing Fixes
+* Fixed: Assigned Points not consistent with quantity on cart
+* Fixed: Translation issue
+* New: Latest WPML compatibility
+* New: Compatibility with WC 5.7.1 and WP 5.8.1
+
 = 1.1.4 - Released on 28 June 2021 =
 * Tweak: QA standards
 
@@ -194,7 +207,7 @@ Customers can see their points balance in the Points tab under the Account secti
 = 1.1.0 - Released on 15 April 2021 =
 * Fix: Minor issues
 * Fix: Product assigned point
-* Fix: Shorting issue in Points Table
+* Fix: Sorting issue in Points Table
 * New: Compatibility with WooCommerce 5.2 and WordPress 5.7
 
 = 1.0.11 - Released on 17 December 2020 =
@@ -243,5 +256,10 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Upgrade Notice ==
 
-= 1.1.4 - Released on 28 June 2021 =
-* Tweak: QA standards
+= 2.0.0 - Released on 16 October 2021 =
+* Fixed: Designing Fixes
+* Fixed: Assigned Points not consistent with quantity on cart
+* Fixed: Translation issue.
+* New: Latest WPML compatibility
+* New: Compatibility with WC 5.7.1 and WP 5.8.1
+
