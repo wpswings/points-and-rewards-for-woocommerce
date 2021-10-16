@@ -6,7 +6,7 @@ Requires at least: 5.0.0
 Tested up to: 5.8.1
 WC requires at least: 4.0
 WC tested up to: 5.7.1
-Stable tag: 2.0.0
+Stable tag: 1.2.0
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -184,7 +184,7 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
-= 2.0.0 - Released on 16 October 2021 =
+= 1.2.0 - Released on 16 October 2021 =
 * Fixed: Designing Fixes
 * Fixed: Assigned Points not consistent with quantity on cart
 * Fixed: Translation issue
@@ -256,7 +256,7 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Upgrade Notice ==
 
-= 2.0.0 - Released on 16 October 2021 =
+= 1.2.0 - Released on 16 October 2021 =
 * Fixed: Designing Fixes
 * Fixed: Assigned Points not consistent with quantity on cart
 * Fixed: Translation issue.
