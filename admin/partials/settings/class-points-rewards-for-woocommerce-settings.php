@@ -152,7 +152,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 	public function mwb_rwpr_generate_label( $value ) {
 		?>
 		<div class="mwb_wpr_general_label">
-			<label for="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" ><?php echo ( array_key_exists( 'title', $value ) ) ? esc_html( $value['title'] ) : ''; ?></label>
+			<label for="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" class='m1'><?php echo ( array_key_exists( 'title', $value ) ) ? esc_html( $value['title'] ) : ''; ?></label>
 			<?php if ( array_key_exists( 'pro', $value ) ) { ?>
 			<span class="mwb_wpr_general_pro">Pro</span>
 			<?php } ?>

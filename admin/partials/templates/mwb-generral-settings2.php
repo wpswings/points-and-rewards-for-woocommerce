@@ -123,7 +123,7 @@ $mwb_wpr_general_settings = array(
 			),
 			array(
 				'type'  => 'checkbox',
-				'id'    => 'mwb_wpr_whatsapp',
+				'id'    => 'mwb_wpr_whatsapp', 
 				'class'   => 'input-text',
 				'desc'  => __( 'Whatsapp', 'points-and-rewards-for-woocommerce' ),
 			),
@@ -205,7 +205,7 @@ $mwb_wpr_general_settings = array(
 					'Entered point will assign to that user by which another user referred from referral link and purchase some products.',
 					'points-and-rewards-for-woocommerce'
 				),
-				'desc' => __( 'Points =', 'points-and-rewards-for-woocommerce' ),
+				'desc' => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
 				'type'  => 'text',
@@ -266,6 +266,7 @@ if ( isset( $_POST['mwb_wpr_save_general'] ) && isset( $_POST['mwb-wpr-nonce'] )
 		$general_settings = array();
 endif;
 	?>
+	<?php do_action( 'mwb_wpr_add_notice' ); ?>
 	<div class="mwb_wpr_table">
 		<div class="mwb_wpr_general_wrapper">
 				<?php
@@ -301,12 +302,14 @@ endif;
 						if ( 'number_text' == $value['type'] ) {
 							foreach ( $value['number_text'] as $k => $val ) {
 								if ( 'text' == $val['type'] ) {
+									echo esc_html( get_woocommerce_currency_symbol() );
 									$settings_obj->mwb_rwpr_generate_text_html( $val, $general_settings );
 
 								}
 								if ( 'number' == $val['type'] ) {
+									
 									$settings_obj->mwb_rwpr_generate_number_html( $val, $general_settings );
-									echo esc_html( get_woocommerce_currency_symbol() );
+									
 								}
 							}
 						}
