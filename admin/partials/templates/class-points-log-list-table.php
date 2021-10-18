@@ -28,9 +28,14 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * This is variable which is used for the store all the data.
 	 *
 	 * @var array $example_data variable for store data.
-	 * @var array $mwb_total_count variable for store data.
 	 */
 	public $example_data;
+
+	/**
+	 * This is variable which is used for the store all the data.
+	 *
+	 * @var array $mwb_total_counta variable for store data.
+	 */
 	public $mwb_total_count;
 
 
@@ -191,7 +196,7 @@ class Points_Log_List_Table extends WP_List_Table {
 		$this->process_bulk_action();
 		$current_page = $this->get_pagenum();
 
-		$this->example_data = $this->get_users_points( $current_page, -1 );
+		$this->example_data = $this->get_users_points( $current_page, $per_page );
 		$data               = $this->example_data;
 
 		usort( $data, array( $this, 'mwb_wpr_usort_reorder' ) );
@@ -205,7 +210,7 @@ class Points_Log_List_Table extends WP_List_Table {
 				'total_pages' => ceil( $total_items / $per_page ),
 			)
 		);
-		$this->items = array_slice( $data, ( ( $current_page - 1 ) * $per_page ), $per_page );
+
 	}
 
 	/**
@@ -360,6 +365,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		$user_log_id = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
 		$user_log    = get_user_meta( $user_log_id, 'mwb_wpr_user_log', true );
 		?>
+		<?php do_action( 'mwb_wpr_add_notice' ); ?>
 		<h3 class="wp-heading-inline" id="mwb_wpr_points_table_heading"><?php esc_html_e( 'User Coupon Details', 'points-and-rewards-for-woocommerce' ); ?></h3>
 		<?php
 		if ( isset( $user_log ) && is_array( $user_log ) && null != $user_log ) {

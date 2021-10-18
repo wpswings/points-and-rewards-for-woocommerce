@@ -1,0 +1,34 @@
+<wpml-config>
+	<admin-texts> 
+		<key name="mwb_wpr_notificatin_array" >
+		<key name="mwb_wpr_email_subject" />
+		<key name="mwb_wpr_signup_email_subject" />
+		<key name="mwb_wpr_product_email_subject" />
+		<key name="mwb_wpr_signup_email_discription_custom_id" />
+		<key name="mwb_wpr_product_email_discription_custom_id" />
+		<key name="mwb_wpr_amount_email_discription_custom_id" />
+		<key name="mwb_wpr_referral_email_discription_custom_id" />
+		<key name="mwb_wpr_membership_email_discription_custom_id" />
+		<key name="mwb_wpr_deduct_assigned_point_desciption" />
+		<key name="mwb_wpr_point_on_cart_desc" />
+		<key name="mwb_wpr_point_on_order_total_range_desc" />
+		<key name="mwb_wpr_amount_email_subject" />
+		<key name="mwb_wpr_referral_email_subject" />
+		<key name="mwb_wpr_membership_email_subject" />
+		<key name="mwb_wpr_deduct_assigned_point_subject" />
+		<key name="mwb_wpr_point_on_cart_subject" />
+		<key name="mwb_wpr_point_on_order_total_range_subject" />
+		<key name="mwb_wpr_email_discription_custom_id" />
+		</key>
+		<key name="mwb_wpr_settings_gallery" >
+		<key name="mwb_wpr_general_text_points" />
+		<key name="mwb_wpr_general_ways_to_gain_points" />
+		<key name="mwb_wpr_points_tab_text" />
+		<key name="mwb_wpr_assign_pro_text" />
+		</key>
+		<key name="mwb_wpr_other_settings" >
+		<key name="mwb_wpr_shortcode_text_membership" />
+		<key name="mwb_wpr_other_shortcode_text" />
+		</key>
+	</admin-texts>
+</wpml-config>

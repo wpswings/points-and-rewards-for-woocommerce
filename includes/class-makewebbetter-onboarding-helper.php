@@ -29,11 +29,12 @@ if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 class Makewebbetter_Onboarding_Helper {
 
 	/**
-	 * The single instance of the class.
+	 * Instance variable.
 	 *
-	 * @since   1.0.0
+	 * @since 1.0.0
+	 * @var string instance
 	 */
-	protected static $_instance = null;
+	protected static $mwb_wpr_instance = null;
 
 	/**
 	 * Base url of hubspot api.
@@ -58,17 +59,31 @@ class Makewebbetter_Onboarding_Helper {
 	 * @var string Form id.
 	 */
 	private static $onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
+	/**
+	 * Deactivation variable
+	 *
+	 * @var string
+	 */
 	private static $deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
 
 
 	/**
-	 * Plugin Name.
+	 * Plugin_name variable
 	 *
-	 * @since 1.0.0
+	 * @var [int]
 	 */
-
 	private static $plugin_name;
+	/**
+	 * Store_name variable
+	 *
+	 * @var [int]
+	 */
 	private static $store_name;
+	/**
+	 * Store_url variable
+	 *
+	 * @var [int]
+	 */
 	private static $store_url;
 
 	/**
@@ -81,8 +96,8 @@ class Makewebbetter_Onboarding_Helper {
 		self::$store_name = get_bloginfo( 'name' );
 		self::$store_url = home_url();
 
-		if ( defined( 'ONBOARD_PLUGIN_NAME' ) ) {
-			self::$plugin_name = ONBOARD_PLUGIN_NAME;
+		if ( defined( 'MWB_PAR_ONBOARD_PLUGIN_NAME' ) ) {
+			self::$plugin_name = MWB_PAR_ONBOARD_PLUGIN_NAME;
 		}
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -111,12 +126,12 @@ class Makewebbetter_Onboarding_Helper {
 	 */
 	public static function get_instance() {
 
-		if ( is_null( self::$_instance ) ) {
+		if ( is_null( self::$mwb_wpr_instance ) ) {
 
-			self::$_instance = new self();
+			self::$mwb_wpr_instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$mwb_wpr_instance;
 	}
 
 	/**
@@ -667,8 +682,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		check_ajax_referer( 'mwb_onboarding_nonce', 'nonce' );
 
-		$form_data = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
-
+		$form_data = ! empty( $_POST['form_data'] ) ? map_deep( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ), 'sanitize_text_field' ) : '';
 		$formatted_data = array();
 
 		if ( ! empty( $form_data ) && is_array( $form_data ) ) {
@@ -808,10 +822,11 @@ class Makewebbetter_Onboarding_Helper {
 	}
 
 	/**
-	 * Handle Hubspot form submission.
+	 * Handle_form_submission_for_hubspot function
 	 *
-	 * @param      string $result       The result of this validation.
-	 * @since    1.0.0
+	 * @param boolean $submission used for submission.
+	 * @param string  $action_type used for string.
+	 * @return boolean
 	 */
 	protected function handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
 
@@ -833,71 +848,52 @@ class Makewebbetter_Onboarding_Helper {
 			return false;
 		}
 	}
-
-
 	/**
-	 * Handle Hubspot GET api calls.
+	 * Hic_post function
 	 *
-	 * @since    1.0.0
-	 */
-	private function hic_get( $endpoint, $headers ) {
-
-		$url = $this->base_url . $endpoint;
-
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, false );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
-
-		return array(
-			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
-		);
-	}
-
-
-	/**
-	 * Handle Hubspot POST api calls.
-	 *
-	 * @since    1.0.0
+	 * @param [mixed] $endpoint for endpoints.
+	 * @param [mixed] $post_params for post params.
+	 * @param [mixed] $headers for headers.
 	 */
 	private function hic_post( $endpoint, $post_params, $headers ) {
 
 		$url = $this->base_url . $endpoint;
+		$request = array(
+			'httpversion' => '1.0',
+			'sslverify'   => false,
+			'method'      => 'POST',
+			'timeout'     => 45,
+			'headers'     => $headers,
+			'body'        => $post_params,
+			'cookies'     => array(),
+		);
 
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, true );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_params );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
+		$response = wp_remote_post( $url, $request );
+
+		if ( is_wp_error( $response ) ) {
+
+			$status_code = 500;
+			$response    = esc_html__( 'Unexpected Error Occured', 'points-and-rewards-for-woocommerce' );
+			$errors      = $response;
+
+		} else {
+
+			$status_code = wp_remote_retrieve_response_code( $response );
+			$response    = wp_remote_retrieve_body( $response );
+			$errors      = $response;
+		}
 
 		return array(
 			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
+			'response'    => $response,
+			'errors'      => $errors,
 		);
 	}
-
 	/**
-	 *  Hubwoo Onboarding Submission :: Get a form.
+	 * Hubwoo_submit_form function
 	 *
-	 * @param           $form_id    form ID.
-	 * @since       1.0.0
+	 * @param array  $form_data for form data.
+	 * @param string $action_type for action type.
 	 */
 	protected function hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
 
@@ -910,7 +906,7 @@ class Makewebbetter_Onboarding_Helper {
 		$url = 'submissions/v3/integration/submit/' . self::$portal_id . '/' . $form_id;
 
 		$headers = array(
-			'Content-Type: application/json',
+			'Content-Type' => 'application/json',
 		);
 
 		$form_data = json_encode(
@@ -925,8 +921,7 @@ class Makewebbetter_Onboarding_Helper {
 		);
 
 		$response = $this->hic_post( $url, $form_data, $headers );
-
-		if ( $response['status_code'] == 200 ) {
+		if ( 200 == $response['status_code'] ) {
 			$result = json_decode( $response['response'], true );
 			$result['success'] = true;
 		} else {
@@ -938,8 +933,12 @@ class Makewebbetter_Onboarding_Helper {
 	}
 
 
-	// Function to get the client IP address
-	function get_client_ip() {
+	/**
+	 * Get_client_ip function
+	 *
+	 * @return ipaddress
+	 */
+	private function get_client_ip() {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );

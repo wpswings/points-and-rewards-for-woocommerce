@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=MWB-PAR-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>
- * Version:           1.1.2
+ * Version:           1.2.0
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Plugin URI:        https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org
@@ -22,9 +22,9 @@
  * Domain Path:       /languages
  *
  * Requires at least: 5.0.0
- * Tested up to:      5.7
+ * Tested up to:     5.8.1
  * WC requires at least: 4.0
- * WC tested up to: 5.2
+ * WC tested up to: 5.8.0
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -52,7 +52,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.1.2' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.2.0' );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_HOME_URL', admin_url() );
@@ -236,11 +236,14 @@ if ( $activated ) {
 	 * This function is used to return the date format as per WP settings
 	 *
 	 * @name mwb_wpr_set_the_wordpress_date_format
-	 * @param string $saved_date saved data in the wordpress formet.
+	 * @param string $saved_date saved data in the WordPress formet.
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_set_the_wordpress_date_format( $saved_date ) {
+		if ( get_locale() == 'zh_TW' ) {
+			return $saved_date;
+		}
 		$saved_date = strtotime( $saved_date );
 		$date_format = get_option( 'date_format', 'Y-m-d' );
 		$time_format = get_option( 'time_format', 'g:i a' );
@@ -278,9 +281,11 @@ if ( $activated ) {
 	 * @link https://www.makewebbetter.com/
 	 */
 	function mwb_wpr_flush_rewrite_rules() {
+
 		add_rewrite_endpoint( 'points', EP_PAGES );
 		add_rewrite_endpoint( 'view-log', EP_PAGES );
 		flush_rewrite_rules();
+
 	}
 } else {
 
@@ -322,5 +327,112 @@ if ( $activated ) {
 			<?php
 		}
 
+	}
+	// Check if function exists.
+	if ( ! function_exists( 'mwb_par_points_per_pos_order_currency' ) ) {
+		/**
+		 * This function is used to return order status settings
+		 *
+		 * @name mwb_par_points_per_pos_order_currency().
+		 * @param int    $user_id user id.
+		 * @param int    $order_id order id.
+		 * @param string $new_status order status.
+		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @link https://www.makewebbetter.com/
+		 */
+		function mwb_par_points_per_pos_order_currency( $user_id, $order_id, $new_status ) {
+
+			if ( 'completed' == $new_status ) {
+
+						$order = wc_get_order( $order_id );
+				if ( ! empty( $order ) ) {
+					$order_total = $order->get_total();
+				}
+
+						/*Get*/
+						$item_conversion_id_set = get_post_meta( $order_id, "$order_id#item_conversion_id_pos", true );
+				if ( 'set' != $item_conversion_id_set ) {
+
+					$user_id = $order->get_user_id();
+					$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
+					/*total calculation of the points*/
+					$mwb_wpr_coupon_conversion_points = $this->mwb_wpr_get_coupon_settings_num_pos( 'mwb_wpr_coupon_conversion_points' );
+					$mwb_wpr_coupon_conversion_points = ( 0 == $mwb_wpr_coupon_conversion_points ) ? 1 : $mwb_wpr_coupon_conversion_points;
+					/*Get the value of the price*/
+					$mwb_wpr_coupon_conversion_price = $this->mwb_wpr_get_coupon_settings_num_pos( 'mwb_wpr_coupon_conversion_price' );
+					$mwb_wpr_coupon_conversion_price = ( 0 == $mwb_wpr_coupon_conversion_price ) ? 1 : $mwb_wpr_coupon_conversion_price;
+					/*Calculat points of the order*/
+
+					$points_calculation = ceil( ( $order_total * $mwb_wpr_coupon_conversion_points ) / $mwb_wpr_coupon_conversion_price );
+					$points_calculation  = apply_filters( 'mwb_round_down_cart_total_value', $points_calculation, $order_total, $mwb_wpr_coupon_conversion_points, $mwb_wpr_coupon_conversion_price );
+					/*Total Point of the order*/
+					$total_points = intval( $points_calculation + $get_points );
+
+					$data = array();
+					/*Update points details in woocommerce*/
+					$this->mwb_wpr_update_points_details_pos( $user_id, 'pro_conversion_points_through_pos', $points_calculation, $data );
+					/*update users totoal points*/
+					update_user_meta( $user_id, 'mwb_wpr_points', $total_points );
+					/*update that user has get the rewards points*/
+					update_post_meta( $order_id, "$order_id#item_conversion_id_pos", 'set' );
+
+					/*Prepare Array to send mail*/
+					return true;
+				}
+			} else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * This function is coupon settings.
+	 *
+	 * @name mwb_wpr_get_coupon_settings_num_pos().
+	 * @param int $id id of the coupon.
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 */
+	function mwb_wpr_get_coupon_settings_num_pos( $id ) {
+		$mwb_wpr_value = 0;
+		$general_settings = get_option( 'mwb_wpr_coupons_gallery', true );
+		if ( ! empty( $general_settings[ $id ] ) ) {
+			$mwb_wpr_value = (int) $general_settings[ $id ];
+		}
+		return $mwb_wpr_value;
+	}
+	/**
+	 * Update points details in the public section.
+	 *
+	 * @name mwb_wpr_update_points_details
+	 * @since 1.0.0
+	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @link https://www.makewebbetter.com/
+	 * @param int    $user_id  User id of the user.
+	 * @param string $type type of description.
+	 * @param int    $points  No. of points.
+	 * @param array  $data  Data of the points details.
+	 */
+	function mwb_wpr_update_points_details_pos( $user_id, $type, $points, $data ) {
+
+		$cart_subtotal_point_arr = get_user_meta( $user_id, 'points_details', true );
+		if ( isset( $cart_subtotal_point_arr[ $type ] ) && ! empty( $cart_subtotal_point_arr[ $type ] ) ) {
+			$cart_array = array(
+				$type => $points,
+				'date' => $today_date,
+			);
+			$cart_subtotal_point_arr[ $type ][] = $cart_array;
+		} else {
+			if ( ! is_array( $cart_subtotal_point_arr ) ) {
+				$cart_subtotal_point_arr = array();
+			}
+			$cart_array = array(
+				$type => $points,
+				'date' => $today_date,
+			);
+			$cart_subtotal_point_arr[ $type ][] = $cart_array;
+		}
+		/*Update the user meta for the points details*/
+		update_user_meta( $user_id, 'points_details', $cart_subtotal_point_arr );
 	}
 }
