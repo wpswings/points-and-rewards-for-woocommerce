@@ -821,7 +821,6 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 			<?php
 
 		}
-
 		do_action( 'mwb_points_on_first_order', $point_log );
 
 		?>

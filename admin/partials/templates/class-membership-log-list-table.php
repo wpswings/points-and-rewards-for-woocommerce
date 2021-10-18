@@ -266,7 +266,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	<?php esc_html_e( 'Membership Log', 'points-and-rewards-for-woocommerce' ); ?></h3>
 <form method="post">
 	<input type="hidden" name="page"
-		value="<?php esc_html_e( 'points_log_list_table', 'points-and-rewards-for-woocommerce' ); ?>">
+		value="points_log_list_table">
 	<?php wp_nonce_field( 'membership-log', 'membership-log' ); ?>
 	<?php
 	$mylisttable = new Membership_Log_List_Table();
