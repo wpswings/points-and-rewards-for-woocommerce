@@ -195,7 +195,7 @@ $mwb_wpr_general_settings = array(
 	array(
 		'title' => __( 'Conversion rate for Cart Sub-Total Redemption', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'number_text',
-		'number_text' => array(
+		'number_text' => apply_filters( 'mwb_wpr_currency_general_filter', array(
 			array(
 				'type'  => 'number',
 				'id'    => 'mwb_wpr_cart_points_rate',
@@ -206,6 +206,7 @@ $mwb_wpr_general_settings = array(
 					'points-and-rewards-for-woocommerce'
 				),
 				'desc' => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),
+				'curr' => '',
 			),
 			array(
 				'type'  => 'text',
@@ -217,9 +218,11 @@ $mwb_wpr_general_settings = array(
 					'points-and-rewards-for-woocommerce'
 				),
 				'default' => '1',
+				'curr' => get_woocommerce_currency_symbol(),
 			),
 		),
-	),
+	)
+),
 	array(
 		'title' => __( 'Enable apply points during checkout', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'checkbox',
@@ -302,14 +305,17 @@ endif;
 						if ( 'number_text' == $value['type'] ) {
 							foreach ( $value['number_text'] as $k => $val ) {
 								if ( 'text' == $val['type'] ) {
-									echo esc_html( get_woocommerce_currency_symbol() );
+								
+									// echo esc_html( get_woocommerce_currency_symbol() );
+									echo isset( $val['curr'] ) ? $val['curr'] : '';
 									$settings_obj->mwb_rwpr_generate_text_html( $val, $general_settings );
+									echo '<br>';
 
 								}
 								if ( 'number' == $val['type'] ) {
-									
+
 									$settings_obj->mwb_rwpr_generate_number_html( $val, $general_settings );
-									
+									// echo '<br>';
 								}
 							}
 						}

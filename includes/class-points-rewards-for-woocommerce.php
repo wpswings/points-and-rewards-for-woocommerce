@@ -193,6 +193,14 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_filter( 'mwb_helper_valid_frontend_screens', $plugin_admin, 'add_mwb_frontend_screens' );
 		// Add Deactivation screen.
 		$this->loader->add_filter( 'mwb_deactivation_supported_slug', $plugin_admin, 'add_mwb_deactivation_screens' );
+		// custom code.
+	
+		$this->loader->add_filter( 'mwb_wpr_general_settings', $plugin_admin, 'mwb_wpr_wallet_order_point' );
+		$this->loader->add_filter( 'mwb_wpr_currency_filter', $plugin_admin, 'mwb_wpr_currency_switcher' );
+		// $this->loader->add_filter( 'mwb_wpr_currency_general_filter', $plugin_admin, 'mwb_wpr_general_currency_setting' );
+		 
+		
+
 	}
 
 	/**
@@ -252,6 +260,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'wcml_register_endpoints_query_vars', $plugin_public, 'mwb_wpr_wpml_register_endpoint', 10, 3 );
 			$this->loader->add_filter( 'wcml_endpoint_permalink_filter', $plugin_public, 'mwb_wpr_endpoint_permalink_filter', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_cart_contents_changed', $plugin_public, 'mwb_wpr_woocommerce_content_change' );
+			//custom_code.
+
+			$this->loader->add_action( 'mwb_wpr_add_coupon_generation', $plugin_public, 'mwb_wpr_add_wallet_generation', 10, 1 );
+			$this->loader->add_action( 'wp_ajax_mwb_wpr_generate_custom_wallet', $plugin_public, 'mwb_wpr_generate_custom_wallet' );
+			$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_generate_custom_wallet', $plugin_public, 'mwb_wpr_generate_custom_wallet' );
 		}
 	}
 

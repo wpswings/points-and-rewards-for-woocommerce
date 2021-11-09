@@ -722,6 +722,39 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 			</div>
 			<?php
 		}
+//points
+		if ( array_key_exists( 'points_deduct_wallet', $point_log ) ) {
+			?>
+	<div class="mwb_wpr_slide_toggle">
+	<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider" ><?php esc_html_e( 'Points Deduct to wallet', 'points-and-rewards-for-woocommerce' ); ?>
+	<a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
+	</p>
+	<table class = "form-table mwp_wpr_settings mwb_wpr_points_view mwb_wpr_common_table">
+	<thead>
+	<tr valign="top">
+	<th scope="row" class="mwb_wpr_head_titledesc">
+		<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+	</th>
+	<th scope="row" class="mwb_wpr_head_titledesc">
+		<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+	</th>
+	</tr>
+	</thead>
+			<?php
+
+			foreach ( $point_log['points_deduct_wallet'] as $key => $value ) {
+				?>
+		<tr valign="top">
+		<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+		<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['points_deduct_wallet'] ); ?></td>
+		</tr>
+				<?php
+			}
+			?>
+		</table></div>
+			<?php
+	}
+//points
 		if ( array_key_exists( 'reference_details', $point_log ) ) {
 			?>
 			<div class="mwb_wpr_slide_toggle">

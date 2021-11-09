@@ -75,10 +75,12 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		$mwb_wpr_cart_price_rate = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_price_rate' );
 		$mwb_wpr_make_readonly   = $this->mwb_wpr_get_other_settings_num( 'mwb_wpr_cart_price_rate' );
-		wp_enqueue_script( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.min.js', array( 'jquery', 'clipboard' ), $this->version, false );
+
+		wp_enqueue_script( $this->plugin_name, MWB_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.js', array( 'jquery', 'clipboard' ), $this->version, false );
 		$mwb_wpr = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'message' => esc_html__( 'Please enter valid points', 'points-and-rewards-for-woocommerce' ),
+			'empty_notice' => __('Please enter some points !!', 'points-and-rewards-for-woocommerce'),
 			'minimum_points' => $mwb_minimum_points_value,
 			'confirmation_msg' => __( 'Do you really want to upgrade your user level as this process will deduct the required points from your account?', 'points-and-rewards-for-woocommerce' ),
 			'minimum_points_text' => __( 'Minimum Points Require To Convert Points To Coupon is ', 'points-and-rewards-for-woocommerce' ) . $mwb_minimum_points_value,
@@ -921,6 +923,9 @@ class Points_Rewards_For_WooCommerce_Public {
 						$mwb_referral_purchase_value = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_referal_purchase_value' );
 						$order_total = $order->get_total();
 						$order_total = apply_filters( 'mwb_wpr_per_currency_points_on_subtotal', $order_total, $order );
+	
+						$mwb_currency = get_post_meta( $order_id, '_order_currency', true );
+						$mwb_default_symbol = get_option('woocommerce_currency');
 						$order_total = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
 						if ( $mwb_wpr_coupon_conversion_enable ) {
 							if ( $conversion_points_is_enable_condition || ! $points_key_priority_high ) {
@@ -931,11 +936,27 @@ class Points_Rewards_For_WooCommerce_Public {
 									$user_id = $order->get_user_id();
 									$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 									/*total calculation of the points*/
-									$mwb_wpr_coupon_conversion_points = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_points' );
-									$mwb_wpr_coupon_conversion_points = ( 0 == $mwb_wpr_coupon_conversion_points ) ? 1 : $mwb_wpr_coupon_conversion_points;
-									/*Get the value of the price*/
-									$mwb_wpr_coupon_conversion_price = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_price' );
-									$mwb_wpr_coupon_conversion_price = ( 0 == $mwb_wpr_coupon_conversion_price ) ? 1 : $mwb_wpr_coupon_conversion_price;
+
+										$mwb_wpr_coupon_conversion_points = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_price' );
+										$mwb_wpr_coupon_conversion_points = ( 0 == $mwb_wpr_coupon_conversion_points ) ? 1 : $mwb_wpr_coupon_conversion_points;
+										$mwb_wpr_coupon_conversion_price = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_points' );
+										$mwb_wpr_coupon_conversion_price = ( 0 == $mwb_wpr_coupon_conversion_price ) ? 1 : $mwb_wpr_coupon_conversion_price;
+//currency switcher 
+
+										$index = get_option( 'mwb_mmcsfw_number_of_currency' , '' );
+									if ( ! empty( $index ) ) {
+										for ( $mwb_par_per_currency = 1; $mwb_par_per_currency <= $index; $mwb_par_per_currency++ ) {
+										if ( get_option( 'mwb_mmcsfw_text_currency_' . $mwb_par_per_currency ) == $mwb_currency && $mwb_currency != get_option( 'woocommerce_currency' ) ) {
+
+																$mwb_wpr_coupon_conversion_points = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_currency_'.$mwb_par_per_currency.'_points' );
+																$mwb_wpr_coupon_conversion_points = ( 0 == $mwb_wpr_coupon_conversion_points ) ? 1 : $mwb_wpr_coupon_conversion_points;
+																$mwb_wpr_coupon_conversion_price = $this->mwb_wpr_get_coupon_settings_num( 'mwb_mmcsfw_text_currency_'.$mwb_par_per_currency );
+																$mwb_wpr_coupon_conversion_price = ( 0 == $mwb_wpr_coupon_conversion_price ) ? 1 : $mwb_wpr_coupon_conversion_price;
+											}
+										}
+									}
+
+
 									/*Calculat points of the order*/
 
 									$points_calculation = ceil( ( $order_total * $mwb_wpr_coupon_conversion_points ) / $mwb_wpr_coupon_conversion_price );
@@ -1184,6 +1205,26 @@ class Points_Rewards_For_WooCommerce_Public {
 				$mwb_wpr_cart_points_rate = ( 0 == $mwb_wpr_cart_points_rate ) ? 1 : $mwb_wpr_cart_points_rate;
 				$mwb_wpr_cart_price_rate = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_price_rate' );
 				$mwb_wpr_cart_price_rate = ( 0 == $mwb_wpr_cart_price_rate ) ? 1 : $mwb_wpr_cart_price_rate;
+				//currency switcher.
+				if ( is_plugin_active() ) {
+					if ( function_exists( 'mwb_mmcsfw_get_currenct_currency' ) )	{
+						$mwb_currency = get_woocommerce_currency();
+
+							$index = get_option( 'mwb_mmcsfw_number_of_currency' , '' );
+					if( ! empty( $index ) ) {
+						for( $mwb_par_per_currency = 1; $mwb_par_per_currency <= $index; $mwb_par_per_currency++ ) {
+
+								if ( get_option( 'mwb_mmcsfw_text_currency_' . $mwb_par_per_currency ) == mwb_mmcsfw_get_currenct_currency() && get_option( 'mwb_mmcsfw_text_currency_' . $mwb_par_per_currency ) != $mwb_currency ) {
+									$mwb_wpr_cart_points_rate = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_currency_' . $mwb_par_per_currency . '_point' );
+									$mwb_wpr_cart_points_rate = ( 0 == $mwb_wpr_cart_points_rate ) ? 1 : $mwb_wpr_cart_points_rate;
+									$mwb_wpr_cart_price_rate = $this->mwb_wpr_get_general_settings_num( 'mwb_mmcsfw_text_redemption_currency_' . $mwb_par_per_currency );
+									$mwb_wpr_cart_price_rate = ( 0 == $mwb_wpr_cart_price_rate ) ? 1 : $mwb_wpr_cart_price_rate;
+								}
+							}
+						}
+					}
+				}
+				//emd of currency switcher
 				if ( ! empty( WC()->session->get( 'mwb_cart_points' ) ) ) {
 					$mwb_wpr_points = WC()->session->get( 'mwb_cart_points' );
 					$mwb_fee_on_cart = ( $mwb_wpr_points * $mwb_wpr_cart_price_rate / $mwb_wpr_cart_points_rate );
@@ -1251,18 +1292,18 @@ class Points_Rewards_For_WooCommerce_Public {
 			?>
 			<div class="woocommerce-message" id="mwb_wpr_order_notice" style="background-color: <?php echo esc_html( $mwb_wpr_notification_color ); ?>">
 				<?php
-				 esc_html_e( 'Place Order and Earn Reward Points in Return.', 'points-and-rewards-for-woocommerce' );
+				esc_html_e( 'Place Order and Earn Reward Points in Return.', 'points-and-rewards-for-woocommerce' );
 				?>
 				<p style="background-color: 
 				<?php
-				echo esc_html( $mwb_wpr_notification_color ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo esc_html( $mwb_wpr_notification_color ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				">
 				<?php
 				esc_html_e( 'Conversion Rate: ', 'points-and-rewards-for-woocommerce' );
 				$allowed_tags = $this->mwb_wpr_allowed_html();
-				echo wc_price( $order_conversion_rate['Points'] ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				 esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo  ( $order_conversion_rate['curr'] ) . ( $order_conversion_rate['Points'] ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				</p>
 			</div>
@@ -1296,12 +1337,32 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function order_conversion_rate() {
-		$order_conversion_rate_value = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_price' );
+
+		$order_conversion_rate_value  = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_price' );
 		$order_conversion_rate_points = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_coupon_conversion_points' );
 		$order_conversion_rate = array(
 			'Value' => $order_conversion_rate_value,
 			'Points' => $order_conversion_rate_points,
+			'curr'  => get_woocommerce_currency_symbol(),
 		);
+
+		$mwb_currency = get_woocommerce_currency();
+
+		$index = get_option( 'mwb_mmcsfw_number_of_currency', '' );
+		if ( ! empty( $index ) ) {
+			for ( $mwb_par_per_currency = 1; $mwb_par_per_currency <= $index; $mwb_par_per_currency++ ) {	
+				if ( get_option( 'mwb_mmcsfw_text_currency_' . $mwb_par_per_currency ) == mwb_mmcsfw_get_currenct_currency() && get_option( 'mwb_mmcsfw_text_currency_' . $mwb_par_per_currency ) != $mwb_currency )
+				{
+					$order_conversion_rate_points = $this->mwb_wpr_get_coupon_settings_num(  'mwb_mmcsfw_text_currency_' . $mwb_par_per_currency );
+					$order_conversion_rate_value  = $this->mwb_wpr_get_coupon_settings_num( 'mwb_wpr_currency_'. $mwb_par_per_currency.'_points' );
+					$order_conversion_rate = array(
+						'Value'  => $order_conversion_rate_value,
+						'Points' => $order_conversion_rate_points,
+						'curr'   => get_option( 'mwb_mmcsfw_symbol_'. get_option( 'mwb_mmcsfw_text_currency_' . $mwb_par_per_currency ) ),
+					);
+				}
+			}
+		}
 		return $order_conversion_rate;
 	}
 
@@ -1410,8 +1471,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						update_post_meta( $order_id, 'mwb_cart_discount#$fee_id', $fee_amount );
 						$fee_amount = -( $fee_amount );
 						$fee_to_point = ceil( ( $mwb_wpr_cart_points_rate * $fee_amount ) / $mwb_wpr_cart_price_rate );
-						 $fee_to_point  = apply_filters( 'mwb_round_down_cart_total_value_amount', $fee_to_point, $mwb_wpr_cart_points_rate, $fee_amount, $mwb_wpr_cart_price_rate );
-
+						$fee_to_point  = apply_filters( 'mwb_round_down_cart_total_value_amount', $fee_to_point, $mwb_wpr_cart_points_rate, $fee_amount, $mwb_wpr_cart_price_rate );
 						$remaining_point = $get_points - $fee_to_point;
 						/*update the users points in the*/
 						update_user_meta( $user_id, 'mwb_wpr_points', $remaining_point );
@@ -2062,5 +2122,114 @@ class Points_Rewards_For_WooCommerce_Public {
 			return $cart_contents;
 
 		}
+	}
+	/**
+	 * Mwb_wpr_add_wallet_generation function
+	 *
+	 * @param [int] $user_id userid.
+	 * @return void
+	 */
+	public function mwb_wpr_add_wallet_generation( $user_id ) {
+		if ( is_plugin_active( 'wallet-system-for-woocommerce/wallet-system-for-woocommerce.php' ) && ! empty( get_option( 'mwb_wsfw_enable', '' ) ) ) {
+			$mwb_req_points                = ! empty( get_user_meta( $user_id, 'mwb_wpr_points', true ) ) ? get_user_meta( $user_id, 'mwb_wpr_points', true ) : '';
+			$mwb_wallet_enable             = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_general_setting_wallet_enablee' );
+			$mwb_points_par_value_wallet   = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_wallet_points_rate' );
+			$mwb_currency_par_value_wallet = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_wallet_price_rate' );
+			if ( $mwb_wallet_enable && ! empty( $mwb_req_points ) ) {
+				?>
+				<p class="mwb_wpr_wallet_heading"><?php echo esc_html__( 'Wallet Points Conversion', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
+				<fieldset class="mwb_wpr_each_wallet_section">
+					<p>
+						<?php echo esc_html__( 'Points Conversion: ', 'ultimate-woocommerce-points-and-rewards' ); ?>
+						<?php echo esc_html( $mwb_points_par_value_wallet  ) . esc_html__( 'points = ', 'ultimate-woocommerce-points-and-rewards' ) . wc_price( $mwb_currency_par_value_wallet ); ?>
+					</p>
+					<form id="points_wallet" enctype="multipart/form-data" action="" method="post">
+
+									<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+										<label for="mwb_custom_wallet_text">
+											<?php esc_html_e( 'Enter your points:', 'ultimate-woocommerce-points-and-rewards' ); ?>
+										</label>
+										<p id="mwb_wpr_wallet_notification"></p>
+										<input type="number" class="woocommerce-Input woocommerce-Input--number input-number" name="mwb_custom_number" min="1" id="mwb_custom_wallet_point_num" style="width: 160px;">
+
+										<input type="button" name="mwb_wpr_custom_wallet" id= "mwb_wpr_custom_wallet" class="mwb_wpr_custom_wallet button" value="<?php esc_html_e( 'Redeem to Wallet', 'ultimate-woocommerce-points-and-rewards' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>">
+									</p>
+					</form>
+				</fieldset>
+				<?php
+			}
+		}
+	}
+	/**
+	 * Mwb_wpr_generate_custom_wallet function
+	 *
+	 * @return void
+	 */
+	public function mwb_wpr_generate_custom_wallet() {
+
+		check_ajax_referer( 'mwb-wpr-verify-nonce', 'mwb_nonce' );
+		$response['result']  = false;
+		$response['message'] = 'Sorry ! Not Transfered';
+		if ( isset( $_POST['user_id'] ) && ! empty( $_POST['user_id'] ) && isset( $_POST['points'] ) && ! empty( $_POST['points'] ) ) {
+			/*Get the the user id*/
+			$user_id = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
+			$points  = sanitize_text_field( wp_unslash( $_POST['points'] ) );	
+			/*Get all user points*/
+			$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
+			if ( empty( $points ) ) {
+					$response['result']  = false;
+					$response['message'] = 'Sorry ! Not Transfered';
+			}
+			if ( $get_points >= $points && ! empty( $points ) ) {
+
+				$mwb_points_par_value_wallet   = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_wallet_points_rate' );
+				$mwb_currency_par_value_wallet = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_wallet_price_rate' );
+				$mwb_wpr_wallet_roundoff       = 	$points * ( $mwb_currency_par_value_wallet / $mwb_points_par_value_wallet );
+				$prev_mwb_mpr_data = get_user_meta( $user_id, 'mwb_wallet' ,true );
+				$total_data_mwb_par =  $prev_mwb_mpr_data + $mwb_wpr_wallet_roundoff ;
+				update_user_meta( $user_id, 'mwb_wallet', $total_data_mwb_par );
+				$new_update_points = $get_points - $points;
+				update_user_meta( $user_id, 'mwb_wpr_points', $new_update_points );
+				$response['result']  = true;
+				$response['message'] = 'successfully transfered';
+//points_log
+				$points_log = get_user_meta( $user_id, 'points_details', true );
+							if ( isset( $points_log['points_deduct_wallet'] ) && ! empty( $points_log['points_deduct_wallet'] ) ) {
+
+								$points_bday_arr = array();
+								$points_bday_arr = array(
+									'points_deduct_wallet' => $points,
+									'date' => date( 'Y-m-d' ),
+								);
+								$points_log['points_deduct_wallet'][] = $points_bday_arr;
+							} else {
+								if ( ! is_array( $points_log ) ) {
+									$points_log = array();
+								}
+								$points_bday_arr = array();
+								$points_bday_arr = array(
+									'points_deduct_wallet' => $points,
+									'date' => date( 'Y-m-d' ),
+								);
+								$points_log['points_deduct_wallet'][] = $points_bday_arr;
+							}
+							update_user_meta( $user_id, 'points_details', $points_log );
+//points log
+				$mwb_par_wallet_payment_gateway = new Wallet_System_For_Woocommerce();
+				$transaction_data = array(
+					'user_id'          => $user_id,
+					'amount'           => $mwb_wpr_wallet_roundoff,
+					'currency'         => get_woocommerce_currency(),
+					'payment_method'   => 'manual',
+					'transaction_type' => 'points conversion to amount',
+					'order_id'         => '',
+					'note'             => 'Through Points and rewards',
+				);
+				$mwb_par_wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
+
+			}
+		}
+		wp_send_json( $response );
+		wp_die();
 	}
 }

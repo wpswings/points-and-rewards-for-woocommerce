@@ -173,6 +173,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 			}
 		}
 
+		
+
 	}
 
 	/**
@@ -1005,25 +1007,125 @@ class Points_Rewards_For_WooCommerce_Admin {
 		return $valid_screens;
 	}
 
-	/**
-	 * Get all custom field.
+	
+		/**
+		 * Add General settings in the lite
+		 *
+		 * @name add_mwb_settings
+		 * @since    1.0.0
+		 * @param array $general_settings settings of the array.
+		 */
+	public function mwb_wpr_wallet_order_point( $mwb_wpr_general_settings ) {
+		if ( is_plugin_active( 'wallet-system-for-woocommerce/wallet-system-for-woocommerce.php' ) && ! empty( get_option( 'mwb_wsfw_enable', '' ) ) ) {
+
+			$my_new_inserted_array = array(
+				array(
+					'title' => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
+					'type'  => 'title',
+				),
+				array(
+					'title' => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
+					'type'  => 'checkbox',
+					'desc'  => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
+					'id'    => 'mwb_wpr_general_setting_wallet_enablee',
+					'desc_tip' => __( 'Check this box to enable points conversion to amount  on wallet.', 'points-and-rewards-for-woocommerce' ),
+					'default'   => 0,
+				),
+				array(
+					'title' => __( 'Conversion rate', 'points-and-rewards-for-woocommerce' ),
+					'type'  => 'number_text',
+					'number_text' => array(
+						array(
+							'type'  => 'number',
+							'id'    => 'mwb_wpr_wallet_points_rate',
+							'class'   => 'input-text wc_input_price mwb_wpr_new_woo_ver_style_text',
+							'custom_attributes' => array( 'min' => '"1"' ),
+							'desc_tip' => __(
+								'Entered point will be converted in frontend.',
+								'points-and-rewards-for-woocommerce'
+							),
+							'desc' => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),
+						),
+						array(
+							'type'  => 'text',
+							'id'    => 'mwb_wpr_wallet_price_rate',
+							'class'   => 'input-text mwb_wpr_new_woo_ver_style_text wc_input_price',
+							'custom_attributes' => array( 'min' => '"1"' ),
+							'desc_tip' => __(
+								'Entered amount to convert',
+								'points-and-rewards-for-woocommerce'
+							),
+							'default' => '1',
+							'curr' => get_woocommerce_currency_symbol(),
+						),
+					),
+				),
+	
+				array(
+					'type'  => 'sectionend',
+				),
+	
+			);
+			$mwb_wpr_general_settings  = $this->insert_key_value_pair( $mwb_wpr_general_settings, $my_new_inserted_array, 150 );
+		}
+			return $mwb_wpr_general_settings;
+		}
+		/**
+	 * Insert array
 	 *
-	 * @param  array $ids valid data.
-	 * @since    1.0.7
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @name insert_key_value_pair
+	 * @since    1.0.0
+	 * @param array $arr array of the settings.
+	 * @param array $inserted_array new array of the settings.
+	 * @param int   $index index of the array.
 	 */
-	public function mwb_wpr_org_add_lock_custom_fields_ids( $ids ) {
+	public function insert_key_value_pair( $arr, $inserted_array, $index ) {
+		$arrayend   = array_splice( $arr, $index );
+		$arraystart = array_splice( $arr, 0, $index );
+		return ( array_merge( $arraystart, $inserted_array, $arrayend ) );
+	}
+/**
+ * Undocumented function
+ *
+ * @param [type] $coupon_settings
+ * @return void
+ */	
+public function mwb_wpr_currency_switcher( $coupon_settings ) {
 
-		$ids[] = '_mwb_sfw_product';
-		$ids[] = 'mwb_sfw_subscription_number';
-		$ids[] = 'mwb_sfw_subscription_interval';
-		$ids[] = 'mwb_sfw_subscription_expiry_number';
-		$ids[] = 'mwb_sfw_subscription_expiry_interval';
-		$ids[] = 'mwb_sfw_subscription_initial_signup_price';
-		$ids[] = 'mwb_sfw_subscription_free_trial_number';
-		$ids[] = 'mwb_sfw_subscription_free_trial_interval';
 
-		return apply_filters( 'mwb_sfw_add_lock_fields_ids_pro', $ids );
+		$new_inserted_array = array();
+		$new_array = array();
+			$index = get_option( 'mwb_mmcsfw_number_of_currency' );
+			$mwb_default_symbol = get_option('woocommerce_currency');
+			for ( $i = 1; $i <= $index; $i++ ) {
+	
+				if( get_option( 'mwb_mmcsfw_text_currency_' . $i ) == $mwb_default_symbol ) {
+					continue;
+				}
+				if ( ! empty( get_option( 'mwb_mmcsfw_text_currency_' . $i ) ) ) {
+					$new_array[] =array(
+						'type'  => 'text',
+						'id'    => 'mwb_mmcsfw_text_currency_' . $i ,
+						'default'  => '1',
+						'class'   => 'input-text mwb_wpr_new_woo_ver_style_text wc_input_price',
+						'custom_attributes' => array( 'min' => '"1"' ),
+						'desc' => __( ' = ', 'points-and-rewards-for-woocommerce' ),
+						'curr' => get_option( 'mwb_mmcsfw_symbol_'. get_option( 'mwb_mmcsfw_text_currency_' . $i ) ),
+
+					);
+					$new_array[] = array(
+							'type'  => 'number',
+							'id'    => 'mwb_wpr_currency_'.$i.'_points',
+							'class'   => 'input-text mwb_wpr_new_woo_ver_style_text wc_input_price',
+							'default'  => '1',
+							'custom_attributes' => array( 'min' => '"1"' ),
+							'desc' => __( ' Points ', 'points-and-rewards-for-woocommerce' ),
+							'curr' => '',
+					);
+
+			}
+		}
+		$coupon_settings =  array_merge( $coupon_settings, $new_array );
+		return $coupon_settings;
 	}
 }
