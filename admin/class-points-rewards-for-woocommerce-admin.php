@@ -172,9 +172,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 			}
 		}
-
-		
-
 	}
 
 	/**
@@ -1069,7 +1066,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$mwb_wpr_general_settings  = $this->insert_key_value_pair( $mwb_wpr_general_settings, $my_new_inserted_array, 150 );
 		}
 			return $mwb_wpr_general_settings;
-		}
+	}
 		/**
 	 * Insert array
 	 *

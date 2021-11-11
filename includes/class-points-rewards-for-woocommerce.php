@@ -197,7 +197,7 @@ class Points_Rewards_For_Woocommerce {
 	
 		$this->loader->add_filter( 'mwb_wpr_general_settings', $plugin_admin, 'mwb_wpr_wallet_order_point' );
 		$this->loader->add_filter( 'mwb_wpr_currency_filter', $plugin_admin, 'mwb_wpr_currency_switcher' );
-		// $this->loader->add_filter( 'mwb_wpr_currency_general_filter', $plugin_admin, 'mwb_wpr_general_currency_setting' );
+		
 		 
 		
 
