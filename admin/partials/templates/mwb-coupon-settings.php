@@ -33,27 +33,30 @@ $mwb_wpr_coupon_settings = array(
 		'title' => __( 'Per ', 'points-and-rewards-for-woocommerce' ) . get_woocommerce_currency_symbol() . __( 'Points Conversion', 'points-and-rewards-for-woocommerce' ),
 		'desc_tip'  => __( 'Enter the redeem price for points. (i.e. how much amounts will be equivalent to the points)', 'points-and-rewards-for-woocommerce' ),
 		'type'    => 'number_text',
-		'number_text' =>  apply_filters('mwb_wpr_currency_filter', array(
-
+		'number_text' => apply_filters(
+			'mwb_wpr_currency_filter',
 			array(
-				'type'  => 'text',
-				'id'    => 'mwb_wpr_coupon_conversion_points',
-				'class'   => 'input-text wc_input_price mwb_wpr_new_woo_ver_style_text',
-				'custom_attributes' => array( 'min' => '"1"' ),
-				'desc' => __( ' = ', 'points-and-rewards-for-woocommerce' ),
-				'curr' => get_woocommerce_currency_symbol(),
 
-			),
-			array(
-				'type'  => 'number',
-				'id'    => 'mwb_wpr_coupon_conversion_price',
-				'class'   => 'input-text mwb_wpr_new_woo_ver_style_text wc_input_price',
-				'default'  => '1',
-				'custom_attributes' => array( 'min' => '"1"' ),
-				'desc' => __( ' Points ', 'points-and-rewards-for-woocommerce' ),
-				'curr' => '',
-			),
-		)),
+				array(
+					'type'  => 'text',
+					'id'    => 'mwb_wpr_coupon_conversion_points',
+					'class'   => 'input-text wc_input_price mwb_wpr_new_woo_ver_style_text',
+					'custom_attributes' => array( 'min' => '"1"' ),
+					'desc' => __( ' = ', 'points-and-rewards-for-woocommerce' ),
+					'curr' => get_woocommerce_currency_symbol(),
+
+				),
+				array(
+					'type'  => 'number',
+					'id'    => 'mwb_wpr_coupon_conversion_price',
+					'class'   => 'input-text mwb_wpr_new_woo_ver_style_text wc_input_price',
+					'default'  => '1',
+					'custom_attributes' => array( 'min' => '"1"' ),
+					'desc' => __( ' Points ', 'points-and-rewards-for-woocommerce' ),
+					'curr' => '',
+				),
+			)
+		),
 	),
 	array(
 		'type'  => 'sectionend',
@@ -121,7 +124,7 @@ endif;
 						$settings_obj->mwb_rwpr_generate_number_html( $value, $coupon_settings );
 					}
 					if ( 'text' == $value['type'] ) {
-						
+
 						$settings_obj->mwb_rwpr_generate_text_html( $value, $coupon_settings );
 					}
 					if ( 'textarea' == $value['type'] ) {
@@ -131,14 +134,12 @@ endif;
 						foreach ( $value['number_text'] as $k => $val ) {
 							if ( 'text' == $val['type'] ) {
 								echo '<br>';
-								echo isset( $val['curr'] ) ? $val['curr'] : '';
-	
-								// echo esc_html( get_woocommerce_currency_symbol() );
+								echo isset( $val['curr'] ) ? esc_html( $val['curr'] ) : '';
 								$settings_obj->mwb_rwpr_generate_text_html( $val, $coupon_settings );
 
 							}
 							if ( 'number' == $val['type'] ) {
-								
+
 								$settings_obj->mwb_rwpr_generate_number_html( $val, $coupon_settings );
 
 							}

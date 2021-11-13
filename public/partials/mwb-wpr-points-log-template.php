@@ -722,7 +722,6 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 			</div>
 			<?php
 		}
-//points
 		if ( array_key_exists( 'points_deduct_wallet', $point_log ) ) {
 			?>
 	<div class="mwb_wpr_slide_toggle">
@@ -753,8 +752,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 			?>
 		</table></div>
 			<?php
-	}
-//points
+		}
 		if ( array_key_exists( 'reference_details', $point_log ) ) {
 			?>
 			<div class="mwb_wpr_slide_toggle">
