@@ -2170,9 +2170,9 @@ class Points_Rewards_For_WooCommerce_Public {
 				$mwb_wpr_wallet_roundoff       = $points * ( $mwb_currency_par_value_wallet / $mwb_points_par_value_wallet );
 				$prev_mwb_mpr_data = get_user_meta( $user_id, 'mwb_wallet', true );
 				$total_data_mwb_par = $prev_mwb_mpr_data + $mwb_wpr_wallet_roundoff;
-				update_user_meta( $user_id, 'mwb_wallet', $total_data_mwb_par );
+
 				$new_update_points = $get_points - $points;
-				update_user_meta( $user_id, 'mwb_wpr_points', $new_update_points );
+
 				$response['result']  = true;
 				$response['message'] = 'successfully transfered';
 				$points_log = get_user_meta( $user_id, 'points_details', true );
@@ -2194,9 +2194,8 @@ class Points_Rewards_For_WooCommerce_Public {
 						'date' => date( 'Y-m-d' ),
 					);
 					$points_log['points_deduct_wallet'][] = $points_bday_arr;
-				}
-							update_user_meta( $user_id, 'points_details', $points_log );
-				$mwb_par_wallet_payment_gateway = new Wallet_System_For_Woocommerce();
+				}	
+
 				$transaction_data = array(
 					'user_id'          => $user_id,
 					'amount'           => $mwb_wpr_wallet_roundoff,
@@ -2206,8 +2205,12 @@ class Points_Rewards_For_WooCommerce_Public {
 					'order_id'         => '',
 					'note'             => 'Through Points and rewards',
 				);
-				if ( function_exists( 'insert_transaction_data_in_table' ) ) {
+				if ( class_exists( 'Wallet_System_For_Woocommerce' ) ) {
 
+					$mwb_par_wallet_payment_gateway = new Wallet_System_For_Woocommerce();
+					update_user_meta( $user_id, 'mwb_wallet', $total_data_mwb_par );
+					update_user_meta( $user_id, 'mwb_wpr_points', $new_update_points );
+					update_user_meta( $user_id, 'points_details', $points_log );
 					$mwb_par_wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
 				}
 			}
