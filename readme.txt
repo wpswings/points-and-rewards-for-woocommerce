@@ -1,23 +1,24 @@
-=== Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, Referral Points & Redemptions   ===
+=== Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, Referral Points & Redemptions ===
 Contributors: MakeWebBetter
 Donate link: https://makewebbetter.com/
 Tags: points, rewards, points and rewards, loyalty, loyalty program, woocommerce points and rewards
 Requires at least: 5.0.0
-Tested up to: 5.8.1
+Tested up to: 5.8.2
 WC requires at least: 4.0
-WC tested up to: 5.7.1
-Stable tag: 1.2.0
+WC tested up to: 5.9.0
+Stable tag: 1.2.1
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Points and Rewards for WooCommerce offers reward points to your customers for their activities & increase customer loyalty
+
+Points and Rewards for WooCommerce offer points management system to your customers for their activities & increase customer loyalty
 
 == Description ==
 
 **TOP-RATED POINTS AND REWARDS SYSTEM FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS. REWARD CUSTOMERS FOR PURCHASES AND CREATE  WOOCOMMERCE LOYALTY PROGRAMS TO REWARD REFERRAL POINTS, SIGN UP POINTS ETC. ALLOW REDEEMING POINTS, POINTS LOG REPORT FOR ADMIN AND USER AND BUILD MEMBERSHIP WITH PROPER EMAIL NOTIFICATIONS**
 
-Points and Rewards for WooCommerce is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem these points to buy products at your store or participate in your membership program with the WordPress loyalty points plugin. With the [**Points and rewards program**](https://makewebbetter.com/blog/points-reward-system-woocommerce/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) at your WooCommerce Store, you can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope.
+Points and Rewards for WooCommerce is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem these points to buy products at your store or participate in your membership program with the WordPress loyalty points plugin. With the WooCommerce reward plugin at your WooCommerce Store, you can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope.
 
 [youtube https://www.youtube.com/watch?v=WWktrnAI88U&t=333s&w=560&h=315&rel=0]
 
@@ -32,7 +33,7 @@ Points and Rewards for WooCommerce is a points management plugin that engages cu
 * Assign a similar point value to all simple products with global point assign feature
 * Offer a specific number of points for a set price range of the order value
 
-PLUGIN MEETS YOUR REQUIREMENT, SO
+== PLUGIN MEETS YOUR REQUIREMENT, SO == 
 
 [**Download Now!!**](https://downloads.wordpress.org/plugin/points-and-rewards-for-woocommerce.zip)
 
@@ -73,19 +74,36 @@ The WooCommerce Rewards plugin is compatible with the WPML Multilingual plugin t
 Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.makewebbetter.com/points-rewards-for-woocommerce/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) and learn more about the features and working of the plugin. 
 Check out [**Points and Rewards plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce-kb/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
+
+== PLUGIN COMPATIBILITIES == 
+
+* WooCommerce rewards plugin is compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**WooCommerce Wallet System**](https://makewebbetter.com/product/woocommerce-wallet-system/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) plugin. This compatibility allows you to convert your earned points into wallet credit based on a certain conversion rate. The admin can set points conversion into wallet credit he wants to allow. For example, 10 points equal 2 wallet credits. Customers can later use this wallet credit for purchase in the store. 
+  
+* WooCommerce store owners using Loyalty points plugin can switch currency with the compatible WordPress plugin [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org). The admin can use these compatible plugins to change the per currency conversion settings.   
+
+* The Points and Rewards plugin is compatible with the WordPress Multilingual (WPML) plugin for localization of the rewards plugin’s strings.
+
+
+
 == WHAT PREMIUM VERSION OF WOOCOMMERCE POINTS AND REWARDS OFFERS == 
 
+* Rewards On Birthday
 * Multilevel Membership
-* Generate Coupons Using The Points
 * Referral Purchase Points
 * Review/Comments Points
-* Assign points to the selected category
-* Points Sharing
-* Purchase Products through Points
-* Points Expiration
+* Points On First Order Only
 * Multilevel Order Total Points
-* Points Adjustments On Order Refund & Cancellation
 * Points On Referral Order Total
+* Purchase Products through Points
+* Points For Selected User Role Only
+* Generate Coupons Using The Points
+* Assign points to the selected category
+* Round Up and Round Down Reward Points
+* Exclude Points On Delivery Fee And Tax Amount
+* Points Adjustments On Order Refund & Cancellation
+* Email Modification For Referral Coupon Code Template
+
+
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE LOYALTY POINTS AND REWARDS PLUGIN ==
 Points and Rewards for WooCommerce help merchants create a points-based loyalty program to reward customers. This reward system involves earning and redeeming store credits as points and discount coupons on activities performed by the customers.
@@ -95,9 +113,14 @@ Points and Rewards for WooCommerce help merchants create a points-based loyalty 
 
 == LIVE DEMO OF PREMIUM VERSION ==
 
-* [ **Points and Rewards Frontend demo**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/my-account/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
+* [ **Points and Rewards Frontend demo**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
 * [ **Points and Rewards Backend demo**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/get-personal-demo/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
+
+**See what Perties freshwear is saying about Points and Rewards plugin:**
+>> I couldn’t expect better results with any other team. Attention is always excellent and on time even when you have minor issues, and they solve them asap. The features have everything, and I can’t think of any feature that could make it better. From compatibility to customizations, they have assisted a lot. Absolute satisfaction. I’ll give it a full 5-star review. It’s definitely worth an upgrade to the pro plugin version. Additionally, I’m using RMA for WooCommerce, and it’s smooth too. [**See Points and Rewards Case Study**](https://makewebbetter.com/success-stories/perties-freshwear/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
+
+
 
 
 == SUPPORT ==
@@ -123,7 +146,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 1. **General Settings** - Basic settings which are required to run the plugin
 2. **Customer's Earned Points Log Table** - After Earn/Redeem points by the customer log will be listed here
 3. **Share Referral Link Using Social Media** - Customers can also share the referral link on social sites as well.
-4. **Customized Text** - Admin can modify/add the text according to the need. It will get display on the My Account > Points page
+4. **Customized Text** - Admin can modify/add the text according to the need. It will get displayed on My Account > Points page
 5. **Redeem Points On Cart Page** - Customer can redeem their points on the cart page and get the discount
 6. **Redeem Points On Checkout Page** - Customer can also redeem their points on the cart page
 7. **Earn Points Per Currency Setting** - Allow customers to earn on every currency spent
@@ -183,6 +206,14 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Changelog ==
+
+= 1.2.1 - Released on 17 October 2021 =
+* New: Compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**WooCommerce Wallet System**](https://makewebbetter.com/product/woocommerce-wallet-system/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
+* New: Compatible with [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) [Per Currency conversion setting of PAR]
+* New: Compatibility with WC 5.9.0 and WP 5.8.2
+* Fix: Refund issues solved
+* Fix: Few minor bugs
+
 
 = 1.2.0 - Released on 16 October 2021 =
 * Fixed: Designing Fixes
@@ -255,11 +286,9 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Upgrade Notice ==
-
-= 1.2.0 - Released on 16 October 2021 =
-* Fixed: Designing Fixes
-* Fixed: Assigned Points not consistent with quantity on cart
-* Fixed: Translation issue.
-* New: Latest WPML compatibility
-* New: Compatibility with WC 5.7.1 and WP 5.8.1
-
+= 1.2.1 - Released on 17 October 2021 =
+* New: Compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**WooCommerce Wallet System**](https://makewebbetter.com/product/woocommerce-wallet-system/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
+* New: Compatible with [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) [Per Currency conversion setting of PAR]
+* New: Compatibility with WC 5.9.0 and WP 5.8.2
+* Fix: Refund issues solved
+* Fix: Few minor bugs
