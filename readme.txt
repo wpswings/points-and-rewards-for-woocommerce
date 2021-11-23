@@ -118,7 +118,7 @@ Points and Rewards for WooCommerce help merchants create a points-based loyalty 
 * [ **Points and Rewards Backend demo**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/get-personal-demo/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
 **See what Perties freshwear is saying about Points and Rewards plugin:**
->> I couldn’t expect better results with any other team. Attention is always excellent and on time even when you have minor issues, and they solve them asap. The features have everything, and I can’t think of any feature that could make it better. From compatibility to customizations, they have assisted a lot. Absolute satisfaction. I’ll give it a full 5-star review. It’s definitely worth an upgrade to the pro plugin version. Additionally, I’m using RMA for WooCommerce, and it’s smooth too. [**See Points and Rewards Case Study**](https://makewebbetter.com/success-stories/perties-freshwear/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
+> I couldn’t expect better results with any other team. Attention is always excellent and on time even when you have minor issues, and they solve them asap. The features have everything, and I can’t think of any feature that could make it better. From compatibility to customizations, they have assisted a lot. Absolute satisfaction. I’ll give it a full 5-star review. It’s definitely worth an upgrade to the pro plugin version. Additionally, I’m using RMA for WooCommerce, and it’s smooth too. [**See Points and Rewards Case Study**](https://makewebbetter.com/success-stories/perties-freshwear/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 
 
 
@@ -207,13 +207,12 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
-= 1.2.1 - Released on 17 October 2021 =
+= 1.2.1 - Released on 16 November 2021 =
 * New: Compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**WooCommerce Wallet System**](https://makewebbetter.com/product/woocommerce-wallet-system/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 * New: Compatible with [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) [Per Currency conversion setting of PAR]
 * New: Compatibility with WC 5.9.0 and WP 5.8.2
 * Fix: Refund issues solved
 * Fix: Few minor bugs
-
 
 = 1.2.0 - Released on 16 October 2021 =
 * Fixed: Designing Fixes
@@ -286,7 +285,7 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Upgrade Notice ==
-= 1.2.1 - Released on 17 October 2021 =
+= 1.2.1 - Released on 16 November 2021 =
 * New: Compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**WooCommerce Wallet System**](https://makewebbetter.com/product/woocommerce-wallet-system/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org)
 * New: Compatible with [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-PAR-org&utm_medium=MWB-org-page&utm_campaign=MWB-PAR-org) [Per Currency conversion setting of PAR]
 * New: Compatibility with WC 5.9.0 and WP 5.8.2

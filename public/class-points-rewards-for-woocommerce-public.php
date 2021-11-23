@@ -853,7 +853,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function mwb_wpr_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
 		// mypos
 		// check allowed user for points features.
-
+	
 		if ( $old_status != $new_status ) {
 			$points_key_priority_high = false;
 			$mwb_wpr_one_email = false;
@@ -1021,6 +1021,52 @@ class Points_Rewards_For_WooCommerce_Public {
 						);
 						/*Send mail to client regarding product purchase*/
 						$this->mwb_wpr_send_notification_mail_product( $user_id, $item_points, $mwb_wpr_shortcode, $mwb_wpr_subject_content );
+					}
+				}
+			}
+		}
+
+		$mwb_wpr_array = array( 'processing', 'on-hold', 'pending', 'completed' );
+		if ( in_array( $old_status, $mwb_wpr_array, true ) && ( 'cancelled' === $new_status || 'refunded' === $new_status ) ) {
+			$order = wc_get_order( $order_id );
+			$user_id = absint( $order->get_user_id() );
+			$pre_mwb_check = get_post_meta( $order_id, 'refunded_points_by_cart', true );
+			if ( ! isset( $pre_mwb_check ) || 'done' != $pre_mwb_check ) {
+				$mwb_points_log = get_user_meta( $user_id, 'points_details', true );
+				if ( array_key_exists( 'cart_subtotal_point', $mwb_points_log ) ) {
+					$today_date = date_i18n( 'Y-m-d h:i:sa' );
+					$mwb_value_to_check = absint( get_post_meta( $order_id, 'mwb_cart_discount#points', true ) );
+					foreach ( $mwb_points_log['cart_subtotal_point'] as $key => $value ) {
+
+						if ( ! isset( $pre_mwb_check ) || 'done' != $pre_mwb_check ) {
+							if ( $value['cart_subtotal_point'] ==  $mwb_value_to_check ) {
+								$value_to_refund = $value['cart_subtotal_point'];
+								$mwb_total_points_par = get_user_meta( $user_id, 'mwb_wpr_points', true );
+								$mwb_points_newly_updated = (int) ( $mwb_total_points_par + $value_to_refund );
+								$mwb_refer_deduct_points = get_user_meta( $user_id, 'points_details', true );
+								if ( isset( $mwb_refer_deduct_points['refund_points_applied_on_cart'] ) && ! empty( $mwb_refer_deduct_points['refund_points_applied_on_cart'] ) ) {
+									$mwb_par_refund_purchase = array();
+									$mwb_par_refund_purchase = array(
+										'refund_points_applied_on_cart' => $value_to_refund,
+										'date' => $today_date,
+									);
+									$mwb_refer_deduct_points['refund_points_applied_on_cart'][] = $mwb_par_refund_purchase;
+								} else {
+									if ( ! is_array( $mwb_refer_deduct_points ) ) {
+										$mwb_refer_deduct_points = array();
+									}
+									$mwb_par_refund_purchase = array();
+									$mwb_par_refund_purchase = array(
+										'refund_points_applied_on_cart' => $value_to_refund,
+										'date' => $today_date,
+										);
+									$mwb_refer_deduct_points['refund_points_applied_on_cart'][] = $mwb_par_refund_purchase;
+												}	
+										update_user_meta( $user_id, 'mwb_wpr_points', $mwb_points_newly_updated );
+										update_user_meta( $user_id, 'points_details', $mwb_refer_deduct_points );
+										update_post_meta( $order_id, 'refunded_points_by_cart', 'done' );
+							}
+						}
 					}
 				}
 			}
@@ -1465,6 +1511,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						$this->mwb_wpr_send_points_deducted_mail( $user_id, 'mwb_cart_discount', $fee_to_point );
 						/*Unset the session*/
 						if ( ! empty( WC()->session->get( 'mwb_cart_points' ) ) ) {
+							update_post_meta( $order_id, 'mwb_cart_discount#points', WC()->session->get( 'mwb_cart_points' ) );
 							WC()->session->__unset( 'mwb_cart_points' );
 						}
 					}
