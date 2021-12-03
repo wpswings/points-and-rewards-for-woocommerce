@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Points and Rewards for WooCommerce 1.2.1\n"
-"POT-Creation-Date: 2021-12-03 08:50+0000\n"
+"POT-Creation-Date: 2021-12-03 08:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
@@ -1972,11 +1972,10 @@ msgstr ""
 #: public/class-points-rewards-for-woocommerce-public.php:1139
 #: public/class-points-rewards-for-woocommerce-public.php:1994
 msgctxt "Hello"
-msgid "hello"
+msgid "Apply Points"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1130
-msgctxt "ssss"
 msgid "Your available points:"
 msgstr ""
 

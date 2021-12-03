@@ -39,7 +39,7 @@ $mwb_wpr_coupon_settings = array(
 
 				array(
 					'type'  => 'text',
-					'id'    => 'mwb_wpr_coupon_conversion_points',
+					'id'    => 'mwb_wpr_coupon_conversion_price',
 					'class'   => 'input-text wc_input_price mwb_wpr_new_woo_ver_style_text',
 					'custom_attributes' => array( 'min' => '"1"' ),
 					'desc' => __( ' = ', 'points-and-rewards-for-woocommerce' ),
@@ -48,7 +48,7 @@ $mwb_wpr_coupon_settings = array(
 				),
 				array(
 					'type'  => 'number',
-					'id'    => 'mwb_wpr_coupon_conversion_price',
+					'id'    => 'mwb_wpr_coupon_conversion_points',
 					'class'   => 'input-text mwb_wpr_new_woo_ver_style_text wc_input_price',
 					'default'  => '1',
 					'custom_attributes' => array( 'min' => '"1"' ),
