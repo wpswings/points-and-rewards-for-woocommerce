@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 1.2.0\n"
-"POT-Creation-Date: 2021-10-16 13:53+0530\n"
+"Project-Id-Version: Points and Rewards for WooCommerce 1.2.2\n"
+"POT-Creation-Date: 2021-12-03 15:02+0530\n"
 "PO-Revision-Date: 2021-10-16 02:22+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.3\n"
-"X-Poedit-Basepath: points-and-rewards-for-woocommerce\n"
+"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;"
@@ -50,35 +50,35 @@ msgid "Export"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:135
-#: public/class-points-rewards-for-woocommerce-public.php:81
+#: public/class-points-rewards-for-woocommerce-public.php:82
 msgid "Please enter valid points"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:136
-#: admin/class-points-rewards-for-woocommerce-admin.php:534
+#: admin/class-points-rewards-for-woocommerce-admin.php:533
 msgid "Enter the Name of the Level"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:137
-#: admin/class-points-rewards-for-woocommerce-admin.php:525
+#: admin/class-points-rewards-for-woocommerce-admin.php:524
 msgid "Enter Level"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:138
-#: admin/class-points-rewards-for-woocommerce-admin.php:543
+#: admin/class-points-rewards-for-woocommerce-admin.php:542
 #: admin/partials/templates/class-points-log-list-table.php:58
 msgid "Enter Points"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:139
-#: admin/class-points-rewards-for-woocommerce-admin.php:624
-#: admin/class-points-rewards-for-woocommerce-admin.php:629
+#: admin/class-points-rewards-for-woocommerce-admin.php:623
+#: admin/class-points-rewards-for-woocommerce-admin.php:628
 msgid "Select Product Category"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:140
-#: admin/class-points-rewards-for-woocommerce-admin.php:537
-#: admin/class-points-rewards-for-woocommerce-admin.php:838
+#: admin/class-points-rewards-for-woocommerce-admin.php:536
+#: admin/class-points-rewards-for-woocommerce-admin.php:837
 msgid "Remove"
 msgstr ""
 
@@ -87,7 +87,7 @@ msgid "Select Product"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:143
-#: admin/class-points-rewards-for-woocommerce-admin.php:710
+#: admin/class-points-rewards-for-woocommerce-admin.php:709
 msgid "Enter Discount (%)"
 msgstr ""
 
@@ -128,27 +128,27 @@ msgid "Points are removed successfully!"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:153
-#: admin/class-points-rewards-for-woocommerce-admin.php:581
+#: admin/class-points-rewards-for-woocommerce-admin.php:580
 msgid "Days"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:154
-#: admin/class-points-rewards-for-woocommerce-admin.php:593
+#: admin/class-points-rewards-for-woocommerce-admin.php:592
 msgid "Weeks"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:155
-#: admin/class-points-rewards-for-woocommerce-admin.php:605
+#: admin/class-points-rewards-for-woocommerce-admin.php:604
 msgid "Months"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:156
-#: admin/class-points-rewards-for-woocommerce-admin.php:617
+#: admin/class-points-rewards-for-woocommerce-admin.php:616
 msgid "Years"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:157
-#: admin/class-points-rewards-for-woocommerce-admin.php:559
+#: admin/class-points-rewards-for-woocommerce-admin.php:558
 msgid "Expiration Period"
 msgstr ""
 
@@ -176,87 +176,124 @@ msgstr ""
 msgid "Negative Values Not Allowed"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:187
+#: admin/class-points-rewards-for-woocommerce-admin.php:186
 msgid "Points and Rewards"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:440
+#: admin/class-points-rewards-for-woocommerce-admin.php:439
 msgid "Fail due to an error"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:530
+#: admin/class-points-rewards-for-woocommerce-admin.php:529
 msgid "Entered text will be the name of the level for membership"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:548
+#: admin/class-points-rewards-for-woocommerce-admin.php:547
 msgid "Entered points need to be reached for this level"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:564
+#: admin/class-points-rewards-for-woocommerce-admin.php:563
 msgid "Select the days, week, month or year for  expiration of current level"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:656
+#: admin/class-points-rewards-for-woocommerce-admin.php:655
 msgid "Select all"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:658
+#: admin/class-points-rewards-for-woocommerce-admin.php:657
 msgid "Select none"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:663
+#: admin/class-points-rewards-for-woocommerce-admin.php:662
 msgid "Select Products"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:668
+#: admin/class-points-rewards-for-woocommerce-admin.php:667
 msgid ""
 "Product of selected category will get displayed in the Select Product Section"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:705
+#: admin/class-points-rewards-for-woocommerce-admin.php:704
 msgid ""
 "Select the products if you want to provide a discount on the specific "
 "products of the selected category. Leave empty to select all the products of "
 "the selected category."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:715
+#: admin/class-points-rewards-for-woocommerce-admin.php:714
 msgid "Entered Discount will be applied on the above-selected products"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:764
+#: admin/class-points-rewards-for-woocommerce-admin.php:788
+msgid "Minimum"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:765
 #: admin/class-points-rewards-for-woocommerce-admin.php:789
-msgid "Minimum"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:766
-#: admin/class-points-rewards-for-woocommerce-admin.php:790
 msgid "Maximum"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:768
-#: admin/class-points-rewards-for-woocommerce-admin.php:791
+#: admin/class-points-rewards-for-woocommerce-admin.php:767
+#: admin/class-points-rewards-for-woocommerce-admin.php:790
 #: admin/partials/templates/class-points-log-list-table.php:378
 #: admin/partials/templates/mwb-generral-settings2.php:169
-#: public/class-points-rewards-for-woocommerce-public.php:256
-#: public/class-points-rewards-for-woocommerce-public.php:1108
-#: public/class-points-rewards-for-woocommerce-public.php:1118
-#: public/class-points-rewards-for-woocommerce-public.php:1528
-#: public/class-points-rewards-for-woocommerce-public.php:1568
-#: public/class-points-rewards-for-woocommerce-public.php:1609
-#: public/class-points-rewards-for-woocommerce-public.php:1949
+#: public/class-points-rewards-for-woocommerce-public.php:258
+#: public/class-points-rewards-for-woocommerce-public.php:1129
+#: public/class-points-rewards-for-woocommerce-public.php:1139
+#: public/class-points-rewards-for-woocommerce-public.php:1572
+#: public/class-points-rewards-for-woocommerce-public.php:1612
+#: public/class-points-rewards-for-woocommerce-public.php:1653
+#: public/class-points-rewards-for-woocommerce-public.php:1993
 msgid "Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:771
+#: admin/class-points-rewards-for-woocommerce-admin.php:770
 #: admin/partials/templates/class-points-log-list-table.php:60
 #: admin/partials/templates/class-points-log-list-table.php:393
 msgid "Action"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:909
+#: admin/class-points-rewards-for-woocommerce-admin.php:908
 #, php-format
 msgid " Something went wrong: %s "
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1017
+#: admin/class-points-rewards-for-woocommerce-admin.php:1021
+#: admin/class-points-rewards-for-woocommerce-admin.php:1023
+msgid "Enable Wallet points setting"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1025
+msgid "Check this box to enable points conversion to amount  on wallet."
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1029
+msgid "Conversion rate"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1038
+msgid "Entered point will be converted in frontend."
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1041
+#: admin/partials/templates/mwb-generral-settings2.php:208
+msgid " Points = "
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1049
+msgid "Entered amount to convert"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1107
+#: admin/partials/templates/mwb-coupon-settings.php:45
+msgid " = "
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1117
+#: admin/partials/templates/mwb-coupon-settings.php:55
+msgid " Points "
 msgstr ""
 
 #: admin/index.php:10 admin/partials/index.php:10 includes/index.php:10
@@ -396,7 +433,7 @@ msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:56
 #: admin/partials/templates/class-points-log-list-table.php:1280
-#: public/partials/mwb-wpr-points-log-template.php:830
+#: public/partials/mwb-wpr-points-log-template.php:861
 msgid "Total Points"
 msgstr ""
 
@@ -484,6 +521,7 @@ msgstr ""
 #: admin/partials/templates/class-points-log-list-table.php:1160
 #: admin/partials/templates/class-points-log-list-table.php:1196
 #: admin/partials/templates/class-points-log-list-table.php:1239
+#: public/partials/mwb-wpr-points-log-template.php:735
 msgid "Date & Time"
 msgstr ""
 
@@ -534,8 +572,9 @@ msgstr ""
 #: public/partials/mwb-wpr-points-log-template.php:608
 #: public/partials/mwb-wpr-points-log-template.php:655
 #: public/partials/mwb-wpr-points-log-template.php:701
-#: public/partials/mwb-wpr-points-log-template.php:736
-#: public/partials/mwb-wpr-points-log-template.php:786
+#: public/partials/mwb-wpr-points-log-template.php:738
+#: public/partials/mwb-wpr-points-log-template.php:767
+#: public/partials/mwb-wpr-points-log-template.php:817
 msgid "Point Status"
 msgstr ""
 
@@ -635,8 +674,8 @@ msgstr ""
 #: admin/partials/templates/class-points-log-list-table.php:1126
 #: public/partials/mwb-wpr-points-log-template.php:623
 #: public/partials/mwb-wpr-points-log-template.php:670
-#: public/partials/mwb-wpr-points-log-template.php:751
-#: public/partials/mwb-wpr-points-log-template.php:801
+#: public/partials/mwb-wpr-points-log-template.php:782
+#: public/partials/mwb-wpr-points-log-template.php:832
 msgid "This user doesn't exists"
 msgstr ""
 
@@ -672,7 +711,7 @@ msgid "Received Points by"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:1289
-#: public/partials/mwb-wpr-points-log-template.php:838
+#: public/partials/mwb-wpr-points-log-template.php:869
 msgid "No Points Generated Yet."
 msgstr ""
 
@@ -734,8 +773,8 @@ msgid "Entered Points are assigned to All Products ."
 msgstr ""
 
 #: admin/partials/templates/mwb-assign-pro-points.php:211
-#: admin/partials/templates/mwb-coupon-settings.php:160
-#: admin/partials/templates/mwb-generral-settings2.php:329
+#: admin/partials/templates/mwb-coupon-settings.php:166
+#: admin/partials/templates/mwb-generral-settings2.php:332
 #: admin/partials/templates/mwb-membership-settings.php:173
 #: admin/partials/templates/mwb-order-total.php:124
 #: admin/partials/templates/mwb-other-setting.php:161
@@ -771,14 +810,6 @@ msgstr ""
 msgid ""
 "Enter the redeem price for points. (i.e. how much amounts will be equivalent "
 "to the points)"
-msgstr ""
-
-#: admin/partials/templates/mwb-coupon-settings.php:43
-msgid " = "
-msgstr ""
-
-#: admin/partials/templates/mwb-coupon-settings.php:52
-msgid " Points "
 msgstr ""
 
 #: admin/partials/templates/mwb-generral-settings2.php:21
@@ -985,27 +1016,23 @@ msgid "Conversion rate for Cart Sub-Total Redemption"
 msgstr ""
 
 #: admin/partials/templates/mwb-generral-settings2.php:205
-#: admin/partials/templates/mwb-generral-settings2.php:216
+#: admin/partials/templates/mwb-generral-settings2.php:217
 msgid ""
 "Entered point will assign to that user by which another user referred from "
 "referral link and purchase some products."
 msgstr ""
 
-#: admin/partials/templates/mwb-generral-settings2.php:208
-msgid " Points = "
-msgstr ""
-
-#: admin/partials/templates/mwb-generral-settings2.php:224
+#: admin/partials/templates/mwb-generral-settings2.php:226
 msgid "Enable apply points during checkout"
 msgstr ""
 
-#: admin/partials/templates/mwb-generral-settings2.php:227
+#: admin/partials/templates/mwb-generral-settings2.php:229
 msgid ""
 "Check this box if you want that customer can apply also apply points on "
 "checkout"
 msgstr ""
 
-#: admin/partials/templates/mwb-generral-settings2.php:229
+#: admin/partials/templates/mwb-generral-settings2.php:231
 msgid "Allow customers to apply points during checkout also."
 msgstr ""
 
@@ -1883,126 +1910,150 @@ msgid ""
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:83
+msgid "Please enter some points !!"
+msgstr ""
+
+#: public/class-points-rewards-for-woocommerce-public.php:85
 msgid ""
 "Do you really want to upgrade your user level as this process will deduct "
 "the required points from your account?"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:84
+#: public/class-points-rewards-for-woocommerce-public.php:86
 msgid "Minimum Points Require To Convert Points To Coupon is "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:85
+#: public/class-points-rewards-for-woocommerce-public.php:87
 msgid "Number of Point you had entered will get deducted from your Account"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:89
-#: public/class-points-rewards-for-woocommerce-public.php:1154
+#: public/class-points-rewards-for-woocommerce-public.php:91
+#: public/class-points-rewards-for-woocommerce-public.php:1175
 msgid "Please enter some valid points!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:90
+#: public/class-points-rewards-for-woocommerce-public.php:92
 msgid "You do not have sufficient amount of points"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:91
+#: public/class-points-rewards-for-woocommerce-public.php:93
 msgid "Entered points are not applicable to this order."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:92
+#: public/class-points-rewards-for-woocommerce-public.php:94
 msgid "Please enter points."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:329
+#: public/class-points-rewards-for-woocommerce-public.php:331
 msgid "Referral Link"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:334
+#: public/class-points-rewards-for-woocommerce-public.php:336
 msgid "Copy"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:411
+#: public/class-points-rewards-for-woocommerce-public.php:413
 msgid "Tweet"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:415
+#: public/class-points-rewards-for-woocommerce-public.php:417
 msgid "Share"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1069
+#: public/class-points-rewards-for-woocommerce-public.php:1089
 msgid "You will Get "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1069
+#: public/class-points-rewards-for-woocommerce-public.php:1089
 msgid " Points on a successful Sign Up"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1109
-#: public/class-points-rewards-for-woocommerce-public.php:1119
-#: public/class-points-rewards-for-woocommerce-public.php:1951
+#: public/class-points-rewards-for-woocommerce-public.php:1130
+#: public/class-points-rewards-for-woocommerce-public.php:1140
+#: public/class-points-rewards-for-woocommerce-public.php:1995
 msgid "Apply Points"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1110
+#: public/class-points-rewards-for-woocommerce-public.php:1131
 msgid "Your available points:"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1120
+#: public/class-points-rewards-for-woocommerce-public.php:1141
 msgid "You require :"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1122
+#: public/class-points-rewards-for-woocommerce-public.php:1143
 msgid "more to get redeem"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1140
+#: public/class-points-rewards-for-woocommerce-public.php:1161
 msgid "Can not redeem!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1151
+#: public/class-points-rewards-for-woocommerce-public.php:1172
 msgid "Custom Point has been applied Successfully!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1190
-#: public/class-points-rewards-for-woocommerce-public.php:1321
-#: public/class-points-rewards-for-woocommerce-public.php:1408
-#: public/class-points-rewards-for-woocommerce-public.php:1875
+#: public/class-points-rewards-for-woocommerce-public.php:1212
+#: public/class-points-rewards-for-woocommerce-public.php:1366
+#: public/class-points-rewards-for-woocommerce-public.php:1453
+#: public/class-points-rewards-for-woocommerce-public.php:1919
 msgid "Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1235
+#: public/class-points-rewards-for-woocommerce-public.php:1257
 msgid "Here is the Discount Rule for Applying your Points to Cart Total"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1240
-#: public/class-points-rewards-for-woocommerce-public.php:1265
-#: public/class-points-rewards-for-woocommerce-public.php:1573
-#: public/class-points-rewards-for-woocommerce-public.php:1952
+#: public/class-points-rewards-for-woocommerce-public.php:1262
+#: public/class-points-rewards-for-woocommerce-public.php:1287
+#: public/class-points-rewards-for-woocommerce-public.php:1617
+#: public/class-points-rewards-for-woocommerce-public.php:1996
 msgid " Points"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1254
+#: public/class-points-rewards-for-woocommerce-public.php:1276
 msgid "Place Order and Earn Reward Points in Return."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1262
+#: public/class-points-rewards-for-woocommerce-public.php:1284
 msgid "Conversion Rate: "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1323
+#: public/class-points-rewards-for-woocommerce-public.php:1368
 msgid "[Remove]"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1340
+#: public/class-points-rewards-for-woocommerce-public.php:1385
 msgid "Failed to Remove Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1344
+#: public/class-points-rewards-for-woocommerce-public.php:1389
 msgid "Successfully Removed Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1906
+#: public/class-points-rewards-for-woocommerce-public.php:1950
 msgid "Have A Points?"
+msgstr ""
+
+#: public/class-points-rewards-for-woocommerce-public.php:2124
+msgid "Convert Points to Currency  Wallet Conversion"
+msgstr ""
+
+#: public/class-points-rewards-for-woocommerce-public.php:2127
+msgid "Points Conversion: "
+msgstr ""
+
+#: public/class-points-rewards-for-woocommerce-public.php:2128
+msgid "points = "
+msgstr ""
+
+#: public/class-points-rewards-for-woocommerce-public.php:2134
+msgid "Enter your points:"
+msgstr ""
+
+#: public/class-points-rewards-for-woocommerce-public.php:2139
+msgid "Redeem to Wallet"
 msgstr ""
 
 #: public/partials/mwb-wpr-points-log-template.php:18
@@ -2031,8 +2082,8 @@ msgstr ""
 #: public/partials/mwb-wpr-points-log-template.php:605
 #: public/partials/mwb-wpr-points-log-template.php:652
 #: public/partials/mwb-wpr-points-log-template.php:698
-#: public/partials/mwb-wpr-points-log-template.php:733
-#: public/partials/mwb-wpr-points-log-template.php:783
+#: public/partials/mwb-wpr-points-log-template.php:764
+#: public/partials/mwb-wpr-points-log-template.php:814
 msgid "Date"
 msgstr ""
 
@@ -2097,18 +2148,22 @@ msgid "Received Points via "
 msgstr ""
 
 #: public/partials/mwb-wpr-points-log-template.php:728
+msgid "Points Deduct to wallet"
+msgstr ""
+
+#: public/partials/mwb-wpr-points-log-template.php:759
 msgid " Check Number of Points Earned by Referring Others "
 msgstr ""
 
-#: public/partials/mwb-wpr-points-log-template.php:739
+#: public/partials/mwb-wpr-points-log-template.php:770
 msgid "Sign Up by"
 msgstr ""
 
-#: public/partials/mwb-wpr-points-log-template.php:778
+#: public/partials/mwb-wpr-points-log-template.php:809
 msgid "Points earned by the purchase has been made by referrals"
 msgstr ""
 
-#: public/partials/mwb-wpr-points-log-template.php:789
+#: public/partials/mwb-wpr-points-log-template.php:820
 msgid "Product purchase by Referred User Points"
 msgstr ""
 
