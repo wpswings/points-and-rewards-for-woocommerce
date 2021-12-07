@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="mwb-overview__wrapper">
 	<div class="mwb-overview__banner">
-		<img src="<?php  echo esc_html( MWB_RWPR_DIR_URL ); ?>admin/images/Points-and-Rewards-for-WooCommerce.jpg" alt="Overview banner image">
+		<img src="<?php echo esc_html( MWB_RWPR_DIR_URL ); ?>admin/images/Points-and-Rewards-for-WooCommerce.jpg" alt="Overview banner image">
 	</div>
 	<div class="mwb-overview__content">
 		<div class="mwb-overview__content-description">

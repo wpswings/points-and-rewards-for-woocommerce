@@ -160,8 +160,7 @@
 								}
 							}
 						}
-					}
-				);
+					);
 
 				/*Removing Custom Points on Cart Subtotal handling via Ajax*/
 				$( document ).on(
@@ -224,7 +223,48 @@
 						}
 					}
 				);
-		}
+				//custom code
+				/*Generate custom coupon*/
+				$( '.mwb_wpr_custom_wallet' ).click(function(){
+					var user_id = $( this ).data( 'id' );
+					var user_points = $( '#mwb_custom_wallet_point_num' ).val().trim();
+					$('#mwb_wpr_custom_wallet').prop('disabled', true);
+					if ( user_points ) {
+						var message = '';
+						var html = '';
+						$( "#mwb_wpr_wallet_notification" ).html( "" );
+						user_points = parseFloat( user_points );
+						var data = {
+							action:'mwb_wpr_generate_custom_wallet', 
+							points:user_points,
+							user_id:user_id,
+							mwb_nonce:mwb_wpr.mwb_wpr_nonce,
+						};
+						jQuery( "#mwb_wpr_loader" ).show();
+						$.ajax({
+							url: mwb_wpr.ajaxurl,
+							type: "POST",
+							data: data,
+							dataType :'json',
+							success: function(response){
+								$('#mwb_wpr_custom_wallet').prop('disabled', false);
+								jQuery( "#mwb_wpr_loader" ).hide();
+								if ( response.result == true ) {
+									var html = '<b style="color:green;">' + response.message + '</b>';
+									
+								}
+								if( response.result == false ) {
+									var html = '<b style="color:red;">' + response.message + '</b>';
+								}
+								$( "#mwb_wpr_wallet_notification" ).html( html );
+								
+							}
+						});
+					} else {
+						$('#mwb_wpr_custom_wallet').prop('disabled', false);
+						$( "#mwb_wpr_wallet_notification" ).html( '<b style="color:red;">' + mwb_wpr.empty_notice + '</b>' )
+					}
+			}
 	);
-
+		});
 })( jQuery );

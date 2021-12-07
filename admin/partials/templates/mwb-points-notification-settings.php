@@ -118,7 +118,7 @@ $mwb_settings = array(
 		'class'             => 'input-text',
 		'desc_tip'      => __( 'Input subject for email.', 'points-and-rewards-for-woocommerce' ),
 		'default'   => __( 'Order Amount Points Notification', 'points-and-rewards-for-woocommerce' ),
-	), 
+	),
 	array(
 		'title'         => __( 'Email Description', 'points-and-rewards-for-woocommerce' ),
 		'type'          => 'textarea_email',

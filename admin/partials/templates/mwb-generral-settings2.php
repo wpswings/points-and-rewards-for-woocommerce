@@ -123,7 +123,7 @@ $mwb_wpr_general_settings = array(
 			),
 			array(
 				'type'  => 'checkbox',
-				'id'    => 'mwb_wpr_whatsapp', 
+				'id'    => 'mwb_wpr_whatsapp',
 				'class'   => 'input-text',
 				'desc'  => __( 'Whatsapp', 'points-and-rewards-for-woocommerce' ),
 			),
@@ -206,6 +206,7 @@ $mwb_wpr_general_settings = array(
 					'points-and-rewards-for-woocommerce'
 				),
 				'desc' => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),
+				'curr' => '',
 			),
 			array(
 				'type'  => 'text',
@@ -217,6 +218,7 @@ $mwb_wpr_general_settings = array(
 					'points-and-rewards-for-woocommerce'
 				),
 				'default' => '1',
+				'curr' => get_woocommerce_currency_symbol(),
 			),
 		),
 	),
@@ -302,14 +304,15 @@ endif;
 						if ( 'number_text' == $value['type'] ) {
 							foreach ( $value['number_text'] as $k => $val ) {
 								if ( 'text' == $val['type'] ) {
-									echo esc_html( get_woocommerce_currency_symbol() );
+
+									echo isset( $val['curr'] ) ? esc_html( $val['curr'] ) : '';
 									$settings_obj->mwb_rwpr_generate_text_html( $val, $general_settings );
+									echo '<br>';
 
 								}
 								if ( 'number' == $val['type'] ) {
-									
+
 									$settings_obj->mwb_rwpr_generate_number_html( $val, $general_settings );
-									
 								}
 							}
 						}
