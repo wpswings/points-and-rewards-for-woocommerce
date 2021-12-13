@@ -350,3 +350,6 @@ if ( $enable_mwb_refer ) {
 /* of the Referral Section*/
 do_action( 'mwb_wpr_add_share_points', $user_id );
 $mwb_wpr_user_can_send_point = get_option( 'mwb_wpr_user_can_send_point', 0 );
+
+/* Hooks to Extends the point tab */
+do_action( 'mwb_extend_point_tab_section', $user_id );
