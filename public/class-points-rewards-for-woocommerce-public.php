@@ -1164,7 +1164,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( isset( $user_id ) && ! empty( $user_id ) ) {
 				$mwb_wpr_order_points = apply_filters( 'mwb_wpr_enable_points_on_order_total', false );
 				if ( $mwb_wpr_order_points ) {
-					do_action( 'mwb_wpr_points_on_order_total', $get_points, $user_id );
+					do_action( 'mwb_wpr_points_on_order_total', $get_points, $user_id , $get_min_redeem_req );
 				} else {
 					?>
 						<?php
@@ -2022,6 +2022,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 
 			$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
+			$get_min_redeem_req = $this->mwb_wpr_get_general_settings_num( 'mwb_wpr_apply_points_value' );
 			/* Points Rate*/
 			$mwb_wpr_cart_points_rate = $public_obj->mwb_wpr_get_general_settings_num( 'mwb_wpr_cart_points_rate' );
 			$mwb_wpr_cart_points_rate = ( 0 == $mwb_wpr_cart_points_rate ) ? 1 : $mwb_wpr_cart_points_rate;
@@ -2032,8 +2033,9 @@ class Points_Rewards_For_WooCommerce_Public {
 
 			$mwb_wpr_order_points = apply_filters( 'mwb_wpr_enable_points_on_order_total', false );
 			if ( $mwb_wpr_order_points ) {
-				do_action( 'mwb_wpr_point_limit_on_order_checkout', $get_points, $user_id );
+				do_action( 'mwb_wpr_point_limit_on_order_checkout', $get_points, $user_id, $get_min_redeem_req );
 			} else {
+				if ( $get_min_redeem_req < $get_points ) {
 				?>
 				<div class="custom_point_checkout woocommerce-info mwb_wpr_checkout_points_class">
 					<input type="number" min="0" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>"/>
@@ -2042,6 +2044,16 @@ class Points_Rewards_For_WooCommerce_Public {
 					<p><?php echo esc_html( $get_points ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( $conversion ), $this->mwb_wpr_allowed_html() ); ?></p>
 				</div>
 				<?php
+				} else {
+				$extra_req = abs( $get_min_redeem_req - $get_points );
+				?>
+				<div class="custom_point_checkout woocommerce-info mwb_wpr_checkout_points_class">
+				<input type="number" min="0" name="mwb_cart_points" class="input-text" id="mwb_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
+				<button class="button mwb_cart_points_apply" name="mwb_cart_points_apply" id="mwb_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0" disabled><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<p><?php esc_html_e( 'You require :', 'points-and-rewards-for-woocommerce' ); ?> <?php echo esc_html( $extra_req ); ?> <?php esc_html_e( 'more points to get redeem', 'points-and-rewards-for-woocommerce' ); ?></p>
+				</div>
+				<?php
+			  	}
 			}
 		}
 	}

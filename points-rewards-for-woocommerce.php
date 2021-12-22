@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=MWB-PAR-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>
- * Version:           1.2.2
+ * Version:           1.2.3
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Plugin URI:        https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org
@@ -24,7 +24,7 @@
  * Requires at least: 5.0.0
  * Tested up to:     5.8.2
  * WC requires at least: 4.0
- * WC tested up to:  5.9.0
+ * WC tested up to:  6.0.0
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html

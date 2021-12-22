@@ -151,7 +151,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 					'plain_text'    => false,
 					'email'         => $this,
 				),
-				'points-and-rewards-for-woocommerce',
+				'',
 				$this->template_base
 			);
 		}
@@ -174,7 +174,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 					'plain_text'    => true,
 					'email'         => $this,
 				),
-				'points-and-rewards-for-woocommerce',
+				'',
 				$this->template_base
 			);
 		}
