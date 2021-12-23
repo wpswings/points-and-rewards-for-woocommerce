@@ -1,5 +1,4 @@
-
-[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-4000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.2-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.9.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
+[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-4000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.2-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.0.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
 # Points and Rewards for WooCommerce – Create Loyalty Programs, Reward Customer Purchases, Referral Points & Redemptions
 ![Points and Rewards for WooCommerce](https://ps.w.org/points-and-rewards-for-woocommerce/assets/banner-772x250.jpg)
 * Contributors: MakeWebBetter
@@ -32,6 +31,7 @@
 * Change the point value for the order total and cart redemption
 * Assign a similar point value to all simple products with global point assign feature
 * Offer a specific number of points for a set price range of the order value
+* Hooks to extend the points tab for admin
 
 
 ## WHAT’S INCLUDED IN OUR FREE POINTS AND REWARDS FOR WOOCOMMERCE PLUGIN
@@ -59,15 +59,19 @@ Points Log Report feature is available for both customers and admin:
 * For Customers – They can check and monitor each point transaction they have done so far. The log table shows the details for each point they earned and redeemed.
 * For Merchant – They can view the user points history to track the points transaction for each customer. Along with it, they can add or deduct points from any customer’s account using this feature.
 
+Additionally, the admin is provided with hooks through which he can extend and customize the points tab and My Account page.
+
 **5) Customer Notification Feature**
 With the Points and Rewards for WooCommerce plugin, merchants can notify their customers of each point transaction. Merchants can customize the email subject and message for different notification types. The notification is sent to the registered email of the customer.
 
 **6) WPML Multilingual Compatibility**
 The WooCommerce rewards plugin is compatible with the WPML Multilingual plugin that allows you to reward your customers in your local language.
 
-[**Free demo of Points and Rewards for WooCommerce**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce-lite/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
+* [**Free demo of Points and Rewards for WooCommerce**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce-lite/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
 
-Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.makewebbetter.com/points-rewards-for-WooCommerce/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git) and learn more about the features and working of the plugin.
+* Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.makewebbetter.com/points-rewards-for-WooCommerce/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git) and learn more about the features and working of the plugin.
+
+* Check out [**Points and Rewards plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce-kb/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
 
 
 ## PLUGIN COMPATIBILITIES 
@@ -79,12 +83,10 @@ Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.makewe
 * The Points and Rewards plugin is compatible with the WordPress Multilingual (WPML) plugin for localization of the rewards plugin’s strings.
 
 
-
-
-
-
 ## WHAT PREMIUM VERSION OF WOOCOMMERCE POINTS AND REWARDS OFFERS: 
 
+* Daily First Login Points
+* Create Customer Ranking On Points
 * Rewards On Birthday
 * Exclude Points On Delivery Fee And Tax Amount
 * Points Adjustments On Order Refund & Cancellation
@@ -108,7 +110,7 @@ Points and Rewards for WooCommerce help merchants create a points-based loyalty 
 
 > Note:  Get [**Points and Rewards for WooCommerce Pro**](https://makewebbetter.com/product/woocommerce-points-and-rewards/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
 
-**See what Perties freshwear is saying about Points and Rewards plugin:**
+**See what Perties freshwear is saying about WooCommerce Points and Rewards plugin:**
 > I couldn’t expect better results with any other team. Attention is always excellent and on time even when you have minor issues, and they solve them asap. The features have everything, and I can’t think of any feature that could make it better. From compatibility to customizations, they have assisted a lot. Absolute satisfaction. I’ll give it a full 5-star review. It’s definitely worth an upgrade to the pro plugin version. Additionally, I’m using RMA for WooCommerce, and it’s smooth too.  [**See Points and Rewards Case Study**](https://makewebbetter.com/success-stories/perties-freshwear/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
 
 
@@ -138,6 +140,7 @@ If you need support or have questions, kindly use our online chat window [**here
 * [**Visit our LinkedIn Account**](https://www.linkedin.com/company/makewebbetter)
 * [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
 * [**Follow Our SlideShare**](https://www.slideshare.net/MakeWebBetter)
+
 
 
 
