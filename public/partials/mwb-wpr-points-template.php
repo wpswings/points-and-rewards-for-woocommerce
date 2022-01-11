@@ -217,8 +217,11 @@ if ( $mwb_wpr_mem_enable ) {
 											foreach ( $values['Product'] as $key => $pro_id ) {
 												$pro_img = wp_get_attachment_image_src( get_post_thumbnail_id( $pro_id ), 'single-post-thumbnail' );
 												$_product = wc_get_product( $pro_id );
-												$price = $_product->get_price();
-												$product_name = $_product->get_title();
+												if( is_object( $_product ) ) {
+
+													$price = $_product->get_price();
+													$product_name = $_product->get_title();
+												}
 												$pro_url = get_permalink( $pro_id );
 												if ( empty( $pro_img[0] ) ) {
 													$pro_img[0] = MWB_RWPR_DIR_URL . 'public/images/placeholder.png';

@@ -13,7 +13,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+
 }
+
 if ( ! defined( 'MWB_PAR_ONBOARD_PLUGIN_NAME' ) ) {
 	define( 'MWB_PAR_ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
 }

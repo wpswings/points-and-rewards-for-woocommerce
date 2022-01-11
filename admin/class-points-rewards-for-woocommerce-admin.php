@@ -219,6 +219,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_rwpr_admin_setting() {
+		?>
+		<?php
 		include_once MWB_RWPR_DIR_PATH . '/admin/partials/points-rewards-for-woocommerce-admin-display.php';
 	}
 

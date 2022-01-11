@@ -13,9 +13,9 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
- * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=MWB-PAR-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> MakeWebBetter </strong></a>
- * Version:           1.2.3
- * Author:            MakeWebBetter
+ * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=MWB-PAR-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
+ * Version:           1.2.4
+ * Author:            WP Swings
  * Author URI:        https://makewebbetter.com/
  * Plugin URI:        https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org
  * Text Domain:       points-and-rewards-for-woocommerce
@@ -286,6 +286,71 @@ if ( $activated ) {
 		add_rewrite_endpoint( 'view-log', EP_PAGES );
 		flush_rewrite_rules();
 
+	}
+	/**
+	 * Migration to new domain notice.
+	 *
+	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @param array  $plugin_data An array of plugin data.
+	 * @param string $status Status filter currently applied to the plugin list.
+	 */
+	function mwb_wpr_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+
+		?>
+			<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-success inline update-message notice-alt">
+					<div class='wps-notice-title wps-notice-section'>
+						<p><strong>IMPORTANT NOTICE:</strong></p>
+					</div>
+					<div class='wps-notice-content wps-notice-section'>
+						<p>From this update [here] onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+						Please connect with us for all setup, support, and update related queries without hesitation.</p>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<style>
+			.wps-notice-section > p:before {
+				content: none;
+			}
+		</style>
+		<?php
+
+	}
+	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mwb_wpr_upgrade_notice', 0, 3 );
+
+	add_action( 'admin_notices', 'mwb_wpr_updgrade_notice' );
+
+	/**
+	 * Migration to new domain notice.
+	 */
+	function mwb_wpr_updgrade_notice() {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+		if ( 'mwb-rwpr-setting' === $tab ) { ?>
+
+		<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-success inline update-message notice-alt">
+					<div class='wps-notice-title wps-notice-section'>
+						<p><strong>IMPORTANT NOTICE:</strong></p>
+					</div>
+					<div class='wps-notice-content wps-notice-section'>
+						<p>From this update [here] onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+						Please connect with us for all setup, support, and update related queries without hesitation.</p>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<style>
+			.wps-notice-section > p:before {
+				content: none;
+			}
+		</style>
+			<?php
+		}
 	}
 } else {
 

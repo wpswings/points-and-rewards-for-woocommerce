@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 	<div class="mwb-overview__content">
 		<div class="mwb-overview__content-description">
-			<h2><?php echo esc_html_e( 'What is Points And Rewards For WooCommerce? ', 'points-and-rewards-for-woocommerce' ); ?></h2>
+			<h3><?php echo esc_html_e( 'What is Points And Rewards For WooCommerce? ', 'points-and-rewards-for-woocommerce' ); ?></h3>
 			<p>
 				<?php
 				esc_html_e(
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<li>
 			</ul>
 		</div>
-		<h2> <?php esc_html_e( 'The Free Plugin Benefits', 'points-and-rewards-for-woocommerce' ); ?></h2>
+		<h3> <?php esc_html_e( 'The Free Plugin Benefits', 'points-and-rewards-for-woocommerce' ); ?></h3>
 		<div class="mwb-overview__keywords">
 			<div class="mwb-overview__keywords-item">
 				<div class="mwb-overview__keywords-card">
