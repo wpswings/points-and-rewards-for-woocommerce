@@ -891,7 +891,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function mwb_wpr_get_update_notification_data() {
 		$mwb_notification_data = array();
-		$url = 'https://demo.makewebbetter.com/client-notification/points-and-rewards-for-woocommerce/mwb-client-notify.php';
+		$url = 'https://demo.wpswings.com/client-notification/points-and-rewards-for-woocommerce/mwb-client-notify.php';
 		$attr = array(
 			'action' => 'mwb_notification_fetch',
 			'plugin_version' => REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION,
