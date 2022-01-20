@@ -81,7 +81,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 			</div>
 			<div class="mwb_rwpr_header_content_right">
 				<ul>
-					<li class="mwb_wpr_get_pro"><a href="https://wpswings.com/contact-us/" target="_blank">
+					<li class="mwb_wpr_get_pro"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-contact-us&utm_medium=par-org-backend&utm_campaign=contact-us" target="_blank">
 						<span class="dashicons dashicons-phone"></span>
 						<span class="mwb_wpr_contact_doc_text"><?php esc_html_e( 'Contact us', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</a>
