@@ -81,12 +81,12 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 			</div>
 			<div class="mwb_rwpr_header_content_right">
 				<ul>
-					<li class="mwb_wpr_get_pro"><a href="https://makewebbetter.com/contact-us/" target="_blank">
+					<li class="mwb_wpr_get_pro"><a href="https://wpswings.com/contact-us/" target="_blank">
 						<span class="dashicons dashicons-phone"></span>
 						<span class="mwb_wpr_contact_doc_text"><?php esc_html_e( 'Contact us', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</a>
 				</li>
-				<li class="mwb_wpr_get_pro"><a href="https://docs.makewebbetter.com/points-rewards-for-woocommerce?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org" target="_blank">
+				<li class="mwb_wpr_get_pro"><a href="https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-backend&utm_campaign=documentation" target="_blank">
 					<span class="dashicons dashicons-media-document"></span>
 					<span class="mwb_wpr_contact_doc_text"><?php esc_html_e( 'Doc', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</a>
@@ -94,11 +94,10 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 			<?php
 			if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 				?>
-						<li class="mwb_wpr_get_pro"><a  href="https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
+						<li class="mwb_wpr_get_pro"><a  href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
 					<?php
 			}
-			?>
-			
+			?>	
 		</ul>
 	</div>
 </div>

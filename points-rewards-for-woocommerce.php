@@ -7,17 +7,17 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://makewebbetter.com/
+ * @link              https://wpswings.com/
  * @since             1.0.0
  * @package           points-and-rewards-for-wooCommerce
  *
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
- * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://makewebbetter.com/wordpress-plugins/?utm_source=org-plugin&utm_medium=plugin-desc&utm_campaign=MWB-PAR-org" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
+ * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://wpswings.com/product/?utm_source=wpswings-shop-page&utm_medium=par-org-page&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
  * Version:           1.2.4
  * Author:            WP Swings
- * Author URI:        https://makewebbetter.com/
- * Plugin URI:        https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org
+ * Author URI:        https://wpswings.com/
+ * Plugin URI:        https://wpswings.com/product/?utm_source=wpswings-shop-page&utm_medium=par-org-page&utm_campaign=more-plugin
  * Text Domain:       points-and-rewards-for-woocommerce
  * Domain Path:       /languages
  *
@@ -88,11 +88,11 @@ if ( $activated ) {
 		if ( strpos( $file, 'points-rewards-for-woocommerce.php' ) !== false ) {
 
 			$row_meta = array(
-				'demo' => '<a target="_blank" href="https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/my-account?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org"><i class="fas fa-laptop" style="margin-right:3px;"></i>' . esc_html__( 'Premium Demo', 'points-and-rewards-for-woocommerce' ) . '</a>',
+				'demo' => '<a target="_blank" href="https://demo.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-demo&utm_medium=par-org-backend&utm_campaign=demo"><i class="fas fa-laptop" style="margin-right:3px;"></i>' . esc_html__( 'Premium Demo', 'points-and-rewards-for-woocommerce' ) . '</a>',
 
-				'docs'    => '<a target="_blank" href="https://docs.makewebbetter.com/points-rewards-for-woocommerce?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org"><i class="far fa-file-alt" style="margin-right:3px;"></i>' . esc_html__( 'Documentation', 'points-and-rewards-for-woocommerce' ) . '</a>',
+				'docs'    => '<a target="_blank" href="https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-backend&utm_campaign=documentation"><i class="far fa-file-alt" style="margin-right:3px;"></i>' . esc_html__( 'Documentation', 'points-and-rewards-for-woocommerce' ) . '</a>',
 
-				'support' => '<a target="_blank" href="https://makewebbetter.com/submit-query/"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>' . esc_html__( 'Support', 'points-and-rewards-for-woocommerce' ) . '</a>',
+				'support' => '<a target="_blank" href="https://wpswings.com/submit-query/?utm_source=wpswings-par-support&utm_medium=par-org-backend&utm_campaign=support"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>' . esc_html__( 'Support', 'points-and-rewards-for-woocommerce' ) . '</a>',
 
 			);
 
@@ -226,7 +226,7 @@ if ( $activated ) {
 
 		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 
-			$my_link['goPro'] = '<a class="mwb-wpr-go-pro" target="_blank" href="https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org">' . esc_html__( 'GO PRO', 'points-and-rewards-for-woocommerce' ) . '</a>';
+			$my_link['goPro'] = '<a class="mwb-wpr-go-pro" target="_blank" href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'points-and-rewards-for-woocommerce' ) . '</a>';
 		}
 
 		return array_merge( $my_link, $links );
@@ -304,7 +304,7 @@ if ( $activated ) {
 						<p><strong>IMPORTANT NOTICE:</strong></p>
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
-						<p>From this update [here] onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+						<p>From this update <strong>Version 1.2.4</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
 						Please connect with us for all setup, support, and update related queries without hesitation.</p>
 					</div>
 				</div>
@@ -338,7 +338,7 @@ if ( $activated ) {
 						<p><strong>IMPORTANT NOTICE:</strong></p>
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
-						<p>From this update [here] onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+						<p>From this update <strong>Version 1.2.4</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
 						Please connect with us for all setup, support, and update related queries without hesitation.</p>
 					</div>
 				</div>

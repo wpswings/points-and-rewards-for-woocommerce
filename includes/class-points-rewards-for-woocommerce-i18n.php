@@ -21,7 +21,7 @@
  * @since      1.0.0
  * @package    points-and-rewards-for-wooCommerce
  * @subpackage points-and-rewards-for-wooCommerce/includes
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     makewebbetter <webmaster@wpswings.com>
  */
 class Points_Rewards_For_Woocommerce_I18n {
 
