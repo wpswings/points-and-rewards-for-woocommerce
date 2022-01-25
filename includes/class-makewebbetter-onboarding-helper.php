@@ -47,26 +47,24 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Portal id of hubspot api.
 	 *
-	 * @since 3.0.0
+	 * @since 1.0.0
 	 * @var string Portal id.
 	 */
-	private static $portal_id = '25444144'; // Wp Swings portal.
+	private static $portal_id = '6493626';
 
 	/**
 	 * Form id of hubspot api.
 	 *
-	 * @since 3.0.0
+	 * @since 1.0.0
 	 * @var string Form id.
 	 */
-	private static $onboarding_form_id = '2a2fe23c-0024-43f5-9473-cbfefdb06fe2';
-
+	private static $onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
 	/**
-	 * Form id of hubspot api.
+	 * Deactivation variable
 	 *
-	 * @since 3.0.0
-	 * @var string deactivation Form id.
+	 * @var string
 	 */
-	private static $deactivation_form_id = '67feecaa-9a93-4fda-8f85-f73168da2672';
+	private static $deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
 
 
 	/**
@@ -907,7 +905,9 @@ class Makewebbetter_Onboarding_Helper {
 
 		$url = 'submissions/v3/integration/submit/' . self::$portal_id . '/' . $form_id;
 
-		$headers = 'Content-Type: application/json';
+		$headers = array(
+			'Content-Type' => 'application/json',
+		);
 
 		$form_data = json_encode(
 			array(

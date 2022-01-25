@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</p>
 					</div>
 					<div class="mwb_wpr_premium_upgrade_btn">
-						<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" class="mwb_wpr_premium--cta"><?php esc_html_e( 'UPGRADE', 'points-and-rewards-for-woocommerce' ); ?></a>
+						<a href="https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org" class="mwb_wpr_premium--cta"><?php esc_html_e( 'UPGRADE', 'points-and-rewards-for-woocommerce' ); ?></a>
 					</div>
 				</div>
 			</div>
@@ -142,7 +142,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</p>
 					</div>
 					<div class="mwb_wpr_premium_upgrade_btn">
-						<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" class="mwb_wpr_premium--cta"><?php esc_html_e( 'UPGRADE', 'points-and-rewards-for-woocommerce' ); ?></a>
+						<a href="https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org" class="mwb_wpr_premium--cta"><?php esc_html_e( 'UPGRADE', 'points-and-rewards-for-woocommerce' ); ?></a>
 					</div>
 				</div>
 			</div>

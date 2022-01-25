@@ -1,21 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 1.2.4\n"
-"POT-Creation-Date: 2022-01-20 15:16+0530\n"
-"PO-Revision-Date: 2022-01-24 13:48+0530\n"
-"Language-Team: WP Swings\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2021-12-22 18:33+0530\n"
+"PO-Revision-Date: 2021-12-22 18:34+0530\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
-"X-Poedit-Basepath: ..\n"
+"X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;"
-"esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop;translate_nooped_plural\n"
-"Last-Translator: \n"
-"Language: en_US\n"
-"X-Poedit-SearchPath-0: .\n"
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:98
 #, php-format
@@ -53,30 +49,30 @@ msgid "Please enter valid points"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:136
-#: admin/class-points-rewards-for-woocommerce-admin.php:535
+#: admin/class-points-rewards-for-woocommerce-admin.php:533
 msgid "Enter the Name of the Level"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:137
-#: admin/class-points-rewards-for-woocommerce-admin.php:526
+#: admin/class-points-rewards-for-woocommerce-admin.php:524
 msgid "Enter Level"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:138
-#: admin/class-points-rewards-for-woocommerce-admin.php:544
+#: admin/class-points-rewards-for-woocommerce-admin.php:542
 #: admin/partials/templates/class-points-log-list-table.php:58
 msgid "Enter Points"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:139
-#: admin/class-points-rewards-for-woocommerce-admin.php:625
-#: admin/class-points-rewards-for-woocommerce-admin.php:630
+#: admin/class-points-rewards-for-woocommerce-admin.php:623
+#: admin/class-points-rewards-for-woocommerce-admin.php:628
 msgid "Select Product Category"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:140
-#: admin/class-points-rewards-for-woocommerce-admin.php:538
-#: admin/class-points-rewards-for-woocommerce-admin.php:839
+#: admin/class-points-rewards-for-woocommerce-admin.php:536
+#: admin/class-points-rewards-for-woocommerce-admin.php:837
 msgid "Remove"
 msgstr ""
 
@@ -85,7 +81,7 @@ msgid "Select Product"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:143
-#: admin/class-points-rewards-for-woocommerce-admin.php:711
+#: admin/class-points-rewards-for-woocommerce-admin.php:709
 msgid "Enter Discount (%)"
 msgstr ""
 
@@ -126,27 +122,27 @@ msgid "Points are removed successfully!"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:153
-#: admin/class-points-rewards-for-woocommerce-admin.php:582
+#: admin/class-points-rewards-for-woocommerce-admin.php:580
 msgid "Days"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:154
-#: admin/class-points-rewards-for-woocommerce-admin.php:594
+#: admin/class-points-rewards-for-woocommerce-admin.php:592
 msgid "Weeks"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:155
-#: admin/class-points-rewards-for-woocommerce-admin.php:606
+#: admin/class-points-rewards-for-woocommerce-admin.php:604
 msgid "Months"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:156
-#: admin/class-points-rewards-for-woocommerce-admin.php:618
+#: admin/class-points-rewards-for-woocommerce-admin.php:616
 msgid "Years"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:157
-#: admin/class-points-rewards-for-woocommerce-admin.php:560
+#: admin/class-points-rewards-for-woocommerce-admin.php:558
 msgid "Expiration Period"
 msgstr ""
 
@@ -178,62 +174,62 @@ msgstr ""
 msgid "Points and Rewards"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:441
+#: admin/class-points-rewards-for-woocommerce-admin.php:439
 msgid "Fail due to an error"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:531
+#: admin/class-points-rewards-for-woocommerce-admin.php:529
 msgid "Entered text will be the name of the level for membership"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:549
+#: admin/class-points-rewards-for-woocommerce-admin.php:547
 msgid "Entered points need to be reached for this level"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:565
+#: admin/class-points-rewards-for-woocommerce-admin.php:563
 msgid "Select the days, week, month or year for  expiration of current level"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:657
+#: admin/class-points-rewards-for-woocommerce-admin.php:655
 msgid "Select all"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:659
+#: admin/class-points-rewards-for-woocommerce-admin.php:657
 msgid "Select none"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:664
+#: admin/class-points-rewards-for-woocommerce-admin.php:662
 msgid "Select Products"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:669
+#: admin/class-points-rewards-for-woocommerce-admin.php:667
 msgid ""
 "Product of selected category will get displayed in the Select Product Section"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:706
+#: admin/class-points-rewards-for-woocommerce-admin.php:704
 msgid ""
 "Select the products if you want to provide a discount on the specific "
 "products of the selected category. Leave empty to select all the products of "
 "the selected category."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:716
+#: admin/class-points-rewards-for-woocommerce-admin.php:714
 msgid "Entered Discount will be applied on the above-selected products"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:766
-#: admin/class-points-rewards-for-woocommerce-admin.php:790
+#: admin/class-points-rewards-for-woocommerce-admin.php:764
+#: admin/class-points-rewards-for-woocommerce-admin.php:788
 msgid "Minimum"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:767
-#: admin/class-points-rewards-for-woocommerce-admin.php:791
+#: admin/class-points-rewards-for-woocommerce-admin.php:765
+#: admin/class-points-rewards-for-woocommerce-admin.php:789
 msgid "Maximum"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:769
-#: admin/class-points-rewards-for-woocommerce-admin.php:792
+#: admin/class-points-rewards-for-woocommerce-admin.php:767
+#: admin/class-points-rewards-for-woocommerce-admin.php:790
 #: admin/partials/templates/class-points-log-list-table.php:378
 #: admin/partials/templates/mwb-generral-settings2.php:169
 #: public/class-points-rewards-for-woocommerce-public.php:258
@@ -247,50 +243,50 @@ msgstr ""
 msgid "Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:772
+#: admin/class-points-rewards-for-woocommerce-admin.php:770
 #: admin/partials/templates/class-points-log-list-table.php:60
 #: admin/partials/templates/class-points-log-list-table.php:393
 msgid "Action"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:910
+#: admin/class-points-rewards-for-woocommerce-admin.php:908
 #, php-format
 msgid " Something went wrong: %s "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1019
+#: admin/class-points-rewards-for-woocommerce-admin.php:1017
+#: admin/class-points-rewards-for-woocommerce-admin.php:1021
 #: admin/class-points-rewards-for-woocommerce-admin.php:1023
-#: admin/class-points-rewards-for-woocommerce-admin.php:1025
 msgid "Enable Wallet points setting"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1027
+#: admin/class-points-rewards-for-woocommerce-admin.php:1025
 msgid "Check this box to enable points conversion to amount  on wallet."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1031
+#: admin/class-points-rewards-for-woocommerce-admin.php:1029
 msgid "Conversion rate"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1040
+#: admin/class-points-rewards-for-woocommerce-admin.php:1038
 msgid "Entered point will be converted in frontend."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1043
+#: admin/class-points-rewards-for-woocommerce-admin.php:1041
 #: admin/partials/templates/mwb-generral-settings2.php:208
 msgid " Points = "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1051
+#: admin/class-points-rewards-for-woocommerce-admin.php:1049
 msgid "Entered amount to convert"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1109
+#: admin/class-points-rewards-for-woocommerce-admin.php:1107
 #: admin/partials/templates/mwb-coupon-settings.php:45
 msgid " = "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1119
+#: admin/class-points-rewards-for-woocommerce-admin.php:1117
 #: admin/partials/templates/mwb-coupon-settings.php:55
 msgid " Points "
 msgstr ""
@@ -300,61 +296,61 @@ msgstr ""
 msgid "oops looks like nothing is here"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:28
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:26
 msgid "Overview"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:32
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:30
 msgid "General"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:37
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:35
 msgid "Per Currency Points Settings"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:41
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:39
 #: admin/partials/templates/class-points-log-list-table.php:1295
 msgid "Points Table"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:45
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:43
 msgid "Points Notification"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:49
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:47
 msgid "Membership"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:53
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:51
 msgid "Assign Product Points"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:58
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:56
 #: admin/partials/templates/mwb-other-setting.php:52
 msgid "Other Settings"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:62
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:60
 msgid "Order Total Points"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:68
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:66
 msgid "Premium Features"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:79
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:77
 msgid "Points and Rewards for WooCommerce"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:86
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:84
 msgid "Contact us"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:91
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:89
 msgid "Doc"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:97
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:95
 msgid "GO PRO NOW"
 msgstr ""
 
@@ -1683,139 +1679,139 @@ msgstr ""
 msgid "Choose which format of email to send."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:323
+#: includes/class-makewebbetter-onboarding-helper.php:321
 msgid "What is your monthly revenue?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:340
+#: includes/class-makewebbetter-onboarding-helper.php:338
 msgid "What industry defines your business?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:348
+#: includes/class-makewebbetter-onboarding-helper.php:346
 msgid "Agency"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:349
+#: includes/class-makewebbetter-onboarding-helper.php:347
 msgid "Consumer Services"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:350
+#: includes/class-makewebbetter-onboarding-helper.php:348
 msgid "Ecommerce"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:351
+#: includes/class-makewebbetter-onboarding-helper.php:349
 msgid "Financial Services"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:352
+#: includes/class-makewebbetter-onboarding-helper.php:350
 msgid "Healthcare"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:353
+#: includes/class-makewebbetter-onboarding-helper.php:351
 msgid "Manufacturing"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:354
+#: includes/class-makewebbetter-onboarding-helper.php:352
 msgid "Nonprofit and Education"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:355
+#: includes/class-makewebbetter-onboarding-helper.php:353
 msgid "Professional Services"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:356
+#: includes/class-makewebbetter-onboarding-helper.php:354
 msgid "Real Estate"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:357
+#: includes/class-makewebbetter-onboarding-helper.php:355
 msgid "Software"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:358
+#: includes/class-makewebbetter-onboarding-helper.php:356
 msgid "Startups"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:359
+#: includes/class-makewebbetter-onboarding-helper.php:357
 msgid "Restaurant"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:360
+#: includes/class-makewebbetter-onboarding-helper.php:358
 msgid "Fitness"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:361
+#: includes/class-makewebbetter-onboarding-helper.php:359
 msgid "Jewelry"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:362
+#: includes/class-makewebbetter-onboarding-helper.php:360
 msgid "Beauty"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:363
+#: includes/class-makewebbetter-onboarding-helper.php:361
 msgid "Celebrity"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:364
+#: includes/class-makewebbetter-onboarding-helper.php:362
 msgid "Gaming"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:365
+#: includes/class-makewebbetter-onboarding-helper.php:363
 msgid "Government"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:366
+#: includes/class-makewebbetter-onboarding-helper.php:364
 msgid "Sports"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:367
+#: includes/class-makewebbetter-onboarding-helper.php:365
 msgid "Retail Store"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:368
+#: includes/class-makewebbetter-onboarding-helper.php:366
 msgid "Travel"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:369
+#: includes/class-makewebbetter-onboarding-helper.php:367
 msgid "Political Campaign"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:375
+#: includes/class-makewebbetter-onboarding-helper.php:373
 msgid "What is the best email address to contact you?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:385
+#: includes/class-makewebbetter-onboarding-helper.php:383
 msgid "What is your contact number?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:480
+#: includes/class-makewebbetter-onboarding-helper.php:478
 msgid "It is a temporary deactivation. I am just debugging an issue."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:481
+#: includes/class-makewebbetter-onboarding-helper.php:479
 msgid "The plugin broke my layout or some functionality."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:482
+#: includes/class-makewebbetter-onboarding-helper.php:480
 msgid "The plugin is too complicated to configure."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:483
+#: includes/class-makewebbetter-onboarding-helper.php:481
 msgid "I no longer need the plugin"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:484
+#: includes/class-makewebbetter-onboarding-helper.php:482
 msgid "I found a better plugin"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:485
+#: includes/class-makewebbetter-onboarding-helper.php:483
 msgid "Other"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:625
+#: includes/class-makewebbetter-onboarding-helper.php:623
 msgid "Select Any One Option..."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:878
+#: includes/class-makewebbetter-onboarding-helper.php:876
 msgid "Unexpected Error Occured"
 msgstr ""
 
@@ -1828,7 +1824,7 @@ msgid "Skip and Deactivate Now"
 msgstr ""
 
 #: includes/extra-templates/makewebbetter-onboarding-template-display.php:43
-msgid "Welcome to WP Swings"
+msgid "Welcome to MakeWebBetter"
 msgstr ""
 
 #: includes/extra-templates/makewebbetter-onboarding-template-display.php:44
@@ -1883,7 +1879,7 @@ msgstr ""
 msgid "GO PRO"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:389
+#: points-rewards-for-woocommerce.php:324
 msgid ""
 "WooCommerce is not activated, Please activate WooCommerce first to activate "
 "Points and Rewards for WooCommerce."
@@ -2187,20 +2183,20 @@ msgstr ""
 msgid "% discount on below products or categories"
 msgstr ""
 
-#: public/partials/mwb-wpr-points-template.php:312
+#: public/partials/mwb-wpr-points-template.php:309
 msgid "Upgrade User Level"
 msgstr ""
 
-#: public/partials/mwb-wpr-points-template.php:314
+#: public/partials/mwb-wpr-points-template.php:311
 msgid "Upgrade Your User Level: "
 msgstr ""
 
-#: public/partials/mwb-wpr-points-template.php:318
+#: public/partials/mwb-wpr-points-template.php:315
 msgid "Select Level"
 msgstr ""
 
-#: public/partials/mwb-wpr-points-template.php:335
-#: public/partials/mwb-wpr-points-template.php:336
+#: public/partials/mwb-wpr-points-template.php:332
+#: public/partials/mwb-wpr-points-template.php:333
 msgid "Upgrade Level"
 msgstr ""
 

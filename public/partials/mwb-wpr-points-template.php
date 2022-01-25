@@ -28,7 +28,8 @@ if ( isset( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 		$user = get_user_by( 'ID', $user_id );
 		$get_points = (int) get_user_meta( $user_id, 'mwb_wpr_points', true );
 		$membership_detail = get_user_meta( $user_id, 'points_details', true );
-		$today_date = date_i18n( 'Y-m-d h:i:sa', current_time( 'timestamp', 0 ) );
+		// $today_date = date_i18n( 'Y-m-d h:i:sa', current_time( 'timestamp', 0 ) );
+		$today_date= current_time('mysql');
 		$expiration_date = '';
 		$membership_settings_array = get_option( 'mwb_wpr_membership_settings', true );
 		$mwb_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
@@ -41,7 +42,10 @@ if ( isset( $_POST['mwb_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 				$this->mwb_wpr_update_points_details( $user_id, 'membership', $values['Points'], $data );
 
 				if ( isset( $values['Exp_Number'] ) && ! empty( $values['Exp_Number'] ) && isset( $values['Exp_Days'] ) && ! empty( $values['Exp_Days'] ) ) {
-					$expiration_date = date_i18n( 'Y-m-d', strtotime( $today_date . ' +' . $values['Exp_Number'] . ' ' . $values['Exp_Days'] ) );
+
+					$expiration_date = date_i18n( 'Y-m-d', strtotime( ' +' . $values['Exp_Number'] . ' ' . $values['Exp_Days'] ,strtotime( $today_date ) ) );
+				
+					
 				}
 				update_user_meta( $user_id, 'mwb_wpr_points', $remaining_points );
 				update_user_meta( $user_id, 'membership_level', $selected_role );
@@ -217,11 +221,8 @@ if ( $mwb_wpr_mem_enable ) {
 											foreach ( $values['Product'] as $key => $pro_id ) {
 												$pro_img = wp_get_attachment_image_src( get_post_thumbnail_id( $pro_id ), 'single-post-thumbnail' );
 												$_product = wc_get_product( $pro_id );
-												if( is_object( $_product ) ) {
-
-													$price = $_product->get_price();
-													$product_name = $_product->get_title();
-												}
+												$price = $_product->get_price();
+												$product_name = $_product->get_title();
 												$pro_url = get_permalink( $pro_id );
 												if ( empty( $pro_img[0] ) ) {
 													$pro_img[0] = MWB_RWPR_DIR_URL . 'public/images/placeholder.png';

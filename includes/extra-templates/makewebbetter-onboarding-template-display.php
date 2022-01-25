@@ -40,7 +40,7 @@ if ( ! $is_valid ) {
 					<span class="close-form">x</span>
 				</a>
 			</div>
-			<h3 class="mwb-on-boarding-heading"><?php esc_html_e( 'Welcome to WP Swings', 'points-and-rewards-for-woocommerce' ); ?></h3>
+			<h3 class="mwb-on-boarding-heading"><?php esc_html_e( 'Welcome to MakeWebBetter', 'points-and-rewards-for-woocommerce' ); ?></h3>
 			<p class="mwb-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'points-and-rewards-for-woocommerce' ); ?></p>
 			<form action="#" method="post" class="mwb-on-boarding-form">
 				<?php foreach ( $form_fields as $key => $field_attr ) : ?>
