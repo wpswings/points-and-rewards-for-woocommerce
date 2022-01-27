@@ -422,7 +422,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$mwb_wpr_total_points = $mwb_wpr_points;
 		}
 		return $mwb_wpr_total_points;
-	}
+	} 
 
 	/**
 	 * This function append the option field after selecting Product category through ajax
