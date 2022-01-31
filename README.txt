@@ -83,7 +83,7 @@ The WooCommerce Rewards plugin is compatible with the WPML Multilingual plugin t
 
 
 
-[**Free demo of Points and Rewards for WooCommerce**](https://demo.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-demo&utm_medium=par-org-page&utm_campaign=demo)
+[**Free demo of Points and Rewards for WooCommerce**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=par-org-page&utm_campaign=demo)
 
 Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-page&utm_campaign=par-doc) and learn more about the features and working of the plugin.
 
