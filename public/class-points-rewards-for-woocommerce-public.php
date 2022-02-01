@@ -2331,4 +2331,34 @@ class Points_Rewards_For_WooCommerce_Public {
 		wp_send_json( $response );
 		wp_die();
 	}
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $order_id
+	 * @param [type] $old_status
+	 * @param [type] $new_status
+	 * @return void
+	 */
+	public function mwb_wpswing_ban_user( $order_id, $old_status, $new_status ) {
+
+					$wpswing_order             = wc_get_order( $order_id );
+					$wp_swing_customer_user_id = $wpswing_order->get_user_id();
+		if ( ! empty( $wp_swing_customer_user_id ) ) {
+					$wp_swing_user                = get_user_by( 'ID', $wp_swing_customer_user_id );
+						$wpswing_registered_email = ! empty( $wp_swing_user->user_email ) ? $wp_swing_user->user_email : '';
+					$mwb_general_gallery          = get_option( 'mwb_wpr_settings_gallery', array() );
+			if ( '0' == $mwb_general_gallery['mwb_wpr_ban_selected_users'] ) {
+				update_option( 'kailash', 'jaibhole' );
+			}
+			if ( isset( $mwb_general_gallery['mwb_wpr_banned_selected_mail'] ) ) {
+
+						$mwb_guest_array_users = ! empty( $mwb_general_gallery['mwb_wpr_banned_selected_mail'] ) ? $mwb_general_gallery['mwb_wpr_banned_selected_mail'] : '';
+			}
+			if ( in_array( $wpswing_registered_email, $mwb_guest_array_users, true ) ) {
+						update_option( 'FINALCODE', 'done' );
+						return;
+			}
+		}
+
+	}
 }

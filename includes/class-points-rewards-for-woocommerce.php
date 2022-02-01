@@ -263,6 +263,8 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'mwb_wpr_add_coupon_generation', $plugin_public, 'mwb_wpr_add_wallet_generation', 10, 1 );
 			$this->loader->add_action( 'wp_ajax_mwb_wpr_generate_custom_wallet', $plugin_public, 'mwb_wpr_generate_custom_wallet' );
 			$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_generate_custom_wallet', $plugin_public, 'mwb_wpr_generate_custom_wallet' );
+			//THis is test.
+			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'mwb_wpswing_ban_user', 10, 3 );
 		}
 	}
 

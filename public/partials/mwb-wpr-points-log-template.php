@@ -222,13 +222,14 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 							</th>
 						</tr>
 					</thead>
-					<?php foreach ( $point_log['refund_points_on_order'] as $key => $value ) { ?>
+					<?php foreach ( $point_log['refund_points_on_order'] as $key => $value ) {
+							?>
 						<tr>
 							<td><?php echo esc_html( mwb_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
 							<td><?php echo '-' . esc_html( $value['refund_points_on_order'] ); ?></td>
 						</tr>
-						<?php
-					}
+							<?php
+						}
 					?>
 				</table>
 			</div>
