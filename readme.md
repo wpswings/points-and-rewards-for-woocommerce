@@ -1,8 +1,8 @@
-[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-4000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.2-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.0.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
+[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-4000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.3-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.0.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
 # Points and Rewards for WooCommerce – Create Loyalty Programs, Reward Customer Purchases, Referral Points & Redemptions
-![Points and Rewards for WooCommerce](https://ps.w.org/points-and-rewards-for-woocommerce/assets/banner-772x250.jpg)
-* Contributors: MakeWebBetter
-* Author URI: [MakeWebBetter](https://makewebbetter.com/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
+![Points and Rewards for WooCommerce](https://ps.w.org/points-and-rewards-for-woocommerce/assets/banner-772x250.jpg?rev=2671934)
+* Contributors: WP Swings
+* Author URI: [WP Swings](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-github-page&utm_campaign=official)
 * Tags: points, rewards, points and rewards, loyalty, loyalty program, woocommerce points and rewards
 * License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -11,10 +11,16 @@
 
 **TOP-RATED POINTS AND REWARDS SYSTEM FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS. REWARD CUSTOMERS FOR PURCHASES AND CREATE WOOCOMMERCE LOYALTY PROGRAMS TO REWARD REFERRAL POINTS, SIGN UP POINTS ETC. ALLOW REDEEMING POINTS, POINTS LOG REPORT FOR ADMIN AND USER AND BUILD MEMBERSHIP WITH PROPER EMAIL NOTIFICATIONS**
 
+
+
+
 [**Points And Rewards for WooCommerce**](https://wordpress.org/plugins/points-and-rewards-for-woocommerce/) is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem these points to buy products at your store or participate in your membership program with the WordPress loyalty points plugin. With the WooCommerce reward plugin at your WooCommerce Store, you can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope.
 
+>**IMPORTANT NOTICE:**
 
+>_**From this update Version 1.2.4 onwards, the Points and Rewards plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-github-page&utm_campaign=official).**_
 
+>_**WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end. Please [**Connect with us**](https://wpswings.com/contact-us/?utm_source=wpswings-par-contactus&utm_medium=par-github-page&utm_campaign=contactus) for all setup, support, and update related queries without hesitation.**_
 
 [**How to Implement Rewards Points In WooCommerce Stores With Free WordPress Rewards System?**](https://www.youtube.com/watch?v=WWktrnAI88U&t=333s)
 
@@ -67,19 +73,23 @@ With the Points and Rewards for WooCommerce plugin, merchants can notify their c
 **6) WPML Multilingual Compatibility**
 The WooCommerce rewards plugin is compatible with the WPML Multilingual plugin that allows you to reward your customers in your local language.
 
-* [**Free demo of Points and Rewards for WooCommerce**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce-lite/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
 
-* Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.makewebbetter.com/points-rewards-for-WooCommerce/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git) and learn more about the features and working of the plugin.
+* Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-github-page&utm_campaign=par-doc) and learn more about the features and working of the plugin.
 
-* Check out [**Points and Rewards plugin knowledge base**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce-kb/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
+* Checkout [**Points and Rewards plugin knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-github-page&utm_campaign=par-kb)
 
+## LIVE DEMO OF POINTS AND REWARDS PLUGIN
+
+* [**Points and Rewards Frontend Demo**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=par-github-page&utm_campaign=frontend-demo)
+
+* [**Points and Rewards Backend Demo**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-par-demo&utm_medium=par-github-page&utm_campaign=backend-demo)
 
 ## PLUGIN COMPATIBILITIES 
 
-* WooCommerce rewards plugin is compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**WooCommerce Wallet System**](https://makewebbetter.com/product/woocommerce-wallet-system/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git) plugin. This compatibility allows you to convert your earned points into wallet credit based on a certain conversion rate. The admin can set points conversion into wallet credit he wants to allow. For example, 10 points equal 2 wallet credits. Customers can later use this wallet credit for purchase in the store. 
-  
-* WooCommerce store owners using Loyalty points plugin can switch currency with the compatible WordPress plugin [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/) and [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git). The admin can use these compatible plugins to change the per currency conversion settings.   
+* WooCommerce rewards plugin is compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**Wallet System For WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-par-git&utm_medium=par-github-page&utm_campaign=par-wallet) plugin. This compatibility allows you to convert your earned points into wallet credit based on a certain conversion rate. The admin can set points conversion into wallet credit he wants to allow. For example, 10 points equal 2 wallet credits. Customers can later use this wallet credit for purchase in the store. 
 
+* WooCommerce store owners using Loyalty points plugin can switch currency with the compatible WordPress plugin [**Multi-Currency Switcher for WooCommerce**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/).
+  
 * The Points and Rewards plugin is compatible with the WordPress Multilingual (WPML) plugin for localization of the rewards plugin’s strings.
 
 
@@ -108,38 +118,27 @@ The WooCommerce rewards plugin is compatible with the WPML Multilingual plugin t
 
 Points and Rewards for WooCommerce help merchants create a points-based loyalty program to reward customers. This reward system involves earning and redeeming store credits as points and discount coupons on activities performed by the customers.
 
-> Note:  Get [**Points and Rewards for WooCommerce Pro**](https://makewebbetter.com/product/woocommerce-points-and-rewards/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
+> Note:  Get [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-github-page&utm_campaign=par-pro)
 
-**See what Perties freshwear is saying about WooCommerce Points and Rewards plugin:**
-> I couldn’t expect better results with any other team. Attention is always excellent and on time even when you have minor issues, and they solve them asap. The features have everything, and I can’t think of any feature that could make it better. From compatibility to customizations, they have assisted a lot. Absolute satisfaction. I’ll give it a full 5-star review. It’s definitely worth an upgrade to the pro plugin version. Additionally, I’m using RMA for WooCommerce, and it’s smooth too.  [**See Points and Rewards Case Study**](https://makewebbetter.com/success-stories/perties-freshwear/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
-
-
-## LIVE DEMO OF PREMIUM VERSION
-
-* [**Points and Rewards Frontend demo**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
-
-* [**Points and Rewards Backend demo**](https://demo.makewebbetter.com/points-and-rewards-for-woocommerce/get-personal-demo/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
 
 
 ## DOCUMENTATION OF PREMIUM VERSION
 
-*  [**WooCommerce Points and Rewards Documentation**](https://docs.makewebbetter.com/points-and-rewards-for-woocommerce-pro/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
+*  [**WooCommerce Points and Rewards Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-doc&utm_medium=par-github-page&utm_campaign=par-pro-doc)
 
 
 ### **SUPPORT**
-If you need support or have questions, kindly use our online chat window [**here**](https://makewebbetter.com/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git) or connect with us then [**Generate a ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
+If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-github-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-par-submit-query&utm_medium=par-github-page&utm_campaign=submit-query)
 
-> If our documentation doesn’t contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git) with your question.
+> If our documentation doesn’t contain the solution to your problem, you can [**Connect with us**](https://wpswings.com/contact-us/?utm_source=wpswings-par-contactus&utm_medium=par-github-page&utm_campaign=contactus) with your question.
 
+### **MORE ABOUT WP Swings**
 
-### **MORE ABOUT MAKEWEBBETTER**
-
-* [**Our Official Website**](https://makewebbetter.com/?utm_source=MWB-PAR-git&utm_medium=MWB-git-page&utm_campaign=MWB-PAR-git)
-* [**Follow us on Facebook Page**](https://www.facebook.com/makewebbetter)
-* [**Tweet us on @MakeWebBetter**](https://twitter.com/makewebbetter)
-* [**Visit our LinkedIn Account**](https://www.linkedin.com/company/makewebbetter)
-* [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
-* [**Follow Our SlideShare**](https://www.slideshare.net/MakeWebBetter)
+* [**Our Official Website**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-github-page&utm_campaign=official)
+* [**Follow us on Facebook Page**](https://www.facebook.com/wpswingsofficial)
+* [**Tweet us on @WP Swings**](https://twitter.com/wpswings)
+* [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
+* [**Subscribe Our Youtube Channel**](https://www.youtube.com/c/wpswings)
 
 
 

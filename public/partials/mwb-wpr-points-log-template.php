@@ -64,6 +64,36 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 			</div> 
 			<?php
 		}
+		if ( array_key_exists( 'refund_points_applied_on_cart', $point_log ) ) {
+			?>
+	<div class="mwb_wpr_slide_toggle">
+		<p class="mwb_wpr_view_log_notice mwb_wpr_common_slider"><?php esc_html_e( 'Apply Points of cart refunded after order is cancelled', 'points-and-rewards-for-woocommerce' ); ?><a class ="mwb_wpr_open_toggle"  href="javascript:;"></a></p>
+		<a class ="mwb_wpr_open_toggle"  href="javascript:;"></a>
+		<table class="mwb_wpr_common_table">
+			<thead>
+					<tr>
+						<th class="mwb-wpr-view-log-Date">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+						</th>
+						<th class="mwb-wpr-view-log-Status">
+							<span class="mwb_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+						</th>
+					</tr>
+				</thead> 
+			<?php
+			foreach ( $point_log['refund_points_applied_on_cart'] as $key => $value ) {
+				?>
+				<tr>
+					<td><?php echo esc_html( mwb_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
+					<td><?php echo '+' . esc_html( $value['refund_points_applied_on_cart'] ); ?></td>
+				</tr>
+				<?php
+			}
+			?>
+		</table>
+	</div>
+				<?php
+		}
 		if ( array_key_exists( 'Coupon_details', $point_log ) ) {
 			?>
 			<div class="mwb_wpr_slide_toggle">

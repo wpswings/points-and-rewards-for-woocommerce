@@ -161,7 +161,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'check_pro_activate' => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
 					'pro_text'           => __( 'Please purchase the pro plugin to add multiple membership.', 'points-and-rewards-for-woocommerce' ),
 					'pro_link_text'      => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
-					'pro_link'       => 'https://makewebbetter.com/product/woocommerce-points-and-rewards?utm_source=MWB-PAR-org&utm_medium=MWB-org-plugin&utm_campaign=MWB-PAR-org',
+					'pro_link'           => 'https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro',
 					'success_update'     => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
 					'support_confirm'     => __( 'Email sent successfully', 'points-and-rewards-for-woocommerce' ),
 					'negative'          => __( 'Negative Values Not Allowed', 'points-and-rewards-for-woocommerce' ),
@@ -219,6 +219,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function mwb_rwpr_admin_setting() {
+		?>
+		<?php
 		include_once MWB_RWPR_DIR_PATH . '/admin/partials/points-rewards-for-woocommerce-admin-display.php';
 	}
 
@@ -420,7 +422,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$mwb_wpr_total_points = $mwb_wpr_points;
 		}
 		return $mwb_wpr_total_points;
-	}
+	} 
 
 	/**
 	 * This function append the option field after selecting Product category through ajax
@@ -889,7 +891,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function mwb_wpr_get_update_notification_data() {
 		$mwb_notification_data = array();
-		$url = 'https://demo.makewebbetter.com/client-notification/points-and-rewards-for-woocommerce/mwb-client-notify.php';
+		$url = 'https://demo.wpswings.com/client-notification/points-and-rewards-for-woocommerce/mwb-client-notify.php';
 		$attr = array(
 			'action' => 'mwb_notification_fetch',
 			'plugin_version' => REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION,
@@ -934,7 +936,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 							<div class="notice is-dismissible notice-info" id="dismiss_notice">
 								<div class="notice-container">
 									<div class="notice-image">
-										<img src="<?php echo esc_url( MWB_RWPR_DIR_URL . 'admin/images/mwb.png' ); ?>" alt="MakeWebBetter">
+										<img src="<?php echo esc_url( MWB_RWPR_DIR_URL . 'admin/images/wpswings_logo.png' ); ?>" alt="WP Swings">
 									</div> 
 									<div class="notice-content">
 										<?php echo wp_kses_post( $notification_message ); ?>
