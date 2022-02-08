@@ -135,7 +135,7 @@ If you need support or have questions, kindly use our online chat window [**here
 ### **MORE ABOUT WP Swings**
 
 * [**Our Official Website**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-github-page&utm_campaign=official)
-* [**Follow us on Facebook Page**](https://www.facebook.com/wpswingsofficial)
+* [**Follow us on Facebook Page**](https://www.facebook.com/wpswings)
 * [**Tweet us on @WP Swings**](https://twitter.com/wpswings)
 * [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 * [**Subscribe Our Youtube Channel**](https://www.youtube.com/c/wpswings)
