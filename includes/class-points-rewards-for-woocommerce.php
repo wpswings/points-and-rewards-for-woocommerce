@@ -143,7 +143,7 @@ class Points_Rewards_For_Woocommerce {
 	 * @since    1.0.0
 	 */
 	public function init() {
-		add_filter( 'woocommerce_email_classes', array( $this, 'mwb_wpr_woocommerce_email_classes' ) );
+		add_filter( 'woocommerce_email_classes', array( $this, 'wps_wpr_woocommerce_email_classes' ) );
 	}
 
 	/**
@@ -175,29 +175,29 @@ class Points_Rewards_For_Woocommerce {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_rwpr_admin_menu', 10, 2 );
-		$this->loader->add_action( 'wp_ajax_mwb_wpr_points_update', $plugin_admin, 'mwb_wpr_points_update' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_points_update', $plugin_admin, 'mwb_wpr_points_update' );
-		$this->loader->add_action( 'wp_ajax_mwb_wpr_select_category', $plugin_admin, 'mwb_wpr_select_category' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_select_category', $plugin_admin, 'mwb_wpr_select_category' );
-		$this->loader->add_action( 'admin_head', $plugin_admin, 'mwb_wpr_add_membership_rule' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'wpswing_migrate_code' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_rwpr_admin_menu', 10, 2 );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'wps_wpr_add_membership_rule' );
 
 		/*cron for notification*/
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_wpr_check_for_notification_daily' );
-		$this->loader->add_action( 'mwb_wpr_check_for_notification_update', $plugin_admin, 'mwb_wpr_save_notice_message' );
-		$this->loader->add_action( 'admin_notices', $plugin_admin, 'mwb_wpr_display_notification_bar' );
-		$this->loader->add_action( 'wp_ajax_mwb_wpr_dismiss_notice', $plugin_admin, 'mwb_wpr_dismiss_notice' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'wps_wpr_check_for_notification_daily' );
+		$this->loader->add_action( 'wps_wpr_check_for_notification_update', $plugin_admin, 'wps_wpr_save_notice_message' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_wpr_display_notification_bar' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_dismiss_notice', $plugin_admin, 'wps_wpr_dismiss_notice' );
 
 		// Add your screen.
-		$this->loader->add_filter( 'mwb_helper_valid_frontend_screens', $plugin_admin, 'add_mwb_frontend_screens' );
+		$this->loader->add_filter( 'wps_helper_valid_frontend_screens', $plugin_admin, 'add_wps_frontend_screens' );
 		// Add Deactivation screen.
-		$this->loader->add_filter( 'mwb_deactivation_supported_slug', $plugin_admin, 'add_mwb_deactivation_screens' );
+		$this->loader->add_filter( 'wps_deactivation_supported_slug', $plugin_admin, 'add_wps_deactivation_screens' );
 		// custom code.
 
-		$this->loader->add_filter( 'mwb_wpr_general_settings', $plugin_admin, 'mwb_wpr_wallet_order_point' );
+		$this->loader->add_filter( 'wps_wpr_general_settings', $plugin_admin, 'wps_wpr_wallet_order_point' );
 
-		$this->loader->add_filter( 'mwb_wpr_currency_filter', $plugin_admin, 'mwb_wpr_currency_switcher' );
+		$this->loader->add_filter( 'wps_wpr_currency_filter', $plugin_admin, 'wps_wpr_currency_switcher' );
 
 	}
 
@@ -211,58 +211,58 @@ class Points_Rewards_For_Woocommerce {
 	private function define_public_hooks() {
 
 		$plugin_public = new Points_Rewards_For_WooCommerce_Public( $this->get_plugin_name(), $this->get_version() );
-		if ( $this->mwb_rwpr_is_plugin_enable() ) {
+		if ( $this->wps_rwpr_is_plugin_enable() ) {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 			/* Include the points tab woocommrerce dashboard and template file*/
-			$this->loader->add_action( 'init', $plugin_public, 'mwb_wpr_add_my_account_endpoint' );
-			$this->loader->add_filter( 'woocommerce_account_menu_items', $plugin_public, 'mwb_wpr_points_dashboard' );
+			$this->loader->add_action( 'init', $plugin_public, 'wps_wpr_add_my_account_endpoint' );
+			$this->loader->add_filter( 'woocommerce_account_menu_items', $plugin_public, 'wps_wpr_points_dashboard' );
 			/*Add the points tabs page in woocommerce*/
-			$this->loader->add_action( 'woocommerce_account_points_endpoint', $plugin_public, 'mwb_wpr_account_points' );
+			$this->loader->add_action( 'woocommerce_account_points_endpoint', $plugin_public, 'wps_wpr_account_points' );
 			/*Add the view logs poitns page in woocommerce*/
-			$this->loader->add_action( 'woocommerce_account_view-log_endpoint', $plugin_public, 'mwb_wpr_account_viewlog' );
+			$this->loader->add_action( 'woocommerce_account_view-log_endpoint', $plugin_public, 'wps_wpr_account_viewlog' );
 			/*Set the referral key in the woocommerce*/
-			$this->loader->add_action( 'wp_loaded', $plugin_public, 'mwb_wpr_referral_link_using_cookie' );
+			$this->loader->add_action( 'wp_loaded', $plugin_public, 'wps_wpr_referral_link_using_cookie' );
 			/*Assign signup points and referral points in woocommerce*/
-			$this->loader->add_action( 'user_register', $plugin_public, 'mwb_wpr_new_customer_registerd', 10, 1 );
-			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'mwb_wpr_woocommerce_order_status_changed', 10, 3 );
+			$this->loader->add_action( 'user_register', $plugin_public, 'wps_wpr_new_customer_registerd', 10, 1 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_woocommerce_order_status_changed', 10, 3 );
 
-			$this->loader->add_action( 'woocommerce_before_customer_login_form', $plugin_public, 'mwb_wpr_woocommerce_signup_point' );
+			$this->loader->add_action( 'woocommerce_before_customer_login_form', $plugin_public, 'wps_wpr_woocommerce_signup_point' );
 			/*Add html in the cart for apply points*/
-			$this->loader->add_action( 'woocommerce_cart_actions', $plugin_public, 'mwb_wpr_woocommerce_cart_coupon' );
-			$this->loader->add_action( 'wp_ajax_mwb_wpr_apply_fee_on_cart_subtotal', $plugin_public, 'mwb_wpr_apply_fee_on_cart_subtotal' );
-			$this->loader->add_action( 'woocommerce_cart_calculate_fees', $plugin_public, 'mwb_wpr_woocommerce_cart_custom_points' );
-			$this->loader->add_action( 'woocommerce_before_cart_contents', $plugin_public, 'mwb_wpr_woocommerce_before_cart_contents' );
-			$this->loader->add_filter( 'woocommerce_cart_totals_fee_html', $plugin_public, 'mwb_wpr_woocommerce_cart_totals_fee_html', 10, 2 );
-			$this->loader->add_action( 'wp_ajax_mwb_wpr_remove_cart_point', $plugin_public, 'mwb_wpr_remove_cart_point' );
+			$this->loader->add_action( 'woocommerce_cart_actions', $plugin_public, 'wps_wpr_woocommerce_cart_coupon' );
+			$this->loader->add_action( 'wp_ajax_wps_wpr_apply_fee_on_cart_subtotal', $plugin_public, 'wps_wpr_apply_fee_on_cart_subtotal' );
+			$this->loader->add_action( 'woocommerce_cart_calculate_fees', $plugin_public, 'wps_wpr_woocommerce_cart_custom_points' );
+			$this->loader->add_action( 'woocommerce_before_cart_contents', $plugin_public, 'wps_wpr_woocommerce_before_cart_contents' );
+			$this->loader->add_filter( 'woocommerce_cart_totals_fee_html', $plugin_public, 'wps_wpr_woocommerce_cart_totals_fee_html', 10, 2 );
+			$this->loader->add_action( 'wp_ajax_wps_wpr_remove_cart_point', $plugin_public, 'wps_wpr_remove_cart_point' );
 			/*Apply points on the cart sub total*/
-			$this->loader->add_filter( 'wc_get_template', $plugin_public, 'mwb_overwrite_form_temp', 10, 2 );
+			$this->loader->add_filter( 'wc_get_template', $plugin_public, 'wps_overwrite_form_temp', 10, 2 );
 			/*Update order meta of the order*/
-			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'mwb_wpr_woocommerce_checkout_update_order_meta', 10, 2 );
-			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'mwb_wpr_woocommerce_add_cart_item_data', 10, 4 );
-			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'mwb_wpr_woocommerce_get_item_data', 10, 2 );
-			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'mwb_display_product_points', 7 );
+			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta', 10, 2 );
+			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'wps_wpr_woocommerce_add_cart_item_data', 10, 4 );
+			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'wps_wpr_woocommerce_get_item_data', 10, 2 );
+			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'wps_display_product_points', 7 );
 			/*Display the meta key*/
-			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $plugin_public, 'mwb_wpr_woocommerce_order_item_display_meta_key', 10, 1 );
-			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $plugin_public, 'mwb_wpr_woocommerce_add_order_item_meta_version_3', 10, 4 );
-			$this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'mwb_wpr_user_level_discount_on_price', 10, 2 );
-			$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public, 'mwb_wpr_woocommerce_before_calculate_totals', 10, 1 );
-			$this->loader->add_filter( 'woocommerce_update_cart_action_cart_updated', $plugin_public, 'mwb_update_cart_points' );
+			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $plugin_public, 'wps_wpr_woocommerce_order_item_display_meta_key', 10, 1 );
+			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $plugin_public, 'wps_wpr_woocommerce_add_order_item_meta_version_3', 10, 4 );
+			$this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'wps_wpr_user_level_discount_on_price', 10, 2 );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public, 'wps_wpr_woocommerce_before_calculate_totals', 10, 1 );
+			$this->loader->add_filter( 'woocommerce_update_cart_action_cart_updated', $plugin_public, 'wps_update_cart_points' );
 
 			/*Make Tax calculation 0 on the fees applied on the points*/
-			$this->loader->add_filter( 'woocommerce_cart_totals_get_fees_from_cart_taxes', $plugin_public, 'mwb_wpr_fee_tax_calculation', 10, 3 );
-			$this->loader->add_action( 'woocommerce_before_checkout_form', $plugin_public, 'mwb_wpr_add_coupon_form', 10, 1 );
+			$this->loader->add_filter( 'woocommerce_cart_totals_get_fees_from_cart_taxes', $plugin_public, 'wps_wpr_fee_tax_calculation', 10, 3 );
+			$this->loader->add_action( 'woocommerce_before_checkout_form', $plugin_public, 'wps_wpr_add_coupon_form', 10, 1 );
 
-			$this->loader->add_filter( 'query_vars', $plugin_public, 'mwb_wpr_custom_endpoint_query_vars' );
+			$this->loader->add_filter( 'query_vars', $plugin_public, 'wps_wpr_custom_endpoint_query_vars' );
 			// wmpl.
-			$this->loader->add_filter( 'wcml_register_endpoints_query_vars', $plugin_public, 'mwb_wpr_wpml_register_endpoint', 10, 3 );
-			$this->loader->add_filter( 'wcml_endpoint_permalink_filter', $plugin_public, 'mwb_wpr_endpoint_permalink_filter', 10, 2 );
-			$this->loader->add_filter( 'woocommerce_cart_contents_changed', $plugin_public, 'mwb_wpr_woocommerce_content_change' );
+			$this->loader->add_filter( 'wcml_register_endpoints_query_vars', $plugin_public, 'wps_wpr_wpml_register_endpoint', 10, 3 );
+			$this->loader->add_filter( 'wcml_endpoint_permalink_filter', $plugin_public, 'wps_wpr_endpoint_permalink_filter', 10, 2 );
+			$this->loader->add_filter( 'woocommerce_cart_contents_changed', $plugin_public, 'wps_wpr_woocommerce_content_change' );
 			// custom_code.
 
-			$this->loader->add_action( 'mwb_wpr_add_coupon_generation', $plugin_public, 'mwb_wpr_add_wallet_generation', 10, 1 );
-			$this->loader->add_action( 'wp_ajax_mwb_wpr_generate_custom_wallet', $plugin_public, 'mwb_wpr_generate_custom_wallet' );
-			$this->loader->add_action( 'wp_ajax_nopriv_mwb_wpr_generate_custom_wallet', $plugin_public, 'mwb_wpr_generate_custom_wallet' );
+			$this->loader->add_action( 'wps_wpr_add_coupon_generation', $plugin_public, 'wps_wpr_add_wallet_generation', 10, 1 );
+			$this->loader->add_action( 'wp_ajax_wps_wpr_generate_custom_wallet', $plugin_public, 'wps_wpr_generate_custom_wallet' );
+			$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_generate_custom_wallet', $plugin_public, 'wps_wpr_generate_custom_wallet' );
 		}
 	}
 
@@ -272,15 +272,15 @@ class Points_Rewards_For_Woocommerce {
 	 * @return true/false
 	 * @since    1.0.0
 	 */
-	public function mwb_rwpr_is_plugin_enable() {
+	public function wps_rwpr_is_plugin_enable() {
 
 		$is_enable = false;
-		$mwb_wpr_enable = '';
-		$general_settings = get_option( 'mwb_wpr_settings_gallery', true );
-		if ( isset( $general_settings['mwb_wpr_general_setting_enable'] ) ) {
-			$mwb_wpr_enable = $general_settings['mwb_wpr_general_setting_enable'];
+		$wps_wpr_enable = '';
+		$general_settings = get_option( 'wps_wpr_settings_gallery', true );
+		if ( isset( $general_settings['wps_wpr_general_setting_enable'] ) ) {
+			$wps_wpr_enable = $general_settings['wps_wpr_general_setting_enable'];
 		}
-		if ( ! empty( $mwb_wpr_enable ) && 1 == $mwb_wpr_enable ) {
+		if ( ! empty( $wps_wpr_enable ) && 1 == $wps_wpr_enable ) {
 			$is_enable = true;
 		}
 		return $is_enable;
@@ -292,8 +292,8 @@ class Points_Rewards_For_Woocommerce {
 	 * @param array $emails email templates.
 	 * @since    1.0.8
 	 */
-	public function mwb_wpr_woocommerce_email_classes( $emails ) {
-		$emails['mwb_wpr_email_notification'] = include MWB_RWPR_DIR_PATH . 'emails/class-mwb-wpr-emails-notification.php';
+	public function wps_wpr_woocommerce_email_classes( $emails ) {
+		$emails['wps_wpr_email_notification'] = include WPS_RWPR_DIR_PATH . 'emails/class-wps-wpr-emails-notification.php';
 		return $emails;
 	}
 

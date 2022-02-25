@@ -16,120 +16,120 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-if ( ! defined( 'MWB_PAR_ONBOARD_PLUGIN_NAME' ) ) {
-	define( 'MWB_PAR_ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
+if ( ! defined( 'WPS_PAR_ONBOARD_PLUGIN_NAME' ) ) {
+	define( 'WPS_PAR_ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
 }
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	$this->onboard = new Makewebbetter_Onboarding_Helper();
 }
 
-$mwb_wpr_setting_tab = array(
+$wps_wpr_setting_tab = array(
 	'overview-setting' => array(
 		'title'     => __( 'Overview', 'points-and-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-wpr-overview-settings.php',
+		'file_path' => WPS_RWPR_DIR_PATH . '/admin/partials/templates/wps-wpr-overview-settings.php',
 	),
 	'general-setting' => array(
 		'title'     => __( 'General', 'points-and-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . '/admin/partials/templates/mwb-generral-settings2.php',
+		'file_path' => WPS_RWPR_DIR_PATH . '/admin/partials/templates/wps-generral-settings2.php',
 	),
 	'coupon-setting' => array(
 
-		'title'     => apply_filters( 'mwb_coupon_tab_text', __( 'Per Currency Points Settings', 'points-and-rewards-for-woocommerce' ) ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-coupon-settings.php',
+		'title'     => apply_filters( 'wps_coupon_tab_text', __( 'Per Currency Points Settings', 'points-and-rewards-for-woocommerce' ) ),
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-coupon-settings.php',
 	),
 	'points-table' => array(
 		'title'     => __( 'Points Table', 'points-and-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/class-points-log-list-table.php',
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/class-points-log-list-table.php',
 	),
 	'points-notification' => array(
 		'title'     => __( 'Points Notification', 'points-and-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-points-notification-settings.php',
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-points-notification-settings.php',
 	),
 	'membership' => array(
 		'title' => __( 'Membership', 'points-and-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-membership-settings.php',
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-membership-settings.php',
 	),
 	'assign-product-points' => array(
 		'title' => __( 'Assign Product Points', 'points-and-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-assign-pro-points.php',
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-assign-pro-points.php',
 	),
 
 	'other-setting' => array(
 		'title' => __( 'Other Settings', 'points-and-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-other-setting.php',
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-other-setting.php',
 	),
 	'order-total-points' => array(
 		'title' => __( 'Order Total Points', 'points-and-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-order-total.php',
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-order-total.php',
 	),
 );
 if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
-	$mwb_wpr_setting_tab['premium_plugin'] = array(
+	$wps_wpr_setting_tab['premium_plugin'] = array(
 		'title' => esc_html__( 'Premium Features', 'points-and-rewards-for-woocommerce' ),
-		'file_path' => MWB_RWPR_DIR_PATH . 'admin/partials/templates/mwb-wpr-premium-features.php',
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-premium-features.php',
 	);
 }
-  $mwb_wpr_setting_tab = apply_filters( 'mwb_rwpr_add_setting_tab', $mwb_wpr_setting_tab );
+  $wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );
 
 ?>
-<div class="wrap woocommerce" id="mwb_rwpr_setting_wrapper">
-	 <form enctype="multipart/form-data" action="" id="mainform"  method="post">		<div class="mwb_rwpr_header">
-			<div class="mwb_rwpr_header_content_left">
+<div class="wrap woocommerce" id="wps_rwpr_setting_wrapper">
+	 <form enctype="multipart/form-data" action="" id="mainform"  method="post">		<div class="wps_rwpr_header">
+			<div class="wps_rwpr_header_content_left">
 				<div>
-					<h3 class="mwb_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ); ?></h3>
+					<h3 class="wps_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ); ?></h3>
 				</div>
 			</div>
-			<div class="mwb_rwpr_header_content_right">
+			<div class="wps_rwpr_header_content_right">
 				<ul>
-					<li class="mwb_wpr_get_pro"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-contact-us&utm_medium=par-org-backend&utm_campaign=contact-us" target="_blank">
+					<li class="wps_wpr_get_pro"><a href="https://wpswings.com/contact-us/?utm_source=wpswings-contact-us&utm_medium=par-org-backend&utm_campaign=contact-us" target="_blank">
 						<span class="dashicons dashicons-phone"></span>
-						<span class="mwb_wpr_contact_doc_text"><?php esc_html_e( 'Contact us', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<span class="wps_wpr_contact_doc_text"><?php esc_html_e( 'Contact us', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</a>
 				</li>
-				<li class="mwb_wpr_get_pro"><a href="https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-backend&utm_campaign=documentation" target="_blank">
+				<li class="wps_wpr_get_pro"><a href="https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-backend&utm_campaign=documentation" target="_blank">
 					<span class="dashicons dashicons-media-document"></span>
-					<span class="mwb_wpr_contact_doc_text"><?php esc_html_e( 'Doc', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<span class="wps_wpr_contact_doc_text"><?php esc_html_e( 'Doc', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</a>
 			</li>
 			<?php
 			if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 				?>
-						<li class="mwb_wpr_get_pro"><a  href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
+						<li class="wps_wpr_get_pro"><a  href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
 					<?php
 			}
 			?>	
 		</ul>
 	</div>
 </div>
-<?php wp_nonce_field( 'mwb-wpr-nonce', 'mwb-wpr-nonce' ); ?>
-<div class="mwb_rwpr_main_template">
-	<div class="mwb_rwpr_body_template">
-		<div class="mwb_rwpr_mobile_nav">
+<?php wp_nonce_field( 'wps-wpr-nonce', 'wps-wpr-nonce' ); ?>
+<div class="wps_rwpr_main_template">
+	<div class="wps_rwpr_body_template">
+		<div class="wps_rwpr_mobile_nav">
 			<span class="dashicons dashicons-menu"></span>
 		</div>
-		<div class="mwb_rwpr_navigator_template">
+		<div class="wps_rwpr_navigator_template">
 			<div class="hubwoo-navigations">
 				<?php
-				if ( ! empty( $mwb_wpr_setting_tab ) && is_array( $mwb_wpr_setting_tab ) ) {
-					foreach ( $mwb_wpr_setting_tab as $key => $mwb_tab ) {
+				if ( ! empty( $wps_wpr_setting_tab ) && is_array( $wps_wpr_setting_tab ) ) {
+					foreach ( $wps_wpr_setting_tab as $key => $wps_tab ) {
 						if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
 							?>
-							<div class="mwb_rwpr_tabs">
-								<a class="mwb_gw_nav_tab nav-tab nav-tab-active " href="?page=mwb-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $mwb_tab['title'] ); ?></a>
+							<div class="wps_rwpr_tabs">
+								<a class="wps_gw_nav_tab nav-tab nav-tab-active " href="?page=wps-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
 							</div>
 							<?php
 						} else {
 							if ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
 								?>
-								<div class="mwb_rwpr_tabs">
-									<a class="mwb_gw_nav_tab nav-tab nav-tab-active" href="?page=mwb-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $mwb_tab['title'] ); ?></a>
+								<div class="wps_rwpr_tabs">
+									<a class="wps_gw_nav_tab nav-tab nav-tab-active" href="?page=wps-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
 								</div>
 								<?php
 							} else {
 								?>
 											
-								<div class="mwb_rwpr_tabs">
-									<a class="mwb_gw_nav_tab nav-tab " href="?page=mwb-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $mwb_tab['title'] ); ?></a>
+								<div class="wps_rwpr_tabs">
+									<a class="wps_gw_nav_tab nav-tab " href="?page=wps-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
 								</div>
 								<?php
 							}
@@ -140,24 +140,24 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 					
 			</div>
 		</div>
-		<div class="loading-style-bg mwb_rwpr_settings_display_none" id="mwb_wpr_loader">
-			<img src="<?php echo esc_url( MWB_RWPR_DIR_URL ); ?>public/images/loading.gif">
+		<div class="loading-style-bg wps_rwpr_settings_display_none" id="wps_wpr_loader">
+			<img src="<?php echo esc_url( WPS_RWPR_DIR_URL ); ?>public/images/loading.gif">
 		</div>
 		<?php
-		if ( ! empty( $mwb_wpr_setting_tab ) && is_array( $mwb_wpr_setting_tab ) ) {
+		if ( ! empty( $wps_wpr_setting_tab ) && is_array( $wps_wpr_setting_tab ) ) {
 
-			foreach ( $mwb_wpr_setting_tab as $key => $mwb_file ) {
+			foreach ( $wps_wpr_setting_tab as $key => $wps_file ) {
 				if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
-					$include_tab = $mwb_file['file_path'];
+					$include_tab = $wps_file['file_path'];
 					?>
-					<div class="mwb_rwpr_content_template">
+					<div class="wps_rwpr_content_template">
 						<?php include_once $include_tab; ?>
 					</div>
 					<?php
 				} elseif ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
 					?>
-					<div class="mwb_rwpr_content_template">
-						<?php include_once $mwb_file['file_path']; ?>
+					<div class="wps_rwpr_content_template">
+						<?php include_once $wps_file['file_path']; ?>
 					</div>
 					<?php
 					break;

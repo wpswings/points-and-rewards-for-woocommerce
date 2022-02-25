@@ -24,14 +24,14 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 <div class="woocommerce-form-coupon-toggle">
 	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_coupon_message', __( 'Have a coupon?', 'points-and-rewards-for-woocommerce' ) . ' <a href="#" class="showcoupon">' . __( 'Click here to enter your code', 'points-and-rewards-for-woocommerce' ) . '</a>' ), 'notice' ); ?>
 </div>
-<!-- /*MWB CUSTOM CODE*/ -->
-<div class="woocommerce-error mwb_rwpr_settings_display_none_notice" id="mwb_wpr_cart_points_notice" >
+<!-- /*WPS CUSTOM CODE*/ -->
+<div class="woocommerce-error wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_notice" >
 	
 </div>
-<div class="woocommerce-message mwb_rwpr_settings_display_none_notice" id="mwb_wpr_cart_points_success" >
+<div class="woocommerce-message wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_success" >
 	
 </div>
-<!-- /*END OF MWB CUSTOM CODE*/ -->
+<!-- /*END OF WPS CUSTOM CODE*/ -->
 <form class="checkout_coupon woocommerce-form-coupon" method="post">
 
 	<p><?php esc_html_e( 'If you have a coupon code, please apply it below.', 'points-and-rewards-for-woocommerce' ); ?></p>
@@ -48,5 +48,5 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 </form>
 <?php
   $public_obj = new Points_Rewards_For_WooCommerce_Public( 'points-rewads-for-woocommerce', '1.0.0' );
-  $public_obj->mwb_wpr_display_apply_points_checkout();
+  $public_obj->wps_wpr_display_apply_points_checkout();
 ?>

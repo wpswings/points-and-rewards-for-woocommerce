@@ -45,6 +45,7 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 	$activated = true;
 }
 if ( $activated ) {
+
 	/**
 	 * Define the constatant of the plugin.
 	 *
@@ -53,9 +54,9 @@ if ( $activated ) {
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
 		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.2.2' );
-		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
-		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
-		rewardeem_woocommerce_points_rewards_constants( 'MWB_RWPR_HOME_URL', admin_url() );
+		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
+		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
+		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
 	}
 
 
@@ -74,16 +75,16 @@ if ( $activated ) {
 		}
 	}
 
-	add_filter( 'plugin_row_meta', 'mwb_wpr_doc_and_premium_link', 10, 2 );
+	add_filter( 'plugin_row_meta', 'wps_wpr_doc_and_premium_link', 10, 2 );
 
 	/**
 	 * Callable function for adding plugin row meta.
 	 *
-	 * @name mwb_wpr_doc_and_premium_link.
+	 * @name wps_wpr_doc_and_premium_link.
 	 * @param string $links link of the constant.
 	 * @param array  $file name of the plugin.
 	 */
-	function mwb_wpr_doc_and_premium_link( $links, $file ) {
+	function wps_wpr_doc_and_premium_link( $links, $file ) {
 
 		if ( strpos( $file, 'points-rewards-for-woocommerce.php' ) !== false ) {
 
@@ -105,11 +106,11 @@ if ( $activated ) {
 	/**
 	 * Dynamically Generate referral Code
 	 *
-	 * @name mwb_wpr_create_referral_code
+	 * @name wps_wpr_create_referral_code
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wpr_create_referral_code() {
+	function wps_wpr_create_referral_code() {
 		$length = 10;
 		$pkey = '';
 		$alphabets = range( 'A', 'Z' );
@@ -128,66 +129,66 @@ if ( $activated ) {
 	 */
 	require plugin_dir_path( __FILE__ ) . 'includes/class-points-rewards-for-woocommerce.php';
 
-	add_shortcode( 'MYCURRENTPOINT', 'mwb_wpr_mytotalpoint_shortcode' );
+	add_shortcode( 'MYCURRENTPOINT', 'wps_wpr_mytotalpoint_shortcode' );
 
 	/**
 	 * Shortcode for the total points
 	 *
-	 * @name mwb_wpr_mytotalpoint_shortcode
+	 * @name wps_wpr_mytotalpoint_shortcode
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wpr_mytotalpoint_shortcode() {
+	function wps_wpr_mytotalpoint_shortcode() {
 		$user_ID = get_current_user_ID();
-		$mwb_wpr_other_settings = get_option( 'mwb_wpr_other_settings', array() );
-		if ( ! empty( $mwb_wpr_other_settings['mwb_wpr_other_shortcode_text'] ) ) {
-			$mwb_wpr_shortcode_text_point = $mwb_wpr_other_settings['mwb_wpr_other_shortcode_text'];
+		$wps_wpr_other_settings = get_option( 'wps_wpr_other_settings', array() );
+		if ( ! empty( $wps_wpr_other_settings['wps_wpr_other_shortcode_text'] ) ) {
+			$wps_wpr_shortcode_text_point = $wps_wpr_other_settings['wps_wpr_other_shortcode_text'];
 		} else {
-			$mwb_wpr_shortcode_text_point = __( 'Your Current Point', 'points-and-rewards-for-woocommerce' );
+			$wps_wpr_shortcode_text_point = __( 'Your Current Point', 'points-and-rewards-for-woocommerce' );
 		}
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
-			$get_points = (int) get_user_meta( $user_ID, 'mwb_wpr_points', true );
-			return '<div class="mwb_wpr_shortcode_wrapper">' . $mwb_wpr_shortcode_text_point . ' ' . $get_points . '</div>';
+			$get_points = (int) get_user_meta( $user_ID, 'wps_wpr_points', true );
+			return '<div class="wps_wpr_shortcode_wrapper">' . $wps_wpr_shortcode_text_point . ' ' . $get_points . '</div>';
 		}
 	}
-	add_shortcode( 'MYCURRENTUSERLEVEL', 'mwb_wpr_mycurrentlevel_shortcode' );
+	add_shortcode( 'MYCURRENTUSERLEVEL', 'wps_wpr_mycurrentlevel_shortcode' );
 	/**
 	 * Display your Current Level by using shortcode
 	 *
-	 * @name mwb_wpr_mycurrentlevel_shortcode
+	 * @name wps_wpr_mycurrentlevel_shortcode
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wpr_mycurrentlevel_shortcode() {
+	function wps_wpr_mycurrentlevel_shortcode() {
 		$user_ID = get_current_user_ID();
-		$mwb_wpr_other_settings = get_option( 'mwb_wpr_other_settings', array() );
-		if ( ! empty( $mwb_wpr_other_settings['mwb_wpr_shortcode_text_membership'] ) ) {
-			$mwb_wpr_shortcode_text_membership = $mwb_wpr_other_settings['mwb_wpr_shortcode_text_membership'];
+		$wps_wpr_other_settings = get_option( 'wps_wpr_other_settings', array() );
+		if ( ! empty( $wps_wpr_other_settings['wps_wpr_shortcode_text_membership'] ) ) {
+			$wps_wpr_shortcode_text_membership = $wps_wpr_other_settings['wps_wpr_shortcode_text_membership'];
 		} else {
-			$mwb_wpr_shortcode_text_membership = __( 'Your Current Membership Level is', 'points-and-rewards-for-woocommerce' );
+			$wps_wpr_shortcode_text_membership = __( 'Your Current Membership Level is', 'points-and-rewards-for-woocommerce' );
 		}
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
 			$user_level = get_user_meta( $user_ID, 'membership_level', true );
 			if ( isset( $user_level ) && ! empty( $user_level ) ) {
-				return $mwb_wpr_shortcode_text_membership . ' ' . $user_level;
+				return $wps_wpr_shortcode_text_membership . ' ' . $user_level;
 			}
 		}
 	}
-	add_shortcode( 'SIGNUPNOTIFICATION', 'mwb_wpr_signupnotif_shortcode' );
+	add_shortcode( 'SIGNUPNOTIFICATION', 'wps_wpr_signupnotif_shortcode' );
 	/**
 	 * Display the SIgnup Notification by using shortcode
 	 *
-	 * @name mwb_wpr_signupnotif_shortcode
+	 * @name wps_wpr_signupnotif_shortcode
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wpr_signupnotif_shortcode() {
-		$general_settings = get_option( 'mwb_wpr_settings_gallery', true );
-		$enable_mwb_signup = isset( $general_settings['mwb_wpr_general_signup'] ) ? intval( $general_settings['mwb_wpr_general_signup'] ) : 0;
-		if ( $enable_mwb_signup && ! is_user_logged_in() ) {
-			$mwb_wpr_signup_value = isset( $general_settings['mwb_wpr_general_signup_value'] ) ? intval( $general_settings['mwb_wpr_general_signup_value'] ) : 1;
+	function wps_wpr_signupnotif_shortcode() {
+		$general_settings = get_option( 'wps_wpr_settings_gallery', true );
+		$enable_wps_signup = isset( $general_settings['wps_wpr_general_signup'] ) ? intval( $general_settings['wps_wpr_general_signup'] ) : 0;
+		if ( $enable_wps_signup && ! is_user_logged_in() ) {
+			$wps_wpr_signup_value = isset( $general_settings['wps_wpr_general_signup_value'] ) ? intval( $general_settings['wps_wpr_general_signup_value'] ) : 1;
 
-			return '<div class="woocommerce-message">' . esc_html__( 'You will get ', 'points-and-rewards-for-woocommerce' ) . esc_html( $mwb_wpr_signup_value ) . esc_html__( ' points for SignUp', 'points-and-rewards-for-woocommerce' ) . '</div>';
+			return '<div class="woocommerce-message">' . esc_html__( 'You will get ', 'points-and-rewards-for-woocommerce' ) . esc_html( $wps_wpr_signup_value ) . esc_html__( ' points for SignUp', 'points-and-rewards-for-woocommerce' ) . '</div>';
 		}
 	}
 
@@ -221,12 +222,12 @@ if ( $activated ) {
 	function rewardeem_woocommerce_points_rewards_settings_link( $links ) {
 
 		$my_link = array(
-			'settings' => '<a href="' . admin_url( 'admin.php?page=mwb-rwpr-setting' ) . '">' . esc_html__( 'Settings', 'points-and-rewards-for-woocommerce' ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'admin.php?page=wps-rwpr-setting' ) . '">' . esc_html__( 'Settings', 'points-and-rewards-for-woocommerce' ) . '</a>',
 		);
 
 		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 
-			$my_link['goPro'] = '<a class="mwb-wpr-go-pro" target="_blank" href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'points-and-rewards-for-woocommerce' ) . '</a>';
+			$my_link['goPro'] = '<a class="wps-wpr-go-pro" target="_blank" href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'points-and-rewards-for-woocommerce' ) . '</a>';
 		}
 
 		return array_merge( $my_link, $links );
@@ -235,12 +236,12 @@ if ( $activated ) {
 	/**
 	 * This function is used to return the date format as per WP settings
 	 *
-	 * @name mwb_wpr_set_the_wordpress_date_format
+	 * @name wps_wpr_set_the_wordpress_date_format
 	 * @param string $saved_date saved data in the WordPress formet.
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wpr_set_the_wordpress_date_format( $saved_date ) {
+	function wps_wpr_set_the_wordpress_date_format( $saved_date ) {
 		if ( get_locale() == 'zh_TW' ) {
 			return $saved_date;
 		}
@@ -269,22 +270,223 @@ if ( $activated ) {
 		}
 	}
 
-	register_activation_hook( __FILE__, 'mwb_wpr_flush_rewrite_rules' );
-	register_deactivation_hook( __FILE__, 'mwb_wpr_flush_rewrite_rules' );
-
+	register_activation_hook( __FILE__, 'wps_wpr_flush_rewrite_rules' );
+	register_deactivation_hook( __FILE__, 'wps_wpr_flush_rewrite_rules' );
 	/**
 	 * This function is used to create tabs
 	 *
-	 * @name mwb_wpr_flush_rewrite_rules
+	 * @name wps_wpr_flush_rewrite_rules
 	 * @since 1.1.0.
 	 * @author makewebbetter<ticket@makewebbetter.com>
 	 * @link https://www.makewebbetter.com/
 	 */
-	function mwb_wpr_flush_rewrite_rules() {
+	function wps_wpr_flush_rewrite_rules() {
 
 		add_rewrite_endpoint( 'points', EP_PAGES );
 		add_rewrite_endpoint( 'view-log', EP_PAGES );
 		flush_rewrite_rules();
+
+	}
+	/**
+	 * Wps_wpr_convert_db_keys function
+	 *
+	 * @return void
+	 */
+	function wps_wpr_convert_db_keys() {
+
+		$wps_check_key_exist = get_option( 'wps_par_org_convert_keys', false );
+		if ( ! $wps_check_key_exist && function_exists( 'wps_wpr_convert_db_keys' ) ) {
+				wps_normal_update_option();
+				wps_general_settings_update_option();
+				wps_per_currency_update_option();
+				wps_points_notification_update_option();
+				wps_add_points_membership_option();
+				wps_wpr_assign_points();
+				wps_wp_other_settings();
+				wps_par_update_user_meta();
+				wps_update_post_meta();
+				update_option( 'wps_par_org_convert_keys', true );
+		}
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_normal_update_option() {
+		$wps_value                        = get_option( 'mwb_wpr_notify_new_msg_id' );
+		$mesg_wps_value                   = get_option( 'mwb_wpr_notify_new_message' );
+		$mwb_wpr_notify_hide_notification = get_option( 'mwb_wpr_notify_hide_notification' );
+		if ( ! empty( $wps_value ) ) {
+			update_option( 'wps_wpr_notify_new_msg_id', $wps_value );
+		}
+		if ( ! empty( $mesg_wps_value ) ) {
+			update_option( 'wps_wpr_notify_new_message', $mesg_wps_value );
+		}
+		if ( ! empty( $mwb_wpr_notify_hide_notification ) ) {
+			update_option( 'wps_wpr_notify_hide_notification', $mesg_wps_value );
+		}
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_general_settings_update_option() {
+		$general_settings         = get_option( 'mwb_wpr_settings_gallery', true ); 
+		$general_migrate_settings = array();
+		if ( ! empty( $general_settings ) ) {
+
+			foreach ( $general_settings as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+		update_option( 'wps_wpr_settings_gallery', $general_migrate_settings );
+
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_update_post_meta() {
+		$user_post_meta_keys = array(
+			'mwb_cart_discount#$fee_id',
+			'mwb_cart_discount#points',
+		);
+		foreach ( $user_post_meta_keys as $index => $meta_key ) {
+			$wps_orders = get_posts(
+				array(
+					'numberposts' => -1,
+					'post_type'   => 'shop_order',
+					'fields'      => 'ids', // return only ids.
+					'order'       => 'ASC',
+					'meta_key'	  => $user_post_meta_keys,//phpcs:ignore
+					'post_status' => 'any',
+				)
+			);
+			foreach ( $wps_orders as $order_id ) {
+				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
+				$meta_value = get_post_meta( $order_id, $meta_key, true );
+				if ( ! empty( $meta_value ) ) {
+					update_user_meta( $order_id, $new_key, $meta_value );
+				}
+			}
+		}
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_per_currency_update_option() {
+		$wps_coupon_settings      = get_option( 'mwb_wpr_coupons_gallery', true ); 
+		$general_migrate_settings = array();
+		if ( ! empty( $wps_coupon_settings ) ) {
+
+			foreach ( $wps_coupon_settings as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+		update_option( 'wps_wpr_coupons_gallery', $general_migrate_settings );
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_points_notification_update_option() {
+
+		$wps_notification_gallery = get_option( 'mwb_wpr_notificatin_array', true ); 
+		$general_migrate_settings = array();
+		if ( ! empty( $wps_notification_gallery ) ) {
+
+			foreach ( $wps_notification_gallery as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+		update_option( 'wps_wpr_notificatin_array', $general_migrate_settings );
+
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_par_update_user_meta() {
+
+		$user_meta_keys = array(
+			'mwb_points_referral',
+			'mwb_points_referral_invite',
+			'mwb_wpr_points',
+			'mwb_wpr_no_of_orders',
+		);
+
+		foreach ( $user_meta_keys as $index => $meta_key ) {
+			$users = get_users(
+				array(
+					'fields'   => 'ids',
+					'meta_key' => $meta_key, //phpcs:ignore
+				)
+			);
+			foreach ( $users as $user_id ) {
+				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
+				$meta_value = get_user_meta( $user_id, $meta_key, true );
+				if ( ! empty( $meta_value ) ) {
+					update_user_meta( $user_id, $new_key, $meta_value );
+				}
+			}
+		}
+	}
+/**
+ * Undocumented function
+ *
+ * @return void
+ */
+	function wps_add_points_membership_option() {
+		$wps_membership_gallery = get_option( 'mwb_wpr_membership_settings', true ); 
+		$general_migrate_settings = array();
+		if ( ! empty( $wps_membership_gallery ) ) {
+
+			foreach ( $wps_membership_gallery as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+		update_option( 'wps_wpr_membership_settings', $general_migrate_settings );
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_wpr_assign_points() {
+
+		$wps_assign_points_settings = get_option( 'mwb_wpr_assign_products_points', true ); 
+		$general_migrate_settings   = array();
+		if ( ! empty( $wps_assign_points_settings ) ) {
+
+			foreach ( $wps_assign_points_settings as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+		update_option( 'wps_wpr_assign_products_points', $general_migrate_settings );
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_wp_other_settings() {
+
+		$wps_assign_points_settings = get_option( 'mwb_wpr_assign_products_points', true ); 
+		$general_migrate_settings   = array();
+		if ( ! empty( $wps_assign_points_settings ) ) {
+
+			foreach ( $wps_assign_points_settings as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+		update_option( 'wps_wpr_assign_products_points', $general_migrate_settings );
 
 	}
 	/**
@@ -294,7 +496,7 @@ if ( $activated ) {
 	 * @param array  $plugin_data An array of plugin data.
 	 * @param string $status Status filter currently applied to the plugin list.
 	 */
-	function mwb_wpr_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+	function wps_wpr_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 		?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
@@ -318,18 +520,18 @@ if ( $activated ) {
 		<?php
 
 	}
-	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mwb_wpr_upgrade_notice', 0, 3 );
+	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_wpr_upgrade_notice', 0, 3 );
 
-	add_action( 'admin_notices', 'mwb_wpr_updgrade_notice' );
+	add_action( 'admin_notices', 'wps_wpr_updgrade_notice' );
 
 	/**
 	 * Migration to new domain notice.
 	 */
-	function mwb_wpr_updgrade_notice() {
+	function wps_wpr_updgrade_notice() {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
-		if ( 'mwb-rwpr-setting' === $tab ) { ?>
+		if ( 'wps-rwpr-setting' === $tab ) { ?>
 
 		<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">

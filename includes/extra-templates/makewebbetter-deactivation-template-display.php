@@ -22,32 +22,32 @@ if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {
 	return false;
 }
 
-	$form_fields = apply_filters( 'mwb_deactivation_form_fields', array() );
+	$form_fields = apply_filters( 'wps_deactivation_form_fields', array() );
 ?>
 <?php if ( ! empty( $form_fields ) ) : ?>
-	<div style="display: none;" class="loading-style-bg" id="mwb_wpr_loader">
-		<img src="<?php echo esc_url( MWB_RWPR_DIR_URL ); ?>public/images/loading.gif">
+	<div style="display: none;" class="loading-style-bg" id="wps_wpr_loader">
+		<img src="<?php echo esc_url( WPS_RWPR_DIR_URL ); ?>public/images/loading.gif">
 	</div>
-	<div class="mwb-onboarding-section">
-		<div class="mwb-on-boarding-wrapper-background">
-		<div class="mwb-on-boarding-wrapper">
-			<div class="mwb-on-boarding-close-btn">
+	<div class="wps-onboarding-section">
+		<div class="wps-on-boarding-wrapper-background">
+		<div class="wps-on-boarding-wrapper">
+			<div class="wps-on-boarding-close-btn">
 				<a href="javascript:void(0);">
 					<span class="close-form">x</span>
 				</a>
 			</div>
-			<h3 class="mwb-on-boarding-heading"></h3>
-			<p class="mwb-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'points-and-rewards-for-woocommerce' ); ?></p>
-			<form action="#" method="post" class="mwb-on-boarding-form">
+			<h3 class="wps-on-boarding-heading"></h3>
+			<p class="wps-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'points-and-rewards-for-woocommerce' ); ?></p>
+			<form action="#" method="post" class="wps-on-boarding-form">
 				<?php foreach ( $form_fields as $key => $field_attr ) : ?>
 					<?php $this->render_field_html( $field_attr, 'deactivating' ); ?>
 				<?php endforeach; ?>
-				<div class="mwb-on-boarding-form-btn__wrapper">
-					<div class="mwb-on-boarding-form-submit mwb-on-boarding-form-verify ">
-					<input type="submit" class="mwb-on-boarding-submit mwb-on-boarding-verify " value="SUBMIT AND DEACTIVATE">
+				<div class="wps-on-boarding-form-btn__wrapper">
+					<div class="wps-on-boarding-form-submit wps-on-boarding-form-verify ">
+					<input type="submit" class="wps-on-boarding-submit wps-on-boarding-verify " value="SUBMIT AND DEACTIVATE">
 				</div>
-				<div class="mwb-on-boarding-form-no_thanks">
-					<a href="javascript:void(0);" class="mwb-deactivation-no_thanks"><?php esc_html_e( 'Skip and Deactivate Now', 'points-and-rewards-for-woocommerce' ); ?></a>
+				<div class="wps-on-boarding-form-no_thanks">
+					<a href="javascript:void(0);" class="wps-deactivation-no_thanks"><?php esc_html_e( 'Skip and Deactivate Now', 'points-and-rewards-for-woocommerce' ); ?></a>
 				</div>
 				</div>
 			</form>

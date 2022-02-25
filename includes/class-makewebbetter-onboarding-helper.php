@@ -34,7 +34,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since 1.0.0
 	 * @var string instance
 	 */
-	protected static $mwb_wpr_instance = null;
+	protected static $wps_wpr_instance = null;
 
 	/**
 	 * Base url of hubspot api.
@@ -98,15 +98,15 @@ class Makewebbetter_Onboarding_Helper {
 		self::$store_name = get_bloginfo( 'name' );
 		self::$store_url = home_url();
 
-		if ( defined( 'MWB_PAR_ONBOARD_PLUGIN_NAME' ) ) {
-			self::$plugin_name = MWB_PAR_ONBOARD_PLUGIN_NAME;
+		if ( defined( 'WPS_PAR_ONBOARD_PLUGIN_NAME' ) ) {
+			self::$plugin_name = WPS_PAR_ONBOARD_PLUGIN_NAME;
 		}
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_footer', array( $this, 'add_onboarding_popup_screen' ) );
 		add_action( 'admin_footer', array( $this, 'add_deactivation_popup_screen' ) );
-		add_filter( 'mwb_on_boarding_form_fields', array( $this, 'add_on_boarding_form_fields' ) );
-		add_filter( 'mwb_deactivation_form_fields', array( $this, 'add_deactivation_form_fields' ) );
+		add_filter( 'wps_on_boarding_form_fields', array( $this, 'add_on_boarding_form_fields' ) );
+		add_filter( 'wps_deactivation_form_fields', array( $this, 'add_deactivation_form_fields' ) );
 
 		// Ajax to send data.
 		add_action( 'wp_ajax_send_onboarding_data', array( $this, 'send_onboarding_data' ) );
@@ -128,12 +128,12 @@ class Makewebbetter_Onboarding_Helper {
 	 */
 	public static function get_instance() {
 
-		if ( is_null( self::$mwb_wpr_instance ) ) {
+		if ( is_null( self::$wps_wpr_instance ) ) {
 
-			self::$mwb_wpr_instance = new self();
+			self::$wps_wpr_instance = new self();
 		}
 
-		return self::$mwb_wpr_instance;
+		return self::$wps_wpr_instance;
 	}
 
 	/**
@@ -156,7 +156,7 @@ class Makewebbetter_Onboarding_Helper {
 		 */
 		if ( $this->is_valid_page_screen() ) {
 
-			wp_enqueue_style( 'makewebbetter-onboarding-style', MWB_RWPR_DIR_URL . 'admin/css/makewebbetter-onboarding-admin.css', array(), '1.0.0', 'all' );
+			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_RWPR_DIR_URL . 'admin/css/makewebbetter-onboarding-admin.css', array(), '1.0.0', 'all' );
 			wp_enqueue_style( 'select2' );
 		}
 	}
@@ -182,18 +182,18 @@ class Makewebbetter_Onboarding_Helper {
 
 		if ( $this->is_valid_page_screen() ) {
 
-			wp_enqueue_script( 'makewebbetter-onboarding-scripts', MWB_RWPR_DIR_URL . 'admin/js/makewebbetter-onboarding-admin.js', array( 'jquery', 'select2' ), '1.0.0', true );
+			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_RWPR_DIR_URL . 'admin/js/makewebbetter-onboarding-admin.js', array( 'jquery', 'select2' ), '1.0.0', true );
 
 			global $pagenow;
 			$current_slug = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
 			wp_localize_script(
 				'makewebbetter-onboarding-scripts',
-				'mwb',
+				'wps',
 				array(
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
-					'auth_nonce'    => wp_create_nonce( 'mwb_onboarding_nonce' ),
+					'auth_nonce'    => wp_create_nonce( 'wps_onboarding_nonce' ),
 					'current_screen'    => $pagenow,
-					'current_supported_slug'    => apply_filters( 'mwb_deactivation_supported_slug', array() ),
+					'current_supported_slug'    => apply_filters( 'wps_deactivation_supported_slug', array() ),
 				)
 			);
 		}
@@ -207,7 +207,7 @@ class Makewebbetter_Onboarding_Helper {
 	public function add_onboarding_popup_screen() {
 
 		if ( $this->is_valid_page_screen() && $this->can_show_onboarding_popup() ) {
-			require_once MWB_RWPR_DIR_PATH . 'includes/extra-templates/makewebbetter-onboarding-template-display.php';
+			require_once WPS_RWPR_DIR_PATH . 'includes/extra-templates/makewebbetter-onboarding-template-display.php';
 		}
 	}
 
@@ -221,7 +221,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		global $pagenow;
 		if ( ! empty( $pagenow ) && 'plugins.php' == $pagenow ) {
-			require_once MWB_RWPR_DIR_PATH . 'includes/extra-templates/makewebbetter-deactivation-template-display.php';
+			require_once WPS_RWPR_DIR_PATH . 'includes/extra-templates/makewebbetter-deactivation-template-display.php';
 		}
 	}
 
@@ -240,7 +240,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		if ( ! empty( $screen->id ) ) {
 
-			$is_valid = in_array( $screen->id, apply_filters( 'mwb_helper_valid_frontend_screens', array() ) ) && $this->add_mwb_additional_validation();
+			$is_valid = in_array( $screen->id, apply_filters( 'wps_helper_valid_frontend_screens', array() ) ) && $this->add_wps_additional_validation();
 		}
 
 		if ( empty( $is_valid ) && 'plugins.php' == $pagenow ) {
@@ -493,7 +493,7 @@ class Makewebbetter_Onboarding_Helper {
 				'name' => 'deactivation_reason_text',
 				'value' => '',
 				'required' => '',
-				'extra-class' => 'mwb-keep-hidden',
+				'extra-class' => 'wps-keep-hidden',
 			),
 
 			rand() => array(
@@ -561,7 +561,7 @@ class Makewebbetter_Onboarding_Helper {
 		$html = '';
 
 		if ( 'hidden' != $type ) : ?>
-			<div class ="mwb-form-single-field">
+			<div class ="wps-form-single-field">
 			<?php
 		endif;
 
@@ -578,7 +578,7 @@ class Makewebbetter_Onboarding_Helper {
 
 					foreach ( $options as $option_value => $option_label ) :
 						?>
-						<div class="mwb-<?php echo esc_html( $base_class ); ?>-radio-wrapper">
+						<div class="wps-<?php echo esc_html( $base_class ); ?>-radio-wrapper">
 							<input type="<?php echo esc_attr( $type ); ?>" class="on-boarding-<?php echo esc_attr( $type ); ?>-field <?php echo esc_attr( $class ); ?>" value="<?php echo esc_attr( $option_value ); ?>" id="<?php echo esc_attr( $option_value ); ?>" <?php echo esc_html( $required ); ?> <?php echo esc_attr( $is_multiple ); ?>>
 							<label class="on-boarding-field-label" for="<?php echo esc_html( $option_value ); ?>"><?php echo esc_html( $option_label ); ?></label>
 						</div>
@@ -598,7 +598,7 @@ class Makewebbetter_Onboarding_Helper {
 					
 					<?php foreach ( $options as $option_id => $option_label ) : ?>
 						
-						   <div class="mwb-<?php echo esc_html( $base_class ); ?>-checkbox-wrapper">
+						   <div class="wps-<?php echo esc_html( $base_class ); ?>-checkbox-wrapper">
 						<input type="<?php echo esc_html( $type ); ?>" class="on-boarding-<?php echo esc_html( $type ); ?>-field <?php echo esc_html( $class ); ?>" value="<?php echo esc_html( $value ); ?>" id="<?php echo esc_html( $option_id ); ?>">
 						<label class="on-boarding-field-label" for="<?php echo esc_html( $option_id ); ?>"><?php echo esc_html( $option_label ); ?></label>
 						</div>
@@ -676,13 +676,13 @@ class Makewebbetter_Onboarding_Helper {
 
 
 	/**
-	 * Send the data to MWB server.
+	 * Send the data to WPS server.
 	 *
 	 * @since    1.0.0
 	 */
 	public function send_onboarding_data() {
 
-		check_ajax_referer( 'mwb_onboarding_nonce', 'nonce' );
+		check_ajax_referer( 'wps_onboarding_nonce', 'nonce' );
 
 		$form_data = ! empty( $_POST['form_data'] ) ? map_deep( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ), 'sanitize_text_field' ) : '';
 		$formatted_data = array();
@@ -813,7 +813,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @param      string $result       The result of this validation.
 	 * @since    1.0.0
 	 */
-	public function add_mwb_additional_validation( $result = true ) {
+	public function add_wps_additional_validation( $result = true ) {
 
 		if ( ! empty( $_GET['tab'] ) && 'general-setting' !== $_GET['tab'] ) {
 
