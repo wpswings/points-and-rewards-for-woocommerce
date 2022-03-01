@@ -333,7 +333,7 @@ if ( $activated ) {
 	 * @return void
 	 */
 	function wps_general_settings_update_option() {
-		$general_settings         = get_option( 'mwb_wpr_settings_gallery', true ); 
+		$general_settings         = get_option( 'mwb_wpr_settings_gallery' ); 
 		$general_migrate_settings = array();
 		if ( ! empty( $general_settings ) ) {
 
@@ -365,11 +365,14 @@ if ( $activated ) {
 					'post_status' => 'any',
 				)
 			);
-			foreach ( $wps_orders as $order_id ) {
-				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-				$meta_value = get_post_meta( $order_id, $meta_key, true );
-				if ( ! empty( $meta_value ) ) {
-					update_user_meta( $order_id, $new_key, $meta_value );
+			if ( ! empty( $wps_orders ) ) {
+
+				foreach ( $wps_orders as $order_id ) {
+					$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
+					$meta_value = get_post_meta( $order_id, $meta_key, true );
+					if ( ! empty( $meta_value ) ) {
+						update_user_meta( $order_id, $new_key, $meta_value );
+					}
 				}
 			}
 		}
@@ -380,7 +383,7 @@ if ( $activated ) {
 	 * @return void
 	 */
 	function wps_per_currency_update_option() {
-		$wps_coupon_settings      = get_option( 'mwb_wpr_coupons_gallery', true ); 
+		$wps_coupon_settings      = get_option( 'mwb_wpr_coupons_gallery'); 
 		$general_migrate_settings = array();
 		if ( ! empty( $wps_coupon_settings ) ) {
 
@@ -397,7 +400,7 @@ if ( $activated ) {
 	 */
 	function wps_points_notification_update_option() {
 
-		$wps_notification_gallery = get_option( 'mwb_wpr_notificatin_array', true ); 
+		$wps_notification_gallery = get_option( 'mwb_wpr_notificatin_array' ); 
 		$general_migrate_settings = array();
 		if ( ! empty( $wps_notification_gallery ) ) {
 
@@ -429,11 +432,14 @@ if ( $activated ) {
 					'meta_key' => $meta_key, //phpcs:ignore
 				)
 			);
-			foreach ( $users as $user_id ) {
-				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-				$meta_value = get_user_meta( $user_id, $meta_key, true );
-				if ( ! empty( $meta_value ) ) {
-					update_user_meta( $user_id, $new_key, $meta_value );
+			if ( ! empty( $users ) ) {
+
+				foreach ( $users as $user_id ) {
+					$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
+					$meta_value = get_user_meta( $user_id, $meta_key, true );
+					if ( ! empty( $meta_value ) ) {
+						update_user_meta( $user_id, $new_key, $meta_value );
+					}
 				}
 			}
 		}
@@ -444,7 +450,7 @@ if ( $activated ) {
  * @return void
  */
 	function wps_add_points_membership_option() {
-		$wps_membership_gallery = get_option( 'mwb_wpr_membership_settings', true ); 
+		$wps_membership_gallery   = get_option( 'mwb_wpr_membership_settings' );
 		$general_migrate_settings = array();
 		if ( ! empty( $wps_membership_gallery ) ) {
 
@@ -461,7 +467,7 @@ if ( $activated ) {
 	 */
 	function wps_wpr_assign_points() {
 
-		$wps_assign_points_settings = get_option( 'mwb_wpr_assign_products_points', true ); 
+		$wps_assign_points_settings = get_option( 'mwb_wpr_assign_products_points' );
 		$general_migrate_settings   = array();
 		if ( ! empty( $wps_assign_points_settings ) ) {
 
@@ -478,7 +484,7 @@ if ( $activated ) {
 	 */
 	function wps_wp_other_settings() {
 
-		$wps_assign_points_settings = get_option( 'mwb_wpr_assign_products_points', true ); 
+		$wps_assign_points_settings = get_option( 'mwb_wpr_assign_products_points'); 
 		$general_migrate_settings   = array();
 		if ( ! empty( $wps_assign_points_settings ) ) {
 
