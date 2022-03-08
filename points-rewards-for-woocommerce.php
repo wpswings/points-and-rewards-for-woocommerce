@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://wpswings.com/product/?utm_source=wpswings-shop-page&utm_medium=par-org-page&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           1.2.4
+ * Version:           1.2.5
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/
  * Plugin URI:        https://wpswings.com/product/?utm_source=wpswings-shop-page&utm_medium=par-org-page&utm_campaign=more-plugin
@@ -44,6 +44,17 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 
 	$activated = true;
 }
+
+if ( is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+	$plug = get_plugins();
+	if ( isset( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
+
+		if ( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php']['Version'] < '1.2.5' ) {
+			unset( $_GET['activate'] );
+			deactivate_plugins( plugin_basename( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) );
+		}
+	}
+}
 if ( $activated ) {
 
 	/**
@@ -53,7 +64,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.2.2' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.2.6' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -305,6 +316,7 @@ if ( $activated ) {
 				wps_wp_other_settings();
 				wps_par_update_user_meta();
 				wps_update_post_meta();
+				wps_order_total_migrate();
 				update_option( 'wps_par_org_convert_keys', true );
 		}
 	}
@@ -484,7 +496,8 @@ if ( $activated ) {
 	 */
 	function wps_wp_other_settings() {
 
-		$wps_assign_points_settings = get_option( 'mwb_wpr_assign_products_points'); 
+		$wps_assign_points_settings = get_option( 'mwb_wpr_other_settings'); 
+
 		$general_migrate_settings   = array();
 		if ( ! empty( $wps_assign_points_settings ) ) {
 
@@ -492,8 +505,28 @@ if ( $activated ) {
 				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
 			}
 		}
-		update_option( 'wps_wpr_assign_products_points', $general_migrate_settings );
 
+		update_option( 'wps_wpr_other_settings', $general_migrate_settings );
+
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_order_total_migrate() {
+
+		$wps_assign_points_settings = get_option( 'mwb_wpr_order_total_settings' );
+
+		$general_migrate_settings   = array();
+		if ( ! empty( $wps_assign_points_settings ) ) {
+
+			foreach ( $wps_assign_points_settings as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+
+		update_option( 'wps_wpr_order_total_settings', $general_migrate_settings );
 	}
 	/**
 	 * Migration to new domain notice.
@@ -512,7 +545,7 @@ if ( $activated ) {
 						<p><strong>IMPORTANT NOTICE:</strong></p>
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
-						<p>From this update <strong>Version 1.2.4</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+						<p>From this update <strong>Version 1.2.5</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
 						Please connect with us for all setup, support, and update related queries without hesitation.</p>
 					</div>
 				</div>
@@ -546,7 +579,7 @@ if ( $activated ) {
 						<p><strong>IMPORTANT NOTICE:</strong></p>
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
-						<p>From this update <strong>Version 1.2.4</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+						<p>From this update <strong>Version 1.2.5</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
 						Please connect with us for all setup, support, and update related queries without hesitation.</p>
 					</div>
 				</div>

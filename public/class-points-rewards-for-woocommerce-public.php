@@ -459,7 +459,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://www.makewebbetter.com/
 	 */
 	public function wps_wpr_referral_link_using_cookie() {
-		if ( ! is_admin() ) {
+
 			if ( ! is_user_logged_in() ) {
 				$wps_wpr_ref_link_expiry = $this->wps_wpr_get_general_settings( 'wps_wpr_ref_link_expiry' );
 				if ( empty( $wps_wpr_ref_link_expiry ) ) {
@@ -467,13 +467,14 @@ class Points_Rewards_For_WooCommerce_Public {
 				}
 				if ( isset( $_GET['pkey'] ) && ! empty( $_GET['pkey'] ) ) {// phpcs:ignore WordPress.Security.NonceVerification
 					$wps_referral_key = sanitize_text_field( wp_unslash( $_GET['pkey'] ) );// phpcs:ignore WordPress.Security.NonceVerification
+
 					$referral_link = trim( $wps_referral_key );// phpcs:ignore WordPress.Security.NonceVerification
+
 					if ( isset( $wps_wpr_ref_link_expiry ) && ! empty( $wps_wpr_ref_link_expiry ) && ! empty( $referral_link ) ) {
 						setcookie( 'wps_wpr_cookie_set', $referral_link, time() + ( 86400 * $wps_wpr_ref_link_expiry ), '/' );
 					}
 				}
 			}
-		}
 	}
 
 	/**
@@ -519,7 +520,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						),
 					);
 					$refere_data = get_users( $args );
-					$refere_id = $refere_data[0]->data->ID;
+					$refere_id = $refere_data[0]->data->ID;	
 					$refere = get_user_by( 'ID', $refere_id );
 					/*Get email of the Refree*/
 					$refere_email = $refere->user_email;
@@ -531,6 +532,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					if ( empty( $get_points ) ) {
 						$get_points = 0;
 					}
+					update_option( 'refereeid', $get_points );
 					$wps_wpr_referral_program = true;
 					/*filter that will add restriction*/
 					$wps_wpr_referral_program = apply_filters( 'wps_wpr_referral_points', $wps_wpr_referral_program, $customer_id, $refere_id );
