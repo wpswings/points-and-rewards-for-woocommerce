@@ -46,10 +46,11 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 }
 
 if ( is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+
 	$plug = get_plugins();
 	if ( isset( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
 
-		if ( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php']['Version'] < '1.2.5' ) {
+		if ( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php']['Version'] < '1.2.6' ) {
 			unset( $_GET['activate'] );
 			deactivate_plugins( plugin_basename( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) );
 		}
