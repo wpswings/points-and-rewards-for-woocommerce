@@ -237,7 +237,7 @@ if ( $activated ) {
 			'settings' => '<a href="' . admin_url( 'admin.php?page=wps-rwpr-setting' ) . '">' . esc_html__( 'Settings', 'points-and-rewards-for-woocommerce' ) . '</a>',
 		);
 
-		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+		if ( ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ) ) {
 
 			$my_link['goPro'] = '<a class="wps-wpr-go-pro" target="_blank" href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'points-and-rewards-for-woocommerce' ) . '</a>';
 		}

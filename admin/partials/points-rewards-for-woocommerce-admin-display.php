@@ -63,7 +63,7 @@ $wps_wpr_setting_tab = array(
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-order-total.php',
 	),
 );
-if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+if ( ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ) ) {
 	$wps_wpr_setting_tab['premium_plugin'] = array(
 		'title' => esc_html__( 'Premium Features', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-premium-features.php',
@@ -92,7 +92,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 				</a>
 			</li>
 			<?php
-			if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+			if ( ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ) ) {
 				?>
 						<li class="wps_wpr_get_pro"><a  href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
 					<?php

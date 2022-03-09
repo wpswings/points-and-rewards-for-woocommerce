@@ -158,7 +158,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'wps_wpr_url'        => $url,
 					'reason'             => __( 'Please enter Remark', 'points-and-rewards-for-woocommerce' ),
 					'wps_wpr_nonce'      => wp_create_nonce( 'wps-wpr-verify-nonce' ),
-					'check_pro_activate' => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
+					'check_pro_activate' => ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ),
 					'pro_text'           => __( 'Please purchase the pro plugin to add multiple membership.', 'points-and-rewards-for-woocommerce' ),
 					'pro_link_text'      => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
 					'pro_link'           => 'https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro',

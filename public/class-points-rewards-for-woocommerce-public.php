@@ -2144,7 +2144,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
 							}
 						}
-						if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+						if ( ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ) ) {
 
 							unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
 
