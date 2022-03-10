@@ -45,7 +45,7 @@
 		
 			/*This will hide/show membership*/
 			if(jQuery(document).find('#wps_wpr_membership_setting_enable').prop("checked") == true){
-				
+
 				jQuery(document).find('.parent_of_div').closest('tr').show();
 			}
 			else{

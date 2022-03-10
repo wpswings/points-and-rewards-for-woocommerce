@@ -518,6 +518,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param array $value value of one array.
 	 */
 	public function wps_wpr_membership_role( $count, $key, $value ) {
+	
 		?>
 		<div id ="wps_wpr_parent_repeatable_<?php echo esc_html( $count ); ?>" data-id="<?php echo esc_html( $count ); ?>" class="wps_wpr_repeat">
 			<table class="wps_wpr_repeatable_section">
@@ -738,8 +739,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_add_membership_rule() {
 		global $public_obj;
-		add_action( 'wps_wpr_add_membership_rule', array( $this, 'wps_wpr_add_rule_for_membership' ), 10 );
-		add_action( 'wps_wpr_order_total_points', array( $this, 'wps_wpr_add_order_total_points' ), 10, 3 );
+
+		if ( ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ) ) {
+			add_action( 'wps_wpr_add_membership_rule', array( $this, 'wps_wpr_add_rule_for_membership' ), 10 );
+			add_action( 'wps_wpr_order_total_points', array( $this, 'wps_wpr_add_order_total_points' ), 10, 3 );
+		}
 		$public_obj = $this;
 	}
 
