@@ -44,10 +44,11 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 
 	$activated = true;
 }
+$plug = get_plugins();
 
 if ( is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 
-	$plug = get_plugins();
+
 	if ( isset( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
 
 		if ( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php']['Version'] < '1.2.6' ) {
@@ -601,7 +602,8 @@ if ( $activated ) {
  * @return void
  */
 	function wps_par_show_deactivation_notice_for_pro() {
-		if ( ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ) ) {
+		$plug = get_plugins();
+		if ( ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ) && isset( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
 			?>
 				<div class="notice notice-error is-dismissible">
 					<p><strong><?php esc_html_e( 'Version 1.2.6 of Points and Rewards for WooCommerce Pro ', 'points-and-rewards-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not available on your system! Please Update ', 'points-and-rewards-for-woocommerce' ); ?><strong><?php esc_html_e( 'Points and Rewards for WooCommerce Pro', 'points-and-rewards-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'points-and-rewards-for-woocommerce' ); ?></p>
