@@ -593,6 +593,21 @@ if ( $activated ) {
 		</style>
 			<?php
 		}
+		wps_par_show_deactivation_notice_for_pro();
+	}
+/**
+ * Undocumented function
+ *
+ * @return void
+ */
+	function wps_par_show_deactivation_notice_for_pro() {
+		if ( ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ) ) {
+			?>
+				<div class="notice notice-error is-dismissible">
+					<p><strong><?php esc_html_e( 'Version 1.2.6 of Points and Rewards for WooCommerce Pro ', 'points-and-rewards-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not available on your system! Please Update ', 'points-and-rewards-for-woocommerce' ); ?><strong><?php esc_html_e( 'Points and Rewards for WooCommerce Pro', 'points-and-rewards-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'points-and-rewards-for-woocommerce' ); ?></p>
+				</div>
+			<?php
+		}
 	}
 } else {
 
