@@ -173,6 +173,40 @@ class Points_Rewards_For_WooCommerce_Admin {
 			}
 		}
 	}
+	/**
+	 * Register the JavaScript for the admin area.
+	 *
+	 * @param  string $hook       The name of page.
+	 * @since    1.0.0
+	 */
+	public function swal_enqueue_scripts( $hook ) {
+
+		$screen = get_current_screen();
+
+		if ( isset( $screen->id ) ) {
+			$pagescreen = $screen->id;
+
+			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
+
+				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/points-rewards-for-woocommerce-admin-swal.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( $this->plugin_name . '-swal', plugin_dir_url( __FILE__ ) . 'js/swal.js', array( 'jquery' ), $this->version, false );
+				wp_localize_script(
+					$this->plugin_name,
+					'localised',
+					array(
+						'ajaxurl'          => admin_url( 'admin-ajax.php' ),
+						'nonce'            => wp_create_nonce( 'wps-wpr-verify-nonce' ),
+						'callback'         => 'ajax_callbacks',
+						'pending_count'    => $this->wps_get_count( 'pending' ),
+						'pending_orders'   => $this->wps_get_count( 'pending', 'orders' ),
+						'completed_orders' => $this->wps_get_count( 'done', 'orders' ),
+						'completed_users'  => $this->wps_get_count_users( 'users' ),
+						'completed_users_count'  => count( $this->wps_get_count_users( 'users' )),
+					)
+				);
+			}
+		}
+	}
 
 	/**
 	 * Add a submenu inside the Woocommerce Menu Page
@@ -1138,5 +1172,164 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wpswing_migrate_code() {
 		wps_wpr_convert_db_keys();
+	}
+		/**
+	 * Order count.
+	 *
+	 * @param string $type type.
+	 * @param string $action action.
+	 * @since    1.0.0
+	 */
+
+	public function wps_get_count( $type = 'all', $action = 'count' ) {
+
+		switch ( $type ) {
+			case 'pending':
+				$sql = 'SELECT (`post_id`)
+				FROM `wp_postmeta`
+				WHERE `meta_key` LIKE "mwb_cart_discount#$fee_id" OR `meta_key` LIKE "mwb_cart_discount#points" OR  `meta_key` LIKE "mwb_product_points_enable" OR  `meta_key` LIKE "mwb_points_product_value"';
+				$sql = apply_filters( 'wps_sql_test_post_meta_extended', $sql );
+				break;
+
+			default:
+				$sql = false;
+				break;
+		}
+
+		if ( empty( $sql ) ) {
+			return 0;
+		}
+
+		global $wpdb;
+		$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
+
+		if ( 'count' === $action ) {
+			$result = ! empty( $result ) ? count( $result ) : 0;
+		}
+
+		return $result;
+	}
+	/**
+	 * Ajax Call back.
+	 */
+	public function ajax_callbacks() {
+
+		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
+		$event = ! empty( $_POST['event'] ) ? sanitize_text_field( wp_unslash( $_POST['event'] ) ) : '';
+		if ( method_exists( $this, $event ) ) {
+			$data = $this->$event( $_POST );
+		} else {
+			$data = esc_html__( 'method not found', 'one-click-upsell-addon' );
+		}
+		echo wp_json_encode( $data );
+		wp_die();
+	}
+
+	/**
+	 * Import order callback.
+	 *
+	 * @param array $posted_data The $_POST data.
+	 */
+	public function import_single_order( $posted_data = array() ) {
+
+		$orders = ! empty( $posted_data['orders'] ) ? $posted_data['orders'] : array();
+
+		if ( empty( $orders ) ) {
+			return array();
+		}
+
+		// Remove this order from request.
+		foreach ( $orders as $key => $order ) {
+			$order_id = ! empty( $order['post_id'] ) ? $order['post_id'] : false;
+			unset( $orders[ $key ] );
+			break;
+		}
+
+		// Attempt for one order.
+		if ( ! empty( $order_id ) ) {
+
+			$user_post_meta_keys = array(
+				'mwb_cart_discount#$fee_id',
+				'mwb_cart_discount#points',
+				'mwb_product_points_enable',
+				'mwb_points_product_value',
+			);
+			$user_post_meta_keys = apply_filters( 'wps_userpost_meta_keys_pro', $user_post_meta_keys );
+			foreach ( $user_post_meta_keys as $index => $meta_key ) {
+
+				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
+				$meta_value = get_post_meta( $order_id, $meta_key, true );
+				if ( ! empty( $meta_value ) ) {
+					update_post_meta( $order_id, $new_key, $meta_value );
+					delete_post_meta( $order_id, $meta_key );
+				}
+			}
+
+			return compact( 'orders' );
+		}
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @param array $posted_data
+	 * @return void
+	 */
+	public function import_users_wps( $posted_data = array() ) {
+		$users = ! empty( $posted_data['users'] ) ? $posted_data['users'] : array();
+		if ( empty( $users ) ) {
+			return array();
+		}
+		foreach ( $users as $key => $user ) {
+			$user_id = ! empty( $user['user_id'] ) ? $user['user_id'] : false;
+			unset( $users[ $key ] );
+			break;
+		}
+		$user_meta_keys = array(
+			'mwb_points_referral',
+			'mwb_points_referral_invite',
+			'mwb_wpr_points',
+			'mwb_wpr_no_of_orders',
+		);
+		$user_meta_keys = apply_filters( 'wps_user_meta_keys_pro', $user_meta_keys );
+		foreach ( $user_meta_keys as $index => $meta_key ) {
+
+					$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
+					$meta_value = get_user_meta( $user_id, $meta_key, true );
+			if ( ! empty( $meta_value ) ) {
+						update_user_meta( $user_id, $new_key, $meta_value );
+						delete_user_meta( $user_id, $meta_key );
+			}
+		}
+		return compact( 'users' );
+	}
+/**
+ * Undocumented function
+ *
+ * @param string $type
+ * @param string $action
+ * @return void
+ */
+	public function wps_get_count_users( $type = 'all', $action = 'count' ) {
+
+		switch ( $type ) {
+			case 'users':
+				$sql = 'SELECT (`user_id`)
+				FROM `wp_usermeta`
+				WHERE `meta_key` LIKE "mwb_points_referral" OR `meta_key` LIKE "mwb_points_referral_invite" OR  `meta_key` LIKE "mwb_wpr_points" OR  `meta_key` LIKE "mwb_wpr_no_of_orders"';
+				$sql = apply_filters( 'wps_user_meta_sql_query', $sql );
+				break;
+			default:
+				$sql = false;
+				break;
+		}
+
+		if ( empty( $sql ) ) {
+			return 0;
+		}
+
+		global $wpdb;
+		$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
+
+		return $result;
 	}
 }

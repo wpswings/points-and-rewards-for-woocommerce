@@ -175,6 +175,8 @@ class Points_Rewards_For_Woocommerce {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'swal_enqueue_scripts' );
+		$this->loader->add_action( 'wp_ajax_ajax_callbacks', $plugin_admin, 'ajax_callbacks' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wpswing_migrate_code' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_rwpr_admin_menu', 10, 2 );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );

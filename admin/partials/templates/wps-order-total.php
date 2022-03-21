@@ -40,7 +40,7 @@ $wps_wpr_order_total_points_settings = array(
 		'title' => __( 'Enable the settings for the orders', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'checkbox',
 		'id' => 'wps_wpr_thankyouorder_enable',
-		'desc_tip' => __( 'Check this box to enable gift coupon for those customers who had placed orders in your site', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Check this box to enable order total points', 'points-and-rewards-for-woocommerce' ),
 		'desc' => __( 'Enable Points on order total.', 'points-and-rewards-for-woocommerce' ),
 		'class' => 'input-text',
 	),
