@@ -43,6 +43,9 @@ img {
     max-width: 200px;
     margin: 0 auto;
 }
+.wps_youtube iframe  {
+    margin-left: -75px;
+}
 
 @media only screen and (max-width: 768px){
     .wps-overview__keywords-item {

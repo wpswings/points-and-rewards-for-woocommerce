@@ -45,18 +45,6 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 	$activated = true;
 }
 $plug = get_plugins();
-
-if ( is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
-
-
-	if ( isset( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
-
-		if ( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php']['Version'] < '1.2.6' ) {
-			unset( $_GET['activate'] );
-			deactivate_plugins( plugin_basename( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) );
-		}
-	}
-}
 if ( $activated ) {
 
 	/**
@@ -66,7 +54,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.2.6' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.2.5' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -238,7 +226,7 @@ if ( $activated ) {
 			'settings' => '<a href="' . admin_url( 'admin.php?page=wps-rwpr-setting' ) . '">' . esc_html__( 'Settings', 'points-and-rewards-for-woocommerce' ) . '</a>',
 		);
 
-		if ( ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ) ) {
+		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 
 			$my_link['goPro'] = '<a class="wps-wpr-go-pro" target="_blank" href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'points-and-rewards-for-woocommerce' ) . '</a>';
 		}
@@ -623,7 +611,7 @@ if ( $activated ) {
 		</style>
 			<?php
 		}
-		wps_par_show_deactivation_notice_for_pro();
+		// wps_par_show_deactivation_notice_for_pro();
 	}
 /**
  * Undocumented function
@@ -636,7 +624,7 @@ if ( $activated ) {
 			if ( isset( $screen->id ) ) {
 				$pagescreen = $screen->id;
 			if ( 'plugins' === $pagescreen ) {
-				if ( ! is_plugin_active( 'points-and-rewards-for-woocommerce-pro/points-and-rewards-for-woocommerce-pro.php' ) && isset( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
+				if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) && isset( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
 					?>
 						<div class="notice notice-error is-dismissible">
 							<p><strong><?php esc_html_e( 'Version 1.2.6 of Points and Rewards for WooCommerce Pro ', 'points-and-rewards-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not available on your system! Please Update ', 'points-and-rewards-for-woocommerce' ); ?><strong><?php esc_html_e( 'Points and Rewards for WooCommerce Pro', 'points-and-rewards-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'points-and-rewards-for-woocommerce' ); ?></p>

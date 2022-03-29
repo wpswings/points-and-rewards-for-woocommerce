@@ -139,6 +139,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 				</div>
 			</div>
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image wps_youtube">	
+					<iframe width="170%" height="200" src="https://www.youtube.com/embed/8W9K6avWESE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</div>
+
+				</div>
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( ' Watch Video: Learn More About the Points and Reward  ', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
+							<?php
+							esc_html_e(
+								'This video tutorial helps the better utilization of the plugin and leverage the maximum benefits.
+',
+								'points-and-rewards-for-woocommerce'
+							);
+							?>
+						</p>
+			</div>
 		</div>
 	</div>
 </div>

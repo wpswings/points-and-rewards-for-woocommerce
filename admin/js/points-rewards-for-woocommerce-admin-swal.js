@@ -13,7 +13,7 @@ jQuery(document).ready( function($) {
 
 	
 	/* Close Button Click */
-	jQuery( document ).on( 'click','.treat-button',function(e){
+	jQuery( document ).on( 'click','.treat-button',function(e) {
 
 		e.preventDefault();
 		Swal.fire({
