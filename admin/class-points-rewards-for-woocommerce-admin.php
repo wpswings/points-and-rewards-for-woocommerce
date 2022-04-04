@@ -805,11 +805,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 							<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
 
 							<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
-							
+
 							<?php if ( count( $thankyouorder_min ) > 1 ) { ?>
 							<th class="wps_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'points-and-rewards-for-woocommerce' ); ?></th>
 							<?php } ?>
-							
+
 						</tr>
 					</thead>
 					<tbody  class="wps_wpr_thankyouorder_tbody">
