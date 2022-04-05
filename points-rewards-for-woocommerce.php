@@ -316,8 +316,80 @@ if ( $activated ) {
 				wps_par_update_user_meta();
 				wps_update_post_meta();
 				wps_order_total_migrate();
+				//pro
+				wps_product_purchase_point();
+				wps_point_expiration_setting();
+				wps_notification_add_on();
+				wps_api_setting_addon();
+				//pro
 				update_option( 'wps_par_org_convert_keys', true );
 		}
+	}
+	/**
+	 * Wps_api_setting_addon function
+	 *
+	 * @return void
+	 */
+	function wps_api_setting_addon() {
+
+		$wps_prodct_points        = get_option( 'mwb_wpr_api_features_settings' );
+		$general_migrate_settings = array();
+		if ( ! empty( $wps_prodct_points ) ) {
+
+			foreach ( $wps_prodct_points as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+		update_option( 'wps_wpr_api_features_settings', $general_migrate_settings );
+	}
+	/**
+	 * Wps_product_purchase_point function
+	 *
+	 * @return void
+	 */
+	function wps_product_purchase_point() {
+
+		$wps_prodct_points        = get_option( 'mwb_wpr_product_purchase_settings');
+		$general_migrate_settings = array();
+		if ( ! empty( $wps_prodct_points ) ) {
+
+			foreach ( $wps_prodct_points as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+		update_option( 'wps_wpr_product_purchase_settings', $general_migrate_settings );
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_point_expiration_setting() {
+		$wps_prodct_points        = get_option( 'mwb_wpr_points_expiration_settings' );
+		$general_migrate_settings = array();
+		if ( ! empty( $wps_prodct_points ) ) {
+
+			foreach ( $wps_prodct_points as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+		update_option( 'wps_wpr_points_expiration_settings', $general_migrate_settings );
+	}
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	function wps_notification_add_on() {
+		$wps_prodct_points        = get_option( 'mwb_wpr_notification_addon_settings');
+		$general_migrate_settings = array();
+		if ( ! empty( $wps_prodct_points ) ) {
+
+			foreach ( $wps_prodct_points as $key => $value ) {
+				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
+			}
+		}
+		update_option( 'wps_wpr_notification_addon_settings', $general_migrate_settings );
 	}
 	/**
 	 * Undocumented function

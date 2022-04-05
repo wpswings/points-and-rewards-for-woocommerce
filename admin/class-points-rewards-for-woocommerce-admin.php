@@ -1245,7 +1245,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 			unset( $orders[ $key ] );
 			break;
 		}
-		
 		// Attempt for one order.
 		if ( ! empty( $order_id ) ) {
 			$user_post_meta_keys = array(
@@ -1259,21 +1258,70 @@ class Points_Rewards_For_WooCommerce_Admin {
 			foreach ( $user_post_meta_keys as $index => $meta_key ) {
 
 				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-	
+
 				$meta_value = get_post_meta( $order_id, $meta_key, true );
 
 				if ( ! empty( $meta_value ) || $meta_value === '0' ) {
 					update_post_meta( $order_id, $new_key, $meta_value );
-					
 					delete_post_meta( $order_id, $meta_key );
 
 				}
 			}
-
-			
 		}
 		return compact( 'orders' );
 	}
+	public function wps_wpr_custom_addon_postkeys_migration( $user_post_meta_keys  ) {
+		$wps_changes_extended_array = array();
+		$user_pro_meta_keys = array(
+			'mwb_product_points_enable',
+			'mwb_product_purchase_points_only',
+			'mwb_points_product_value',
+			'mwb_points_product_purchase_value',
+			'mwb_product_purchase_through_point_disable',
+			'mwb_wpr_variable_points',
+			'mwb_wpr_variable_points_purchase',
+		);
+		$wps_changes_extended_array = array_merge( $user_post_meta_keys, $user_pro_meta_keys );
+		return $wps_changes_extended_array;
+	}
+	public function wps_wpr_custom_addon_keys_migration( $user_meta_keys ) {
+		$wps_extended_user_meta_keys = array();
+		$wps_addon_key = array(
+			'mwb_wpr_user_log',
+			'mwb_wpr_points_expiration_date',
+			'mwb_points_referral',
+			'mwb_points_referral_invite',
+			'mwb_wpr_birthday_points_year',
+		);
+		$wps_extended_user_meta_keys = array_merge( $user_meta_keys, $wps_addon_key );
+		return $wps_extended_user_meta_keys;
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $sql
+	 * @return $sql
+	 */
+		public function wps_wpr_sql_test_post_meta( $sql) {
+
+		$sql = 'SELECT (`post_id`)
+		FROM `wp_postmeta`
+		WHERE `meta_key` LIKE "mwb_cart_discount#$fee_id" OR `meta_key` LIKE "mwb_cart_discount#points" OR  `meta_key` LIKE "mwb_product_points_enable" OR  `meta_key` LIKE "mwb_product_purchase_points_only" OR  `meta_key` LIKE "mwb_points_product_value" OR `meta_key` LIKE "mwb_points_product_purchase_value" OR `meta_key` LIKE "mwb_product_purchase_through_point_disable" OR `meta_key` LIKE "mwb_wpr_variable_points" OR  `meta_key` LIKE "mwb_wpr_variable_points_purchase"OR  `meta_key` LIKE "mwb_wpr_points_coupon"';
+		return $sql;
+		}
+		/**
+		 * Undocumented function
+		 *
+		 * @param [type] $sql
+		 * @return $sql.
+		 */
+		public function wps_wpr_sql_test_user_meta( $sql ) {
+			$sql = 'SELECT (`user_id`)
+			FROM `wp_usermeta`
+			WHERE `meta_key` LIKE "mwb_points_referral" OR `meta_key` LIKE "mwb_points_referral_invite" OR  `meta_key` LIKE "mwb_wpr_points" OR  `meta_key` LIKE "mwb_wpr_no_of_orders" OR `meta_key` LIKE "mwb_wpr_user_log" OR `meta_key` LIKE "mwb_wpr_points_expiration_date"  OR  `meta_key` LIKE "mwb_wpr_birthday_points_year"';
+		return $sql;
+		}
 	/**
 	 * Undocumented function
 	 *
