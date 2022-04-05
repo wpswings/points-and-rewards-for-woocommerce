@@ -1240,33 +1240,39 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 		// Remove this order from request.
 		foreach ( $orders as $key => $order ) {
+
 			$order_id = ! empty( $order['post_id'] ) ? $order['post_id'] : false;
 			unset( $orders[ $key ] );
 			break;
 		}
-
+		
 		// Attempt for one order.
 		if ( ! empty( $order_id ) ) {
-
 			$user_post_meta_keys = array(
 				'mwb_cart_discount#$fee_id',
 				'mwb_cart_discount#points',
 				'mwb_product_points_enable',
 				'mwb_points_product_value',
+				'mwb_wpr_points_coupon',
 			);
 			$user_post_meta_keys = apply_filters( 'wps_userpost_meta_keys_pro', $user_post_meta_keys );
 			foreach ( $user_post_meta_keys as $index => $meta_key ) {
 
 				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
+	
 				$meta_value = get_post_meta( $order_id, $meta_key, true );
-				if ( ! empty( $meta_value ) ) {
+
+				if ( ! empty( $meta_value ) || $meta_value === '0' ) {
 					update_post_meta( $order_id, $new_key, $meta_value );
+					
 					delete_post_meta( $order_id, $meta_key );
+
 				}
 			}
 
-			return compact( 'orders' );
+			
 		}
+		return compact( 'orders' );
 	}
 	/**
 	 * Undocumented function
@@ -1284,21 +1290,25 @@ class Points_Rewards_For_WooCommerce_Admin {
 			unset( $users[ $key ] );
 			break;
 		}
-		$user_meta_keys = array(
-			'mwb_points_referral',
-			'mwb_points_referral_invite',
-			'mwb_wpr_points',
-			'mwb_wpr_no_of_orders',
-		);
-		$user_meta_keys = apply_filters( 'wps_user_meta_keys_pro', $user_meta_keys );
-		foreach ( $user_meta_keys as $index => $meta_key ) {
+		if( ! empty( $user_id ) ) {
 
-					$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-					$meta_value = get_user_meta( $user_id, $meta_key, true );
-			if ( ! empty( $meta_value ) ) {
-						update_user_meta( $user_id, $new_key, $meta_value );
-						delete_user_meta( $user_id, $meta_key );
+			$user_meta_keys = array(
+				'mwb_points_referral',
+				'mwb_points_referral_invite',
+				'mwb_wpr_points',
+				'mwb_wpr_no_of_orders',
+			);
+			$user_meta_keys = apply_filters( 'wps_user_meta_keys_pro', $user_meta_keys );
+			foreach ( $user_meta_keys as $index => $meta_key ) {
+	
+						$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
+						$meta_value = get_user_meta( $user_id, $meta_key, true );
+				if ( ! empty( $meta_value ) || $meta_value === '0') {
+							update_user_meta( $user_id, $new_key, $meta_value );
+							delete_user_meta( $user_id, $meta_key );
+				}
 			}
+		
 		}
 		return compact( 'users' );
 	}
