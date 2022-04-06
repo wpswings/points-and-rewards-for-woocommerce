@@ -1263,11 +1263,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 				$meta_value = get_post_meta( $order_id, $meta_key, true );
 
-				if ( ! empty( $meta_value ) || $meta_value === '0' ) {
 					update_post_meta( $order_id, $new_key, $meta_value );
 					delete_post_meta( $order_id, $meta_key );
 
-				}
 			}
 		}
 		return compact( 'orders' );
@@ -1350,18 +1348,15 @@ class Points_Rewards_For_WooCommerce_Admin {
 			);
 			$user_meta_keys = apply_filters( 'wps_user_meta_keys_pro', $user_meta_keys );
 			foreach ( $user_meta_keys as $index => $meta_key ) {
-	
 						$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
 						$meta_value = get_user_meta( $user_id, $meta_key, true );
-				if ( ! empty( $meta_value ) || $meta_value === '0') {
+
 							update_user_meta( $user_id, $new_key, $meta_value );
 							delete_user_meta( $user_id, $meta_key );
-				}
 			}
-		
 		}
 
-		update_option('wps_migrated_successfully', 'yes');
+		update_option( 'wps_migrated_successfully', 'yes');
 		return compact( 'users' );
 	}
 /**
