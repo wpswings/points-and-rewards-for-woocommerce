@@ -53,6 +53,7 @@ if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 
 	$activated = true;
 }
+
 $plug = get_plugins();
 if ( $activated ) {
 
@@ -313,8 +314,6 @@ if ( $activated ) {
 				wps_add_points_membership_option();
 				wps_wpr_assign_points();
 				wps_wp_other_settings();
-				wps_par_update_user_meta();
-				wps_update_post_meta();
 				wps_order_total_migrate();
 				//pro
 				wps_product_purchase_point();
@@ -432,39 +431,6 @@ if ( $activated ) {
 	 *
 	 * @return void
 	 */
-	function wps_update_post_meta() {
-		$user_post_meta_keys = array(
-			'mwb_cart_discount#$fee_id',
-			'mwb_cart_discount#points',
-		);
-		foreach ( $user_post_meta_keys as $index => $meta_key ) {
-			$wps_orders = get_posts(
-				array(
-					'numberposts' => -1,
-					'post_type'   => 'shop_order',
-					'fields'      => 'ids', // return only ids.
-					'order'       => 'ASC',
-					'meta_key'	  => $user_post_meta_keys,//phpcs:ignore
-					'post_status' => 'any',
-				)
-			);
-			if ( ! empty( $wps_orders ) ) {
-
-				foreach ( $wps_orders as $order_id ) {
-					$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-					$meta_value = get_post_meta( $order_id, $meta_key, true );
-					if ( ! empty( $meta_value ) ) {
-						update_user_meta( $order_id, $new_key, $meta_value );
-					}
-				}
-			}
-		}
-	}
-	/**
-	 * Undocumented function
-	 *
-	 * @return void
-	 */
 	function wps_per_currency_update_option() {
 		$wps_coupon_settings      = get_option( 'mwb_wpr_coupons_gallery'); 
 		$general_migrate_settings = array();
@@ -493,39 +459,6 @@ if ( $activated ) {
 		}
 		update_option( 'wps_wpr_notificatin_array', $general_migrate_settings );
 
-	}
-	/**
-	 * Undocumented function
-	 *
-	 * @return void
-	 */
-	function wps_par_update_user_meta() {
-
-		$user_meta_keys = array(
-			'mwb_points_referral',
-			'mwb_points_referral_invite',
-			'mwb_wpr_points',
-			'mwb_wpr_no_of_orders',
-		);
-
-		foreach ( $user_meta_keys as $index => $meta_key ) {
-			$users = get_users(
-				array(
-					'fields'   => 'ids',
-					'meta_key' => $meta_key, //phpcs:ignore
-				)
-			);
-			if ( ! empty( $users ) ) {
-
-				foreach ( $users as $user_id ) {
-					$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-					$meta_value = get_user_meta( $user_id, $meta_key, true );
-					if ( ! empty( $meta_value ) ) {
-						update_user_meta( $user_id, $new_key, $meta_value );
-					}
-				}
-			}
-		}
 	}
 	/**
 	 * Undocumented function
@@ -600,7 +533,9 @@ if ( $activated ) {
 		update_option( 'wps_wpr_order_total_settings', $general_migrate_settings );
 	}
 
-	if ( true === $old_pro_exists ) {
+	if ( $old_pro_exists === true ) {
+
+
 
 		add_action( 'admin_notices', 'wps_wgm_check_and_inform_update' );
 		/**
@@ -638,14 +573,10 @@ if ( $activated ) {
 		?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
-				<div class="notice notice-success inline update-message notice-alt">
-					<div class='wps-notice-title wps-notice-section'>
-						<p><strong>IMPORTANT NOTICE:</strong></p>
-					</div>
-					<div class='wps-notice-content wps-notice-section'>
-						<p>From this update <strong>Version 1.2.5</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
-						Please connect with us for all setup, support, and update related queries without hesitation.</p>
-					</div>
+				<div class="notice notice-error inline update-message notice-alt">
+					<p class='wps-notice-title wps-notice-section'>
+						<?php esc_html_e( 'The latest update includes some substantial changes across different areas of the plugin. Hence, if you are not a new user then', 'points-and-rewards-for-woocommerce' ); ?><strong><?php esc_html_e( ' please migrate your old data and settings from ', 'points-and-rewards-for-woocommerce' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'admin.php?page=wps-rwpr-setting' ) ); ?>"><?php esc_html_e( 'Dashboard', 'points-and-rewards-for-woocommerce' ); ?></strong></a><?php esc_html_e( ' page then Click On Start Import Button.', 'points-and-rewards-for-woocommerce' ); ?>
+					</p>
 				</div>
 			</td>
 		</tr>
@@ -672,13 +603,12 @@ if ( $activated ) {
 
 		<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
-				<div class="notice notice-success inline update-message notice-alt">
+				<div class="notice notice-error inline update-message notice-alt">
 					<div class='wps-notice-title wps-notice-section'>
 						<p><strong>IMPORTANT NOTICE:</strong></p>
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
-						<p>From this update <strong>Version 1.2.5</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
-						Please connect with us for all setup, support, and update related queries without hesitation.</p>
+						<p>The latest Update includes some substantial changes across different areas of plugin<strong>Please Migrate your data by clicking on Start Migration<strong></p>
 					</div>
 					<div class="treat-wrapper">
 						<button class="treat-button">Start Migration!</button>

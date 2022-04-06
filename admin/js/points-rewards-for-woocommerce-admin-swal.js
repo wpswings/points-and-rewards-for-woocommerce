@@ -8,12 +8,12 @@ jQuery(document).ready( function($) {
 	const completed_orders = localised.completed_orders;
 	
 	const users	           = localised.completed_users;
-	const users_count	           = localised.completed_users_count;
+	const users_count	   = localised.completed_users_count;
 	const searchHTML = '<style>input[type=number], select, numberarea{width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-top: 6px; margin-bottom: 16px; resize: vertical;}input[type=submit]{background-color: #04AA6D; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer;}.container{border-radius: 5px; background-color: #f2f2f2; padding: 20px;}</style></head><div class="container"> <label for="ordername">Order Id</label> <input type="number" id="ordername" name="firstname" placeholder="Order ID to search.."></div>';
 
 	
 	/* Close Button Click */
-	jQuery( document ).on( 'click','.treat-button',function(e) {
+	jQuery( document ).on( 'click','.treat-button', '.swal-button--confirm',function(e) {
 
 		e.preventDefault();
 		Swal.fire({
@@ -86,7 +86,6 @@ jQuery(document).ready( function($) {
 		});
 	}
 	const startUser = ( users ) => {
-		
 		var event   = 'import_users_wps';
 		var request = { action, event, nonce, users };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
@@ -105,15 +104,25 @@ jQuery(document).ready( function($) {
 				startUser( users );
 			} else {
 				// All orders imported!
-				Swal.fire({
-					title   : 'Users data are also migrated successfully!',
-				})
-				location.reload();
+				Swal.fire(' All of the Data are Migrated Successfully !', '', 'success').then(() => {
+					window.location.reload();
+				});
+				// location.reload();
 			}
 		}, function(error) {
 			console.error(error);
 		});
 	}
-
+	
 });
 });
+var wps_par_migration_success = function() {
+	
+	if ( localised.pending_count != 0 && localised.completed_users_count != 0 ) {
+		jQuery( ".treat-button" ).click();
+		jQuery( ".treat-button" ).show();
+	}else{
+		jQuery( ".treat-button" ).hide();
+		
+	}
+}

@@ -10,7 +10,6 @@
  * @package    Rewardeem_woocommerce_Points_Rewards
  * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 
@@ -127,7 +126,6 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 								<?php
 							} else {
 								?>
-											
 								<div class="wps_rwpr_tabs">
 									<a class="wps_gw_nav_tab nav-tab " href="?page=wps-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
 								</div>
@@ -136,8 +134,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 						}
 					}
 				}
-				?>
-					
+				?>	
 			</div>
 		</div>
 		<div class="loading-style-bg wps_rwpr_settings_display_none" id="wps_wpr_loader">
@@ -164,9 +161,29 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 				}
 			}
 		}
+		$wps_success_option = get_option( 'wps_migrated_successfully', 'no' );
+	if ( $wps_success_option == 'no' ) {
+
+			$wps_par_global_custom_css = 'const triggerError = () => {
+			swal({
+		
+				title: "Attention Required!",
+				text: "Please Migrate Your Database Keys First By Clicking On Below Button , Then You can Have Access To Your Dashboard Button",
+				icon: "error",
+				button: "Click To Import",
+				closeOnClickOutside: false,
+			}).then(function() {
+				wps_par_migration_success();
+			});
+		}
+		triggerError();';
+		wp_register_script( 'wps_par_incompatible_css', false, array(), '1.2.8', 'all' );
+		wp_enqueue_script( 'wps_par_incompatible_css' );
+		wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
+}
+
 		?>
 	</div>
 </div>
 </form>
 </div>
-

@@ -2139,7 +2139,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						$check_enable       = get_post_meta( $cart_contents[ $key ]['product_id'], 'wps_product_points_enable', 'no' );
 
 						$cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
-						if ( ! is_bool( $global_enable ) ) {
+						if ( ! is_bool( $global_enable ) && isset( $global_enable['wps_wpr_global_product_enable'] ) ) {
 							if ( '0' == $global_enable['wps_wpr_global_product_enable'] && 'no' == $check_enable ) {
 								unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
 							}
@@ -2156,7 +2156,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						$cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
 					}
 					$check_enable = get_post_meta( $cart_contents[ $key ]['product_id'], 'wps_product_points_enable', 'no' );
-					if ( ! is_bool( $global_enable ) ) {
+					if ( ! is_bool( $global_enable ) && isset( $global_enable['wps_wpr_global_product_enable'] ) ) {
 						if ( '0' == $global_enable['wps_wpr_global_product_enable'] && ( 'no' == $check_enable ) ) {
 							unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
 						}

@@ -188,20 +188,22 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
 
-				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/points-rewards-for-woocommerce-admin-swal.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( 'wps_my_par_custom_js', plugin_dir_url( __FILE__ ) . 'js/points-rewards-for-woocommerce-admin-swal.js', array( 'jquery' ), $this->version, false );
+
 				wp_enqueue_script( $this->plugin_name . '-swal', plugin_dir_url( __FILE__ ) . 'js/swal.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( 'par-wps-swall' . '-swall', plugin_dir_url( __FILE__ ) . 'js/swall.js', array( 'jquery' ), $this->version, false );
 				wp_localize_script(
-					$this->plugin_name,
+					'wps_my_par_custom_js',
 					'localised',
 					array(
 						'ajaxurl'          => admin_url( 'admin-ajax.php' ),
 						'nonce'            => wp_create_nonce( 'wps-wpr-verify-nonce' ),
 						'callback'         => 'ajax_callbacks',
-						'pending_count'    => $this->wps_get_count( 'pending' ),
-						'pending_orders'   => $this->wps_get_count( 'pending', 'orders' ),
-						'completed_orders' => $this->wps_get_count( 'done', 'orders' ),
-						'completed_users'  => $this->wps_get_count_users( 'users' ),
-						'completed_users_count'  => count( $this->wps_get_count_users( 'users' )),
+						'pending_count'    => $this->wps_par_get_count( 'pending' ),
+						'pending_orders'   => $this->wps_par_get_count( 'pending', 'orders' ),
+						'completed_orders' => $this->wps_par_get_count( 'done', 'orders' ),
+						'completed_users'  => $this->wps_par_get_count_users( 'users' ),
+						'completed_users_count'  => count( $this->wps_par_get_count_users( 'users' )),
 					)
 				);
 			}
@@ -1181,7 +1183,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @since    1.0.0
 	 */
 
-	public function wps_get_count( $type = 'all', $action = 'count' ) {
+	public function wps_par_get_count( $type = 'all', $action = 'count' ) {
 
 		switch ( $type ) {
 			case 'pending':
@@ -1358,6 +1360,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 			}
 		
 		}
+
+		update_option('wps_migrated_successfully', 'yes');
 		return compact( 'users' );
 	}
 /**
@@ -1367,7 +1371,7 @@ class Points_Rewards_For_WooCommerce_Admin {
  * @param string $action
  * @return void
  */
-	public function wps_get_count_users( $type = 'all', $action = 'count' ) {
+	public function wps_par_get_count_users( $type = 'all', $action = 'count' ) {
 
 		switch ( $type ) {
 			case 'users':
