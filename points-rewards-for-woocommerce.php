@@ -22,7 +22,7 @@
  * Domain Path:       /languages
  *
  * Requires at least: 4.4.0
- * Tested up to:     5.9.2
+ * Tested up to:     5.9.3
  * WC requires at least: 3.0.0
  * WC tested up to:  6.3.1
  *
@@ -315,12 +315,12 @@ if ( $activated ) {
 				wps_wpr_assign_points();
 				wps_wp_other_settings();
 				wps_order_total_migrate();
-				//pro
+				// pro
 				wps_product_purchase_point();
 				wps_point_expiration_setting();
 				wps_notification_add_on();
 				wps_api_setting_addon();
-				//pro
+				// pro
 				update_option( 'wps_par_org_convert_keys', true );
 		}
 	}
@@ -348,7 +348,7 @@ if ( $activated ) {
 	 */
 	function wps_product_purchase_point() {
 
-		$wps_prodct_points        = get_option( 'mwb_wpr_product_purchase_settings');
+		$wps_prodct_points        = get_option( 'mwb_wpr_product_purchase_settings' );
 		$general_migrate_settings = array();
 		if ( ! empty( $wps_prodct_points ) ) {
 
@@ -380,7 +380,7 @@ if ( $activated ) {
 	 * @return void
 	 */
 	function wps_notification_add_on() {
-		$wps_prodct_points        = get_option( 'mwb_wpr_notification_addon_settings');
+		$wps_prodct_points        = get_option( 'mwb_wpr_notification_addon_settings' );
 		$general_migrate_settings = array();
 		if ( ! empty( $wps_prodct_points ) ) {
 
@@ -415,7 +415,7 @@ if ( $activated ) {
 	 * @return void
 	 */
 	function wps_general_settings_update_option() {
-		$general_settings         = get_option( 'mwb_wpr_settings_gallery' ); 
+		$general_settings         = get_option( 'mwb_wpr_settings_gallery' );
 		$general_migrate_settings = array();
 		if ( ! empty( $general_settings ) ) {
 
@@ -432,7 +432,7 @@ if ( $activated ) {
 	 * @return void
 	 */
 	function wps_per_currency_update_option() {
-		$wps_coupon_settings      = get_option( 'mwb_wpr_coupons_gallery'); 
+		$wps_coupon_settings      = get_option( 'mwb_wpr_coupons_gallery' );
 		$general_migrate_settings = array();
 		if ( ! empty( $wps_coupon_settings ) ) {
 
@@ -449,7 +449,7 @@ if ( $activated ) {
 	 */
 	function wps_points_notification_update_option() {
 
-		$wps_notification_gallery = get_option( 'mwb_wpr_notificatin_array' ); 
+		$wps_notification_gallery = get_option( 'mwb_wpr_notificatin_array' );
 		$general_migrate_settings = array();
 		if ( ! empty( $wps_notification_gallery ) ) {
 
@@ -500,7 +500,7 @@ if ( $activated ) {
 	 */
 	function wps_wp_other_settings() {
 
-		$wps_assign_points_settings = get_option( 'mwb_wpr_other_settings'); 
+		$wps_assign_points_settings = get_option( 'mwb_wpr_other_settings' );
 
 		$general_migrate_settings   = array();
 		if ( ! empty( $wps_assign_points_settings ) ) {
@@ -590,8 +590,8 @@ if ( $activated ) {
 	}
 	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_wpr_upgrade_notice', 0, 3 );
 	if ( $old_pro_exists === true ) {
-		add_action('admin_notices', 'wps_wpr_updgrade_warning_notice');
-}
+		add_action( 'admin_notices', 'wps_wpr_updgrade_warning_notice' );
+	}
 	add_action( 'admin_notices', 'wps_wpr_updgrade_notice' );
 
 
@@ -603,7 +603,8 @@ if ( $activated ) {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		$wps_update_pro = get_option( 'wps_migrated_successfully', 'no' );
-		if ( 'wps-rwpr-setting' === $tab && $wps_update_pro == 'no') { ?>
+		if ( 'wps-rwpr-setting' === $tab && $wps_update_pro == 'no' ) {
+			?>
 
 		<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
@@ -662,7 +663,8 @@ if ( $activated ) {
 	function wps_wpr_updgrade_warning_notice() {
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
-		if ( 'wps-rwpr-setting' === $tab ) { ?>
+		if ( 'wps-rwpr-setting' === $tab ) {
+			?>
 	<tr class="plugin-update-tr active notice-warning notice-alt">
 	<td colspan="4" class="plugin-update colspanchange">
 		<div class="notice notice-error inline update-message notice-alt">
@@ -706,9 +708,9 @@ if ( $activated ) {
 				content: none;
 			}
 		</style>
-		<?php
+			<?php
+		}
 	}
-}
 	if ( true === $old_pro_exists ) {
 		unset( $_GET['activate'] );
 		deactivate_plugins( plugin_basename( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) );

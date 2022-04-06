@@ -203,7 +203,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'pending_orders'   => $this->wps_par_get_count( 'pending', 'orders' ),
 						'completed_orders' => $this->wps_par_get_count( 'done', 'orders' ),
 						'completed_users'  => $this->wps_par_get_count_users( 'users' ),
-						'completed_users_count'  => count( $this->wps_par_get_count_users( 'users' )),
+						'completed_users_count'  => count( $this->wps_par_get_count_users( 'users' ) ),
 					)
 				);
 			}
@@ -458,7 +458,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$wps_wpr_total_points = $wps_wpr_points;
 		}
 		return $wps_wpr_total_points;
-	} 
+	}
 
 	/**
 	 * This function append the option field after selecting Product category through ajax
@@ -554,7 +554,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param array $value value of one array.
 	 */
 	public function wps_wpr_membership_role( $count, $key, $value ) {
-	
+
 		?>
 		<div id ="wps_wpr_parent_repeatable_<?php echo esc_html( $count ); ?>" data-id="<?php echo esc_html( $count ); ?>" class="wps_wpr_repeat">
 			<table class="wps_wpr_repeatable_section">
@@ -1270,7 +1270,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		}
 		return compact( 'orders' );
 	}
-	public function wps_wpr_custom_addon_postkeys_migration( $user_post_meta_keys  ) {
+	public function wps_wpr_custom_addon_postkeys_migration( $user_post_meta_keys ) {
 		$wps_changes_extended_array = array();
 		$user_pro_meta_keys = array(
 			'mwb_product_points_enable',
@@ -1303,25 +1303,25 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param [type] $sql
 	 * @return $sql
 	 */
-		public function wps_wpr_sql_test_post_meta( $sql) {
+	public function wps_wpr_sql_test_post_meta( $sql ) {
 
 		$sql = 'SELECT (`post_id`)
 		FROM `wp_postmeta`
 		WHERE `meta_key` LIKE "mwb_cart_discount#$fee_id" OR `meta_key` LIKE "mwb_cart_discount#points" OR  `meta_key` LIKE "mwb_product_points_enable" OR  `meta_key` LIKE "mwb_product_purchase_points_only" OR  `meta_key` LIKE "mwb_points_product_value" OR `meta_key` LIKE "mwb_points_product_purchase_value" OR `meta_key` LIKE "mwb_product_purchase_through_point_disable" OR `meta_key` LIKE "mwb_wpr_variable_points" OR  `meta_key` LIKE "mwb_wpr_variable_points_purchase"OR  `meta_key` LIKE "mwb_wpr_points_coupon"';
 		return $sql;
-		}
+	}
 		/**
 		 * Undocumented function
 		 *
 		 * @param [type] $sql
 		 * @return $sql.
 		 */
-		public function wps_wpr_sql_test_user_meta( $sql ) {
-			$sql = 'SELECT (`user_id`)
+	public function wps_wpr_sql_test_user_meta( $sql ) {
+		$sql = 'SELECT (`user_id`)
 			FROM `wp_usermeta`
 			WHERE `meta_key` LIKE "mwb_points_referral" OR `meta_key` LIKE "mwb_points_referral_invite" OR  `meta_key` LIKE "mwb_wpr_points" OR  `meta_key` LIKE "mwb_wpr_no_of_orders" OR `meta_key` LIKE "mwb_wpr_user_log" OR `meta_key` LIKE "mwb_wpr_points_expiration_date"  OR  `meta_key` LIKE "mwb_wpr_birthday_points_year"';
 		return $sql;
-		}
+	}
 	/**
 	 * Undocumented function
 	 *
@@ -1338,7 +1338,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			unset( $users[ $key ] );
 			break;
 		}
-		if( ! empty( $user_id ) ) {
+		if ( ! empty( $user_id ) ) {
 
 			$user_meta_keys = array(
 				'mwb_points_referral',
@@ -1356,16 +1356,16 @@ class Points_Rewards_For_WooCommerce_Admin {
 			}
 		}
 
-		update_option( 'wps_migrated_successfully', 'yes');
+		update_option( 'wps_migrated_successfully', 'yes' );
 		return compact( 'users' );
 	}
-/**
- * Undocumented function
- *
- * @param string $type
- * @param string $action
- * @return void
- */
+	/**
+	 * Undocumented function
+	 *
+	 * @param string $type
+	 * @param string $action
+	 * @return void
+	 */
 	public function wps_par_get_count_users( $type = 'all', $action = 'count' ) {
 
 		switch ( $type ) {

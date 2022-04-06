@@ -96,7 +96,8 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 						<li class="wps_wpr_get_pro"><a  href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
 					<?php
 			}
-			?>	
+			?>
+				
 		</ul>
 	</div>
 </div>
@@ -134,7 +135,8 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 						}
 					}
 				}
-				?>	
+				?>
+					
 			</div>
 		</div>
 		<div class="loading-style-bg wps_rwpr_settings_display_none" id="wps_wpr_loader">
@@ -162,7 +164,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 			}
 		}
 		$wps_success_option = get_option( 'wps_migrated_successfully', 'no' );
-	if ( $wps_success_option == 'no' ) {
+		if ( $wps_success_option == 'no' ) {
 
 			$wps_par_global_custom_css = 'const triggerError = () => {
 			swal({
@@ -177,10 +179,10 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 			});
 		}
 		triggerError();';
-		wp_register_script( 'wps_par_incompatible_css', false, array(), '1.2.8', 'all' );
-		wp_enqueue_script( 'wps_par_incompatible_css' );
-		wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
-}
+			wp_register_script( 'wps_par_incompatible_css', false, array(), '1.2.8', 'all' );
+			wp_enqueue_script( 'wps_par_incompatible_css' );
+			wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
+		}
 
 		?>
 	</div>
