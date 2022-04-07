@@ -537,11 +537,11 @@ if ( $activated ) {
 
 
 
-		add_action( 'admin_notices', 'wps_wgm_check_and_inform_update' );
+		add_action( 'admin_notices', 'wps_par_check_and_inform_update' );
 		/**
 		 * Check update if pro is old.
 		 */
-		function wps_wgm_check_and_inform_update() {
+		function wps_par_check_and_inform_update() {
 			$update_file = plugin_dir_path( dirname( __FILE__ ) ) . 'ultimate-woocommerce-points-and-rewards/class-ultimate-woocommerce-points-and-rewards-update.php';
 
 			// If present but not active.

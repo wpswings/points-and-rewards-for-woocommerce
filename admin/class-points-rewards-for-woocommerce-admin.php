@@ -1368,6 +1368,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * Migration to new domain notice.
 	 */
 	public function wps_wpr_updgrade_notice() {
+		$screen = get_current_screen();
+
+		if ( isset( $screen->id ) ) {
+			$pagescreen = $screen->id;
+			if ( $pagescreen === 'plugins' ) {
+				return;
+			}
+		}
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		if ( 'wps-rwpr-setting' === $tab && ( $this->wps_par_get_count( 'pending' ) != '0' ) || ( count( $this->wps_par_get_count_users( 'users' ) ) != 0 ) ) {
