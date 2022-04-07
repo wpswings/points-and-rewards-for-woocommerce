@@ -1268,8 +1268,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 					update_post_meta( $order_id, $new_key, $meta_value );
 					update_user_meta( $order_id, 'copy_' . $meta_key, $meta_value );
 					delete_post_meta( $order_id, $meta_key );
+				} else {
+					delete_post_meta( $order_id, $meta_key  );
 				}
-
 			}
 		}
 		return compact( 'orders' );
@@ -1362,7 +1363,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 							update_user_meta( $user_id, $new_key, $meta_value );
 							update_user_meta( $user_id, 'copy_' . $meta_key, $meta_value );
 							delete_user_meta( $user_id, $meta_key );
-						}
+				} else {
+					delete_user_meta( $user_id, $meta_key );
+				}
 			}
 		}
 		return compact( 'users' );
