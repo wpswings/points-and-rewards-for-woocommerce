@@ -1263,10 +1263,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
 
 				$meta_value = get_post_meta( $order_id, $meta_key, true );
+			if ( ! empty ( $meta_value  ) ) {
 
 					update_post_meta( $order_id, $new_key, $meta_value );
 					update_user_meta( $order_id, 'copy_' . $meta_key, $meta_value );
 					delete_post_meta( $order_id, $meta_key );
+				}
 
 			}
 		}
@@ -1356,10 +1358,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 			foreach ( $user_meta_keys as $index => $meta_key ) {
 						$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
 						$meta_value = get_user_meta( $user_id, $meta_key, true );
-
+						if ( ! empty ( $meta_value  ) ) {
 							update_user_meta( $user_id, $new_key, $meta_value );
 							update_user_meta( $user_id, 'copy_' . $meta_key, $meta_value );
 							delete_user_meta( $user_id, $meta_key );
+						}
 			}
 		}
 		return compact( 'users' );
@@ -1372,7 +1375,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
-			if ( $pagescreen === 'plugins' ) {
+
+			if ( $pagescreen != 'woocommerce_page_wps-rwpr-setting' ) {
 				return;
 			}
 		}
