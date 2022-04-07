@@ -118,7 +118,7 @@ jQuery(document).ready( function($) {
 });
 var wps_par_migration_success = function() {
 	
-	if ( localised.pending_count != 0 && localised.completed_users_count != 0 ) {
+	if ( localised.pending_count != 0 || localised.completed_users_count != 0 ) {
 		jQuery( ".treat-button" ).click();
 		jQuery( ".treat-button" ).show();
 	}else{

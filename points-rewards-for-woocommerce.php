@@ -592,69 +592,6 @@ if ( $activated ) {
 	if ( $old_pro_exists === true ) {
 		add_action( 'admin_notices', 'wps_wpr_updgrade_warning_notice' );
 	}
-	add_action( 'admin_notices', 'wps_wpr_updgrade_notice' );
-
-
-
-	/**
-	 * Migration to new domain notice.
-	 */
-	function wps_wpr_updgrade_notice() {
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		$tab = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-		$wps_update_pro = get_option( 'wps_migrated_successfully', 'no' );
-		if ( 'wps-rwpr-setting' === $tab && $wps_update_pro == 'no' ) {
-			?>
-
-		<tr class="plugin-update-tr active notice-warning notice-alt">
-			<td colspan="4" class="plugin-update colspanchange">
-				<div class="notice notice-error inline update-message notice-alt">
-					<div class='wps-notice-title wps-notice-section'>
-						<p><strong>IMPORTANT NOTICE:</strong></p>
-					</div>
-					<div class='wps-notice-content wps-notice-section'>
-						<p>The latest  Update includes some substantial changes across different areas of plugin<strong> Please Migrate your data by clicking on Start Migration<strong></p>
-					</div>
-					<div class="treat-wrapper">
-						<button class="treat-button">Start Migration!</button>
-					</div>
-				</div>
-			</td>
-		</tr>
-		<style>
-			.treat-button {
-			font-family: "Fascinate Inline", cursive;
-			-webkit-appearance: none;
-				-moz-appearance: none;
-					appearance: none;
-			background: linear-gradient(to bottom, #F46001, #E14802);
-			border: none;
-			color: #FFF;
-			border-radius: 2em;
-			padding: 0.6em 1.5em;
-			width: 200px;
-			font-size: 20px;
-			overflow: hidden;
-			-webkit-user-select: none;
-				-moz-user-select: none;
-				-ms-user-select: none;
-					user-select: none;
-			cursor: pointer;
-			z-index: 1;
-			box-shadow: 0 0 1em rgba(255, 255, 255, 0.2);
-			transition: transform 0.1s cubic-bezier(0.5, 0, 0.5, 1), box-shadow 0.2s;
-			outline: none;
-			}
-			.treat-button:hover {
-			box-shadow: 0 0 2em rgba(255, 255, 255, 0.3);
-			}
-			.wps-notice-section > p:before {
-				content: none;
-			}
-		</style>
-			<?php
-		}
-	}
 	/**
 	 * Undocumented function
 	 *

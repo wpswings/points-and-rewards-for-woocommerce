@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Points and Rewards for WooCommerce 1.2.4\n"
-"POT-Creation-Date: 2022-04-06 20:23+0530\n"
+"POT-Creation-Date: 2022-04-07 12:11+0530\n"
 "PO-Revision-Date: 2021-12-22 18:33+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -296,7 +296,7 @@ msgstr ""
 msgid " Points "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1224
+#: admin/class-points-rewards-for-woocommerce-admin.php:1225
 msgid "method not found"
 msgstr ""
 
@@ -305,61 +305,61 @@ msgstr ""
 msgid "oops looks like nothing is here"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:27
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:26
 msgid "Overview"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:31
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:30
 msgid "General"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:36
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:35
 msgid "Per Currency Points Settings"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:40
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:39
 #: admin/partials/templates/class-points-log-list-table.php:1295
 msgid "Points Table"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:44
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:43
 msgid "Points Notification"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:48
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:47
 msgid "Membership"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:52
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:51
 msgid "Assign Product Points"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:57
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:56
 #: admin/partials/templates/wps-other-setting.php:52
 msgid "Other Settings"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:61
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:60
 msgid "Order Total Points"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:67
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:66
 msgid "Premium Features"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:78
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:77
 msgid "Points and Rewards for WooCommerce"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:85
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:84
 msgid "Contact us"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:90
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:89
 msgid "Doc"
 msgstr ""
 
-#: admin/partials/points-rewards-for-woocommerce-admin-display.php:96
+#: admin/partials/points-rewards-for-woocommerce-admin-display.php:95
 msgid "GO PRO NOW"
 msgstr ""
 
@@ -1914,23 +1914,23 @@ msgstr ""
 msgid " page then Click On Start Import Button."
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:675
+#: points-rewards-for-woocommerce.php:612
 msgid " You are Using Old Version of Points and Rewards For WooCommerce Pro !!"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:675
+#: points-rewards-for-woocommerce.php:612
 msgid " Please Update it "
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:675
+#: points-rewards-for-woocommerce.php:612
 msgid " Click Here"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:675
+#: points-rewards-for-woocommerce.php:612
 msgid " to update to latest "
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:752
+#: points-rewards-for-woocommerce.php:689
 msgid ""
 "WooCommerce is not activated, Please activate WooCommerce first to activate "
 "Points and Rewards for WooCommerce."

@@ -14,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 
 }
-
 if ( ! defined( 'WPS_PAR_ONBOARD_PLUGIN_NAME' ) ) {
 	define( 'WPS_PAR_ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
 }
@@ -97,11 +96,41 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 					<?php
 			}
 			?>
-				
 		</ul>
 	</div>
 </div>
-<?php wp_nonce_field( 'wps-wpr-nonce', 'wps-wpr-nonce' ); ?>
+
+<?php wp_nonce_field( 'wps-wpr-nonce', 'wps-wpr-nonce' );
+if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
+
+	$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.2.5');
+	$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'pending' );
+	$wps_count_users   = ( count )( $wps_par_get_count->wps_par_get_count_users( 'users' ) ); 
+
+
+
+	if ( $wps_pending_par != '0' || $wps_count_users != '0' ) {
+
+		$wps_par_global_custom_css = 'const triggerError = () => {
+		swal({
+
+			title: "Attention Required!",
+			text: "Please Migrate Your Database Keys First By Clicking On Below Button , Then You can Have Access To Your Dashboard Button",
+			icon: "error",
+			button: "Click To Import",
+			closeOnClickOutside: false,
+		}).then(function() {
+			wps_par_migration_success();
+		});
+	}
+	triggerError();';
+		wp_register_script( 'wps_par_incompatible_css', false, array(), '1.2.8', 'all' );
+		wp_enqueue_script( 'wps_par_incompatible_css' );
+		wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
+	}
+}
+
+?>
 <div class="wps_rwpr_main_template">
 	<div class="wps_rwpr_body_template">
 		<div class="wps_rwpr_mobile_nav">
@@ -163,27 +192,6 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 				}
 			}
 		}
-		$wps_success_option = get_option( 'wps_migrated_successfully', 'no' );
-		if ( $wps_success_option == 'no' ) {
-
-			$wps_par_global_custom_css = 'const triggerError = () => {
-			swal({
-		
-				title: "Attention Required!",
-				text: "Please Migrate Your Database Keys First By Clicking On Below Button , Then You can Have Access To Your Dashboard Button",
-				icon: "error",
-				button: "Click To Import",
-				closeOnClickOutside: false,
-			}).then(function() {
-				wps_par_migration_success();
-			});
-		}
-		triggerError();';
-			wp_register_script( 'wps_par_incompatible_css', false, array(), '1.2.8', 'all' );
-			wp_enqueue_script( 'wps_par_incompatible_css' );
-			wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
-		}
-
 		?>
 	</div>
 </div>
