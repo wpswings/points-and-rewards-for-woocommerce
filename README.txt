@@ -222,7 +222,7 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
-= 1.2.5 - Released on 7 April 2022 =
+= 1.2.5 - Released on 8 April 2022 =
 * New: Some substantial changes across different areas of the plugin.
 * New: Minor Bug Fixes
 * New: Compatible with latest WP and WC
@@ -320,8 +320,7 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Upgrade Notice ==
-= 1.2.5 - Released on 7 April 2022 =
+= 1.2.5 - Released on 8 April 2022 =
 * New: Some substantial changes across different areas of the plugin.
 * New: Minor Bug Fixes
 * New: Compatible with latest WP and WC
-
