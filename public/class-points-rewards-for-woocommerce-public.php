@@ -1762,6 +1762,9 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( is_array( $wps_wpr_membership_roles ) && ! empty( $wps_wpr_membership_roles ) ) {
 					foreach ( $wps_wpr_membership_roles as $roles => $values ) {
 						if ( $user_level == $roles ) {
+							if ( ! is_array( $values ) ) {
+								return;
+							}
 							if ( is_array( $values['Product'] ) && ! empty( $values['Product'] ) ) {
 								if ( in_array( $product_id, $values['Product'] ) && ! $product_is_variable && ! $this->check_exclude_sale_products( $product_data ) ) {
 									$new_price = $reg_price - ( $reg_price * $values['Discount'] ) / 100;
@@ -1860,6 +1863,9 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( isset( $user_level ) && ! empty( $user_level ) ) {
 					foreach ( $wps_wpr_membership_roles as $roles => $values ) {
 						if ( $user_level == $roles ) {
+							if( ! is_array( $values ) ) {
+								return;
+							}
 							if ( is_array( $values['Product'] ) && ! empty( $values['Product'] ) ) {
 								if ( in_array( $product_id, $values['Product'] ) && ! $this->check_exclude_sale_products( $_product ) ) {
 									if ( ! $product_is_variable ) {
