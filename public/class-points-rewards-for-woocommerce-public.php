@@ -643,6 +643,28 @@ class Points_Rewards_For_WooCommerce_Public {
 			/*Update the user meta for the points details*/
 			update_user_meta( $user_id, 'points_details', $wps_points_sharing );
 		}
+		// Refund points per currency setting conversions.
+		if ( 'pro_conversion_points' == $type ) {
+			$get_referral_detail = get_user_meta( $user_id, 'points_details', true );
+			if ( isset( $get_referral_detail[ $type ] ) && ! empty( $get_referral_detail[ $type ] ) ) {
+				$custom_array = array(
+					$type => $points,
+					'date' => $today_date,
+					'refered_order_id' => $data['wps_par_order_id'],
+				);
+				$get_referral_detail[ $type ][] = $custom_array;
+			} else {
+				if ( ! is_array( $get_referral_detail ) ) {
+					$get_referral_detail = array();
+				}
+				$get_referral_detail[ $type ][] = array(
+					$type => $points,
+					'date' => $today_date,
+					'refered_order_id' => $data['wps_par_order_id'],
+				);
+			}
+			update_user_meta( $user_id, 'points_details', $get_referral_detail );
+		}
 		do_action( 'wps_wpr_update_points_log', $user_id );
 		return 'Successfully';
 	}
@@ -965,7 +987,9 @@ class Points_Rewards_For_WooCommerce_Public {
 									/*Total Point of the order*/
 									$total_points = intval( $points_calculation + $get_points );
 
-									$data = array();
+									$data = array(
+										'wps_par_order_id' => $order_id,
+									);
 									/*Update points details in woocommerce*/
 									$this->wps_wpr_update_points_details( $user_id, 'pro_conversion_points', $points_calculation, $data );
 									/*update users totoal points*/
@@ -1027,46 +1051,47 @@ class Points_Rewards_For_WooCommerce_Public {
 				}
 			}
 		}
+		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+				$mwb_wpr_array = array( 'processing', 'on-hold', 'pending', 'completed' );
+			if ( in_array( $old_status, $mwb_wpr_array, true ) && ( 'cancelled' === $new_status || 'refunded' === $new_status ) ) {
+				$order         = wc_get_order( $order_id );
+				$user_id       = absint( $order->get_user_id() );
+				$pre_wps_check = get_post_meta( $order_id, 'refunded_points_by_cart', true );
+				if ( ! isset( $pre_wps_check ) || 'done' != $pre_wps_check ) {
+					$wps_points_log = get_user_meta( $user_id, 'points_details', true );
+					if ( array_key_exists( 'cart_subtotal_point', $wps_points_log ) ) {
+						$today_date = date_i18n( 'Y-m-d h:i:sa' );
+						$wps_value_to_check = absint( get_post_meta( $order_id, 'wps_cart_discount#points', true ) );
+						foreach ( $wps_points_log['cart_subtotal_point'] as $key => $value ) {
 
-		$wps_wpr_array = array( 'processing', 'on-hold', 'pending', 'completed' );
-		if ( in_array( $old_status, $wps_wpr_array, true ) && ( 'cancelled' === $new_status || 'refunded' === $new_status ) ) {
-			$order = wc_get_order( $order_id );
-			$user_id = absint( $order->get_user_id() );
-			$pre_wps_check = get_post_meta( $order_id, 'refunded_points_by_cart', true );
-			if ( ! isset( $pre_wps_check ) || 'done' != $pre_wps_check ) {
-				$wps_points_log = get_user_meta( $user_id, 'points_details', true );
-				if ( array_key_exists( 'cart_subtotal_point', $wps_points_log ) ) {
-					$today_date = date_i18n( 'Y-m-d h:i:sa' );
-					$wps_value_to_check = absint( get_post_meta( $order_id, 'wps_cart_discount#points', true ) );
-					foreach ( $wps_points_log['cart_subtotal_point'] as $key => $value ) {
-
-						if ( ! isset( $pre_wps_check ) || 'done' != $pre_wps_check ) {
-							if ( $value['cart_subtotal_point'] == $wps_value_to_check ) {
-								$value_to_refund = $value['cart_subtotal_point'];
-								$wps_total_points_par = get_user_meta( $user_id, 'wps_wpr_points', true );
-								$wps_points_newly_updated = (int) ( $wps_total_points_par + $value_to_refund );
-								$wps_refer_deduct_points = get_user_meta( $user_id, 'points_details', true );
-								if ( isset( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) && ! empty( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) ) {
-									$wps_par_refund_purchase = array();
-									$wps_par_refund_purchase = array(
-										'refund_points_applied_on_cart' => $value_to_refund,
-										'date' => $today_date,
-									);
-									$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
-								} else {
-									if ( ! is_array( $wps_refer_deduct_points ) ) {
-										$wps_refer_deduct_points = array();
+							if ( ! isset( $pre_wps_check ) || 'done' != $pre_wps_check ) {
+								if ( $value['cart_subtotal_point'] == $wps_value_to_check ) {
+									$value_to_refund = $value['cart_subtotal_point'];
+									$wps_total_points_par = get_user_meta( $user_id, 'wps_wpr_points', true );
+									$wps_points_newly_updated = (int) ( $wps_total_points_par + $value_to_refund );
+									$wps_refer_deduct_points = get_user_meta( $user_id, 'points_details', true );
+									if ( isset( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) && ! empty( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) ) {
+										$wps_par_refund_purchase = array();
+										$wps_par_refund_purchase = array(
+											'refund_points_applied_on_cart' => $value_to_refund,
+											'date' => $today_date,
+										);
+										$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
+									} else {
+										if ( ! is_array( $wps_refer_deduct_points ) ) {
+											$wps_refer_deduct_points = array();
+										}
+										$wps_par_refund_purchase = array();
+										$wps_par_refund_purchase = array(
+											'refund_points_applied_on_cart' => $value_to_refund,
+											'date' => $today_date,
+										);
+										$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
 									}
-									$wps_par_refund_purchase = array();
-									$wps_par_refund_purchase = array(
-										'refund_points_applied_on_cart' => $value_to_refund,
-										'date' => $today_date,
-									);
-									$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
+											update_user_meta( $user_id, 'wps_wpr_points', $wps_points_newly_updated );
+											update_user_meta( $user_id, 'points_details', $wps_refer_deduct_points );
+											update_post_meta( $order_id, 'refunded_points_by_cart', 'done' );
 								}
-										update_user_meta( $user_id, 'wps_wpr_points', $wps_points_newly_updated );
-										update_user_meta( $user_id, 'points_details', $wps_refer_deduct_points );
-										update_post_meta( $order_id, 'refunded_points_by_cart', 'done' );
 							}
 						}
 					}
@@ -1863,7 +1888,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( isset( $user_level ) && ! empty( $user_level ) ) {
 					foreach ( $wps_wpr_membership_roles as $roles => $values ) {
 						if ( $user_level == $roles ) {
-							if( ! is_array( $values ) ) {
+							if ( ! is_array( $values ) ) {
 								return;
 							}
 							if ( is_array( $values['Product'] ) && ! empty( $values['Product'] ) ) {
@@ -2248,7 +2273,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					$points_bday_arr = array();
 					$points_bday_arr = array(
 						'points_deduct_wallet' => $points,
-						'date' => date( 'Y-m-d' ),
+						'date'                 => gmdate( 'Y-m-d' ),
 					);
 					$points_log['points_deduct_wallet'][] = $points_bday_arr;
 				} else {
@@ -2258,7 +2283,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					$points_bday_arr = array();
 					$points_bday_arr = array(
 						'points_deduct_wallet' => $points,
-						'date' => date( 'Y-m-d' ),
+						'date'                 => gmdate( 'Y-m-d' ),
 					);
 					$points_log['points_deduct_wallet'][] = $points_bday_arr;
 				}

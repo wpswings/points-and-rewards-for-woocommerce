@@ -12,15 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
+if ( ! class_exists( 'Wps_Wpr_Emails_Notification' ) ) {
 		/**
-		 * Mwb_Wpr_Emails_Notification function
+		 * Wps_Wpr_Emails_Notification function
 		 *
 		 * @param [int] $email_content
 		 * @param [mixed] $wps_wpr_email_subject
 		 * @return void
 		 */
-	class Mwb_Wpr_Emails_Notification extends WC_Email {
+	class Wps_Wpr_Emails_Notification extends WC_Email {
 		/**
 		 * Email_content variable
 		 *
@@ -216,4 +216,4 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 	}
 
 }
-return new Mwb_Wpr_Emails_Notification();
+return new Wps_Wpr_Emails_Notification();

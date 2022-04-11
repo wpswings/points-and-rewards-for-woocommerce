@@ -10,6 +10,7 @@
  * @package    Rewardeem_woocommerce_Points_Rewards
  * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 
@@ -100,16 +101,17 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 	</div>
 </div>
 
-<?php wp_nonce_field( 'wps-wpr-nonce', 'wps-wpr-nonce' );
+<?php
+wp_nonce_field( 'wps-wpr-nonce', 'wps-wpr-nonce' );
 if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-	$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.2.5');
+	$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.2.5' );
 	$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'pending' );
-	$wps_count_users   = count( $wps_par_get_count->wps_par_get_count_users( 'users' ) ); 
+	$wps_count_users   = count( $wps_par_get_count->wps_par_get_count_users( 'users' ) );
 
 
 
-	if ( $wps_pending_par != '0' || $wps_count_users != '0' ) {
+	if ( 0 !== $wps_pending_par || 0 !== $wps_count_users ) {
 
 		$wps_par_global_custom_css = 'const triggerError = () => {
 		swal({
@@ -165,7 +167,6 @@ if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 					}
 				}
 				?>
-					
 			</div>
 		</div>
 		<div class="loading-style-bg wps_rwpr_settings_display_none" id="wps_wpr_loader">

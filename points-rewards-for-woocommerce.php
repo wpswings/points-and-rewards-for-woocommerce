@@ -35,12 +35,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-$old_pro_exists = false;
+$wps_par_exists = false;
 $plug           = get_plugins();
 if ( isset( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
 	if ( version_compare( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php']['Version'], '1.2.6', '<' ) ) {
-		$old_pro_exists = true;
+		$wps_par_exists = true;
 	}
 }
 // To Activate plugin only when WooCommerce is active.
@@ -315,12 +314,10 @@ if ( $activated ) {
 				wps_wpr_assign_points();
 				wps_wp_other_settings();
 				wps_order_total_migrate();
-				// pro
 				wps_product_purchase_point();
 				wps_point_expiration_setting();
 				wps_notification_add_on();
 				wps_api_setting_addon();
-				// pro
 				update_option( 'wps_par_org_convert_keys', true );
 		}
 	}
@@ -533,7 +530,7 @@ if ( $activated ) {
 		update_option( 'wps_wpr_order_total_settings', $general_migrate_settings );
 	}
 
-	if ( $old_pro_exists === true ) {
+	if ( true === $wps_par_exists ) {
 
 
 
@@ -595,7 +592,7 @@ if ( $activated ) {
 
 	}
 	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_wpr_upgrade_notice', 0, 3 );
-	if ( $old_pro_exists === true ) {
+	if ( true === $wps_par_exists ) {
 		add_action( 'admin_notices', 'wps_wpr_updgrade_warning_notice' );
 	}
 	/**
@@ -654,7 +651,7 @@ if ( $activated ) {
 			<?php
 		}
 	}
-	if ( true === $old_pro_exists ) {
+	if ( true === $wps_par_exists ) {
 		unset( $_GET['activate'] );
 		deactivate_plugins( plugin_basename( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) );
 	}

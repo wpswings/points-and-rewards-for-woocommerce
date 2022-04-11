@@ -201,7 +201,7 @@ class Points_Rewards_For_Woocommerce {
 
 		$this->loader->add_filter( 'wps_wpr_currency_filter', $plugin_admin, 'wps_wpr_currency_switcher' );
 		$this->loader->add_filter( 'wps_userpost_meta_keys_pro', $plugin_admin, 'wps_wpr_custom_addon_postkeys_migration' );
-		$this->loader->add_filter( 'wps_sql_test_post_meta_extended', $plugin_admin, 'wps_wpr_sql_test_post_meta');
+		$this->loader->add_filter( 'wps_sql_test_post_meta_extended', $plugin_admin, 'wps_wpr_sql_test_post_meta' );
 		$this->loader->add_filter( 'wps_user_meta_sql_query', $plugin_admin, 'wps_wpr_sql_test_user_meta' );
 		$this->loader->add_filter( 'wps_user_meta_keys_pro', $plugin_admin, 'wps_wpr_custom_addon_keys_migration' );
 		$this->loader->add_filter( 'admin_notices', $plugin_admin, 'wps_wpr_updgrade_notice' );
