@@ -1,12 +1,12 @@
 === Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, Referral Points & Redemptions ===
-Contributors: WP Swings
+Contributors: wpswings
 Donate link: https://wpswings.com/
-Tags: points, rewards, points and rewards, loyalty, loyalty program, woocommerce points and rewards
+Tags: points, rewards, points and rewards, loyalty, loyalty program, woocommerce points and rewards, points rewards, reward system
 Requires at least: 4.4.0
-Tested up to: 5.8.3
+Tested up to: 5.9.3
 WC requires at least: 3.0.0
-WC tested up to: 6.1.1
-Stable tag: 1.2.4
+WC tested up to: 6.3.1
+Stable tag: 1.2.5
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -65,10 +65,10 @@ In the WordPress loyalty program plugin, Customers can redeem their points eithe
 **For Example:** If the order costs $20 and the customer has 10 points in his account, the merchant can determine whether the customer will get a discount of 10, 5, or 2 dollars by redeeming those 10 points.
 
 **3)** **Membership System For Exclusive Offers**
-Merchants can create their own membership system based on rewards points. This helps them offer exclusive discounts to the customers based on the points they collect. Merchants can add rewards discounts on some categories and their products. If the customer subscribes to the membership, he can purchase those discounted products.
+Merchants can create their own membership system based on rewards points. This helps them offer exclusive discounts to the customers based on the points they collect. Merchants can add discounts on rewards on some categories and their products. If the customer subscribes to the membership, he can purchase those discounted products.
 
 **4)** **Points Log Report**
-In Rewards plugin Woocommerce, the points Log Report feature is available for both customers and admin:
+In the Rewards plugin Woocommerce, the points Log Report feature is available for both customers and admin:
 
 * **For Customers:** They can check and monitor each point transaction they have done so far. The log table shows the details for each point they earned and redeemed.
 * **For Merchant:** They can view the user points history to track the points transaction for each customer. Along with it, they can add or deduct points from any customer’s account using this feature.
@@ -81,17 +81,22 @@ With the Points and Rewards for WooCommerce plugin, merchants can notify their c
 **6)** **WPML Multilingual Compatibility**
 The WooCommerce Rewards plugin is compatible with the WPML Multilingual plugin that allows you to reward your customers in your local language.
 
-
-
-[**Free demo of Points and Rewards for WooCommerce**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=par-org-page&utm_campaign=demo)
-
 Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-page&utm_campaign=par-doc) and learn more about the features and working of the plugin.
 
-Check Out [**Points and Rewards for WooCommerce plugin knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
+Check Out [**Points and Rewards for WooCommerce Plugin Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
+
+== LIVE DEMO OF POINTS AND REWARDS PLUGIN ==
+* [**Points and Rewards Frontend Demo**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=par-org-page&utm_campaign=frontend-demo)
+
+
+* [**Points and Rewards Backend Demo**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-par-demo&utm_medium=par-org-page&utm_campaign=backend-demo)
+
 
 == PLUGIN COMPATIBILITIES == 
 
-* WooCommerce rewards plugin is compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**Wallet System For WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-page&utm_campaign=par-wallet) plugin. This compatibility allows you to convert your earned points into wallet credit based on a certain conversion rate. The admin can set points conversion into wallet credit he wants to allow. For example, 10 points equal 2 wallet credits. Customers can later use this wallet credit for purchase in the store.   
+* WooCommerce rewards plugin is compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**Wallet System For WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-page&utm_campaign=par-wallet) plugin. This compatibility allows you to convert your earned points into wallet credit based on a certain conversion rate. The admin can set points conversion into wallet credit he wants to allow. 
+For example, 10 points equal 2 wallet credits. Customers can later use this wallet credit for purchase in the store.
+
 
 * The Points and Rewards plugin is compatible with the WordPress Multilingual (WPML) plugin for localization of the rewards plugin’s strings.
 
@@ -123,10 +128,8 @@ Points and Rewards for WooCommerce help merchants create a points-based loyalty 
 
 > Note:  Get [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-page&utm_campaign=par-pro)
 
-
-
-== LIVE DEMO OF PREMIUM VERSION ==
-* [**Points and Rewards for WooCommerce Pro Demo**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro-demo&utm_medium=par-org-page&utm_campaign=par-pro-demo)
+**See What Perties Freshwear is saying about Points and Rewards Plugin:**
+> I couldn’t expect better results with any other team. Attention is always excellent and on time even when you have minor issues, and they solve them asap. The features have everything, and I can’t think of any feature that could make it better. From compatibility to customizations, they have assisted a lot. Absolute satisfaction. I’ll give it a full 5-star review. It’s definitely worth an upgrade to the pro plugin version. Additionally, I’m using RMA for WooCommerce, and it’s smooth too. [**See Points and Rewards Case Study**](https://wpswings.com/case-studies/perties-freshwear/?utm_source=wpswings-par-case-study&utm_medium=par-org-page&utm_campaign=par-pro-case-study)
 
 == DOCUMENTATION OF PREMIUM VERSION ==
 
@@ -219,7 +222,14 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
-= 1.2.4 - Released on 22 January 2022 =
+= 1.2.5 - Released on 8 April 2022 =
+* New: Some substantial changes across different areas of the plugin.
+* New: Minor Bug Fixes
+* New: Compatible with latest WP and WC
+
+
+= 1.2.4 - Released on 03 February 2022 =
+* New: Change author from MakeWebBetter to WP Swings
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-org-page&utm_campaign=official).
 * New: Minor Bug fixes
 * New: Compatible with latest WP and WC 
@@ -310,9 +320,7 @@ Customers can see their points balance in the Points tab under the Account secti
 
 
 == Upgrade Notice ==
-= 1.2.4 - Released on 22 January 2022 =
-* New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-org-page&utm_campaign=official).
-* New: Minor Bug fixes
+= 1.2.5 - Released on 8 April 2022 =
+* New: Some substantial changes across different areas of the plugin.
+* New: Minor Bug Fixes
 * New: Compatible with latest WP and WC
-
-

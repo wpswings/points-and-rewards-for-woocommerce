@@ -11,12 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<div class="mwb-overview__wrapper">
-	<div class="mwb-overview__banner">
-		<img src="<?php echo esc_html( MWB_RWPR_DIR_URL ); ?>admin/images/Points-and-Rewards-for-WooCommerce.jpg" alt="Overview banner image">
+<div class="wps-overview__wrapper">
+	<div class="wps-overview__banner">
+		<img src="<?php echo esc_html( WPS_RWPR_DIR_URL ); ?>admin/images/Points-and-Rewards-for-WooCommerce.jpg" alt="Overview banner image">
 	</div>
-	<div class="mwb-overview__content">
-		<div class="mwb-overview__content-description">
+	<div class="wps-overview__content">
+		<div class="wps-overview__content-description">
 			<h3><?php echo esc_html_e( 'What is Points And Rewards For WooCommerce? ', 'points-and-rewards-for-woocommerce' ); ?></h3>
 			<p>
 				<?php
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 			</p>
 			<h3><?php esc_html_e( 'As a store owner, you get to:', 'points-and-rewards-for-woocommerce' ); ?></h3>
-			<ul class="mwb-overview__features">
+			<ul class="wps-overview__features">
 				<li><?php esc_html_e( 'Engage customers by awarding points to shoppers on signup, referrals, and purchase', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Create membership programs for loyal customers to reward them with exclusive offers', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Set conversion rule to determine the value of each point', 'points-and-rewards-for-woocommerce' ); ?></li>
@@ -43,15 +43,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</ul>
 		</div>
 		<h3> <?php esc_html_e( 'The Free Plugin Benefits', 'points-and-rewards-for-woocommerce' ); ?></h3>
-		<div class="mwb-overview__keywords">
-			<div class="mwb-overview__keywords-item">
-				<div class="mwb-overview__keywords-card">
-					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MWB_RWPR_DIR_URL . 'admin/images/Reward-Points-for-Different-Actions.png' ); ?>" alt="Advanced-report image">
+		<div class="wps-overview__keywords">
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image">
+						<img src="<?php echo esc_html( WPS_RWPR_DIR_URL . 'admin/images/Reward-Points-for-Different-Actions.png' ); ?>" alt="Advanced-report image">
 					</div>
-					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( ' Reward Points for Different Actions', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p class="mwb-overview__keywords-description">
+					<div class="wps-overview__keywords-text">
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( ' Reward Points for Different Actions', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
 							<?php
 							esc_html_e(
 								'Admin can assign and reward points to users on different actions. These include Signups, Referrals, Total Amount Spent, Products purchase, Order Total Range, etc
@@ -63,14 +63,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 				</div>
 			</div>
-			<div class="mwb-overview__keywords-item">
-				<div class="mwb-overview__keywords-card">
-					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MWB_RWPR_DIR_URL . 'admin/images/Easy-Points-Redemption.png' ); ?>" alt="Workflow image">
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image">
+						<img src="<?php echo esc_html( WPS_RWPR_DIR_URL . 'admin/images/Easy-Points-Redemption.png' ); ?>" alt="Workflow image">
 					</div>
-					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( ' Easy Points Redemption', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p class="mwb-overview__keywords-description">
+					<div class="wps-overview__keywords-text">
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( ' Easy Points Redemption', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
 							<?php
 							esc_html_e(
 								'Users can redeem points by entering points in the "Apply point" field on the checkout or cart pages. Admin decides the conversion of each point to currency.
@@ -82,14 +82,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 				</div>
 			</div>
-			<div class="mwb-overview__keywords-item">
-				<div class="mwb-overview__keywords-card">
-					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MWB_RWPR_DIR_URL . 'admin/images/Membership-System-for-Exclusive-Offers.png' ); ?>" alt="Variable product image">
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image">
+						<img src="<?php echo esc_html( WPS_RWPR_DIR_URL . 'admin/images/Membership-System-for-Exclusive-Offers.png' ); ?>" alt="Variable product image">
 					</div>
-					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( ' Membership System for Exclusive Offers ', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p class="mwb-overview__keywords-description">
+					<div class="wps-overview__keywords-text">
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( ' Membership System for Exclusive Offers ', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
 							<?php
 							esc_html_e(
 								'Admin can create a membership system depending on reward points. Users can buy exclusive products at discounted prices based on their total collected points on subscribing to the membership.
@@ -101,14 +101,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 				</div>
 			</div>
-			<div class="mwb-overview__keywords-item">
-				<div class="mwb-overview__keywords-card">
-					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MWB_RWPR_DIR_URL . 'admin/images/Customer-Notification-Feature.png' ); ?>" alt="Variable product image">
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image">
+						<img src="<?php echo esc_html( WPS_RWPR_DIR_URL . 'admin/images/Customer-Notification-Feature.png' ); ?>" alt="Variable product image">
 					</div>
-					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( ' Customer Notification Feature ', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p class="mwb-overview__keywords-description">
+					<div class="wps-overview__keywords-text">
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( ' Customer Notification Feature ', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
 							<?php
 							esc_html_e(
 								'Admin can edit email template to send users as a notification for points transaction on users registered email..
@@ -120,14 +120,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 				</div>
 			</div>
-			<div class="mwb-overview__keywords-item">
-				<div class="mwb-overview__keywords-card">
-					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MWB_RWPR_DIR_URL . 'admin/images/WPML-Multilingual-Compatibility.png' ); ?>" alt="Variable product image">
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image">
+						<img src="<?php echo esc_html( WPS_RWPR_DIR_URL . 'admin/images/WPML-Multilingual-Compatibility.png' ); ?>" alt="Variable product image">
 					</div>
-					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( ' WPML Multilingual Compatibility ', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p class="mwb-overview__keywords-description">
+					<div class="wps-overview__keywords-text">
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( ' WPML Multilingual Compatibility ', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
 							<?php
 							esc_html_e(
 								'Admin can reward users in their local language since the Points and Rewards for WooCommerce plugin is WPML Multilingual plugin compatible. .
@@ -138,6 +138,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</p>
 					</div>
 				</div>
+			</div>
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image wps_youtube">	
+					<iframe width="170%" height="200" src="https://www.youtube.com/embed/8W9K6avWESE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</div>
+
+				</div>
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( ' Watch Video: Learn More About the Points and Reward  ', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
+							<?php
+							esc_html_e(
+								'This video tutorial helps the better utilization of the plugin and leverage the maximum benefits.
+',
+								'points-and-rewards-for-woocommerce'
+							);
+							?>
+						</p>
 			</div>
 		</div>
 	</div>

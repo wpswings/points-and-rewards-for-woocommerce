@@ -2,7 +2,7 @@
 /**
  * Points and rewards email
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/emails/plain/mwb-wpr-email-notification-template.php.
+ * This template can be overridden by copying it to yourtheme/woocommerce/emails/plain/wps-wpr-email-notification-template.php.
  *
  * @package    points-and-rewards-for-wooCommerce
  * @author  makewebbetter<ticket@makewebbetter.com>
@@ -18,7 +18,7 @@ echo esc_html( $email_heading ) . "\n\n"; // PHPCS:Ignore WordPress.Security.Esc
 ?>
 
 <?php
-$template = '<table class="mwb_wuc_email_template" style="width: 100%!important; max-width: 600px; text-align: center; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+$template = '<table class="wps_wuc_email_template" style="width: 100%!important; max-width: 600px; text-align: center; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
 	<tbody>
 		<tr>
 			<td style="background: #fff;">

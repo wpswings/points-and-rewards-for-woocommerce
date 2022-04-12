@@ -17,7 +17,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		 * Mwb_Wpr_Emails_Notification function
 		 *
 		 * @param [int] $email_content
-		 * @param [mixed] $mwb_wpr_email_subject
+		 * @param [mixed] $wps_wpr_email_subject
 		 * @return void
 		 */
 	class Mwb_Wpr_Emails_Notification extends WC_Email {
@@ -32,18 +32,18 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		 *
 		 * @var [int]
 		 */
-		public $mwb_wpr_email_subject;
+		public $wps_wpr_email_subject;
 		/**
 		 * __construct function
 		 */
 		public function __construct() {
-			$this->id             = 'mwb_wpr_email_notification';
+			$this->id             = 'wps_wpr_email_notification';
 			$this->title          = __( 'Points and rewards email', 'points-and-rewards-for-woocommerce' );
 			$this->customer_email = true;
 			$this->description    = __( 'This emal send to the customer on every event.', 'points-and-rewards-for-woocommerce' );
-			$this->template_html  = 'mwb-wpr-email-notification-template.php';
-			$this->template_plain = 'plain/mwb-wpr-email-notification-template.php';
-			$this->template_base  = MWB_RWPR_DIR_PATH . 'emails/templates/';
+			$this->template_html  = 'wps-wpr-email-notification-template.php';
+			$this->template_plain = 'plain/wps-wpr-email-notification-template.php';
+			$this->template_base  = WPS_RWPR_DIR_PATH . 'emails/templates/';
 			$this->placeholders   = array(
 				'{site_title}'       => $this->get_blogname(),
 				'{email_content}' => '',
@@ -61,7 +61,7 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		 */
 		public function get_default_subject() {
 
-			return $this->mwb_wpr_email_subject;
+			return $this->wps_wpr_email_subject;
 		}
 
 		/**
@@ -78,10 +78,10 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		 *
 		 * @param  [int]    $user_id Used for id.
 		 * @param [String] $email_content used for email content.
-		 * @param [String] $mwb_wpr_email_subject used for email subject.
+		 * @param [String] $wps_wpr_email_subject used for email subject.
 		 * @return void
 		 */
-		public function trigger( $user_id, $email_content, $mwb_wpr_email_subject ) {
+		public function trigger( $user_id, $email_content, $wps_wpr_email_subject ) {
 			if ( $user_id ) {
 				$this->setup_locale();
 
@@ -90,12 +90,12 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 				if ( is_a( $user, 'WP_User' ) ) {
 					$this->object                          = $user;
 					$this->email_content                   = $email_content;
-					$this->mwb_wpr_email_subject           = $mwb_wpr_email_subject;
+					$this->wps_wpr_email_subject           = $wps_wpr_email_subject;
 					$this->recipient                       = $user_info->user_email;
 					$this->placeholders['{email_content}'] = $email_content;
 
 					if ( $this->is_enabled() && $this->get_recipient() ) {
-						$this->send( $this->get_recipient(), $mwb_wpr_email_subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
+						$this->send( $this->get_recipient(), $wps_wpr_email_subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
 					}
 				}
 				$this->restore_locale();
@@ -107,11 +107,11 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 		 *
 		 * @param [int]    $user_id for userid.
 		 * @param [string] $email_content used for email content .
-		 * @param [String] $mwb_wpr_email_subject used for email subject.
-		 * @param [String] $mwb_reciever_email used for email.
+		 * @param [String] $wps_wpr_email_subject used for email subject.
+		 * @param [String] $wps_reciever_email used for email.
 		 * @return void
 		 */
-		public function trigger_test( $user_id, $email_content, $mwb_wpr_email_subject, $mwb_reciever_email ) {
+		public function trigger_test( $user_id, $email_content, $wps_wpr_email_subject, $wps_reciever_email ) {
 			if ( $user_id ) {
 				$this->setup_locale();
 
@@ -120,12 +120,12 @@ if ( ! class_exists( 'Mwb_Wpr_Emails_Notification' ) ) {
 				if ( is_a( $user, 'WP_User' ) ) {
 					$this->object                          = $user;
 					$this->email_content                   = $email_content;
-					$this->mwb_wpr_email_subject           = $mwb_wpr_email_subject;
-					$this->recipient                       = $mwb_reciever_email;
+					$this->wps_wpr_email_subject           = $wps_wpr_email_subject;
+					$this->recipient                       = $wps_reciever_email;
 					$this->placeholders['{email_content}'] = $email_content;
 
 					if ( $this->is_enabled() && $this->get_recipient() ) {
-						$this->send( $this->get_recipient(), $mwb_wpr_email_subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
+						$this->send( $this->get_recipient(), $wps_wpr_email_subject, $this->get_content(), $this->get_headers(), $this->get_attachments() );
 					}
 				}
 				$this->restore_locale();

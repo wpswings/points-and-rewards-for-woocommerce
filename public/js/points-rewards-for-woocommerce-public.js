@@ -35,16 +35,16 @@
 				var message = '';
 				var clipboard = new ClipboardJS( btns );
 				/*View Benefits of the Membership Role*/
-				$( '.mwb_wpr_level_benefits' ).click(
+				$( '.wps_wpr_level_benefits' ).click(
 					function(){
 
-						var mwb_wpr_level = $( this ).data( 'id' );
-						jQuery( '#mwb_wpr_popup_wrapper_' + mwb_wpr_level ).css( 'display', 'block' );
+						var wps_wpr_level = $( this ).data( 'id' );
+						jQuery( '#wps_wpr_popup_wrapper_' + wps_wpr_level ).css( 'display', 'block' );
 
-						jQuery( '.mwb_wpr_close' ).click(
+						jQuery( '.wps_wpr_close' ).click(
 							function(){
 
-								jQuery( '#mwb_wpr_popup_wrapper_' + mwb_wpr_level ).css( 'display', 'none' );
+								jQuery( '#wps_wpr_popup_wrapper_' + wps_wpr_level ).css( 'display', 'none' );
 							}
 						);
 					}
@@ -52,40 +52,40 @@
 				/*Slide toggle on tables*/
 				$( document ).on(
 					'click',
-					'.mwb_wpr_common_slider',
+					'.wps_wpr_common_slider',
 					function(){
-						$( this ).siblings( '.mwb_wpr_common_table' ).slideToggle( "fast" );
-						$( this ).children( '.mwb_wpr_open_toggle' ).toggleClass( 'mwb_wpr_plus_icon' );
+						$( this ).siblings( '.wps_wpr_common_table' ).slideToggle( "fast" );
+						$( this ).children( '.wps_wpr_open_toggle' ).toggleClass( 'wps_wpr_plus_icon' );
 					}
 				);
 
 				/*Custom Points on Cart Subtotal handling via Ajax*/
 				$( document ).on(
 					'click',
-					'#mwb_cart_points_apply',
+					'#wps_cart_points_apply',
 					function(){
 						var user_id = $( this ).data( 'id' );
 						var user_total_point = $( this ).data( 'point' );
 						var order_limit = $( this ).data( 'order-limit' );
 						var message = ''; var html = '';
-						var mwb_wpr_cart_points_rate = mwb_wpr.mwb_wpr_cart_points_rate;
-						var mwb_wpr_cart_price_rate = mwb_wpr.mwb_wpr_cart_price_rate;
-						var mwb_cart_points = $( '#mwb_cart_points' ).val();
-						$( "#mwb_wpr_cart_points_notice" ).html( "" );
-						$( "mwb_wpr_cart_points_success" ).html( "" );
-						if (mwb_cart_points !== 'undefined' && mwb_cart_points !== '' && mwb_cart_points !== null && mwb_cart_points > 0) {
-							if (user_total_point !== null && user_total_point > 0 && user_total_point >= mwb_cart_points ) {
+						var wps_wpr_cart_points_rate = wps_wpr.wps_wpr_cart_points_rate;
+						var wps_wpr_cart_price_rate = wps_wpr.wps_wpr_cart_price_rate;
+						var wps_cart_points = $( '#wps_cart_points' ).val();
+						$( "#wps_wpr_cart_points_notice" ).html( "" );
+						$( "wps_wpr_cart_points_success" ).html( "" );
+						if (wps_cart_points !== 'undefined' && wps_cart_points !== '' && wps_cart_points !== null && wps_cart_points > 0) {
+							if (user_total_point !== null && user_total_point > 0 && user_total_point >= wps_cart_points ) {
 								block( $( '.woocommerce-cart-form' ) );
 								block( $( '.woocommerce-checkout' ) );
 								var data = {
-									action:'mwb_wpr_apply_fee_on_cart_subtotal',
+									action:'wps_wpr_apply_fee_on_cart_subtotal',
 									user_id:user_id,
-									mwb_cart_points:mwb_cart_points,
-									mwb_nonce:mwb_wpr.mwb_wpr_nonce,
+									wps_cart_points:wps_cart_points,
+									wps_nonce:wps_wpr.wps_wpr_nonce,
 								};
 								$.ajax(
 									{
-										url: mwb_wpr.ajaxurl,
+										url: wps_wpr.ajaxurl,
 										type: "POST",
 										data: data,
 										dataType :'json',
@@ -94,15 +94,15 @@
 											if (response.result == true) {
 												message = response.message;
 												html = message;
-												$( "#mwb_wpr_cart_points_success" ).removeClass( 'mwb_rwpr_settings_display_none_notice' );
-												$( "#mwb_wpr_cart_points_success" ).html( html );
-												$( "#mwb_wpr_cart_points_success" ).show();
+												$( "#wps_wpr_cart_points_success" ).removeClass( 'wps_rwpr_settings_display_none_notice' );
+												$( "#wps_wpr_cart_points_success" ).html( html );
+												$( "#wps_wpr_cart_points_success" ).show();
 											} else {
 												message = response.message;
 												html = message;
-												$( "#mwb_wpr_cart_points_notice" ).removeClass( 'mwb_rwpr_settings_display_none_notice' );
-												$( "#mwb_wpr_cart_points_notice" ).html( html );
-												$( "#mwb_wpr_cart_points_notice" ).show();
+												$( "#wps_wpr_cart_points_notice" ).removeClass( 'wps_rwpr_settings_display_none_notice' );
+												$( "#wps_wpr_cart_points_notice" ).html( html );
+												$( "#wps_wpr_cart_points_notice" ).show();
 											}
 										},
 										complete: function(){
@@ -114,47 +114,47 @@
 								);
 							} else if( order_limit !== 'undefined' && order_limit !== '' && order_limit !== null && order_limit > 0 ){
 									if ($( ".woocommerce-cart-form" ).offset() ) {
-										$(".mwb_error").remove();
+										$(".wps_error").remove();
 										$( 'html, body' ).animate(
 											{
 												scrollTop: $( ".woocommerce-cart-form" ).offset().top
 											},
 											800
 										);
-										var assing_message = '<ul class="woocommerce-error mwb_error" role="alert"><li>' + mwb_wpr.above_order_limit + '</li></ul>';
+										var assing_message = '<ul class="woocommerce-error wps_error" role="alert"><li>' + wps_wpr.above_order_limit + '</li></ul>';
 										$( assing_message ).insertBefore( $( '.woocommerce-cart-form' ) );
 									} else {
-										$(".mwb_error").remove();
+										$(".wps_error").remove();
 										$( 'html, body' ).animate(
 											{
 												scrollTop: $( ".custom_point_checkout" ).offset().top
 											},
 											800
 										);
-										var assing_message = '<ul class="woocommerce-error mwb_error" role="alert"><li>' + mwb_wpr.above_order_limit + '</li></ul>';
+										var assing_message = '<ul class="woocommerce-error wps_error" role="alert"><li>' + wps_wpr.above_order_limit + '</li></ul>';
 										$( assing_message ).insertBefore( $( '.custom_point_checkout' ) );
 									}
 
 							} else{
 									if ($( ".woocommerce-cart-form" ).offset() ) {
-										$(".mwb_error").remove();
+										$(".wps_error").remove();
 										$( 'html, body' ).animate(
 											{
 												scrollTop: $( ".woocommerce-cart-form" ).offset().top
 											},
 											800
 										);
-										var assing_message = '<ul class="woocommerce-error mwb_error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
+										var assing_message = '<ul class="woocommerce-error wps_error" role="alert"><li>' + wps_wpr.not_suffient + '</li></ul>';
 										$( assing_message ).insertBefore( $( '.woocommerce-cart-form' ) );
 									} else {
-										$(".mwb_error").remove();
+										$(".wps_error").remove();
 										$( 'html, body' ).animate(
 											{
 												scrollTop: $( ".custom_point_checkout" ).offset().top
 											},
 											800
 										);
-										var assing_message = '<ul class="woocommerce-error mwb_error" role="alert"><li>' + mwb_wpr.not_suffient + '</li></ul>';
+										var assing_message = '<ul class="woocommerce-error wps_error" role="alert"><li>' + wps_wpr.not_suffient + '</li></ul>';
 										$( assing_message ).insertBefore( $( '.custom_point_checkout' ) );
 									}
 								}
@@ -165,23 +165,23 @@
 				/*Removing Custom Points on Cart Subtotal handling via Ajax*/
 				$( document ).on(
 					'click',
-					'#mwb_wpr_remove_cart_point',
+					'#wps_wpr_remove_cart_point',
 					function(){
 						block( $( '.woocommerce-cart-form' ) );
 						var data = {
-							action:'mwb_wpr_remove_cart_point',
-							mwb_nonce:mwb_wpr.mwb_wpr_nonce
+							action:'wps_wpr_remove_cart_point',
+							wps_nonce:wps_wpr.wps_wpr_nonce
 						};
 						$.ajax(
 							{
-								url: mwb_wpr.ajaxurl,
+								url: wps_wpr.ajaxurl,
 								type: "POST",
 								data: data,
 								dataType :'json',
 								success: function(response)
 							{
 									if (response.result == true) {
-										$( '#mwb_cart_points' ).val( '' );
+										$( '#wps_cart_points' ).val( '' );
 									}
 								},
 								complete: function(){
@@ -215,40 +215,40 @@
 				/*Add confirmation in the myaccount page*/
 				$( document ).on(
 					'click',
-					'#mwb_wpr_upgrade_level_click',
+					'#wps_wpr_upgrade_level_click',
 					function(){
-						var mwb_wpr_confirm = confirm( mwb_wpr.confirmation_msg );
-						if (mwb_wpr_confirm) {
-							  $( document ).find( '#mwb_wpr_upgrade_level' ).click();
+						var wps_wpr_confirm = confirm( wps_wpr.confirmation_msg );
+						if (wps_wpr_confirm) {
+							  $( document ).find( '#wps_wpr_upgrade_level' ).click();
 						}
 					}
 				);
 				//custom code
 				/*Generate custom coupon*/
-				$( '.mwb_wpr_custom_wallet' ).click(function(){
+				$( '.wps_wpr_custom_wallet' ).click(function(){
 					var user_id = $( this ).data( 'id' );
-					var user_points = $( '#mwb_custom_wallet_point_num' ).val().trim();
-					$('#mwb_wpr_custom_wallet').prop('disabled', true);
+					var user_points = $( '#wps_custom_wallet_point_num' ).val().trim();
+					$('#wps_wpr_custom_wallet').prop('disabled', true);
 					if ( user_points ) {
 						var message = '';
 						var html = '';
-						$( "#mwb_wpr_wallet_notification" ).html( "" );
+						$( "#wps_wpr_wallet_notification" ).html( "" );
 						user_points = parseFloat( user_points );
 						var data = {
-							action:'mwb_wpr_generate_custom_wallet', 
+							action:'wps_wpr_generate_custom_wallet', 
 							points:user_points,
 							user_id:user_id,
-							mwb_nonce:mwb_wpr.mwb_wpr_nonce,
+							wps_nonce:wps_wpr.wps_wpr_nonce,
 						};
-						jQuery( "#mwb_wpr_loader" ).show();
+						jQuery( "#wps_wpr_loader" ).show();
 						$.ajax({
-							url: mwb_wpr.ajaxurl,
+							url: wps_wpr.ajaxurl,
 							type: "POST",
 							data: data,
 							dataType :'json',
 							success: function(response){
-								$('#mwb_wpr_custom_wallet').prop('disabled', false);
-								jQuery( "#mwb_wpr_loader" ).hide();
+								$('#wps_wpr_custom_wallet').prop('disabled', false);
+								jQuery( "#wps_wpr_loader" ).hide();
 								if ( response.result == true ) {
 									var html = '<b style="color:green;">' + response.message + '</b>';
 									
@@ -256,13 +256,13 @@
 								if( response.result == false ) {
 									var html = '<b style="color:red;">' + response.message + '</b>';
 								}
-								$( "#mwb_wpr_wallet_notification" ).html( html );
+								$( "#wps_wpr_wallet_notification" ).html( html );
 								
 							}
 						});
 					} else {
-						$('#mwb_wpr_custom_wallet').prop('disabled', false);
-						$( "#mwb_wpr_wallet_notification" ).html( '<b style="color:red;">' + mwb_wpr.empty_notice + '</b>' )
+						$('#wps_wpr_custom_wallet').prop('disabled', false);
+						$( "#wps_wpr_wallet_notification" ).html( '<b style="color:red;">' + wps_wpr.empty_notice + '</b>' )
 					}
 			}
 	);
