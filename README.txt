@@ -5,8 +5,8 @@ Tags: points, rewards, points and rewards, loyalty, loyalty program, woocommerce
 Requires at least: 4.4.0
 Tested up to: 5.9.3
 WC requires at least: 3.0.0
-WC tested up to: 6.3.1
-Stable tag: 1.2.5
+WC tested up to: 6.4.0
+Stable tag: 1.2.6
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -222,6 +222,10 @@ Customers can see their points balance in the Points tab under the Account secti
 
 == Changelog ==
 
+= 1.2.6 - Released on 9 April 2022 =
+*Compatibility issue fixed
+* New:  Bug Fixes
+* New: Compatible with latest WP and WC
 
 
 = 1.2.5 - Released on 8 April 2022 =
