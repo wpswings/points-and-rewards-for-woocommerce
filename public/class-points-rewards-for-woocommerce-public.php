@@ -599,8 +599,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			update_user_meta( $user_id, 'points_details', $get_referral_detail );
 		}
 		/*Here is cart discount through the points*/
-		if ( 'cart_subtotal_point' == $type || 'product_details' == $type
-		 || 'pro_conversion_points' == $type || 'registration' == $type || 'points_on_order' == $type || 'membership' == $type ) {
+		if ( 'cart_subtotal_point' == $type || 'product_details' == $type || 'registration' == $type || 'points_on_order' == $type || 'membership' == $type ) {
 			$cart_subtotal_point_arr = get_user_meta( $user_id, 'points_details', true );
 			if ( isset( $cart_subtotal_point_arr[ $type ] ) && ! empty( $cart_subtotal_point_arr[ $type ] ) ) {
 				$cart_array = array(
