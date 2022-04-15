@@ -880,7 +880,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 						</td>
 					<?php endif; ?>
 				</tr>
-		
 		<?php
 	}
 

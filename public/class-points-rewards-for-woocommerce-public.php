@@ -428,24 +428,55 @@ class Points_Rewards_For_WooCommerce_Public {
 
 				$content = $content . $share_button;
 			}
-			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_email' ) == 1 ) {
-				if ( $maill != $html_div ) {
+			echo wp_kses_post( $content );
 
-					$content = $content . $maill;
+			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_email' ) == 1 ) {
+
+				if ( $maill != $html_div ) {
+					$content2 = $maill;
 
 				} else {
-
-					$content = $content . $mail;
+					$content2 = $mail;
 				}
 			}
+			$allowed_html = array(
+				'div' => array(
+					'id' => array(),
+					'class' => array(),
+				),
+				'a' => array(
+					'href' => array(),
+					'class' => array(),
+				),
+				'p' => array(
+					'id' => array(),
+				),
+				'button' => array(
+					'id' => array(),
+					'class' => array(),
+				),
+				'img' => array(
+					'src' => array(),
+				),
+				'input' => array(
+					'type' => array(),
+					'style' => array(),
+					'id' => array(),
+					'value' => array(),
+					'placeholder' => array(),
+					'name' => array(),
+					'data-id' => array(),
+				),
+			);
+			echo wp_kses( $content2, $allowed_html );
 			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_whatsapp' ) == 1 ) {
 
-				$content = $content . $whatsapp;
+				$content3 = $whatsapp;
 			}
 
-			$content = $content . '</div>';
+			$content3 = $content3 . '</div>';
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo $content;
+			echo wp_kses_post( $content3 );
 
 		}
 	}
@@ -2215,7 +2246,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				<fieldset class="wps_wpr_each_section">
 					<p>
 						<?php echo esc_html__( 'Points Conversion: ', 'ultimate-woocommerce-points-and-rewards' ); ?>
-						<?php echo esc_html( $wps_points_par_value_wallet ) . esc_html__( 'points = ', 'ultimate-woocommerce-points-and-rewards' ) . wc_price( $wps_currency_par_value_wallet ); ?>
+						<?php echo esc_html( $wps_points_par_value_wallet ) . esc_html__( 'points = ', 'ultimate-woocommerce-points-and-rewards' ) . wp_kses( wc_price( $wps_currency_par_value_wallet ), $this->wps_wpr_allowed_html() ); ?>
 					</p>
 					<form id="points_wallet" enctype="multipart/form-data" action="" method="post">
 
