@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           1.2.6
+ * Version:           1.2.7
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wpswings.com/product/?utm_source=wpswings-shop-page&utm_medium=par-org-page&utm_campaign=more-plugin
@@ -24,7 +24,7 @@
  * Requires at least: 4.4.0
  * Tested up to:     5.9.3
  * WC requires at least: 3.0.0
- * WC tested up to:  6.4.0
+ * WC tested up to:  6.4.1
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
