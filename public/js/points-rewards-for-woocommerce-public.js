@@ -198,7 +198,7 @@
 								complete: function(){
 									if ( ! wps_wpr.is_checkout ) {
 										unblock( $( '.woocommerce-cart-form' ) );
-										location.reload();
+										// location.reload();
 									}
 								}
 							}

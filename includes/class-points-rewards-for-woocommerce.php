@@ -253,9 +253,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_get_price_html', $plugin_public, 'wps_wpr_user_level_discount_on_price', 10, 2 );
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public, 'wps_wpr_woocommerce_before_calculate_totals', 10, 1 );
 			$this->loader->add_filter( 'woocommerce_update_cart_action_cart_updated', $plugin_public, 'wps_update_cart_points' );
-			// Paypal Issue Change start //
+
+			// Paypal Issue Change start.
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public, 'wps_wpr_woocommerce_cart_custom_points' );
-			// Paypal Issue Change End //
+			// Paypal Issue Change End.
+
 			/*Make Tax calculation 0 on the fees applied on the points*/
 			$this->loader->add_filter( 'woocommerce_cart_totals_get_fees_from_cart_taxes', $plugin_public, 'wps_wpr_fee_tax_calculation', 10, 3 );
 			$this->loader->add_action( 'woocommerce_before_checkout_form', $plugin_public, 'wps_wpr_add_coupon_form', 10, 1 );
@@ -270,11 +272,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_wpr_add_coupon_generation', $plugin_public, 'wps_wpr_add_wallet_generation', 10, 1 );
 			$this->loader->add_action( 'wp_ajax_wps_wpr_generate_custom_wallet', $plugin_public, 'wps_wpr_generate_custom_wallet' );
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_generate_custom_wallet', $plugin_public, 'wps_wpr_generate_custom_wallet' );
-			// Paypal Issue Change start //
+
+			// Paypal Issue Change start.
 			$this->loader->add_filter( 'woocommerce_get_shop_coupon_data', $plugin_public, 'wps_wpr_validate_virtual_coupon_for_points', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_cart_totals_coupon_label', $plugin_public, 'wps_wpr_filter_woocommerce_coupon_label', 10, 2 );
-
-			// Paypal Issue Change End //
+			// Paypal Issue Change End.
 		}
 	}
 

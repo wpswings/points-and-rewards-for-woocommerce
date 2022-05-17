@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Points and Rewards for WooCommerce 1.2.6\n"
 "POT-Creation-Date: 2022-04-19 11:46+0530\n"
-"PO-Revision-Date: 2022-05-17 06:31+0000\n"
+"PO-Revision-Date: 2022-05-17 06:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -2029,7 +2029,7 @@ msgstr ""
 #: public/class-points-rewards-for-woocommerce-public.php:1555
 #: public/class-points-rewards-for-woocommerce-public.php:2028
 msgid "Cart Discount"
-msgstr ""
+msgstr "Test"
 
 #: public/class-points-rewards-for-woocommerce-public.php:1359
 msgid "Here is the Discount Rule for Applying your Points to Cart Total"
