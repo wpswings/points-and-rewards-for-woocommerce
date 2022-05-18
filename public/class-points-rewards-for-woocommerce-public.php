@@ -1584,9 +1584,9 @@ class Points_Rewards_For_WooCommerce_Public {
 				WC()->cart->remove_coupon( $code );
 			}
 		}
-		if ( $code === $coupon_code ) {
-			$coupon->add_coupon_message( WC_Coupon::WC_COUPON_REMOVED );
-		}
+		// if ( strtolower( $code ) === strtolower( $coupon_code ) ) {
+		// 	$coupon->add_coupon_message( WC_Coupon::WC_COUPON_REMOVED );
+		// }
 		wp_send_json( $response );
 	}
 
