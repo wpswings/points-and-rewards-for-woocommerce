@@ -1653,7 +1653,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						if ( strtolower( $cart_discount ) == strtolower( $coupon_name ) ) {
 							$coupon_meta = $coupon_data['meta_data'][0]->get_data();
 							$coupon_amount = $coupon_meta['value']['amount'];
-							update_post_meta( $order_id, 'wps_cart_discount#$fee_id', -$coupon_amount );
+							update_post_meta( $order_id, 'wps_cart_discount#$fee_id', $coupon_amount );
 							$fee_to_point = ceil( ( $wps_wpr_cart_points_rate * $coupon_amount ) / $wps_wpr_cart_price_rate );
 							$fee_to_point  = apply_filters( 'wps_round_down_cart_total_value_amount', $fee_to_point, $wps_wpr_cart_points_rate, $coupon_amount, $wps_wpr_cart_price_rate );
 							$remaining_point = $get_points - $fee_to_point;
