@@ -1123,7 +1123,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 							if ( isset( $user ) && ! empty( $user ) ) {
 								$user_name = $user->user_login;
 							} else {
-								$user_name = esc_html__( 'This user doesn\'t exists', 'points-and-rewards-for-woocommerce' );
+								$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
 							}
 						}
 						?>

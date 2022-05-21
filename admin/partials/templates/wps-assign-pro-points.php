@@ -66,7 +66,7 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 					?>
 					</strong></p>
 					<button type="button" class="notice-dismiss">
-						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</button>
 				</div>
 				<?php
@@ -75,7 +75,7 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 				<div class="notice notice-error is-dismissible">
 					<p><strong><?php esc_html_e( ' Please enter some points !', 'points-and-rewards-for-woocommerce' ); ?></strong></p>
 					<button type="button" class="notice-dismiss">
-						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</button>
 				</div>
 				<?php
@@ -111,7 +111,7 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 			<div class="notice notice-success is-dismissible">
 				<p><strong><?php esc_html_e( 'Points are removed Successfully from All Products', 'points-and-rewards-for-woocommerce' ); ?></strong></p>
 				<button type="button" class="notice-dismiss">
-					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</button>
 			</div>
 			<?php
@@ -139,7 +139,7 @@ $wps_wpr_assign_product_table_settings = array(
 		'type'  => 'number',
 		'desc'  => __( 'Enter Global Product Points', 'points-and-rewards-for-woocommerce' ),
 		'id'    => 'wps_wpr_pro_points_to_all',
-		'desc_tip' => __( 'Entered Points are assigned to All Products .', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Entered Points are assigned to All Products.', 'points-and-rewards-for-woocommerce' ),
 		'custom_attribute' => array( 'min' => '"1"' ),
 		'class' => 'input-text wps_wpr_common_width',
 	),

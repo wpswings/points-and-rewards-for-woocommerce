@@ -95,11 +95,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
 				$params  = array(
 					/* translators: %s: decimal */
-					'i18n_decimal_error'               => sprintf( __( 'Please enter in decimal (%s) format without thousand separators.', 'points-and-rewards-for-woocommerce' ), $decimal ),
+					'i18n_decimal_error'               => sprintf( __( 'Please enter the decimal (%s) format without thousand separators.', 'points-and-rewards-for-woocommerce' ), $decimal ),
 					/* translators: %s: price decimal separator */
 					'i18n_mon_decimal_error'           => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.', 'points-and-rewards-for-woocommerce' ), wc_get_price_decimal_separator() ),
-					'i18n_country_iso_error'           => __( 'Please enter in country code with two capital letters.', 'points-and-rewards-for-woocommerce' ),
-					'i18_sale_less_than_regular_error' => __( 'Please enter in a value less than the regular price.', 'points-and-rewards-for-woocommerce' ),
+					'i18n_country_iso_error'           => __( 'Please enter the country code with two capital letters.', 'points-and-rewards-for-woocommerce' ),
+					'i18_sale_less_than_regular_error' => __( 'Please enter the value less than the regular price.', 'points-and-rewards-for-woocommerce' ),
 					'decimal_point'                    => $decimal,
 					'mon_decimal_point'                => wc_get_price_decimal_separator(),
 					'strings'                          => array(
@@ -132,7 +132,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$url     = admin_url( 'admin.php?page=wps-wpr-setting' );
 				$wps_wpr = array(
 					'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-					'validpoint'         => __( 'Please enter valid points', 'points-and-rewards-for-woocommerce' ),
+					'validpoint'         => __( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
 					'Labelname'          => __( 'Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
 					'Labeltext'          => __( 'Enter Level', 'points-and-rewards-for-woocommerce' ),
 					'Points'             => __( 'Enter Points', 'points-and-rewards-for-woocommerce' ),
@@ -146,7 +146,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'LevelValue_notice'  => __( 'Please Enter valid Points', 'points-and-rewards-for-woocommerce' ),
 					'CategValue_notice'  => __( 'Please select a category', 'points-and-rewards-for-woocommerce' ),
 					'ProdValue_notice'   => __( 'Please select a product', 'points-and-rewards-for-woocommerce' ),
-					'Discount_notice'    => __( 'Please enter valid discount', 'points-and-rewards-for-woocommerce' ),
+					'Discount_notice'    => __( 'Please enter a valid discount', 'points-and-rewards-for-woocommerce' ),
 					'success_assign'     => __( 'Points are assigned successfully!', 'points-and-rewards-for-woocommerce' ),
 					'error_assign'       => __( 'Enter Some Valid Points!', 'points-and-rewards-for-woocommerce' ),
 					'success_remove'     => __( 'Points are removed successfully!', 'points-and-rewards-for-woocommerce' ),
@@ -159,7 +159,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'reason'             => __( 'Please enter Remark', 'points-and-rewards-for-woocommerce' ),
 					'wps_wpr_nonce'      => wp_create_nonce( 'wps-wpr-verify-nonce' ),
 					'check_pro_activate' => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
-					'pro_text'           => __( 'Please purchase the pro plugin to add multiple membership.', 'points-and-rewards-for-woocommerce' ),
+					'pro_text'           => __( 'Please purchase the pro plugin to add multiple memberships.', 'points-and-rewards-for-woocommerce' ),
 					'pro_link_text'      => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
 					'pro_link'           => 'https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro',
 					'success_update'     => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
@@ -565,7 +565,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->wps_wpr_allowed_html();
-						$attribute_description = __( 'Entered text will be the name of the level for membership', 'points-and-rewards-for-woocommerce' );
+						$attribute_description = __( 'The entered text will be the name of the level for membership', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="wps_wpr_membership_level_name">
@@ -599,7 +599,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->wps_wpr_allowed_html();
-						$attribute_description = __( 'Select the days, week, month or year for  expiration of current level', 'points-and-rewards-for-woocommerce' );
+						$attribute_description = __( 'Select the days, week, month, or year for the expiration of the current level', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						$exp_num = isset( $value['Exp_Number'] ) ? $value['Exp_Number'] : '';
 						?>
@@ -750,7 +750,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					<td class="forminp forminp-text">
 						<?php
 						$allowed_tags = $this->wps_wpr_allowed_html();
-						$attribute_description = __( 'Entered Discount will be applied on the above-selected products', 'points-and-rewards-for-woocommerce' );
+						$attribute_description = __( 'Entered Discount will be applied to the above-selected products', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="wps_wpr_membership_discount">
@@ -1063,7 +1063,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'type'  => 'checkbox',
 					'desc'  => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
 					'id'    => 'wps_wpr_general_setting_wallet_enablee',
-					'desc_tip' => __( 'Check this box to enable points conversion to amount  on wallet.', 'points-and-rewards-for-woocommerce' ),
+					'desc_tip' => __( 'Check this box to enable points conversion to the amount on the wallet.', 'points-and-rewards-for-woocommerce' ),
 					'default'   => 0,
 				),
 				array(
@@ -1076,7 +1076,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 							'class'   => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text',
 							'custom_attributes' => array( 'min' => '"1"' ),
 							'desc_tip' => __(
-								'Entered point will be converted in frontend.',
+								'The entered point will be converted in the front end.',
 								'points-and-rewards-for-woocommerce'
 							),
 							'desc' => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),

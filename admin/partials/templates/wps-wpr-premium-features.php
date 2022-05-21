@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="wps_wpr_premium__column">
 					<div class="wps_wpr_premium__content">
 						<h3 class="wps_wpr_premium__heading"><?php esc_html_e( 'Points Adjustments On Order Refund & Cancellation', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p class="wps_wpr_premium__text"><?php esc_html_e( 'Allow easy points adjustments on order refunds and/or cancellation.', 'points-and-rewards-for-woocommerce' ); ?></p>
+						<p class="wps_wpr_premium__text"><?php esc_html_e( 'Allow easy points adjustments on order refunds and/or cancellations.', 'points-and-rewards-for-woocommerce' ); ?></p>
 						
 					</div>
 				</div>

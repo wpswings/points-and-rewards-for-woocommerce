@@ -40,7 +40,7 @@ if ( ! class_exists( 'Wps_Wpr_Emails_Notification' ) ) {
 			$this->id             = 'wps_wpr_email_notification';
 			$this->title          = __( 'Points and rewards email', 'points-and-rewards-for-woocommerce' );
 			$this->customer_email = true;
-			$this->description    = __( 'This emal send to the customer on every event.', 'points-and-rewards-for-woocommerce' );
+			$this->description    = __( 'This email is sent to the customer at every event.', 'points-and-rewards-for-woocommerce' );
 			$this->template_html  = 'wps-wpr-email-notification-template.php';
 			$this->template_plain = 'plain/wps-wpr-email-notification-template.php';
 			$this->template_base  = WPS_RWPR_DIR_PATH . 'emails/templates/';

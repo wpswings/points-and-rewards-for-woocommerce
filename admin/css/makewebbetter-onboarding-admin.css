@@ -419,4 +419,10 @@ input[type="text"] {
     margin: 0 0 10px 0;
 }
 
+.wps-info-img{
+  margin-right: 6px;
+  max-width: 15px;
+  vertical-align: middle;
+}
+
 /*end of deactivating popup css*/

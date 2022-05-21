@@ -13,11 +13,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
- * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> allow merchants to reward their customers with loyalty points.<a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
+ * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
  * Version:           1.2.7
  * Author:            WP Swings
- * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-org-backend&utm_campaign=official
- * Plugin URI:        https://wpswings.com/product/?utm_source=wpswings-shop-page&utm_medium=par-org-page&utm_campaign=more-plugin
+ * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
+ * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
  * Text Domain:       points-and-rewards-for-woocommerce
  * Domain Path:       /languages
  *
@@ -99,11 +99,11 @@ if ( $activated ) {
 		if ( strpos( $file, 'points-rewards-for-woocommerce.php' ) !== false ) {
 
 			$row_meta = array(
-				'demo' => '<a target="_blank" href="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=par-org-backend&utm_campaign=demo"><i class="fas fa-laptop" style="margin-right:3px;"></i>' . esc_html__( 'Premium Demo', 'points-and-rewards-for-woocommerce' ) . '</a>',
+				'demo' => '<a target="_blank" href="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=par-org-backend&utm_campaign=par-demo"><i class="fas fa-laptop"></i><img src="' . esc_html( WPS_RWPR_DIR_URL ) . 'admin/images/Demo.svg" class="wps-info-img" alt="Demo image">' . esc_html__( 'Demo', 'points-and-rewards-for-woocommerce' ) . '</a>',
 
-				'docs'    => '<a target="_blank" href="https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-backend&utm_campaign=documentation"><i class="far fa-file-alt" style="margin-right:3px;"></i>' . esc_html__( 'Documentation', 'points-and-rewards-for-woocommerce' ) . '</a>',
+				'docs'    => '<a target="_blank" href="https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-backend&utm_campaign=par-doc"><i class="far fa-file-alt"></i><img src="' . esc_html( WPS_RWPR_DIR_URL ) . 'admin/images/Documentation.svg" class="wps-info-img" alt="Demo image">' . esc_html__( 'Documentation', 'points-and-rewards-for-woocommerce' ) . '</a>',
 
-				'support' => '<a target="_blank" href="https://wpswings.com/submit-query/?utm_source=wpswings-par-support&utm_medium=par-org-backend&utm_campaign=support"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>' . esc_html__( 'Support', 'points-and-rewards-for-woocommerce' ) . '</a>',
+				'support' => '<a target="_blank" href="https://wpswings.com/submit-query/?utm_source=wpswings-par-query&utm_medium=par-org-backend&utm_campaign=submit-query"><i class="fas fa-user-ninja"></i><img src="' . esc_html( WPS_RWPR_DIR_URL ) . 'admin/images/Support.svg" class="wps-info-img" alt="Demo image">' . esc_html__( 'Support', 'points-and-rewards-for-woocommerce' ) . '</a>',
 
 			);
 
@@ -235,7 +235,8 @@ if ( $activated ) {
 			'settings' => '<a href="' . admin_url( 'admin.php?page=wps-rwpr-setting' ) . '">' . esc_html__( 'Settings', 'points-and-rewards-for-woocommerce' ) . '</a>',
 		);
 
-		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+		$mfw_plugins = get_plugins();
+		if ( ! isset( $mfw_plugins['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
 
 			$my_link['goPro'] = '<a class="wps-wpr-go-pro" target="_blank" href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'points-and-rewards-for-woocommerce' ) . '</a>';
 		}
@@ -621,7 +622,7 @@ if ( $activated ) {
 				<p><strong>IMPORTANT NOTICE:</strong></p>
 			</div>
 			<div class='wps-notice-content wps-notice-section'>
-			<?php esc_html_e( ' You are Using Old Version of Points and Rewards For WooCommerce Pro !!', 'points-and-rewards-for-woocommerce' ); ?><?php esc_html_e( ' Please Update it ', 'points-and-rewards-for-woocommerce' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><strong><?php esc_html_e( ' Click Here', 'points-and-rewards-for-woocommerce' ); ?></strong></a><?php esc_html_e( ' to update to latest ', 'points-and-rewards-for-woocommerce' ); ?>	
+			<?php esc_html_e( 'You are Using the Old Version of Points and Rewards For WooCommerce Pro !!', 'points-and-rewards-for-woocommerce' ); ?><?php esc_html_e( ' Please Update it ', 'points-and-rewards-for-woocommerce' ); ?><a style="text-decoration:none;" href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><strong><?php esc_html_e( ' Click Here', 'points-and-rewards-for-woocommerce' ); ?></strong></a><?php esc_html_e( ' to update to the latest ', 'points-and-rewards-for-woocommerce' ); ?>	
 			</div>
 		</div>
 	</td>

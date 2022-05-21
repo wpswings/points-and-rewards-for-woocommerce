@@ -70,9 +70,9 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 */
 	public function wps_wpr_genrate_label_for_shortcode( $value ) {
 		?>
-		<p class="description"><?php esc_html_e( 'Use shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level of Users', 'points-and-rewards-for-woocommerce' ); ?></p>
-		<p class="description"><?php esc_html_e( 'Use shortcode [MYCURRENTPOINT] for displaying current Points of Users', 'points-and-rewards-for-woocommerce' ); ?></p>
-		<p class="description"><?php esc_html_e( 'Use shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ); ?></p>	
+		<p class="description"><?php esc_html_e( 'Use the shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level of Users', 'points-and-rewards-for-woocommerce' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Use the shortcode [MYCURRENTPOINT] for displaying the current Points of Users', 'points-and-rewards-for-woocommerce' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Use the shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ); ?></p>	
 		<?php
 
 	}
@@ -325,7 +325,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 		<div class="notice notice-success is-dismissible">
 			<p><strong><?php esc_html_e( 'Settings saved.', 'points-and-rewards-for-woocommerce' ); ?></strong></p>
 			<button type="button" class="notice-dismiss">
-				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</button>
 		</div>
 		<?php
@@ -535,8 +535,8 @@ class Points_Rewards_For_WooCommerce_Settings {
 	public function wps_wpr_display_shortcode() {
 		$shortcode_array = array(
 			'desc1' => __( 'Use the shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level', 'points-and-rewards-for-woocommerce' ),
-			'desc2' => __( 'Use shortcode [MYCURRENTPOINT] for displaying current Points of Users', 'points-and-rewards-for-woocommerce' ),
-			'desc3' => __( 'Use shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ),
+			'desc2' => __( 'Use the shortcode [MYCURRENTPOINT] for displaying the current Points of Users', 'points-and-rewards-for-woocommerce' ),
+			'desc3' => __( 'Use the shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ),
 		);
 		return apply_filters( 'wps_wpr_show_shortcoe_text', $shortcode_array );
 	}

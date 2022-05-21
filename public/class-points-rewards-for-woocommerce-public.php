@@ -79,18 +79,18 @@ class Points_Rewards_For_WooCommerce_Public {
 		wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.js', array( 'jquery', 'clipboard' ), $this->version, false );
 		$wps_wpr = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'message' => esc_html__( 'Please enter valid points', 'points-and-rewards-for-woocommerce' ),
+			'message' => esc_html__( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
 			'empty_notice' => __( 'Please enter some points !!', 'points-and-rewards-for-woocommerce' ),
 			'minimum_points' => $wps_minimum_points_value,
 			'confirmation_msg' => __( 'Do you really want to upgrade your user level as this process will deduct the required points from your account?', 'points-and-rewards-for-woocommerce' ),
-			'minimum_points_text' => __( 'Minimum Points Require To Convert Points To Coupon is ', 'points-and-rewards-for-woocommerce' ) . $wps_minimum_points_value,
-			'wps_wpr_custom_notice' => __( 'Number of Point you had entered will get deducted from your Account', 'points-and-rewards-for-woocommerce' ),
+			'minimum_points_text' => __( 'The minimum Points Required To Convert Points To Coupons is ', 'points-and-rewards-for-woocommerce' ) . $wps_minimum_points_value,
+			'wps_wpr_custom_notice' => __( 'The number of points you had entered will get deducted from your Account', 'points-and-rewards-for-woocommerce' ),
 			'wps_wpr_nonce' => wp_create_nonce( 'wps-wpr-verify-nonce' ),
 			'wps_wpr_cart_points_rate' => $wps_wpr_cart_points_rate,
 			'wps_wpr_cart_price_rate' => $wps_wpr_cart_price_rate,
 			'not_allowed' => __( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' ),
-			'not_suffient' => __( 'You do not have sufficient amount of points', 'points-and-rewards-for-woocommerce' ),
-			'above_order_limit' => __( 'Entered points are not applicable to this order.', 'points-and-rewards-for-woocommerce' ),
+			'not_suffient' => __( 'You do not have a sufficient amount of points', 'points-and-rewards-for-woocommerce' ),
+			'above_order_limit' => __( 'Entered points do not apply to this order.', 'points-and-rewards-for-woocommerce' ),
 			'points_empty' => __( 'Please enter points.', 'points-and-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
@@ -1188,7 +1188,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			?>
 			<div class="woocommerce-message" style="background-color<?php echo esc_attr( $wps_wpr_notification_color ); ?>">
 				<?php
-				echo esc_html__( 'You will Get ', 'points-and-rewards-for-woocommerce' ) . esc_html( $wps_wpr_signup_value ) . esc_html__( ' Points on a successful Sign Up', 'points-and-rewards-for-woocommerce' )
+				echo esc_html__( 'You will Get ', 'points-and-rewards-for-woocommerce' ) . esc_html( $wps_wpr_signup_value ) . esc_html__( ' Points on a successful Sign-Up', 'points-and-rewards-for-woocommerce' )
 				?>
 			</div>
 			<?php

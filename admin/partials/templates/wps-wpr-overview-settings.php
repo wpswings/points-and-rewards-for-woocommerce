@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<p>
 				<?php
 				esc_html_e(
-					'Points And Rewards For WooCommerce is a customer-oriented solution that aims to engage customers by offering them points for activities they perform on your WooCommerce store. For instance, signup, purchase, referrals, etc. Each point earned can be redeemed by the shoppers on additional purchases. These reward points make the customers eligible for on-purchase discounts and participation in the membership program',
+					'Points And Rewards For WooCommerce is a customer-oriented solution that aims to engage customers by offering them points for activities they perform on your WooCommerce store. For instance, signup, purchase, referrals, etc. Each Points earned can be redeemed by the shoppers on additional purchases. These reward points make the customers eligible for on-purchase discounts and participation in the membership program',
 					'points-and-rewards-for-woocommerce'
 				);
 				?>
@@ -33,8 +33,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<li><?php esc_html_e( 'Set conversion rule to determine the value of each point', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Allow points referral via social media platforms like Whatsapp, email, Facebook, Twitter, etc.', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Track points transaction of each customer with point log report', 'points-and-rewards-for-woocommerce' ); ?></li>
-				<li><?php esc_html_e( 'Update customers point manually from the points table.', 'points-and-rewards-for-woocommerce' ); ?></li>
-				<li><?php esc_html_e( 'Email notification for customers point transactions', 'points-and-rewards-for-woocommerce' ); ?></li>
+				<li><?php esc_html_e( "Update the customer's point manually from the points table.", 'points-and-rewards-for-woocommerce' ); ?></li>
+				<li><?php esc_html_e( 'Email notification for customer point transactions', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'WPML Multilingual support to reward points in a different language', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Alter point value for the order total and cart redemption', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Global Point assign a feature to assign a similar point value to all products', 'points-and-rewards-for-woocommerce' ); ?></li>

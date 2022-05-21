@@ -53,7 +53,7 @@ $wps_wpr_general_settings = array(
 		'id'    => 'wps_wpr_general_signup_value',
 		'custom_attributes'   => array( 'min' => '"1"' ),
 		'class'   => 'input-text wps_wpr_new_woo_ver_style_text',
-		'desc_tip' => __( 'The points which the new customer will get after signup.', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'The points that the new customer will get after signup.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type'  => 'sectionend',
@@ -69,7 +69,7 @@ $wps_wpr_general_settings = array(
 		'id'    => 'wps_wpr_general_refer_enable',
 		'heading' => __( 'Sign Up', 'points-and-rewards-for-woocommerce' ),
 		'class'   => 'input-text',
-		'desc_tip' => __( 'Check this box to enable the Referral Points when customer invites another customers.', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Check this box to enable the Referral Points when the customer invites another  customers.', 'points-and-rewards-for-woocommerce' ),
 		'desc'    => __( 'Enable Referral Points for Rewards.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
@@ -101,7 +101,7 @@ $wps_wpr_general_settings = array(
 		'title' => __( 'Select Social Links', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'multiple_checkbox',
 		'id'    => 'wps_wpr_facebook',
-		'desc_tip' => __( 'Check these boxes to share referral link', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Check these boxes to share the referral link', 'points-and-rewards-for-woocommerce' ),
 		'multiple_checkbox' => array(
 			array(
 				'type'  => 'checkbox',
@@ -142,8 +142,8 @@ $wps_wpr_general_settings = array(
 		'type'  => 'text',
 		'id'    => 'wps_wpr_general_text_points',
 		'class' => 'text_points wps_wpr_new_woo_ver_style_text',
-		'desc'  => __( 'Entered text will get displayed on points page.', 'points-and-rewards-for-woocommerce' ),
-		'desc_tip' => __( 'Entered text will append before the Total Number of Point', 'points-and-rewards-for-woocommerce' ),
+		'desc'  => __( 'The entered text will get displayed on the points page.', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'The entered text will append before the Total Number of Point', 'points-and-rewards-for-woocommerce' ),
 		'default' => __( 'My Points', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
@@ -155,7 +155,7 @@ $wps_wpr_general_settings = array(
 		),
 		'id'    => 'wps_wpr_general_ways_to_gain_points',
 		'class' => 'input-text',
-		'desc_tip' => __( 'Entered text will append before the Total Number of Point', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'The entered text will append before the Total Number of Point', 'points-and-rewards-for-woocommerce' ),
 		'desc2' => '[Refer Points]' . __( ' for Referral Points', 'points-and-rewards-for-woocommerce' ) . '[Per Currency Spent Points]' . __( ' for Per currency spent points and', 'points-and-rewards-for-woocommerce' ) . '[Per Currency Spent Price]' . __( ' for per currency spent price', 'points-and-rewards-for-woocommerce' ),
 		'desc'  => __( 'Use these shortcodes for providing ways to gain points at the front end.', 'points-and-rewards-for-woocommerce' ),
 	),
@@ -165,7 +165,7 @@ $wps_wpr_general_settings = array(
 		'id'    => 'wps_wpr_points_tab_text',
 		'class' => 'text_points wps_wpr_new_woo_ver_style_text',
 		'desc'  => __( 'Points Tab replaced with your text.', 'points-and-rewards-for-woocommerce' ),
-		'desc_tip' => __( 'Entered text will be replaced the Points tab at Myaccount Page', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'The entered text will be replaced in the Points tab on the My Account Page', 'points-and-rewards-for-woocommerce' ),
 		'default' => __( 'Points', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
@@ -174,7 +174,7 @@ $wps_wpr_general_settings = array(
 		'id'    => 'wps_wpr_assign_pro_text',
 		'class' => 'text_points wps_wpr_new_woo_ver_style_text',
 		'desc'  => __( 'Product Point text can be replaced with the entered text', 'points-and-rewards-for-woocommerce' ),
-		'desc_tip' => __( 'Enter the message you want to display for those products who have assigned with some of the Points', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Enter the message you want to display for those products who have been assigned with some of the Points', 'points-and-rewards-for-woocommerce' ),
 		'default' => __( 'Product Points', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
@@ -185,7 +185,7 @@ $wps_wpr_general_settings = array(
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Redemption Over Cart Sub-Total', 'points-and-rewards-for-woocommerce' ),
+		'title' => __( 'Redemption Over Cart Sub-total', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'checkbox',
 		'id'    => 'wps_wpr_custom_points_on_cart',
 		'desc_tip' => __( 'Check this box if you want to let your customers redeem their earned points for the cart subtotal.', 'points-and-rewards-for-woocommerce' ),
@@ -193,7 +193,7 @@ $wps_wpr_general_settings = array(
 		'desc'  => __( 'Allow customers to apply points during Cart.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title' => __( 'Conversion rate for Cart Sub-Total Redemption', 'points-and-rewards-for-woocommerce' ),
+		'title' => __( 'Conversion rate for Cart Sub-total Redemption', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'number_text',
 		'number_text' => array(
 			array(
