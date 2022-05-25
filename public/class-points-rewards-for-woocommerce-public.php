@@ -1584,9 +1584,6 @@ class Points_Rewards_For_WooCommerce_Public {
 				WC()->cart->remove_coupon( $code );
 			}
 		}
-		// if ( strtolower( $code ) === strtolower( $coupon_code ) ) {
-		// 	$coupon->add_coupon_message( WC_Coupon::WC_COUPON_REMOVED );
-		// }
 		wp_send_json( $response );
 	}
 
@@ -1642,7 +1639,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Order*/
 		$order = wc_get_order( $order_id );
 		if ( isset( $order ) && ! empty( $order ) ) {
-			// Paypal Issue Change Start //
+			// Paypal Issue Change Start.
 			$order_data = $order->get_data();
 			if ( ! empty( $order_data['coupon_lines'] ) ) {
 				foreach ( $order_data['coupon_lines'] as $coupon ) {
@@ -1673,7 +1670,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 				}
 			}
-			// Paypal Issue Change End //
+			// Paypal Issue Change End.
 		}
 	}
 
@@ -1816,7 +1813,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				echo '</span>';
 			} elseif ( $product_is_variable ) {
 				$get_product_points = '<span class=wps_wpr_variable_points></span>';
-				echo '<span class=wps_wpr_product_point style="display:none;background-color:' . esc_html( $wps_wpr_notification_color ) . '">' . esc_html( $wps_wpr_assign_pro_text ) . ': ' . wp_kses_post( $get_product_points );
+				echo '<span class=wps_wpr_product_point style="display:none;background-color:' . esc_html( $wps_wpr_notification_color ) . '">' . esc_html( $wps_wpr_assign_pro_text ) . ': ' . esc_html( $get_product_points );
 				esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' );
 				echo '</span>';
 			}
