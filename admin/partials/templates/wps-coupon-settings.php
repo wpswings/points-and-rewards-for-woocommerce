@@ -27,7 +27,7 @@ $wps_wpr_coupon_settings = array(
 		'id'  => 'wps_wpr_coupon_conversion_enable',
 		'class' => 'input-text',
 		'desc'  => __( 'Allow per currency points conversion', 'points-and-rewards-for-woocommerce' ),
-		'desc_tip' => __( 'Check this box if you want enable per currency points conversion.', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Check this box if you want to enable per currency points conversion.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'title' => __( 'Per ', 'points-and-rewards-for-woocommerce' ) . get_woocommerce_currency_symbol() . __( 'Points Conversion', 'points-and-rewards-for-woocommerce' ),

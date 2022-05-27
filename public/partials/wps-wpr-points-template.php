@@ -186,6 +186,9 @@ if ( $wps_wpr_mem_enable ) {
 				<?php
 				if ( is_array( $wps_wpr_membership_roles ) && ! empty( $wps_wpr_membership_roles ) ) {
 					foreach ( $wps_wpr_membership_roles as $wps_role => $values ) {//phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+						if ( ! is_array( $values ) ) {
+									return;
+						}
 						?>
 				<tr>
 					<td>

@@ -161,7 +161,50 @@
 							}
 						}
 					);
-
+				/*Removing Custom Points on Cart Subtotal handling via Ajax*/  // Paypal Issue Change End //
+				$( document ).on(
+					'click',
+					'.woocommerce-remove-coupon',
+					function(e){
+						if ( ! wps_wpr.is_checkout ) {
+							block( $( '.woocommerce-cart-form' ) );
+						}
+						var $this = $(this);
+						
+						var data = {
+							action:'wps_wpr_remove_cart_point',
+							coupon_code: $(this).data('coupon'),
+							wps_nonce:wps_wpr.wps_wpr_nonce,
+							is_checkout:wps_wpr.is_checkout
+						};
+						$.ajax(
+							{
+								url: wps_wpr.ajaxurl,
+								type: "POST",
+								data: data,
+								dataType :'json',
+								success: function(response)
+								{
+									if (response.result == true) {
+										$( '#wps_cart_points' ).val( '' );
+										if ( wps_wpr.is_checkout ) {
+											setTimeout(function() {
+												$this.closest('tr.cart-discount').remove();
+												jQuery(document.body).trigger("update_checkout");
+											}, 200);	
+										}
+									}
+								},
+								complete: function(){
+									if ( ! wps_wpr.is_checkout ) {
+										unblock( $( '.woocommerce-cart-form' ) );
+										// location.reload();
+									}
+								}
+							}
+						);
+					}
+				);// Paypal Issue Change End //
 				/*Removing Custom Points on Cart Subtotal handling via Ajax*/
 				$( document ).on(
 					'click',

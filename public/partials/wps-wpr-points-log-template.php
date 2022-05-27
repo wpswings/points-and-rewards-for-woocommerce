@@ -67,7 +67,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		if ( array_key_exists( 'refund_points_applied_on_cart', $point_log ) ) {
 			?>
 	<div class="wps_wpr_slide_toggle">
-		<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Apply Points of cart refunded after order is cancelled', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+		<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Apply Points of cart refunded after the order is canceled', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
 		<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 		<table class="wps_wpr_common_table">
 			<thead>
@@ -324,7 +324,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		if ( array_key_exists( 'pur_by_points', $point_log ) ) {
 			?>
 			<div class="wps_wpr_slide_toggle">
-				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Deduction of points as you has purchased your product through points', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Deduction of points as you have purchased your product through points', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
 
 				<table class="wps_wpr_common_table">
 					<thead>
@@ -650,7 +650,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 							if ( isset( $user ) && ! empty( $user ) ) {
 								$user_name = $user->user_nicename;
 							} else {
-								$user_name = esc_html__( 'This user doesn\'t exists', 'points-and-rewards-for-woocommerce' );
+								$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
 							}
 						}
 						?>
@@ -697,7 +697,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 							if ( isset( $user ) && ! empty( $user ) ) {
 								$user_name = $user->user_nicename;
 							} else {
-								$user_name = esc_html__( 'This user doesn\'t exists', 'points-and-rewards-for-woocommerce' );
+								$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
 							}
 						}
 						?>
@@ -755,7 +755,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		if ( array_key_exists( 'points_deduct_wallet', $point_log ) ) {
 			?>
 	<div class="wps_wpr_slide_toggle">
-	<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points Deduct to wallet', 'points-and-rewards-for-woocommerce' ); ?>
+	<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points Deduct to the wallet', 'points-and-rewards-for-woocommerce' ); ?>
 	<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 	</p>
 	<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
@@ -809,7 +809,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 							if ( isset( $user ) && ! empty( $user ) ) {
 								$user_name = $user->user_login;
 							} else {
-								$user_name = esc_html__( 'This user doesn\'t exists', 'points-and-rewards-for-woocommerce' );
+								$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
 							}
 						}
 						?>
@@ -859,7 +859,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 							if ( isset( $user ) && ! empty( $user ) ) {
 								$user_name = $user->user_nicename;
 							} else {
-								$user_name = esc_html__( 'This user doesn\'t exists', 'points-and-rewards-for-woocommerce' );
+								$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
 							}
 						}
 						?>

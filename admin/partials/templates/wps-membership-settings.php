@@ -78,7 +78,7 @@ if ( isset( $_POST['wps_wpr_save_membership'] ) && isset( $_POST['wps-wpr-nonce'
 		<div class="notice notice-success is-dismissible">
 			<p><strong><?php esc_html_e( 'Settings saved.', 'points-and-rewards-for-woocommerce' ); ?></strong></p>
 			<button type="button" class="notice-dismiss">
-				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notices.', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</button>
 		</div>
 		<?php
