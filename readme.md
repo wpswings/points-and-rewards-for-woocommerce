@@ -1,4 +1,4 @@
-[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-5000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.9.3-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.3.1-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
+[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-5000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.0.0-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.5.1-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
 # Points and Rewards for WooCommerce – Create Loyalty Programs, Reward Customer Purchases, Referral Points & Redemptions
 ![Points and Rewards for WooCommerce](https://ps.w.org/points-and-rewards-for-woocommerce/assets/banner-772x250.jpg?rev=2671934)
 * Contributors: WP Swings
@@ -15,16 +15,13 @@
 
 >**IMPORTANT NOTICE:**
 
->_**From this update Version 1.2.4 onwards, the Points and Rewards plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-github-page&utm_campaign=official).**_
+>_**From the 1.2.4  Version update onwards, the Points and Rewards plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-github-page&utm_campaign=official).**_
 
 >_**WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end. Please [**Connect with us**](https://wpswings.com/contact-us/?utm_source=wpswings-par-contactus&utm_medium=par-github-page&utm_campaign=contactus) for all setup, support, and update related queries without hesitation.**_
 
 [**How to Implement Rewards Points In WooCommerce Stores With Free WordPress Rewards System?**](https://www.youtube.com/watch?v=WWktrnAI88U&t=333s)
 
-## PLUGIN MEETS YOUR REQUIREMENT, SO
-[**Download Now**](https://downloads.wordpress.org/plugin/points-and-rewards-for-woocommerce.zip)
-
-**WITH THE WOOCOMMERCE REWARDS SYSTEM PLUGIN YOU CAN:**
+## WITH THE WOOCOMMERCE REWARDS SYSTEM PLUGIN YOU CAN:
 * Offer points on signup, referrals, purchase, etc. to engage your customers
 * Create a membership program to reward loyal customers with exclusive offers
 * Track the points transaction of every customer with point log report
@@ -36,6 +33,8 @@
 * Offer a specific number of points for a set price range of the order value
 * Hooks to extend the points tab for admin
 
+### PLUGIN MEETS YOUR REQUIREMENT, SO
+[**Download Now**](https://downloads.wordpress.org/plugin/points-and-rewards-for-woocommerce.zip)
 
 ## WHAT’S INCLUDED IN OUR FREE POINTS AND REWARDS FOR WOOCOMMERCE PLUGIN
 
@@ -49,7 +48,7 @@ With Woocommerce Points and rewards plugin, customers have the opportunity to ea
 **On A Set Range Of Order Total**– Merchant can set the number of points the customer will get if his order value lies within a set range.
 
 **2) Easy Point Redemption**
-Customers can redeem their points either on the cart or at the checkout page by entering the points in the “Apply Points” field. Merchant can select where he wants to show the “Apply Points” field, on a cart or the checkout page. He can also set the conversion rule to determine the value of every point using the conversion table feature.
+In the WordPress loyalty program plugin, customers can redeem their points either on the cart or at the checkout page by entering the points in the “Apply Points” field. Merchant can select where he wants to show the “Apply Points” field, on a cart or the checkout page. He can also set the conversion rule to determine the value of every point using the conversion table feature.
 
 **For Example:** If the order costs $20 and the customer has 10 points in his account, the merchant can determine whether the customer will get a discount of 10, 5, or 2 dollars by redeeming those 10 points.
 
@@ -57,7 +56,7 @@ Customers can redeem their points either on the cart or at the checkout page by 
 Merchants can create their own membership system based on rewards points. This helps them offer exclusive discounts to the customers based on the points they collect. Merchants can add rewards discounts on some categories and their products. If the customer subscribes to the membership, he can purchase those discounted products.
 
 **4) Points Log Report**
-Points Log Report feature is available for both customers and admin:
+In the Woocommerce Rewards plugin, the points Log Report feature is available for both customers and admin:
 
 * For Customers – They can check and monitor each point transaction they have done so far. The log table shows the details for each point they earned and redeemed.
 * For Merchant – They can view the user points history to track the points transaction for each customer. Along with it, they can add or deduct points from any customer’s account using this feature.
@@ -71,9 +70,9 @@ With the Points and Rewards for WooCommerce plugin, merchants can notify their c
 The WooCommerce rewards plugin is compatible with the WPML Multilingual plugin that allows you to reward your customers in your local language.
 
 
-Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-github-page&utm_campaign=par-doc) and learn more about the features and working of the plugin.
+* Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-github-page&utm_campaign=par-doc) and learn more about the features and working of the plugin.
 
-Checkout [**Points and Rewards plugin knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-github-page&utm_campaign=par-kb)
+* Checkout [**Points and Rewards plugin knowledge base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-github-page&utm_campaign=par-kb)
 
 ## LIVE DEMO OF POINTS AND REWARDS PLUGIN
 
@@ -86,6 +85,8 @@ Checkout [**Points and Rewards plugin knowledge base**](https://support.wpswings
 * WooCommerce rewards plugin is compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**Wallet System For WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-par-git&utm_medium=par-github-page&utm_campaign=par-wallet) plugin. This compatibility allows you to convert your earned points into wallet credit based on a certain conversion rate. The admin can set points conversion into wallet credit he wants to allow. For example, 10 points equal 2 wallet credits. Customers can later use this wallet credit for purchase in the store. 
 
 * The Points and Rewards plugin is compatible with the WordPress Multilingual (WPML) plugin for localization of the rewards plugin’s strings.
+
+* WooCommerce points and reward plugin is compatible with PayPal for operating secure online payments.
 
 
 ## WHAT PREMIUM VERSION OF WOOCOMMERCE POINTS AND REWARDS OFFERS: 
@@ -127,7 +128,6 @@ Points and Rewards for WooCommerce help merchants create a points-based loyalty 
 ## SUPPORT
 If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-github-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-par-submit-query&utm_medium=par-github-page&utm_campaign=submit-query)
 
-> If our documentation doesn’t contain the solution to your problem, you can [**Connect with us**](https://wpswings.com/contact-us/?utm_source=wpswings-par-contactus&utm_medium=par-github-page&utm_campaign=contactus) with your question.
 
 ### MORE ABOUT WP Swings
 
@@ -136,17 +136,3 @@ If you need support or have questions, kindly use our online chat window [**here
 * [**Tweet us on @WP Swings**](https://twitter.com/wpswings)
 * [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 * [**Subscribe Our Youtube Channel**](https://www.youtube.com/c/wpswings)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
