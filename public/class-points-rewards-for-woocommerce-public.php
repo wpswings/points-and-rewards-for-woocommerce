@@ -1294,7 +1294,9 @@ class Points_Rewards_For_WooCommerce_Public {
 		global $woocommerce;
 		/*Get the current user id*/
 		$my_cart_change_return = 0;
-		$my_cart_change_return = apply_filters( 'wps_cart_content_check_for_sale_item', $cart );
+		if ( isset( $cart ) && ! empty( $cart ) ) {
+			$my_cart_change_return = apply_filters( 'wps_cart_content_check_for_sale_item', $cart );
+		}
 		if ( '1' == $my_cart_change_return ) {
 
 			return;
@@ -1589,16 +1591,21 @@ class Points_Rewards_For_WooCommerce_Public {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
 		$response['result']  = false;
 		$response['message'] = __( 'Failed to Remove Cart Discount', 'points-and-rewards-for-woocommerce' );
+		$cart_discount       = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 		$coupon_code         = isset( $_POST['coupon_code'] ) && ! empty( $_POST['coupon_code'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon_code'] ) ) : '';
 		if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
 			WC()->session->__unset( 'wps_cart_points' );
 			$response['result'] = true;
 			$response['message'] = __( 'Successfully Removed Cart Discount', 'points-and-rewards-for-woocommerce' );
 		}
-		if ( null !== WC()->cart->get_applied_coupons() && ! empty( WC()->cart->get_applied_coupons() ) ) {
-			foreach ( WC()->cart->get_applied_coupons() as $code ) {
-				$coupon = new WC_Coupon( $code );
-				WC()->cart->remove_coupon( $code );
+		if ( isset( WC()->cart ) ) {
+			if ( null !== WC()->cart->get_applied_coupons() && ! empty( WC()->cart->get_applied_coupons() ) ) {
+				foreach ( WC()->cart->get_applied_coupons() as $code ) {
+					$coupon = new WC_Coupon( $code );
+					if ( strtolower( $code ) === strtolower( $cart_discount ) ) {
+						WC()->cart->remove_coupon( $code );
+					}
+				}
 			}
 		}
 		wp_send_json( $response );
