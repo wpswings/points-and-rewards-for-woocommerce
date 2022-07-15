@@ -272,6 +272,7 @@ class Points_Rewards_For_Woocommerce {
 			// Paypal Issue Change start.
 			$this->loader->add_filter( 'woocommerce_get_shop_coupon_data', $plugin_public, 'wps_wpr_validate_virtual_coupon_for_points', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_cart_totals_coupon_label', $plugin_public, 'wps_wpr_filter_woocommerce_coupon_label', 10, 2 );
+			$this->loader->add_filter( 'woocommerce_cart_totals_coupon_html', $plugin_public, 'wps_wpr_par_virtual_coupon_remove', 30, 3 );
 			// Paypal Issue Change End.
 		}
 	}

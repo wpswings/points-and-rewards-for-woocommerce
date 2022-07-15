@@ -1466,7 +1466,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				break;
 		}
 		if ( empty( $result ) ) {
-			return array();
+			return 0;
 		}
 		return $result;
 	}

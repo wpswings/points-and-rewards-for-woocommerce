@@ -30,6 +30,7 @@
 	 */
 	$( document ).ready(
 		function() {
+
 				/*create clipboard */
 				var btns = document.querySelectorAll( 'button' );
 				var message = '';
@@ -164,8 +165,9 @@
 				/*Removing Custom Points on Cart Subtotal handling via Ajax*/  // Paypal Issue Change End //
 				$( document ).on(
 					'click',
-					'.woocommerce-remove-coupon',
+					'.wps_remove_virtual_coupon',
 					function(e){
+						e.preventDefault();
 						if ( ! wps_wpr.is_checkout ) {
 							block( $( '.woocommerce-cart-form' ) );
 						}
@@ -193,12 +195,13 @@
 												jQuery(document.body).trigger("update_checkout");
 											}, 200);	
 										}
+										location.reload();
 									}
 								},
 								complete: function(){
 									if ( ! wps_wpr.is_checkout ) {
 										unblock( $( '.woocommerce-cart-form' ) );
-										// location.reload();
+										location.reload();
 									}
 								}
 							}
@@ -206,35 +209,6 @@
 					}
 				);// Paypal Issue Change End //
 				/*Removing Custom Points on Cart Subtotal handling via Ajax*/
-				$( document ).on(
-					'click',
-					'#wps_wpr_remove_cart_point',
-					function(){
-						block( $( '.woocommerce-cart-form' ) );
-						var data = {
-							action:'wps_wpr_remove_cart_point',
-							wps_nonce:wps_wpr.wps_wpr_nonce
-						};
-						$.ajax(
-							{
-								url: wps_wpr.ajaxurl,
-								type: "POST",
-								data: data,
-								dataType :'json',
-								success: function(response)
-							{
-									if (response.result == true) {
-										$( '#wps_cart_points' ).val( '' );
-									}
-								},
-								complete: function(){
-									unblock( $( '.woocommerce-cart-form' ) );
-									location.reload();
-								}
-							}
-						);
-					}
-				);
 				/*This is code for the loader*/
 				var block = function( $node ) {
 					if ( ! is_blocked( $node ) ) {
