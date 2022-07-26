@@ -118,7 +118,7 @@ if ( $activated ) {
 	 *
 	 * @name wps_wpr_create_referral_code
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_create_referral_code() {
 		$length = 10;
@@ -146,7 +146,7 @@ if ( $activated ) {
 	 *
 	 * @name wps_wpr_mytotalpoint_shortcode
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_mytotalpoint_shortcode() {
 		$user_ID = get_current_user_ID();
@@ -167,7 +167,7 @@ if ( $activated ) {
 	 *
 	 * @name wps_wpr_mycurrentlevel_shortcode
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_mycurrentlevel_shortcode() {
 		$user_ID = get_current_user_ID();
@@ -190,7 +190,7 @@ if ( $activated ) {
 	 *
 	 * @name wps_wpr_signupnotif_shortcode
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_signupnotif_shortcode() {
 		$general_settings = get_option( 'wps_wpr_settings_gallery', true );
@@ -250,7 +250,7 @@ if ( $activated ) {
 	 * @name wps_wpr_set_the_wordpress_date_format
 	 * @param string $saved_date saved data in the WordPress formet.
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_set_the_wordpress_date_format( $saved_date ) {
 		if ( get_locale() == 'zh_TW' ) {
@@ -271,7 +271,7 @@ if ( $activated ) {
 		 * @name array_key_first
 		 * @param array $arr optional parameter.
 		 * @author makewebbetter<ticket@makewebbetter.com>
-		 * @link https://www.makewebbetter.com/
+		 * @link https://www.wpswings.com/
 		 */
 		function array_key_first( array $arr ) {
 			foreach ( $arr as $key => $unused ) {
@@ -289,7 +289,7 @@ if ( $activated ) {
 	 * @name wps_wpr_flush_rewrite_rules
 	 * @since 1.1.0.
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_flush_rewrite_rules() {
 
@@ -596,6 +596,7 @@ if ( $activated ) {
 
 		$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.2.5' );
 		$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
+		$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
 		$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );
 		$wps_count_users   = ! empty( $wps_count_users ) && is_array( $wps_count_users ) ? count( $wps_count_users ) : 0;
 
@@ -677,7 +678,7 @@ if ( $activated ) {
 	 *
 	 * @name rewardeem_woocommerce_points_rewards_activation_failure
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure() {
 
@@ -692,7 +693,7 @@ if ( $activated ) {
 	 *
 	 * @name rewardeem_woocommerce_points_rewards_activation_failure
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure_admin_notice() {
 			// hide Plugin activated notice.

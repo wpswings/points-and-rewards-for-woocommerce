@@ -198,7 +198,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'ajaxurl'          => admin_url( 'admin-ajax.php' ),
 						'nonce'            => wp_create_nonce( 'wps-wpr-verify-nonce' ),
 						'callback'         => 'ajax_callbacks',
-						'pending_count'    => $this->wps_par_get_count( 'pending' ),
+						'pending_count'    => ! empty( $this->wps_par_get_count( 'pending' ) ) && is_array( $this->wps_par_get_count( 'pending' ) ) ? $this->wps_par_get_count( 'pending' ) : 0,
 						'pending_orders'   => $this->wps_par_get_count( 'pending', 'orders' ),
 						'completed_orders' => $this->wps_par_get_count( 'done', 'orders' ),
 						'completed_users'  => ! empty( $this->wps_par_get_count_users( 'users' ) ) && is_array( $this->wps_par_get_count_users( 'users' ) ) ? $this->wps_par_get_count_users( 'users' ) : 0,
@@ -215,7 +215,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @since 1.0.0
 	 * @name wps_rwpr_admin_menu()
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_rwpr_admin_menu() {
 		add_submenu_page( 'woocommerce', __( 'Points and Rewards', 'points-and-rewards-for-woocommerce' ), __( 'Points and Rewards', 'points-and-rewards-for-woocommerce' ), 'manage_options', 'wps-rwpr-setting', array( $this, 'wps_rwpr_admin_setting' ) );
@@ -251,7 +251,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @since 1.0.0
 	 * @name wps_rwpr_admin_setting()
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_rwpr_admin_setting() {
 		?>
@@ -265,7 +265,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_points_update
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_points_update() {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
@@ -315,7 +315,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param string $type type of the points details.
 	 * @param int    $points points.
 	 * @param array  $data  array of the data.
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public static function wps_wpr_update_points_details( $user_id, $type, $points, $data ) {
 
@@ -360,7 +360,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_update_points_details
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param int    $user_id user id of the user.
 	 * @param string $type type of the points details.
 	 * @param int    $point points.
@@ -399,7 +399,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_check_mail_notfication_is_enable
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public static function wps_wpr_check_mail_notfication_is_enable() {
 		$wps_points_notification_enable = false;
@@ -417,7 +417,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_check_mail_notfication_is_enable
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param int $id of the database array.
 	 */
 	public function wps_wpr_get_subject( $id ) {
@@ -432,7 +432,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_check_mail_notfication_is_enable
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param int $id of the database array.
 	 */
 	public function wps_wpr_get_email_description( $id ) {
@@ -447,7 +447,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_get_user_points
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param int $user_id user id of the user.
 	 */
 	public function wps_wpr_get_user_points( $user_id ) {
@@ -465,7 +465,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_select_category.
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_select_category() {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
@@ -509,7 +509,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_add_rule_for_membership.
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param array $wps_wpr_membership_roles array of the user roles.
 	 */
 	public function wps_wpr_add_rule_for_membership( $wps_wpr_membership_roles ) {
@@ -534,7 +534,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name check_is_not_empty.
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param array $value value of the database.
 	 */
 	public function check_is_not_empty( $value ) {
@@ -547,7 +547,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_membership_role.
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param int   $count count of the membership.
 	 * @param int   $key key of the array.
 	 * @param array $value value of one array.
@@ -770,7 +770,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_add_membership_rule.
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_add_membership_rule() {
 		global $public_obj;
@@ -788,7 +788,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_add_order_total_points.
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param array $thankyouorder_min  array of the min satements.
 	 * @param array $thankyouorder_max array of the max rules.
 	 * @param array $thankyouorder_value array of the points value.
@@ -848,7 +848,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_add_rule_for_membership.
 	 * @since      1.0.0
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param array $thankyouorder_min  array of the min satements.
 	 * @param array $thankyouorder_max array of the max rules.
 	 * @param array $thankyouorder_value array of the points value.
@@ -888,7 +888,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @since 1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_check_for_notification_daily() {
 		$is_already_sent = get_option( 'onboarding-data-sent', false );
@@ -907,7 +907,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @since 1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_save_notice_message() {
 		$wps_notification_data = $this->wps_wpr_get_update_notification_data();
@@ -925,7 +925,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @since 1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_get_update_notification_data() {
 		$wps_notification_data = array();
@@ -957,7 +957,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @since 1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_display_notification_bar() {
 		$screen = get_current_screen();
@@ -996,7 +996,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @name wps_wpr_dismiss_notice
 	 * @since 1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_dismiss_notice() {
 		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wpr-verify-nonce' ) ) { // WPCS: input var ok, sanitization ok.
@@ -1014,7 +1014,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param  array $valid_screens valid screen.
 	 * @since    1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function add_wps_frontend_screens( $valid_screens = array() ) {
 
@@ -1032,7 +1032,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param  array $valid_screens valid screen.
 	 * @since    1.0.7
 	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function add_wps_deactivation_screens( $valid_screens = array() ) {
 
@@ -1246,7 +1246,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		}
 
 		if ( empty( $result ) ) {
-			return 0;
+			return array();
 		}
 
 		if ( 'count' === $action ) {
@@ -1380,9 +1380,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 		}
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$tab                = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+		$wps__order_count   = $this->wps_par_get_count( 'pending' );
+		$wps__order_count   = ! empty( $wps__order_count ) && is_array( $wps__order_count ) ? count( $wps__order_count ) : 0;
 		$wps_meta_key_count = $this->wps_par_get_count_users( 'users' );
 		$wps_meta_key_count = ! empty( $wps_meta_key_count ) && is_array( $wps_meta_key_count ) ? count( $wps_meta_key_count ) : 0;
-		if ( 'wps-rwpr-setting' === $tab && ( 0 !== $this->wps_par_get_count( 'pending' ) ) || ( 0 !== $wps_meta_key_count ) ) {
+		if ( 'wps-rwpr-setting' === $tab && ( 0 !== $wps__order_count ) || ( 0 !== $wps_meta_key_count ) ) {
 			?>
 
 		<tr class="plugin-update-tr active notice-warning notice-alt">
@@ -1466,7 +1468,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				break;
 		}
 		if ( empty( $result ) ) {
-			return 0;
+			return array();
 		}
 		return $result;
 	}

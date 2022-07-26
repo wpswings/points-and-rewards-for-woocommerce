@@ -20,7 +20,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * @since      1.0.0
  * @category Class
  * @author makewebbetter<webmaster@wpswings.com>
- * @link http://www.makewebbetter.com/
+ * @link https://www.wpswings.com/
  */
 class Membership_Log_List_Table extends WP_List_Table {
 	/**
@@ -28,7 +28,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 *
 	 * @var $example_data
 	 * @author makewebbetter<webmaster@wpswings.com>
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public $example_data;
 
@@ -38,7 +38,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @name get_columns.
 	 * @since      1.0.0
 	 * @author makewebbetter<webmaster@wpswings.com>
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function get_columns() {
 
@@ -58,7 +58,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @name column_default.
 	 * @author makewebbetter<webmaster@wpswings.com>
 	 * @since      1.0.0
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param array  $item array of the row.
 	 * @param string $column_name column name of the Table.
 	 */
@@ -88,7 +88,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @name process_bulk_action.
 	 * @since      1.0.0
 	 * @author makewebbetter<webmaster@wpswings.com>
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function process_bulk_action() {
 
@@ -116,7 +116,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @since      1.0.0
 	 * @return array
 	 * @author makewebbetter<webmaster@wpswings.com>
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
@@ -132,7 +132,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @since      1.0.0
 	 * @return array
 	 * @author makewebbetter<webmaster@wpswings.com>
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function get_sortable_columns() {
 		$sortable_columns = array(
@@ -149,7 +149,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @name prepare_items.
 	 * @since      1.0.0
 	 * @author makewebbetter<webmaster@wpswings.com>
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function prepare_items() {
 		$per_page              = 10;
@@ -183,7 +183,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @since      1.0.0
 	 * @return array
 	 * @author makewebbetter<webmaster@wpswings.com>
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param array $cloumna column id .
 	 * @param array $cloumnb .
 	 */
@@ -212,7 +212,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @name column_cb.
 	 * @since      1.0.0
 	 * @author makewebbetter<webmaster@wpswings.com>
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 * @param array $item array of the items.
 	 */
 	public function column_cb( $item ) {
@@ -228,7 +228,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @since      1.0.0
 	 * @return array
 	 * @author makewebbetter<webmaster@wpswings.com>
-	 * @link http://www.makewebbetter.com/
+	 * @link https://www.wpswings.com/
 	 */
 	public function get_users_points() {
 		$args['meta_query'] = array(
