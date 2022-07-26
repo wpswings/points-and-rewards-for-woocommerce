@@ -148,7 +148,7 @@ $wps_wpr_general_settings = array(
 	),
 	array(
 		'title' => __( 'Enter Ways to Gain Points', 'points-and-rewards-for-woocommerce' ),
-		'type'  => 'textarea',
+		'type'  => 'custom_text_area',
 		'custom_attributes' => array(
 			'cols' => '"35"',
 			'rows' => '"5"',
@@ -244,7 +244,7 @@ if ( isset( $_POST['wps_wpr_save_general'] ) && isset( $_POST['wps-wpr-nonce'] )
 		if ( 'wps_wpr_general_setting' == $current_tab ) {
 
 			/* Save Settings and check is not empty*/
-			$postdata = map_deep( wp_unslash( $_POST ), 'sanitize_text_field' );
+			$postdata = $_POST;
 			$postdata = $settings_obj->check_is_settings_is_not_empty( $wps_wpr_general_settings, $postdata );
 			/* End of the save Settings and check is not empty*/
 			$general_settings_array = array();
@@ -315,6 +315,11 @@ endif;
 									$settings_obj->wps_rwpr_generate_number_html( $val, $general_settings );
 								}
 							}
+						}
+						if ( 'custom_text_area' == $value['type'] ) {
+							echo wp_kses_post( ' ' . $value['desc'] );
+							$settings_obj->wps_wpr_custom_editor( $value, $general_settings );
+							echo wp_kses_post( $value['desc2'] );
 						}
 						do_action( 'wps_wpr_additional_general_settings', $value, $general_settings );
 						?>
