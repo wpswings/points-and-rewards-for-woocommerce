@@ -63,7 +63,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.2.5' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.2.9' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -117,7 +117,7 @@ if ( $activated ) {
 	 * Dynamically Generate referral Code
 	 *
 	 * @name wps_wpr_create_referral_code
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_create_referral_code() {
@@ -145,7 +145,7 @@ if ( $activated ) {
 	 * Shortcode for the total points
 	 *
 	 * @name wps_wpr_mytotalpoint_shortcode
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_mytotalpoint_shortcode() {
@@ -166,7 +166,7 @@ if ( $activated ) {
 	 * Display your Current Level by using shortcode
 	 *
 	 * @name wps_wpr_mycurrentlevel_shortcode
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_mycurrentlevel_shortcode() {
@@ -189,7 +189,7 @@ if ( $activated ) {
 	 * Display the SIgnup Notification by using shortcode
 	 *
 	 * @name wps_wpr_signupnotif_shortcode
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_signupnotif_shortcode() {
@@ -249,7 +249,7 @@ if ( $activated ) {
 	 *
 	 * @name wps_wpr_set_the_wordpress_date_format
 	 * @param string $saved_date saved data in the WordPress formet.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_set_the_wordpress_date_format( $saved_date ) {
@@ -270,7 +270,7 @@ if ( $activated ) {
 		 *
 		 * @name array_key_first
 		 * @param array $arr optional parameter.
-		 * @author makewebbetter<ticket@makewebbetter.com>
+		 * @author WP Swings <webmaster@wpswings.com>
 		 * @link https://www.wpswings.com/
 		 */
 		function array_key_first( array $arr ) {
@@ -288,7 +288,7 @@ if ( $activated ) {
 	 *
 	 * @name wps_wpr_flush_rewrite_rules
 	 * @since 1.1.0.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	function wps_wpr_flush_rewrite_rules() {
@@ -554,7 +554,7 @@ if ( $activated ) {
 					$wps_par_pro_license_key = get_option( 'ultimate_woocommerce_points_and_rewards_lcns_key', '' );
 					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_LICENSE_KEY' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_LICENSE_KEY', $wps_par_pro_license_key );
 					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_BASE_FILE' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_BASE_FILE', 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' );
-					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION', '1.2.5' );
+					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION', '1.2.9' );
 				}
 				require_once $update_file;
 			}
@@ -594,7 +594,7 @@ if ( $activated ) {
 	}
 	if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-		$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.2.5' );
+		$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.2.9' );
 		$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
 		$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
 		$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );
@@ -677,7 +677,7 @@ if ( $activated ) {
 	 * This function is used to deactivate plugin.
 	 *
 	 * @name rewardeem_woocommerce_points_rewards_activation_failure
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure() {
@@ -692,7 +692,7 @@ if ( $activated ) {
 	 * This function is used to deactivate plugin.
 	 *
 	 * @name rewardeem_woocommerce_points_rewards_activation_failure
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure_admin_notice() {

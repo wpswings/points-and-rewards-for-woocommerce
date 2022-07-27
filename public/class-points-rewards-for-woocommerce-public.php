@@ -107,7 +107,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_get_general_settings
 	 * @since    1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param string $id of the array.
 	 */
@@ -126,7 +126,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @name wps_wpr_get_other_settings
 	 * @since    1.0.0
 	 * @param string $id id of the settings.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_get_other_settings( $id ) {
@@ -143,7 +143,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_get_general_settings
 	 * @since    1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param string $id  id of the general settings.
 	 */
@@ -161,7 +161,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_get_general_settings
 	 * @since    1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param string $id name of the settings.
 	 */
@@ -180,7 +180,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @name wps_wpr_get_other_settings_num
 	 * @since    1.0.0
 	 * @param string $id name of the settings.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_get_other_settings_num( $id ) {
@@ -198,7 +198,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @name wps_wpr_get_order_total_settings
 	 * @since    1.0.0
 	 * @param string $id name of the settings.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_get_order_total_settings( $id ) {
@@ -216,7 +216,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @name wps_wpr_get_order_total_settings
 	 * @since    1.0.0
 	 * @param string $id name of the settings.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_get_order_total_settings_num( $id ) {
@@ -233,7 +233,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_add_my_account_endpoint
 	 * @since    1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_add_my_account_endpoint() {
@@ -247,7 +247,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_points_dashboard
 	 * @since    1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $items array of the items.
 	 */
@@ -273,7 +273,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_account_points
 	 * @since    1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_account_points() {
@@ -294,7 +294,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_account_viewlog
 	 * @since    1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_account_viewlog() {
@@ -309,7 +309,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_get_referral_section
 	 * @since    1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int $user_id of the user.
 	 */
@@ -361,7 +361,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_allowed_html
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_allowed_html() {
@@ -406,7 +406,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_get_social_shraing_section
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int $user_id userid of the customer.
 	 */
@@ -427,6 +427,8 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( $enable_wps_social ) {
 
 			$content  = '';
+			$content2 = '';
+			$content3 = '';
 			$html_div = '<div class="wps_wpr_wrapper_button">';
 			$content  = $content . $html_div;
 			$share_button = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/twitter.png">' . __( 'Tweet', 'points-and-rewards-for-woocommerce' ) . '</a></div>';
@@ -505,7 +507,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_referral_link_using_cookie
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_referral_link_using_cookie() {
@@ -532,7 +534,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_new_customer_registerd
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int $customer_id  user id of the customer.
 	 */
@@ -613,7 +615,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_update_points_details
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int    $user_id  User id of the user.
 	 * @param string $type type of description.
@@ -693,26 +695,28 @@ class Points_Rewards_For_WooCommerce_Public {
 			update_user_meta( $user_id, 'points_details', $wps_points_sharing );
 		}
 		// Refund points per currency setting conversions.
-		if ( 'pro_conversion_points' == $type ) {
-			$get_referral_detail = get_user_meta( $user_id, 'points_details', true );
-			if ( isset( $get_referral_detail[ $type ] ) && ! empty( $get_referral_detail[ $type ] ) ) {
-				$custom_array = array(
-					$type => $points,
-					'date' => $today_date,
-					'refered_order_id' => $data['wps_par_order_id'],
-				);
-				$get_referral_detail[ $type ][] = $custom_array;
-			} else {
-				if ( ! is_array( $get_referral_detail ) ) {
-					$get_referral_detail = array();
+		if ( $points > 0 ) {
+			if ( 'pro_conversion_points' == $type ) {
+				$get_referral_detail = get_user_meta( $user_id, 'points_details', true );
+				if ( isset( $get_referral_detail[ $type ] ) && ! empty( $get_referral_detail[ $type ] ) ) {
+					$custom_array = array(
+						$type => $points,
+						'date' => $today_date,
+						'refered_order_id' => $data['wps_par_order_id'],
+					);
+					$get_referral_detail[ $type ][] = $custom_array;
+				} else {
+					if ( ! is_array( $get_referral_detail ) ) {
+						$get_referral_detail = array();
+					}
+					$get_referral_detail[ $type ][] = array(
+						$type => $points,
+						'date' => $today_date,
+						'refered_order_id' => $data['wps_par_order_id'],
+					);
 				}
-				$get_referral_detail[ $type ][] = array(
-					$type => $points,
-					'date' => $today_date,
-					'refered_order_id' => $data['wps_par_order_id'],
-				);
+				update_user_meta( $user_id, 'points_details', $get_referral_detail );
 			}
-			update_user_meta( $user_id, 'points_details', $get_referral_detail );
 		}
 		do_action( 'wps_wpr_update_points_log', $user_id );
 		return 'Successfully';
@@ -723,7 +727,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_update_points_details
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int    $user_id    User id of the user.
 	 * @param string $type    Type of the mail.
@@ -792,7 +796,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_check_mail_notfication_is_enable
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param string $id  key of the settings.
 	 */
@@ -807,7 +811,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_destroy_cookie
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_destroy_cookie() {
@@ -821,7 +825,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name check_enable_offer
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function check_enable_offer() {
@@ -840,7 +844,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since 1.0.0
 	 * @param int $order_id  order id of the order.
 	 * @param int $user_id   user id of the user.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function calculate_points( $order_id, $user_id ) {
@@ -917,7 +921,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_order_status_changed
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int    $order_id order  id of the order.
 	 * @param string $old_status  old status of the order.
@@ -1154,7 +1158,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_send_notification_mail_product
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int    $user_id  user id of the user.
 	 * @param int    $points  points of the user.
@@ -1194,7 +1198,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_signup_point
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_woocommerce_signup_point() {
@@ -1247,21 +1251,22 @@ class Points_Rewards_For_WooCommerce_Public {
 						if ( $get_min_redeem_req < $get_points ) {
 							?>
 							<div class="wps_wpr_apply_custom_points">
-							<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>"/>
-							<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0"><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
-							<p><?php esc_html_e( 'Your available points:', 'points-and-rewards-for-woocommerce' ); ?>
-							<?php echo esc_html( $get_points ); ?></p>
-						</div>	
+								<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>"/>
+								<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0"><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
+								<p><?php esc_html_e( 'Your available points:', 'points-and-rewards-for-woocommerce' ); ?>
+								<?php echo esc_html( $get_points ); ?></p>
+							</div>	
 							<?php
 						} else {
 							$extra_req = abs( $get_min_redeem_req - $get_points );
 							?>
 							<div class="wps_wpr_apply_custom_points">
-							<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
-							<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0" disabled><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
-							<p><?php esc_html_e( 'You require :', 'points-and-rewards-for-woocommerce' ); ?>
-							<?php echo esc_html( $extra_req ); ?></p>
-							<p><?php esc_html_e( 'more to get redeem', 'points-and-rewards-for-woocommerce' ); ?>
+								<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
+								<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0" disabled><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
+								<p><?php esc_html_e( 'You require :', 'points-and-rewards-for-woocommerce' ); ?>
+								<?php echo esc_html( $extra_req ); ?></p>
+								<p><?php esc_html_e( 'more to get redeem', 'points-and-rewards-for-woocommerce' ); ?></p>
+							</div>
 							<?php
 						}
 				}
@@ -1273,7 +1278,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_apply_fee_on_cart_subtotal
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_apply_fee_on_cart_subtotal() {
@@ -1304,7 +1309,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_cart_custom_points
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $cart  array of the cart.
 	 */
@@ -1456,7 +1461,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_before_cart_contents
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_woocommerce_before_cart_contents() {
@@ -1523,7 +1528,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name is_order_conversion_enabled
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function is_order_conversion_enabled() {
@@ -1540,7 +1545,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name order_conversion_rate
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function order_conversion_rate() {
@@ -1581,7 +1586,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_cart_totals_fee_html
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param string $cart_totals_fee_html html of the fees.
 	 * @param array  $fee array of the fees.
@@ -1602,7 +1607,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_remove_cart_point
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_remove_cart_point() {
@@ -1634,7 +1639,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_overwrite_form_temp
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param string $path path of the templates.
 	 * @param string $template_name name of the file.
@@ -1657,7 +1662,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_checkout_update_order_meta..
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int   $order_id id of the order.
 	 * @param array $data data of the order.
@@ -1721,7 +1726,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_checkout_update_order_meta.
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int    $user_id user id of the user.
 	 * @param string $type type of the mail.
@@ -1758,7 +1763,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_add_cart_item_data
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $the_cart_data array of the cart data.
 	 * @param int   $product_id id of the product.
@@ -1799,7 +1804,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_get_item_data
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $item_meta array of the meta item.
 	 * @param array $existing_item_meta array of the existing meta.
@@ -1828,7 +1833,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_display_product_points
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_display_product_points() {
@@ -1867,7 +1872,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_check_whether_product_is_variable
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $product arry of the whole product.
 	 */
@@ -1886,7 +1891,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_order_item_display_meta_key
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param string $display_key display key in the cart.
 	 */
@@ -1902,7 +1907,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_add_order_item_meta_version_3
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array  $item  array of the items.
 	 * @param string $cart_key  key of the cart.
@@ -1928,7 +1933,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_user_level_discount_on_price
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int   $price price of the product.
 	 * @param array $product_data product data of the product.
@@ -1992,7 +1997,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name check_exclude_sale_products
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $products array of the products all details.
 	 */
@@ -2014,7 +2019,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_woocommerce_before_calculate_totals
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $cart array of the cart.
 	 */
@@ -2117,7 +2122,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @name wps_update_cart_points
 	 * @since 1.0.0
 	 * @return array
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $cart_updated array of the update cart.
 	 */
@@ -2157,7 +2162,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @name wps_wpr_fee_tax_calculation
 	 * @since 1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $fee_taxes   taxes array.
 	 * @param array $fee   object array of the fee.
@@ -2180,7 +2185,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @name wps_wpr_add_coupon_form
 	 * @since 1.0.1
 	 * @param array $checkout  Array of the checkout.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://makewebbetter.com
 	 */
 	public function wps_wpr_add_coupon_form( $checkout ) {
@@ -2209,7 +2214,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @since 1.0.1
 	 * @name wps_wpr_display_apply_points_checkout
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://makewebbetter.com
 	 */
 	public function wps_wpr_display_apply_points_checkout() {
@@ -2266,7 +2271,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since 1.1.4
 	 * @name wps_wpr_custom_endpoint_query_vars
 	 * @param array $vars array.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://makewebbetter.com
 	 */
 	public function wps_wpr_custom_endpoint_query_vars( $vars ) {
@@ -2283,7 +2288,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param array  $query_vars array.
 	 * @param array  $wc_vars array.
 	 * @param object $obj array.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://makewebbetter.com
 	 */
 	public function wps_wpr_wpml_register_endpoint( $query_vars, $wc_vars, $obj ) {
@@ -2302,7 +2307,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @name wps_wpr_endpoint_permalink_filter
 	 * @param array  $endpoint array.
 	 * @param string $key string.
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://makewebbetter.com
 	 */
 	public function wps_wpr_endpoint_permalink_filter( $endpoint, $key ) {
@@ -3305,7 +3310,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 								<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['points_deduct_wallet'] ); ?></td>
 							</tr>
-							<?php
+								<?php
 							}
 							?>
 						</table></div>
@@ -3427,4 +3432,5 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		return ob_get_clean();
 	}
+
 }

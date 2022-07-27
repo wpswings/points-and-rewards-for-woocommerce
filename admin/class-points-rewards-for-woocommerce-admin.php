@@ -214,7 +214,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name wps_rwpr_admin_menu()
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_rwpr_admin_menu() {
@@ -250,7 +250,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 * @name wps_rwpr_admin_setting()
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_rwpr_admin_setting() {
@@ -264,7 +264,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_points_update
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_points_update() {
@@ -310,7 +310,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_update_points_details
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @param int    $user_id user id of the user.
 	 * @param string $type type of the points details.
 	 * @param int    $points points.
@@ -359,7 +359,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_update_points_details
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int    $user_id user id of the user.
 	 * @param string $type type of the points details.
@@ -398,7 +398,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_check_mail_notfication_is_enable
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public static function wps_wpr_check_mail_notfication_is_enable() {
@@ -416,7 +416,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_check_mail_notfication_is_enable
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int $id of the database array.
 	 */
@@ -431,7 +431,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_check_mail_notfication_is_enable
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int $id of the database array.
 	 */
@@ -446,7 +446,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_get_user_points
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int $user_id user id of the user.
 	 */
@@ -464,7 +464,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_select_category.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_select_category() {
@@ -508,7 +508,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_add_rule_for_membership.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $wps_wpr_membership_roles array of the user roles.
 	 */
@@ -533,7 +533,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name check_is_not_empty.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $value value of the database.
 	 */
@@ -546,7 +546,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_membership_role.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param int   $count count of the membership.
 	 * @param int   $key key of the array.
@@ -769,7 +769,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_add_membership_rule.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_add_membership_rule() {
@@ -787,7 +787,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_add_order_total_points.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $thankyouorder_min  array of the min satements.
 	 * @param array $thankyouorder_max array of the max rules.
@@ -847,7 +847,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_add_rule_for_membership.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param array $thankyouorder_min  array of the min satements.
 	 * @param array $thankyouorder_max array of the max rules.
@@ -887,7 +887,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to set cron if user want to get support.
 	 *
 	 * @since 1.0.7
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_check_for_notification_daily() {
@@ -906,7 +906,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to save notification message with notification id.
 	 *
 	 * @since 1.0.7
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_save_notice_message() {
@@ -924,7 +924,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to get notification data from server.
 	 *
 	 * @since 1.0.7
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_get_update_notification_data() {
@@ -956,7 +956,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * This function is used to display notoification bar at admin.
 	 *
 	 * @since 1.0.7
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_display_notification_bar() {
@@ -995,7 +995,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @name wps_wpr_dismiss_notice
 	 * @since 1.0.7
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_dismiss_notice() {
@@ -1013,7 +1013,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @param  array $valid_screens valid screen.
 	 * @since    1.0.7
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function add_wps_frontend_screens( $valid_screens = array() ) {
@@ -1031,7 +1031,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @param  array $valid_screens valid screen.
 	 * @since    1.0.7
-	 * @author makewebbetter<ticket@makewebbetter.com>
+	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
 	public function add_wps_deactivation_screens( $valid_screens = array() ) {
