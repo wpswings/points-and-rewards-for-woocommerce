@@ -1105,6 +1105,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 
+		// Applied points on cart refunded here.
 		$mwb_wpr_array = array( 'processing', 'on-hold', 'pending', 'completed' );
 		if ( in_array( $old_status, $mwb_wpr_array, true ) && ( 'cancelled' === $new_status || 'refunded' === $new_status ) ) {
 			$order         = wc_get_order( $order_id );
@@ -1151,6 +1152,291 @@ class Points_Rewards_For_WooCommerce_Public {
 				}
 			}
 		}
+
+		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+
+			$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
+			$mwb_wpr_array             = array( 'completed' );
+
+			// per currency refund here in org.
+			if ( in_array( $old_status, $mwb_wpr_array, true ) && ( 'cancelled' === $new_status || 'refunded' === $new_status ) ) {
+
+				if ( $this->is_order_conversion_enabled() ) {
+
+					$item_conversion_id_set = get_post_meta( $order_id, "$order_id#item_conversion_id", false );
+					$order_total            = $order->get_total();
+					$order_total            = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
+					$round_down_setting     = $this->wps_wpr_set_org_general_setting();
+
+					if ( isset( $item_conversion_id_set[0] ) && ! empty( $item_conversion_id_set[0] ) && 'set' == $item_conversion_id_set[0] ) {
+						$refund_per_currency_spend_points = get_post_meta( $order_id, "$order_id#refund_per_currency_spend_points", true );
+						if ( empty( $refund_per_currency_spend_points ) || 'yes' != $refund_per_currency_spend_points ) {
+
+							$get_points  = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+							$points_log  = get_user_meta( $user_id, 'points_details', true );
+							$all_refunds = $order->get_refunds();
+
+							/*total calculation of the points*/
+							$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
+							$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
+
+							/*Get the value of the price*/
+							$wps_wpr_coupon_conversion_price = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
+							$wps_wpr_coupon_conversion_price = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
+							$round_down_setting              = $this->wps_wpr_set_org_general_setting();
+
+							if ( array_key_exists( 'pro_conversion_points', $points_log ) ) {
+								foreach ( $points_log['pro_conversion_points'] as $key => $value ) {
+									if ( ! empty( $value['refered_order_id'] ) ) {
+										if ( $value['refered_order_id'] == $order_id ) {
+											$refund_amount = $value['pro_conversion_points'];
+										}
+									}
+								}
+							}
+
+							if ( 'wps_wpr_round_down' == $round_down_setting ) {
+								$refund_amount = floor( $refund_amount );
+							} else {
+								$refund_amount = ceil( $refund_amount );
+							}
+
+							$deduct_currency_spent = $refund_amount;
+							$remaining_points      = $get_points - $deduct_currency_spent;
+
+							if ( isset( $points_log['deduction_currency_spent'] ) && ! empty( $points_log['deduction_currency_spent'] ) ) {
+								$currency_arr = array();
+								$currency_arr = array(
+									'deduction_currency_spent' => $deduct_currency_spent,
+									'date' => $today_date,
+								);
+								$points_log['deduction_currency_spent'][] = $currency_arr;
+							} else {
+								$currency_arr = array();
+								$currency_arr = array(
+									'deduction_currency_spent' => $deduct_currency_spent,
+									'date' => $today_date,
+								);
+								$points_log['deduction_currency_spent'][] = $currency_arr;
+							}
+
+							update_user_meta( $user_id, 'wps_wpr_points', $remaining_points );
+							update_user_meta( $user_id, 'points_details', $points_log );
+							update_post_meta( $order_id, "$order_id#refund_per_currency_spend_points", 'yes' );
+
+							if ( is_array( $wps_wpr_notificatin_array ) && ! empty( $wps_wpr_notificatin_array ) ) {
+
+								$wps_wpr_email_subject     = ! empty( $wps_wpr_notificatin_array['wps_wpr_deduct_per_currency_point_subject'] ) ? $wps_wpr_notificatin_array['wps_wpr_deduct_per_currency_point_subject'] : '';
+								$wps_wpr_email_discription = ! empty( $wps_wpr_notificatin_array['wps_wpr_deduct_per_currency_point_description'] ) ? $wps_wpr_notificatin_array['wps_wpr_deduct_per_currency_point_description'] : '';
+								$wps_wpr_email_discription = str_replace( '[DEDUCTEDPOINT]', $deduct_currency_spent, $wps_wpr_email_discription );
+								$wps_wpr_email_discription = str_replace( '[TOTALPOINTS]', $remaining_points, $wps_wpr_email_discription );
+								$user                      = get_user_by( 'email', $user_email );
+								$user_name                 = $user->user_firstname;
+								$wps_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $wps_wpr_email_discription );
+
+								/*Check is points Email notification is enable*/
+								$check_enable = apply_filters( 'wps_wpr_check_custom_points_notification_enable', true, 'deduct_per_currency_spent_notification' );
+								if ( Points_Rewards_For_WooCommerce_Admin::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
+									$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
+									$email_status = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+								}
+							}
+						}
+					}
+				}
+
+				// refund global assign points here in org.
+				if ( isset( $order ) && ! empty( $order ) ) {
+					foreach ( $order->get_items() as $item_id => $item ) {
+
+						$item_quantity             = wc_get_order_item_meta( $item_id, '_qty', true );
+						$wps_wpr_items             = $item->get_meta_data();
+						$wps_product_id            = $item->get_product_id();
+						$wps_product_points_enable = get_post_meta( $wps_product_id, 'wps_product_points_enable', 'no' );
+						$deduction_of_points       = get_user_meta( $user_id, 'points_details', true );
+
+						foreach ( $wps_wpr_items as $key => $wps_wpr_value ) {
+							$wps_wpr_assign_products_points = get_option( 'wps_wpr_assign_products_points', true );
+							$wps_check_global_points_assign = $wps_wpr_assign_products_points['wps_wpr_global_product_enable'];
+
+							if ( '1' == $wps_check_global_points_assign ) {
+								if ( isset( $wps_wpr_value->key ) && ! empty( $wps_wpr_value->key ) && ( 'Points' == $wps_wpr_value->key ) ) {
+									$is_refunded = get_post_meta( $order_id, "$order_id#$item_id#refund_points", true );
+
+									if ( empty( $is_refunded ) || 'yes' != $is_refunded ) {
+
+										$get_points   = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+										$deduct_point = $wps_wpr_value->value;
+										$total_points = $get_points - $deduct_point;
+
+										if ( isset( $deduction_of_points['deduction_of_points'] ) && ! empty( $deduction_of_points['deduction_of_points'] ) ) {
+
+											$deduction_arr = array();
+											$deduction_arr = array(
+												'deduction_of_points' => $deduct_point,
+												'date' => $today_date,
+											);
+											$deduction_of_points['deduction_of_points'][] = $deduction_arr;
+										} else {
+											$deduction_arr = array();
+											$deduction_arr = array(
+												'deduction_of_points' => $deduct_point,
+												'date' => $today_date,
+											);
+											$deduction_of_points['deduction_of_points'][] = $deduction_arr;
+										}
+
+										update_user_meta( $user_id, 'wps_wpr_points', $total_points );
+										update_user_meta( $user_id, 'points_details', $deduction_of_points );
+										update_post_meta( $order_id, "$order_id#$item_id#refund_points", 'yes' );
+
+										if ( is_array( $wps_wpr_notificatin_array ) && ! empty( $wps_wpr_notificatin_array ) ) {
+
+											$wps_wpr_email_subject     = isset( $wps_wpr_notificatin_array['wps_wpr_deduct_assigned_point_subject'] ) ? $wps_wpr_notificatin_array['wps_wpr_deduct_assigned_point_subject'] : '';
+											$wps_wpr_email_discription = isset( $wps_wpr_notificatin_array['wps_wpr_deduct_assigned_point_desciption'] ) ? $wps_wpr_notificatin_array['wps_wpr_deduct_assigned_point_desciption'] : '';
+											$wps_wpr_email_discription = str_replace( '[DEDUCTEDPOINT]', $deduct_point, $wps_wpr_email_discription );
+											$wps_wpr_email_discription = str_replace( '[TOTALPOINTS]', $total_points, $wps_wpr_email_discription );
+											$user                      = get_user_by( 'email', $user_email );
+											$user_name                 = $user->user_firstname;
+											$wps_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $wps_wpr_email_discription );
+
+											/*check is mail notification is enable or not*/
+											$check_enable = apply_filters( 'wps_wpr_check_custom_points_notification_enable', true, 'deduct_assign_points_notification' );
+											if ( Points_Rewards_For_WooCommerce_Admin::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
+												$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
+												$email_status = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					// order total range points refund here ( min max ).
+					if ( $this->check_enable_offer() ) {
+						$this->wps_refund_order_total_point( $order_id );
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to refund order.
+	 *
+	 * @param int $order_id order id.
+	 * @return void
+	 */
+	public function wps_refund_order_total_point( $order_id ) {
+
+		$is_refunded = get_post_meta( $order_id, '$order_id#wps_point_on_order_total', true );
+		if ( ! isset( $is_refunded ) || 'yes' !== $is_refunded ) {
+
+			$today_date                = date_i18n( 'Y-m-d h:i:sa' );
+			$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
+
+			/*Get the minimum order total value*/
+			$thankyouorder_min = $this->wps_wpr_get_order_total_settings( 'wps_wpr_thankyouorder_minimum' );
+
+			/*Get the maxmimm order total value*/
+			$thankyouorder_max = $this->wps_wpr_get_order_total_settings( 'wps_wpr_thankyouorder_maximum' );
+
+			/*Get the order points value that will assigned to the user*/
+			$thankyouorder_value = $this->wps_wpr_get_order_total_settings( 'wps_wpr_thankyouorder_current_type' );
+			$order               = wc_get_order( $order_id );
+
+			/*Get the order total points*/
+			$order_total         = $order->get_total();
+			$user_id             = $order->get_user_id();
+			$get_points          = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+			$deduction_of_points = get_user_meta( $user_id, 'points_details', true );
+
+			/*Get the user*/
+			$user = get_user_by( 'ID', $user_id );
+
+			/*Get the user email*/
+			$user_email   = $user->user_email;
+			$total_points = 0;
+
+			if ( is_array( $thankyouorder_value ) && ! empty( $thankyouorder_value ) ) {
+				foreach ( $thankyouorder_value as $key => $value ) {
+					if (
+						isset( $thankyouorder_min[ $key ] ) && ! empty( $thankyouorder_min[ $key ] ) && isset( $thankyouorder_max[ $key ] ) &&
+						! empty( $thankyouorder_max[ $key ] )
+					) {
+
+						if (
+							$thankyouorder_min[ $key ] <= $order_total &&
+							$order_total <= $thankyouorder_max[ $key ]
+						) {
+							$wps_wpr_point = (int) $thankyouorder_value[ $key ];
+							$total_points  = $total_points + $wps_wpr_point;
+						}
+					} else if (
+						isset( $thankyouorder_min[ $key ] ) &&
+						! empty( $thankyouorder_min[ $key ] ) &&
+						empty( $thankyouorder_max[ $key ] )
+					) {
+						if ( $thankyouorder_min[ $key ] <= $order_total ) {
+							$wps_wpr_point = (int) $thankyouorder_value[ $key ];
+							$total_points  = $total_points + $wps_wpr_point;
+						}
+					}
+				}
+			}
+
+			$deduct_currency_spent = $total_points;
+			$remaining_points      = $get_points - $deduct_currency_spent;
+
+			if ( isset( $deduction_of_points['refund_points_on_order'] ) && ! empty( $deduction_of_points['refund_points_on_order'] ) ) {
+				$currency_arr = array();
+				$currency_arr = array(
+					'refund_points_on_order' => $deduct_currency_spent,
+					'date' => $today_date,
+				);
+				$deduction_of_points['refund_points_on_order'][] = $currency_arr;
+			} else {
+				$currency_arr = array();
+				$currency_arr = array(
+					'refund_points_on_order' => $deduct_currency_spent,
+					'date' => $today_date,
+				);
+				$deduction_of_points['refund_points_on_order'][] = $currency_arr;
+			}
+
+			update_user_meta( $user_id, 'wps_wpr_points', $remaining_points );
+			update_user_meta( $user_id, 'points_details', $deduction_of_points );
+			update_post_meta( $order_id, '$order_id#wps_point_on_order_total', 'yes' );
+
+			if ( is_array( $wps_wpr_notificatin_array ) && ! empty( $wps_wpr_notificatin_array ) ) {
+
+				$wps_wpr_email_subject     = isset( $wps_wpr_notificatin_array['wps_wpr_deduct_assigned_point_subject'] ) ? $wps_wpr_notificatin_array['wps_wpr_deduct_assigned_point_subject'] : '';
+				$wps_wpr_email_discription = isset( $wps_wpr_notificatin_array['wps_wpr_deduct_assigned_point_desciption'] ) ? $wps_wpr_notificatin_array['wps_wpr_deduct_assigned_point_desciption'] : '';
+				$wps_wpr_email_discription = str_replace( '[DEDUCTEDPOINT]', $deduct_currency_spent, $wps_wpr_email_discription );
+				$wps_wpr_email_discription = str_replace( '[TOTALPOINTS]', $remaining_points, $wps_wpr_email_discription );
+				$user                      = get_user_by( 'email', $user_email );
+				$user_name                 = $user->user_firstname;
+				$wps_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $wps_wpr_email_discription );
+
+				/*check is mail notification is enable or not*/
+				$check_enable = apply_filters( 'wps_wpr_check_custom_points_notification_enable', true, 'deduct_assign_points_notification' );
+				if ( Points_Rewards_For_WooCommerce_Admin::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
+					$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
+					$email_status = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+				}
+			}
+		}
+	}
+
+	/**
+	 * This Function returns a round_down setting.
+	 * Mwb_general_Setting function.
+	 */
+	public function wps_wpr_set_org_general_setting() {
+		$general_settings   = get_option( 'wps_wpr_settings_gallery' );
+		$round_down_setting = ! empty( $general_settings['wps_wpr_point_round_off'] ) ? $general_settings['wps_wpr_point_round_off'] : '';
+		return $round_down_setting;
 	}
 
 	/**
