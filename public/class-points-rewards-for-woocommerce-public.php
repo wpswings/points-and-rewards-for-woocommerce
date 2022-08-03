@@ -1800,7 +1800,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				<?php
 				esc_html_e( 'Conversion Rate: ', 'points-and-rewards-for-woocommerce' );
 				$allowed_tags = $this->wps_wpr_allowed_html();
-				echo esc_html( $order_conversion_rate['curr'] ) . esc_html( $order_conversion_rate['Points'] ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses_post( $order_conversion_rate['curr'] ) . wp_kses_post( $order_conversion_rate['Points'] ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				</p>
