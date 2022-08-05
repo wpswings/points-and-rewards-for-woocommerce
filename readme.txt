@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points, rewards, points and rewards, loyalty, loyalty program, woocommerce points and rewards, points rewards, reward system
 Requires at least: 5.1.0
-Tested up to: 6.0.0
+Tested up to: 6.0.1
 WC requires at least: 4.6.0
-WC tested up to: 6.6.1
-Stable tag: 1.2.8
+WC tested up to: 6.7
+Stable tag: 1.2.9
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -73,7 +73,7 @@ With the Points and Rewards for WooCommerce plugin, merchants can notify their c
 **6) WPML Multilingual Compatibility**
 The WooCommerce Rewards plugin is compatible with the WPML Multilingual plugin that allows you to reward your customers in your local language.
 
-Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-page&utm_campaign=par-doc) and learn more about the features and working of the plugin.
+Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-page&utm_campaign=par-doc) and learn more about the features and working of the reward plugin.
 
 == LIVE DEMO OF POINTS AND REWARDS PLUGIN ==
 * [**Points and Rewards Frontend Demo**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=par-org-page&utm_campaign=frontend-demo)
@@ -86,7 +86,7 @@ Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.wpswin
 * WooCommerce rewards plugin is compatible with [**Wallet System for WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**WooCommerce  Wallet System Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-page&utm_campaign=par-wallet) plugin. This compatibility allows you to convert your earned points into wallet credit based on a specific conversion rate. The admin can set points conversion into wallet credit he wants to allow. 
 For example, 10 points equal 2 wallet credits. Customers can later use this wallet credit for purchases in the store.
 
-* The Points and Rewards plugin is compatible with the WordPress Multilingual (WPML) plugin for localization of the rewards plugin’s strings.
+* WooCommerce store owners use the customer's loyalty points plugin is compatible with the WordPress Multilingual (WPML) plugin for localization of the rewards plugin’s strings.
 
 * WooCommerce points and reward plugin is compatible with PayPal for operating secure online payments.
 
@@ -207,6 +207,13 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 1.2.9 - Released on 05 August 2022 =
+* New: Option to redirect referral user on any page
+* New: Shortcode to show points log
+* Upgrade: Enhancement in Enter Ways to Gain Points settings
+* Upgrade: Enhancement in API
+* Fix: Minor Fixes.
+
 = 1.2.8 - Released on 29 June 2022 =
 * New: Minor Bug Fixes
 * New: Minor compatibility issue fixed
@@ -319,7 +326,11 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 1.2.8 - Released on 29 June 2022 =
-* New: Minor Bug Fixes
-* New: Minor compatibility issue fixed
-* New: Compatible with latest WP and WC
+= 1.2.9 - Released on 05 August 2022 =
+* New: Option to redirect referral user on any page
+* New: Shortcode to show points log
+* Upgrade: Enhancement in Enter Ways to Gain Points settings
+* Upgrade: Enhancement in API
+* Fix: Minor Fixes.
+
+

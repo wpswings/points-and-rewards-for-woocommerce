@@ -142,6 +142,40 @@ class Points_Rewards_For_WooCommerce_Settings {
 				<?php
 		}
 	}
+
+	/**
+	 * This function is used to create wp editor for way to gain points.
+	 *
+	 * @param array $value value.
+	 * @param array $general_settings general_settings.
+	 * @return void
+	 */
+	public function wps_wpr_custom_editor( $value, $general_settings ) {
+		if ( isset( $value['id'] ) && ! empty( $value['id'] ) ) {
+			$wps_gain_points_content = ! empty( $general_settings[ $value['id'] ] ) ? $general_settings[ $value['id'] ] : __( '[Refer Points] for Referral Points[Per Currency Spent Points] for Per currency spent points and[Per Currency Spent Price] for per currency spent price' );
+			$value_id                = array_key_exists( 'id', $value ) ? $value['id'] : '';
+			?>
+			<label for="<?php echo esc_html( $value_id ); ?>">
+				<?php
+				$content   = stripcslashes( $wps_gain_points_content );
+				$editor_id = $value_id;
+				$settings  = array(
+					'media_buttons'    => false,
+					'drag_drop_upload' => true,
+					'dfw'              => true,
+					'teeny'            => true,
+					'editor_height'    => 150,
+					'editor_class'     => 'wps_wpr_new_woo_ver_style_textarea',
+					'textarea_rows'    => 5,
+					'textarea_name'    => $value_id,
+				);
+					wp_editor( $content, $editor_id, $settings );
+				?>
+			</label>	
+			<?php
+		}
+	}
+
 	/**
 	 * This function is for generating for the Label for the Settings
 	 *
@@ -537,6 +571,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 			'desc1' => __( 'Use the shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level', 'points-and-rewards-for-woocommerce' ),
 			'desc2' => __( 'Use the shortcode [MYCURRENTPOINT] for displaying the current Points of Users', 'points-and-rewards-for-woocommerce' ),
 			'desc3' => __( 'Use the shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ),
+			'desc4' => __( 'Use the shortcode [SHOW_POINTS_LOG] for displaying points log anywhere on site', 'points-and-rewards-for-woocommerce' ),
 		);
 		return apply_filters( 'wps_wpr_show_shortcoe_text', $shortcode_array );
 	}

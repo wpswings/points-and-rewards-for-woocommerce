@@ -105,8 +105,9 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 wp_nonce_field( 'wps-wpr-nonce', 'wps-wpr-nonce' );
 if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-	$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.2.5' );
-	$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'pending' );
+	$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.2.9' );
+	$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
+	$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
 	$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );
 	$wps_count_users   = ! empty( $wps_count_users ) && is_array( $wps_count_users ) ? count( $wps_count_users ) : 0;
 	if ( 0 !== $wps_pending_par || 0 !== $wps_count_users ) {

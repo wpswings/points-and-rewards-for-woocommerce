@@ -73,7 +73,7 @@ $general_settings = get_option( 'wps_wpr_settings_gallery', true );
 $enable_wps_refer = isset( $general_settings['wps_wpr_general_refer_enable'] ) ? intval( $general_settings['wps_wpr_general_refer_enable'] ) : 0;
 $wps_refer_value = isset( $general_settings['wps_wpr_general_refer_value'] ) ? intval( $general_settings['wps_wpr_general_refer_value'] ) : 1;
 $wps_text_points_value = isset( $general_settings['wps_wpr_general_text_points'] ) ? $general_settings['wps_wpr_general_text_points'] : esc_html__( 'My Points', 'points-and-rewards-for-woocommerce' );
-$wps_ways_to_gain_points_value = isset( $general_settings['wps_wpr_general_ways_to_gain_points'] ) ? $general_settings['wps_wpr_general_ways_to_gain_points'] : '';
+$wps_ways_to_gain_points_value = ! empty( $general_settings['wps_wpr_general_ways_to_gain_points'] ) ? $general_settings['wps_wpr_general_ways_to_gain_points'] : __( '[Refer Points] for Referral Points[Per Currency Spent Points] for Per currency spent points and[Per Currency Spent Price] for per currency spent price' );
 // End Section of the Setings.
 // Get the General Settings.
 $membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
@@ -144,7 +144,7 @@ if ( isset( $wps_ways_to_gain_points_value ) && ! empty( $wps_ways_to_gain_point
 				$wps_ways_to_gain_points_value = str_replace( '[Refer Points]', $wps_refer_value, $wps_ways_to_gain_points_value );
 				$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $wps_per_currency_spent_points, $wps_ways_to_gain_points_value );
 				$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $wps_per_currency_spent_price, $wps_ways_to_gain_points_value );
-			echo '<fieldset class="wps_wpr_each_section">' . esc_html( $wps_ways_to_gain_points_value ) . '</fieldset>';
+				echo '<fieldset class="wps_wpr_each_section">' . wp_kses_post( $wps_ways_to_gain_points_value ) . '</fieldset>';
 			?>
 
 	</div>

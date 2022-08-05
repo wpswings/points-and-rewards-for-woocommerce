@@ -20,8 +20,8 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * @name Points_Log_List_Table
  * @since      1.0.0
  * @category Class
- * @author makewebbetter<ticket@makewebbetter.com>
- * @link https://www.makewebbetter.com/
+ * @author WP Swings <webmaster@wpswings.com>
+ * @link https://www.wpswings.com/
  */
 class Points_Log_List_Table extends WP_List_Table {
 	/**
@@ -44,8 +44,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 *
 	 * @name get_columns.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
 	 */
 	public function get_columns() {
 
@@ -68,12 +68,15 @@ class Points_Log_List_Table extends WP_List_Table {
 	 *
 	 * @name column_default.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
 	 * @param array  $item  array of the items.
 	 * @param string $column_name name of the colmn.
 	 */
 	public function column_default( $item, $column_name ) {
+
+		$wps_user = get_user_by( 'id', $item['id'] );
+		$points   = ! empty( get_user_meta( $item['id'], 'wps_wpr_points', true ) ) ? get_user_meta( $item['id'], 'wps_wpr_points', true ) : 0;
 
 		switch ( $column_name ) {
 
@@ -83,11 +86,11 @@ class Points_Log_List_Table extends WP_List_Table {
 
 				);
 				$actions = apply_filters( 'wps_add_coupon_details', $actions, $item['id'] );
-				return $item[ $column_name ] . $this->row_actions( $actions );
+				return $wps_user->user_nicename . $this->row_actions( $actions );
 			case 'user_email':
-				return '<b>' . $item[ $column_name ] . '</b>';
+				return '<b>' . $wps_user->user_email . '</b>';
 			case 'user_points':
-				return '<b>' . $item[ $column_name ] . '</b>';
+				return '<b>' . $points . '</b>';
 			case 'sign':
 				$html = '<select id="wps_sign' . $item['id'] . '" ><option value="+">+</option><option value="-">-</option></select>';
 				return $html;
@@ -110,8 +113,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 *
 	 * @name view_html.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
 	 * @param int $user_id  user id of the user.
 	 */
 	public function view_html( $user_id ) {
@@ -124,8 +127,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * Perform admin bulk action setting for points table.
 	 *
 	 * @name process_bulk_action.
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
 	 */
 	public function process_bulk_action() {
 
@@ -151,8 +154,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @name process_bulk_action.
 	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
@@ -167,8 +170,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @name get_sortable_columns.
 	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
 	 */
 	public function get_sortable_columns() {
 		$sortable_columns = array(
@@ -184,8 +187,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 *
 	 * @name prepare_items.
 	 * @since      1.0.0
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
 	 */
 	public function prepare_items() {
 		$per_page              = 10;
@@ -219,8 +222,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @name wps_wpr_usort_reorder.
 	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
 	 * @param array $cloumna column of the points.
 	 * @param array $cloumnb column of the points.
 	 */
@@ -249,8 +252,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @name column_cb.
 	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
 	 * @param array $item array of the items.
 	 */
 	public function column_cb( $item ) {
@@ -266,24 +269,27 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @name get_users_points.
 	 * @since      1.0.0
 	 * @return array
-	 * @author makewebbetter<ticket@makewebbetter.com>
-	 * @link https://www.makewebbetter.com/
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
 	 * @param int $current_page current page.
 	 * @param int $per_page no of pages.
 	 */
 	public function get_users_points( $current_page, $per_page ) {
-		$args['meta_query'] = array(
-			'relation' => 'OR',
-			array(
-				'key'     => 'wps_wpr_points',
-				'compare' => 'EXISTS',
-			),
-			array(
-				'key'     => 'wps_wpr_points',
-				'compare' => 'NOT EXISTS',
-
+		$args = array(
+			'fields'       => 'ID',
+			'meta_query'   => array(
+				'relation' => 'OR',
+				array(
+					'key'     => 'wps_wpr_points',
+					'compare' => 'EXISTS',
+				),
+				array(
+					'key'     => 'wps_wpr_points',
+					'compare' => 'NOT EXISTS',
+				),
 			),
 		);
+
 		$args['number'] = $per_page;
 		$args['offset'] = ( $current_page - 1 ) * $per_page;
 		if ( isset( $_REQUEST['s'] ) ) {
@@ -291,17 +297,13 @@ class Points_Log_List_Table extends WP_List_Table {
 			$args['search']     = '*' . $wps_request_search . '*';
 		}
 
-		$user_data        = new WP_User_Query( $args );
+		$user_data   = new WP_User_Query( $args );
 		$total_count = $user_data->get_total();
-		$user_data        = $user_data->get_results();
-		$points_data      = array();
+		$user_data   = $user_data->get_results();
+		$points_data = array();
 		foreach ( $user_data as $key => $value ) {
-			$poin = ! empty( get_user_meta( $value->ID, 'wps_wpr_points', true ) ) ? get_user_meta( $value->ID, 'wps_wpr_points', true ) : 0;
 			$points_data[] = array(
-				'id'          => $value->data->ID,
-				'user_name'   => $value->data->user_nicename,
-				'user_email'  => $value->data->user_email,
-				'user_points' => $poin,
+				'id' => $value,
 			);
 		}
 		$this->wps_total_count = $total_count;

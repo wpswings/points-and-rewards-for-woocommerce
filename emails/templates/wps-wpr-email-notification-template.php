@@ -5,7 +5,7 @@
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/wps-wpr-email-notification-template.php.
  *
  * @package    points-and-rewards-for-wooCommerce
- * @author  makewebbetter<ticket@makewebbetter.com>
+ * @author  WP Swings <webmaster@wpswings.com>
  * @since      1.0.8
  */
 

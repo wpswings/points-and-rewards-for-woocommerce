@@ -72,7 +72,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '1.0.8';
+			$this->version = '1.2.9';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -274,6 +274,9 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_cart_totals_coupon_label', $plugin_public, 'wps_wpr_filter_woocommerce_coupon_label', 10, 2 );
 			$this->loader->add_filter( 'woocommerce_cart_totals_coupon_html', $plugin_public, 'wps_wpr_par_virtual_coupon_remove', 30, 3 );
 			// Paypal Issue Change End.
+
+			// Shortcode to show points log.
+			$this->loader->add_action( 'plugins_loaded', $plugin_public, 'wps_wpr_shortocde_to_show_points_log' );
 		}
 	}
 
