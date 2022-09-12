@@ -677,9 +677,6 @@ font-weight: bold;
 .notice-image img {
     max-width: 50px;
 }
-img {
-    border: none;
-}
 .notice-content {
     margin-left: 15px;
 }

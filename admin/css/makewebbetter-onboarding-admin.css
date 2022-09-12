@@ -164,22 +164,22 @@
   width: 100%;
   max-width: inherit !important;
 }
-.select2-search-field {
+.wps_rwpr_main_template .select2-search-field {
   width: 100%;
 }
-.select2-search-choice {
+.wps_rwpr_main_template .select2-search-choice {
   background: #ffffff !important;
   box-shadow: none !important;
 }
-.select2-search-choice {
-  float: none !important
+.wps_rwpr_main_template .select2-search-choice {
+  float: none !important;
   padding: 10px !important;
   text-align: left;
 }
-.select2-search-choice div{
+.wps_rwpr_main_template .select2-search-choice div{
   margin-left: 20px;
 }
-.select2-search-choice-close {
+.wps_rwpr_main_template .select2-search-choice-close {
   left: 6px !important;
   top: 11px !important;
 }
@@ -197,7 +197,7 @@ input#s2id_autogen1 {
   font-family: inherit !important;
   font-size: 15px;
 }
-.select2-choices {
+.wps_rwpr_main_template .select2-choices {
   border:none !important;
 }
 .on-boarding-label:last-child {
@@ -292,19 +292,16 @@ input#s2id_autogen1 {
   float: right;
   margin: 20px 20px 0 0px;
 }
-.select2-search-choice {
+.wps_rwpr_main_template .select2-search-choice {
   padding: 10px !important;
 }
 .onboard-popup-body-control {
   overflow: hidden;
 }
-span.select2.select2-container.select2-container--default {
-    /* width: 100% !important; */
-}
-input.select2-search__field {
+.wps_rwpr_main_template input.select2-search__field {
     width: 100% !important;
 }
-li.select2-search.select2-search--inline {
+.wps_rwpr_main_template li.select2-search.select2-search--inline {
     width: 100% !important;
 }
 /*=====  End of WPS POPUP FORM CSS  ======*/
@@ -318,13 +315,13 @@ li.select2-search.select2-search--inline {
 .wps-form-single-field:nth-child(2) {
   width: 96%;
 }
-input#s2id_autogen1 {
+.wps_rwpr_main_template input#s2id_autogen1 {
   width: 100% !important;
 }
-input#s2id_autogen1 {
+.wps_rwpr_main_template input#s2id_autogen1 {
   width: 100% !important;
 }
-input[type="email"] {
+.wps_rwpr_main_template input[type="email"] {
   width: 99% !important;
 }
 select#how-you-use {
@@ -332,10 +329,10 @@ select#how-you-use {
   max-width: 100%;
   width: 100% !important;
 }
-input#s2id_autogen1 {
+.wps_rwpr_main_template input#s2id_autogen1 {
   width: 100%;
 }
-input[type="text"] {
+.wps_rwpr_main_template input[type="text"] {
     width: 99%;
   }
 } 
@@ -350,7 +347,7 @@ input[type="text"] {
     max-width: 97%;
     width: 100%;
   }
-  input[type="text"] {
+  .wps_rwpr_main_template input[type="text"] {
     width: 99%;
   }
 }
@@ -370,7 +367,7 @@ input[type="text"] {
     max-width: 100%;
     width: 100%;
   }
-  input[type="email"] {
+  .wps_rwpr_main_template input[type="email"] {
     width: 99% !important;
   }
   .wps-on-boarding-close-btn {
@@ -389,7 +386,7 @@ input[type="text"] {
     right: 25px;
     top: 32px;
   }
-  input[type="email"] {
+  .wps_rwpr_main_template input[type="email"] {
     width: 96% !important;
   }
   .wps-form-single-field:nth-child(2) {

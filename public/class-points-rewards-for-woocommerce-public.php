@@ -283,7 +283,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		}
 
 		$user_ID = get_current_user_ID();
-		$user = new WP_User( $user_ID );
+		$user    = new WP_User( $user_ID );
 
 		/* Include the template file in the woocommerce template*/
 		require plugin_dir_path( __FILE__ ) . 'partials/wps-wpr-points-template.php';
@@ -431,33 +431,30 @@ class Points_Rewards_For_WooCommerce_Public {
 			$content3 = '';
 			$html_div = '<div class="wps_wpr_wrapper_button">';
 			$content  = $content . $html_div;
-			$share_button = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/twitter.png">' . __( 'Tweet', 'points-and-rewards-for-woocommerce' ) . '</a></div>';
 
-			$fb_button = '<div id="fb-root"></div>
-			
-			<div class="fb-share-button wps_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">' . __( 'Share', 'points-and-rewards-for-woocommerce' ) . '</a></div>';
+			$twitter_share_button  = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/twitter.png">' . __( 'Tweet', 'points-and-rewards-for-woocommerce' ) . '</a></div>';
+			$facebook_share_button = '<div id="fb-root"></div><div class="fb-share-button wps_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">' . __( 'Share', 'points-and-rewards-for-woocommerce' ) . '</a></div>';
+			$mail_share_button     = '<a class="wps_wpr_mail_button wps_wpr_common_class" href="mailto:enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/email.png"></a>';
+			$email_share_button    = apply_filters( 'wps_mail_box', $content, $user_id );
+			$whatsapp_share_button = '<a target="_blank" class="wps_wpr_whatsapp_share" href="https://api.whatsapp.com/send?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . WPS_RWPR_DIR_URL . 'public/images/whatsapp.png"></a>';
 
-			$mail = '<a class="wps_wpr_mail_button wps_wpr_common_class" href="mailto:enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/email.png"></a>';
-			$maill = apply_filters( 'wps_mail_box', $content, $user_id );
-
-			$whatsapp = '<a target="_blank" class="wps_wpr_whatsapp_share" href="https://api.whatsapp.com/send?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . WPS_RWPR_DIR_URL . 'public/images/whatsapp.png"></a>';
 			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_facebook' ) == 1 ) {
 
-				$content = $content . $fb_button;
+				$content = $content . $facebook_share_button;
 			}
 			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_twitter' ) == 1 ) {
 
-				$content = $content . $share_button;
+				$content = $content . $twitter_share_button;
 			}
 			echo wp_kses_post( $content );
 
 			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_email' ) == 1 ) {
 
-				if ( $maill != $html_div ) {
-					$content2 = $maill;
+				if ( $email_share_button != $html_div ) {
+					$content2 = $email_share_button;
 
 				} else {
-					$content2 = $mail;
+					$content2 = $mail_share_button;
 				}
 			}
 			$allowed_html = array(
@@ -492,7 +489,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			echo wp_kses( $content2, $allowed_html );
 			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_whatsapp' ) == 1 ) {
 
-				$content3 = $whatsapp;
+				$content3 = $whatsapp_share_button;
 			}
 
 			$content3 = $content3 . '</div>';
@@ -930,21 +927,23 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
 		// mypos
 		// check allowed user for points features.
-
 		if ( $old_status != $new_status ) {
-			$points_key_priority_high = false;
-			$wps_wpr_one_email = false;
-			$item_points = 0;
-			$wps_wpr_assigned_points = true;
+			$points_key_priority_high              = false;
+			$wps_wpr_one_email                     = false;
+			$item_points                           = 0;
+			$wps_wpr_assigned_points               = true;
 			$conversion_points_is_enable_condition = true;
 			/*product assigned points*/
 			$wps_wpr_assigned_points = apply_filters( 'wps_wpr_assigned_points', $wps_wpr_assigned_points );
 			/*Get the conversion value of the coupon*/
 			$wps_wpr_coupon_conversion_enable = $this->is_order_conversion_enabled();
 			/*Get the order from the order id*/
-			$order = wc_get_order( $order_id );
+			$order   = wc_get_order( $order_id );
 			$user_id = absint( $order->get_user_id() );
-			$user = get_user_by( 'ID', $user_id );
+			if ( empty( $user_id ) || is_null( $user_id ) ) {
+				return;
+			}
+			$user    = get_user_by( 'ID', $user_id );
 			if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features_order', false, $user ) ) {
 				return;
 			}
@@ -983,11 +982,11 @@ class Points_Rewards_For_WooCommerce_Public {
 									if ( 'set' == $itempointsset ) {
 										continue;
 									}
-									$wps_wpr_points = (int) $wps_wpr_value->value;
-									$item_points += (int) $wps_wpr_points;
+									$wps_wpr_points    = (int) $wps_wpr_value->value;
+									$item_points       += (int) $wps_wpr_points;
 									$wps_wpr_one_email = true;
-									$product_id = $item->get_product_id();
-									$check_enable = get_post_meta( $product_id, 'wps_product_points_enable', 'no' );
+									$product_id        = $item->get_product_id();
+									$check_enable      = get_post_meta( $product_id, 'wps_product_points_enable', 'no' );
 									if ( 'yes' == $check_enable ) {
 										update_post_meta( $order_id, "$order_id#$wps_wpr_value->id#set", 'set' );
 									}
@@ -998,12 +997,12 @@ class Points_Rewards_For_WooCommerce_Public {
 							}
 						}
 						$wps_referral_purchase_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_referal_purchase_value' );
-						$order_total = $order->get_total();
-						$order_total = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
+						$order_total                 = $order->get_total();
+						$order_total                 = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
 
-						$wps_currency = get_post_meta( $order_id, '_order_currency', true );
+						$wps_currency       = get_post_meta( $order_id, '_order_currency', true );
 						$wps_default_symbol = get_option( 'woocommerce_currency' );
-						$order_total = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
+						$order_total        = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
 						if ( $wps_wpr_coupon_conversion_enable ) {
 							if ( $conversion_points_is_enable_condition || ! $points_key_priority_high ) {
 								/*Get*/
@@ -1013,30 +1012,25 @@ class Points_Rewards_For_WooCommerce_Public {
 									$user_id = $order->get_user_id();
 									$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 									/*total calculation of the points*/
-
-										$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
-										$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
-										$wps_wpr_coupon_conversion_price = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
-										$wps_wpr_coupon_conversion_price = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
+									$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
+									$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
+									$wps_wpr_coupon_conversion_price  = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
+									$wps_wpr_coupon_conversion_price  = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
 									// currency switcher.
-
 									$index = get_option( 'wps_mmcsfw_number_of_currency', '' );
 									if ( ! empty( $index ) ) {
 										for ( $wps_par_per_currency = 1; $wps_par_per_currency <= $index; $wps_par_per_currency++ ) {
 											if ( get_option( 'wps_mmcsfw_text_currency_' . $wps_par_per_currency ) == $wps_currency && get_option( 'woocommerce_currency' ) != $wps_currency ) {
-
-																$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_currency_' . $wps_par_per_currency . '_points' );
-																$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
-																$wps_wpr_coupon_conversion_price = $this->wps_wpr_get_coupon_settings_num( 'wps_mmcsfw_text_currency_' . $wps_par_per_currency );
-																$wps_wpr_coupon_conversion_price = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
+												$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_currency_' . $wps_par_per_currency . '_points' );
+												$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
+												$wps_wpr_coupon_conversion_price  = $this->wps_wpr_get_coupon_settings_num( 'wps_mmcsfw_text_currency_' . $wps_par_per_currency );
+												$wps_wpr_coupon_conversion_price  = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
 											}
 										}
 									}
-
 									/*Calculat points of the order*/
-
 									$points_calculation = ceil( ( $order_total * $wps_wpr_coupon_conversion_points ) / $wps_wpr_coupon_conversion_price );
-									$points_calculation  = apply_filters( 'wps_round_down_cart_total_value', $points_calculation, $order_total, $wps_wpr_coupon_conversion_points, $wps_wpr_coupon_conversion_price );
+									$points_calculation = apply_filters( 'wps_round_down_cart_total_value', $points_calculation, $order_total, $wps_wpr_coupon_conversion_points, $wps_wpr_coupon_conversion_price );
 									/*Total Point of the order*/
 									$total_points = intval( $points_calculation + $get_points );
 
@@ -1074,7 +1068,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					$get_product_points = get_post_meta( $product_id, 'wps_points_product_value', 1 );
 					$user_id = absint( $order->get_user_id() );
 					if ( ! empty( $user_id ) ) {
-						$user = get_user_by( 'ID', $user_id );
+						$user       = get_user_by( 'ID', $user_id );
 						$user_email = $user->user_email;
 						$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 						$product_detail_points = get_user_meta( $user_id, 'points_details', true );
@@ -1108,45 +1102,43 @@ class Points_Rewards_For_WooCommerce_Public {
 		// Applied points on cart refunded here.
 		$mwb_wpr_array = array( 'processing', 'on-hold', 'pending', 'completed' );
 		if ( in_array( $old_status, $mwb_wpr_array, true ) && ( 'cancelled' === $new_status || 'refunded' === $new_status ) ) {
-			$order         = wc_get_order( $order_id );
-			$user_id       = absint( $order->get_user_id() );
-			$pre_wps_check = get_post_meta( $order_id, 'refunded_points_by_cart', true );
-			if ( ! isset( $pre_wps_check ) || 'done' != $pre_wps_check ) {
-				$wps_points_log = get_user_meta( $user_id, 'points_details', true );
-				$wps_points_log = ! empty( $wps_points_log ) && is_array( $wps_points_log ) ? $wps_points_log : array();
-				if ( array_key_exists( 'cart_subtotal_point', $wps_points_log ) ) {
-					$today_date = date_i18n( 'Y-m-d h:i:sa' );
-					$wps_value_to_check = absint( get_post_meta( $order_id, 'wps_cart_discount#points', true ) );
-					foreach ( $wps_points_log['cart_subtotal_point'] as $key => $value ) {
+			$order          = wc_get_order( $order_id );
+			$user_id        = absint( $order->get_user_id() );
+			$wps_points_log = get_user_meta( $user_id, 'points_details', true );
+			$wps_points_log = ! empty( $wps_points_log ) && is_array( $wps_points_log ) ? $wps_points_log : array();
+			if ( array_key_exists( 'cart_subtotal_point', $wps_points_log ) ) {
+				$today_date         = date_i18n( 'Y-m-d h:i:sa' );
+				$wps_value_to_check = absint( get_post_meta( $order_id, 'wps_cart_discount#points', true ) );
+				foreach ( $wps_points_log['cart_subtotal_point'] as $key => $value ) {
+					$pre_wps_check = get_post_meta( $order_id, 'refunded_points_by_cart', true );
 
-						if ( ! isset( $pre_wps_check ) || 'done' != $pre_wps_check ) {
-							if ( $value['cart_subtotal_point'] == $wps_value_to_check ) {
-								$value_to_refund = $value['cart_subtotal_point'];
-								$wps_total_points_par = get_user_meta( $user_id, 'wps_wpr_points', true );
-								$wps_points_newly_updated = (int) ( $wps_total_points_par + $value_to_refund );
-								$wps_refer_deduct_points = get_user_meta( $user_id, 'points_details', true );
-								if ( isset( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) && ! empty( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) ) {
-									$wps_par_refund_purchase = array();
-									$wps_par_refund_purchase = array(
-										'refund_points_applied_on_cart' => $value_to_refund,
-										'date' => $today_date,
-									);
-									$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
-								} else {
-									if ( ! is_array( $wps_refer_deduct_points ) ) {
-										$wps_refer_deduct_points = array();
-									}
-									$wps_par_refund_purchase = array();
-									$wps_par_refund_purchase = array(
-										'refund_points_applied_on_cart' => $value_to_refund,
-										'date' => $today_date,
-									);
-									$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
+					if ( ! isset( $pre_wps_check ) || 'done' != $pre_wps_check ) {
+						if ( $value['cart_subtotal_point'] == $wps_value_to_check ) {
+							$value_to_refund = $value['cart_subtotal_point'];
+							$wps_total_points_par = get_user_meta( $user_id, 'wps_wpr_points', true );
+							$wps_points_newly_updated = (int) ( $wps_total_points_par + $value_to_refund );
+							$wps_refer_deduct_points = get_user_meta( $user_id, 'points_details', true );
+							if ( isset( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) && ! empty( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) ) {
+								$wps_par_refund_purchase = array();
+								$wps_par_refund_purchase = array(
+									'refund_points_applied_on_cart' => $value_to_refund,
+									'date' => $today_date,
+								);
+								$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
+							} else {
+								if ( ! is_array( $wps_refer_deduct_points ) ) {
+									$wps_refer_deduct_points = array();
 								}
-									update_user_meta( $user_id, 'wps_wpr_points', $wps_points_newly_updated );
-									update_user_meta( $user_id, 'points_details', $wps_refer_deduct_points );
-									update_post_meta( $order_id, 'refunded_points_by_cart', 'done' );
+								$wps_par_refund_purchase = array();
+								$wps_par_refund_purchase = array(
+									'refund_points_applied_on_cart' => $value_to_refund,
+									'date' => $today_date,
+								);
+								$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
 							}
+								update_user_meta( $user_id, 'wps_wpr_points', $wps_points_newly_updated );
+								update_user_meta( $user_id, 'points_details', $wps_refer_deduct_points );
+								update_post_meta( $order_id, 'refunded_points_by_cart', 'done' );
 						}
 					}
 				}

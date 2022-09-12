@@ -66,33 +66,33 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		}
 		if ( array_key_exists( 'refund_points_applied_on_cart', $point_log ) ) {
 			?>
-	<div class="wps_wpr_slide_toggle">
-		<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Apply Points of cart refunded after the order is canceled', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
-		<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
-		<table class="wps_wpr_common_table">
-			<thead>
-					<tr>
-						<th class="wps-wpr-view-log-Date">
-							<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
-						</th>
-						<th class="wps-wpr-view-log-Status">
-							<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
-						</th>
-					</tr>
-				</thead> 
+			<div class="wps_wpr_slide_toggle">
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Apply Points of cart refunded after the order is canceled', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+				<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+				<table class="wps_wpr_common_table">
+					<thead>
+							<tr>
+								<th class="wps-wpr-view-log-Date">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+								</th>
+								<th class="wps-wpr-view-log-Status">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								</th>
+							</tr>
+						</thead> 
+					<?php
+					foreach ( $point_log['refund_points_applied_on_cart'] as $key => $value ) {
+						?>
+						<tr>
+							<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
+							<td><?php echo '+' . esc_html( $value['refund_points_applied_on_cart'] ); ?></td>
+						</tr>
+						<?php
+					}
+					?>
+				</table>
+			</div>
 			<?php
-			foreach ( $point_log['refund_points_applied_on_cart'] as $key => $value ) {
-				?>
-				<tr>
-					<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
-					<td><?php echo '+' . esc_html( $value['refund_points_applied_on_cart'] ); ?></td>
-				</tr>
-				<?php
-			}
-			?>
-		</table>
-	</div>
-				<?php
 		}
 		if ( array_key_exists( 'Coupon_details', $point_log ) ) {
 			?>
@@ -754,33 +754,33 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		}
 		if ( array_key_exists( 'points_deduct_wallet', $point_log ) ) {
 			?>
-	<div class="wps_wpr_slide_toggle">
-	<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points Deduct to the wallet', 'points-and-rewards-for-woocommerce' ); ?>
-	<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
-	</p>
-	<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
-	<thead>
-	<tr valign="top">
-	<th scope="row" class="wps_wpr_head_titledesc">
-		<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
-	</th>
-	<th scope="row" class="wps_wpr_head_titledesc">
-		<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
-	</th>
-	</tr>
-	</thead>
-			<?php
-
-			foreach ( $point_log['points_deduct_wallet'] as $key => $value ) {
-				?>
-		<tr valign="top">
-		<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-		<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['points_deduct_wallet'] ); ?></td>
-		</tr>
-				<?php
-			}
-			?>
-		</table></div>
+			<div class="wps_wpr_slide_toggle">
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points Deduct to the wallet', 'points-and-rewards-for-woocommerce' ); ?>
+					<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+				</p>
+				<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
+					<thead>
+						<tr valign="top">
+						<th scope="row" class="wps_wpr_head_titledesc">
+							<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+						</th>
+						<th scope="row" class="wps_wpr_head_titledesc">
+							<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+						</th>
+						</tr>
+					</thead>
+					<?php
+						foreach ( $point_log['points_deduct_wallet'] as $key => $value ) {
+						?>
+						<tr valign="top">
+							<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+							<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['points_deduct_wallet'] ); ?></td>
+						</tr>
+							<?php
+						}
+					?>
+				</table>
+			</div>
 			<?php
 		}
 		if ( array_key_exists( 'reference_details', $point_log ) ) {
@@ -878,9 +878,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 
 				</table>
 			</div> 
-			
 			<?php
-
 		}
 		do_action( 'wps_points_on_first_order', $point_log );
 
@@ -893,7 +891,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 					<td></td>
 				</tr>        
 			</table>
-</div>
+		</div>
 		<?php
 	} else {
 		echo '<h3>' . esc_html__( 'No Points Generated Yet.', 'points-and-rewards-for-woocommerce' ) . '<h3>';
