@@ -1444,8 +1444,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param string $wps_wpr_subject_content  content of the shortcode.
 	 */
 	public function wps_wpr_send_notification_mail_product( $user_id, $points, $shortcode, $wps_wpr_subject_content ) {
-		$user = get_user_by( 'ID', $user_id );
-		$user_email = $user->user_email;
+		$user                      = get_user_by( 'ID', $user_id );
+		$user_email                = $user->user_email;
 		$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
 		/*check if not empty the notification array*/
 		if ( ! empty( $wps_wpr_notificatin_array ) && is_array( $wps_wpr_notificatin_array ) ) {

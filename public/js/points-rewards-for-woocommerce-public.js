@@ -236,7 +236,7 @@
 					function(){
 						var wps_wpr_confirm = confirm( wps_wpr.confirmation_msg );
 						if (wps_wpr_confirm) {
-							  $( document ).find( '#wps_wpr_upgrade_level' ).click();
+							$( document ).find( '#wps_wpr_upgrade_level' ).click();
 						}
 					}
 				);
