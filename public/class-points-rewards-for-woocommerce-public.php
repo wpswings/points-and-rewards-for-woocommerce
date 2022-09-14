@@ -1506,15 +1506,30 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_woocommerce_cart_coupon() {
-			// check allowed user for points features.
+		// get shortcode setting values.
+		$wps_wpr_other_settings                = get_option( 'wps_wpr_other_settings', array() );
+		$wps_wpr_other_settings                = ! empty( $wps_wpr_other_settings ) && is_array( $wps_wpr_other_settings ) ? $wps_wpr_other_settings : array();
+		$wps_wpr_cart_page_apply_point_section = ! empty( $wps_wpr_other_settings['wps_wpr_cart_page_apply_point_section'] ) ? $wps_wpr_other_settings['wps_wpr_cart_page_apply_point_section'] : '';
+		// check if shortcode is exist then return from here.
+		if ( '1' === $wps_wpr_cart_page_apply_point_section ) {
+			$content = get_the_content();
+			if ( ! empty( $content ) ) {
+				$shortcode = '[WPS_CART_PAGE_SECTION';
+				$check     = strpos( $content, $shortcode );
+				if ( true == $check ) {
+					return;
+				}
+			}
+		}
+		// check allowed user for points features.
 		if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
 			return;
 		}
-			/*Get the value of the custom points*/
-			$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+		/*Get the value of the custom points*/
+		$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
 		if ( 1 == $wps_wpr_custom_points_on_cart ) {
-			$user_id = get_current_user_ID();
-			$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+			$user_id            = get_current_user_ID();
+			$get_points         = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 			$get_min_redeem_req = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' );
 			if ( empty( $get_points ) ) {
 				$get_points = 0;
@@ -2496,6 +2511,21 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://makewebbetter.com
 	 */
 	public function wps_wpr_display_apply_points_checkout() {
+		// get shortcode setting values.
+		$wps_wpr_other_settings                    = get_option( 'wps_wpr_other_settings', array() );
+		$wps_wpr_other_settings                    = ! empty( $wps_wpr_other_settings ) && is_array( $wps_wpr_other_settings ) ? $wps_wpr_other_settings : array();
+		$wps_wpr_checkout_page_apply_point_section = ! empty( $wps_wpr_other_settings['wps_wpr_checkout_page_apply_point_section'] ) ? $wps_wpr_other_settings['wps_wpr_checkout_page_apply_point_section'] : '';
+		// check if shortcode is exist then return from here.
+		if ( '1' === $wps_wpr_checkout_page_apply_point_section ) {
+			$content = get_the_content();
+			if ( ! empty( $content ) ) {
+				$shortcode = '[WPS_CHECKOUT_PAGE_SECTION';
+				$check     = strpos( $content, $shortcode );
+				if ( true == $check ) {
+					return;
+				}
+			}
+		}
 		// check allowed user for points features.
 		if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
 			return;
@@ -3708,6 +3738,141 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 
+		return ob_get_clean();
+	}
+
+	/**
+	 * This function is used to register shortcode for WordPress pages.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_shortocde_to_show_apply_points_section() {
+		// get shortcode setting values.
+		$wps_wpr_other_settings                    = get_option( 'wps_wpr_other_settings', array() );
+		$wps_wpr_other_settings                    = ! empty( $wps_wpr_other_settings ) && is_array( $wps_wpr_other_settings ) ? $wps_wpr_other_settings : array();
+		$wps_wpr_cart_page_apply_point_section     = ! empty( $wps_wpr_other_settings['wps_wpr_cart_page_apply_point_section'] ) ? $wps_wpr_other_settings['wps_wpr_cart_page_apply_point_section'] : '';
+		$wps_wpr_checkout_page_apply_point_section = ! empty( $wps_wpr_other_settings['wps_wpr_checkout_page_apply_point_section'] ) ? $wps_wpr_other_settings['wps_wpr_checkout_page_apply_point_section'] : '';
+		// Shotcode to show apply points section on cart page.
+		if ( '1' === $wps_wpr_cart_page_apply_point_section ) {
+			add_shortcode( 'WPS_CART_PAGE_SECTION', array( $this, 'wps_wpr_create_apply_point_shotcode' ) );
+		}
+		// Shortcode to show apply points section on checkout page.
+		if ( '1' === $wps_wpr_checkout_page_apply_point_section ) {
+			add_shortcode( 'WPS_CHECKOUT_PAGE_SECTION', array( $this, 'wps_wpr_create_checkout_page_shortcode' ) );
+		}
+	}
+
+	/**
+	 * This function is used to create shortcode for apply points section on cart page.
+	 *
+	 * @return object
+	 */
+	public function wps_wpr_create_apply_point_shotcode() {
+		ob_start();
+
+		if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
+		// It only shows on cart page.
+		if ( is_cart() ) {
+			/*Get the value of the custom points*/
+			$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+			if ( 1 === $wps_wpr_custom_points_on_cart ) {
+				$user_id            = get_current_user_ID();
+				$get_points         = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+				$get_min_redeem_req = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' );
+
+				if ( empty( $get_points ) ) {
+					$get_points = 0;
+				}
+				if ( isset( $user_id ) && ! empty( $user_id ) ) {
+					$wps_wpr_order_points = apply_filters( 'wps_wpr_enable_points_on_order_total', false );
+					if ( $wps_wpr_order_points ) {
+						do_action( 'wps_wpr_points_on_order_total', $get_points, $user_id, $get_min_redeem_req );
+					} else {
+						?>
+						<?php
+						if ( $get_min_redeem_req < $get_points ) {
+							?>
+							<div class="wps_wpr_apply_custom_points">
+								<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>"/>
+								<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0"><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
+								<p><?php esc_html_e( 'Your available points:', 'points-and-rewards-for-woocommerce' ); ?>
+								<?php echo esc_html( $get_points ); ?></p>
+							</div>	
+							<?php
+						} else {
+							$extra_req = abs( $get_min_redeem_req - $get_points );
+							?>
+							<div class="wps_wpr_apply_custom_points">
+								<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
+								<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0" disabled><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
+								<p><?php esc_html_e( 'You require :', 'points-and-rewards-for-woocommerce' ); ?>
+								<?php echo esc_html( $extra_req ); ?></p>
+								<p><?php esc_html_e( 'more to get redeem', 'points-and-rewards-for-woocommerce' ); ?></p>
+							</div>
+							<?php
+						}
+					}
+				}
+			}
+		}
+		return ob_get_clean();
+	}
+
+	/**
+	 * This shortcode is used to show apply points section on checkout page.
+	 *
+	 * @return object
+	 */
+	public function wps_wpr_create_checkout_page_shortcode() {
+		ob_start();
+		// This shortoce only works on checkout page.
+		if ( is_checkout() ) {
+			// check allowed user for points features.
+			if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
+				return;
+			}
+			$user_id = get_current_user_ID();
+			if ( isset( $user_id ) && ! empty( $user_id ) ) {
+				if ( class_exists( 'Points_Rewards_For_WooCommerce_Public' ) ) {
+					$public_obj = new Points_Rewards_For_WooCommerce_Public( 'points-and-rewards-for-woocommerce', '1.0.0' );
+				}
+				$get_points         = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+				$get_min_redeem_req = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' );
+				/* Points Rate*/
+				$wps_wpr_cart_points_rate = $public_obj->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
+				$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+				/* Points Rate*/
+				$wps_wpr_cart_price_rate = $public_obj->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
+				$wps_wpr_cart_price_rate = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+				$conversion              = ( $get_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+
+				$wps_wpr_order_points = apply_filters( 'wps_wpr_enable_points_on_order_total', false );
+				if ( $wps_wpr_order_points ) {
+					do_action( 'wps_wpr_point_limit_on_order_checkout', $get_points, $user_id, $get_min_redeem_req );
+				} else {
+					if ( $get_min_redeem_req < $get_points ) {
+						?>
+					<div class="custom_point_checkout woocommerce-info wps_wpr_checkout_points_class">
+						<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>"/>
+						<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0"><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
+						<p><?php echo esc_html( $get_points ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( $conversion ), $this->wps_wpr_allowed_html() ); ?></p>
+					</div>
+						<?php
+					} else {
+						$extra_req = abs( $get_min_redeem_req - $get_points );
+						?>
+					<div class="custom_point_checkout woocommerce-info wps_wpr_checkout_points_class">
+						<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
+						<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0" disabled><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
+						<p><?php esc_html_e( 'You require :', 'points-and-rewards-for-woocommerce' ); ?> <?php echo esc_html( $extra_req ); ?> <?php esc_html_e( 'more points to get redeem', 'points-and-rewards-for-woocommerce' ); ?></p>
+					</div>
+						<?php
+					}
+				}
+			}
+		}
 		return ob_get_clean();
 	}
 

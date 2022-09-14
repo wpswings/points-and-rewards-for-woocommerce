@@ -277,6 +277,8 @@ class Points_Rewards_For_Woocommerce {
 
 			// Shortcode to show points log.
 			$this->loader->add_action( 'plugins_loaded', $plugin_public, 'wps_wpr_shortocde_to_show_points_log' );
+			// Shortcode to show apply points section.
+			$this->loader->add_action( 'plugins_loaded', $plugin_public, 'wps_wpr_shortocde_to_show_apply_points_section' );
 		}
 	}
 
