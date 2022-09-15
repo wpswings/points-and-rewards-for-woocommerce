@@ -192,16 +192,17 @@ if ( $wps_wpr_mem_enable ) {
 				if ( is_array( $wps_wpr_membership_roles ) && ! empty( $wps_wpr_membership_roles ) ) {
 					foreach ( $wps_wpr_membership_roles as $wps_role => $values ) {//phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 						if ( ! is_array( $values ) ) {
-									return;
+							return;
 						}
 						?>
 				<tr>
 					<td>
 						<?php
-							echo esc_html( $wps_role ) . '<br/><a class = "wps_wpr_level_benefits" data-id = "' . esc_html( $wps_role ) . '" href="javascript:;">' . esc_html__( 'View Benefits', 'points-and-rewards-for-woocommerce' ) . '</a>'; //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited,WordPress.WP.I18n.NonSingularStringLiteralText
+						$wps_member_name = strtolower( str_replace( ' ', '_', $wps_role ) );
+						echo esc_html( $wps_role ) . '<br/><a class = "wps_wpr_level_benefits" data-id = "' . esc_html( $wps_member_name ) . '" href="javascript:;">' . esc_html__( 'View Benefits', 'points-and-rewards-for-woocommerce' ) . '</a>'; //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited,WordPress.WP.I18n.NonSingularStringLiteralText
 						?>
 						</td>
-						<div class="wps_wpr_popup_wrapper wps_rwpr_settings_display_none" id="wps_wpr_popup_wrapper_<?php echo esc_html( $wps_role ); ?>">
+						<div class="wps_wpr_popup_wrapper wps_rwpr_settings_display_none" id="wps_wpr_popup_wrapper_<?php echo esc_html( $wps_member_name ); ?>">
 							<div class="wps_wpr_popup_content_section">
 								<div class="wps_wpr_popup_content">
 									<div class="wps_wpr_popup_notice_section">					
