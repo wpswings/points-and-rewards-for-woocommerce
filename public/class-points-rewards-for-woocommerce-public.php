@@ -2148,12 +2148,12 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( 'yes' == $check_enable ) {
 			if ( ! $product_is_variable ) {
 				$get_product_points = get_post_meta( $post->ID, 'wps_points_product_value', 1 );
-				echo '<span class=wps_wpr_product_point style=background-color:' . esc_html( $wps_wpr_notification_color ) . '>' . esc_html( $wps_wpr_assign_pro_text ) . ':' . esc_html( $get_product_points );
+				echo '<span class=wps_wpr_product_point style=background-color:' . esc_html( $wps_wpr_notification_color ) . '>' . esc_html( $wps_wpr_assign_pro_text ) . ' : ' . esc_html( $get_product_points );
 				esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' );
 				echo '</span>';
 			} elseif ( $product_is_variable ) {
 				$get_product_points = '<span class=wps_wpr_variable_points></span>';
-				echo '<span class=wps_wpr_product_point style="display:none;background-color:' . esc_html( $wps_wpr_notification_color ) . '">' . esc_html( $wps_wpr_assign_pro_text ) . ': ' . wp_kses_post( $get_product_points );
+				echo '<span class=wps_wpr_product_point style="display:none;background-color:' . esc_html( $wps_wpr_notification_color ) . '">' . esc_html( $wps_wpr_assign_pro_text ) . ' : ' . wp_kses_post( $get_product_points );
 				esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' );
 				echo '</span>';
 			}

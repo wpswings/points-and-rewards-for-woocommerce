@@ -29,28 +29,22 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 				$wps_wpr_assing_product_points['wps_wpr_global_product_enable'] = 1;
 				$wps_wpr_assing_product_points['wps_wpr_pro_points_to_all'] = $wps_wpr_pro_points_to_all;
 				if ( is_array( $wps_wpr_assing_product_points ) && ! empty( $wps_wpr_assing_product_points ) ) {
-
 					update_option( 'wps_wpr_assign_products_points', $wps_wpr_assing_product_points );
 				}
 				$args = array(
-					'post_type' => 'product',
+					'post_type'      => 'product',
 					'posts_per_page' => -1,
 				);
 				$loop = new WP_Query( $args );
 				foreach ( $loop->posts as $key => $value ) {
 					$product = wc_get_product( $value->ID );
 					if ( apply_filters( 'wps_wpr_is_variable_product', false, $product ) ) {
-
 						$parent_id = $product->get_id();
 						$parent_product = wc_get_product( $parent_id );
 						foreach ( $parent_product->get_children() as $child_id ) {
 
-
-
 							update_post_meta( $parent_id, 'wps_product_points_enable', 'yes' );
 							update_post_meta( $child_id, 'wps_wpr_variable_points', $wps_wpr_pro_points_to_all );
-
-
 						}
 					} else {
 						update_post_meta( $value->ID, 'wps_product_points_enable', 'yes' );
