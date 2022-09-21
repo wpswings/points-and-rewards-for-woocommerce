@@ -2938,7 +2938,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_create_checkout_page_shortcode() {
 		ob_start();
 		// This shortoce only works on checkout page.
-		if ( is_checkout() ) {
+		if ( is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
 			// check allowed user for points features.
 			if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
 				return;
