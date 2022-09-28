@@ -1994,6 +1994,9 @@ class Points_Rewards_For_WooCommerce_Public {
 							$fee_to_point = ceil( ( $wps_wpr_cart_points_rate * $coupon_amount ) / $wps_wpr_cart_price_rate );
 							$fee_to_point  = apply_filters( 'wps_round_down_cart_total_value_amount', $fee_to_point, $wps_wpr_cart_points_rate, $coupon_amount, $wps_wpr_cart_price_rate );
 							$remaining_point = $get_points - $fee_to_point;
+							if ( $remaining_point < 0 ) {
+								$remaining_point = 0;
+							}
 							/*update the users points in the*/
 							update_user_meta( $user_id, 'wps_wpr_points', $remaining_point );
 							$data = array();
