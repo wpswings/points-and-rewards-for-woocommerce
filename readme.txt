@@ -221,7 +221,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 * Fix: String translation issues
 * Fix: Applied points goes in negative
 
-= 1.2.9 - Released on 05 August 2022 =
+= 1.2.10 - Released on 05 August 2022 =
 * New: Option to redirect referral user on any page
 * New: Shortcode to show points log
 * Upgrade: Enhancement in Enter Ways to Gain Points settings
