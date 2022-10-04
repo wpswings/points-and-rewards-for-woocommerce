@@ -1,7 +1,3 @@
-img {
-    max-width: 100%;
-    height: auto;
-}
 
 .wps-overview__banner {
     margin-bottom: 50px;
@@ -31,7 +27,7 @@ img {
     border-radius: 8px;
     padding: 10px;
     max-width: calc(50% - 15px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0,0.25);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
     margin-bottom: 30px;
 }
 
@@ -39,17 +35,102 @@ img {
     margin-right: 30px;
 }
 
-.wps-overview__keywords-image {
-    max-width: 200px;
-    margin: 0 auto;
-}
-.wps_youtube iframe  {
-    margin-left: -75px;
+.wps-overview__wrapper img {
+    width: 100%;
+    height: auto;
 }
 
-@media only screen and (max-width: 768px){
+.wps-overview__keywords-image {
+    max-width: 200px;
+    margin: 0;
+}
+
+.wps_youtube iframe {
+    width: 100%;
+}
+
+.wps-overview__keywords-image.wps_youtube {
+    margin: 0 auto;
+    max-width: unset;
+}
+
+@media only screen and (max-width: 768px) {
     .wps-overview__keywords-item {
         margin-right: 0;
         max-width: 100%;
+    }
+}
+
+/* Fixing design Fixes */
+
+#wps_rwpr_setting_wrapper input[type="checkbox"],
+#wps_rwpr_setting_wrapper input[type="radio"] {
+    width: 25px;
+    height: 25px;
+    position: relative;
+}
+
+#wps_wpr_coupon_conversion_points,
+#wps_wpr_coupon_conversion_price,
+#wps_wpr_coupon_redeem_price,
+#wps_wpr_product_purchase_price,
+#wps_wpr_cart_price_rate,
+.wps_rwpr_main_template input[type=number] {
+    max-width: 120px;
+}
+
+.wps_rwpr_main_template .woocommerce-help-tip+br {
+    display: none;
+}
+
+#wps_rwpr_setting_wrapper h3 {
+    line-height: 28px;
+    margin: 0;
+}
+
+.wps_wpr_pro_points_setting input[type=number] {
+    width: 100%;
+    max-width: unset;
+}
+
+#wps_rwpr_setting_wrapper input[type="checkbox"]:before {
+    font: normal 22px/1 dashicons;
+    width: 35px;
+    height: 35px;
+    margin: -5px 0 0 -7px;
+}
+
+@media only screen and (max-width: 782px) {
+    #wps_rwpr_setting_wrapper input[type="checkbox"]:before {
+        font: normal 22px/1 dashicons;
+        width: 25px;
+        height: 25px;
+        margin: -5px 0 0 -7px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+
+    #wps_wpr_coupon_conversion_points,
+    #wps_wpr_coupon_conversion_price,
+    #wps_wpr_coupon_redeem_price,
+    #wps_wpr_product_purchase_price,
+    #wps_wpr_cart_price_rate,
+    .wps_rwpr_main_template input[type=number] {
+        max-width: 80px;
+    }
+
+    .wps_rwpr_header_content_right {
+        padding: 10px;
+    }
+
+    .wps_rwpr_header_content_right .wps_wpr_get_pro {
+        display: block;
+        margin: 15px 0 0;
+    }
+
+    .wps_wpr_pro_points_setting input[type=number] {
+        width: 100%;
+        max-width: unset;
     }
 }

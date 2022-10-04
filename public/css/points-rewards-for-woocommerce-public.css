@@ -282,12 +282,6 @@
     visibility: visible
 }
 
-body,
-html {
-    margin: 0;
-    padding: 0
-}
-
 .wps_wpr_popup_wrapper {
     background-color: rgba(0, 0, 0, .41);
     height: 100%;
@@ -651,11 +645,6 @@ html {
     transform: translateY(-50%)
 }
 
-.high {
-    font-weight: 700;
-    margin-right: 5px
-}
-
 #wps_wpr_order_notice::before {
     content: ""
 }
@@ -684,7 +673,7 @@ html {
     margin-bottom: 0
 }
 
-.shop_table.cart .coupon .input-text {
+#wps_wpr_order_notice+.shop_table.cart .coupon .input-text {
     width: auto;
     max-width: 170px
 }
@@ -698,7 +687,6 @@ html {
     box-shadow: none!important;
     border: 0;
     font-size: 18px;
-    vertical-align: top;
     margin: 0;
     max-width: 170px;
     margin-right: 5px
@@ -720,7 +708,6 @@ html {
 }
 
 .custom_point_checkout #wps_cart_points_apply {
-    float: left;
     margin-left: 10px
 }
 
@@ -761,14 +748,14 @@ html {
         margin-left: 0;
         margin-top: 20px
     }
-    .shop_table.cart .coupon .input-text {
+    #wps_wpr_order_notice+.shop_table.cart .coupon .input-text {
         width: 100%!important;
         max-width: 100%!important
     }
-    .shop_table.cart .coupon .button {
+    #wps_wpr_order_notice+.shop_table.cart .coupon .button {
         width: 100%
     }
-    .shop_table.cart .actions .button {
+    #wps_wpr_order_notice+.shop_table.cart .actions .button {
         width: 100%
     }
     .shop_table.cart .wps_wpr_apply_custom_points #wps_cart_points {
@@ -776,6 +763,11 @@ html {
     }
     .shop_table.cart .wps_wpr_apply_custom_points .button {
         width: 100%!important
+    }
+    .shop_table.cart .wps_wpr_apply_custom_points #wps_cart_points {
+        width: 100%!important;
+        max-width: unset;
+        margin-bottom: 10px;
     }
 }
 
@@ -799,11 +791,9 @@ html {
     table-layout: fixed
 }
 
-#wps_cart_points_apply ~ p {
-    float: left;
+#wps_cart_points_apply + p {
     width: 100%;
     margin-bottom: 0;
-    text-align: left
 }
 .wps_wpr_checkout_points_class::after {
 
@@ -815,7 +805,6 @@ html {
 .custom_point_checkout #wps_cart_points {
     padding: 10px 10px;
     width: 135px;
-    float: left
 }
 
 .wps_wpr_avada_wrap .custom_point_checkout.woocommerce-info:before {
@@ -854,4 +843,36 @@ html {
 
 .wps_wpr_common_table thead th {
     padding: 0px 24px;
+}
+
+input#wps_cart_points {
+    min-height: 30px;
+    font-size: 16px;
+    padding: 8px 5px;
+    max-width: 200px;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+    float: unset;
+}
+button#wps_cart_points_apply {
+    min-height: 30px;
+    font-size: 16px;
+    vertical-align: middle;
+    float: unset;
+}
+button#wps_cart_points_apply+p {
+    color: rgb(99, 97, 97);
+    font-size: 14px;
+}
+
+@media screen and (max-width: 420px) {
+    .custom_point_checkout #wps_cart_points {
+        width: 180px;
+    }
+    
+    .custom_point_checkout #wps_cart_points_apply {
+        margin-left: 0;
+        margin-top: 10px;
+    }
 }

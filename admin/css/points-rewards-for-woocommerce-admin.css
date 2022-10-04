@@ -79,7 +79,6 @@
   width: 16px;
   height: 16px;
   position: relative;
-  /*z-index: 111;*/
 }
 
 #wps_rwpr_setting_wrapper .wps_rwpr_pro_version_wrapper .wps_rwpr_about_pro_version {
@@ -544,10 +543,6 @@
 a.wps_gw_nav_tab.nav-tab {
 	white-space: unset;
 }
-/*.woocommerce table.form-table .wps_wpr_repeatable_section .select2-container {
-	min-width: auto !important;
-	width: auto !important;
-}*/
 
 @media screen and (max-width: 675px) {
   .wps_rwpr_header_content_left,
@@ -676,9 +671,6 @@ font-weight: bold;
 }
 .notice-image img {
     max-width: 50px;
-}
-img {
-    border: none;
 }
 .notice-content {
     margin-left: 15px;

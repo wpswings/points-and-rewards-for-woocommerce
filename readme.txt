@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points, rewards, points and rewards, loyalty, loyalty program, woocommerce points and rewards, points rewards, reward system
 Requires at least: 5.1.0
-Tested up to: 6.0.1
-WC requires at least: 4.6.0
-WC tested up to: 6.7
-Stable tag: 1.2.9
+Tested up to: 6.0.2
+WC requires at least: 5.1.0
+WC tested up to: 6.9.4
+Stable tag: 2.0.0
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -88,7 +88,10 @@ For example, 10 points equal 2 wallet credits. Customers can later use this wall
 
 * WooCommerce store owners use the customer's loyalty points plugin is compatible with the WordPress Multilingual (WPML) plugin for localization of the rewards plugin’s strings.
 
-* WooCommerce points and reward plugin is compatible with PayPal for operating secure online payments.
+* WooCommerce points and reward plugin is compatible with [**WooCommerce PayPal Payment**](https://wordpress.org/plugins/woocommerce-paypal-payments/) for operating secure online payments.
+
+* [**Elementor Page Builder**](https://wordpress.org/plugins/elementor/) is compatible with the Points and Rewards for WooCommerce plugin. This compatibility lets you use Elementor’s capabilities to add “apply points” snippets to the cart page and checkout page efficiently.
+
 
 == WHAT PREMIUM VERSION OF WOOCOMMERCE POINTS AND REWARDS OFFERS == 
 
@@ -207,7 +210,18 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 1.2.9 - Released on 05 August 2022 =
+= 2.0.0 - Released on 30 September 2022 =
+* New: Shortcode to show Apply Points section on Cart Page.
+* New: Shortcode to show Apply Points section on Checkout Page
+* New: Compatible with latest WC 6.9.4 and WP 6.0.2
+* Upgrade: Change Mesaage on popup modal when referral purchase type selected as percentage.
+* Upgrade: Enhance sorting in points table
+* Upgrade: Update view points log on admin panel
+* Fix: When order is cancel it refund more than one time
+* Fix: String translation issues
+* Fix: Applied points goes in negative
+
+= 1.2.10 - Released on 05 August 2022 =
 * New: Option to redirect referral user on any page
 * New: Shortcode to show points log
 * Upgrade: Enhancement in Enter Ways to Gain Points settings
@@ -326,11 +340,15 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 1.2.9 - Released on 05 August 2022 =
-* New: Option to redirect referral user on any page
-* New: Shortcode to show points log
-* Upgrade: Enhancement in Enter Ways to Gain Points settings
-* Upgrade: Enhancement in API
-* Fix: Minor Fixes.
+= 2.0.0 - Released on 30 September 2022 =
+* New: Shortcode to show Apply Points section on Cart Page.
+* New: Shortcode to show Apply Points section on Checkout Page
+* New: Compatible with latest WC 6.9.4 and WP 6.0.2
+* Upgrade: Change Mesaage on popup modal when referral purchase type selected as percentage.
+* Upgrade: Enhance sorting in points table
+* Upgrade: Update view points log on admin panel
+* Fix: When order is cancel it refund more than one time
+* Fix: String translation issues
+* Fix: Applied points goes in negative
 
 

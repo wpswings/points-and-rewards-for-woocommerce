@@ -107,7 +107,6 @@ jQuery(document).ready( function($) {
 				Swal.fire(' All of the Data are Migrated Successfully !', '', 'success').then(() => {
 					window.location.reload();
 				});
-				// location.reload();
 			}
 		}, function(error) {
 			console.error(error);
