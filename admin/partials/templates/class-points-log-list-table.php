@@ -189,8 +189,8 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @return array
 	 */
 	public function wps_wpr_sort_user_table( $data ) {
+		$points_data = array();
 		if ( ! empty( $data ) ) {
-			$points_data = array();
 			foreach ( $data as $sort_id ) {
 				$user          = get_userdata( $sort_id['id'] );
 				$points        = get_user_meta( $sort_id['id'], 'wps_wpr_points', true );
