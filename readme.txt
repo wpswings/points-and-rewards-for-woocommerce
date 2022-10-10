@@ -6,7 +6,7 @@ Requires at least: 5.1.0
 Tested up to: 6.0.2
 WC requires at least: 5.1.0
 WC tested up to: 6.9.4
-Stable tag: 2.0.0
+Stable tag: 1.2.11
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -210,7 +210,11 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 2.0.0 - Released on 30 September 2022 =
+= 1.2.11 - Released on 10 October 2022 =
+* New: Compatible with latest WC & WP
+* Upgrade: Enhance search in points table
+
+= 1.2.10 - Released on 30 September 2022 =
 * New: Shortcode to show Apply Points section on Cart Page.
 * New: Shortcode to show Apply Points section on Checkout Page
 * New: Compatible with latest WC 6.9.4 and WP 6.0.2
@@ -221,7 +225,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 * Fix: String translation issues
 * Fix: Applied points goes in negative
 
-= 1.2.11 - Released on 05 August 2022 =
+= 1.2.9 - Released on 05 August 2022 =
 * New: Option to redirect referral user on any page
 * New: Shortcode to show points log
 * Upgrade: Enhancement in Enter Ways to Gain Points settings
@@ -340,15 +344,9 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.0.0 - Released on 30 September 2022 =
-* New: Shortcode to show Apply Points section on Cart Page.
-* New: Shortcode to show Apply Points section on Checkout Page
-* New: Compatible with latest WC 6.9.4 and WP 6.0.2
-* Upgrade: Change Mesaage on popup modal when referral purchase type selected as percentage.
-* Upgrade: Enhance sorting in points table
-* Upgrade: Update view points log on admin panel
-* Fix: When order is cancel it refund more than one time
-* Fix: String translation issues
-* Fix: Applied points goes in negative
+= 1.2.11 - Released on 10 October 2022 =
+* New: Compatible with latest WC & WP
+* Upgrade: Enhance search in points table
+
 
 
