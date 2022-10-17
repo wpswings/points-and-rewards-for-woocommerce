@@ -6,7 +6,7 @@ Requires at least: 5.1.0
 Tested up to: 6.0.2
 WC requires at least: 5.1.0
 WC tested up to: 6.9.4
-Stable tag: 1.2.11
+Stable tag: 1.2.12
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -210,7 +210,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 1.2.11 - Released on 10 October 2022 =
+= 1.2.12 - Released on 10 October 2022 =
 * New: Compatible with latest WC & WP
 * Upgrade: Enhance search in points table
 
@@ -344,7 +344,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 1.2.11 - Released on 10 October 2022 =
+= 1.2.12 - Released on 10 October 2022 =
 * New: Compatible with latest WC & WP
 * Upgrade: Enhance search in points table
 
