@@ -159,7 +159,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
-			'bulk-delete' => __( 'Delete', 'points-and-rewards-for-woocommerce' ),
+			'bulk-delete' => __( 'Reset Points', 'points-and-rewards-for-woocommerce' ),
 		);
 		return apply_filters( 'wps_wpr_points_log_bulk_option', $actions );
 	}
