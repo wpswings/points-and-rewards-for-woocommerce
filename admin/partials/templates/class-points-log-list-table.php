@@ -434,6 +434,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 										$wps_split   = explode( '#', $key );
 										$column_name = get_post_meta( $wps_split[1], 'coupon_amount', true );
 										echo esc_html( get_woocommerce_currency_symbol() ) . esc_html( $column_name );
+									} elseif ( 'camount' == $column_id ) {
+										$wps_split   = explode( '#', $key );
+										$column_name = get_post_meta( $wps_split[1], 'wps_coupon_static_amount', true );
+										echo esc_html( get_woocommerce_currency_symbol() ) . esc_html( $column_name );
 									} elseif ( 'expiry' == $column_id ) {
 										if ( WC()->version < '3.0.6' ) {
 
