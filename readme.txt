@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points, rewards, points and rewards, loyalty, loyalty program, woocommerce points and rewards, points rewards, reward system
 Requires at least: 5.1.0
-Tested up to: 6.0.2
+Tested up to: 6.1
 WC requires at least: 5.1.0
-WC tested up to: 6.9.4
-Stable tag: 1.2.11
+WC tested up to: 7.0.0
+Stable tag: 1.2.12
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -112,6 +112,7 @@ For example, 10 points equal 2 wallet credits. Customers can later use this wall
 * Multilevel Order Total Points
 * Round-Up and Round Down Reward Points
 * Email Modification For Referral Coupon Code Template
+* Export Points Table
 
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE LOYALTY POINTS AND REWARDS PLUGIN ==
@@ -209,6 +210,13 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 1.2.12 - Released on 28 October 2022 =
+* New: Compatible with latest WC & WP
+* Fix: Static Referral Link are not changeable 
+* Fix: String translation issues
+* Fix: Assigned Membership role are not removed from user account
+
 
 = 1.2.11 - Released on 10 October 2022 =
 * New: Compatible with latest WC & WP
@@ -344,9 +352,11 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 1.2.11 - Released on 10 October 2022 =
+= 1.2.12 - Released on 28 October 2022 =
 * New: Compatible with latest WC & WP
-* Upgrade: Enhance search in points table
+* Fix: Static Referral Link are not changeable 
+* Fix: String translation issues
+* Fix: Assigned Membership role are not removed from user account
 
 
 

@@ -159,7 +159,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
-			'bulk-delete' => __( 'Delete', 'points-and-rewards-for-woocommerce' ),
+			'bulk-delete' => __( 'Reset Points', 'points-and-rewards-for-woocommerce' ),
 		);
 		return apply_filters( 'wps_wpr_points_log_bulk_option', $actions );
 	}
@@ -433,6 +433,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									if ( 'left' == $column_id ) {
 										$wps_split   = explode( '#', $key );
 										$column_name = get_post_meta( $wps_split[1], 'coupon_amount', true );
+										echo esc_html( get_woocommerce_currency_symbol() ) . esc_html( $column_name );
+									} elseif ( 'camount' == $column_id ) {
+										$wps_split   = explode( '#', $key );
+										$column_name = get_post_meta( $wps_split[1], 'wps_coupon_static_amount', true );
 										echo esc_html( get_woocommerce_currency_symbol() ) . esc_html( $column_name );
 									} elseif ( 'expiry' == $column_id ) {
 										if ( WC()->version < '3.0.6' ) {
