@@ -592,21 +592,32 @@ if ( $activated ) {
 		<?php
 
 	}
-	if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-		$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.2.12' );
-		$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
-		$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
-		$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );
-		$wps_count_users   = ! empty( $wps_count_users ) && is_array( $wps_count_users ) ? count( $wps_count_users ) : 0;
+	add_action( 'wp_loaded', 'wps_wpr_show_notice_on_plugin_dashboard' );
+	/**
+	 * This function is used to show notice on plugin listing page.
+	 *
+	 * @return void
+	 */
+	function wps_wpr_show_notice_on_plugin_dashboard() {
+		if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-		if ( 0 !== $wps_pending_par || 0 !== $wps_count_users ) {
-			add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_wpr_upgrade_notice', 0, 3 );
+			$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.2.12' );
+			$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
+			$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
+			$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );
+			$wps_count_users   = ! empty( $wps_count_users ) && is_array( $wps_count_users ) ? count( $wps_count_users ) : 0;
+
+			if ( 0 !== $wps_pending_par || 0 !== $wps_count_users ) {
+				add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_wpr_upgrade_notice', 0, 3 );
+			}
 		}
 	}
+
 	if ( true === $wps_par_exists ) {
 		add_action( 'admin_notices', 'wps_wpr_updgrade_warning_notice' );
 	}
+
 	/**
 	 * Undocumented function
 	 *

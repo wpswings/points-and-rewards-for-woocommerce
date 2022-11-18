@@ -1778,7 +1778,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$user_id = get_current_user_ID();
 		if ( ( 1 == $wps_wpr_custom_points_on_cart || 1 === $wps_wpr_custom_points_on_checkout ) && isset( $user_id ) && ! empty( $user_id ) ) {
 			?>
-			<div class="woocommerce-message"><?php esc_html_e( 'Here is the Discount Rule for Applying your Points to Cart Total', 'points-and-rewards-for-woocommerce' ); ?>
+			<div class="woocommerce-message wps_wpr_cart_redemption__notice"><?php esc_html_e( 'Here is the Discount Rule for Applying your Points to Cart Total', 'points-and-rewards-for-woocommerce' ); ?>
 				<ul>
 					<li>
 					<?php
