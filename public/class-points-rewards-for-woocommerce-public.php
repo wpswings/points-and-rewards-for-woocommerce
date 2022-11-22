@@ -856,6 +856,8 @@ class Points_Rewards_For_WooCommerce_Public {
 			$order = wc_get_order( $order_id );
 			/*Get the order total points*/
 			$order_total = $order->get_total();
+			// Currency Switcher Implementation start here.
+			$order_total = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
 			$total_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 			/*Get the user*/
 			$user = get_user_by( 'ID', $user_id );
@@ -999,8 +1001,9 @@ class Points_Rewards_For_WooCommerce_Public {
 						$wps_referral_purchase_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_referal_purchase_value' );
 						$order_total                 = $order->get_total();
 						$order_total                 = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
+						// Currency Switcher Implementation start here.
+						$order_total = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
 
-						$wps_currency       = get_post_meta( $order_id, '_order_currency', true );
 						$wps_default_symbol = get_option( 'woocommerce_currency' );
 						$order_total        = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
 						if ( $wps_wpr_coupon_conversion_enable ) {
@@ -1640,6 +1643,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 						$wps_fee_on_cart = $subtotal;
 					}
+					$wps_fee_on_cart = apply_filters( 'wps_wpr_show_conversion_price', $wps_fee_on_cart );
 					do_action( 'wps_change_amount_cart', $wps_fee_on_cart, $cart, $cart_discount );
 
 					// Paypal Issue Change Start.
@@ -1713,6 +1717,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 										$wps_fee_on_cart = $subtotal;
 									}
+									$wps_fee_on_cart = apply_filters( 'wps_wpr_show_conversion_price', $wps_fee_on_cart );
 									if ( $coupon_data == $cart_discount ) {
 										$discount_type = 'fixed_cart';
 										$coupon = array(
@@ -1783,7 +1788,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					<li>
 					<?php
 					$allowed_tags = $this->wps_wpr_allowed_html();
-					echo esc_html( $wps_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( $wps_wpr_cart_price_rate ), $allowed_tags );
+					echo esc_html( $wps_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $allowed_tags );
 					?>
 					</li>
 				</ul>
@@ -1807,7 +1812,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				<?php
 				esc_html_e( 'Conversion Rate: ', 'points-and-rewards-for-woocommerce' );
 				$allowed_tags = $this->wps_wpr_allowed_html();
-				echo wp_kses_post( $order_conversion_rate['curr'] ) . wp_kses_post( $order_conversion_rate['Points'] ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo wp_kses_post( $order_conversion_rate['curr'] ) . ' ' . wp_kses_post( apply_filters( 'wps_wpr_show_conversion_price', $order_conversion_rate['Points'] ) ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				</p>
@@ -1990,6 +1995,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						if ( strtolower( $cart_discount ) == strtolower( $coupon_name ) ) {
 							$coupon_meta = $coupon_data['meta_data'][0]->get_data();
 							$coupon_amount = $coupon_meta['value']['amount'];
+							$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
 							update_post_meta( $order_id, 'wps_cart_discount#$fee_id', $coupon_amount );
 							$fee_to_point = ceil( ( $wps_wpr_cart_points_rate * $coupon_amount ) / $wps_wpr_cart_price_rate );
 							$fee_to_point  = apply_filters( 'wps_round_down_cart_total_value_amount', $fee_to_point, $wps_wpr_cart_points_rate, $coupon_amount, $wps_wpr_cart_price_rate );
@@ -2365,6 +2371,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								if ( in_array( $product_id, $values['Product'] ) && ! $this->check_exclude_sale_products( $_product ) ) {
 									if ( ! $product_is_variable ) {
 										$new_price = $reg_price - ( $reg_price * $values['Discount'] ) / 100;
+										$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
 										if ( $woo_ver < '3.0.0' ) {
 											$value['data']->price = $new_price;
 										} else {
@@ -2372,6 +2379,7 @@ class Points_Rewards_For_WooCommerce_Public {
 										}
 									} elseif ( $product_is_variable ) {
 										$new_price = $variable_price - ( $variable_price * $values['Discount'] ) / 100;
+										$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
 										if ( $woo_ver < '3.0.0' ) {
 											$value['data']->price = $new_price;
 										} else {
@@ -2388,6 +2396,7 @@ class Points_Rewards_For_WooCommerce_Public {
 										if ( in_array( $cat_id, $values['Prod_Categ'] ) || in_array( $parent_cat, $values['Prod_Categ'] ) ) {
 											if ( ! $product_is_variable ) {
 												$new_price = $reg_price - ( $reg_price * $values['Discount'] ) / 100;
+												$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
 												if ( $woo_ver < '3.0.0' ) {
 													$value['data']->price = $new_price;
 												} else {
@@ -2395,6 +2404,7 @@ class Points_Rewards_For_WooCommerce_Public {
 												}
 											} elseif ( $product_is_variable ) {
 												$new_price = $variable_price - ( $variable_price * $values['Discount'] ) / 100;
+												$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
 												if ( $woo_ver < '3.0.0' ) {
 													$value['data']->price = $new_price;
 												} else {
@@ -2559,7 +2569,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>"/>
 
 					<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-point="<?php echo esc_html( $get_points ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0"><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
-					<p><?php echo esc_html( $get_points ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( $conversion ), $this->wps_wpr_allowed_html() ); ?></p>
+					<p><?php echo esc_html( $get_points ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( apply_filters( 'wps_wpr_show_conversion_price', $conversion ) ), $this->wps_wpr_allowed_html() ); ?></p>
 				</div>
 					<?php
 				} else {
@@ -2987,6 +2997,71 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 		return ob_get_clean();
+	}
+
+	// WOOCS - WooCommerce Currency Switcher Compatibility.
+	/**
+	 * This function is used to show converted price.
+	 *
+	 * @param string $amounts amount.
+	 * @return string
+	 */
+	public function wps_wpr_conversion_price_callback( $amounts ) {
+		if ( class_exists( 'WOOCS' ) ) {
+			global $WOOCS;
+			$amount = $WOOCS->woocs_exchange_value( $amounts );
+			return round( $amount );
+		} else {
+			return round( $amounts );
+		}
+	}
+
+	/**
+	 * This function is used to convert price in to base price.
+	 *
+	 * @param  string $price prices.
+	 * @return string
+	 */
+	public function wps_wpr_convert_diffrent_currency_base_price_callback( $price ) {
+		if ( class_exists( 'WOOCS' ) ) {
+			global $WOOCS;
+			$amount = 0;
+
+			if ( $WOOCS->is_multiple_allowed ) {
+				$currrent = $WOOCS->current_currency;
+				if ( $currrent != $WOOCS->default_currency ) {
+
+					$currencies = $WOOCS->get_currencies();
+					$rate       = $currencies[ $currrent ]['rate'];
+					$amount     = $price / ( $rate );
+					return round( $amount );
+				} else {
+					return round( $price );
+				}
+			}
+		}
+		return round( $price );
+	}
+
+	/**
+	 * This function is used to convert in to base currency when currency are same.
+	 *
+	 * @param string $price price.
+	 * @param string $order_id order_id.
+	 * @return void
+	 */
+	public function wps_wpr_convert_same_currency_base_price_callback( $order_total, $order_id ) {
+		if ( class_exists( 'WOOCS' ) ) {
+			global $WOOCS;
+			$wps_currency = get_post_meta( $order_id, '_order_currency', true );
+			if ( $wps_currency == $WOOCS->default_currency ) {
+
+				$currencies  = $WOOCS->get_currencies();
+				$rate        = $currencies[ $wps_currency ]['rate'];
+				$order_total = round( $order_total / ( $rate ) );
+			}
+		}
+		return $order_total;
 	}
 
 }
