@@ -1343,6 +1343,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 			/*Get the order total points*/
 			$order_total         = $order->get_total();
+			$order_total         = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $order_total );
 			$user_id             = $order->get_user_id();
 			$get_points          = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 			$deduction_of_points = get_user_meta( $user_id, 'points_details', true );
