@@ -567,7 +567,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 									<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['Coupon_details'] ); ?></td>
 								</tr>
-								<?php
+									<?php
 								}
 								?>
 							</table>
@@ -831,7 +831,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['membership'] ); ?></td>
 									</tr>
-									<?php
+										<?php
 									}
 									?>
 							</table>
