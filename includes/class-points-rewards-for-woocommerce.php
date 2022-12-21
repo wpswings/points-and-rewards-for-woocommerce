@@ -72,7 +72,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '1.2.12';
+			$this->version = '1.3.0';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -279,6 +279,13 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'plugins_loaded', $plugin_public, 'wps_wpr_shortocde_to_show_points_log' );
 			// Shortcode to show apply points section.
 			$this->loader->add_action( 'plugins_loaded', $plugin_public, 'wps_wpr_shortocde_to_show_apply_points_section' );
+
+			// WOOCS - WooCommerce Currency Switcher Compatibility.
+			if ( is_plugin_active( 'woocommerce-currency-switcher/index.php' ) ) {
+				$this->loader->add_filter( 'wps_wpr_show_conversion_price', $plugin_public, 'wps_wpr_conversion_price_callback', 10, 1 );
+				$this->loader->add_filter( 'wps_wpr_convert_base_price_diffrent_currency', $plugin_public, 'wps_wpr_convert_diffrent_currency_base_price_callback', 10, 1 );
+				$this->loader->add_filter( 'wps_wpr_convert_same_currency_base_price', $plugin_public, 'wps_wpr_convert_same_currency_base_price_callback', 10, 2 );
+			}
 		}
 	}
 

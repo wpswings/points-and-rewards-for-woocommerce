@@ -770,14 +770,14 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 						</tr>
 					</thead>
 					<?php
-						foreach ( $point_log['points_deduct_wallet'] as $key => $value ) {
+					foreach ( $point_log['points_deduct_wallet'] as $key => $value ) {
 						?>
 						<tr valign="top">
 							<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 							<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['points_deduct_wallet'] ); ?></td>
 						</tr>
-							<?php
-						}
+						<?php
+					}
 					?>
 				</table>
 			</div>

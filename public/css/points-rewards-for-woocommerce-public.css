@@ -866,6 +866,41 @@ button#wps_cart_points_apply+p {
     font-size: 14px;
 }
 
+input#wps_wpr_upgrade_level_click,#points_form .wps_wpr_custom_coupon.button {
+    min-height: 40px;
+    float: right;
+}
+
+#points_form #wps_custom_point_num,.wps_wpr_each_section #wps_wpr_membership_roles {
+    border: 1px solid;
+    max-width: 200px;
+    width: 80%!important;
+    min-height: 40px;
+}
+
+#wps_wpr_points_notification+.wps_wpr_generate_coupon.button {
+    float: left;
+    min-height: 40px;
+}
+
+.wps_wpr_cart_redemption__notice ul {
+    margin: 0;
+}
+
+div#wps_wpr_order_notice {
+    padding: 10px;
+}
+
+div#wps_wpr_order_notice p{
+    padding: 0;
+}
+
+input#wps_wpr_some_custom_points {
+    border: 1px solid;
+    min-height: 40px;
+    min-width: 150px;
+}
+
 @media screen and (max-width: 420px) {
     .custom_point_checkout #wps_cart_points {
         width: 180px;
