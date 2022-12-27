@@ -32,8 +32,8 @@
 		function() {
 
 				/*create clipboard */
-				var btns = document.querySelectorAll( 'button' );
-				var message = '';
+				var btns      = document.querySelectorAll( 'button' );
+				var message   = '';
 				var clipboard = new ClipboardJS( btns );
 				/*View Benefits of the Membership Role*/
 				$( '.wps_wpr_level_benefits' ).click(
@@ -65,17 +65,21 @@
 					'click',
 					'#wps_cart_points_apply',
 					function(){
-						var user_id = $( this ).data( 'id' );
-						var user_total_point = $( this ).data( 'point' );
-						var order_limit = $( this ).data( 'order-limit' );
-						var message = ''; var html = '';
+						var user_id                  = $( this ).data( 'id' );
+						var user_total_point         = wps_wpr.wps_user_current_points;
+						var order_limit              = $( this ).data( 'order-limit' );
+						var message                  = '';
+						var html                     = '';
 						var wps_wpr_cart_points_rate = wps_wpr.wps_wpr_cart_points_rate;
-						var wps_wpr_cart_price_rate = wps_wpr.wps_wpr_cart_price_rate;
-						var wps_cart_points = $( '#wps_cart_points' ).val();
+						var wps_wpr_cart_price_rate  = wps_wpr.wps_wpr_cart_price_rate;
+						var wps_cart_points          = $( '#wps_cart_points' ).val();
+
 						$( "#wps_wpr_cart_points_notice" ).html( "" );
 						$( "wps_wpr_cart_points_success" ).html( "" );
+
 						if (wps_cart_points !== 'undefined' && wps_cart_points !== '' && wps_cart_points !== null && wps_cart_points > 0) {
 							if (user_total_point !== null && user_total_point > 0 && user_total_point >= wps_cart_points ) {
+
 								block( $( '.woocommerce-cart-form' ) );
 								block( $( '.woocommerce-checkout' ) );
 								var data = {
@@ -94,15 +98,15 @@
 									{
 											if (response.result == true) {
 												message = response.message;
-												html = message;
+												$( "#wps_wpr_cart_points_success" ).addClass( 'woocommerce-message' );
 												$( "#wps_wpr_cart_points_success" ).removeClass( 'wps_rwpr_settings_display_none_notice' );
-												$( "#wps_wpr_cart_points_success" ).html( html );
+												$( "#wps_wpr_cart_points_success" ).html( message );
 												$( "#wps_wpr_cart_points_success" ).show();
 											} else {
 												message = response.message;
-												html = message;
+												$( "#wps_wpr_cart_points_notice" ).addClass( 'woocommerce-error' );
 												$( "#wps_wpr_cart_points_notice" ).removeClass( 'wps_rwpr_settings_display_none_notice' );
-												$( "#wps_wpr_cart_points_notice" ).html( html );
+												$( "#wps_wpr_cart_points_notice" ).html( message );
 												$( "#wps_wpr_cart_points_notice" ).show();
 											}
 										},
