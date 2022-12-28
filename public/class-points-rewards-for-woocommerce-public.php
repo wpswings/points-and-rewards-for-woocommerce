@@ -1110,11 +1110,13 @@ class Points_Rewards_For_WooCommerce_Public {
 		// Applied points on cart refunded here.
 		$mwb_wpr_array = array( 'processing', 'on-hold', 'pending', 'completed' );
 		if ( in_array( $old_status, $mwb_wpr_array, true ) && ( 'cancelled' === $new_status || 'refunded' === $new_status ) ) {
+
 			$order          = wc_get_order( $order_id );
 			$user_id        = absint( $order->get_user_id() );
 			$wps_points_log = get_user_meta( $user_id, 'points_details', true );
 			$wps_points_log = ! empty( $wps_points_log ) && is_array( $wps_points_log ) ? $wps_points_log : array();
 			if ( array_key_exists( 'cart_subtotal_point', $wps_points_log ) ) {
+
 				$today_date         = date_i18n( 'Y-m-d h:i:sa' );
 				$wps_value_to_check = absint( get_post_meta( $order_id, 'wps_cart_discount#points', true ) );
 				foreach ( $wps_points_log['cart_subtotal_point'] as $key => $value ) {
@@ -1122,11 +1124,13 @@ class Points_Rewards_For_WooCommerce_Public {
 
 					if ( ! isset( $pre_wps_check ) || 'done' != $pre_wps_check ) {
 						if ( $value['cart_subtotal_point'] == $wps_value_to_check ) {
-							$value_to_refund = $value['cart_subtotal_point'];
-							$wps_total_points_par = get_user_meta( $user_id, 'wps_wpr_points', true );
+
+							$value_to_refund          = $value['cart_subtotal_point'];
+							$wps_total_points_par     = get_user_meta( $user_id, 'wps_wpr_points', true );
 							$wps_points_newly_updated = (int) ( $wps_total_points_par + $value_to_refund );
-							$wps_refer_deduct_points = get_user_meta( $user_id, 'points_details', true );
+							$wps_refer_deduct_points  = get_user_meta( $user_id, 'points_details', true );
 							if ( isset( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) && ! empty( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) ) {
+
 								$wps_par_refund_purchase = array();
 								$wps_par_refund_purchase = array(
 									'refund_points_applied_on_cart' => $value_to_refund,
@@ -1144,9 +1148,55 @@ class Points_Rewards_For_WooCommerce_Public {
 								);
 								$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
 							}
+							update_user_meta( $user_id, 'wps_wpr_points', $wps_points_newly_updated );
+							update_user_meta( $user_id, 'points_details', $wps_refer_deduct_points );
+							update_post_meta( $order_id, 'refunded_points_by_cart', 'done' );
+						}
+					}
+				}
+			}
+
+			// Refund subscription renewal awarded points when subscription is cancelled or refunded.
+			if ( is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
+				if ( array_key_exists( 'subscription_renewal_points', $wps_points_log ) ) {
+
+					$today_date         = date_i18n( 'Y-m-d h:i:sa' );
+					$wps_value_to_check = absint( get_post_meta( $order_id, 'wps_wpr_subscription_renewal_awarded_points', true ) );
+					$wps_value_to_check = ! empty( $wps_value_to_check ) ? $wps_value_to_check : 0;
+
+					foreach ( $wps_points_log['subscription_renewal_points'] as $key => $value ) {
+						$pre_wps_check = get_post_meta( $order_id, 'wps_wpr_subscription_renewal_refund', true );
+
+						if ( ! isset( $pre_wps_check ) || 'done' != $pre_wps_check ) {
+							if ( $value['subscription_renewal_points'] == $wps_value_to_check ) {
+
+								$value_to_refund                 = $value['subscription_renewal_points'];
+								$wps_total_points_par            = get_user_meta( $user_id, 'wps_wpr_points', true );
+								$wps_points_newly_updated        = (int) ( $wps_total_points_par - $value_to_refund );
+								$wps_subscription_renewal_refund = get_user_meta( $user_id, 'points_details', true );
+								if ( isset( $wps_subscription_renewal_refund['refund_subscription__renewal_points'] ) && ! empty( $wps_subscription_renewal_refund['refund_subscription__renewal_points'] ) ) {
+
+									$wps_par_refund_purchase = array();
+									$wps_par_refund_purchase = array(
+										'refund_subscription__renewal_points' => $value_to_refund,
+										'date'                                => $today_date,
+									);
+									$wps_subscription_renewal_refund['refund_subscription__renewal_points'][] = $wps_par_refund_purchase;
+								} else {
+									if ( ! is_array( $wps_subscription_renewal_refund ) ) {
+										$wps_subscription_renewal_refund = array();
+									}
+									$wps_par_refund_purchase = array();
+									$wps_par_refund_purchase = array(
+										'refund_subscription__renewal_points' => $value_to_refund,
+										'date'                                => $today_date,
+									);
+									$wps_subscription_renewal_refund['refund_subscription__renewal_points'][] = $wps_par_refund_purchase;
+								}
 								update_user_meta( $user_id, 'wps_wpr_points', $wps_points_newly_updated );
-								update_user_meta( $user_id, 'points_details', $wps_refer_deduct_points );
-								update_post_meta( $order_id, 'refunded_points_by_cart', 'done' );
+								update_user_meta( $user_id, 'points_details', $wps_subscription_renewal_refund );
+								update_post_meta( $order_id, 'wps_wpr_subscription_renewal_refund', 'done' );
+							}
 						}
 					}
 				}
@@ -3078,6 +3128,38 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 		return $order_total;
+	}
+
+	/**
+	 * This function is used to show subscription renewal message for user acknowledge.
+	 *
+	 * @param int $user_id user_id.
+	 * @return void
+	 */
+	public function wps_wpr_show_subscription_message( $user_id ) {
+
+		if ( is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
+			if ( function_exists( 'wps_sfw_check_plugin_enable' ) && wps_sfw_check_plugin_enable() ) {
+
+				// Renewal setting values.
+				$wps_wpr_general_settings                 = get_option( 'wps_wpr_settings_gallery', array() );
+				$wps_wpr_subscription__renewal_points     = ! empty( $wps_wpr_general_settings['wps_wpr_subscription__renewal_points'] ) ? $wps_wpr_general_settings['wps_wpr_subscription__renewal_points'] : 0;
+				$wps_wpr_enable__renewal_message_settings = ! empty( $wps_wpr_general_settings['wps_wpr_enable__renewal_message_settings'] ) ? $wps_wpr_general_settings['wps_wpr_enable__renewal_message_settings'] : 0;
+				$wps_wpr_subscription__renewal_message    = ! empty( $wps_wpr_general_settings['wps_wpr_subscription__renewal_message'] ) ? $wps_wpr_general_settings['wps_wpr_subscription__renewal_message'] : esc_html__( 'You will earn [Points] points when your subscription should be renewal.', 'points-and-rewards-for-woocommerce' );
+				$wps_wpr_subscription__renewal_message    = str_replace( '[Points]', $wps_wpr_subscription__renewal_points, $wps_wpr_subscription__renewal_message );
+
+				if ( '1' == $wps_wpr_enable__renewal_message_settings ) {
+					?>
+					<div class ="wps_ways_to_gain_points_section">
+						<p class="wps_wpr_heading"><?php echo esc_html__( 'Subscription Renewal Points Message :', 'points-and-rewards-for-woocommerce' ); ?></p>
+						<?php
+						echo '<fieldset class="wps_wpr_each_section">' . wp_kses_post( $wps_wpr_subscription__renewal_message ) . '</fieldset>';
+						?>
+					</div>
+					<?php
+				}
+			}
+		}
 	}
 
 }
