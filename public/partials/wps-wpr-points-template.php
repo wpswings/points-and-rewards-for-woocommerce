@@ -184,6 +184,15 @@ if ( $wps_wpr_mem_enable ) {
 						<th class="wps-wpr-points-code">
 							<span class="wps_wpr_nobr"><?php echo esc_html__( 'Required Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
+						<?php
+						if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+							?>
+							<th class="wps-wpr-points-expiry">
+								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Membership Expiry', 'ultimate-woocommerce-points-and-rewards' ); ?></span>
+							</th>
+							<?php
+						}
+						?>
 						<?php do_action( 'wps_wpr_membership_expiry_for_user_html' ); ?>
 					</tr>
 				</thead>
@@ -291,13 +300,16 @@ if ( $wps_wpr_mem_enable ) {
 					</td>
 					<td>
 						<?php
+						if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+							echo esc_html( $values['Exp_Number'] ) . ' ' . esc_html( $values['Exp_Days'] );
+						}
 						do_action( 'wps_wpr_membership_expiry_date_for_user', $user_id, $values, $wps_role );
 						if ( $wps_role == $wps_user_level ) {
 							echo '<img class="wps_wpr_tick" src = "' . esc_url( WPS_RWPR_DIR_URL ) . 'public/images/tick.png">';
 						}
 						?>
 					</td>
-				</tr>	
+				</tr>
 						<?php
 
 						if ( $values['Points'] == $get_points || $values['Points'] < $get_points ) {
