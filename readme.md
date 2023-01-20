@@ -1,4 +1,4 @@
-[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-6000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.1.1-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-7.1.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
+[![BuildStatus](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-6000%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.1.1-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-7.3.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
 # Points and Rewards for WooCommerce – Create Loyalty Programs, Reward Customer Purchases, Referral Points & Redemptions
 ![Points and Rewards for WooCommerce](https://ps.w.org/points-and-rewards-for-woocommerce/assets/banner-772x250.jpg?rev=2671934)
 * Contributors: WP Swings
@@ -75,9 +75,9 @@ The WooCommerce rewards plugin is compatible with the WPML Multilingual plugin w
 
 * [**Points and Rewards Backend Demo**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-par-demo&utm_medium=par-github-page&utm_campaign=backend-demo)
 
-## PLUGIN COMPATIBILITIES 
+## POINTS AND REWARDS PLUGIN COMPATIBILITIES 
 
-* WooCommerce rewards plugin is compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**Wallet System For WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-par-git&utm_medium=par-github-page&utm_campaign=par-wallet) plugin. This compatibility allows you to convert your earned points into wallet credit based on a certain conversion rate. The admin can set points conversion into wallet credit he wants to allow. For example, 10 points equal 2 wallet credits. Customers can later use this wallet credit for purchases in the store. 
+* WooCommerce rewards plugin is compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**Wallet System For WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-wallet-pro&utm_medium=par-github-page&utm_campaign=wallet-pro) plugin. This compatibility allows you to convert your earned points into wallet credit based on a certain conversion rate. The admin can set points conversion into wallet credit he wants to allow. For example, 10 points equal 2 wallet credits. Customers can later use this wallet credit for purchases in the store. 
 
 * The WooCommerce reward plugin is compatible with [**Currency Switcher for WooCommerce**](https://wordpress.org/plugins/woocommerce-currency-switcher/). The Currency Switcher for WooCommerce plugin allows your customers to select the currency unit for their purchase. They can choose from the currencies for the Points and Rewards system. This increases the user experience. All transactions will happen in the currency they select. For example, if 10 points = $1, but the customer chooses INR as a switch, it will show as 10 points = ₹82.36.
 
@@ -86,6 +86,8 @@ The WooCommerce rewards plugin is compatible with the WPML Multilingual plugin w
 * [**Elementor Page Builder**](https://wordpress.org/plugins/elementor/) is compatible with the Points and Rewards for WooCommerce plugin. This compatibility lets you use Elementor’s capabilities to add “apply points” snippets to the cart page and checkout page efficiently.
 
 * WooCommerce store owners use the customer's loyalty points plugin is compatible with the WordPress Multilingual (WPML) plugin for the localization of the rewards plugin’s strings
+
+* The WooCommerce Points and Rewards Plugin is compatible with [**Subscriptions For WooCommerce Free**](https://wordpress.org/plugins/subscriptions-for-woocommerce/) and [**Subscriptions For WooCommerce Pro**](https://wpswings.com/product/subscriptions-for-woocommerce-pro/?utm_source=wpswings-subs-pro&utm_medium=par-github-page&utm_campaign=subs-pro/) allowing the users to get points on subscription products. For example, User A has bought a subscription product from your website for the first time, he/she will get points as per the reward system. But now with this compatibility, the user will also get points on renewal of the purchased product.
 
 
 ## WHAT PREMIUM VERSION OF WOOCOMMERCE POINTS AND REWARDS OFFERS: 
@@ -140,6 +142,7 @@ If you need support or have questions, kindly use our online chat window [**here
 * [**Tweet us on @WP Swings**](https://twitter.com/wpswings)
 * [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 * [**Subscribe Our Youtube Channel**](https://www.youtube.com/c/wpswings)
+
 
 
 
