@@ -72,7 +72,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '1.3.0';
+			$this->version = '1.4.0';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -195,10 +195,14 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_filter( 'wps_helper_valid_frontend_screens', $plugin_admin, 'add_wps_frontend_screens' );
 		// Add Deactivation screen.
 		$this->loader->add_filter( 'wps_deactivation_supported_slug', $plugin_admin, 'add_wps_deactivation_screens' );
-		// custom code.
-
+		// wallet compatibility.
 		$this->loader->add_filter( 'wps_wpr_general_settings', $plugin_admin, 'wps_wpr_wallet_order_point' );
-
+		// subscription compatibility.
+		if ( is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
+			$this->loader->add_filter( 'wps_wpr_general_settings', $plugin_admin, 'wps_wpr_subscription_settings' );
+			$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $plugin_admin, 'wps_wpr_subscription_renewal_point', 10, 1 );
+		}
+		// old mwb currency swithcer compatibility.
 		$this->loader->add_filter( 'wps_wpr_currency_filter', $plugin_admin, 'wps_wpr_currency_switcher' );
 		$this->loader->add_filter( 'admin_notices', $plugin_admin, 'wps_wpr_updgrade_notice' );
 	}
@@ -286,6 +290,8 @@ class Points_Rewards_For_Woocommerce {
 				$this->loader->add_filter( 'wps_wpr_convert_base_price_diffrent_currency', $plugin_public, 'wps_wpr_convert_diffrent_currency_base_price_callback', 10, 1 );
 				$this->loader->add_filter( 'wps_wpr_convert_same_currency_base_price', $plugin_public, 'wps_wpr_convert_same_currency_base_price_callback', 10, 2 );
 			}
+			// subscription compatibility ( show message on account page ).
+			$this->loader->add_action( 'wps_extend_point_tab_section', $plugin_public, 'wps_wpr_show_subscription_message', 10, 1 );
 		}
 	}
 

@@ -1472,4 +1472,134 @@ class Points_Rewards_For_WooCommerce_Admin {
 		}
 		return $result;
 	}
+
+	/**
+	 * This function is used to make PAR compatible with PAR.
+	 *
+	 * @param array $wps_wpr_general_settings wps_wpr_general_settings.
+	 * @return array
+	 */
+	public function wps_wpr_subscription_settings( $wps_wpr_general_settings ) {
+
+		if ( function_exists( 'wps_sfw_check_plugin_enable' ) && wps_sfw_check_plugin_enable() ) {
+
+			$my_new_inserted_array    = array(
+				array(
+					'title' => __( 'Subscription Points Settings', 'points-and-rewards-for-woocommerce' ),
+					'type'  => 'title',
+				),
+				array(
+					'title'    => __( 'Enable Renewal Subscription Point Settings', 'points-and-rewards-for-woocommerce' ),
+					'type'     => 'checkbox',
+					'desc'     => __( 'Enable this setting to give points when subscription is renewal', 'points-and-rewards-for-woocommerce' ),
+					'id'       => 'wps_wpr_enable_subscription_renewal_settings',
+					'desc_tip' => __( 'Check this box to give points only when subscription is renewal', 'points-and-rewards-for-woocommerce' ),
+					'default'  => 0,
+				),
+				array(
+					'title'             => __( 'Enter Subscription Renewal Points', 'points-and-rewards-for-woocommerce' ),
+					'type'              => 'number',
+					'default'           => 1,
+					'id'                => 'wps_wpr_subscription__renewal_points',
+					'custom_attributes' => array( 'min' => '"1"' ),
+					'class'             => 'input-text wps_wpr_new_woo_ver_style_text',
+					'desc_tip'          => __( 'Entered Points will be awarded to user when subscription is renewal', 'points-and-rewards-for-woocommerce' ),
+				),
+				array(
+					'title'    => __( 'Enable to show message on Account Page', 'points-and-rewards-for-woocommerce' ),
+					'type'     => 'checkbox',
+					'desc'     => __( 'Enable this setting to show message on account page for user acknowledge', 'points-and-rewards-for-woocommerce' ),
+					'id'       => 'wps_wpr_enable__renewal_message_settings',
+					'desc_tip' => __( 'Check this box to show message on account page for user to know how much he/she will earn', 'points-and-rewards-for-woocommerce' ),
+					'default'  => 0,
+				),
+				array(
+					'title'    => __( 'Enter Renewal Message', 'points-and-rewards-for-woocommerce' ),
+					'type'     => 'text',
+					'id'       => 'wps_wpr_subscription__renewal_message',
+					'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
+					'desc'     => __( 'Entered message will shown on the user Account Page. Please enter message including [Points] this shortcode.', 'points-and-rewards-for-woocommerce' ),
+					'desc_tip' => __( 'Please enter some message for user to know about renewal points', 'points-and-rewards-for-woocommerce' ),
+				),
+				array(
+					'type' => 'sectionend',
+				),
+			);
+			$wps_wpr_general_settings = $this->insert_key_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 150 );
+		}
+		return $wps_wpr_general_settings;
+	}
+
+	/**
+	 * This function is used to awarded user with points when order is renewal.You will earn [Points] points when your subscription should be renewal.
+	 *
+	 * @param int $order_id $order id.
+	 * @return void
+	 */
+	public function wps_wpr_subscription_renewal_point( $order_id ) {
+
+		if ( ! empty( $order_id ) && ! is_null( $order_id ) ) {
+
+			$order              = wc_get_order( $order_id );
+			$order_status       = $order->get_status();
+			$user_id            = absint( $order->get_user_id() );
+			$user               = get_user_by( 'ID', $user_id );
+			$user_email         = $user->user_email;
+			$user_name          = $user->user_login;
+			$today_date         = date_i18n( 'Y-m-d h:i:sa' );
+			$user_points        = get_user_meta( $user_id, 'wps_wpr_points', true );
+			$user_points        = ! empty( $user_points ) && ! is_null( $user_points ) ? $user_points : 0;
+			$wps_points_details = get_user_meta( $user_id, 'points_details', true );
+			$wps_points_details = ! empty( $wps_points_details ) && is_array( $wps_points_details ) ? $wps_points_details : array();
+
+			// Renewal setting values.
+			$wps_wpr_general_settings                     = get_option( 'wps_wpr_settings_gallery', array() );
+			$wps_wpr_enable_subscription_renewal_settings = ! empty( $wps_wpr_general_settings['wps_wpr_enable_subscription_renewal_settings'] ) ? $wps_wpr_general_settings['wps_wpr_enable_subscription_renewal_settings'] : 0;
+			$wps_wpr_subscription__renewal_points         = ! empty( $wps_wpr_general_settings['wps_wpr_subscription__renewal_points'] ) ? $wps_wpr_general_settings['wps_wpr_subscription__renewal_points'] : 0;
+
+			if ( '1' == $wps_wpr_enable_subscription_renewal_settings ) {
+				$wps_wpr_renewal_points_awarded = get_post_meta( $order_id, 'wps_wpr_renewal_points_awarded', true );
+
+				if ( empty( $wps_wpr_renewal_points_awarded ) ) {
+					if ( 'processing' === $order_status ) {
+
+						$wps_wpr_total_points = $user_points + $wps_wpr_subscription__renewal_points;
+						if ( isset( $wps_points_details['subscription_renewal_points'] ) && ! empty( $wps_points_details['subscription_renewal_points'] ) ) {
+
+							$currency_arr = array();
+							$currency_arr = array(
+								'subscription_renewal_points' => $wps_wpr_subscription__renewal_points,
+								'date'                        => $today_date,
+							);
+							$wps_points_details['subscription_renewal_points'][] = $currency_arr;
+						} else {
+							$currency_arr = array();
+							$currency_arr = array(
+								'subscription_renewal_points' => $wps_wpr_subscription__renewal_points,
+								'date'                        => $today_date,
+							);
+							$wps_points_details['subscription_renewal_points'][] = $currency_arr;
+						}
+
+						update_user_meta( $user_id, 'wps_wpr_points', $wps_wpr_total_points );
+						update_user_meta( $user_id, 'points_details', $wps_points_details );
+						update_post_meta( $order_id, 'wps_wpr_renewal_points_awarded', 'done' );
+						update_post_meta( $order_id, 'wps_wpr_subscription_renewal_awarded_points', $wps_wpr_subscription__renewal_points );
+
+						if ( self::wps_wpr_check_mail_notfication_is_enable() ) {
+
+							$wps_wpr_email_subject     = esc_html__( 'Subscription Renewal Points Notification', 'points-and-rewards-for-woocommerce' );
+							$wps_wpr_email_discription = esc_html__( 'You have received [Points] points and your total points are [Total Points]', 'points-and-rewards-for-woocommerce' );
+							$wps_wpr_email_discription = str_replace( '[Total Points]', $wps_wpr_total_points, $wps_wpr_email_discription );
+							$wps_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $wps_wpr_email_discription );
+							$wps_wpr_email_discription = str_replace( '[Points]', $wps_wpr_subscription__renewal_points, $wps_wpr_email_discription );
+
+							$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
+							$email_status   = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+						}
+					}
+				}
+			}
+		}
+	}
 }
