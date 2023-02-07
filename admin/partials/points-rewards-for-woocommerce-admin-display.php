@@ -72,7 +72,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 
 ?>
 <div class="wrap woocommerce" id="wps_rwpr_setting_wrapper">
-	 <form enctype="multipart/form-data" action="" id="mainform"  method="post">		<div class="wps_rwpr_header">
+	<form enctype="multipart/form-data" action="" id="mainform"  method="post">		<div class="wps_rwpr_header">
 			<div class="wps_rwpr_header_content_left">
 				<div>
 					<h3 class="wps_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ); ?></h3>
@@ -93,8 +93,8 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 			<?php
 			if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 				?>
-						<li class="wps_wpr_get_pro"><a  href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
-					<?php
+				<li class="wps_wpr_get_pro"><a  href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
+				<?php
 			}
 			?>
 		</ul>

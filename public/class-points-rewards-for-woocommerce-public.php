@@ -1024,18 +1024,7 @@ class Points_Rewards_For_WooCommerce_Public {
 									$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
 									$wps_wpr_coupon_conversion_price  = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
 									$wps_wpr_coupon_conversion_price  = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
-									// currency switcher.
-									$index = get_option( 'wps_mmcsfw_number_of_currency', '' );
-									if ( ! empty( $index ) ) {
-										for ( $wps_par_per_currency = 1; $wps_par_per_currency <= $index; $wps_par_per_currency++ ) {
-											if ( get_option( 'wps_mmcsfw_text_currency_' . $wps_par_per_currency ) == $wps_currency && get_option( 'woocommerce_currency' ) != $wps_currency ) {
-												$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_currency_' . $wps_par_per_currency . '_points' );
-												$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
-												$wps_wpr_coupon_conversion_price  = $this->wps_wpr_get_coupon_settings_num( 'wps_mmcsfw_text_currency_' . $wps_par_per_currency );
-												$wps_wpr_coupon_conversion_price  = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
-											}
-										}
-									}
+
 									/*Calculat points of the order*/
 									$points_calculation = ceil( ( $order_total * $wps_wpr_coupon_conversion_points ) / $wps_wpr_coupon_conversion_price );
 									$points_calculation = apply_filters( 'wps_round_down_cart_total_value', $points_calculation, $order_total, $wps_wpr_coupon_conversion_points, $wps_wpr_coupon_conversion_price );
@@ -1828,7 +1817,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		}
 		/*Check is custom points on cart is enable*/
 		$wps_wpr_custom_points_on_checkout = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' );
-		$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+		$wps_wpr_custom_points_on_cart     = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
 		/*Get the Notification*/
 		$wps_wpr_notification_color = $this->wps_wpr_get_other_settings( 'wps_wpr_notification_color' );
 		$wps_wpr_notification_color = ( ! empty( $wps_wpr_notification_color ) ) ? $wps_wpr_notification_color : '#55b3a5';
@@ -1880,6 +1869,55 @@ class Points_Rewards_For_WooCommerce_Public {
 			</div>
 			<?php
 		}
+
+		// ==== Order Rewards Points message show here ====
+
+		// check if user is already awarded than return from here.
+		$wps_wpr_rewards_points_awarded_check = get_user_meta( $user_id, 'wps_wpr_rewards_points_awarded_check', true );
+		if ( empty( $wps_wpr_rewards_points_awarded_check ) ) {
+
+			// get rewards setting here.
+			$wps_wpr_settings_gallery                    = get_option( 'wps_wpr_settings_gallery', true );
+			$wps_wpr_enable_order_rewards_settings       = ! empty( $wps_wpr_settings_gallery['wps_wpr_enable_order_rewards_settings'] ) ? $wps_wpr_settings_gallery['wps_wpr_enable_order_rewards_settings'] : 0;
+			$wps_wpr_number_of_reward_order              = ! empty( $wps_wpr_settings_gallery['wps_wpr_number_of_reward_order'] ) ? $wps_wpr_settings_gallery['wps_wpr_number_of_reward_order'] : 0;
+			$wps_wpr_number_of_rewards_points            = ! empty( $wps_wpr_settings_gallery['wps_wpr_number_of_rewards_points'] ) ? $wps_wpr_settings_gallery['wps_wpr_number_of_rewards_points'] : 0;
+			$wps_wpr_enable_to_show_order_reward_message = ! empty( $wps_wpr_settings_gallery['wps_wpr_enable_to_show_order_reward_message'] ) ? $wps_wpr_settings_gallery['wps_wpr_enable_to_show_order_reward_message'] : 0;
+			$wps_wpr_number_order_rewards_messages       = ! empty( $wps_wpr_settings_gallery['wps_wpr_number_order_rewards_messages'] ) ? $wps_wpr_settings_gallery['wps_wpr_number_order_rewards_messages'] : 'Place [ORDER] order and earn [POINTS] Points in return';
+			$order_count                                 = 0;
+
+			// check rewards setting is enable or not.
+			if ( 1 === $wps_wpr_enable_order_rewards_settings ) {
+				if ( 1 === $wps_wpr_enable_to_show_order_reward_message ) {
+
+					// Get all user completed order.
+					$wps_customer_orders = get_posts(
+						array(
+							'numberposts' => -1,
+							'meta_key'    => '_customer_user',
+							'meta_value'  => $user_id,
+							'post_type'   => wc_get_order_types(),
+							'post_status' => array( 'wc-completed' ),
+						)
+					);
+
+					// Get user order count.
+					if ( ! empty( $wps_customer_orders ) && ! is_null( $wps_customer_orders ) ) {
+						$order_count = count( $wps_customer_orders );
+					}
+
+					// Replace order and points shortcode with order count and order rewards points.
+					$wps_wpr_number_order_rewards_messages = str_replace( '[ORDER]', ( $wps_wpr_number_of_reward_order - $order_count ), $wps_wpr_number_order_rewards_messages );
+					$wps_wpr_number_order_rewards_messages = str_replace( '[POINTS]', $wps_wpr_number_of_rewards_points, $wps_wpr_number_order_rewards_messages );
+
+					?>
+					<!-- Show awards discount notice -->
+					<div class="woocommerce-message" id="wps_wpr_order_notice" style="background-color: <?php echo esc_attr( $wps_wpr_notification_color ); ?>">
+						<p style="background-color: <?php echo esc_attr( $wps_wpr_notification_color ); ?>"><?php echo wp_kses_post( $wps_wpr_number_order_rewards_messages ); ?></p>
+					</div>
+					<?php
+				}
+			}
+		}
 	}
 
 	/**
@@ -1911,32 +1949,12 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		$order_conversion_rate_value  = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
 		$order_conversion_rate_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
-		$order_conversion_rate = array(
-			'Value' => $order_conversion_rate_value,
+		$order_conversion_rate        = array(
+			'Value'  => $order_conversion_rate_value,
 			'Points' => $order_conversion_rate_points,
-			'curr'  => get_woocommerce_currency_symbol(),
+			'curr'   => get_woocommerce_currency_symbol(),
 		);
-
-		$wps_currency = get_woocommerce_currency();
-		if ( is_plugin_active( 'wps-multi-currency-switcher-for-woocommerce/wps-multi-currency-switcher-for-woocommerce.php' ) && ! empty( get_option( 'mmcsfw_radio_switch_demo', '' ) ) ) {
-			if ( function_exists( 'wps_mmcsfw_get_currenct_currency' ) ) {
-
-				$index = get_option( 'wps_mmcsfw_number_of_currency', '' );
-				if ( ! empty( $index ) ) {
-					for ( $wps_par_per_currency = 1; $wps_par_per_currency <= $index; $wps_par_per_currency++ ) {
-						if ( get_option( 'wps_mmcsfw_text_currency_' . $wps_par_per_currency ) == wps_mmcsfw_get_currenct_currency() && get_option( 'wps_mmcsfw_text_currency_' . $wps_par_per_currency ) != $wps_currency ) {
-							$order_conversion_rate_points = $this->wps_wpr_get_coupon_settings_num( 'wps_mmcsfw_text_currency_' . $wps_par_per_currency );
-							$order_conversion_rate_value  = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_currency_' . $wps_par_per_currency . '_points' );
-							$order_conversion_rate = array(
-								'Value'  => $order_conversion_rate_value,
-								'Points' => $order_conversion_rate_points,
-								'curr'   => get_option( 'wps_mmcsfw_symbol_' . get_option( 'wps_mmcsfw_text_currency_' . $wps_par_per_currency ) ),
-							);
-						}
-					}
-				}
-			}
-		}
+		$wps_currency                 = get_woocommerce_currency();
 		return $order_conversion_rate;
 	}
 
@@ -2238,7 +2256,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since 1.0.0
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
-	 * @param array $product arry of the whole product.
+	 * @param object $product arry of the whole product.
 	 */
 	public function wps_wpr_check_whether_product_is_variable( $product ) {
 		if ( isset( $product ) && ! empty( $product ) ) {
@@ -3157,6 +3175,107 @@ class Points_Rewards_For_WooCommerce_Public {
 						?>
 					</div>
 					<?php
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to give points to user when user reaches order limit.
+	 *
+	 * @param  int    $order_id order_id.
+	 * @param  object $order order.
+	 * @return void
+	 */
+	public function wps_wpr_order_rewards_points_callback( $order_id, $order ) {
+
+		// if user is not logged in then return from here.
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+
+		$user_id                              = $order->get_user_id();
+		$wps_wpr_rewards_points_awarded_check = get_user_meta( $user_id, 'wps_wpr_rewards_points_awarded_check', true );
+		// check if user is already awarded than return from here.
+		if ( ! empty( $wps_wpr_rewards_points_awarded_check ) || 'done' == $wps_wpr_rewards_points_awarded_check ) {
+			return;
+		}
+
+		// get order rewards setting here.
+		$wps_wpr_notificatin_array             = get_option( 'wps_wpr_notificatin_array', true );
+		$wps_wpr_settings_gallery              = get_option( 'wps_wpr_settings_gallery', true );
+		$wps_wpr_settings_gallery              = ! empty( $wps_wpr_settings_gallery ) && is_array( $wps_wpr_settings_gallery ) ? $wps_wpr_settings_gallery : array();
+		$wps_wpr_enable_order_rewards_settings = ! empty( $wps_wpr_settings_gallery['wps_wpr_enable_order_rewards_settings'] ) ? $wps_wpr_settings_gallery['wps_wpr_enable_order_rewards_settings'] : '';
+		$wps_wpr_number_of_reward_order        = ! empty( $wps_wpr_settings_gallery['wps_wpr_number_of_reward_order'] ) ? $wps_wpr_settings_gallery['wps_wpr_number_of_reward_order'] : 0;
+		$wps_wpr_number_of_rewards_points      = ! empty( $wps_wpr_settings_gallery['wps_wpr_number_of_rewards_points'] ) ? $wps_wpr_settings_gallery['wps_wpr_number_of_rewards_points'] : 0;
+
+		// check order rewards setting enable or not.
+		if ( '1' == $wps_wpr_enable_order_rewards_settings ) {
+
+			// get particular user completed order.
+			$customer_orders = get_posts(
+				array(
+					'numberposts' => -1,
+					'meta_key'    => '_customer_user',
+					'meta_value'  => $user_id,
+					'post_type'   => wc_get_order_types(),
+					'post_status' => array( 'wc-completed' ),
+				)
+			);
+
+			// check user number of order.
+			if ( ! empty( $customer_orders ) && ! is_null( $customer_orders ) ) {
+				// check user reches order limit.
+				if ( count( $customer_orders ) >= $wps_wpr_number_of_reward_order ) {
+
+					$today_date                = date_i18n( 'Y-m-d h:i:sa' );
+					$wps_order_rewards_details = get_user_meta( $user_id, 'points_details', true );
+					$wps_order_rewards_details = ! empty( $wps_order_rewards_details ) && is_array( $wps_order_rewards_details ) ? $wps_order_rewards_details : array();
+					$user_total_points         = get_user_meta( $user_id, 'wps_wpr_points', true );
+					$user_total_points         = ! empty( $user_total_points ) && ! is_null( $user_total_points ) ? $user_total_points : 0;
+					$updated_points            = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
+
+					// create log for order rewards points.
+					if ( isset( $wps_order_rewards_details['order__rewards_points'] ) && ! empty( $wps_order_rewards_details['order__rewards_points'] ) ) {
+						$daily_login_arr = array(
+							'order__rewards_points' => $wps_wpr_number_of_rewards_points,
+							'date'                  => $today_date,
+						);
+						$wps_order_rewards_details['order__rewards_points'][] = $daily_login_arr;
+
+					} else {
+						if ( ! is_array( $wps_order_rewards_details ) ) {
+							$wps_order_rewards_details = array();
+						}
+						$daily_login_arr = array(
+							'order__rewards_points' => $wps_wpr_number_of_rewards_points,
+							'date'                  => $today_date,
+						);
+						$wps_order_rewards_details['order__rewards_points'][] = $daily_login_arr;
+					}
+
+					// update user total points, update user logs.
+					update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+					update_user_meta( $user_id, 'points_details', $wps_order_rewards_details );
+					update_user_meta( $user_id, 'wps_wpr_rewards_points_awarded_check', 'done' );
+
+					if ( is_array( $wps_wpr_notificatin_array ) && ! empty( $wps_wpr_notificatin_array ) ) {
+
+						$wps_wpr_email_subject     = isset( $wps_wpr_notificatin_array['wps_wpr_order_rewards_points_subject'] ) ? $wps_wpr_notificatin_array['wps_wpr_order_rewards_points_subject'] : '';
+						$wps_wpr_email_discription = isset( $wps_wpr_notificatin_array['wps_wpr_order_rewards_points_description'] ) ? $wps_wpr_notificatin_array['wps_wpr_order_rewards_points_description'] : '';
+						$wps_wpr_email_discription = str_replace( '[REWARDTOTALPOINT]', $wps_wpr_number_of_rewards_points, $wps_wpr_email_discription );
+						$wps_wpr_email_discription = str_replace( '[TOTALPOINTS]', $updated_points, $wps_wpr_email_discription );
+						$user                      = get_user_by( 'id', $user_id );
+						$user_name                 = $user->user_firstname;
+						$wps_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $wps_wpr_email_discription );
+
+						/*check is mail notification is enable or not*/
+						$check_enable = apply_filters( 'wps_wpr_check_custom_points_notification_enable', true, 'rewards_points_notify' );
+						if ( Points_Rewards_For_WooCommerce_Admin::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
+							$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
+							$email_status   = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+						}
+					}
 				}
 			}
 		}

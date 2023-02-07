@@ -202,8 +202,6 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'wps_wpr_general_settings', $plugin_admin, 'wps_wpr_subscription_settings' );
 			$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $plugin_admin, 'wps_wpr_subscription_renewal_point', 10, 1 );
 		}
-		// old mwb currency swithcer compatibility.
-		$this->loader->add_filter( 'wps_wpr_currency_filter', $plugin_admin, 'wps_wpr_currency_switcher' );
 		$this->loader->add_filter( 'admin_notices', $plugin_admin, 'wps_wpr_updgrade_notice' );
 	}
 	/**
@@ -292,6 +290,8 @@ class Points_Rewards_For_Woocommerce {
 			}
 			// subscription compatibility ( show message on account page ).
 			$this->loader->add_action( 'wps_extend_point_tab_section', $plugin_public, 'wps_wpr_show_subscription_message', 10, 1 );
+			// order rewards points functionality.
+			$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_public, 'wps_wpr_order_rewards_points_callback', 20, 2 );
 		}
 	}
 

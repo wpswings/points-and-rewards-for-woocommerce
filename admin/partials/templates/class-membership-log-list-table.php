@@ -231,6 +231,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @link https://www.wpswings.com/
 	 */
 	public function get_users_points() {
+
 		$args['meta_query'] = array(
 			'relation' => 'AND',
 			array(
@@ -242,13 +243,16 @@ class Membership_Log_List_Table extends WP_List_Table {
 
 			),
 		);
+
 		if ( isset( $_REQUEST['s'] ) ) {
 			$data           = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
 			$args['search'] = '*' . $data . '*';
 		}
-		$user_data        = new WP_User_Query( $args );
-		$user_data        = $user_data->get_results();
-		$points_data      = array();
+
+		$user_data   = new WP_User_Query( $args );
+		$user_data   = $user_data->get_results();
+		$points_data = array();
+
 		foreach ( $user_data as $key => $value ) {
 			$points_data[] = array(
 				'id'          => $value->data->ID,

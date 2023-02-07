@@ -1058,112 +1058,66 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'type'  => 'title',
 				),
 				array(
-					'title' => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
-					'type'  => 'checkbox',
-					'desc'  => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
-					'id'    => 'wps_wpr_general_setting_wallet_enablee',
+					'title'    => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
+					'type'     => 'checkbox',
+					'desc'     => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
+					'id'       => 'wps_wpr_general_setting_wallet_enablee',
 					'desc_tip' => __( 'Check this box to enable points conversion to the amount on the wallet.', 'points-and-rewards-for-woocommerce' ),
-					'default'   => 0,
+					'default'  => 0,
 				),
 				array(
-					'title' => __( 'Conversion rate', 'points-and-rewards-for-woocommerce' ),
-					'type'  => 'number_text',
+					'title'       => __( 'Conversion rate', 'points-and-rewards-for-woocommerce' ),
+					'type'        => 'number_text',
 					'number_text' => array(
 						array(
-							'type'  => 'number',
-							'id'    => 'wps_wpr_wallet_points_rate',
-							'class'   => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text',
+							'type'              => 'number',
+							'id'                => 'wps_wpr_wallet_points_rate',
+							'class'             => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text',
 							'custom_attributes' => array( 'min' => '"1"' ),
-							'desc_tip' => __(
+							'desc_tip'          => __(
 								'The entered point will be converted in the front end.',
 								'points-and-rewards-for-woocommerce'
 							),
-							'desc' => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),
+							'desc'              => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),
 						),
 						array(
-							'type'  => 'text',
-							'id'    => 'wps_wpr_wallet_price_rate',
-							'class'   => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
+							'type'              => 'text',
+							'id'                => 'wps_wpr_wallet_price_rate',
+							'class'             => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
 							'custom_attributes' => array( 'min' => '"1"' ),
-							'desc_tip' => __(
+							'desc_tip'          => __(
 								'Entered amount to convert',
 								'points-and-rewards-for-woocommerce'
 							),
-							'default' => '1',
-							'curr' => get_woocommerce_currency_symbol(),
+							'default'           => '1',
+							'curr'              => get_woocommerce_currency_symbol(),
 						),
 					),
 				),
 
 				array(
-					'type'  => 'sectionend',
+					'type' => 'sectionend',
 				),
 
 			);
 			$wps_wpr_general_settings  = $this->insert_key_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 150 );
 		}
-			return $wps_wpr_general_settings;
+		return $wps_wpr_general_settings;
 	}
-		/**
-		 * Insert array
-		 *
-		 * @name insert_key_value_pair
-		 * @since    1.0.0
-		 * @param array $arr array of the settings.
-		 * @param array $inserted_array new array of the settings.
-		 * @param int   $index index of the array.
-		 */
+
+	/**
+	 * Insert array
+	 *
+	 * @name insert_key_value_pair
+	 * @since    1.0.0
+	 * @param array $arr array of the settings.
+	 * @param array $inserted_array new array of the settings.
+	 * @param int   $index index of the array.
+	 */
 	public function insert_key_value_pair( $arr, $inserted_array, $index ) {
 		$arrayend   = array_splice( $arr, $index );
 		$arraystart = array_splice( $arr, 0, $index );
 		return ( array_merge( $arraystart, $inserted_array, $arrayend ) );
-	}
-	/**
-	 * Mwb_wpr_currency_switcher function
-	 *
-	 * @param [array] $coupon_settings for coupon setting.
-	 * @return array
-	 */
-	public function wps_wpr_currency_switcher( $coupon_settings ) {
-		if ( is_plugin_active( 'wps-multi-currency-switcher-for-woocommerce/wps-multi-currency-switcher-for-woocommerce.php' ) && ! empty( get_option( 'mmcsfw_radio_switch_demo', '' ) ) ) {
-			$new_inserted_array = array();
-			$new_array = array();
-			$index = get_option( 'wps_mmcsfw_number_of_currency', '' );
-			$wps_default_symbol = get_option( 'woocommerce_currency' );
-			if ( ! empty( $index ) ) {
-
-				for ( $i = 1; $i <= $index; $i++ ) {
-
-					if ( get_option( 'wps_mmcsfw_text_currency_' . $i ) == $wps_default_symbol ) {
-						continue;
-					}
-					if ( ! empty( get_option( 'wps_mmcsfw_text_currency_' . $i ) ) ) {
-						$new_array[] = array(
-							'type'  => 'text',
-							'id'    => 'wps_mmcsfw_text_currency_' . $i,
-							'default'  => '1',
-							'class'   => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
-							'custom_attributes' => array( 'min' => '"1"' ),
-							'desc' => __( ' = ', 'points-and-rewards-for-woocommerce' ),
-							'curr' => get_option( 'wps_mmcsfw_symbol_' . get_option( 'wps_mmcsfw_text_currency_' . $i ) ),
-
-						);
-						$new_array[] = array(
-							'type'  => 'number',
-							'id'    => 'wps_wpr_currency_' . $i . '_points',
-							'class'   => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
-							'default'  => '1',
-							'custom_attributes' => array( 'min' => '"1"' ),
-							'desc' => __( ' Points ', 'points-and-rewards-for-woocommerce' ),
-							'curr' => '',
-						);
-
-					}
-				}
-				$coupon_settings = array_merge( $coupon_settings, $new_array );
-			}
-		}
-		return $coupon_settings;
 	}
 
 	/**
@@ -1225,11 +1179,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 				$variable_product = get_posts(
 					array(
-						'post_type' => 'product_variation',
-						'post_status'    => array( 'publish', 'draft', 'trash', 'wc-pending', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed' ),
-						'numberposts'    => -1,
-						'meta_key' => $product_meta_array, // phpcs:ignore
-						'fields'         => 'ids',
+						'post_type'   => 'product_variation',
+						'post_status' => array( 'publish', 'draft', 'trash', 'wc-pending', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed' ),
+						'numberposts' => -1,
+						'meta_key'    => $product_meta_array, // phpcs:ignore
+						'fields'      => 'ids',
 					)
 				);
 
@@ -1365,6 +1319,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		}
 		return compact( 'users' );
 	}
+
 	/**
 	 * Migration to new domain notice.
 	 */
@@ -1436,6 +1391,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			<?php
 		}
 	}
+
 	/**
 	 * Wps_par_get_count_users function
 	 *
