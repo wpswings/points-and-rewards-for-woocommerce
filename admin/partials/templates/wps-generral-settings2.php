@@ -266,7 +266,7 @@ $wps_wpr_general_settings = array(
 		'desc_tip'          => __( 'Set the number of points that user will get when reach the maximum number of order.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title'    => __( 'Enable to show order message on cart page', 'points-and-rewards-for-woocommerce' ),
+		'title'    => __( 'Enable to show reward message on Cart Page', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'checkbox',
 		'id'       => 'wps_wpr_enable_to_show_order_reward_message',
 		'desc_tip' => __( 'Please enable this to show message for user to know how much points he/she will get when reach oredr limit.', 'points-and-rewards-for-woocommerce' ),

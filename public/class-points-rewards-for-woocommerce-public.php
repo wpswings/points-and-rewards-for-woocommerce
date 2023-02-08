@@ -2045,14 +2045,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param array $data data of the order.
 	 */
 	public function wps_wpr_woocommerce_checkout_update_order_meta( $order_id, $data ) {
-		$user_id = get_current_user_id();
-		$user = get_user_by( 'ID', $user_id );
-		$user_email = $user->user_email;
-		$woo_ver = WC()->version;
-		$deduct_point = '';
-		$points_deduct = 0;
-		$wps_wpr_is_pnt_fee_applied = false;
-		$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
+		$user_id    = get_current_user_id();
 		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 		/*Get the cart points rate*/
 		$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
@@ -2115,9 +2108,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param int    $fee_to_point points that will be applied.
 	 */
 	public function wps_wpr_send_points_deducted_mail( $user_id, $type, $fee_to_point ) {
-		$user = get_user_by( 'ID', $user_id );
+		$user       = get_user_by( 'ID', $user_id );
 		$user_email = $user->user_email;
-		$user_name = $user->user_login;
+		$user_name  = $user->user_login;
 		$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
 		/*check if not empty the notification array*/
 		if ( ! empty( $wps_wpr_notificatin_array ) && is_array( $wps_wpr_notificatin_array ) ) {
@@ -2163,10 +2156,10 @@ class Points_Rewards_For_WooCommerce_Public {
 			$quantity = 1;
 		}
 		/*Get current user id*/
-		$user_id = get_current_user_ID();
-		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+		$user_id       = get_current_user_ID();
+		$get_points    = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 		$product_types = wp_get_object_terms( $product_id, 'product_type' );
-		$check_enable = get_post_meta( $product_id, 'wps_product_points_enable', 'no' );
+		$check_enable  = get_post_meta( $product_id, 'wps_product_points_enable', 'no' );
 		if ( 'yes' == $check_enable ) {
 			/*Check is exists the variation id*/
 			if ( isset( $variation_id ) && ! empty( $variation_id ) && $variation_id > 0 ) {
@@ -2291,7 +2284,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since 1.0.0
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
-	 * @param array  $item  array of the items.
+	 * @param object $item  array of the items.
 	 * @param string $cart_key  key of the cart.
 	 * @param array  $values  array of the cart meta data.
 	 * @param array  $order  array of the order.
@@ -2317,8 +2310,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since 1.0.0
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
-	 * @param int   $price price of the product.
-	 * @param array $product_data product data of the product.
+	 * @param int    $price price of the product.
+	 * @param object $product_data product data of the product.
 	 */
 	public function wps_wpr_user_level_discount_on_price( $price, $product_data ) {
 		// check allowed user for points features.
@@ -2381,12 +2374,12 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since 1.0.0
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
-	 * @param array $products array of the products all details.
+	 * @param object $products array of the products all details.
 	 */
 	public function check_exclude_sale_products( $products ) {
 		$membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
-		$exclude_sale_product = isset( $membership_settings_array['exclude_sale_product'] ) ? intval( $membership_settings_array['exclude_sale_product'] ) : 0;
-		$exclude = false;
+		$exclude_sale_product      = isset( $membership_settings_array['exclude_sale_product'] ) ? intval( $membership_settings_array['exclude_sale_product'] ) : 0;
+		$exclude                    = false;
 		if ( $exclude_sale_product && $products->is_on_sale() ) {
 			$exclude = true;
 		} else {
@@ -2403,7 +2396,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since 1.0.0
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
-	 * @param array $cart array of the cart.
+	 * @param object $cart array of the cart.
 	 */
 	public function wps_wpr_woocommerce_before_calculate_totals( $cart ) {
 		// check allowed user for points features.
@@ -2425,20 +2418,20 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Get the membership level*/
 		$wps_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
 		/*Get the current user*/
-		$user = wp_get_current_user();
+		$user    = wp_get_current_user();
 		$user_id = $user->ID;
 		/*Get the total points of the user*/
 		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 		foreach ( $cart->cart_contents as $key => $value ) {
-			$product_id = $value['product_id'];
-			$pro_quant = $value['quantity'];
-			$_product = wc_get_product( $product_id );
+			$product_id          = $value['product_id'];
+			$pro_quant           = $value['quantity'];
+			$_product            = wc_get_product( $product_id );
 			$product_is_variable = $this->wps_wpr_check_whether_product_is_variable( $_product );
-			$reg_price = $_product->get_price();
+			$reg_price           = $_product->get_price();
 			if ( isset( $value['variation_id'] ) && ! empty( $value['variation_id'] ) ) {
-				$variation_id = $value['variation_id'];
+				$variation_id     = $value['variation_id'];
 				$variable_product = wc_get_product( $variation_id );
-				$variable_price = $variable_product->get_price();
+				$variable_price   = $variable_product->get_price();
 			}
 			if ( isset( $wps_wpr_mem_expr ) && ! empty( $wps_wpr_mem_expr ) && $today_date <= $wps_wpr_mem_expr ) {
 				if ( isset( $user_level ) && ! empty( $user_level ) ) {
@@ -2518,10 +2511,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_update_cart_points( $cart_updated ) {
 		if ( $cart_updated ) {
-			$cart = WC()->session->get( 'cart' );
-			$user_id = get_current_user_ID();
+			$cart       = WC()->session->get( 'cart' );
+			$user_id    = get_current_user_ID();
 			$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-			$contents = WC()->cart->get_cart();
+			$contents   = WC()->cart->get_cart();
 			if ( is_array( $contents ) && ! empty( $contents ) ) {
 				foreach ( $contents as $key => $value ) {
 					if ( isset( WC()->cart->cart_contents[ $key ]['product_meta'] ) ) {
@@ -2554,9 +2547,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since 1.0.0
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
-	 * @param array $fee_taxes   taxes array.
-	 * @param array $fee   object array of the fee.
-	 * @param array $object  object of the add fee.
+	 * @param array  $fee_taxes   taxes array.
+	 * @param object $fee   object array of the fee.
+	 * @param array  $object  object of the add fee.
 	 */
 	public function wps_wpr_fee_tax_calculation( $fee_taxes, $fee, $object ) {
 		$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
@@ -2698,10 +2691,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_wpml_register_endpoint( $query_vars, $wc_vars, $obj ) {
 
-		$query_vars['points'] = $obj->get_endpoint_translation( 'points', isset( $wc_vars['points'] ) ? $wc_vars['points'] : 'points' );
-
+		$query_vars['points']   = $obj->get_endpoint_translation( 'points', isset( $wc_vars['points'] ) ? $wc_vars['points'] : 'points' );
 		$query_vars['view-log'] = $obj->get_endpoint_translation( 'view-log', isset( $wc_vars['view-log'] ) ? $wc_vars['view-log'] : 'view-log' );
-
 		return $query_vars;
 	}
 
@@ -2725,22 +2716,20 @@ class Points_Rewards_For_WooCommerce_Public {
 		}
 		return $endpoint;
 	}
-		/**
-		 * This function updates cart contents before adding into the cart.
-		 *
-		 * @param [mixed] $cart_contents due to cart contents.
-		 * @return $cart_contents.
-		 */
+
+	/**
+	 * This function updates cart contents before adding into the cart.
+	 *
+	 * @param [mixed] $cart_contents due to cart contents.
+	 * @return $cart_contents.
+	 */
 	public function wps_wpr_woocommerce_content_change( $cart_contents ) {
 
 		if ( ! empty( $cart_contents ) ) {
-
 			foreach ( $cart_contents as $key => $value ) {
 
-				$product    = wc_get_product( $cart_contents[ $key ]['product_id'] );
-
+				$product       = wc_get_product( $cart_contents[ $key ]['product_id'] );
 				$global_enable = get_option( 'wps_wpr_assign_products_points', true );
-
 				if ( $product->get_type() == 'variable' ) {
 
 					if ( isset( $cart_contents[ $key ]['variation_id'] ) && ! empty( $cart_contents[ $key ]['variation_id'] ) ) {
@@ -2777,6 +2766,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		}
 	}
+
 	/**
 	 * Mwb_wpr_add_wallet_generation function
 	 *
@@ -2813,6 +2803,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 	}
+
 	/**
 	 * Mwb_wpr_generate_custom_wallet function
 	 *
@@ -3210,7 +3201,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_number_of_rewards_points      = ! empty( $wps_wpr_settings_gallery['wps_wpr_number_of_rewards_points'] ) ? $wps_wpr_settings_gallery['wps_wpr_number_of_rewards_points'] : 0;
 
 		// check order rewards setting enable or not.
-		if ( '1' == $wps_wpr_enable_order_rewards_settings ) {
+		if ( 1 === $wps_wpr_enable_order_rewards_settings ) {
 
 			// get particular user completed order.
 			$customer_orders = get_posts(

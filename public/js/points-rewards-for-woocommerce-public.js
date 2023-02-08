@@ -66,19 +66,19 @@
 					'#wps_cart_points_apply',
 					function(){
 						var user_id                  = $( this ).data( 'id' );
-						var user_total_point         = wps_wpr.wps_user_current_points;
+						var user_total_point         = wps_wpr.wps_user_current_points.trim();
 						var order_limit              = $( this ).data( 'order-limit' );
 						var message                  = '';
 						var html                     = '';
 						var wps_wpr_cart_points_rate = wps_wpr.wps_wpr_cart_points_rate;
 						var wps_wpr_cart_price_rate  = wps_wpr.wps_wpr_cart_price_rate;
-						var wps_cart_points          = $( '#wps_cart_points' ).val();
+						var wps_cart_points          = $( '#wps_cart_points' ).val().trim();
 
 						$( "#wps_wpr_cart_points_notice" ).html( "" );
 						$( "wps_wpr_cart_points_success" ).html( "" );
 
 						if (wps_cart_points !== 'undefined' && wps_cart_points !== '' && wps_cart_points !== null && wps_cart_points > 0) {
-							if (user_total_point !== null && user_total_point > 0 && user_total_point >= wps_cart_points ) {
+							if (user_total_point !== null && user_total_point > 0 && parseFloat( user_total_point ) >= parseFloat( wps_cart_points ) ) {
 
 								block( $( '.woocommerce-cart-form' ) );
 								block( $( '.woocommerce-checkout' ) );
