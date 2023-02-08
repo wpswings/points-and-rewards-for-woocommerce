@@ -41,6 +41,4 @@ class Points_Rewards_For_Woocommerce_I18n {
 
 	}
 
-
-
 }

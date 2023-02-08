@@ -76,13 +76,11 @@ class Points_Rewards_For_Woocommerce {
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
-
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->init();
-
 	}
 
 	/**
@@ -303,8 +301,8 @@ class Points_Rewards_For_Woocommerce {
 	 */
 	public function wps_rwpr_is_plugin_enable() {
 
-		$is_enable = false;
-		$wps_wpr_enable = '';
+		$is_enable        = false;
+		$wps_wpr_enable   = '';
 		$general_settings = get_option( 'wps_wpr_settings_gallery', true );
 		if ( isset( $general_settings['wps_wpr_general_setting_enable'] ) ) {
 			$wps_wpr_enable = $general_settings['wps_wpr_general_setting_enable'];

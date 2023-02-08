@@ -95,8 +95,8 @@ class Points_Rewards_For_WooCommerce_Settings {
 			<input type="number" 
 			<?php
 			if ( array_key_exists( 'custom_attributes', $value ) ) {
-
 				foreach ( $value['custom_attributes'] as $attribute_name => $attribute_val ) {
+
 					echo esc_html( $attribute_name );
 					$allowed_tags = $this->wps_wpr_allowed_html();
 					echo wp_kses( "=$attribute_val", $allowed_tags );

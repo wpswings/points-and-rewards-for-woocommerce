@@ -160,6 +160,7 @@ if ( $activated ) {
 		}
 	}
 	add_shortcode( 'MYCURRENTUSERLEVEL', 'wps_wpr_mycurrentlevel_shortcode' );
+
 	/**
 	 * Display your Current Level by using shortcode
 	 *
@@ -183,6 +184,7 @@ if ( $activated ) {
 		}
 	}
 	add_shortcode( 'SIGNUPNOTIFICATION', 'wps_wpr_signupnotif_shortcode' );
+
 	/**
 	 * Display the SIgnup Notification by using shortcode
 	 *
@@ -232,7 +234,6 @@ if ( $activated ) {
 		$my_link = array(
 			'settings' => '<a href="' . admin_url( 'admin.php?page=wps-rwpr-setting' ) . '">' . esc_html__( 'Settings', 'points-and-rewards-for-woocommerce' ) . '</a>',
 		);
-
 		$mfw_plugins = get_plugins();
 		if ( ! isset( $mfw_plugins['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
 
@@ -261,9 +262,9 @@ if ( $activated ) {
 		$wp_date     = date_i18n( $date_format, $saved_date );
 		$wp_time     = date_i18n( $time_format, $saved_date );
 		$return_date = $wp_date . ' ' . $wp_time;
-
 		return $return_date;
 	}
+
 	if ( ! function_exists( 'array_key_first' ) ) {
 		/**
 		 * This function is used to return the first key
@@ -322,6 +323,7 @@ if ( $activated ) {
 				update_option( 'wps_par_org_convert_keys', true );
 		}
 	}
+
 	/**
 	 * Wps_api_setting_addon function
 	 *
@@ -339,6 +341,7 @@ if ( $activated ) {
 		}
 		update_option( 'wps_wpr_api_features_settings', $general_migrate_settings );
 	}
+
 	/**
 	 * Wps_product_purchase_point function
 	 *
@@ -356,6 +359,7 @@ if ( $activated ) {
 		}
 		update_option( 'wps_wpr_product_purchase_settings', $general_migrate_settings );
 	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -372,6 +376,7 @@ if ( $activated ) {
 		}
 		update_option( 'wps_wpr_points_expiration_settings', $general_migrate_settings );
 	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -388,6 +393,7 @@ if ( $activated ) {
 		}
 		update_option( 'wps_wpr_notification_addon_settings', $general_migrate_settings );
 	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -407,6 +413,7 @@ if ( $activated ) {
 			update_option( 'wps_wpr_notify_hide_notification', $mesg_wps_value );
 		}
 	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -424,6 +431,7 @@ if ( $activated ) {
 		update_option( 'wps_wpr_settings_gallery', $general_migrate_settings );
 
 	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -440,6 +448,7 @@ if ( $activated ) {
 		}
 		update_option( 'wps_wpr_coupons_gallery', $general_migrate_settings );
 	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -456,8 +465,8 @@ if ( $activated ) {
 			}
 		}
 		update_option( 'wps_wpr_notificatin_array', $general_migrate_settings );
-
 	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -474,6 +483,7 @@ if ( $activated ) {
 		}
 		update_option( 'wps_wpr_membership_settings', $general_migrate_settings );
 	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -491,6 +501,7 @@ if ( $activated ) {
 		}
 		update_option( 'wps_wpr_assign_products_points', $general_migrate_settings );
 	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -506,10 +517,9 @@ if ( $activated ) {
 				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
 			}
 		}
-
 		update_option( 'wps_wpr_other_settings', $general_migrate_settings );
-
 	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -525,13 +535,10 @@ if ( $activated ) {
 				$general_migrate_settings[ str_replace( 'mwb', 'wps', $key ) ] = str_replace( 'mwb', 'wps', $value );
 			}
 		}
-
 		update_option( 'wps_wpr_order_total_settings', $general_migrate_settings );
 	}
 
 	if ( true === $wps_par_exists ) {
-
-
 
 		add_action( 'admin_notices', 'wps_par_check_and_inform_update' );
 		/**
@@ -539,13 +546,14 @@ if ( $activated ) {
 		 */
 		function wps_par_check_and_inform_update() {
 
-			$update_file        = plugin_dir_path( dirname( __FILE__ ) ) . 'ultimate-woocommerce-points-and-rewards/class-ultimate-woocommerce-points-and-rewards-update.php';
-			$wps_plug           = get_plugins();
+			$update_file = plugin_dir_path( dirname( __FILE__ ) ) . 'ultimate-woocommerce-points-and-rewards/class-ultimate-woocommerce-points-and-rewards-update.php';
+			$wps_plug    = get_plugins();
 			if ( isset( $wps_plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
 				if ( version_compare( $wps_plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php']['Version'], '1.2.1', '<' ) ) {
 					$update_file = plugin_dir_path( dirname( __FILE__ ) ) . 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards-update.php';
 				}
 			}
+
 			// If present but not active.
 			if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 				if ( file_exists( $update_file ) ) {
@@ -563,6 +571,7 @@ if ( $activated ) {
 			}
 		}
 	}
+
 	/**
 	 * Migration to new domain notice.
 	 *
@@ -672,12 +681,12 @@ if ( $activated ) {
 			<?php
 		}
 	}
+
 	if ( true === $wps_par_exists ) {
 		unset( $_GET['activate'] );
 		deactivate_plugins( plugin_basename( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) );
 	}
 } else {
-
 
 	// WooCommerce is not active so deactivate this plugin.
 	add_action( 'admin_init', 'rewardeem_woocommerce_points_rewards_activation_failure' );
@@ -715,7 +724,6 @@ if ( $activated ) {
 
 			<?php
 		}
-
 	}
 }
 

@@ -380,7 +380,7 @@ endif;
 				</div>
 				<?php } ?>
 					<?php if ( 'sectionend' == $value['type'] ) : ?>
-				 </div>	
+				</div>	
 				<?php endif; ?>
 			<?php } ?> 		
 		</div>

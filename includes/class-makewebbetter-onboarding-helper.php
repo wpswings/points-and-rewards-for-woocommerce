@@ -96,7 +96,7 @@ class Makewebbetter_Onboarding_Helper {
 	public function __construct() {
 
 		self::$store_name = get_bloginfo( 'name' );
-		self::$store_url = home_url();
+		self::$store_url  = home_url();
 
 		if ( defined( 'WPS_PAR_ONBOARD_PLUGIN_NAME' ) ) {
 			self::$plugin_name = WPS_PAR_ONBOARD_PLUGIN_NAME;
@@ -190,10 +190,10 @@ class Makewebbetter_Onboarding_Helper {
 				'makewebbetter-onboarding-scripts',
 				'wps',
 				array(
-					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
-					'auth_nonce'    => wp_create_nonce( 'wps_onboarding_nonce' ),
-					'current_screen'    => $pagenow,
-					'current_supported_slug'    => apply_filters( 'wps_deactivation_supported_slug', array() ),
+					'ajaxurl'                => admin_url( 'admin-ajax.php' ),
+					'auth_nonce'             => wp_create_nonce( 'wps_onboarding_nonce' ),
+					'current_screen'         => $pagenow,
+					'current_supported_slug' => apply_filters( 'wps_deactivation_supported_slug', array() ),
 				)
 			);
 		}
@@ -297,8 +297,8 @@ class Makewebbetter_Onboarding_Helper {
 		}
 
 		$currency_symbol = get_woocommerce_currency_symbol();
-		$store_name = get_bloginfo( 'name' );
-		$store_url = get_home_url();
+		$store_name      = get_bloginfo( 'name' );
+		$store_url       = get_home_url();
 
 		/**
 		 * Do not repeat id index.
@@ -319,54 +319,54 @@ class Makewebbetter_Onboarding_Helper {
 			 */
 
 			rand() => array(
-				'id' => 'monthly-revenue',
-				'label' => esc_html__( 'What is your monthly revenue?', 'points-and-rewards-for-woocommerce' ),
-				'type' => 'radio',
-				'name' => 'monthly_revenue_',
-				'value' => '',
-				'multiple' => 'no',
-				'required' => 'yes',
+				'id'          => 'monthly-revenue',
+				'label'       => esc_html__( 'What is your monthly revenue?', 'points-and-rewards-for-woocommerce' ),
+				'type'        => 'radio',
+				'name'        => 'monthly_revenue_',
+				'value'       => '',
+				'multiple'    => 'no',
+				'required'    => 'yes',
 				'extra-class' => '',
-				'options' => array(
-					'0-500'         => $currency_symbol . '0-' . $currency_symbol . '500',
-					'501-5000'          => $currency_symbol . '501-' . $currency_symbol . '5000',
-					'5001-10000'        => $currency_symbol . '5001-' . $currency_symbol . '10000',
-					'10000+'        => $currency_symbol . '10000+',
+				'options'     => array(
+					'0-500'      => $currency_symbol . '0-' . $currency_symbol . '500',
+					'501-5000'   => $currency_symbol . '501-' . $currency_symbol . '5000',
+					'5001-10000' => $currency_symbol . '5001-' . $currency_symbol . '10000',
+					'10000+'     => $currency_symbol . '10000+',
 				),
 			),
 
 			rand() => array(
-				'id' => 'industry_type',
-				'label' => esc_html__( 'What industry defines your business?', 'points-and-rewards-for-woocommerce' ),
-				'type' => 'select',
-				'name' => 'industry_type_',
-				'value' => '',
-				'multiple' => 'yes',
-				'required' => 'yes',
+				'id'          => 'industry_type',
+				'label'       => esc_html__( 'What industry defines your business?', 'points-and-rewards-for-woocommerce' ),
+				'type'        => 'select',
+				'name'        => 'industry_type_',
+				'value'       => '',
+				'multiple'    => 'yes',
+				'required'    => 'yes',
 				'extra-class' => '',
-				'options' => array(
-					'agency'                => __( 'Agency', 'points-and-rewards-for-woocommerce' ),
-					'consumer-services'     => __( 'Consumer Services', 'points-and-rewards-for-woocommerce' ),
-					'ecommerce'             => __( 'Ecommerce', 'points-and-rewards-for-woocommerce' ),
-					'financial-services'    => __( 'Financial Services', 'points-and-rewards-for-woocommerce' ),
-					'healthcare'            => __( 'Healthcare', 'points-and-rewards-for-woocommerce' ),
-					'manufacturing'         => __( 'Manufacturing', 'points-and-rewards-for-woocommerce' ),
+				'options'     => array(
+					'agency'                  => __( 'Agency', 'points-and-rewards-for-woocommerce' ),
+					'consumer-services'       => __( 'Consumer Services', 'points-and-rewards-for-woocommerce' ),
+					'ecommerce'               => __( 'Ecommerce', 'points-and-rewards-for-woocommerce' ),
+					'financial-services'      => __( 'Financial Services', 'points-and-rewards-for-woocommerce' ),
+					'healthcare'              => __( 'Healthcare', 'points-and-rewards-for-woocommerce' ),
+					'manufacturing'           => __( 'Manufacturing', 'points-and-rewards-for-woocommerce' ),
 					'nonprofit-and-education' => __( 'Nonprofit and Education', 'points-and-rewards-for-woocommerce' ),
-					'professional-services' => __( 'Professional Services', 'points-and-rewards-for-woocommerce' ),
-					'real-estate'           => __( 'Real Estate', 'points-and-rewards-for-woocommerce' ),
-					'software'              => __( 'Software', 'points-and-rewards-for-woocommerce' ),
-					'startups'              => __( 'Startups', 'points-and-rewards-for-woocommerce' ),
-					'restaurant'            => __( 'Restaurant', 'points-and-rewards-for-woocommerce' ),
-					'fitness'               => __( 'Fitness', 'points-and-rewards-for-woocommerce' ),
-					'jewelry'               => __( 'Jewelry', 'points-and-rewards-for-woocommerce' ),
-					'beauty'                => __( 'Beauty', 'points-and-rewards-for-woocommerce' ),
-					'celebrity'             => __( 'Celebrity', 'points-and-rewards-for-woocommerce' ),
-					'gaming'                => __( 'Gaming', 'points-and-rewards-for-woocommerce' ),
-					'government'            => __( 'Government', 'points-and-rewards-for-woocommerce' ),
-					'sports'                => __( 'Sports', 'points-and-rewards-for-woocommerce' ),
-					'retail-store'          => __( 'Retail Store', 'points-and-rewards-for-woocommerce' ),
-					'travel'                => __( 'Travel', 'points-and-rewards-for-woocommerce' ),
-					'political-campaign'    => __( 'Political Campaign', 'points-and-rewards-for-woocommerce' ),
+					'professional-services'   => __( 'Professional Services', 'points-and-rewards-for-woocommerce' ),
+					'real-estate'             => __( 'Real Estate', 'points-and-rewards-for-woocommerce' ),
+					'software'                => __( 'Software', 'points-and-rewards-for-woocommerce' ),
+					'startups'                => __( 'Startups', 'points-and-rewards-for-woocommerce' ),
+					'restaurant'              => __( 'Restaurant', 'points-and-rewards-for-woocommerce' ),
+					'fitness'                 => __( 'Fitness', 'points-and-rewards-for-woocommerce' ),
+					'jewelry'                 => __( 'Jewelry', 'points-and-rewards-for-woocommerce' ),
+					'beauty'                  => __( 'Beauty', 'points-and-rewards-for-woocommerce' ),
+					'celebrity'               => __( 'Celebrity', 'points-and-rewards-for-woocommerce' ),
+					'gaming'                  => __( 'Gaming', 'points-and-rewards-for-woocommerce' ),
+					'government'              => __( 'Government', 'points-and-rewards-for-woocommerce' ),
+					'sports'                  => __( 'Sports', 'points-and-rewards-for-woocommerce' ),
+					'retail-store'            => __( 'Retail Store', 'points-and-rewards-for-woocommerce' ),
+					'travel'                  => __( 'Travel', 'points-and-rewards-for-woocommerce' ),
+					'political-campaign'      => __( 'Political Campaign', 'points-and-rewards-for-woocommerce' ),
 				),
 			),
 
@@ -381,51 +381,51 @@ class Makewebbetter_Onboarding_Helper {
 			),
 
 			rand() => array(
-				'id' => 'onboard-number',
-				'label' => esc_html__( 'What is your contact number?', 'points-and-rewards-for-woocommerce' ),
-				'type' => 'text',
-				'name' => 'phone',
-				'value' => '',
-				'required' => 'yes',
+				'id'          => 'onboard-number',
+				'label'       => esc_html__( 'What is your contact number?', 'points-and-rewards-for-woocommerce' ),
+				'type'        => 'text',
+				'name'        => 'phone',
+				'value'       => '',
+				'required'    => 'yes',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'store-name',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'company',
-				'value' => $store_name,
-				'required' => '',
+				'id'          => 'store-name',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'company',
+				'value'       => $store_name,
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'store-url',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'website',
-				'value' => $store_url,
-				'required' => '',
+				'id'          => 'store-url',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'website',
+				'value'       => $store_url,
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'show-counter',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'show-counter',
-				'value' => get_option( 'onboarding-data-sent', 'not-sent' ),
-				'required' => '',
+				'id'          => 'show-counter',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'show-counter',
+				'value'       => get_option( 'onboarding-data-sent', 'not-sent' ),
+				'required'    => '',
 				'extra-class' => '',
 			),
 			rand() => array(
-				'id' => 'plugin-name',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'org_plugin_name',
-				'value' => self::$plugin_name,
-				'required' => '',
+				'id'          => 'plugin-name',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'org_plugin_name',
+				'value'       => self::$plugin_name,
+				'required'    => '',
 				'extra-class' => '',
 			),
 		);
@@ -447,7 +447,7 @@ class Makewebbetter_Onboarding_Helper {
 		}
 
 		$store_name = get_bloginfo( 'name' );
-		$store_url = get_home_url();
+		$store_url  = get_home_url();
 
 		/**
 		 * Do not repeat id index.
@@ -548,15 +548,15 @@ class Makewebbetter_Onboarding_Helper {
 	 * @param       string $base_class         The basic class for the label.
 	 */
 	public function render_field_html( $attr = array(), $base_class = 'on-boarding' ) {
-		$id     = ! empty( $attr['id'] ) ? $attr['id'] : '';
-		$name   = ! empty( $attr['name'] ) ? $attr['name'] : '';
-		$label  = ! empty( $attr['label'] ) ? $attr['label'] : '';
-		$type   = ! empty( $attr['type'] ) ? $attr['type'] : '';
-		$class  = ! empty( $attr['extra-class'] ) ? $attr['extra-class'] : '';
-		$value  = ! empty( $attr['value'] ) ? $attr['value'] : '';
-		$options    = ! empty( $attr['options'] ) ? $attr['options'] : array();
-		$multiple   = ! empty( $attr['multiple'] ) && 'yes' == $attr['multiple'] ? 'yes' : 'no';
-		$required   = ! empty( $attr['required'] ) ? 'required="required"' : '';
+		$id       = ! empty( $attr['id'] ) ? $attr['id'] : '';
+		$name     = ! empty( $attr['name'] ) ? $attr['name'] : '';
+		$label    = ! empty( $attr['label'] ) ? $attr['label'] : '';
+		$type     = ! empty( $attr['type'] ) ? $attr['type'] : '';
+		$class    = ! empty( $attr['extra-class'] ) ? $attr['extra-class'] : '';
+		$value    = ! empty( $attr['value'] ) ? $attr['value'] : '';
+		$options  = ! empty( $attr['options'] ) ? $attr['options'] : array();
+		$multiple = ! empty( $attr['multiple'] ) && 'yes' == $attr['multiple'] ? 'yes' : 'no';
+		$required = ! empty( $attr['required'] ) ? 'required="required"' : '';
 
 		$html = '';
 
@@ -585,8 +585,7 @@ class Makewebbetter_Onboarding_Helper {
 					<?php endforeach; ?>
 
 					<?php
-				 endif;
-
+				endif;
 				break;
 
 			case 'checkbox':
@@ -595,10 +594,10 @@ class Makewebbetter_Onboarding_Helper {
 					?>
 
 					<label class="on-boarding-label" for="<?php echo esc_attr( $id ); ?>'"><?php echo esc_attr( $label ); ?></label>
-					
+
 					<?php foreach ( $options as $option_id => $option_label ) : ?>
-						
-						   <div class="wps-<?php echo esc_html( $base_class ); ?>-checkbox-wrapper">
+
+						<div class="wps-<?php echo esc_html( $base_class ); ?>-checkbox-wrapper">
 						<input type="<?php echo esc_html( $type ); ?>" class="on-boarding-<?php echo esc_html( $type ); ?>-field <?php echo esc_html( $class ); ?>" value="<?php echo esc_html( $value ); ?>" id="<?php echo esc_html( $option_id ); ?>">
 						<label class="on-boarding-field-label" for="<?php echo esc_html( $option_id ); ?>"><?php echo esc_html( $option_label ); ?></label>
 						</div>
@@ -626,7 +625,7 @@ class Makewebbetter_Onboarding_Helper {
 						<?php endif; ?>
 
 						<?php foreach ( $options as $option_value => $option_label ) : ?>	
-						
+
 							<option class="on-boarding-options" value="<?php echo esc_attr( $option_value ); ?>"><?php echo esc_html( $option_label ); ?></option>
 
 						<?php endforeach; ?>
@@ -684,7 +683,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		check_ajax_referer( 'wps_onboarding_nonce', 'nonce' );
 
-		$form_data = ! empty( $_POST['form_data'] ) ? map_deep( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ), 'sanitize_text_field' ) : '';
+		$form_data      = ! empty( $_POST['form_data'] ) ? map_deep( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ), 'sanitize_text_field' ) : '';
 		$formatted_data = array();
 
 		if ( ! empty( $form_data ) && is_array( $form_data ) ) {
@@ -826,8 +825,8 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Handle_form_submission_for_hubspot function
 	 *
-	 * @param boolean $submission used for submission.
-	 * @param string  $action_type used for string.
+	 * @param array  $submission used for submission.
+	 * @param string $action_type used for string.
 	 * @return boolean
 	 */
 	protected function handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
