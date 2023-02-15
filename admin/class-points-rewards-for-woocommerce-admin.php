@@ -83,6 +83,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$pagescreen = $screen->id;
 
 			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
+
 				wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 				wp_enqueue_style( 'woocommerce_admin_styles' );
@@ -113,9 +114,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 				wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
 
 				wp_enqueue_script( 'woocommerce_admin' );
-				$args_cat   = array( 'taxonomy' => 'product_cat' );
-				$categories = get_terms( $args_cat );
-				$option_arr = array();
+				$args_cat     = array( 'taxonomy' => 'product_cat' );
+				$categories   = get_terms( $args_cat );
 				$option_categ = array();
 				if ( isset( $categories ) && ! empty( $categories ) ) {
 					foreach ( $categories as $category ) {
@@ -168,10 +168,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 				wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
 				wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
-
 			}
 		}
 	}
+
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
@@ -181,27 +181,24 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function swal_enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
-
 		if ( isset( $screen->id ) ) {
-			$pagescreen = $screen->id;
 
 			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
 
 				wp_enqueue_script( 'wps_my_par_custom_js', plugin_dir_url( __FILE__ ) . 'js/points-rewards-for-woocommerce-admin-swal.js', array( 'jquery' ), $this->version, false );
-
 				wp_enqueue_script( $this->plugin_name . '-swal', plugin_dir_url( __FILE__ ) . 'js/swal.js', array( 'jquery' ), $this->version, false );
 				wp_enqueue_script( $this->plugin_name . '-swall', plugin_dir_url( __FILE__ ) . 'js/swall.js', array( 'jquery' ), $this->version, false );
 				wp_localize_script(
 					'wps_my_par_custom_js',
 					'localised',
 					array(
-						'ajaxurl'          => admin_url( 'admin-ajax.php' ),
-						'nonce'            => wp_create_nonce( 'wps-wpr-verify-nonce' ),
-						'callback'         => 'ajax_callbacks',
-						'pending_count'    => ! empty( $this->wps_par_get_count( 'pending' ) ) && is_array( $this->wps_par_get_count( 'pending' ) ) ? $this->wps_par_get_count( 'pending' ) : 0,
-						'pending_orders'   => $this->wps_par_get_count( 'pending', 'orders' ),
-						'completed_orders' => $this->wps_par_get_count( 'done', 'orders' ),
-						'completed_users'  => ! empty( $this->wps_par_get_count_users( 'users' ) ) && is_array( $this->wps_par_get_count_users( 'users' ) ) ? $this->wps_par_get_count_users( 'users' ) : 0,
+						'ajaxurl'               => admin_url( 'admin-ajax.php' ),
+						'nonce'                 => wp_create_nonce( 'wps-wpr-verify-nonce' ),
+						'callback'              => 'ajax_callbacks',
+						'pending_count'         => ! empty( $this->wps_par_get_count( 'pending' ) ) && is_array( $this->wps_par_get_count( 'pending' ) ) ? $this->wps_par_get_count( 'pending' ) : 0,
+						'pending_orders'        => $this->wps_par_get_count( 'pending', 'orders' ),
+						'completed_orders'      => $this->wps_par_get_count( 'done', 'orders' ),
+						'completed_users'       => ! empty( $this->wps_par_get_count_users( 'users' ) ) && is_array( $this->wps_par_get_count_users( 'users' ) ) ? $this->wps_par_get_count_users( 'users' ) : 0,
 						'completed_users_count' => ! empty( $this->wps_par_get_count_users( 'users' ) ) && is_array( $this->wps_par_get_count_users( 'users' ) ) ? count( $this->wps_par_get_count_users( 'users' ) ) : 0,
 					)
 				);
@@ -230,19 +227,18 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function wps_wpr_allowed_html() {
 		$allowed_tags = array(
 			'span' => array(
-				'class' => array(),
-				'title' => array(),
-				'style' => array(),
+				'class'    => array(),
+				'title'    => array(),
+				'style'    => array(),
 				'data-tip' => array(),
 			),
-			'min' => array(),
-			'max' => array(),
+			'min'   => array(),
+			'max'   => array(),
 			'class' => array(),
 			'style' => array(),
 			'<br>'  => array(),
 		);
 		return $allowed_tags;
-
 	}
 
 	/**
@@ -254,8 +250,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_rwpr_admin_setting() {
-		?>
-		<?php
 		include_once WPS_RWPR_DIR_PATH . '/admin/partials/points-rewards-for-woocommerce-admin-display.php';
 	}
 
@@ -275,9 +269,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 			/* Get the user points*/
 			$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 			/* Get the Input Values*/
-			$points     = sanitize_text_field( wp_unslash( $_POST['points'] ) );
-			$sign       = sanitize_text_field( wp_unslash( $_POST['sign'] ) );
-			$reason     = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
+			$points = sanitize_text_field( wp_unslash( $_POST['points'] ) );
+			$sign   = sanitize_text_field( wp_unslash( $_POST['sign'] ) );
+			$reason = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
 			/* calculate users points*/
 			if ( '+' === $sign ) {
 				$total_points = $get_points + $points;
@@ -320,7 +314,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public static function wps_wpr_update_points_details( $user_id, $type, $points, $data ) {
 
 		/* Get the points of the points details*/
-		$today_date = date_i18n( 'Y-m-d h:i:sa' );
+		$today_date   = date_i18n( 'Y-m-d h:i:sa' );
 		$admin_points = get_user_meta( $user_id, 'points_details', true );
 		if ( isset( $points ) && ! empty( $points ) ) {
 			/* Check the type of the array*/
@@ -387,7 +381,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 				if ( self::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
 					$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
-					$email_status = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+					$email_status   = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
 				}
 			}
 		}
@@ -405,6 +399,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		$wps_points_notification_enable = false;
 		$wps_wpr_notificatin_array      = get_option( 'wps_wpr_notificatin_array', true );
 		$wps_wpr_notificatin_enable     = isset( $wps_wpr_notificatin_array['wps_wpr_notification_setting_enable'] ) ? intval( $wps_wpr_notificatin_array['wps_wpr_notification_setting_enable'] ) : 0;
+
 		if ( 1 == $wps_wpr_notificatin_enable ) {
 			$wps_points_notification_enable = true;
 		}
@@ -453,6 +448,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function wps_wpr_get_user_points( $user_id ) {
 		$wps_wpr_total_points = 0;
 		$wps_wpr_points       = get_user_meta( $user_id, 'wps_wpr_points', true );
+
 		if ( ! empty( $wps_wpr_points ) ) {
 			$wps_wpr_total_points = $wps_wpr_points;
 		}
@@ -490,7 +486,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$loop                  = new WP_Query( $args );
 			while ( $loop->have_posts() ) :
 				$loop->the_post();
-				global $product;
 
 				$product_id              = $loop->post->ID;
 				$product_title           = $loop->post->post_title;
@@ -563,7 +558,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$allowed_tags = $this->wps_wpr_allowed_html();
+						$allowed_tags          = $this->wps_wpr_allowed_html();
 						$attribute_description = __( 'The entered text will be the name of the level for membership', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
@@ -581,7 +576,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$allowed_tags = $this->wps_wpr_allowed_html();
+						$allowed_tags          = $this->wps_wpr_allowed_html();
 						$attribute_description = __( 'Entered points need to be reached for this level', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 
@@ -597,7 +592,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$allowed_tags = $this->wps_wpr_allowed_html();
+						$allowed_tags          = $this->wps_wpr_allowed_html();
 						$attribute_description = __( 'Select the days, week, month, or year for the expiration of the current level', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						$exp_num = isset( $value['Exp_Number'] ) ? $value['Exp_Number'] : '';
@@ -662,7 +657,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$allowed_tags = $this->wps_wpr_allowed_html();
+						$allowed_tags          = $this->wps_wpr_allowed_html();
 						$attribute_description = __( 'Select Product Category', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
@@ -701,7 +696,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$allowed_tags = $this->wps_wpr_allowed_html();
+						$allowed_tags          = $this->wps_wpr_allowed_html();
 						$attribute_description = __( 'Product of selected category will get displayed in the Select Product Section', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
@@ -748,7 +743,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-						$allowed_tags = $this->wps_wpr_allowed_html();
+						$allowed_tags          = $this->wps_wpr_allowed_html();
 						$attribute_description = __( 'Entered Discount will be applied to the above-selected products', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
@@ -774,8 +769,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_add_membership_rule() {
 		global $public_obj;
-
 		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+
 			add_action( 'wps_wpr_add_membership_rule', array( $this, 'wps_wpr_add_rule_for_membership' ), 10 );
 			add_action( 'wps_wpr_order_total_points', array( $this, 'wps_wpr_add_order_total_points' ), 10, 3 );
 		}
@@ -796,8 +791,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function wps_wpr_add_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value ) {
 
 		if ( isset( $thankyouorder_min ) && null != $thankyouorder_min && isset( $thankyouorder_max ) && null != $thankyouorder_max && isset( $thankyouorder_value ) && null != $thankyouorder_value ) {
-			$wps_wpr_no = 1;
 			if ( count( $thankyouorder_min ) == count( $thankyouorder_max ) && count( $thankyouorder_max ) == count( $thankyouorder_value ) ) {
+
 				?>
 				<table class="form-table wp-list-table widefat fixed striped">
 					<thead> 
@@ -829,7 +824,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 						<th><?php esc_html_e( 'Minimum', 'points-and-rewards-for-woocommerce' ); ?></th>
 						<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
 						<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
-		
 					</tr>
 				</thead>
 			<tbody  class="wps_wpr_thankyouorder_tbody">
@@ -856,29 +850,28 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_add_rule_for_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value, $key ) {
 		?>
-			
-				<tr valign="top">
-					<td class="forminp forminp-text">
-						<label for="wps_wpr_thankyouorder_minimum">
-							<input type="text" name="wps_wpr_thankyouorder_minimum[]" class="wps_wpr_thankyouorder_minimum input-text wc_input_price"  placeholder = "No minimum"  value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? esc_html( $thankyouorder_min[ $key ] ) : ''; ?>">
-						</label>
-					</td>
-					<td class="forminp forminp-text">
-						<label for="wps_wpr_thankyouorder_maximum">
-							<input type="text" name="wps_wpr_thankyouorder_maximum[]" class="wps_wpr_thankyouorder_maximum"  placeholder = "No maximum"  value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>" required>
-						</label>
-					</td>
-					<td class="forminp forminp-text">
-						<label for="wps_wpr_thankyouorder_current_type">
-							<input type="text" name="wps_wpr_thankyouorder_current_type[]" class="wps_wpr_thankyouorder_current_type input-text wc_input_price"  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? esc_html( $thankyouorder_value[ $key ] ) : ''; ?>">
-						</label>
-					</td>    
-					<?php if ( ! empty( $key ) ) : ?>                       
-						<td class="wps_wpr_remove_thankyouorder_content forminp forminp-text">
-							<input type="button" value="<?php esc_html_e( 'Remove', 'points-and-rewards-for-woocommerce' ); ?>" class="wps_wpr_remove_thankyouorder button" >
-						</td>
-					<?php endif; ?>
-				</tr>
+		<tr valign="top">
+			<td class="forminp forminp-text">
+				<label for="wps_wpr_thankyouorder_minimum">
+					<input type="text" name="wps_wpr_thankyouorder_minimum[]" class="wps_wpr_thankyouorder_minimum input-text wc_input_price"  placeholder = "No minimum"  value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? esc_html( $thankyouorder_min[ $key ] ) : ''; ?>">
+				</label>
+			</td>
+			<td class="forminp forminp-text">
+				<label for="wps_wpr_thankyouorder_maximum">
+					<input type="text" name="wps_wpr_thankyouorder_maximum[]" class="wps_wpr_thankyouorder_maximum"  placeholder = "No maximum"  value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>" required>
+				</label>
+			</td>
+			<td class="forminp forminp-text">
+				<label for="wps_wpr_thankyouorder_current_type">
+					<input type="text" name="wps_wpr_thankyouorder_current_type[]" class="wps_wpr_thankyouorder_current_type input-text wc_input_price"  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? esc_html( $thankyouorder_value[ $key ] ) : ''; ?>">
+				</label>
+			</td>    
+			<?php if ( ! empty( $key ) ) : ?>                       
+				<td class="wps_wpr_remove_thankyouorder_content forminp forminp-text">
+					<input type="button" value="<?php esc_html_e( 'Remove', 'points-and-rewards-for-woocommerce' ); ?>" class="wps_wpr_remove_thankyouorder button" >
+				</td>
+			<?php endif; ?>
+		</tr>
 		<?php
 	}
 
@@ -894,9 +887,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 		$is_already_sent = get_option( 'onboarding-data-sent', false );
 		// Already submitted the data.
 		if ( ! empty( $is_already_sent ) && 'sent' == $is_already_sent ) {
+
 			$offset = get_option( 'gmt_offset' );
-			$time = time() + $offset * 60 * 60;
+			$time   = time() + $offset * 60 * 60;
 			if ( ! wp_next_scheduled( 'wps_wpr_check_for_notification_update' ) ) {
+
 				wp_schedule_event( $time, 'daily', 'wps_wpr_check_for_notification_update' );
 			}
 		}
@@ -912,13 +907,13 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function wps_wpr_save_notice_message() {
 		$wps_notification_data = $this->wps_wpr_get_update_notification_data();
 		if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
-			$notification_id = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['notification_id'] : '';
+
+			$notification_id      = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['notification_id'] : '';
 			$notification_message = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['notification_message'] : '';
 			update_option( 'wps_wpr_notify_new_msg_id', $notification_id );
 			update_option( 'wps_wpr_notify_new_message', $notification_message );
 		}
 	}
-
 
 	/**
 	 * This function is used to get notification data from server.
@@ -929,12 +924,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_get_update_notification_data() {
 		$wps_notification_data = array();
-		$url = 'https://demo.wpswings.com/client-notification/points-and-rewards-for-woocommerce/wps-client-notify.php';
-		$attr = array(
+		$url                   = 'https://demo.wpswings.com/client-notification/points-and-rewards-for-woocommerce/wps-client-notify.php';
+		$attr                  = array(
 			'action' => 'wps_notification_fetch',
 			'plugin_version' => REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION,
 		);
-		$query = esc_url_raw( add_query_arg( $attr, $url ) );
+		$query    = esc_url_raw( add_query_arg( $attr, $url ) );
 		$response = wp_remote_get(
 			$query,
 			array(
@@ -962,14 +957,18 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function wps_wpr_display_notification_bar() {
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
+
 			$pagescreen = $screen->id;
 			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
+
 				$notification_id = get_option( 'wps_wpr_notify_new_msg_id', false );
 				if ( isset( $notification_id ) && '' !== $notification_id ) {
-					$hidden_id = get_option( 'wps_wpr_notify_hide_notification', false );
+
+					$hidden_id            = get_option( 'wps_wpr_notify_hide_notification', false );
 					$notification_message = get_option( 'wps_wpr_notify_new_message', '' );
 					if ( isset( $hidden_id ) && $hidden_id < $notification_id ) {
 						if ( '' !== $notification_message ) {
+
 							?>
 							<div class="notice is-dismissible notice-info" id="dismiss_notice">
 								<div class="notice-container">
@@ -1000,8 +999,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_dismiss_notice() {
 		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wpr-verify-nonce' ) ) { // WPCS: input var ok, sanitization ok.
+
 			$notification_id = get_option( 'wps_wpr_notify_new_msg_id', false );
 			if ( isset( $notification_id ) && '' !== $notification_id ) {
+
 				update_option( 'wps_wpr_notify_hide_notification', $notification_id );
 			}
 			wp_send_json_success();
@@ -1019,7 +1020,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function add_wps_frontend_screens( $valid_screens = array() ) {
 
 		if ( is_array( $valid_screens ) ) {
-
 			// Push your screen here.
 			array_push( $valid_screens, 'woocommerce_page_wps-rwpr-setting' );
 		}
@@ -1037,12 +1037,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function add_wps_deactivation_screens( $valid_screens = array() ) {
 
 		if ( is_array( $valid_screens ) ) {
-
 			// Push your screen here.
 			array_push( $valid_screens, 'points-and-rewards-for-woocommerce' );
 		}
 		return $valid_screens;
 	}
+
 	/**
 	 * Mwb_wpr_wallet_order_point function
 	 *
@@ -1058,112 +1058,65 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'type'  => 'title',
 				),
 				array(
-					'title' => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
-					'type'  => 'checkbox',
-					'desc'  => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
-					'id'    => 'wps_wpr_general_setting_wallet_enablee',
+					'title'    => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
+					'type'     => 'checkbox',
+					'desc'     => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
+					'id'       => 'wps_wpr_general_setting_wallet_enablee',
 					'desc_tip' => __( 'Check this box to enable points conversion to the amount on the wallet.', 'points-and-rewards-for-woocommerce' ),
-					'default'   => 0,
+					'default'  => 0,
 				),
 				array(
-					'title' => __( 'Conversion rate', 'points-and-rewards-for-woocommerce' ),
-					'type'  => 'number_text',
+					'title'       => __( 'Conversion rate', 'points-and-rewards-for-woocommerce' ),
+					'type'        => 'number_text',
 					'number_text' => array(
 						array(
-							'type'  => 'number',
-							'id'    => 'wps_wpr_wallet_points_rate',
-							'class'   => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text',
+							'type'              => 'number',
+							'id'                => 'wps_wpr_wallet_points_rate',
+							'class'             => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text',
 							'custom_attributes' => array( 'min' => '"1"' ),
-							'desc_tip' => __(
+							'desc_tip'          => __(
 								'The entered point will be converted in the front end.',
 								'points-and-rewards-for-woocommerce'
 							),
-							'desc' => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),
+							'desc'              => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),
 						),
 						array(
-							'type'  => 'text',
-							'id'    => 'wps_wpr_wallet_price_rate',
-							'class'   => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
+							'type'              => 'text',
+							'id'                => 'wps_wpr_wallet_price_rate',
+							'class'             => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
 							'custom_attributes' => array( 'min' => '"1"' ),
-							'desc_tip' => __(
+							'desc_tip'          => __(
 								'Entered amount to convert',
 								'points-and-rewards-for-woocommerce'
 							),
-							'default' => '1',
-							'curr' => get_woocommerce_currency_symbol(),
+							'default'           => '1',
+							'curr'              => get_woocommerce_currency_symbol(),
 						),
 					),
 				),
-
 				array(
-					'type'  => 'sectionend',
+					'type' => 'sectionend',
 				),
 
 			);
-			$wps_wpr_general_settings  = $this->insert_key_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 150 );
+			$wps_wpr_general_settings = $this->insert_key_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 150 );
 		}
-			return $wps_wpr_general_settings;
+		return $wps_wpr_general_settings;
 	}
-		/**
-		 * Insert array
-		 *
-		 * @name insert_key_value_pair
-		 * @since    1.0.0
-		 * @param array $arr array of the settings.
-		 * @param array $inserted_array new array of the settings.
-		 * @param int   $index index of the array.
-		 */
+
+	/**
+	 * Insert array
+	 *
+	 * @name insert_key_value_pair
+	 * @since    1.0.0
+	 * @param array $arr array of the settings.
+	 * @param array $inserted_array new array of the settings.
+	 * @param int   $index index of the array.
+	 */
 	public function insert_key_value_pair( $arr, $inserted_array, $index ) {
 		$arrayend   = array_splice( $arr, $index );
 		$arraystart = array_splice( $arr, 0, $index );
 		return ( array_merge( $arraystart, $inserted_array, $arrayend ) );
-	}
-	/**
-	 * Mwb_wpr_currency_switcher function
-	 *
-	 * @param [array] $coupon_settings for coupon setting.
-	 * @return array
-	 */
-	public function wps_wpr_currency_switcher( $coupon_settings ) {
-		if ( is_plugin_active( 'wps-multi-currency-switcher-for-woocommerce/wps-multi-currency-switcher-for-woocommerce.php' ) && ! empty( get_option( 'mmcsfw_radio_switch_demo', '' ) ) ) {
-			$new_inserted_array = array();
-			$new_array = array();
-			$index = get_option( 'wps_mmcsfw_number_of_currency', '' );
-			$wps_default_symbol = get_option( 'woocommerce_currency' );
-			if ( ! empty( $index ) ) {
-
-				for ( $i = 1; $i <= $index; $i++ ) {
-
-					if ( get_option( 'wps_mmcsfw_text_currency_' . $i ) == $wps_default_symbol ) {
-						continue;
-					}
-					if ( ! empty( get_option( 'wps_mmcsfw_text_currency_' . $i ) ) ) {
-						$new_array[] = array(
-							'type'  => 'text',
-							'id'    => 'wps_mmcsfw_text_currency_' . $i,
-							'default'  => '1',
-							'class'   => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
-							'custom_attributes' => array( 'min' => '"1"' ),
-							'desc' => __( ' = ', 'points-and-rewards-for-woocommerce' ),
-							'curr' => get_option( 'wps_mmcsfw_symbol_' . get_option( 'wps_mmcsfw_text_currency_' . $i ) ),
-
-						);
-						$new_array[] = array(
-							'type'  => 'number',
-							'id'    => 'wps_wpr_currency_' . $i . '_points',
-							'class'   => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
-							'default'  => '1',
-							'custom_attributes' => array( 'min' => '"1"' ),
-							'desc' => __( ' Points ', 'points-and-rewards-for-woocommerce' ),
-							'curr' => '',
-						);
-
-					}
-				}
-				$coupon_settings = array_merge( $coupon_settings, $new_array );
-			}
-		}
-		return $coupon_settings;
 	}
 
 	/**
@@ -1183,8 +1136,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @since    1.0.0
 	 */
 	public function wps_par_get_count( $type = 'all', $action = 'count' ) {
-		global $wpdb;
-		$fee_id = '$fee_id';
 		switch ( $type ) {
 			case 'pending':
 				$product_meta_array = array(
@@ -1225,11 +1176,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 				$variable_product = get_posts(
 					array(
-						'post_type' => 'product_variation',
-						'post_status'    => array( 'publish', 'draft', 'trash', 'wc-pending', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed' ),
-						'numberposts'    => -1,
-						'meta_key' => $product_meta_array, // phpcs:ignore
-						'fields'         => 'ids',
+						'post_type'   => 'product_variation',
+						'post_status' => array( 'publish', 'draft', 'trash', 'wc-pending', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed' ),
+						'numberposts' => -1,
+						'meta_key'    => $product_meta_array, // phpcs:ignore
+						'fields'      => 'ids',
 					)
 				);
 
@@ -1279,7 +1230,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function import_single_order( $posted_data = array() ) {
 
 		$orders = ! empty( $posted_data['orders'] ) ? $posted_data['orders'] : array();
-
 		if ( empty( $orders ) ) {
 			return array();
 		}
@@ -1309,7 +1259,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 			foreach ( $user_post_meta_keys as $index => $meta_key ) {
 
 				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-
 				$meta_value = get_post_meta( $order_id, $meta_key, true );
 				if ( ! empty( $meta_value ) || '0' === $meta_value ) {
 
@@ -1365,6 +1314,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		}
 		return compact( 'users' );
 	}
+
 	/**
 	 * Migration to new domain notice.
 	 */
@@ -1436,6 +1386,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			<?php
 		}
 	}
+
 	/**
 	 * Wps_par_get_count_users function
 	 *

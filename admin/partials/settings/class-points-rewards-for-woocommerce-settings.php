@@ -47,13 +47,13 @@ class Points_Rewards_For_WooCommerce_Settings {
 	public function wps_wpr_allowed_html() {
 		$allowed_tags = array(
 			'span' => array(
-				'class' => array(),
-				'title' => array(),
-				'style' => array(),
+				'class'    => array(),
+				'title'    => array(),
+				'style'    => array(),
 				'data-tip' => array(),
 			),
-			'min' => array(),
-			'max' => array(),
+			'min'   => array(),
+			'max'   => array(),
 			'class' => array(),
 			'style' => array(),
 			'<br>'  => array(),
@@ -61,6 +61,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 		return $allowed_tags;
 
 	}
+
 	/**
 	 * This function is for generating for the checkbox for the Settings
 	 *
@@ -94,8 +95,8 @@ class Points_Rewards_For_WooCommerce_Settings {
 			<input type="number" 
 			<?php
 			if ( array_key_exists( 'custom_attributes', $value ) ) {
-
 				foreach ( $value['custom_attributes'] as $attribute_name => $attribute_val ) {
+
 					echo esc_html( $attribute_name );
 					$allowed_tags = $this->wps_wpr_allowed_html();
 					echo wp_kses( "=$attribute_val", $allowed_tags );
@@ -103,11 +104,12 @@ class Points_Rewards_For_WooCommerce_Settings {
 				}
 			}
 			?>
-				 value="<?php echo esc_html( $wps_signup_value ); ?>" name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
+			value="<?php echo esc_html( $wps_signup_value ); ?>" name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
 			class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php echo ( array_key_exists( 'desc', $value ) ) ? esc_html( $value['desc'] ) : ''; ?>
 		</label>
 		<?php
 	}
+
 	/**
 	 * This function is for generating for the wp_editor for the Settings
 	 *
@@ -208,6 +210,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 			<?php
 		}
 	}
+
 	/**
 	 * This function is for generating for the heading for the Settings
 	 *
@@ -265,7 +268,6 @@ class Points_Rewards_For_WooCommerce_Settings {
 				}
 			}
 			?>
-				 
 				style ="<?php echo ( array_key_exists( 'style', $value ) ) ? esc_html( $value['style'] ) : ''; ?>"
 				value="<?php echo esc_html( $wps_signup_value ); ?>" name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
 				class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php echo ( array_key_exists( 'desc', $value ) ) ? esc_html( $value['desc'] ) : ''; ?>
@@ -317,7 +319,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 */
 	public function wps_rwpr_generate_textarea_html( $value, $general_settings ) {
 		$wps_get_textarea_id = isset( $value['id'] ) ? $value['id'] : '';
-		$wps_show_text_area = false;
+		$wps_show_text_area  = false;
 		if ( isset( $wps_get_textarea_id ) && '' !== $wps_get_textarea_id ) {
 			$wps_show_text_area = apply_filters( 'wps_wpr_remove_text_area_in_pro', $wps_show_text_area, $value, $general_settings );
 		}
@@ -340,7 +342,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 						}
 					}
 					?>
-					  name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
+					name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
 					class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php echo wp_kses( ( $wps_signup_value ), $this->wps_wpr_allowed_html() ); ?></textarea>
 			</label>
 			<p class="description"><?php echo esc_html( $value['desc2'] ); ?></p>
@@ -410,11 +412,11 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 * @since 1.0.0
 	 */
 	public function wps_wpr_generate_label_for_membership( $value, $count ) {
-		$wps_wpr_id = array_key_exists( 'id', $value ) ? $value['id'] : '';
+		$wps_wpr_id    = array_key_exists( 'id', $value ) ? $value['id'] : '';
 		$wps_wpr_title = array_key_exists( 'title', $value ) ? $value['title'] : '';
 		?>
 		<label for="<?php echo esc_html( $wps_wpr_id ); ?>_$count">
-		 <?php echo esc_html( $wps_wpr_title ); ?>
+			<?php echo esc_html( $wps_wpr_title ); ?>
 		</label>
 		<?php
 	}
@@ -467,6 +469,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 		}
 		return $postdata[ $value['id'] ];
 	}
+
 	/**
 	 * This function used for checking is textbox is empty or not.
 	 *
@@ -558,7 +561,6 @@ class Points_Rewards_For_WooCommerce_Settings {
 		}
 		return $_postdata;
 	}
-
 
 	/**
 	 * This function is used for showing shortcode description.

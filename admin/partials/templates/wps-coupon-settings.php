@@ -15,56 +15,56 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 include_once WPS_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
-$settings_obj = new Points_Rewards_For_WooCommerce_Settings();
+$settings_obj            = new Points_Rewards_For_WooCommerce_Settings();
 $wps_wpr_coupon_settings = array(
 	array(
 		'title' => __( 'Earn Points Per Currency Settings', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Enable Per Currency Points Conversion', 'points-and-rewards-for-woocommerce' ),
-		'type'  => 'checkbox',
-		'id'  => 'wps_wpr_coupon_conversion_enable',
-		'class' => 'input-text',
-		'desc'  => __( 'Allow per currency points conversion', 'points-and-rewards-for-woocommerce' ),
+		'title'    => __( 'Enable Per Currency Points Conversion', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'id'       => 'wps_wpr_coupon_conversion_enable',
+		'class'    => 'input-text',
+		'desc'     => __( 'Allow per currency points conversion', 'points-and-rewards-for-woocommerce' ),
 		'desc_tip' => __( 'Check this box if you want to enable per currency points conversion.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title' => __( 'Per ', 'points-and-rewards-for-woocommerce' ) . get_woocommerce_currency_symbol() . __( 'Points Conversion', 'points-and-rewards-for-woocommerce' ),
-		'desc_tip'  => __( 'Enter the redeem price for points. (i.e. how much amounts will be equivalent to the points)', 'points-and-rewards-for-woocommerce' ),
-		'type'    => 'number_text',
+		'title'       => __( 'Per ', 'points-and-rewards-for-woocommerce' ) . get_woocommerce_currency_symbol() . __( 'Points Conversion', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip'    => __( 'Enter the redeem price for points. (i.e. how much amounts will be equivalent to the points)', 'points-and-rewards-for-woocommerce' ),
+		'type'        => 'number_text',
 		'number_text' => apply_filters(
 			'wps_wpr_currency_filter',
 			array(
 
 				array(
-					'type'  => 'text',
-					'id'    => 'wps_wpr_coupon_conversion_points',
-					'class'   => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text',
+					'type'              => 'text',
+					'id'                => 'wps_wpr_coupon_conversion_points',
+					'class'             => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text',
 					'custom_attributes' => array( 'min' => '"1"' ),
-					'desc' => __( ' = ', 'points-and-rewards-for-woocommerce' ),
-					'curr' => get_woocommerce_currency_symbol(),
+					'desc'              => __( ' = ', 'points-and-rewards-for-woocommerce' ),
+					'curr'              => get_woocommerce_currency_symbol(),
 
 				),
 				array(
-					'type'  => 'number',
-					'id'    => 'wps_wpr_coupon_conversion_price',
-					'class'   => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
-					'default'  => '1',
+					'type'              => 'number',
+					'id'                => 'wps_wpr_coupon_conversion_price',
+					'class'             => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
+					'default'           => '1',
 					'custom_attributes' => array( 'min' => '"1"' ),
-					'desc' => __( ' Points ', 'points-and-rewards-for-woocommerce' ),
-					'curr' => '',
+					'desc'              => __( ' Points ', 'points-and-rewards-for-woocommerce' ),
+					'curr'              => '',
 				),
 			)
 		),
 	),
 	array(
-		'type'  => 'sectionend',
+		'type' => 'sectionend',
 	),
 
 );
-	$wps_wpr_coupon_settings = apply_filters( 'wps_wpr_coupon_settings', $wps_wpr_coupon_settings );
-$current_tab = 'wps_wpr_coupons_tab';
+$wps_wpr_coupon_settings = apply_filters( 'wps_wpr_coupon_settings', $wps_wpr_coupon_settings );
+$current_tab             = 'wps_wpr_coupons_tab';
 if ( isset( $_POST['wps_wpr_save_coupon'] ) && isset( $_POST['wps-wpr-nonce'] ) ) {
 	$wps_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) );
 	if ( wp_verify_nonce( $wps_wpr_nonce, 'wps-wpr-nonce' ) ) {
@@ -74,11 +74,11 @@ if ( isset( $_POST['wps_wpr_save_coupon'] ) && isset( $_POST['wps-wpr-nonce'] ) 
 		if ( 'wps_wpr_coupons_tab' == $current_tab ) {
 			unset( $_POST['wps_wpr_save_coupon'] );
 			$coupon_settings_array = array();
-			$postdata = $settings_obj->check_is_settings_is_not_empty( $wps_wpr_coupon_settings, $_POST );
+			$postdata              = $settings_obj->check_is_settings_is_not_empty( $wps_wpr_coupon_settings, $_POST );
 			if ( is_array( $postdata ) && ! empty( $postdata ) ) {
 				foreach ( $postdata as $key => $value ) {
-					$value = stripcslashes( $value );
-					$value = sanitize_text_field( $value );
+					$value                         = stripcslashes( $value );
+					$value                         = sanitize_text_field( $value );
 					$coupon_settings_array[ $key ] = $value;
 				}
 			}
@@ -106,9 +106,9 @@ endif;
 		foreach ( $wps_wpr_coupon_settings as $key => $value ) {
 			if ( 'title' == $value['type'] ) {
 				?>
-					<div class="wps_wpr_general_row_wrap">
+				<div class="wps_wpr_general_row_wrap">
 					<?php
-						$settings_obj->wps_rwpr_generate_heading( $value );
+					$settings_obj->wps_rwpr_generate_heading( $value );
 			}
 			if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) {
 				?>
@@ -136,20 +136,17 @@ endif;
 								echo '<br>';
 								echo isset( $val['curr'] ) ? esc_html( $val['curr'] ) : '';
 								$settings_obj->wps_rwpr_generate_text_html( $val, $coupon_settings );
-
 							}
 							if ( 'number' == $val['type'] ) {
-
 								$settings_obj->wps_rwpr_generate_number_html( $val, $coupon_settings );
-
 							}
 						}
 					}
 					do_action( 'wps_wpr_additional_coupon_settings', $value, $coupon_settings );
 					?>
-						</div>
+					</div>
 				</div>
-					<?php
+				<?php
 			}
 			if ( 'sectionend' == $value['type'] ) {
 				?>
@@ -158,7 +155,6 @@ endif;
 			}
 		}
 		?>
-				
 	</div>
 </div>
 <div class="clear"></div>	

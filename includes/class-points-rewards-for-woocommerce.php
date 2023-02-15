@@ -72,17 +72,15 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '1.4.0';
+			$this->version = '1.4.1';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
-
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->init();
-
 	}
 
 	/**
@@ -202,8 +200,6 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'wps_wpr_general_settings', $plugin_admin, 'wps_wpr_subscription_settings' );
 			$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $plugin_admin, 'wps_wpr_subscription_renewal_point', 10, 1 );
 		}
-		// old mwb currency swithcer compatibility.
-		$this->loader->add_filter( 'wps_wpr_currency_filter', $plugin_admin, 'wps_wpr_currency_switcher' );
 		$this->loader->add_filter( 'admin_notices', $plugin_admin, 'wps_wpr_updgrade_notice' );
 	}
 	/**
@@ -292,6 +288,8 @@ class Points_Rewards_For_Woocommerce {
 			}
 			// subscription compatibility ( show message on account page ).
 			$this->loader->add_action( 'wps_extend_point_tab_section', $plugin_public, 'wps_wpr_show_subscription_message', 10, 1 );
+			// order rewards points functionality.
+			$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_public, 'wps_wpr_order_rewards_points_callback', 20, 2 );
 		}
 	}
 
@@ -303,8 +301,8 @@ class Points_Rewards_For_Woocommerce {
 	 */
 	public function wps_rwpr_is_plugin_enable() {
 
-		$is_enable = false;
-		$wps_wpr_enable = '';
+		$is_enable        = false;
+		$wps_wpr_enable   = '';
 		$general_settings = get_option( 'wps_wpr_settings_gallery', true );
 		if ( isset( $general_settings['wps_wpr_general_setting_enable'] ) ) {
 			$wps_wpr_enable = $general_settings['wps_wpr_general_setting_enable'];

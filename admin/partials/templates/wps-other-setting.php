@@ -129,58 +129,60 @@ $other_settings = get_option( 'wps_wpr_other_settings', array() );
 				foreach ( $wps_wpr_other_settings as $key => $value ) {
 					if ( 'title' == $value['type'] ) {
 						?>
-					<div class="wps_wpr_general_row_wrap">
-						<?php $settings_obj->wps_rwpr_generate_heading( $value ); ?>
-					<?php } ?>
-					<?php if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) { ?>
-				<div class="wps_wpr_general_row">
-						<?php $settings_obj->wps_rwpr_generate_label( $value ); ?>
-					<div class="wps_wpr_general_content">
-						<?php
-						$settings_obj->wps_rwpr_generate_tool_tip( $value );
-						if ( 'checkbox' == $value['type'] ) {
-							$settings_obj->wps_rwpr_generate_checkbox_html( $value, $other_settings );
-						}
-						if ( 'shortcode' == $value['type'] ) {
-							$settings_obj->wps_wpr_generate_shortcode( $value );
-						}
-						if ( 'number' == $value['type'] ) {
-							$settings_obj->wps_rwpr_generate_number_html( $value, $other_settings );
-						}
-						if ( 'color' == $value['type'] ) {
-							$settings_obj->wps_rwpr_generate_color_box( $value, $other_settings );
-						}
-						if ( 'multiple_checkbox' == $value['type'] ) {
-							foreach ( $value['multiple_checkbox'] as $k => $val ) {
-								$settings_obj->wps_rwpr_generate_checkbox_html( $val, $other_settings );
-							}
-						}
-						if ( 'text' == $value['type'] ) {
-							$settings_obj->wps_rwpr_generate_text_html( $value, $other_settings );
-						}
-						if ( 'textarea' == $value['type'] ) {
-							$settings_obj->wps_rwpr_generate_textarea_html( $value, $other_settings );
-						}
-						if ( 'number_text' == $value['type'] ) {
-							foreach ( $value['number_text'] as $k => $val ) {
-								if ( 'text' == $val['type'] ) {
-									$settings_obj->wps_rwpr_generate_text_html( $val, $other_settings );
+						<div class="wps_wpr_general_row_wrap">
+							<?php $settings_obj->wps_rwpr_generate_heading( $value ); ?>
+							<?php } ?>
+							<?php if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) { ?>
+							<div class="wps_wpr_general_row">
+								<?php $settings_obj->wps_rwpr_generate_label( $value ); ?>
+								<div class="wps_wpr_general_content">
+									<?php
+									$settings_obj->wps_rwpr_generate_tool_tip( $value );
+									if ( 'checkbox' == $value['type'] ) {
+										$settings_obj->wps_rwpr_generate_checkbox_html( $value, $other_settings );
+									}
+									if ( 'shortcode' == $value['type'] ) {
+										$settings_obj->wps_wpr_generate_shortcode( $value );
+									}
+									if ( 'number' == $value['type'] ) {
+										$settings_obj->wps_rwpr_generate_number_html( $value, $other_settings );
+									}
+									if ( 'color' == $value['type'] ) {
+										$settings_obj->wps_rwpr_generate_color_box( $value, $other_settings );
+									}
+									if ( 'multiple_checkbox' == $value['type'] ) {
+										foreach ( $value['multiple_checkbox'] as $k => $val ) {
+											$settings_obj->wps_rwpr_generate_checkbox_html( $val, $other_settings );
+										}
+									}
+									if ( 'text' == $value['type'] ) {
+										$settings_obj->wps_rwpr_generate_text_html( $value, $other_settings );
+									}
+									if ( 'textarea' == $value['type'] ) {
+										$settings_obj->wps_rwpr_generate_textarea_html( $value, $other_settings );
+									}
+									if ( 'number_text' == $value['type'] ) {
+										foreach ( $value['number_text'] as $k => $val ) {
+											if ( 'text' == $val['type'] ) {
+												$settings_obj->wps_rwpr_generate_text_html( $val, $other_settings );
 
-								}
-								if ( 'number' == $val['type'] ) {
-									$settings_obj->wps_rwpr_generate_number_html( $val, $other_settings );
-									echo esc_html( get_woocommerce_currency_symbol() );
-								}
+											}
+											if ( 'number' == $val['type'] ) {
+												$settings_obj->wps_rwpr_generate_number_html( $val, $other_settings );
+												echo esc_html( get_woocommerce_currency_symbol() );
+											}
+										}
+									}
+									do_action( 'wps_wpr_additional_other_settings', $value, $other_settings );
+									?>
+								</div>
+							</div>
+								<?php
 							}
-						}
-						do_action( 'wps_wpr_additional_other_settings', $value, $other_settings );
-						?>
-					</div>
-				</div>
-				<?php } ?>
-					<?php if ( 'sectionend' == $value['type'] ) : ?>
-				</div>	
-				<?php endif; ?>
+							?>
+							<?php if ( 'sectionend' == $value['type'] ) : ?>
+						</div>
+					<?php endif; ?>
 			<?php } ?> 		
 		</div>
 	</div>

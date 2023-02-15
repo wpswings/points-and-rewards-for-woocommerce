@@ -14,20 +14,22 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 include_once WPS_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
 $settings_obj = new Points_Rewards_For_WooCommerce_Settings();
-$current_tab = 'wps_wpr_pro_points_tab';
+$current_tab  = 'wps_wpr_pro_points_tab';
 
 if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-nonce'] ) ) {
 	$wps_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) );
 	if ( wp_verify_nonce( $wps_wpr_nonce, 'wps-wpr-nonce' ) ) {
-		if ( isset( $_POST['wps_wpr_global_product_enable'] ) && ! empty( $_POST['wps_wpr_global_product_enable'] ) ) {
 
+		if ( isset( $_POST['wps_wpr_global_product_enable'] ) && ! empty( $_POST['wps_wpr_global_product_enable'] ) ) {
 			if ( isset( $_POST['wps_wpr_pro_points_to_all'] ) && ! empty( $_POST['wps_wpr_pro_points_to_all'] ) ) {
-				$wps_wpr_assing_product_points = array();
-				$wps_wpr_pro_points_to_all = sanitize_text_field( wp_unslash( $_POST['wps_wpr_pro_points_to_all'] ) );
+
+				$wps_wpr_assing_product_points                                  = array();
+				$wps_wpr_pro_points_to_all                                      = sanitize_text_field( wp_unslash( $_POST['wps_wpr_pro_points_to_all'] ) );
 				$wps_wpr_assing_product_points['wps_wpr_global_product_enable'] = 1;
-				$wps_wpr_assing_product_points['wps_wpr_pro_points_to_all'] = $wps_wpr_pro_points_to_all;
+				$wps_wpr_assing_product_points['wps_wpr_pro_points_to_all']     = $wps_wpr_pro_points_to_all;
 				if ( is_array( $wps_wpr_assing_product_points ) && ! empty( $wps_wpr_assing_product_points ) ) {
 					update_option( 'wps_wpr_assign_products_points', $wps_wpr_assing_product_points );
 				}
@@ -38,8 +40,10 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 				$loop = new WP_Query( $args );
 				foreach ( $loop->posts as $key => $value ) {
 					$product = wc_get_product( $value->ID );
+
 					if ( apply_filters( 'wps_wpr_is_variable_product', false, $product ) ) {
-						$parent_id = $product->get_id();
+
+						$parent_id      = $product->get_id();
 						$parent_product = wc_get_product( $parent_id );
 						foreach ( $parent_product->get_children() as $child_id ) {
 
@@ -88,8 +92,10 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 			$loop = new WP_Query( $args );
 			foreach ( $loop->posts as $key => $value ) {
 				$product = wc_get_product( $value->ID );
+
 				if ( $product->is_type( 'variable' ) && $product->has_child() ) {
-					$parent_id = $product->get_id();
+
+					$parent_id      = $product->get_id();
 					$parent_product = wc_get_product( $parent_id );
 					foreach ( $parent_product->get_children() as $child_id ) {
 						update_post_meta( $parent_id, 'wps_product_points_enable', 'no' );
@@ -112,36 +118,35 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 		}
 	}
 }
+
 $wps_wpr_assing_product_points = get_option( 'wps_wpr_assign_products_points', array() );
 
-?>
-<?php
 $wps_wpr_assign_product_table_settings = array(
 	array(
 		'title' => __( 'Global setting for assigning points to all products at once', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'title',
 	),
 	array(
-		'title' => __( 'Global Assign Product Points', 'points-and-rewards-for-woocommerce' ),
-		'type'  => 'checkbox',
-		'desc'  => __( 'Enable Assign Global Product Points', 'points-and-rewards-for-woocommerce' ),
-		'id'    => 'wps_wpr_global_product_enable',
+		'title'    => __( 'Global Assign Product Points', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'desc'     => __( 'Enable Assign Global Product Points', 'points-and-rewards-for-woocommerce' ),
+		'id'       => 'wps_wpr_global_product_enable',
 		'desc_tip' => __( 'This is the global setting for Product Purchase Points, check this if you want to assign points to all products at once or uncheck if you want to remove assigned points from all products at once.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title' => __( 'Enter Assign Global Product Points', 'points-and-rewards-for-woocommerce' ),
-		'type'  => 'number',
-		'desc'  => __( 'Enter Global Product Points', 'points-and-rewards-for-woocommerce' ),
-		'id'    => 'wps_wpr_pro_points_to_all',
-		'desc_tip' => __( 'Entered Points are assigned to All Products.', 'points-and-rewards-for-woocommerce' ),
+		'title'            => __( 'Enter Assign Global Product Points', 'points-and-rewards-for-woocommerce' ),
+		'type'             => 'number',
+		'desc'             => __( 'Enter Global Product Points', 'points-and-rewards-for-woocommerce' ),
+		'id'               => 'wps_wpr_pro_points_to_all',
+		'desc_tip'         => __( 'Entered Points are assigned to All Products.', 'points-and-rewards-for-woocommerce' ),
 		'custom_attribute' => array( 'min' => '"1"' ),
-		'class' => 'input-text wps_wpr_common_width',
+		'class'            => 'input-text wps_wpr_common_width',
 	),
 	array(
-		'type'  => 'sectionend',
+		'type' => 'sectionend',
 	),
 );
-	$wps_wpr_assign_product_table_settings = apply_filters( 'wps_wpr_assign_product_points_settings', $wps_wpr_assign_product_table_settings );
+$wps_wpr_assign_product_table_settings = apply_filters( 'wps_wpr_assign_product_points_settings', $wps_wpr_assign_product_table_settings );
 ?>
 <?php do_action( 'wps_wpr_add_notice' ); ?>
 <div class="wps_wpr_table">
@@ -150,7 +155,7 @@ $wps_wpr_assign_product_table_settings = array(
 	foreach ( $wps_wpr_assign_product_table_settings as $key => $value ) {
 		if ( 'title' == $value['type'] ) {
 			?>
-					<div class="wps_wpr_general_row_wrap">
+			<div class="wps_wpr_general_row_wrap">
 				<?php $settings_obj->wps_rwpr_generate_heading( $value ); ?>
 				<?php } ?>
 				<?php if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) { ?>
@@ -194,14 +199,14 @@ $wps_wpr_assign_product_table_settings = array(
 				</div>
 				<?php } ?>
 			<?php if ( 'sectionend' == $value['type'] ) : ?>
-				 </div>	
+				</div>	
 				<?php endif; ?>
 		<?php } ?> 
 	</div>
 
 </div>
 <div class="clear"></div>
-	<p class="submit">
-		<input type="submit" value='<?php esc_attr_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_select_all_products">
-	</p>
-	<?php do_action( 'wps_wpr_product_assign_points' ); ?>
+<p class="submit">
+	<input type="submit" value='<?php esc_attr_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_select_all_products">
+</p>
+<?php do_action( 'wps_wpr_product_assign_points' ); ?>

@@ -68,11 +68,11 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-premium-features.php',
 	);
 }
-  $wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );
+$wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );
 
 ?>
 <div class="wrap woocommerce" id="wps_rwpr_setting_wrapper">
-	 <form enctype="multipart/form-data" action="" id="mainform"  method="post">		<div class="wps_rwpr_header">
+	<form enctype="multipart/form-data" action="" id="mainform"  method="post">		<div class="wps_rwpr_header">
 			<div class="wps_rwpr_header_content_left">
 				<div>
 					<h3 class="wps_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ); ?></h3>
@@ -93,8 +93,8 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 			<?php
 			if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 				?>
-						<li class="wps_wpr_get_pro"><a  href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
-					<?php
+				<li class="wps_wpr_get_pro"><a  href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a></li>
+				<?php
 			}
 			?>
 		</ul>
@@ -105,7 +105,7 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 wp_nonce_field( 'wps-wpr-nonce', 'wps-wpr-nonce' );
 if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-	$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.4.0' );
+	$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.4.1' );
 	$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
 	$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
 	$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );

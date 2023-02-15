@@ -94,9 +94,11 @@ class Membership_Log_List_Table extends WP_List_Table {
 
 		if ( 'bulk-delete' === $this->current_action() ) {
 			if ( isset( $_POST['membership-log'] ) ) {
+
 				$wps_membership_nonce = sanitize_text_field( wp_unslash( $_POST['membership-log'] ) );
 				if ( wp_verify_nonce( $wps_membership_nonce, 'membership-log' ) ) {
 					if ( isset( $_POST['mpr_points_ids'] ) && ! empty( $_POST['mpr_points_ids'] ) ) {
+
 						$all_id = map_deep( wp_unslash( $_POST['mpr_points_ids'] ), 'sanitize_text_field' );
 						if ( ! empty( $all_id ) && is_array( $all_id ) ) {
 							foreach ( $all_id as $key => $value ) {
@@ -192,15 +194,19 @@ class Membership_Log_List_Table extends WP_List_Table {
 		$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'desc';
 		if ( is_numeric( $cloumna[ $orderby ] ) && is_numeric( $cloumnb[ $orderby ] ) ) {
 			if ( $cloumna[ $orderby ] == $cloumnb[ $orderby ] ) {
+
 					return 0;
 			} elseif ( $cloumna[ $orderby ] < $cloumnb[ $orderby ] ) {
+
 				$result = -1;
 				return ( 'asc' === $order ) ? $result : -$result;
 			} elseif ( $cloumna[ $orderby ] > $cloumnb[ $orderby ] ) {
+
 				$result = 1;
 				return ( 'asc' === $order ) ? $result : -$result;
 			}
 		} else {
+
 			$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
 			return ( 'asc' === $order ) ? $result : -$result;
 		}
@@ -231,6 +237,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 * @link https://www.wpswings.com/
 	 */
 	public function get_users_points() {
+
 		$args['meta_query'] = array(
 			'relation' => 'AND',
 			array(
@@ -242,13 +249,16 @@ class Membership_Log_List_Table extends WP_List_Table {
 
 			),
 		);
+
 		if ( isset( $_REQUEST['s'] ) ) {
 			$data           = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
 			$args['search'] = '*' . $data . '*';
 		}
-		$user_data        = new WP_User_Query( $args );
-		$user_data        = $user_data->get_results();
-		$points_data      = array();
+
+		$user_data   = new WP_User_Query( $args );
+		$user_data   = $user_data->get_results();
+		$points_data = array();
+
 		foreach ( $user_data as $key => $value ) {
 			$points_data[] = array(
 				'id'          => $value->data->ID,

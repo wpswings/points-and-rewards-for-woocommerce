@@ -85,7 +85,7 @@ if ( ! class_exists( 'Wps_Wpr_Emails_Notification' ) ) {
 			if ( $user_id ) {
 				$this->setup_locale();
 
-				$user = new WP_User( $user_id );
+				$user      = new WP_User( $user_id );
 				$user_info = get_userdata( $user_id );
 				if ( is_a( $user, 'WP_User' ) ) {
 					$this->object                          = $user;

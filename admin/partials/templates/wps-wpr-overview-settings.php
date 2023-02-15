@@ -146,16 +146,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 
 				</div>
-						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( ' Watch Video: Learn More About the Points and Reward  ', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p class="wps-overview__keywords-description">
-							<?php
-							esc_html_e(
-								'This video tutorial helps the better utilization of the plugin and leverage the maximum benefits.
+					<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( ' Watch Video: Learn More About the Points and Reward  ', 'points-and-rewards-for-woocommerce' ); ?></h3>
+					<p class="wps-overview__keywords-description">
+						<?php
+						esc_html_e(
+							'This video tutorial helps the better utilization of the plugin and leverage the maximum benefits.
 ',
-								'points-and-rewards-for-woocommerce'
-							);
-							?>
-						</p>
+							'points-and-rewards-for-woocommerce'
+						);
+						?>
+					</p>
 			</div>
 		</div>
 	</div>
