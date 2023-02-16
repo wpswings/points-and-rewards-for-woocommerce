@@ -65,8 +65,8 @@ Merchants can create their own membership system based on WooCommerce rewards po
 
 In the WooCommerce rewards plugin, the points Log Report feature is available for both customers and the admin:
 
-* For Customers – They can check and monitor each point transaction they have done so far. The log table shows the details for each point they earned and redeemed.
-* For Merchants – They can view the user points history to track the points transaction for each customer. Along with it, they can add or deduct points from any customer’s account using this feature.
+* **For Customers–** They can check and monitor each point transaction they have done so far. The log table shows the details for each point they earned and redeemed.
+* **For Merchants–** They can view the user points history to track the points transaction for each customer. Along with it, they can add or deduct points from any customer’s account using this feature.
 
 Additionally, the admin is provided with hooks through which he can extend and customize the points tab and My Account page.
 
