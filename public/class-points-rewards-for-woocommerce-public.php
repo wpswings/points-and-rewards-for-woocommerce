@@ -1748,11 +1748,14 @@ class Points_Rewards_For_WooCommerce_Public {
 
 									// apply points on subtotal.
 									$subtotal = $woocommerce->cart->get_subtotal();
-									if ( $subtotal > $wps_fee_on_cart ) {
-										$wps_fee_on_cart = $wps_fee_on_cart;
-									} else {
+									// WOOCS - WooCommerce Currency Switcher Compatibility.
+									if ( ! class_exists( 'WOOCS' ) ) {
+										if ( $subtotal > $wps_fee_on_cart ) {
+											$wps_fee_on_cart = $wps_fee_on_cart;
+										} else {
 
-										$wps_fee_on_cart = $subtotal;
+											$wps_fee_on_cart = $subtotal;
+										}
 									}
 									// WOOCS - WooCommerce Currency Switcher Compatibility.
 									$wps_fee_on_cart = apply_filters( 'wps_wpr_show_conversion_price', $wps_fee_on_cart );
@@ -1819,23 +1822,25 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_cart_price_rate = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
 		/*Get current user id*/
 		$user_id = get_current_user_ID();
+
+		// show message on cart page for redemption settings.
 		if ( ( 1 == $wps_wpr_custom_points_on_cart || 1 === $wps_wpr_custom_points_on_checkout ) && isset( $user_id ) && ! empty( $user_id ) ) {
 			?>
-			<div class="woocommerce-message wps_wpr_cart_redemption__notice"><?php esc_html_e( 'Here is the Discount Rule for Applying your Points to Cart Total', 'points-and-rewards-for-woocommerce' ); ?>
-				<ul>
-					<li>
+			<div class="woocommerce-message wps_wpr_cart_redemption__notice" id="wps_wpr_order_notice" style="background-color: <?php echo esc_html( $wps_wpr_notification_color ); ?>;"><?php esc_html_e( 'Here is the Discount Rule for Applying your Points to Cart Total', 'points-and-rewards-for-woocommerce' ); ?>
+				<span class="wps_wpr_show_redemption_conversion_rate">
 					<?php
 					// WOOCS - WooCommerce Currency Switcher Compatibility.
 					$allowed_tags = $this->wps_wpr_allowed_html();
 					echo esc_html( $wps_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $allowed_tags );
 					?>
-					</li>
-				</ul>
+				</span>
 			</div>
 			<div class="wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_notice"></div>
 			<div class="wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_success"></div>
 			<?php
 		}
+
+		// show message on cart page for per currency earn points.
 		if ( $this->is_order_conversion_enabled() ) {
 			$order_conversion_rate = $this->order_conversion_rate();
 			?>

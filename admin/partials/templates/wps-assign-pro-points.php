@@ -26,18 +26,22 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 		if ( isset( $_POST['wps_wpr_global_product_enable'] ) && ! empty( $_POST['wps_wpr_global_product_enable'] ) ) {
 			if ( isset( $_POST['wps_wpr_pro_points_to_all'] ) && ! empty( $_POST['wps_wpr_pro_points_to_all'] ) ) {
 
-				$wps_wpr_assing_product_points                                  = array();
-				$wps_wpr_pro_points_to_all                                      = sanitize_text_field( wp_unslash( $_POST['wps_wpr_pro_points_to_all'] ) );
-				$wps_wpr_assing_product_points['wps_wpr_global_product_enable'] = 1;
-				$wps_wpr_assing_product_points['wps_wpr_pro_points_to_all']     = $wps_wpr_pro_points_to_all;
+				$wps_wpr_assing_product_points                                            = array();
+				$wps_wpr_pro_points_to_all                                                = sanitize_text_field( wp_unslash( $_POST['wps_wpr_pro_points_to_all'] ) );
+				$wps_wpr_assing_product_points['wps_wpr_global_product_enable']           = 1;
+				$wps_wpr_assing_product_points['wps_wpr_pro_points_to_all']               = $wps_wpr_pro_points_to_all;
+				$wps_wpr_assing_product_points['wps_wpr_show_assign_points_on_shop_page'] = ! empty( $_POST['wps_wpr_show_assign_points_on_shop_page'] ) ? '1' : 0;
+
 				if ( is_array( $wps_wpr_assing_product_points ) && ! empty( $wps_wpr_assing_product_points ) ) {
 					update_option( 'wps_wpr_assign_products_points', $wps_wpr_assing_product_points );
 				}
+
 				$args = array(
 					'post_type'      => 'product',
 					'posts_per_page' => -1,
 				);
 				$loop = new WP_Query( $args );
+
 				foreach ( $loop->posts as $key => $value ) {
 					$product = wc_get_product( $value->ID );
 
@@ -141,9 +145,6 @@ $wps_wpr_assign_product_table_settings = array(
 		'desc_tip'         => __( 'Entered Points are assigned to All Products.', 'points-and-rewards-for-woocommerce' ),
 		'custom_attribute' => array( 'min' => '"1"' ),
 		'class'            => 'input-text wps_wpr_common_width',
-	),
-	array(
-		'type' => 'sectionend',
 	),
 );
 $wps_wpr_assign_product_table_settings = apply_filters( 'wps_wpr_assign_product_points_settings', $wps_wpr_assign_product_table_settings );

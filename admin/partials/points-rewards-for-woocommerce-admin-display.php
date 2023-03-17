@@ -105,7 +105,7 @@ $wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setti
 wp_nonce_field( 'wps-wpr-nonce', 'wps-wpr-nonce' );
 if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-	$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.4.1' );
+	$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.4.2' );
 	$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
 	$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
 	$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );

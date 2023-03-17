@@ -901,6 +901,10 @@ input#wps_wpr_some_custom_points {
     min-width: 150px;
 }
 
+.wps_wpr_show_redemption_conversion_rate{
+    margin-left: 20px;
+}
+
 @media screen and (max-width: 420px) {
     .custom_point_checkout #wps_cart_points {
         width: 180px;
