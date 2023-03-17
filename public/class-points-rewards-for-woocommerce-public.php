@@ -1748,11 +1748,14 @@ class Points_Rewards_For_WooCommerce_Public {
 
 									// apply points on subtotal.
 									$subtotal = $woocommerce->cart->get_subtotal();
-									if ( $subtotal > $wps_fee_on_cart ) {
-										$wps_fee_on_cart = $wps_fee_on_cart;
-									} else {
+									// WOOCS - WooCommerce Currency Switcher Compatibility.
+									if ( ! class_exists( 'WOOCS' ) ) {
+										if ( $subtotal > $wps_fee_on_cart ) {
+											$wps_fee_on_cart = $wps_fee_on_cart;
+										} else {
 
-										$wps_fee_on_cart = $subtotal;
+											$wps_fee_on_cart = $subtotal;
+										}
 									}
 									// WOOCS - WooCommerce Currency Switcher Compatibility.
 									$wps_fee_on_cart = apply_filters( 'wps_wpr_show_conversion_price', $wps_fee_on_cart );
