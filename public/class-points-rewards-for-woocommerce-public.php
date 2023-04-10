@@ -243,6 +243,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_add_my_account_endpoint() {
 		add_rewrite_endpoint( 'points', EP_PAGES );
 		add_rewrite_endpoint( 'view-log', EP_PAGES );
+		flush_rewrite_rules();
 	}
 
 	/**

@@ -46,12 +46,15 @@ if ( isset( $plug['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-
 }
 
 // To Activate plugin only when WooCommerce is active.
-$activated = false;
-// Check if WooCommerce is active.
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+$activated      = true;
+$active_plugins = (array) get_option( 'active_plugins', array() );
 
-if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-	$activated = true;
+// Multisite Compatibility.
+if ( is_multisite() ) {
+	$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+}
+if ( ! ( array_key_exists( 'woocommerce/woocommerce.php', $active_plugins ) || in_array( 'woocommerce/woocommerce.php', $active_plugins ) ) ) {
+	$activated = false;
 }
 
 $plug = get_plugins();
@@ -293,13 +296,54 @@ if ( $activated ) {
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
-	function wps_wpr_flush_rewrite_rules() {
+	function wps_wpr_flush_rewrite_rules( $network_wide ) {
 
-		add_rewrite_endpoint( 'points', EP_PAGES );
-		add_rewrite_endpoint( 'view-log', EP_PAGES );
-		flush_rewrite_rules();
+		// Multisite compatibility.
+		global $wpdb;
+		if ( is_multisite() && $network_wide ) {
+			// Get all blogs in the network and activate plugin on each one.
+			$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			foreach ( $blog_ids as $blog_id ) {
+				switch_to_blog( $blog_id );
 
+				add_rewrite_endpoint( 'points', EP_PAGES );
+				add_rewrite_endpoint( 'view-log', EP_PAGES );
+				flush_rewrite_rules();
+
+				restore_current_blog();
+			}
+		} else {
+
+			add_rewrite_endpoint( 'points', EP_PAGES );
+			add_rewrite_endpoint( 'view-log', EP_PAGES );
+			flush_rewrite_rules();
+		}
 	}
+
+	/**
+	 * Add endpoints when a new blog is created.
+	 *
+	 * @param object $new_site New site object.
+	 * @return void
+	 */
+	function wps_wpr_on_create_blogs( $new_site ) {
+
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+
+		if ( is_plugin_active_for_network( 'points-rewards-for-woocommerce/points-rewards-for-woocommerce.php' ) ) {
+			$blog_id = $new_site->blog_id;
+			switch_to_blog( $blog_id );
+
+			add_rewrite_endpoint( 'points', EP_PAGES );
+			add_rewrite_endpoint( 'view-log', EP_PAGES );
+			flush_rewrite_rules();
+
+			restore_current_blog();
+		}
+	}
+	add_action( 'wp_initialize_site', 'wps_wpr_on_create_blogs', 900 );
 
 	/**
 	 * Wps_wpr_convert_db_keys function
@@ -700,12 +744,11 @@ if ( $activated ) {
 	 * @link https://www.wpswings.com/
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure() {
-
 		deactivate_plugins( plugin_basename( __FILE__ ) );
+		unset( $_GET['activate'] );
+		// Add admin error notice.
+		add_action( 'admin_notices', 'rewardeem_woocommerce_points_rewards_activation_failure_admin_notice' );
 	}
-
-	// Add admin error notice.
-	add_action( 'admin_notices', 'rewardeem_woocommerce_points_rewards_activation_failure_admin_notice' );
 
 	/**
 	 * This function is used to deactivate plugin.
@@ -715,8 +758,7 @@ if ( $activated ) {
 	 * @link https://www.wpswings.com/
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure_admin_notice() {
-			// hide Plugin activated notice.
-		unset( $_GET['activate'] );
+		// hide Plugin activated notice.
 		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			?>
 			<div class="notice notice-error is-dismissible">
