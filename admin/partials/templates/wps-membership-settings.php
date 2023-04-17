@@ -131,6 +131,7 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 			'create_member' => array(),
 		),
 	);
+	$wps_wpr_settings = apply_filters( 'wps_wpr_add_membership_settings', $wps_wpr_settings );
 
 	?>
 	<?php do_action( 'wps_wpr_add_notice' ); ?>
