@@ -4,10 +4,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points, rewards, points and rewards, loyalty, referrals, woocommerce points and rewards, points rewards, reward system, gamification, badges
 Requires at least: 5.5.0
-Tested up to: 6.1.1
+Tested up to: 6.2
 WC requires at least: 5.5.0
-WC tested up to: 7.5.0
-Stable tag: 1.4.2
+WC tested up to: 7.6.0
+Stable tag: 1.5.0
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -17,7 +17,6 @@ Points and Rewards for WooCommerce offer a point management system to your custo
 == Description ==
 
 **TOP-RATED POINTS AND REWARDS FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS. REWARD CUSTOMERS FOR PURCHASES AND CREATE  WOOCOMMERCE LOYALTY PROGRAMS TO REWARD REFERRAL POINTS, SIGN-UP POINTS, ETC. ALLOW REDEEMING POINTS, POINTS LOG REPORT FOR ADMIN AND USER, AND BUILD MEMBERSHIP WITH PROPER EMAIL NOTIFICATIONS**
-
 
 Points and Rewards for WooCommerce is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem rewards using the WooCommerce reward points plugin to buy products at your store or participate in your membership program with the WordPress loyalty points plugin. With the [**WooCommerce Points and Rewards**](https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-page&utm_campaign=par-pro) plugin at your WooCommerce Store, you can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope.
 
@@ -62,7 +61,7 @@ In the WooCommerce loyalty program plugin, Customers can redeem their points eit
 **For Example:** If the order costs $20 and the customer has 10 points in his account, the merchant can determine whether the customer will get a discount of 10, 5, or 2 dollars by redeeming those 10 points.
 
 **4) Membership System For Exclusive Offers**
-Merchants can create their own membership system based on WooCommerce Loyalty Program. This helps them offer exclusive discounts to customers based on the points they collect. Merchants can add discounts on rewards on some categories and their products. If the customer subscribes to the membership, he can purchase those discounted products.
+Merchants can create their own membership system based on the WooCommerce Loyalty Program plugin. This helps them offer exclusive discounts to customers based on the points they collect. Merchants can add discounts on rewards on some categories and their products. If the customer subscribes to the membership, he can purchase those discounted products.
 
 **5) Points Log Report**
 In the Woocommerce Rewards plugin, the points Log Report feature is available for both customers and admin:
@@ -89,9 +88,9 @@ Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.wpswin
 == POINTS AND REWARDS  PLUGIN COMPATIBILITIES == 
 
 * WooCommerce rewards plugin is compatible with [**Wallet System for WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**WooCommerce  Wallet System Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-wallet-pro&utm_medium=par-org-page&utm_campaign=wallet-pro/) plugin. This compatibility allows you to convert your earned points and rewards into wallet credit based on a specific conversion rate. The admin can set points conversion into wallet credit he wants to allow. 
-For example, 10 points equals 2 wallet credits. Customers can later use this wallet credit for purchases in the store.
+For example, 10 points equal 2 wallet credits. Customers can later use this wallet credit for purchases in the store.
 
-* Points for rewards plugin is compatible with [**Currency Switcher for WooCommercer**](https://wordpress.org/plugins/woocommerce-currency-switcher/).The Currency Switcher for WooCommerce plugin allows your customers to select the currency unit for their purchase. They can choose from the currencies for the Points and Rewards plugin. This increases the user experience. All transactions will happen in the currency they select. For example, if 10 points = $1, but the customer chooses INR as a switch, it will show as 10 points = ₹82.36.
+* Points for rewards plugin is compatible with [**Currency Switcher for WooCommerce**](https://wordpress.org/plugins/woocommerce-currency-switcher/).The Currency Switcher for WooCommerce plugin allows your customers to select the currency unit for their purchase. They can choose from the currencies for the Points and Rewards plugin. This increases the user experience. All transactions will happen in the currency they select. For example, if 10 points = $1, but the customer chooses INR as a switch, it will show as 10 points = ₹82.36.
 
 * The WooCommerce loyalty points plugin is compatible with [**WooCommerce PayPal Payment**](https://wordpress.org/plugins/woocommerce-paypal-payments/) for operating secure online payments.
 
@@ -222,6 +221,12 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 1.5.0 - Released on 18 April 2023 =
+* New: Multisite Compatible
+* New: Option to show user per page
+* Enhance: Points Table
+* New: Compatible with latest WP( 6.2 ) & WC( 7.6.0 )
 
 = 1.4.2 - Released on 17 March 2023 =
 * Fix: Currency Switcher Issues
@@ -388,7 +393,3 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 1.4.2 - Released on 17 March 2023 =
-* Fix: Currency Switcher Issues
-* Fix: Assign points not removed from the cart page
-* New: Compatible with the latest WC (6.1.1) & WP (7.5.0)

@@ -416,6 +416,12 @@ select#how-you-use {
     margin: 0 0 10px 0;
 }
 
+.wps-wpr-img-youtube{
+  margin-right: 6px;
+  max-width: 17px;
+  vertical-align: middle;
+}
+
 .wps-info-img{
   margin-right: 6px;
   max-width: 15px;

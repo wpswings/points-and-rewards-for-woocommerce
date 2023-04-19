@@ -248,7 +248,7 @@ $wps_settings = array(
 		'id'       => 'wps_wpr_point_on_order_total_range_desc',
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
-		'default'  => __( 'Your [ORDERTOTALPOINT] Points have been added in now your Total Points are [Total Points].', 'points-and-rewards-for-woocommerce' ),
+		'default'  => __( 'Your [ORDERTOTALPOINT] Points have been added in now your Total Points are [TOTALPOINTS].', 'points-and-rewards-for-woocommerce' ),
 		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[ORDERTOTALPOINT]' . __( ' shortcode in place of points which has been added ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(

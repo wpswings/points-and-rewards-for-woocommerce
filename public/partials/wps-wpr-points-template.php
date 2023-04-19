@@ -328,8 +328,8 @@ if ( isset( $enable_drop ) && $enable_drop ) {
 	}
 	if ( ! empty( $wps_wpr_membership_roles ) && is_array( $wps_wpr_membership_roles ) ) {
 		?>
-			<p class="wps_wpr_heading"><?php echo esc_html_e( 'Upgrade User Level', 'points-and-rewards-for-woocommerce' ); ?></p>
-			<fieldset class="wps_wpr_each_section">	
+			<p class="wps_wpr_heading wps_wpr_membrship_update_heading"><?php echo esc_html_e( 'Upgrade User Level', 'points-and-rewards-for-woocommerce' ); ?></p>
+			<fieldset class="wps_wpr_each_section wps_wpr_membership_listing_class">	
 				<span class="wps_wpr_membership_message"><?php echo esc_html_e( 'Upgrade Your User Level: ', 'points-and-rewards-for-woocommerce' ); ?></span>
 				<form action="" method="post" id="wps_wpr_membership">
 					<?php wp_nonce_field( 'membership-save-level', 'membership-save-level' ); ?>

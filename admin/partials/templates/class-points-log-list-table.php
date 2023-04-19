@@ -214,13 +214,13 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @link https://www.wpswings.com/
 	 */
 	public function prepare_items() {
-		$per_page              = 10;
+		$per_page              = ! empty( get_option( 'wps_wpr_number_items_per_page' ) ) ? get_option( 'wps_wpr_number_items_per_page' ) : 10;
 		$columns               = $this->get_columns();
 		$hidden                = array();
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
+		$current_page          = $this->get_pagenum();
 		$this->process_bulk_action();
-		$current_page = $this->get_pagenum();
 
 		$this->example_data = $this->get_users_points( $current_page, $per_page );
 		$data               = $this->example_data;
@@ -228,13 +228,12 @@ class Points_Log_List_Table extends WP_List_Table {
 		$sort_data = $this->wps_wpr_sort_user_table( $data );
 		usort( $sort_data, array( $this, 'wps_wpr_usort_reorder' ) );
 
-		$total_items = $this->wps_total_count;
+		$total_items = count_users()['total_users'];
 		$this->items = $sort_data;
 		$this->set_pagination_args(
 			array(
 				'total_items' => $total_items,
 				'per_page'    => $per_page,
-				'total_pages' => ceil( $total_items / $per_page ),
 			)
 		);
 
@@ -322,7 +321,6 @@ class Points_Log_List_Table extends WP_List_Table {
 		}
 
 		$user_data   = new WP_User_Query( $args );
-		$total_count = $user_data->get_total();
 		$user_data   = $user_data->get_results();
 		$points_data = array();
 		foreach ( $user_data as $key => $value ) {
@@ -330,7 +328,6 @@ class Points_Log_List_Table extends WP_List_Table {
 				'id' => $value,
 			);
 		}
-		$this->wps_total_count = $total_count;
 		return $points_data;
 	}
 }
@@ -386,6 +383,18 @@ if ( isset( $_POST['wps_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
 		}
 	}
 }
+
+// === Save items per page data here ===
+if ( isset( $_POST['wps_wpr_items_per_page_nonce'] ) ) {
+	$wps_wpr_items_per_page_nonce = ! empty( $_POST['wps_wpr_items_per_page_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_items_per_page_nonce'] ) ) : '';
+	if ( wp_verify_nonce( $wps_wpr_items_per_page_nonce, 'wps-wpr-items-per-page-nonce' ) ) {
+		if ( isset( $_POST['wps_wpr_save_items_per_page'] ) ) {
+			$wps_wpr_number_items_per_page = ! empty( $_POST['wps_wpr_number_items_per_page'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_number_items_per_page'] ) ) : 10;
+			update_option( 'wps_wpr_number_items_per_page', $wps_wpr_number_items_per_page );
+		}
+	}
+}
+
 if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	if ( 'view' == $_GET['action'] ) {
 		$user_log_id = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
@@ -1490,6 +1499,13 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	do_action( 'wps_wpr_add_additional_import_points' );
 	?>
 	<h3 class="wp-heading-inline" id="wps_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-and-rewards-for-woocommerce' ); ?></h3>
+	<!-- === Create HTML for Items per page === -->
+	<div>
+		<p><?php esc_html_e( 'Number of items per page', 'points-and-rewards-for-woocommerce' ); ?></p>
+		<input type="number" max="200" name="wps_wpr_number_items_per_page" id="wps_wpr_number_items_per_page" value="<?php echo esc_html( ! empty( get_option( 'wps_wpr_number_items_per_page' ) ) ? get_option( 'wps_wpr_number_items_per_page' ) : 10 ); ?>">
+		<input type="hidden" name="wps_wpr_items_per_page_nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-items-per-page-nonce' ) ); ?>">
+		<input type="submit" name="wps_wpr_save_items_per_page" class="button button-primary" id="wps_wpr_save_items_per_page" value="<?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?>">
+	</div>
 	<?php
 	$general_settings  = get_option( 'wps_wpr_settings_gallery', true );
 	$enable_wps_signup = isset( $general_settings['wps_wpr_signup'] ) ? intval( $general_settings['wps_wpr_signup'] ) : 0;

@@ -765,6 +765,14 @@ a.wps_wpr_premium--cta {
     text-transform: uppercase;
     text-decoration: none;
 }
+
+img.wps_wpr_dash_video_svg_img {
+  height: 22px;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 6px;
+  line-height: 0;
+}
 /*=====================================
 =            MEDIA QUERIES            =
 =====================================*/
