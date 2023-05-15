@@ -299,16 +299,11 @@ class Points_Log_List_Table extends WP_List_Table {
 	 */
 	public function get_users_points( $current_page, $per_page ) {
 		$args = array(
-			'fields'       => 'ID',
-			'meta_query'   => array(
-				'relation' => 'OR',
+			'fields'     => 'ID',
+			'meta_query' => array(
 				array(
 					'key'     => 'wps_wpr_points',
 					'compare' => 'EXISTS',
-				),
-				array(
-					'key'     => 'wps_wpr_points',
-					'compare' => 'NOT EXISTS',
 				),
 			),
 		);
@@ -1005,6 +1000,39 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									<tr valign="top">
 										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduction_of_points'] ); ?></td>
+									</tr>
+										<?php
+									}
+									?>
+							</table>
+						</div>
+					</div>
+					<?php
+				}
+				if ( array_key_exists( 'reset_users_points_logs', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Your points has been reset by Admin', 'points-and-rewards-for-woocommerce' ); ?>
+						<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+					</p>
+						<div class="wps_wpr_points_view"> 
+							<table class = "form-table mwp_wpr_settings wps_wpr_common_table">
+								<thead>
+									<tr valign="top">
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+									</tr>
+								</thead>
+									<?php
+									foreach ( $point_log['reset_users_points_logs'] as $key => $value ) {
+										?>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['reset_users_points_logs'] ); ?></td>
 									</tr>
 										<?php
 									}
