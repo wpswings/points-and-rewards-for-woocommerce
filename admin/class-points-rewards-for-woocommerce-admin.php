@@ -62,7 +62,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 		}
-		if ( 'woocommerce_page_wps-rwpr-setting' == $hook || ( isset( $pagescreen ) && 'plugins' === $pagescreen ) ) {
+		if ( 'woocommerce_page_wps-rwpr-setting' == $hook || 'woocommerce_page_wps-rwpr-setting' === $pagescreen ) {
 			wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'select2' );
 		}
@@ -262,6 +262,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_points_update() {
+
+		// check if user have capability.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
 		if ( isset( $_POST['points'] ) && is_numeric( $_POST['points'] ) && isset( $_POST['user_id'] ) && isset( $_POST['sign'] ) && isset( $_POST['reason'] ) ) {
 

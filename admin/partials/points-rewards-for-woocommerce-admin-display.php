@@ -71,6 +71,11 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 }
 $wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );
 
+// check if user is admin.
+if ( ! current_user_can( 'manage_options' ) ) {
+	return;
+}
+
 ?>
 <div class="wrap woocommerce" id="wps_rwpr_setting_wrapper">
 	<form enctype="multipart/form-data" action="" id="mainform"  method="post">

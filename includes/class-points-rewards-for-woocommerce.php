@@ -156,9 +156,7 @@ class Points_Rewards_For_Woocommerce {
 	private function set_locale() {
 
 		$plugin_i18n = new Points_Rewards_For_Woocommerce_I18n();
-
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -202,6 +200,7 @@ class Points_Rewards_For_Woocommerce {
 		}
 		$this->loader->add_filter( 'admin_notices', $plugin_admin, 'wps_wpr_updgrade_notice' );
 	}
+
 	/**
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.

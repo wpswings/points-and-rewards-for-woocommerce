@@ -974,7 +974,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 						<?php
 					}
 					?>
-				</table> 
+				</table>
 			</div>
 			<?php
 		}
