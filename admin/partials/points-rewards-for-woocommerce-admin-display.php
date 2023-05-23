@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! defined( 'WPS_PAR_ONBOARD_PLUGIN_NAME' ) ) {
 	define( 'WPS_PAR_ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
 }
-if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
-	$this->onboard = new Makewebbetter_Onboarding_Helper();
+if ( class_exists( 'WPSwings_Onboarding_Helper' ) ) {
+	$this->onboard = new WPSwings_Onboarding_Helper();
 }
 
 $wps_wpr_setting_tab = array(
@@ -95,7 +95,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 					</li>
 					<li class="wps_wpr_get_pro">
 						<a href="https://www.youtube.com/watch?v=WWktrnAI88U&list=PLwUHVEkPKlHlxoQ27Qxkd8buLx_LPtPBh&index=1" target="_blank">
-							<img src="<?php echo esc_url( WPS_RWPR_DIR_URL ) . 'admin/images/wps-youtube-dash.svg' ?>" class="wps_wpr_dash_video_svg_img" alt="Demo image">
+							<img src="<?php echo esc_url( WPS_RWPR_DIR_URL ) . 'admin/images/wps-youtube-dash.svg'; ?>" class="wps_wpr_dash_video_svg_img" alt="Demo image">
 							<span class="wps_wpr_contact_doc_text"><?php esc_html_e( 'Video', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</a>
 					</li>

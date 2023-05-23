@@ -130,8 +130,8 @@ class Points_Rewards_For_Woocommerce {
 		 * The class responsible for defining all actions that occur in the onboarding the site data
 		 * in the admin side of the site.
 		 */
-		! class_exists( 'Makewebbetter_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-makewebbetter-onboarding-helper.php';
-		$this->onboard = new Makewebbetter_Onboarding_Helper();
+		! class_exists( 'WPSwings_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wpswings-onboarding-helper.php';
+		$this->onboard = new WPSwings_Onboarding_Helper();
 
 	}
 

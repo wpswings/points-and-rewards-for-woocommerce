@@ -288,13 +288,12 @@ if ( $activated ) {
 
 	register_activation_hook( __FILE__, 'wps_wpr_flush_rewrite_rules' );
 	register_deactivation_hook( __FILE__, 'wps_wpr_flush_rewrite_rules' );
+
 	/**
-	 * This function is used to create tabs
+	 * This function is used to create points tab.
 	 *
-	 * @name wps_wpr_flush_rewrite_rules
-	 * @since 1.1.0.
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
+	 * @param string $network_wide network_wide.
+	 * @return void
 	 */
 	function wps_wpr_flush_rewrite_rules( $network_wide ) {
 
@@ -353,19 +352,19 @@ if ( $activated ) {
 	function wps_wpr_convert_db_keys() {
 		$wps_check_key_exist = get_option( 'wps_par_org_convert_keys', false );
 		if ( ! $wps_check_key_exist && function_exists( 'wps_wpr_convert_db_keys' ) ) {
-				wps_normal_update_option();
-				wps_general_settings_update_option();
-				wps_per_currency_update_option();
-				wps_points_notification_update_option();
-				wps_add_points_membership_option();
-				wps_wpr_assign_points();
-				wps_wp_other_settings();
-				wps_order_total_migrate();
-				wps_product_purchase_point();
-				wps_point_expiration_setting();
-				wps_notification_add_on();
-				wps_api_setting_addon();
-				update_option( 'wps_par_org_convert_keys', true );
+			wps_normal_update_option();
+			wps_general_settings_update_option();
+			wps_per_currency_update_option();
+			wps_points_notification_update_option();
+			wps_add_points_membership_option();
+			wps_wpr_assign_points();
+			wps_wp_other_settings();
+			wps_order_total_migrate();
+			wps_product_purchase_point();
+			wps_point_expiration_setting();
+			wps_notification_add_on();
+			wps_api_setting_addon();
+			update_option( 'wps_par_org_convert_keys', true );
 		}
 	}
 
@@ -627,7 +626,7 @@ if ( $activated ) {
 	function wps_wpr_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 		?>
-			<tr class="plugin-update-tr active notice-warning notice-alt">
+		<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="notice notice-error inline update-message notice-alt">
 					<p class='wps-notice-title wps-notice-section'>
@@ -764,7 +763,6 @@ if ( $activated ) {
 			<div class="notice notice-error is-dismissible">
 				<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to activate Points and Rewards for WooCommerce.', 'points-and-rewards-for-woocommerce' ); ?></p>
 			</div>
-
 			<?php
 		}
 	}

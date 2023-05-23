@@ -1685,7 +1685,6 @@ class Points_Rewards_For_WooCommerce_Public {
 					do_action( 'wps_change_amount_cart', $wps_fee_on_cart, $cart, $cart_discount );
 
 					// Paypal Issue Change Start.
-
 					if ( isset( $woocommerce->cart ) ) {
 						if ( ! $woocommerce->cart->has_discount( $cart_discount ) ) {
 							if ( $woocommerce->cart->applied_coupons ) {
@@ -1698,8 +1697,6 @@ class Points_Rewards_For_WooCommerce_Public {
 							$woocommerce->cart->applied_coupons[] = $cart_discount;
 						}
 					}
-
-					// $cart->add_fee( $cart_discount, -$wps_fee_on_cart, true, '' );
 				}
 				// Paypal Issue Change End.
 			}
@@ -1961,7 +1958,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 * @param string $cart_totals_fee_html html of the fees.
-	 * @param object  $fee array of the fees.
+	 * @param object $fee array of the fees.
 	 */
 	public function wps_wpr_woocommerce_cart_totals_fee_html( $cart_totals_fee_html, $fee ) {
 		if ( isset( $fee ) && ! empty( $fee ) ) {

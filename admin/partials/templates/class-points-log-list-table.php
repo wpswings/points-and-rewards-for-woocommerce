@@ -489,7 +489,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		<?php
 		if ( isset( $point_log ) && is_array( $point_log ) && null != $point_log ) {
 			?>
- 
+
 			<div class="wps_wpr_wrapper_div">
 				<?php
 				if ( array_key_exists( 'registration', $point_log ) ) {
