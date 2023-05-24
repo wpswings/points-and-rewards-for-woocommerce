@@ -1,21 +1,16 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 1.6.0\n"
-"POT-Creation-Date: 2023-05-19 16:16+0530\n"
-"PO-Revision-Date: 2023-05-19 16:21+0530\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2023-05-24 09:04+0530\n"
+"PO-Revision-Date: 2023-05-24 09:05+0530\n"
 "Last-Translator: \n"
-"Language-Team: WP Swings\n"
+"Language-Team: \n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.3.1\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;"
-"esc_html;esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop;"
-"translate_nooped_plural\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Basepath: .\n"
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:98
 #, php-format
@@ -240,15 +235,15 @@ msgstr ""
 #: public/class-points-rewards-for-woocommerce-public.php:263
 #: public/class-points-rewards-for-woocommerce-public.php:1586
 #: public/class-points-rewards-for-woocommerce-public.php:1596
-#: public/class-points-rewards-for-woocommerce-public.php:2190
-#: public/class-points-rewards-for-woocommerce-public.php:2230
-#: public/class-points-rewards-for-woocommerce-public.php:2271
-#: public/class-points-rewards-for-woocommerce-public.php:2661
-#: public/class-points-rewards-for-woocommerce-public.php:2671
-#: public/class-points-rewards-for-woocommerce-public.php:3011
-#: public/class-points-rewards-for-woocommerce-public.php:3021
-#: public/class-points-rewards-for-woocommerce-public.php:3071
-#: public/class-points-rewards-for-woocommerce-public.php:3080
+#: public/class-points-rewards-for-woocommerce-public.php:2187
+#: public/class-points-rewards-for-woocommerce-public.php:2227
+#: public/class-points-rewards-for-woocommerce-public.php:2268
+#: public/class-points-rewards-for-woocommerce-public.php:2658
+#: public/class-points-rewards-for-woocommerce-public.php:2668
+#: public/class-points-rewards-for-woocommerce-public.php:3008
+#: public/class-points-rewards-for-woocommerce-public.php:3018
+#: public/class-points-rewards-for-woocommerce-public.php:3068
+#: public/class-points-rewards-for-woocommerce-public.php:3077
 msgid "Points"
 msgstr ""
 
@@ -2011,166 +2006,166 @@ msgstr ""
 msgid "Choose which format of email to send."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:323
+#: includes/class-wpswings-onboarding-helper.php:323
 msgid "What is your monthly revenue?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:340
+#: includes/class-wpswings-onboarding-helper.php:340
 msgid "What industry defines your business?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:348
+#: includes/class-wpswings-onboarding-helper.php:348
 msgid "Agency"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:349
+#: includes/class-wpswings-onboarding-helper.php:349
 msgid "Consumer Services"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:350
+#: includes/class-wpswings-onboarding-helper.php:350
 msgid "Ecommerce"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:351
+#: includes/class-wpswings-onboarding-helper.php:351
 msgid "Financial Services"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:352
+#: includes/class-wpswings-onboarding-helper.php:352
 msgid "Healthcare"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:353
+#: includes/class-wpswings-onboarding-helper.php:353
 msgid "Manufacturing"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:354
+#: includes/class-wpswings-onboarding-helper.php:354
 msgid "Nonprofit and Education"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:355
+#: includes/class-wpswings-onboarding-helper.php:355
 msgid "Professional Services"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:356
+#: includes/class-wpswings-onboarding-helper.php:356
 msgid "Real Estate"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:357
+#: includes/class-wpswings-onboarding-helper.php:357
 msgid "Software"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:358
+#: includes/class-wpswings-onboarding-helper.php:358
 msgid "Startups"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:359
+#: includes/class-wpswings-onboarding-helper.php:359
 msgid "Restaurant"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:360
+#: includes/class-wpswings-onboarding-helper.php:360
 msgid "Fitness"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:361
+#: includes/class-wpswings-onboarding-helper.php:361
 msgid "Jewelry"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:362
+#: includes/class-wpswings-onboarding-helper.php:362
 msgid "Beauty"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:363
+#: includes/class-wpswings-onboarding-helper.php:363
 msgid "Celebrity"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:364
+#: includes/class-wpswings-onboarding-helper.php:364
 msgid "Gaming"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:365
+#: includes/class-wpswings-onboarding-helper.php:365
 msgid "Government"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:366
+#: includes/class-wpswings-onboarding-helper.php:366
 msgid "Sports"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:367
+#: includes/class-wpswings-onboarding-helper.php:367
 msgid "Retail Store"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:368
+#: includes/class-wpswings-onboarding-helper.php:368
 msgid "Travel"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:369
+#: includes/class-wpswings-onboarding-helper.php:369
 msgid "Political Campaign"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:375
+#: includes/class-wpswings-onboarding-helper.php:375
 msgid "What is the best email address to contact you?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:385
+#: includes/class-wpswings-onboarding-helper.php:385
 msgid "What is your contact number?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:480
+#: includes/class-wpswings-onboarding-helper.php:480
 msgid "It is a temporary deactivation. I am just debugging an issue."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:481
+#: includes/class-wpswings-onboarding-helper.php:481
 msgid "The plugin broke my layout or some functionality."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:482
+#: includes/class-wpswings-onboarding-helper.php:482
 msgid "The plugin is too complicated to configure."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:483
+#: includes/class-wpswings-onboarding-helper.php:483
 msgid "I no longer need the plugin"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:484
+#: includes/class-wpswings-onboarding-helper.php:484
 msgid "I found a better plugin"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:485
+#: includes/class-wpswings-onboarding-helper.php:485
 msgid "Other"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:624
+#: includes/class-wpswings-onboarding-helper.php:624
 msgid "Select Any One Option..."
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:877
+#: includes/class-wpswings-onboarding-helper.php:877
 msgid "Unexpected Error Occured"
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-deactivation-template-display.php:40
+#: includes/extra-templates/wpswings-deactivation-template-display.php:40
 msgid "May we have a little info about why you are deactivating?"
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-deactivation-template-display.php:50
+#: includes/extra-templates/wpswings-deactivation-template-display.php:50
 msgid "Skip and Deactivate Now"
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-onboarding-template-display.php:43
+#: includes/extra-templates/wpswings-onboarding-template-display.php:43
 msgid "Welcome to WP Swings"
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-onboarding-template-display.php:44
+#: includes/extra-templates/wpswings-onboarding-template-display.php:44
 msgid ""
 "We love making new friends! Subscribe below and we promise to keep you up-to-"
 "date with our latest new plugins, updates, awesome deals and a few special "
 "offers."
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-onboarding-template-display.php:51
+#: includes/extra-templates/wpswings-onboarding-template-display.php:51
 msgid "Send Us"
 msgstr ""
 
-#: includes/extra-templates/makewebbetter-onboarding-template-display.php:54
+#: includes/extra-templates/wpswings-onboarding-template-display.php:54
 msgid "Skip For Now"
 msgstr ""
 
@@ -2215,42 +2210,42 @@ msgstr ""
 msgid "GO PRO"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:634
+#: points-rewards-for-woocommerce.php:633
 msgid ""
 "The latest update includes some substantial changes across different areas "
 "of the plugin. Hence, if you are not a new user then"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:634
+#: points-rewards-for-woocommerce.php:633
 msgid " please migrate your old data and settings from "
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:634
+#: points-rewards-for-woocommerce.php:633
 msgid "Dashboard"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:634
+#: points-rewards-for-woocommerce.php:633
 msgid " page then Click On Start Import Button."
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:690
+#: points-rewards-for-woocommerce.php:689
 msgid ""
 "You are Using the Old Version of Points and Rewards For WooCommerce Pro !!"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:690
+#: points-rewards-for-woocommerce.php:689
 msgid " Please Update it "
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:690
+#: points-rewards-for-woocommerce.php:689
 msgid " Click Here"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:690
+#: points-rewards-for-woocommerce.php:689
 msgid " to update to the latest "
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:765
+#: points-rewards-for-woocommerce.php:764
 msgid ""
 "WooCommerce is not activated, Please activate WooCommerce first to activate "
 "Points and Rewards for WooCommerce."
@@ -2318,29 +2313,29 @@ msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1587
 #: public/class-points-rewards-for-woocommerce-public.php:1597
-#: public/class-points-rewards-for-woocommerce-public.php:2663
-#: public/class-points-rewards-for-woocommerce-public.php:2672
-#: public/class-points-rewards-for-woocommerce-public.php:3012
-#: public/class-points-rewards-for-woocommerce-public.php:3022
-#: public/class-points-rewards-for-woocommerce-public.php:3072
-#: public/class-points-rewards-for-woocommerce-public.php:3081
+#: public/class-points-rewards-for-woocommerce-public.php:2660
+#: public/class-points-rewards-for-woocommerce-public.php:2669
+#: public/class-points-rewards-for-woocommerce-public.php:3009
+#: public/class-points-rewards-for-woocommerce-public.php:3019
+#: public/class-points-rewards-for-woocommerce-public.php:3069
+#: public/class-points-rewards-for-woocommerce-public.php:3078
 msgid "Apply Points"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1588
-#: public/class-points-rewards-for-woocommerce-public.php:3013
+#: public/class-points-rewards-for-woocommerce-public.php:3010
 msgid "Your available points:"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1598
-#: public/class-points-rewards-for-woocommerce-public.php:2673
-#: public/class-points-rewards-for-woocommerce-public.php:3023
-#: public/class-points-rewards-for-woocommerce-public.php:3082
+#: public/class-points-rewards-for-woocommerce-public.php:2670
+#: public/class-points-rewards-for-woocommerce-public.php:3020
+#: public/class-points-rewards-for-woocommerce-public.php:3079
 msgid "You require :"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1600
-#: public/class-points-rewards-for-woocommerce-public.php:3025
+#: public/class-points-rewards-for-woocommerce-public.php:3022
 msgid "more to get redeem"
 msgstr ""
 
@@ -2353,83 +2348,83 @@ msgid "Custom Point has been applied Successfully!"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1674
-#: public/class-points-rewards-for-woocommerce-public.php:1728
-#: public/class-points-rewards-for-woocommerce-public.php:1969
-#: public/class-points-rewards-for-woocommerce-public.php:1989
-#: public/class-points-rewards-for-woocommerce-public.php:2063
-#: public/class-points-rewards-for-woocommerce-public.php:2571
-#: public/class-points-rewards-for-woocommerce-public.php:2906
-#: public/class-points-rewards-for-woocommerce-public.php:2925
+#: public/class-points-rewards-for-woocommerce-public.php:1725
+#: public/class-points-rewards-for-woocommerce-public.php:1966
+#: public/class-points-rewards-for-woocommerce-public.php:1986
+#: public/class-points-rewards-for-woocommerce-public.php:2060
+#: public/class-points-rewards-for-woocommerce-public.php:2568
+#: public/class-points-rewards-for-woocommerce-public.php:2903
+#: public/class-points-rewards-for-woocommerce-public.php:2922
 msgid "Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1830
+#: public/class-points-rewards-for-woocommerce-public.php:1827
 msgid "Here is the Discount Rule for Applying your Points to Cart Total"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1835
-#: public/class-points-rewards-for-woocommerce-public.php:1862
-#: public/class-points-rewards-for-woocommerce-public.php:2235
-#: public/class-points-rewards-for-woocommerce-public.php:2664
-#: public/class-points-rewards-for-woocommerce-public.php:3073
+#: public/class-points-rewards-for-woocommerce-public.php:1832
+#: public/class-points-rewards-for-woocommerce-public.php:1859
+#: public/class-points-rewards-for-woocommerce-public.php:2232
+#: public/class-points-rewards-for-woocommerce-public.php:2661
+#: public/class-points-rewards-for-woocommerce-public.php:3070
 msgid " Points"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1850
+#: public/class-points-rewards-for-woocommerce-public.php:1847
 msgid "Place Order and Earn Reward Points in Return."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1859
+#: public/class-points-rewards-for-woocommerce-public.php:1856
 msgid "Conversion Rate: "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1971
-#: public/class-points-rewards-for-woocommerce-public.php:2929
+#: public/class-points-rewards-for-woocommerce-public.php:1968
+#: public/class-points-rewards-for-woocommerce-public.php:2926
 msgid "[Remove]"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1988
+#: public/class-points-rewards-for-woocommerce-public.php:1985
 msgid "Failed to Remove Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1994
+#: public/class-points-rewards-for-woocommerce-public.php:1991
 msgid "Successfully Removed Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2602
+#: public/class-points-rewards-for-woocommerce-public.php:2599
 msgid "Have A Points?"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2673
-#: public/class-points-rewards-for-woocommerce-public.php:3082
+#: public/class-points-rewards-for-woocommerce-public.php:2670
+#: public/class-points-rewards-for-woocommerce-public.php:3079
 msgid "more points to get redeem"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2800
+#: public/class-points-rewards-for-woocommerce-public.php:2797
 msgid "Convert Points to Currency  Wallet Conversion"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2803
+#: public/class-points-rewards-for-woocommerce-public.php:2800
 msgid "Points Conversion: "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2804
+#: public/class-points-rewards-for-woocommerce-public.php:2801
 msgid "points = "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2809
+#: public/class-points-rewards-for-woocommerce-public.php:2806
 msgid "Enter your points:"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2814
+#: public/class-points-rewards-for-woocommerce-public.php:2811
 msgid "Redeem to Wallet"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3172
+#: public/class-points-rewards-for-woocommerce-public.php:3169
 msgid "You will earn [Points] points when your subscription should be renewal."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3178
+#: public/class-points-rewards-for-woocommerce-public.php:3175
 msgid "Subscription Renewal Points Message :"
 msgstr ""
 

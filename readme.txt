@@ -222,7 +222,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 1.6.0 - Released on 22 May 2023 =
+= 1.6.0 - Released on 24 May 2023 =
 * Enhance: Points table layout
 * New: Compatible with latest WP( 6.2.1 ) & WC( 7.7.0 )
 * Fix: Vulnerability issues

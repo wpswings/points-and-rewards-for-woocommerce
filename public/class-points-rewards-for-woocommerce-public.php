@@ -1616,22 +1616,26 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_apply_fee_on_cart_subtotal() {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
-		$response['result'] = false;
+		$response['result']  = false;
 		$response['message'] = __( 'Can not redeem!', 'points-and-rewards-for-woocommerce' );
-		if ( ! empty( $_POST['user_id'] ) && isset( $_POST['user_id'] ) ) {
-			$user_id = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
-		}
-		if ( ! empty( $_POST['wps_cart_points'] ) && isset( $_POST['wps_cart_points'] ) ) {
-			$wps_cart_points = sanitize_text_field( wp_unslash( $_POST['wps_cart_points'] ) );
-		}
-		if ( isset( $user_id ) && ! empty( $user_id ) ) {
-			if ( isset( $wps_cart_points ) && ! empty( $wps_cart_points ) ) {
-				WC()->session->set( 'wps_cart_points', $wps_cart_points );
-				$response['result'] = true;
-				$response['message'] = esc_html__( 'Custom Point has been applied Successfully!', 'points-and-rewards-for-woocommerce' );
-			} else {
-				$response['result'] = false;
-				$response['message'] = __( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
+		if ( isset( $_POST ) ) {
+
+			$user_id         = ! empty( $_POST['user_id'] ) ? sanitize_text_field( wp_unslash( $_POST['user_id'] ) ) : 0;
+			$wps_cart_points = ! empty( $_POST['wps_cart_points'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_cart_points'] ) ) : 0;
+			$get_points      = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+			$get_points      = ! empty( $get_points ) && $get_points > 0 ? $get_points : 0;
+
+			if ( $get_points > 0 && $wps_cart_points > 0 ) {
+				if ( $get_points >= $wps_cart_points ) {
+
+					WC()->session->set( 'wps_cart_points', $wps_cart_points );
+					$response['result']  = true;
+					$response['message'] = esc_html__( 'Custom Point has been applied Successfully!', 'points-and-rewards-for-woocommerce' );
+				} else {
+
+					$response['result']  = false;
+					$response['message'] = __( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
+				}
 			}
 		}
 		wp_send_json( $response );
