@@ -63,12 +63,6 @@
 
 /* Fixing design Fixes */
 
-#wps_rwpr_setting_wrapper input[type="checkbox"],
-#wps_rwpr_setting_wrapper input[type="radio"] {
-    width: 25px;
-    height: 25px;
-    position: relative;
-}
 
 #wps_wpr_coupon_conversion_points,
 #wps_wpr_coupon_conversion_price,
@@ -91,13 +85,6 @@
 .wps_wpr_pro_points_setting input[type=number] {
     width: 100%;
     max-width: unset;
-}
-
-#wps_rwpr_setting_wrapper input[type="checkbox"]:before {
-    font: normal 22px/1 dashicons;
-    width: 35px;
-    height: 35px;
-    margin: -5px 0 0 -7px;
 }
 
 @media only screen and (max-width: 782px) {

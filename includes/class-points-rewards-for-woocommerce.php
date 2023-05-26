@@ -72,7 +72,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '1.5.0';
+			$this->version = '1.6.0';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -130,8 +130,8 @@ class Points_Rewards_For_Woocommerce {
 		 * The class responsible for defining all actions that occur in the onboarding the site data
 		 * in the admin side of the site.
 		 */
-		! class_exists( 'Makewebbetter_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-makewebbetter-onboarding-helper.php';
-		$this->onboard = new Makewebbetter_Onboarding_Helper();
+		! class_exists( 'WPSwings_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wpswings-onboarding-helper.php';
+		$this->onboard = new WPSwings_Onboarding_Helper();
 
 	}
 
@@ -156,9 +156,7 @@ class Points_Rewards_For_Woocommerce {
 	private function set_locale() {
 
 		$plugin_i18n = new Points_Rewards_For_Woocommerce_I18n();
-
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -202,6 +200,7 @@ class Points_Rewards_For_Woocommerce {
 		}
 		$this->loader->add_filter( 'admin_notices', $plugin_admin, 'wps_wpr_updgrade_notice' );
 	}
+
 	/**
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.

@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! defined( 'WPS_PAR_ONBOARD_PLUGIN_NAME' ) ) {
 	define( 'WPS_PAR_ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
 }
-if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
-	$this->onboard = new Makewebbetter_Onboarding_Helper();
+if ( class_exists( 'WPSwings_Onboarding_Helper' ) ) {
+	$this->onboard = new WPSwings_Onboarding_Helper();
 }
 
 $wps_wpr_setting_tab = array(
@@ -71,6 +71,11 @@ if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-wooco
 }
 $wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );
 
+// check if user is admin.
+if ( ! current_user_can( 'manage_options' ) ) {
+	return;
+}
+
 ?>
 <div class="wrap woocommerce" id="wps_rwpr_setting_wrapper">
 	<form enctype="multipart/form-data" action="" id="mainform"  method="post">
@@ -90,7 +95,7 @@ $wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setti
 					</li>
 					<li class="wps_wpr_get_pro">
 						<a href="https://www.youtube.com/watch?v=WWktrnAI88U&list=PLwUHVEkPKlHlxoQ27Qxkd8buLx_LPtPBh&index=1" target="_blank">
-							<img src="<?php echo esc_url( WPS_RWPR_DIR_URL ) . 'admin/images/wps-youtube-dash.svg' ?>" class="wps_wpr_dash_video_svg_img" alt="Demo image">
+							<img src="<?php echo esc_url( WPS_RWPR_DIR_URL ) . 'admin/images/wps-youtube-dash.svg'; ?>" class="wps_wpr_dash_video_svg_img" alt="Demo image">
 							<span class="wps_wpr_contact_doc_text"><?php esc_html_e( 'Video', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</a>
 					</li>
@@ -116,7 +121,7 @@ $wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setti
 		wp_nonce_field( 'wps-wpr-nonce', 'wps-wpr-nonce' );
 		if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-			$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.5.0' );
+			$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.6.0' );
 			$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
 			$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
 			$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );

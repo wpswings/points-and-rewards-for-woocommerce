@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           1.5.0
+ * Version:           1.6.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
@@ -22,9 +22,9 @@
  * Domain Path:       /languages
  *
  * Requires at least    : 5.5.0
- * Tested up to         : 6.2
+ * Tested up to         : 6.2.1
  * WC requires at least : 5.5.0
- * WC tested up to      : 7.6.0
+ * WC tested up to      : 7.7.0
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -67,7 +67,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.5.0' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '1.6.0' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -288,13 +288,12 @@ if ( $activated ) {
 
 	register_activation_hook( __FILE__, 'wps_wpr_flush_rewrite_rules' );
 	register_deactivation_hook( __FILE__, 'wps_wpr_flush_rewrite_rules' );
+
 	/**
-	 * This function is used to create tabs
+	 * This function is used to create points tab.
 	 *
-	 * @name wps_wpr_flush_rewrite_rules
-	 * @since 1.1.0.
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
+	 * @param string $network_wide network_wide.
+	 * @return void
 	 */
 	function wps_wpr_flush_rewrite_rules( $network_wide ) {
 
@@ -353,19 +352,19 @@ if ( $activated ) {
 	function wps_wpr_convert_db_keys() {
 		$wps_check_key_exist = get_option( 'wps_par_org_convert_keys', false );
 		if ( ! $wps_check_key_exist && function_exists( 'wps_wpr_convert_db_keys' ) ) {
-				wps_normal_update_option();
-				wps_general_settings_update_option();
-				wps_per_currency_update_option();
-				wps_points_notification_update_option();
-				wps_add_points_membership_option();
-				wps_wpr_assign_points();
-				wps_wp_other_settings();
-				wps_order_total_migrate();
-				wps_product_purchase_point();
-				wps_point_expiration_setting();
-				wps_notification_add_on();
-				wps_api_setting_addon();
-				update_option( 'wps_par_org_convert_keys', true );
+			wps_normal_update_option();
+			wps_general_settings_update_option();
+			wps_per_currency_update_option();
+			wps_points_notification_update_option();
+			wps_add_points_membership_option();
+			wps_wpr_assign_points();
+			wps_wp_other_settings();
+			wps_order_total_migrate();
+			wps_product_purchase_point();
+			wps_point_expiration_setting();
+			wps_notification_add_on();
+			wps_api_setting_addon();
+			update_option( 'wps_par_org_convert_keys', true );
 		}
 	}
 
@@ -605,7 +604,7 @@ if ( $activated ) {
 					$wps_par_pro_license_key = get_option( 'ultimate_woocommerce_points_and_rewards_lcns_key', '' );
 					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_LICENSE_KEY' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_LICENSE_KEY', $wps_par_pro_license_key );
 					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_BASE_FILE' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_BASE_FILE', 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' );
-					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION', '1.5.0' );
+					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION', '1.6.0' );
 				}
 				require_once $update_file;
 			}
@@ -627,7 +626,7 @@ if ( $activated ) {
 	function wps_wpr_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 		?>
-			<tr class="plugin-update-tr active notice-warning notice-alt">
+		<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="notice notice-error inline update-message notice-alt">
 					<p class='wps-notice-title wps-notice-section'>
@@ -654,7 +653,7 @@ if ( $activated ) {
 	function wps_wpr_show_notice_on_plugin_dashboard() {
 		if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-			$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.5.0' );
+			$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.6.0' );
 			$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
 			$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
 			$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );
@@ -764,7 +763,6 @@ if ( $activated ) {
 			<div class="notice notice-error is-dismissible">
 				<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to activate Points and Rewards for WooCommerce.', 'points-and-rewards-for-woocommerce' ); ?></p>
 			</div>
-
 			<?php
 		}
 	}

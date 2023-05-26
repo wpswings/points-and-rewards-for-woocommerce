@@ -19,14 +19,14 @@
  * @subpackage points-and-rewards-for-wooCommerce/includes
  * @author     makewebbetter <ticket@makewebbetter.com>
  */
-if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
+if ( class_exists( 'WPSwings_Onboarding_Helper' ) ) {
 	return;
 }
 
 /**
  * Helper module for MakeWebBetter plugins.
  */
-class Makewebbetter_Onboarding_Helper {
+class WPSwings_Onboarding_Helper {
 
 	/**
 	 * Instance variable.
@@ -156,7 +156,7 @@ class Makewebbetter_Onboarding_Helper {
 		 */
 		if ( $this->is_valid_page_screen() ) {
 
-			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_RWPR_DIR_URL . 'admin/css/makewebbetter-onboarding-admin.css', array(), '1.0.0', 'all' );
+			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_RWPR_DIR_URL . 'admin/css/wpswings-onboarding-admin.css', array(), '1.6.0', 'all' );
 			wp_enqueue_style( 'select2' );
 		}
 	}
@@ -182,7 +182,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		if ( $this->is_valid_page_screen() ) {
 
-			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_RWPR_DIR_URL . 'admin/js/makewebbetter-onboarding-admin.js', array( 'jquery', 'select2' ), '1.0.0', true );
+			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_RWPR_DIR_URL . 'admin/js/wpswings-onboarding-admin.js', array( 'jquery', 'select2' ), '1.6.0', true );
 
 			global $pagenow;
 			$current_slug = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
@@ -207,7 +207,7 @@ class Makewebbetter_Onboarding_Helper {
 	public function add_onboarding_popup_screen() {
 
 		if ( $this->is_valid_page_screen() && $this->can_show_onboarding_popup() ) {
-			require_once WPS_RWPR_DIR_PATH . 'includes/extra-templates/makewebbetter-onboarding-template-display.php';
+			require_once WPS_RWPR_DIR_PATH . 'includes/extra-templates/wpswings-onboarding-template-display.php';
 		}
 	}
 
@@ -221,7 +221,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		global $pagenow;
 		if ( ! empty( $pagenow ) && 'plugins.php' == $pagenow ) {
-			require_once WPS_RWPR_DIR_PATH . 'includes/extra-templates/makewebbetter-deactivation-template-display.php';
+			require_once WPS_RWPR_DIR_PATH . 'includes/extra-templates/wpswings-deactivation-template-display.php';
 		}
 	}
 
@@ -941,15 +941,15 @@ class Makewebbetter_Onboarding_Helper {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
-		} else if ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
+		} elseif ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
 			$ipaddress = getenv( 'HTTP_X_FORWARDED_FOR' );
-		} else if ( getenv( 'HTTP_X_FORWARDED' ) ) {
+		} elseif ( getenv( 'HTTP_X_FORWARDED' ) ) {
 			$ipaddress = getenv( 'HTTP_X_FORWARDED' );
-		} else if ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
+		} elseif ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
 			$ipaddress = getenv( 'HTTP_FORWARDED_FOR' );
-		} else if ( getenv( 'HTTP_FORWARDED' ) ) {
+		} elseif ( getenv( 'HTTP_FORWARDED' ) ) {
 			$ipaddress = getenv( 'HTTP_FORWARDED' );
-		} else if ( getenv( 'REMOTE_ADDR' ) ) {
+		} elseif ( getenv( 'REMOTE_ADDR' ) ) {
 			$ipaddress = getenv( 'REMOTE_ADDR' );
 		} else {
 			$ipaddress = 'UNKNOWN';

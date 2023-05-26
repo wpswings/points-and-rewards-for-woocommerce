@@ -4,10 +4,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points, rewards, points and rewards, loyalty, referrals, woocommerce points and rewards, points rewards, reward system, gamification, badges
 Requires at least: 5.5.0
-Tested up to: 6.2
+Tested up to: 6.2.1
 WC requires at least: 5.5.0
-WC tested up to: 7.6.0
-Stable tag: 1.5.0
+WC tested up to: 7.7.0
+Stable tag: 1.6.0
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -153,7 +153,7 @@ Automatic installation is the easiest option as WordPress handles the file trans
 In the search field type **"Points and Rewards for WooCommerce"** and click Search Plugins. Once you've found our Points and Rewards for WooCommerce plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking **"Install Now"**.
 
 = Manual installation =
-The manual installation method involves downloading our Points And Rewards for WooCommerce and uploading it to your webserver via your favorite FTP application. The WordPress codex contains [**instructions on how to do this here**](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
+The manual installation method involves downloading our Points And Rewards for WooCommerce and uploading it to your web server via your favorite FTP application. The WordPress codex contains [**instructions on how to do this here**](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
 
 = Updating =
 Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
@@ -174,26 +174,26 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 == Frequently Asked Questions ==
 
-=How does the WooCommerce Rewards plugin work?=
+=How does the WooCommerce Rewards Points plugin work?=
 Merchants can create a WooCommerce rewards point management system using this plugin. In this point reward system, customers get rewarded with loyalty points for their store activities like purchases, signup, referral, and many more. Customers can further redeem earned point value as a discount for their purchase.
 
-=Who can use the points WooCommerce plugin?=
+=Who can use the points Loyalty Points and Rewards plugin?=
 Any WooCommerce store owner who wants to build a loyalty rewards program for their customers can use this plugin.
 
-=How can points be redeemed using the WooCommerce Reward System plugin?=
+=How can points be redeemed using the WooCommerce Reward Point plugin?=
 The plugin allows merchants to let their users redeem earned points either on the cart or the checkout page. Customers need to add the points in the “Apply Points” field and the points will be redeemed.
 
 =How and where can we manually add, remove, or view the points for the user?=
 You can view, add, or remove the users’ points manually through the points table section. To do this, go to your WordPress Dashboard then navigate to WooCommerce > Points and Rewards, and in the plugin, go to the Points Table section. Under that section, you can select whether you want to add or deduct points for a specific user, add your remarks for updating the points and click on Update and you’re done.
 
-=Is there any feature in the plugin by which we can give the points on the order total?=
+=Is there any feature in the WooCommerce rewards points plugin by which we can give the points on the order total?=
 Yes. Through the “Order Total Points” setting, the admin can offer points on the order total. Merchants can set the number of points a customer will receive if his order value lies within a set price range. **For example**: Merchants can offer 100 points whenever a customer spends an amount between 100 to 300 dollars. So you can add 100 in as the minimum and 300 as the maximum price and the customer will receive 100 points whenever they spend this much amount.
 
 To enable this feature, go to your WordPress Dashboard > WooCommerce > Points and Rewards > Order Total Points and click on the checkbox that says “Enable the settings for the orders”. Then set the maximum and minimum price on which you want to offer points to your customers. And enter the number of points you will offer if a customer spends the set amount at your store. Save Changes and your customers will receive points if they shop within the set range of amounts.
 
 Admins can also create memberships using this plugin to offer exclusive discounts to customers. Customers can join the membership using the earned points.
 
-=Are coding skills required for using the points and rewards plugin?=
+=Are coding skills required for using the loyalty points and rewards plugin?=
 No. Coding skills are not required to use this WooCommerce reward points plugin. You can easily install, activate, and use this plugin.
 
 =Can I provide points to the customer for signup?=
@@ -207,14 +207,14 @@ Yes. You can notify the customers about the transaction of their loyalty points 
 
 =How can a customer or admin check the point’s transaction history?=
 Our WooCommerce Points and Rewards plugin offers a points log report feature that allows both customers and admins to check the point’s transaction history.
-**For customers:** Customers can check their points transaction history on your online store by going to My Account > Points > View Point Log. All the points transactions are shown in that report.
+**For customers:** Customers can check their points transaction history on your online store by going to My Account > Points > Viewpoint Log. All the points transactions are shown in that report.
 
 **For admins:** Admins can check the points transaction history of each customer by going to their WordPress Dashboard and then navigating to WooCommerce > Points and Rewards > Points Table. In the points table, the admin can click on the View Point Log to checkpoints the transactions of every customer.
 
 =Can customers earn points on the referral signup?=
 Yes. The admin can enable this feature to offer loyalty points on referral signup. To do this, go to your WordPress dashboard and navigate to **WooCommerce > Points and Rewards > General**. In the General tab, you’ll see the Referral section. Enable the checkbox that says “Enable Referral Points for Rewards” and enter the number of loyalty points you want to offer to customers on every referral sign-up. Save changes once you’re done and the referrer will receive the loyalty points whenever a referee signs up to your website using the referrer’s referral link.
 
-=How do I see my points balance with the WordPress Loyalty Program plugin ?=
+=How do I see my points balance with the WooCommerce Loyalty Points and Rewards plugin?=
 Customers can see their points balance in the Points tab under the Account section.
 
 =My Question is not listed?=
@@ -222,7 +222,12 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 1.5.0 - Released on 18 April 2023 =
+= 1.6.0 - Released on 24 May 2023 =
+* Enhance: Points table layout
+* New: Compatible with latest WP( 6.2.1 ) & WC( 7.7.0 )
+* Fix: Vulnerability issues
+
+= 1.5.0 - Released on 19 April 2023 =
 * New: Multisite Compatible
 * New: Option to show user per page
 * Enhance: Points Table
@@ -392,4 +397,11 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 * First version
 
 == Upgrade Notice ==
+
+= 1.6.0 - Released on 22 May 2023 =
+* Enhance: Points table layout
+* New: Compatible with latest WP( 6.2.1 ) & WC( 7.7.0 )
+* Fix: Vulnerability issues
+
+
 
