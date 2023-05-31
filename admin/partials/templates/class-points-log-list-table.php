@@ -10,6 +10,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
@@ -24,6 +25,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * @link https://www.wpswings.com/
  */
 class Points_Log_List_Table extends WP_List_Table {
+
 	/**
 	 * This is variable which is used for the store all the data.
 	 *
@@ -37,7 +39,6 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @var array $wps_total_counta variable for store data.
 	 */
 	public $wps_total_count;
-
 
 	/**
 	 * This construct colomns in point table.
@@ -120,7 +121,6 @@ class Points_Log_List_Table extends WP_List_Table {
 	public function view_html( $user_id ) {
 
 		echo '<a  href="javascript:void(0)" class="wps_points_update button button-primary wps_wpr_save_changes" data-id="' . esc_html( $user_id ) . '">' . esc_html__( 'Update', 'points-and-rewards-for-woocommerce' ) . '</a>';
-
 	}
 
 	/**
@@ -134,20 +134,56 @@ class Points_Log_List_Table extends WP_List_Table {
 
 		if ( 'bulk-delete' === $this->current_action() ) {
 			if ( isset( $_POST['points-log'] ) ) {
+
 				$wps_membership_nonce = sanitize_text_field( wp_unslash( $_POST['points-log'] ) );
 				if ( wp_verify_nonce( $wps_membership_nonce, 'points-log' ) ) {
 					if ( isset( $_POST['mpr_points_ids'] ) && ! empty( $_POST['mpr_points_ids'] ) ) {
+
 						$all_id = map_deep( wp_unslash( $_POST['mpr_points_ids'] ), 'sanitize_text_field' );
 						foreach ( $all_id as $key => $value ) {
-							delete_user_meta( $value, 'wps_wpr_points' );
+
+							$this->wps_wpr_create_points_reset_log( $value );
+							update_user_meta( $value, 'wps_wpr_points', 0 );
 						}
 					}
 				}
 			}
 		}
 		do_action( 'wps_wpr_process_bulk_reset_option', $this->current_action(), $_POST );
-
 	}
+
+	/**
+	 * This function is used to create log for resets points.
+	 *
+	 * @param String $user_id user_id.
+	 * @return void
+	 */
+	public function wps_wpr_create_points_reset_log( $user_id ) {
+
+		$get_points           = get_user_meta( $user_id, 'wps_wpr_points', true );
+		$wps_reset_points_log = get_user_meta( $user_id, 'points_details', true );
+		$wps_reset_points_log = ! empty( $wps_reset_points_log ) && is_array( $wps_reset_points_log ) ? $wps_reset_points_log : array();
+
+		if ( $get_points > 0 ) {
+			if ( isset( $wps_reset_points_log['points_reset_by_admin'] ) && ! empty( $wps_reset_points_log['points_reset_by_admin'] ) ) {
+
+				$wps_reset_log = array(
+					'points_reset_by_admin' => $get_points,
+					'date'                  => date_i18n( 'Y-m-d h:i:sa' ),
+				);
+				$wps_reset_points_log['points_reset_by_admin'][] = $wps_reset_log;
+			} else {
+
+				$wps_reset_log = array(
+					'points_reset_by_admin' => $get_points,
+					'date'                  => date_i18n( 'Y-m-d h:i:sa' ),
+				);
+				$wps_reset_points_log['points_reset_by_admin'][] = $wps_reset_log;
+			}
+			update_user_meta( $user_id, 'points_details', $wps_reset_points_log );
+		}
+	}
+
 	/**
 	 * Returns an associative array containing the bulk action
 	 *
@@ -158,6 +194,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @link https://www.wpswings.com/
 	 */
 	public function get_bulk_actions() {
+
 		$actions = array(
 			'bulk-delete' => __( 'Reset Points', 'points-and-rewards-for-woocommerce' ),
 		);
@@ -174,6 +211,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @link https://www.wpswings.com/
 	 */
 	public function get_sortable_columns() {
+
 		$sortable_columns = array(
 			'user_name'   => array( 'user_name', false ),
 			'user_email'  => array( 'user_email', false ),
@@ -189,9 +227,11 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @return array
 	 */
 	public function wps_wpr_sort_user_table( $data ) {
+
 		$points_data = array();
 		if ( ! empty( $data ) ) {
 			foreach ( $data as $sort_id ) {
+
 				$user          = get_userdata( $sort_id['id'] );
 				$points        = get_user_meta( $sort_id['id'], 'wps_wpr_points', true );
 				$points_data[] = array(
@@ -214,6 +254,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @link https://www.wpswings.com/
 	 */
 	public function prepare_items() {
+
 		$per_page              = ! empty( get_option( 'wps_wpr_number_items_per_page' ) ) ? get_option( 'wps_wpr_number_items_per_page' ) : 10;
 		$columns               = $this->get_columns();
 		$hidden                = array();
@@ -251,19 +292,24 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @param array $cloumnb column of the points.
 	 */
 	public function wps_wpr_usort_reorder( $cloumna, $cloumnb ) {
+
 		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'id';
 		$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'desc';
 		if ( is_numeric( $cloumna[ $orderby ] ) && is_numeric( $cloumnb[ $orderby ] ) ) {
 			if ( $cloumna[ $orderby ] == $cloumnb[ $orderby ] ) {
+
 				return 0;
 			} elseif ( $cloumna[ $orderby ] < $cloumnb[ $orderby ] ) {
+
 				$result = -1;
 				return ( 'asc' === $order ) ? $result : -$result;
 			} elseif ( $cloumna[ $orderby ] > $cloumnb[ $orderby ] ) {
+
 				$result = 1;
 				return ( 'asc' === $order ) ? $result : -$result;
 			}
 		} else {
+
 			$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
 			return ( 'asc' === $order ) ? $result : -$result;
 		}
@@ -280,6 +326,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @param array $item array of the items.
 	 */
 	public function column_cb( $item ) {
+
 		return sprintf(
 			'<input type="checkbox" name="mpr_points_ids[]" value="%s" />',
 			$item['id']
@@ -298,19 +345,15 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * @param int $per_page no of pages.
 	 */
 	public function get_users_points( $current_page, $per_page ) {
+
 		$args = array(
-			'fields'     => 'ID',
-			'meta_query' => array(
-				array(
-					'key'     => 'wps_wpr_points',
-					'compare' => 'EXISTS',
-				),
-			),
+			'number' => $per_page,
+			'offset' => ( $current_page - 1 ) * $per_page,
+			'fields' => 'ID',
 		);
 
-		$args['number'] = $per_page;
-		$args['offset'] = ( $current_page - 1 ) * $per_page;
 		if ( isset( $_REQUEST['s'] ) ) {
+
 			$wps_request_search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
 			$args['search']     = '*' . $wps_request_search . '*';
 		}
@@ -328,12 +371,13 @@ class Points_Log_List_Table extends WP_List_Table {
 }
 
 if ( isset( $_POST['wps_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
+
 	$wps_membership_nonce = sanitize_text_field( wp_unslash( $_POST['points-log'] ) );
 	$import_user          = get_option( 'wps_wpr_user_imported', false );
 	if ( wp_verify_nonce( $wps_membership_nonce, 'points-log' ) ) {
 		if ( false == $import_user ) {
-			$user_data = get_users();
 
+			$user_data             = get_users();
 			$points_data           = array();
 			$flag                  = false;
 			$general_settings      = get_option( 'wps_wpr_settings_gallery', true );
@@ -341,6 +385,7 @@ if ( isset( $_POST['wps_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
 			foreach ( $user_data as $key => $value ) {
 				$check_user = get_user_meta( $value->data->ID, 'wps_wpr_points', false );
 				if ( false == $check_user ) {
+
 						$today_date                       = date_i18n( 'Y-m-d h:i:sa' );
 						$wps_signup_value                 = isset( $general_settings['wps_wpr_general_signup_value'] ) ? intval( $general_settings['wps_wpr_general_signup_value'] ) : 1;
 						$import_points['import_points'][] = array(
@@ -353,6 +398,7 @@ if ( isset( $_POST['wps_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
 						$flag                      = true;
 						$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
 						if ( is_array( $wps_wpr_notificatin_array ) && ! empty( $wps_wpr_notificatin_array ) ) {
+
 							$wps_per_currency_spent_value = isset( $coupon_settings_array['wps_wpr_coupon_conversion_points'] ) ? intval( $coupon_settings_array['wps_wpr_coupon_conversion_points'] ) : 1;
 							$wps_comment_value            = isset( $general_settings['wps_comment_value'] ) ? intval( $general_settings['wps_comment_value'] ) : 1;
 							$wps_refer_value              = isset( $general_settings['wps_refer_value'] ) ? intval( $general_settings['wps_refer_value'] ) : 1;
@@ -381,9 +427,11 @@ if ( isset( $_POST['wps_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
 
 // === Save items per page data here ===
 if ( isset( $_POST['wps_wpr_items_per_page_nonce'] ) ) {
+
 	$wps_wpr_items_per_page_nonce = ! empty( $_POST['wps_wpr_items_per_page_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_items_per_page_nonce'] ) ) : '';
 	if ( wp_verify_nonce( $wps_wpr_items_per_page_nonce, 'wps-wpr-items-per-page-nonce' ) ) {
 		if ( isset( $_POST['wps_wpr_save_items_per_page'] ) ) {
+
 			$wps_wpr_number_items_per_page = ! empty( $_POST['wps_wpr_number_items_per_page'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_number_items_per_page'] ) ) : 10;
 			update_option( 'wps_wpr_number_items_per_page', $wps_wpr_number_items_per_page );
 		}
@@ -392,6 +440,7 @@ if ( isset( $_POST['wps_wpr_items_per_page_nonce'] ) ) {
 
 if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	if ( 'view' == $_GET['action'] ) {
+
 		$user_log_id = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
 		$user_log    = get_user_meta( $user_log_id, 'wps_wpr_user_log', true );
 		?>
@@ -429,16 +478,17 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					foreach ( $user_log as $key => $wps_user_log ) :
 						$wps_user_log['delete'] = 'delete';
 						?>
-
 						<tr valign="top">
 							<?php foreach ( $wps_user_log as $column_id => $column_name ) : ?>
 								<td class="forminp forminp-text">
 									<?php
 									if ( 'left' == $column_id ) {
+
 										$wps_split   = explode( '#', $key );
 										$column_name = get_post_meta( $wps_split[1], 'coupon_amount', true );
 										echo esc_html( get_woocommerce_currency_symbol() ) . esc_html( $column_name );
 									} elseif ( 'camount' == $column_id ) {
+
 										$wps_split   = explode( '#', $key );
 										$column_name = get_post_meta( $wps_split[1], 'wps_coupon_static_amount', true );
 										echo esc_html( get_woocommerce_currency_symbol() ) . esc_html( $column_name );
@@ -451,15 +501,19 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 
 											$column_name = get_post_meta( $wps_split[1], 'date_expires', true );
 											if ( ! empty( $column_name ) ) {
+
 												$dt = new DateTime( "@$column_name" );
 												echo esc_html( $dt->format( 'Y-m-d' ) );
 											} else {
+
 												esc_html_e( 'No Expiry', 'points-and-rewards-for-woocommerce' );
 											}
 										}
 									} elseif ( 'delete' == $column_name ) {
+
 										echo '<a href="#" class="wps_wpr_delete_user_coupon" data-id="' . esc_html( $wps_split[1] ) . '" data-user_id="' . esc_html( $user_log_id ) . '">' . esc_html__( 'Delete', 'points-and-rewards-for-woocommerce' ) . '</a>';
 									} else {
+
 										echo esc_html( $column_name );
 									}
 
@@ -473,6 +527,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 
 			<?php
 		} else {
+
 			echo '<h3>' . esc_html__( 'No Coupons Generated Yet.', 'points-and-rewards-for-woocommerce' ) . '<h3>';
 		}
 		?>
@@ -481,6 +536,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		<?php
 
 	} elseif ( 'view_point_log' == $_GET['action'] ) {
+
 		$user_id      = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
 		$point_log    = get_user_meta( $user_id, 'points_details', true );
 		$total_points = get_user_meta( $user_id, 'wps_wpr_points', true );
@@ -1506,6 +1562,39 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 											<td class="forminp forminp-text"><?php echo esc_html( $value['sign'] ) . esc_html( $value['admin_points'] ); ?></td>
 											<td class="forminp forminp-text"><?php echo esc_html( $value['reason'] ); ?></td>
+										</tr>
+										<?php
+									}
+									?>
+							</table>
+						</div>
+					</div>
+					<?php
+				}
+				if ( array_key_exists( 'points_reset_by_admin', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points Reset By Admin', 'points-and-rewards-for-woocommerce' ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<div class="wps_wpr_points_view"> 
+							<table class = "form-table mwp_wpr_settings  wps_wpr_common_table">
+									<thead>
+										<tr valign="top">
+											<th scope="row" class="wps_wpr_head_titledesc">
+												<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+											</th>
+											<th scope="row" class="wps_wpr_head_titledesc">
+												<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+											</th>
+										</tr>
+									</thead>
+									<?php
+									foreach ( $point_log['points_reset_by_admin'] as $key => $value ) {
+										?>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['points_reset_by_admin'] ); ?></td>
 										</tr>
 										<?php
 									}
