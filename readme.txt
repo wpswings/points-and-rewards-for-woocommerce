@@ -4,10 +4,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points, rewards, points and rewards, loyalty, referrals, woocommerce points and rewards, points rewards, reward system, gamification, badges
 Requires at least: 5.5.0
-Tested up to: 6.2.1
+Tested up to: 6.2.2
 WC requires at least: 5.5.0
-WC tested up to: 7.7.0
-Stable tag: 1.6.0
+WC tested up to: 7.7.1
+Stable tag: 1.6.1
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -222,6 +222,10 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 1.6.1 - Released on 31 May 2023 =
+* New: Compatible with latest WP(6.2.2) & WC(7.7.1)
+* Fix: Points table issues 
+
 = 1.6.0 - Released on 24 May 2023 =
 * Enhance: Points table layout
 * New: Compatible with latest WP( 6.2.1 ) & WC( 7.7.0 )
@@ -397,11 +401,11 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 * First version
 
 == Upgrade Notice ==
+= 1.6.1 - Released on 31 May 2023 =
+* New: Compatible with latest WP(6.2.2) & WC(7.7.1)
+* Fix: Points table issues 
 
-= 1.6.0 - Released on 22 May 2023 =
-* Enhance: Points table layout
-* New: Compatible with latest WP( 6.2.1 ) & WC( 7.7.0 )
-* Fix: Vulnerability issues
+
 
 
 
