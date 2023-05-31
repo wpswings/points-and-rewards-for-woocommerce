@@ -142,6 +142,7 @@ class Points_Log_List_Table extends WP_List_Table {
 						$all_id = map_deep( wp_unslash( $_POST['mpr_points_ids'] ), 'sanitize_text_field' );
 						foreach ( $all_id as $key => $value ) {
 
+							$this->wps_wpr_create_points_reset_log( $value );
 							update_user_meta( $value, 'wps_wpr_points', 0 );
 						}
 					}
@@ -149,6 +150,38 @@ class Points_Log_List_Table extends WP_List_Table {
 			}
 		}
 		do_action( 'wps_wpr_process_bulk_reset_option', $this->current_action(), $_POST );
+	}
+
+	/**
+	 * This function is used to create log for resets points.
+	 *
+	 * @param String $user_id user_id.
+	 * @return void
+	 */
+	public function wps_wpr_create_points_reset_log( $user_id ) {
+
+		$get_points           = get_user_meta( $user_id, 'wps_wpr_points', true );
+		$wps_reset_points_log = get_user_meta( $user_id, 'points_details', true );
+		$wps_reset_points_log = ! empty( $wps_reset_points_log ) && is_array( $wps_reset_points_log ) ? $wps_reset_points_log : array();
+
+		if ( $get_points > 0 ) {
+			if ( isset( $wps_reset_points_log['points_reset_by_admin'] ) && ! empty( $wps_reset_points_log['points_reset_by_admin'] ) ) {
+
+				$wps_reset_log = array(
+					'points_reset_by_admin' => $get_points,
+					'date'                  => date_i18n( 'Y-m-d h:i:sa' ),
+				);
+				$wps_reset_points_log['points_reset_by_admin'][] = $wps_reset_log;
+			} else {
+
+				$wps_reset_log = array(
+					'points_reset_by_admin' => $get_points,
+					'date'                  => date_i18n( 'Y-m-d h:i:sa' ),
+				);
+				$wps_reset_points_log['points_reset_by_admin'][] = $wps_reset_log;
+			}
+			update_user_meta( $user_id, 'points_details', $wps_reset_points_log );
+		}
 	}
 
 	/**
@@ -1529,6 +1562,39 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 											<td class="forminp forminp-text"><?php echo esc_html( $value['sign'] ) . esc_html( $value['admin_points'] ); ?></td>
 											<td class="forminp forminp-text"><?php echo esc_html( $value['reason'] ); ?></td>
+										</tr>
+										<?php
+									}
+									?>
+							</table>
+						</div>
+					</div>
+					<?php
+				}
+				if ( array_key_exists( 'points_reset_by_admin', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points Reset By Admin', 'points-and-rewards-for-woocommerce' ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<div class="wps_wpr_points_view"> 
+							<table class = "form-table mwp_wpr_settings  wps_wpr_common_table">
+									<thead>
+										<tr valign="top">
+											<th scope="row" class="wps_wpr_head_titledesc">
+												<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+											</th>
+											<th scope="row" class="wps_wpr_head_titledesc">
+												<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+											</th>
+										</tr>
+									</thead>
+									<?php
+									foreach ( $point_log['points_reset_by_admin'] as $key => $value ) {
+										?>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['points_reset_by_admin'] ); ?></td>
 										</tr>
 										<?php
 									}
