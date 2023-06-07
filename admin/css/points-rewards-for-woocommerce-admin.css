@@ -895,6 +895,17 @@ img.wps_wpr_dash_video_svg_img {
     background-color: #e4f3ff;
 }
 
+.wps_wpr_previous_order_notice {
+    display: none;
+    font-weight: 600;
+}
+
+.wps_wpr_previous_order_loader {
+    display: none;
+    vertical-align: middle;
+    height: 24px;
+}
+
 #wps_rwpr_setting_wrapper .wps_wpr_points_table_second_wrappers>h3 {
     background: #2196f3;
     padding: 8px 15px;
@@ -904,4 +915,22 @@ img.wps_wpr_dash_video_svg_img {
 
 .wps_wpr_instructions_tabledata_btn {
     text-align: center;
+}
+
+.wps_wpr_previous_button_wrappers {
+    position: relative;
+}
+
+.wps_wpr_previous_button_wrappers .wps_wpr_previous_order_loader {
+    position: absolute;
+}
+
+.wps_wpr_previous_button_wrappers .wps_wpr_previous_order_notice {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 10px);
+    text-align: left;
+    line-height: 1.25;
+    font-size: 12px;
+    letter-spacing: 0.4px;
 }
