@@ -188,7 +188,7 @@ if ( $wps_wpr_mem_enable ) {
 						if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 							?>
 							<th class="wps-wpr-points-expiry">
-								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Membership Expiry', 'ultimate-woocommerce-points-and-rewards' ); ?></span>
+								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Membership Expiry', 'points-and-rewards-for-woocommerce' ); ?></span>
 							</th>
 							<?php
 						}

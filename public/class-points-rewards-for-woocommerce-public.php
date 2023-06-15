@@ -2798,21 +2798,21 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_currency_par_value_wallet = $this->wps_wpr_get_general_settings_num( 'wps_wpr_wallet_price_rate' );
 			if ( $wps_wallet_enable && ! empty( $wps_req_points ) ) {
 				?>
-				<p class="wps_wpr_heading"><?php echo esc_html__( 'Convert Points to Currency  Wallet Conversion', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
+				<p class="wps_wpr_heading"><?php echo esc_html__( 'Convert Points to Currency  Wallet Conversion', 'points-and-rewards-for-woocommerce' ); ?></p>
 				<fieldset class="wps_wpr_each_section">
 					<p>
-						<?php echo esc_html__( 'Points Conversion: ', 'ultimate-woocommerce-points-and-rewards' ); ?>
-						<?php echo esc_html( $wps_points_par_value_wallet ) . esc_html__( 'points = ', 'ultimate-woocommerce-points-and-rewards' ) . wp_kses( wc_price( $wps_currency_par_value_wallet ), $this->wps_wpr_allowed_html() ); ?>
+						<?php echo esc_html__( 'Points Conversion: ', 'points-and-rewards-for-woocommerce' ); ?>
+						<?php echo esc_html( $wps_points_par_value_wallet ) . esc_html__( 'points = ', 'points-and-rewards-for-woocommerce' ) . wp_kses( wc_price( $wps_currency_par_value_wallet ), $this->wps_wpr_allowed_html() ); ?>
 					</p>
 					<form id="points_wallet" enctype="multipart/form-data" action="" method="post">
 						<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
 							<label for="wps_custom_wallet_text">
-								<?php esc_html_e( 'Enter your points:', 'ultimate-woocommerce-points-and-rewards' ); ?>
+								<?php esc_html_e( 'Enter your points:', 'points-and-rewards-for-woocommerce' ); ?>
 							</label>
 							<p id="wps_wpr_wallet_notification"></p>
 							<input type="number" class="woocommerce-Input woocommerce-Input--number input-number" name="wps_custom_number" min="1" id="wps_custom_wallet_point_num" style="width: 160px;">
 
-							<input type="button" name="wps_wpr_custom_wallet" id= "wps_wpr_custom_wallet" class="wps_wpr_custom_wallet button" value="<?php esc_html_e( 'Redeem to Wallet', 'ultimate-woocommerce-points-and-rewards' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>">
+							<input type="button" name="wps_wpr_custom_wallet" id= "wps_wpr_custom_wallet" class="wps_wpr_custom_wallet button" value="<?php esc_html_e( 'Redeem to Wallet', 'points-and-rewards-for-woocommerce' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>">
 						</p>
 					</form>
 				</fieldset>
