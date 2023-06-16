@@ -29,7 +29,7 @@ if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {
 		<img src="<?php echo esc_url( WPS_RWPR_DIR_URL ); ?>public/images/loading.gif">
 	</div>
 	<div class="wps-wpr-onboarding-section">
-		<div class="wps-on-boarding-wrapper-background">
+		<div class="wps-wpr-first-on-boarding-wrapper-background">
 		<div class="wps-on-boarding-wrapper">
 			<div class="wps-on-boarding-close-btn">
 				<a href="javascript:void(0);">

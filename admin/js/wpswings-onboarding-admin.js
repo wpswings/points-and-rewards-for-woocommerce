@@ -35,7 +35,7 @@ jQuery(document).ready( function($) {
 
 		// Show Popup after 1 second of entering into the WPS pagescreen.
 		if ( jQuery( '#show-counter' ).length > 0 && jQuery( '#show-counter' ).val() == 'not-sent' ) {
-			setTimeout( wps_wpr_show_deactivation_form(), 1000 );
+			setTimeout( wps_wpr_show_onboarding_form(), 1000 );
 		}
 	}
 
@@ -102,8 +102,9 @@ jQuery(document).ready( function($) {
 
 	// Show deativation pop-up
 	function wps_wpr_show_deactivation_form() {
-		jQuery( '.wps-wpr-second-onboarding-section' ).show();
-		jQuery( '.wps-on-boarding-wrapper-background' ).addClass( 'onboard-popup-show' );
+		jQuery( '.wps-wpr-first-on-boarding-wrapper-background' ).addClass( 'deactivate-onboard-popup-show' );
+		jQuery( '.wps-wpr-onboarding-section' ).show();
+		jQuery( '#deactivation-reason-text' ).addClass( 'keep_hidden' );
 
 	    if( ! jQuery( 'body' ).hasClass( 'mobile-device' ) ) {
 	    	jQuery( 'body' ).addClass( 'wps-on-boarding-wrapper-control' );
@@ -112,8 +113,8 @@ jQuery(document).ready( function($) {
 
 	// Hide deactivation pop-up form.
 	function wps_wpr_hide_deactivation_form() {
-		jQuery( '.wps-on-boarding-wrapper-background' ).removeClass( 'onboard-popup-show' );
-		jQuery( '.wps-wpr-second-onboarding-section' ).hide();
+		jQuery( '.wps-wpr-first-on-boarding-wrapper-background' ).removeClass( 'deactivate-onboard-popup-show' );
+		jQuery( '.wps-wpr-onboarding-section' ).hide();
 		if( ! jQuery( 'body' ).hasClass( 'mobile-device' ) ) {
 	    	jQuery( 'body' ).removeClass( 'wps-on-boarding-wrapper-control' );
 	    }
@@ -121,8 +122,9 @@ jQuery(document).ready( function($) {
 
 	// Show onboarding form.
 	function wps_wpr_show_onboarding_form() {
-		jQuery( '.wps-wpr-onboarding-section' ).show();
-		jQuery( '.wps-on-boarding-wrapper-background' ).addClass( 'onboard-popup-show' );
+		jQuery( '.wps-wpr-second-onboarding-section' ).show();
+		jQuery( '.wps-on-second-boarding-wrapper-background' ).addClass( 'onboard-onboard-popup-show' );
+		jQuery( '#deactivation-reason-text' ).addClass( 'keep_hidden' );
 
 	    if( ! jQuery( 'body' ).hasClass( 'mobile-device' ) ) {
 	    	jQuery( 'body' ).addClass( 'wps-on-boarding-wrapper-control' );
@@ -131,8 +133,8 @@ jQuery(document).ready( function($) {
 
 	// hide onboarding form.
 	function wps_wpr_hide_onboarding_form() {
-		jQuery( '.wps-on-boarding-wrapper-background' ).removeClass( 'onboard-popup-show' );
-		jQuery( '.wps-wpr-onboarding-section' ).hide();
+		jQuery( '.wps-on-second-boarding-wrapper-background' ).removeClass( 'onboard-onboard-popup-show' );
+		jQuery( '.wps-wpr-second-onboarding-section' ).hide();
 		if( ! jQuery( 'body' ).hasClass( 'mobile-device' ) ) {
 	    	jQuery( 'body' ).removeClass( 'wps-on-boarding-wrapper-control' );
 	    }
@@ -154,7 +156,7 @@ jQuery(document).ready( function($) {
 				jQuery( '.wps-on-boarding-heading' ).text( plugin_name + ' Feedback' );
 				var placeholder = jQuery( '#deactivation-reason-text' ).attr( 'placeholder' );
 				jQuery( '#deactivation-reason-text' ).attr( 'placeholder', placeholder.replace( '{plugin-name}', plugin_name ) );
-				wps_wpr_show_onboarding_form();
+				wps_wpr_show_deactivation_form();
 			});
 		}
 	}
