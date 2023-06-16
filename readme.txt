@@ -176,6 +176,11 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 == Frequently Asked Questions ==
 
+=Can I assign Points to all  Previous orders which are completed?=
+Yes, you can assign points to all previous orders which are completed.For this: Go to Points Table>Under Assign Points on Previous order section>Enter Points to assign>Click on Assign Points Button.
+After that points will be assigned to all the previous orders which are completed
+
+
 =How does the WooCommerce Rewards Points plugin work?=
 Merchants can create a WooCommerce rewards point management system using this plugin. In this point reward system, customers get rewarded with loyalty points for their store activities like purchases, signup, referral, and many more. Customers can further redeem earned point value as a discount for their purchase.
 
