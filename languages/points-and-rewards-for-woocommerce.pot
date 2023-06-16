@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 1.6.1\n"
-"POT-Creation-Date: 2023-05-31 14:19+0530\n"
-"PO-Revision-Date: 2023-05-31 14:19+0530\n"
+"Project-Id-Version: Points and Rewards for WooCommerce 1.7.0\n"
+"POT-Creation-Date: 2023-06-16 12:07+0530\n"
+"PO-Revision-Date: 2023-06-16 12:07+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -38,8 +38,8 @@ msgid "Please enter the value less than the regular price."
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:106
-#: admin/partials/templates/class-points-log-list-table.php:1672
-#: admin/partials/templates/class-points-log-list-table.php:1696
+#: admin/partials/templates/class-points-log-list-table.php:1802
+#: admin/partials/templates/class-points-log-list-table.php:1827
 msgid "Import"
 msgstr ""
 
@@ -235,7 +235,7 @@ msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:809
 #: admin/class-points-rewards-for-woocommerce-admin.php:832
-#: admin/partials/templates/class-points-log-list-table.php:424
+#: admin/partials/templates/class-points-log-list-table.php:457
 #: admin/partials/templates/wps-generral-settings2.php:169
 #: public/class-points-rewards-for-woocommerce-public.php:263
 #: public/class-points-rewards-for-woocommerce-public.php:1586
@@ -254,7 +254,7 @@ msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:812
 #: admin/partials/templates/class-points-log-list-table.php:61
-#: admin/partials/templates/class-points-log-list-table.php:439
+#: admin/partials/templates/class-points-log-list-table.php:472
 msgid "Action"
 msgstr ""
 
@@ -356,6 +356,22 @@ msgid ""
 "You have received [Points] points and your total points are [Total Points]"
 msgstr ""
 
+#: admin/class-points-rewards-for-woocommerce-admin.php:1581
+msgid "Points not awarded"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1599
+msgid "Error Occurred"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1638
+msgid "Points awarded successfully"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:1644
+msgid "Points already awarded on this orders"
+msgstr ""
+
 #: admin/index.php:10 admin/partials/index.php:10 includes/index.php:10
 #: index.php:10 public/index.php:10
 msgid "oops looks like nothing is here"
@@ -374,7 +390,7 @@ msgid "Per Currency Points Settings"
 msgstr ""
 
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:40
-#: admin/partials/templates/class-points-log-list-table.php:1651
+#: admin/partials/templates/class-points-log-list-table.php:1780
 msgid "Points Table"
 msgstr ""
 
@@ -496,7 +512,7 @@ msgid "Level"
 msgstr ""
 
 #: admin/partials/templates/class-membership-log-list-table.php:125
-#: admin/partials/templates/class-points-log-list-table.php:481
+#: admin/partials/templates/class-points-log-list-table.php:514
 msgid "Delete"
 msgstr ""
 
@@ -506,13 +522,13 @@ msgid "Membership Log"
 msgstr ""
 
 #: admin/partials/templates/class-membership-log-list-table.php:284
-#: admin/partials/templates/class-points-log-list-table.php:1710
+#: admin/partials/templates/class-points-log-list-table.php:1841
 msgid "Search Users"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:57
-#: admin/partials/templates/class-points-log-list-table.php:1634
-#: public/partials/wps-wpr-points-log-template.php:1034
+#: admin/partials/templates/class-points-log-list-table.php:1738
+#: public/partials/wps-wpr-points-log-template.php:1097
 msgid "Total Points"
 msgstr ""
 
@@ -533,55 +549,54 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:166
+#: admin/partials/templates/class-points-log-list-table.php:199
 msgid "Reset Points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:415
+#: admin/partials/templates/class-points-log-list-table.php:448
 msgid "User Coupon Details"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:427
+#: admin/partials/templates/class-points-log-list-table.php:460
 msgid "Coupon Code"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:430
+#: admin/partials/templates/class-points-log-list-table.php:463
 msgid "Coupon Amount"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:433
+#: admin/partials/templates/class-points-log-list-table.php:466
 msgid "Amount Left"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:436
+#: admin/partials/templates/class-points-log-list-table.php:469
 msgid "Expiry"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:476
+#: admin/partials/templates/class-points-log-list-table.php:509
 msgid "No Expiry"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:498
+#: admin/partials/templates/class-points-log-list-table.php:531
 msgid "No Coupons Generated Yet."
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:502
+#: admin/partials/templates/class-points-log-list-table.php:535
 msgid "Go Back"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:511
+#: admin/partials/templates/class-points-log-list-table.php:544
 msgid "Points Earned on Order Total Listed on Points Table"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:521
-#: admin/partials/templates/class-points-log-list-table.php:548
+#: admin/partials/templates/class-points-log-list-table.php:554
+#: admin/partials/templates/class-points-log-list-table.php:581
 #: public/partials/wps-wpr-points-log-template.php:37
 msgid "Signup Event"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:529
-#: admin/partials/templates/class-points-log-list-table.php:556
-#: admin/partials/templates/class-points-log-list-table.php:583
+#: admin/partials/templates/class-points-log-list-table.php:562
+#: admin/partials/templates/class-points-log-list-table.php:589
 #: admin/partials/templates/class-points-log-list-table.php:616
 #: admin/partials/templates/class-points-log-list-table.php:649
 #: admin/partials/templates/class-points-log-list-table.php:682
@@ -592,7 +607,7 @@ msgstr ""
 #: admin/partials/templates/class-points-log-list-table.php:847
 #: admin/partials/templates/class-points-log-list-table.php:880
 #: admin/partials/templates/class-points-log-list-table.php:913
-#: admin/partials/templates/class-points-log-list-table.php:947
+#: admin/partials/templates/class-points-log-list-table.php:946
 #: admin/partials/templates/class-points-log-list-table.php:980
 #: admin/partials/templates/class-points-log-list-table.php:1013
 #: admin/partials/templates/class-points-log-list-table.php:1046
@@ -600,26 +615,28 @@ msgstr ""
 #: admin/partials/templates/class-points-log-list-table.php:1112
 #: admin/partials/templates/class-points-log-list-table.php:1145
 #: admin/partials/templates/class-points-log-list-table.php:1178
-#: admin/partials/templates/class-points-log-list-table.php:1210
-#: admin/partials/templates/class-points-log-list-table.php:1241
-#: admin/partials/templates/class-points-log-list-table.php:1272
-#: admin/partials/templates/class-points-log-list-table.php:1303
-#: admin/partials/templates/class-points-log-list-table.php:1334
-#: admin/partials/templates/class-points-log-list-table.php:1365
-#: admin/partials/templates/class-points-log-list-table.php:1396
-#: admin/partials/templates/class-points-log-list-table.php:1427
-#: admin/partials/templates/class-points-log-list-table.php:1459
-#: admin/partials/templates/class-points-log-list-table.php:1513
-#: admin/partials/templates/class-points-log-list-table.php:1551
-#: admin/partials/templates/class-points-log-list-table.php:1595
-#: public/partials/wps-wpr-points-log-template.php:879
-#: public/partials/wps-wpr-points-log-template.php:910
+#: admin/partials/templates/class-points-log-list-table.php:1211
+#: admin/partials/templates/class-points-log-list-table.php:1243
+#: admin/partials/templates/class-points-log-list-table.php:1274
+#: admin/partials/templates/class-points-log-list-table.php:1305
+#: admin/partials/templates/class-points-log-list-table.php:1340
+#: admin/partials/templates/class-points-log-list-table.php:1371
+#: admin/partials/templates/class-points-log-list-table.php:1402
+#: admin/partials/templates/class-points-log-list-table.php:1433
+#: admin/partials/templates/class-points-log-list-table.php:1464
+#: admin/partials/templates/class-points-log-list-table.php:1495
+#: admin/partials/templates/class-points-log-list-table.php:1527
+#: admin/partials/templates/class-points-log-list-table.php:1584
+#: admin/partials/templates/class-points-log-list-table.php:1623
+#: admin/partials/templates/class-points-log-list-table.php:1655
+#: admin/partials/templates/class-points-log-list-table.php:1699
+#: public/partials/wps-wpr-points-log-template.php:942
+#: public/partials/wps-wpr-points-log-template.php:973
 msgid "Date & Time"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:532
-#: admin/partials/templates/class-points-log-list-table.php:559
-#: admin/partials/templates/class-points-log-list-table.php:586
+#: admin/partials/templates/class-points-log-list-table.php:565
+#: admin/partials/templates/class-points-log-list-table.php:592
 #: admin/partials/templates/class-points-log-list-table.php:619
 #: admin/partials/templates/class-points-log-list-table.php:652
 #: admin/partials/templates/class-points-log-list-table.php:685
@@ -630,7 +647,7 @@ msgstr ""
 #: admin/partials/templates/class-points-log-list-table.php:850
 #: admin/partials/templates/class-points-log-list-table.php:883
 #: admin/partials/templates/class-points-log-list-table.php:916
-#: admin/partials/templates/class-points-log-list-table.php:950
+#: admin/partials/templates/class-points-log-list-table.php:949
 #: admin/partials/templates/class-points-log-list-table.php:983
 #: admin/partials/templates/class-points-log-list-table.php:1016
 #: admin/partials/templates/class-points-log-list-table.php:1049
@@ -638,18 +655,21 @@ msgstr ""
 #: admin/partials/templates/class-points-log-list-table.php:1115
 #: admin/partials/templates/class-points-log-list-table.php:1148
 #: admin/partials/templates/class-points-log-list-table.php:1181
-#: admin/partials/templates/class-points-log-list-table.php:1213
-#: admin/partials/templates/class-points-log-list-table.php:1244
-#: admin/partials/templates/class-points-log-list-table.php:1275
-#: admin/partials/templates/class-points-log-list-table.php:1306
-#: admin/partials/templates/class-points-log-list-table.php:1337
-#: admin/partials/templates/class-points-log-list-table.php:1368
-#: admin/partials/templates/class-points-log-list-table.php:1399
-#: admin/partials/templates/class-points-log-list-table.php:1430
-#: admin/partials/templates/class-points-log-list-table.php:1462
-#: admin/partials/templates/class-points-log-list-table.php:1516
-#: admin/partials/templates/class-points-log-list-table.php:1554
-#: admin/partials/templates/class-points-log-list-table.php:1598
+#: admin/partials/templates/class-points-log-list-table.php:1214
+#: admin/partials/templates/class-points-log-list-table.php:1246
+#: admin/partials/templates/class-points-log-list-table.php:1277
+#: admin/partials/templates/class-points-log-list-table.php:1308
+#: admin/partials/templates/class-points-log-list-table.php:1343
+#: admin/partials/templates/class-points-log-list-table.php:1374
+#: admin/partials/templates/class-points-log-list-table.php:1405
+#: admin/partials/templates/class-points-log-list-table.php:1436
+#: admin/partials/templates/class-points-log-list-table.php:1467
+#: admin/partials/templates/class-points-log-list-table.php:1498
+#: admin/partials/templates/class-points-log-list-table.php:1530
+#: admin/partials/templates/class-points-log-list-table.php:1587
+#: admin/partials/templates/class-points-log-list-table.php:1626
+#: admin/partials/templates/class-points-log-list-table.php:1658
+#: admin/partials/templates/class-points-log-list-table.php:1702
 #: public/partials/wps-wpr-points-log-template.php:28
 #: public/partials/wps-wpr-points-log-template.php:79
 #: public/partials/wps-wpr-points-log-template.php:108
@@ -669,216 +689,246 @@ msgstr ""
 #: public/partials/wps-wpr-points-log-template.php:510
 #: public/partials/wps-wpr-points-log-template.php:540
 #: public/partials/wps-wpr-points-log-template.php:570
-#: public/partials/wps-wpr-points-log-template.php:600
-#: public/partials/wps-wpr-points-log-template.php:630
-#: public/partials/wps-wpr-points-log-template.php:660
-#: public/partials/wps-wpr-points-log-template.php:690
-#: public/partials/wps-wpr-points-log-template.php:721
-#: public/partials/wps-wpr-points-log-template.php:752
-#: public/partials/wps-wpr-points-log-template.php:799
-#: public/partials/wps-wpr-points-log-template.php:845
-#: public/partials/wps-wpr-points-log-template.php:882
-#: public/partials/wps-wpr-points-log-template.php:913
-#: public/partials/wps-wpr-points-log-template.php:942
-#: public/partials/wps-wpr-points-log-template.php:992
+#: public/partials/wps-wpr-points-log-template.php:604
+#: public/partials/wps-wpr-points-log-template.php:634
+#: public/partials/wps-wpr-points-log-template.php:664
+#: public/partials/wps-wpr-points-log-template.php:694
+#: public/partials/wps-wpr-points-log-template.php:724
+#: public/partials/wps-wpr-points-log-template.php:755
+#: public/partials/wps-wpr-points-log-template.php:786
+#: public/partials/wps-wpr-points-log-template.php:833
+#: public/partials/wps-wpr-points-log-template.php:879
+#: public/partials/wps-wpr-points-log-template.php:914
+#: public/partials/wps-wpr-points-log-template.php:945
+#: public/partials/wps-wpr-points-log-template.php:976
+#: public/partials/wps-wpr-points-log-template.php:1005
+#: public/partials/wps-wpr-points-log-template.php:1055
 msgid "Point Status"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:575
+#: admin/partials/templates/class-points-log-list-table.php:608
 #: admin/partials/templates/wps-wpr-premium-features.php:70
 msgid "Coupon Generation"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:608
+#: admin/partials/templates/class-points-log-list-table.php:641
 msgid "Points earned on Order Total"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:641
+#: admin/partials/templates/class-points-log-list-table.php:674
 #: public/partials/wps-wpr-points-log-template.php:213
 msgid "Deducted Points earned on Order Total on Order Refund"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:674
+#: admin/partials/templates/class-points-log-list-table.php:707
 #: public/partials/wps-wpr-points-log-template.php:240
 msgid "Subscription Renewal Points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:707
+#: admin/partials/templates/class-points-log-list-table.php:740
 #: public/partials/wps-wpr-points-log-template.php:267
 msgid "Refund Subscription Renewal Points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:740
+#: admin/partials/templates/class-points-log-list-table.php:773
 #: public/partials/wps-wpr-points-log-template.php:294
 msgid "Deducted Points earned on Order Total on Order Cancellation"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:773
+#: admin/partials/templates/class-points-log-list-table.php:806
 #: public/partials/wps-wpr-points-log-template.php:70
 msgid "Apply Points of cart refunded after the order is canceled"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:806
+#: admin/partials/templates/class-points-log-list-table.php:839
 msgid "Assigned Product Point"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:839
+#: admin/partials/templates/class-points-log-list-table.php:872
 msgid "Order Total Points - Product Conversion Points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:872
+#: admin/partials/templates/class-points-log-list-table.php:905
 msgid "Product Review/Comment Point"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:905
+#: admin/partials/templates/class-points-log-list-table.php:938
 #: public/partials/wps-wpr-points-log-template.php:351
 msgid "Membership Points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:939
-#: public/partials/wps-wpr-points-log-template.php:984
+#: admin/partials/templates/class-points-log-list-table.php:972
+#: public/partials/wps-wpr-points-log-template.php:1047
 msgid "Points earned by the purchase has been made by referrals"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:972
+#: admin/partials/templates/class-points-log-list-table.php:1005
 msgid "Refunded referral purchase point"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1005
+#: admin/partials/templates/class-points-log-list-table.php:1038
 msgid "Cancelled referral purchase point"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1038
+#: admin/partials/templates/class-points-log-list-table.php:1071
 msgid "Product has been purchased using points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1071
+#: admin/partials/templates/class-points-log-list-table.php:1104
 msgid "Deduction of points for return request"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1104
-#: public/partials/wps-wpr-points-log-template.php:903
+#: admin/partials/templates/class-points-log-list-table.php:1137
+#: public/partials/wps-wpr-points-log-template.php:966
 msgid "Your points has been reset by Admin"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1137
+#: admin/partials/templates/class-points-log-list-table.php:1170
 msgid "Return Points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1170
+#: admin/partials/templates/class-points-log-list-table.php:1203
 msgid "Deduct Order Total Points - Per Currency Spent"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1203
+#: admin/partials/templates/class-points-log-list-table.php:1236
 #: public/partials/wps-wpr-points-log-template.php:501
 msgid "Points Applied on Cart"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1234
+#: admin/partials/templates/class-points-log-list-table.php:1267
 #: admin/partials/templates/wps-points-notification-settings.php:258
 #: public/partials/wps-wpr-points-log-template.php:531
 msgid "Order Rewards Points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1265
+#: admin/partials/templates/class-points-log-list-table.php:1298
 #: public/partials/wps-wpr-points-log-template.php:561
+msgid "Points awarded on previous order"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:1311
+#: public/partials/wps-wpr-points-log-template.php:573
+msgid "Order No."
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:1333
+#: public/partials/wps-wpr-points-log-template.php:595
 msgid "Membership updated via API"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1296
+#: admin/partials/templates/class-points-log-list-table.php:1364
 msgid "Expired Points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1327
-#: public/partials/wps-wpr-points-log-template.php:621
+#: admin/partials/templates/class-points-log-list-table.php:1395
+#: public/partials/wps-wpr-points-log-template.php:655
 msgid "Order Points Deducted due to Cancelation of Order"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1358
+#: admin/partials/templates/class-points-log-list-table.php:1426
 msgid "Assigned Points Deducted due to Cancelation of Order"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1389
-#: public/partials/wps-wpr-points-log-template.php:681
+#: admin/partials/templates/class-points-log-list-table.php:1457
+#: public/partials/wps-wpr-points-log-template.php:715
 msgid "Points Returned due to Cancelation of Order"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1420
-#: public/partials/wps-wpr-points-log-template.php:712
+#: admin/partials/templates/class-points-log-list-table.php:1488
+#: public/partials/wps-wpr-points-log-template.php:746
 msgid "Points deducted for purchasing the product"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1451
+#: admin/partials/templates/class-points-log-list-table.php:1519
 msgid "Referral SignUp"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1465
+#: admin/partials/templates/class-points-log-list-table.php:1533
 msgid "Reference Sign Up by"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1477
-#: public/partials/wps-wpr-points-log-template.php:767
-#: public/partials/wps-wpr-points-log-template.php:814
-#: public/partials/wps-wpr-points-log-template.php:957
-#: public/partials/wps-wpr-points-log-template.php:1007
+#: admin/partials/templates/class-points-log-list-table.php:1548
+#: public/partials/wps-wpr-points-log-template.php:801
+#: public/partials/wps-wpr-points-log-template.php:848
+#: public/partials/wps-wpr-points-log-template.php:1020
+#: public/partials/wps-wpr-points-log-template.php:1070
 msgid "This user doesn't exist"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1505
+#: admin/partials/templates/class-points-log-list-table.php:1576
 msgid "Admin Updates"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1519
-#: public/partials/wps-wpr-points-log-template.php:848
+#: admin/partials/templates/class-points-log-list-table.php:1590
+#: public/partials/wps-wpr-points-log-template.php:882
 msgid "Reason"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1526
-#: public/partials/wps-wpr-points-log-template.php:837
-#: public/partials/wps-wpr-points-log-template.php:855
+#: admin/partials/templates/class-points-log-list-table.php:1597
+#: public/partials/wps-wpr-points-log-template.php:871
+#: public/partials/wps-wpr-points-log-template.php:889
 msgid "Updated By Admin"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1544
+#: admin/partials/templates/class-points-log-list-table.php:1615
+#: public/partials/wps-wpr-points-log-template.php:906
+msgid "Points Reset By Admin"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:1648
 msgid "Points Shared with"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1557
+#: admin/partials/templates/class-points-log-list-table.php:1661
 msgid "Shared to "
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1588
+#: admin/partials/templates/class-points-log-list-table.php:1692
 msgid "Receives Points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1601
+#: admin/partials/templates/class-points-log-list-table.php:1705
 msgid "Received Points by"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1643
-#: public/partials/wps-wpr-points-log-template.php:1042
+#: admin/partials/templates/class-points-log-list-table.php:1747
+#: public/partials/wps-wpr-points-log-template.php:1105
 msgid "No Points Generated Yet."
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1652
+#: admin/partials/templates/class-points-log-list-table.php:1756
+msgid "Assign Points on Previous Orders"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:1761
+msgid ""
+"This will help you to apply points to all previous order which are completed."
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:1767
+msgid "Assign Points"
+msgstr ""
+
+#: admin/partials/templates/class-points-log-list-table.php:1781
 msgid "Number of items per page"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1655
+#: admin/partials/templates/class-points-log-list-table.php:1784
 msgid "Apply"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1667
-#: admin/partials/templates/class-points-log-list-table.php:1691
+#: admin/partials/templates/class-points-log-list-table.php:1797
+#: admin/partials/templates/class-points-log-list-table.php:1822
 msgid "Import Users"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1670
-#: admin/partials/templates/class-points-log-list-table.php:1694
+#: admin/partials/templates/class-points-log-list-table.php:1800
+#: admin/partials/templates/class-points-log-list-table.php:1825
 msgid "Import existing users and assign them with Sign Up Points"
 msgstr ""
 
-#: admin/partials/templates/class-points-log-list-table.php:1705
+#: admin/partials/templates/class-points-log-list-table.php:1836
 msgid "points_log_list_table"
 msgstr ""
 
@@ -2300,14 +2350,6 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:439
-msgid "Tweet"
-msgstr ""
-
-#: public/class-points-rewards-for-woocommerce-public.php:440
-msgid "Share"
-msgstr ""
-
 #: public/class-points-rewards-for-woocommerce-public.php:1532
 msgid "You will Get "
 msgstr ""
@@ -2456,16 +2498,18 @@ msgstr ""
 #: public/partials/wps-wpr-points-log-template.php:507
 #: public/partials/wps-wpr-points-log-template.php:537
 #: public/partials/wps-wpr-points-log-template.php:567
-#: public/partials/wps-wpr-points-log-template.php:597
-#: public/partials/wps-wpr-points-log-template.php:627
-#: public/partials/wps-wpr-points-log-template.php:657
-#: public/partials/wps-wpr-points-log-template.php:687
-#: public/partials/wps-wpr-points-log-template.php:718
-#: public/partials/wps-wpr-points-log-template.php:749
-#: public/partials/wps-wpr-points-log-template.php:796
-#: public/partials/wps-wpr-points-log-template.php:842
-#: public/partials/wps-wpr-points-log-template.php:939
-#: public/partials/wps-wpr-points-log-template.php:989
+#: public/partials/wps-wpr-points-log-template.php:601
+#: public/partials/wps-wpr-points-log-template.php:631
+#: public/partials/wps-wpr-points-log-template.php:661
+#: public/partials/wps-wpr-points-log-template.php:691
+#: public/partials/wps-wpr-points-log-template.php:721
+#: public/partials/wps-wpr-points-log-template.php:752
+#: public/partials/wps-wpr-points-log-template.php:783
+#: public/partials/wps-wpr-points-log-template.php:830
+#: public/partials/wps-wpr-points-log-template.php:876
+#: public/partials/wps-wpr-points-log-template.php:911
+#: public/partials/wps-wpr-points-log-template.php:1002
+#: public/partials/wps-wpr-points-log-template.php:1052
 msgid "Date"
 msgstr ""
 
@@ -2505,43 +2549,43 @@ msgstr ""
 msgid "Deduct Per Currency Spent Point on your return request"
 msgstr ""
 
-#: public/partials/wps-wpr-points-log-template.php:591
+#: public/partials/wps-wpr-points-log-template.php:625
 msgid "Oops!! Points are expired!"
 msgstr ""
 
-#: public/partials/wps-wpr-points-log-template.php:651
+#: public/partials/wps-wpr-points-log-template.php:685
 msgid "Assigned Points Deducted due Cancelation of Order"
 msgstr ""
 
-#: public/partials/wps-wpr-points-log-template.php:743
+#: public/partials/wps-wpr-points-log-template.php:777
 msgid "Points deducted successfully as you have shared your points"
 msgstr ""
 
-#: public/partials/wps-wpr-points-log-template.php:755
+#: public/partials/wps-wpr-points-log-template.php:789
 msgid "Shared to"
 msgstr ""
 
-#: public/partials/wps-wpr-points-log-template.php:790
+#: public/partials/wps-wpr-points-log-template.php:824
 msgid "Points received successfully as someone has shared"
 msgstr ""
 
-#: public/partials/wps-wpr-points-log-template.php:802
+#: public/partials/wps-wpr-points-log-template.php:836
 msgid "Received Points via "
 msgstr ""
 
-#: public/partials/wps-wpr-points-log-template.php:872
+#: public/partials/wps-wpr-points-log-template.php:935
 msgid "Points Deduct to the wallet"
 msgstr ""
 
-#: public/partials/wps-wpr-points-log-template.php:934
+#: public/partials/wps-wpr-points-log-template.php:997
 msgid " Check Number of Points Earned by Referring Others "
 msgstr ""
 
-#: public/partials/wps-wpr-points-log-template.php:945
+#: public/partials/wps-wpr-points-log-template.php:1008
 msgid "Sign Up by"
 msgstr ""
 
-#: public/partials/wps-wpr-points-log-template.php:995
+#: public/partials/wps-wpr-points-log-template.php:1058
 msgid "Product purchase by Referred User Points"
 msgstr ""
 

@@ -436,11 +436,11 @@ class Points_Rewards_For_WooCommerce_Public {
 			$html_div = '<div class="wps_wpr_wrapper_button">';
 			$content  = $content . $html_div;
 
-			$twitter_share_button  = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/twitter.png">' . __( 'Tweet', 'points-and-rewards-for-woocommerce' ) . '</a></div>';
-			$facebook_share_button = '<div id="fb-root"></div><div class="fb-share-button wps_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">' . __( 'Share', 'points-and-rewards-for-woocommerce' ) . '</a></div>';
-			$mail_share_button     = '<a class="wps_wpr_mail_button wps_wpr_common_class" href="mailto:enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/email.png"></a>';
+			$twitter_share_button  = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/Twitter.svg"></a></div>';
+			$facebook_share_button = '<div id="fb-root"></div><div class="fb-share-button wps_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/Facebook.svg"></a></div>';
+			$mail_share_button     = '<a class="wps_wpr_mail_button wps_wpr_common_class" href="mailto:enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/email.svg"></a>';
 			$email_share_button    = apply_filters( 'wps_mail_box', $content, $user_id );
-			$whatsapp_share_button = '<a target="_blank" class="wps_wpr_whatsapp_share" href="https://api.whatsapp.com/send?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . WPS_RWPR_DIR_URL . 'public/images/whatsapp.png"></a>';
+			$whatsapp_share_button = '<a target="_blank" class="wps_wpr_whatsapp_share" href="https://api.whatsapp.com/send?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . WPS_RWPR_DIR_URL . 'public/images/WhatsApp.svg"></a>';
 
 			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_facebook' ) == 1 ) {
 
@@ -1091,7 +1091,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		}
 
 		// Applied points on cart refunded here.
-		$mwb_wpr_array = array( 'processing', 'on-hold', 'pending', 'completed' );
+		$mwb_wpr_array = array( 'processing', 'on-hold', 'pending', 'completed', 'failed' );
 		if ( in_array( $old_status, $mwb_wpr_array, true ) && ( 'cancelled' === $new_status || 'refunded' === $new_status ) ) {
 
 			$order          = wc_get_order( $order_id );
@@ -2798,21 +2798,21 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_currency_par_value_wallet = $this->wps_wpr_get_general_settings_num( 'wps_wpr_wallet_price_rate' );
 			if ( $wps_wallet_enable && ! empty( $wps_req_points ) ) {
 				?>
-				<p class="wps_wpr_heading"><?php echo esc_html__( 'Convert Points to Currency  Wallet Conversion', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
+				<p class="wps_wpr_heading"><?php echo esc_html__( 'Convert Points to Currency  Wallet Conversion', 'points-and-rewards-for-woocommerce' ); ?></p>
 				<fieldset class="wps_wpr_each_section">
 					<p>
-						<?php echo esc_html__( 'Points Conversion: ', 'ultimate-woocommerce-points-and-rewards' ); ?>
-						<?php echo esc_html( $wps_points_par_value_wallet ) . esc_html__( 'points = ', 'ultimate-woocommerce-points-and-rewards' ) . wp_kses( wc_price( $wps_currency_par_value_wallet ), $this->wps_wpr_allowed_html() ); ?>
+						<?php echo esc_html__( 'Points Conversion: ', 'points-and-rewards-for-woocommerce' ); ?>
+						<?php echo esc_html( $wps_points_par_value_wallet ) . esc_html__( 'points = ', 'points-and-rewards-for-woocommerce' ) . wp_kses( wc_price( $wps_currency_par_value_wallet ), $this->wps_wpr_allowed_html() ); ?>
 					</p>
 					<form id="points_wallet" enctype="multipart/form-data" action="" method="post">
 						<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
 							<label for="wps_custom_wallet_text">
-								<?php esc_html_e( 'Enter your points:', 'ultimate-woocommerce-points-and-rewards' ); ?>
+								<?php esc_html_e( 'Enter your points:', 'points-and-rewards-for-woocommerce' ); ?>
 							</label>
 							<p id="wps_wpr_wallet_notification"></p>
 							<input type="number" class="woocommerce-Input woocommerce-Input--number input-number" name="wps_custom_number" min="1" id="wps_custom_wallet_point_num" style="width: 160px;">
 
-							<input type="button" name="wps_wpr_custom_wallet" id= "wps_wpr_custom_wallet" class="wps_wpr_custom_wallet button" value="<?php esc_html_e( 'Redeem to Wallet', 'ultimate-woocommerce-points-and-rewards' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>">
+							<input type="button" name="wps_wpr_custom_wallet" id= "wps_wpr_custom_wallet" class="wps_wpr_custom_wallet button" value="<?php esc_html_e( 'Redeem to Wallet', 'points-and-rewards-for-woocommerce' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>">
 						</p>
 					</form>
 				</fieldset>

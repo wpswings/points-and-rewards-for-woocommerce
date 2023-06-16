@@ -277,7 +277,6 @@ class Points_Log_List_Table extends WP_List_Table {
 				'per_page'    => $per_page,
 			)
 		);
-
 	}
 
 	/**
@@ -382,6 +381,7 @@ if ( isset( $_POST['wps_wpr_import_user'] ) && isset( $_POST['points-log'] ) ) {
 			$flag                  = false;
 			$general_settings      = get_option( 'wps_wpr_settings_gallery', true );
 			$coupon_settings_array = get_option( 'wps_wpr_coupons_gallery', array() );
+
 			foreach ( $user_data as $key => $value ) {
 				$check_user = get_user_meta( $value->data->ID, 'wps_wpr_points', false );
 				if ( false == $check_user ) {
@@ -623,10 +623,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								<?php
 								foreach ( $point_log['Coupon_details'] as $key => $value ) {
 									?>
-								<tr valign="top">
-									<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-									<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['Coupon_details'] ); ?></td>
-								</tr>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['Coupon_details'] ); ?></td>
+									</tr>
 									<?php
 								}
 								?>
@@ -887,10 +887,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								<?php
 								foreach ( $point_log['pro_conversion_points'] as $key => $value ) {
 									?>
-								<tr valign="top">
-									<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-									<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['pro_conversion_points'] ); ?></td>
-								</tr>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['pro_conversion_points'] ); ?></td>
+									</tr>
 									<?php
 								}
 								?>
@@ -920,10 +920,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									<?php
 									foreach ( $point_log['comment'] as $key => $value ) {
 										?>
-								<tr valign="top">
-									<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-									<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['comment'] ); ?></td>
-								</tr>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['comment'] ); ?></td>
+										</tr>
 										<?php
 									}
 									?>
@@ -953,10 +953,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									<?php
 									foreach ( $point_log['membership'] as $key => $value ) {
 										?>
-									<tr valign="top">
-										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['membership'] ); ?></td>
-									</tr>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['membership'] ); ?></td>
+										</tr>
 										<?php
 									}
 									?>
@@ -984,16 +984,16 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 										</th>
 									</tr>
 								</thead>
-										<?php
-										foreach ( $point_log['ref_product_detail'] as $key => $value ) {
-											?>
-									<tr valign="top">
-										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['ref_product_detail'] ); ?></td>
-									</tr>
-											<?php
-										}
+									<?php
+									foreach ( $point_log['ref_product_detail'] as $key => $value ) {
 										?>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['ref_product_detail'] ); ?></td>
+										</tr>
+										<?php
+									}
+									?>
 							</table>
 						</div>
 					</div>
@@ -1017,16 +1017,16 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 										</th>
 									</tr>
 								</thead>
-										<?php
-										foreach ( $point_log['wps_refer_purchase_point_refund'] as $key => $value ) {
-											?>
-									<tr valign="top">
-										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['wps_refer_purchase_point_refund'] ); ?></td>
-									</tr>
-											<?php
-										}
+									<?php
+									foreach ( $point_log['wps_refer_purchase_point_refund'] as $key => $value ) {
 										?>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['wps_refer_purchase_point_refund'] ); ?></td>
+										</tr>
+										<?php
+									}
+									?>
 							</table>
 						</div>
 					</div>
@@ -1050,16 +1050,16 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 										</th>
 									</tr>
 								</thead>
-										<?php
-										foreach ( $point_log['wps_refer_purchase_point_cancelled'] as $key => $value ) {
-											?>
-									<tr valign="top">
-										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['wps_refer_purchase_point_cancelled'] ); ?></td>
-									</tr>
-											<?php
-										}
+									<?php
+									foreach ( $point_log['wps_refer_purchase_point_cancelled'] as $key => $value ) {
 										?>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['wps_refer_purchase_point_cancelled'] ); ?></td>
+										</tr>
+										<?php
+									}
+									?>
 							</table>
 						</div>
 					</div>
@@ -1083,16 +1083,16 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 										</th>
 									</tr>
 								</thead>
-										<?php
-										foreach ( $point_log['pur_by_points'] as $key => $value ) {
-											?>
-									<tr valign="top">
-										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['pur_by_points'] ); ?></td>
-									</tr>
-											<?php
-										}
+									<?php
+									foreach ( $point_log['pur_by_points'] as $key => $value ) {
 										?>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['pur_by_points'] ); ?></td>
+										</tr>
+										<?php
+									}
+									?>
 							</table>
 						</div>
 					</div>
@@ -1119,10 +1119,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									<?php
 									foreach ( $point_log['deduction_of_points'] as $key => $value ) {
 										?>
-									<tr valign="top">
-										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduction_of_points'] ); ?></td>
-									</tr>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduction_of_points'] ); ?></td>
+										</tr>
 										<?php
 									}
 									?>
@@ -1152,10 +1152,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									<?php
 									foreach ( $point_log['reset_users_points_logs'] as $key => $value ) {
 										?>
-									<tr valign="top">
-										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['reset_users_points_logs'] ); ?></td>
-									</tr>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['reset_users_points_logs'] ); ?></td>
+										</tr>
 										<?php
 									}
 									?>
@@ -1182,16 +1182,16 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 											</th>
 										</tr>
 									</thead>
-										<?php
-										foreach ( $point_log['return_pur_points'] as $key => $value ) {
-											?>
-									<tr valign="top">
-										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['return_pur_points'] ); ?></td>
-									</tr>
-											<?php
-										}
+									<?php
+									foreach ( $point_log['return_pur_points'] as $key => $value ) {
 										?>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['return_pur_points'] ); ?></td>
+										</tr>
+										<?php
+									}
+									?>
 							</table>
 						</div>
 					</div>
@@ -1215,16 +1215,16 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 											</th>
 										</tr>
 									</thead>
-										<?php
-										foreach ( $point_log['deduction_currency_spent'] as $key => $value ) {
-											?>
-									<tr valign="top">
-										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduction_currency_spent'] ); ?></td>
-									</tr>
-											<?php
-										}
+									<?php
+									foreach ( $point_log['deduction_currency_spent'] as $key => $value ) {
 										?>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduction_currency_spent'] ); ?></td>
+										</tr>
+										<?php
+									}
+									?>
 							</table>
 						</div>
 					</div>
@@ -1250,10 +1250,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								<?php
 								foreach ( $point_log['cart_subtotal_point'] as $key => $value ) {
 									?>
-								<tr valign="top">
-									<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-									<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['cart_subtotal_point'] ); ?> </td>
-								</tr>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['cart_subtotal_point'] ); ?> </td>
+									</tr>
 									<?php
 								}
 								?>
@@ -1281,10 +1281,45 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								<?php
 								foreach ( $point_log['order__rewards_points'] as $key => $value ) {
 									?>
-								<tr valign="top">
-									<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-									<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['order__rewards_points'] ); ?> </td>
-								</tr>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['order__rewards_points'] ); ?> </td>
+									</tr>
+									<?php
+								}
+								?>
+						</table>
+					</div>
+					<?php
+				}
+				if ( array_key_exists( 'award_points_on_previous_order', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points awarded on previous order', 'points-and-rewards-for-woocommerce' ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
+								<thead>
+									<tr valign="top">
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Order No.', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+									</tr>
+								</thead>
+								<?php
+								foreach ( $point_log['award_points_on_previous_order'] as $key => $value ) {
+									?>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo esc_html( $value['award_points_on_previous_order'] ); ?> </td>
+										<td class="forminp forminp-text"><?php echo esc_html( $value['order_no'] ); ?> </td>
+									</tr>
 									<?php
 								}
 								?>
@@ -1312,10 +1347,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								<?php
 								foreach ( $point_log['api_membership_logs'] as $key => $value ) {
 									?>
-								<tr valign="top">
-									<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-									<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['api_membership_logs'] ); ?> </td>
-								</tr>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['api_membership_logs'] ); ?> </td>
+									</tr>
 									<?php
 								}
 								?>
@@ -1374,10 +1409,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								<?php
 								foreach ( $point_log['deduct_currency_pnt_cancel'] as $key => $value ) {
 									?>
-								<tr valign="top">
-									<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-									<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduct_currency_pnt_cancel'] ); ?></td>
-								</tr>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['deduct_currency_pnt_cancel'] ); ?></td>
+									</tr>
 									<?php
 								}
 								?>
@@ -1436,10 +1471,10 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								<?php
 								foreach ( $point_log['pur_points_cancel'] as $key => $value ) {
 									?>
-										<tr valign="top">
-											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-											<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['pur_points_cancel'] ); ?></td>
-										</tr>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['pur_points_cancel'] ); ?></td>
+									</tr>
 									<?php
 								}
 								?>
@@ -1503,18 +1538,21 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								foreach ( $point_log['reference_details'] as $key => $value ) {
 									$user_name = '';
 									if ( isset( $value['refered_user'] ) && ! empty( $value['refered_user'] ) ) {
-										$user      = get_user_by( 'ID', $value['refered_user'] );
+										$user = get_user_by( 'ID', $value['refered_user'] );
+
 										if ( isset( $user ) && ! empty( $user ) ) {
+
 											$user_name = $user->user_login;
 										} else {
+
 											$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
 										}
 									}
 									?>
 									<tr valign="top">
-											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-											<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['reference_details'] ); ?></td>
-											<td class="forminp forminp-text">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['reference_details'] ); ?></td>
+										<td class="forminp forminp-text">
 										<?php
 										if ( isset( $user ) && ! empty( $user ) ) {
 											echo esc_html( $user_name );
@@ -1636,9 +1674,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['Sender_point_details'] ); ?></td>
 										<td class="forminp forminp-text">
-												<?php
-												echo esc_html( $user_name );
-												?>
+											<?php
+											echo esc_html( $user_name );
+											?>
 										</td>
 									</tr>
 									<?php
@@ -1680,9 +1718,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 									<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['Receiver_point_details'] ); ?> </td>
 									<td class="forminp forminp-text">
-												<?php
-												echo esc_html( $user_name );
-												?>
+										<?php
+										echo esc_html( $user_name );
+										?>
 									</td>
 								</tr>
 								<?php
@@ -1710,8 +1748,33 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		}
 	}
 } else {
+
 	do_action( 'wps_wpr_add_additional_import_points' );
 	?>
+	<!-- Previous Order Points Settings -->
+	<div class="wps_wpr_points_table_second_wrappers">
+		<h3 class="wp-heading-inline" id="wps_wpr_points_table_heading"><?php esc_html_e( 'Assign Points on Previous Orders', 'points-and-rewards-for-woocommerce' ); ?></h3>
+		<table class="form-table wps_wpr_general_setting">
+			<tbody>
+				<tr valign="top">
+					<td class="wps_wpr_instructions_tabledata">
+						<p><?php esc_html_e( 'This will help you to apply points to all previous order which are completed.', 'points-and-rewards-for-woocommerce' ); ?></p>
+					</td>
+					<td class="wps_wpr_instructions_tabledata_btn">
+						<p class="wps_wpr_button_to_assign_points">
+							<span class="wps_wpr_previous_button_wrappers">
+								<input type="number" min="1" id="wps_wpr_previous_order_point_value">
+								<input type="button" id="wps_wpr_points_on_previous_order" class="button-primary woocommerce-save-button" value="<?php esc_html_e( 'Assign Points', 'points-and-rewards-for-woocommerce' ); ?>" />
+								<img class="wps_wpr_previous_order_loader" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/images/loading.gif' ); ?>">
+								<span class="wps_wpr_previous_order_notice"></span>
+							</span>
+						</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
 	<!-- === Create HTML for Items per page === -->
 	<div class="wps_wpr_points_table_second_wrappers">
 		<h3 class="wp-heading-inline" id="wps_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-and-rewards-for-woocommerce' ); ?></h3>
@@ -1720,6 +1783,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		<input type="hidden" name="wps_wpr_items_per_page_nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-items-per-page-nonce' ) ); ?>">
 		<input type="submit" name="wps_wpr_save_items_per_page" class="button button-primary" id="wps_wpr_save_items_per_page" value="<?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?>">
 	</div>
+
 	<?php
 	$general_settings  = get_option( 'wps_wpr_settings_gallery', true );
 	$enable_wps_signup = isset( $general_settings['wps_wpr_signup'] ) ? intval( $general_settings['wps_wpr_signup'] ) : 0;
@@ -1743,10 +1807,11 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			$user_data  = get_users( $args );
 			$guest_flag = false;
 			foreach ( $user_data as $key => $value ) {
+
 				$user_id      = $value->data->ID;
 				$guest_points = get_user_meta( $value->data->ID, 'wps_wpr_points', false );
-
 				if ( false == $guest_points ) {
+
 					$guest_flag = true;
 				}
 			}

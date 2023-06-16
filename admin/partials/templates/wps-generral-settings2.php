@@ -234,7 +234,7 @@ $wps_wpr_general_settings = array(
 		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Order Rewards Points Settings', 'ultimate-woocommerce-points-and-rewards' ),
+		'title' => __( 'Order Rewards Points Settings', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'title',
 	),
 	array(

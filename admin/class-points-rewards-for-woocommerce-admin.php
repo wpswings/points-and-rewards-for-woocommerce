@@ -1559,4 +1559,161 @@ class Points_Rewards_For_WooCommerce_Admin {
 			}
 		}
 	}
+
+	/**
+	 * This function is used to assign points on previuos orders.
+	 *
+	 * @return bool
+	 */
+	public function wps_wpr_assign_points_on_previous_order_call() {
+
+		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
+		// check admin capability.
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
+
+		$offset             = 0;
+		$order_per_page     = 200;
+		$response           = array();
+		$response['result'] = false;
+		$response['msg']    = esc_html__( 'Points not awarded', 'points-and-rewards-for-woocommerce' );
+		if ( isset( $_POST ) ) {
+
+			$rewards_points = ! empty( $_POST['rewards_points'] ) ? sanitize_text_field( wp_unslash( $_POST['rewards_points'] ) ) : '0';
+			do {
+
+				$args = array(
+					'type'   => 'shop_order',
+					'status' => array( 'wc-completed' ),
+					'return' => 'ids',
+					'offset' => $offset,
+					'limit'  => $order_per_page,
+				);
+
+				$orders = wc_get_orders( $args );
+				if ( is_wp_error( $orders ) ) {
+
+					$response['result'] = false;
+					$response['msg']    = esc_html__( 'Error Occurred', 'points-and-rewards-for-woocommerce' );
+					return false;
+				}
+
+				if ( ! empty( $orders ) && is_array( $orders ) ) {
+
+					$flag     = false;
+					$negative = 0;
+					$positive = 0;
+					foreach ( $orders as $order_id ) {
+
+						$per_curreny_points_check = get_post_meta( $order_id, "$order_id#item_conversion_id", true );
+						$referral_purchase_check  = get_post_meta( $order_id, 'wps_wpr_awarded_referral_purchase_points', true );
+						$order_total_points_check = get_post_meta( $order_id, "$order_id#points_assignedon_order_total", true );
+
+						if ( ! empty( $per_curreny_points_check ) || ! empty( $referral_purchase_check ) || ! empty( $order_total_points_check ) ) {
+
+							continue;
+						}
+
+						$order = wc_get_order( $order_id );
+						if ( ! empty( $order ) ) {
+							if ( 'completed' === $order->get_status() ) {
+
+								// calling funciton to update users points.
+								$flag = $this->wps_wpr_add_points_on_old_orders( $order, $rewards_points );
+								if ( $flag ) {
+
+									++$positive;
+									++$negative;
+								}
+							}
+						}
+					}
+
+					// show success msg when points awarded.
+					if ( $positive > 0 ) {
+
+						$response['result'] = true;
+						$response['msg']    = esc_html__( 'Points awarded successfully', 'points-and-rewards-for-woocommerce' );
+					}
+					// show msg if points is already awarded.
+					if ( 0 === $negative ) {
+
+						$response['result'] = false;
+						$response['msg']    = esc_html__( 'Points already awarded on this orders', 'points-and-rewards-for-woocommerce' );
+					}
+				}
+
+				$offset     += $order_per_page;
+				$order_total = count( $orders );
+			} while ( $order_total === $order_per_page );
+		}
+		wp_send_json( $response );
+		wp_die();
+	}
+
+	/**
+	 * This function is used to update user points via order previous methods.
+	 *
+	 * @param object $order order.
+	 * @param string $rewards_points rewards_points.
+	 * @return bool
+	 */
+	public function wps_wpr_add_points_on_old_orders( $order, $rewards_points ) {
+
+		if ( ! empty( $order ) ) {
+
+			$wps_wpr_assign_points_to_old_orders = get_post_meta( $order->get_id(), 'wps_wpr_assign_points_to_old_orders', true );
+			if ( empty( $wps_wpr_assign_points_to_old_orders ) ) {
+
+				$get_points     = get_user_meta( $order->get_user_id(), 'wps_wpr_points', true );
+				$get_points     = ! empty( $get_points ) ? $get_points : 0;
+				$updated_points = (int) $get_points + $rewards_points;
+
+				update_user_meta( $order->get_user_id(), 'wps_wpr_points', $updated_points );
+				update_post_meta( $order->get_id(), 'wps_wpr_assign_points_to_old_orders', 'done' );
+
+				// calling function to create logs.
+				$this->wps_wpr_create_log_for_previous_order( $order->get_user_id(), $rewards_points, $order->get_id() );
+				return true;
+			}
+		}
+	}
+
+	/**
+	 * This function is used to create logs for previuos orders.
+	 *
+	 * @param string $user_id user_id.
+	 * @param string $rewards_points rewards points.
+	 * @param string $order_id order id.
+	 * @return void
+	 */
+	public function wps_wpr_create_log_for_previous_order( $user_id, $rewards_points, $order_id ) {
+
+		if ( $rewards_points > 0 ) {
+
+			$previous_order_logs = get_user_meta( $user_id, 'points_details', true );
+			$previous_order_logs = ! empty( $previous_order_logs ) && is_array( $previous_order_logs ) ? $previous_order_logs : array();
+
+			if ( isset( $previous_order_logs['award_points_on_previous_order'] ) && ! empty( $previous_order_logs['award_points_on_previous_order'] ) ) {
+
+				$orders_points = array(
+					'award_points_on_previous_order' => + $rewards_points,
+					'date'                           => date_i18n( 'Y-m-d h:i:sa' ),
+					'order_no'                       => $order_id,
+				);
+				$previous_order_logs['award_points_on_previous_order'][] = $orders_points;
+			} else {
+
+				$orders_points = array(
+					'award_points_on_previous_order' => + $rewards_points,
+					'date'                           => date_i18n( 'Y-m-d h:i:sa' ),
+					'order_no'                       => $order_id,
+				);
+				$previous_order_logs['award_points_on_previous_order'][] = $orders_points;
+			}
+			update_user_meta( $user_id, 'points_details', $previous_order_logs );
+		}
+	}
 }
