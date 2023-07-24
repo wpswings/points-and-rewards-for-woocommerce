@@ -91,7 +91,39 @@ $wps_wpr_other_settings = array(
 	array(
 		'type' => 'sectionend',
 	),
-
+	array(
+		'title' => __( 'Restrict Rewards Points Settings', 'points-and-rewards-for-woocommerce' ),
+		'type'  => 'title',
+	),
+	array(
+		'title'    => __( 'Enable Restrict Points Settings', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'id'       => 'wps_wpr_restrict_rewards_points',
+		'class'    => 'input-text',
+		'desc_tip' => __( 'User will not earn any points when he/she redeem points on cart/checkout page', 'points-and-rewards-for-woocommerce' ),
+		'default'  => 0,
+		'desc'     => __( 'Enable this setting if you want to restrict user to not eran any points.', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'title'    => __( 'Enable Message Settings', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'id'       => 'wps_wpr_show_message_on_cart_page',
+		'class'    => 'input-text',
+		'desc_tip' => __( 'Check this box to show the Message on Cart Page, when user redeem points', 'points-and-rewards-for-woocommerce' ),
+		'default'  => 0,
+		'desc'     => __( 'Enable this setting to show message on cart page after apply points section.', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'id'       => 'wps_wpr_restricted_cart_page_msg',
+		'title'    => __( 'Enter Message', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'text',
+		'desc_tip' => __( 'Entered message will appear not cart page after apply points section.', 'points-and-rewards-for-woocommerce' ),
+		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
+		'desc'     => __( ' Enter Rewards Restriction Message', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'type' => 'sectionend',
+	),
 );
 
 $wps_wpr_other_settings = apply_filters( 'wps_wpr_others_settings', $wps_wpr_other_settings );
