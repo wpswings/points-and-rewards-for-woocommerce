@@ -129,12 +129,14 @@
 											unblock( $( '.woocommerce-cart-form' ) );
 											unblock( $( '.woocommerce-cart-form' ) );
 
-											$( 'html, body' ).animate(
-												{
-													scrollTop: $( ".woocommerce-cart-form" ).offset().top
-												},
-												800
-											);
+											if ( ! wps_wpr.checkout_page ) {
+												$( 'html, body' ).animate(
+													{
+														scrollTop: jQuery( ".woocommerce-cart-form" ).offset().top
+													},
+													800
+												);
+											}
 											// Restrict rewards points settings features.
 											if ( wps_wpr.is_restrict_message_enable ) {
 
