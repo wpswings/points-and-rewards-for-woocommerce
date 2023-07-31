@@ -3474,4 +3474,162 @@ class Points_Rewards_For_WooCommerce_Public {
 		return $validate;
 	}
 
+	/**
+	 * Undocumented function wps_display_product_points.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_show_msg_on_gift_card_product() {
+		global $post;
+
+		// Get the color of the.
+		$wps_wpr_notification_color = $this->wps_wpr_get_other_settings( 'wps_wpr_notification_color' );
+		$wps_wpr_notification_color = ( ! empty( $wps_wpr_notification_color ) ) ? $wps_wpr_notification_color : '#55b3a5';
+
+		// get gift card settings.
+		$wps_wpr_settings_gallery                   = get_option( 'wps_wpr_settings_gallery', true );
+		$wps_wpr_settings_gallery                   = ! empty( $wps_wpr_settings_gallery ) && is_array( $wps_wpr_settings_gallery ) ? $wps_wpr_settings_gallery : array();
+		$wps_wpr_enable_gift_card_settings          = ! empty( $wps_wpr_settings_gallery['wps_wpr_enable_gift_card_settings'] ) ? $wps_wpr_settings_gallery['wps_wpr_enable_gift_card_settings'] : '0';
+		$wps_wpr_gift_card_points                   = ! empty( $wps_wpr_settings_gallery['wps_wpr_gift_card_points'] ) ? $wps_wpr_settings_gallery['wps_wpr_gift_card_points'] : 0;
+		$wps_wpr_enable__gift_card_message_settings = ! empty( $wps_wpr_settings_gallery['wps_wpr_enable__gift_card_message_settings'] ) ? $wps_wpr_settings_gallery['wps_wpr_enable__gift_card_message_settings'] : 0;
+		$wps_wpr_gift__card_message                 = ! empty( $wps_wpr_settings_gallery['wps_wpr_gift__card_message'] ) ? $wps_wpr_settings_gallery['wps_wpr_gift__card_message'] : esc_html__( 'Gift Card Points', 'points-and-rewards-for-woocommerce' );
+
+		if ( 1 === $wps_wpr_enable_gift_card_settings ) {
+			if ( 1 === $wps_wpr_enable__gift_card_message_settings ) {
+				$product = wc_get_product( $post->ID );
+				if ( $product->is_type( 'wgm_gift_card' ) ) {
+
+					echo '<span class=wps_wpr_product_point style=background-color:' . esc_html( $wps_wpr_notification_color ) . '>' . esc_html( $wps_wpr_gift__card_message ) . ' : ' . esc_html( $wps_wpr_gift_card_points );
+					esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' );
+					echo '</span>';
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to awards points on gift card product.
+	 *
+	 * @param string $order_id   order id.
+	 * @param string $old_status old status.
+	 * @param string $new_status new status.
+	 * @return void
+	 */
+	public function wps_wpr_points_on_gift_card_points( $order_id, $old_status, $new_status ) {
+		if ( $old_status != $new_status ) {
+
+			// get gift card settings.
+			$wps_wpr_settings_gallery          = get_option( 'wps_wpr_settings_gallery', true );
+			$wps_wpr_settings_gallery          = ! empty( $wps_wpr_settings_gallery ) && is_array( $wps_wpr_settings_gallery ) ? $wps_wpr_settings_gallery : array();
+			$wps_wpr_enable_gift_card_settings = ! empty( $wps_wpr_settings_gallery['wps_wpr_enable_gift_card_settings'] ) ? $wps_wpr_settings_gallery['wps_wpr_enable_gift_card_settings'] : '0';
+			$wps_wpr_gift__card_points         = ! empty( $wps_wpr_settings_gallery['wps_wpr_gift_card_points'] ) ? $wps_wpr_settings_gallery['wps_wpr_gift_card_points'] : 0;
+
+			// check if GC setting is not enable than retrun from here.
+			if ( 1 !== $wps_wpr_enable_gift_card_settings ) {
+
+				return;
+			}
+
+			$order   = wc_get_order( $order_id );
+			$user_id = $order->get_user_id();
+
+			// if user not found return from here.
+			if ( empty( $user_id ) ) {
+
+				return;
+			}
+
+			$today_date           = date_i18n( 'Y-m-d h:i:sa' );
+			$get_points           = get_user_meta( $user_id, 'wps_wpr_points', true );
+			$get_points           = ! empty( $get_points ) ? $get_points : 0;
+			$gift_card_points_log = get_user_meta( $user_id, 'points_details', true );
+			$gift_card_points_log = ! empty( $gift_card_points_log ) && is_array( $gift_card_points_log ) ? $gift_card_points_log : array();
+
+			// Awarded with points when Gift Card product is purchased and status change to completed.
+			if ( 'completed' === $new_status ) {
+				foreach ( $order->get_items() as $item_key => $item_value ) {
+
+					$product = wc_get_product( $item_value->get_product_id() );
+					if ( $product->is_type( 'wgm_gift_card' ) ) {
+
+						$wps_wpr_gift_card_points_awarded = get_post_meta( $order_id, 'wps_wpr_gift_card_points_awarded', true );
+						if ( empty( $wps_wpr_gift_card_points_awarded ) ) {
+
+							$updated_points = (int) $get_points + $wps_wpr_gift__card_points;
+							if ( isset( $gift_card_points_log['gift_card_awarded_points'] ) && ! empty( $gift_card_points_log['gift_card_awarded_points'] ) ) {
+
+								$wps_par_refund_purchase                            = array();
+								$wps_par_refund_purchase                            = array(
+									'gift_card_awarded_points' => $wps_wpr_gift__card_points,
+									'date'                     => $today_date,
+								);
+								$gift_card_points_log['gift_card_awarded_points'][] = $wps_par_refund_purchase;
+							} else {
+								if ( ! is_array( $gift_card_points_log ) ) {
+									$gift_card_points_log = array();
+								}
+								$wps_par_refund_purchase                            = array();
+								$wps_par_refund_purchase                            = array(
+									'gift_card_awarded_points' => $wps_wpr_gift__card_points,
+									'date'                     => $today_date,
+								);
+								$gift_card_points_log['gift_card_awarded_points'][] = $wps_par_refund_purchase;
+							}
+							update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+							update_user_meta( $user_id, 'points_details', $gift_card_points_log );
+							update_post_meta( $order_id, 'wps_wpr_gift_card_points_awarded', 'done' );
+							update_post_meta( $order_id, 'wps_wpr_gift_card_awarded_points', $wps_wpr_gift__card_points );
+						}
+					}
+				}
+			}
+
+			// Remove points if Gift Card product is refunded or cancelled.
+			if ( 'completed' === $old_status && ( 'cancelled' === $new_status || 'refunded' === $new_status ) ) {
+
+				if ( array_key_exists( 'gift_card_awarded_points', $gift_card_points_log ) ) {
+
+					$gift_points_check = absint( get_post_meta( $order_id, 'wps_wpr_gift_card_awarded_points', true ) );
+					foreach ( $gift_card_points_log['gift_card_awarded_points'] as $key => $value ) {
+
+						$wps_wpr_gift__card_points__refunded = get_post_meta( $order_id, 'wps_wpr_gift__card_points__refunded', true );
+						if ( empty( $wps_wpr_gift__card_points__refunded ) ) {
+
+							if ( $value['gift_card_awarded_points'] == $gift_points_check ) {
+
+								$updated_points = $get_points - $gift_points_check;
+								if ( $updated_points < 0 ) {
+
+									$updated_points = 0;
+								}
+
+								if ( isset( $gift_card_points_log['gift__card_points_refunded'] ) && ! empty( $gift_card_points_log['gift__card_points_refunded'] ) ) {
+
+									$wps_par_refund_purchase                              = array();
+									$wps_par_refund_purchase                              = array(
+										'gift__card_points_refunded' => $wps_wpr_gift__card_points,
+										'date'                     => $today_date,
+									);
+									$gift_card_points_log['gift__card_points_refunded'][] = $wps_par_refund_purchase;
+								} else {
+									if ( ! is_array( $gift_card_points_log ) ) {
+										$gift_card_points_log = array();
+									}
+									$wps_par_refund_purchase                              = array();
+									$wps_par_refund_purchase                              = array(
+										'gift__card_points_refunded' => $wps_wpr_gift__card_points,
+										'date'                     => $today_date,
+									);
+									$gift_card_points_log['gift__card_points_refunded'][] = $wps_par_refund_purchase;
+								}
+								update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+								update_user_meta( $user_id, 'points_details', $gift_card_points_log );
+								update_post_meta( $order_id, 'wps_wpr_gift__card_points__refunded', 'done' );
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

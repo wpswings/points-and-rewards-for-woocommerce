@@ -202,6 +202,10 @@ class Points_Rewards_For_Woocommerce {
 
 		// assign points on previous order.
 		$this->loader->add_action( 'wp_ajax_assign_points_on_previous_order', $plugin_admin, 'wps_wpr_assign_points_on_previous_order_call' );
+		// Gift Card Compatibility.
+		if ( is_plugin_active( 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) ) {
+			$this->loader->add_filter( 'wps_wpr_general_settings', $plugin_admin, 'wps_wpr_gift_card_settings' );
+		}
 	}
 
 	/**
@@ -292,6 +296,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_extend_point_tab_section', $plugin_public, 'wps_wpr_show_subscription_message', 10, 1 );
 			// order rewards points functionality.
 			$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_public, 'wps_wpr_order_rewards_points_callback', 20, 2 );
+			// Gift Card Compatibility.
+			if ( is_plugin_active( 'woo-gift-cards-lite/woocommerce_gift_cards_lite.php' ) ) {
+				$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'wps_wpr_show_msg_on_gift_card_product' );
+				$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_points_on_gift_card_points', 10, 3 );
+			}
 		}
 	}
 
