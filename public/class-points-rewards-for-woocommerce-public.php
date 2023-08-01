@@ -1668,16 +1668,51 @@ class Points_Rewards_For_WooCommerce_Public {
 			$get_points                                   = $get_points - $wps_wpr_check_points_discount_applied_amount;
 
 			// deduct points if discount applied via product edit page( purchase throught only points ).
-			$applied__points = 0;
+			$applied__points     = 0;
+			$product_sale__price = 0;
 			if ( isset( WC()->cart ) ) {
 				foreach ( WC()->cart->get_cart() as $cart ) {
+
+					// purchase through points only data.
 					if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
 						$applied__points += $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
 					}
+
+					// get sale product price.
+					$product = wc_get_product( $cart['product_id'] );
+					if ( $product->is_on_sale() ) {
+
+						$product_sale__price += $product->get_sale_price();
+					}
 				}
 			}
+			// purchase through points only data.
 			$get_points = $get_points - $applied__points;
 
+			// Restriction on sale Product data.
+			$general_settings      = get_option( 'wps_wpr_settings_gallery' );
+			$restrict_sale_on_cart = ! empty( $general_settings['wps_wpr_points_restrict_sale'] ) ? $general_settings['wps_wpr_points_restrict_sale'] : '';
+
+			if ( is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+				if ( 1 === $restrict_sale_on_cart ) {
+					$cart_price = 0;
+					if ( isset( WC()->cart ) ) {
+
+						$cart_price = WC()->cart->get_subtotal() - $product_sale__price;
+					}
+
+					// check points is equal/lower than product price after sale product price calculated.
+					if ( $wps_cart_points <= $cart_price ) {
+
+						$wps_cart_points = $wps_cart_points;
+					} else {
+
+						$wps_cart_points = $cart_price;
+					}
+				}
+			}
+
+			// Applied points here.
 			if ( $get_points > 0 && $wps_cart_points > 0 ) {
 				if ( $get_points >= $wps_cart_points ) {
 
