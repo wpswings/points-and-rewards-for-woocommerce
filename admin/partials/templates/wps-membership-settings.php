@@ -112,7 +112,7 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 			'type'           => 'checkbox',
 			'class'          => 'input-text',
 			'desc'           => __( 'Enable Membership', 'points-and-rewards-for-woocommerce' ),
-			'desc_tip'       => __( 'Check this box to enable the Membership Feature', 'points-and-rewards-for-woocommerce' ),
+			'desc_tip'       => __( 'Toggle this box to enable the Membership Feature', 'points-and-rewards-for-woocommerce' ),
 			'memebrship_log' => true,
 		),
 		array(
@@ -121,7 +121,7 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 			'type'     => 'checkbox',
 			'class'    => 'input-text',
 			'desc'     => __( 'Exclude Sale Products for Membership Discount', 'points-and-rewards-for-woocommerce' ),
-			'desc_tip' => __( 'Check this box to do not apply the membership discount on sale products', 'points-and-rewards-for-woocommerce' ),
+			'desc_tip' => __( 'Toggle this box to do not apply the membership discount on sale products', 'points-and-rewards-for-woocommerce' ),
 		),
 		array(
 			'title'         => __( 'Create Member', 'points-and-rewards-for-woocommerce' ),
