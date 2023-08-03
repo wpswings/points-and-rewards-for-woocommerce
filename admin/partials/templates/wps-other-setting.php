@@ -79,14 +79,14 @@ $wps_wpr_other_settings = array(
 		'desc'     => __( 'Toggle This to show the Apply Points Section on the Cart page using this shortcode.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title'    => __( 'Show shortcode on Checkout Page [WPSW_CHECKOUT_PAGE_SECTION]', 'points-and-rewards-for-woocommerce' ),
+		'title'    => __( 'Show shortcode on Checkout Page [WPS_CHECKOUT_PAGE_SECTION]', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'checkbox',
 		'id'       => 'wps_wpr_checkout_page_apply_point_section',
 		'heading'  => __( 'Checkout page shortcode', 'points-and-rewards-for-woocommerce' ),
 		'class'    => 'input-text',
 		'desc_tip' => __( 'This shortcode is only work on Checkout page.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => 0,
-		'desc'     => __( 'Toggle this to show Apply Points Section on the Checkout page using this [WPS_CHECKOUT_PAGE_SECTION] shortcode.', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Toggle This to show the Apply Points Section on the Checkout page using this shortcode.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type' => 'sectionend',
