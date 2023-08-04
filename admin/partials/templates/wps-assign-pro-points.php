@@ -133,9 +133,9 @@ $wps_wpr_assign_product_table_settings = array(
 	array(
 		'title'    => __( 'Global Assign Product Points', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'checkbox',
-		'desc'     => __( 'Enable Assign Global Product Points', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Enable this to assign Global Product Points', 'points-and-rewards-for-woocommerce' ),
 		'id'       => 'wps_wpr_global_product_enable',
-		'desc_tip' => __( 'This is the global setting for Product Purchase Points, check this if you want to assign points to all products at once or uncheck if you want to remove assigned points from all products at once.', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Toggle This to Assign Points to All Products at Once. Untoggle to Remove Assigned Points to All Products at Once.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'title'            => __( 'Enter Assign Global Product Points', 'points-and-rewards-for-woocommerce' ),

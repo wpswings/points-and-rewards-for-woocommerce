@@ -30,7 +30,7 @@ $wps_wpr_other_settings = array(
 	),
 	array(
 		'id'       => 'wps_wpr_other_shortcode_text',
-		'title'    => __( 'Enter the text which you want to display with shortcode [MYCURRENTPOINT]', 'points-and-rewards-for-woocommerce' ),
+		'title'    => __( 'Text You Want to Display Along With [MYCURRENTPOINT] Shortcode', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'text',
 		'desc_tip' => __( 'Entered text will get displayed along with [MYCURRENTPOINT] shortcode', 'points-and-rewards-for-woocommerce' ),
 		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
@@ -39,7 +39,7 @@ $wps_wpr_other_settings = array(
 	array(
 		'id'       => 'wps_wpr_shortcode_text_membership',
 		'type'     => 'text',
-		'title'    => __( 'Enter the text which you want to display with shortcode [MYCURRENTUSERLEVEL]', 'points-and-rewards-for-woocommerce' ),
+		'title'    => __( 'Text You Want to Display Along With [MYCURRENTUSERLEVEL] Shortcode', 'points-and-rewards-for-woocommerce' ),
 		'desc_tip' => __( 'Entered text will get displayed along with [MYCURRENTUSERLEVEL] shortcode', 'points-and-rewards-for-woocommerce' ),
 		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
 		'desc'     => __( 'Entered text will get displayed along with [MYCURRENTUSERLEVEL] shortcode', 'points-and-rewards-for-woocommerce' ),
@@ -69,29 +69,61 @@ $wps_wpr_other_settings = array(
 		'type'  => 'title',
 	),
 	array(
-		'title'    => __( 'Enable to show shortcode on Cart page [WPS_CART_PAGE_SECTION]', 'points-and-rewards-for-woocommerce' ),
+		'title'    => __( 'Show Shortcode on Cart Page [WPS_CART_PAGE_SECTION]', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'checkbox',
 		'id'       => 'wps_wpr_cart_page_apply_point_section',
 		'heading'  => __( 'Cart page shortcode', 'points-and-rewards-for-woocommerce' ),
 		'class'    => 'input-text',
 		'desc_tip' => __( 'This shortcode is only work on Cart page.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => 0,
-		'desc'     => __( 'Please check this box to show apply points section on Cart page using this shortcode.', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Toggle This to show the Apply Points Section on the Cart page using this shortcode.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title'    => __( 'Enable to show shortcode on Checkout page [WPS_CHECKOUT_PAGE_SECTION]', 'points-and-rewards-for-woocommerce' ),
+		'title'    => __( 'Show shortcode on Checkout Page [WPS_CHECKOUT_PAGE_SECTION]', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'checkbox',
 		'id'       => 'wps_wpr_checkout_page_apply_point_section',
 		'heading'  => __( 'Checkout page shortcode', 'points-and-rewards-for-woocommerce' ),
 		'class'    => 'input-text',
 		'desc_tip' => __( 'This shortcode is only work on Checkout page.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => 0,
-		'desc'     => __( 'Please check this box to show apply points section on Checkout page using this shortcode.', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Toggle This to show the Apply Points Section on the Checkout page using this shortcode.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type' => 'sectionend',
 	),
-
+	array(
+		'title' => __( 'Restrict Rewards Points Settings', 'points-and-rewards-for-woocommerce' ),
+		'type'  => 'title',
+	),
+	array(
+		'title'    => __( 'Enable Restrict Points Settings', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'id'       => 'wps_wpr_restrict_rewards_points',
+		'class'    => 'input-text',
+		'desc_tip' => __( 'User will not earn any points when he/she redeem points on cart/checkout page', 'points-and-rewards-for-woocommerce' ),
+		'default'  => 0,
+		'desc'     => __( 'Enable this setting if you want to restrict user to not earn any points.', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'title'    => __( 'Enable Message Settings', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'id'       => 'wps_wpr_show_message_on_cart_page',
+		'class'    => 'input-text',
+		'desc_tip' => __( 'Toggle this box to show the Message on Cart Page, when user redeem points', 'points-and-rewards-for-woocommerce' ),
+		'default'  => 0,
+		'desc'     => __( 'Enable this setting to show message on cart page after apply points section.', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'id'       => 'wps_wpr_restricted_cart_page_msg',
+		'title'    => __( 'Enter Message', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'text',
+		'desc_tip' => __( 'Entered message will appear on cart page after apply points section.', 'points-and-rewards-for-woocommerce' ),
+		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
+		'desc'     => __( ' Enter Rewards Restriction Message', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'type' => 'sectionend',
+	),
 );
 
 $wps_wpr_other_settings = apply_filters( 'wps_wpr_others_settings', $wps_wpr_other_settings );

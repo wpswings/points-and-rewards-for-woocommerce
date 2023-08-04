@@ -570,10 +570,10 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 */
 	public function wps_wpr_display_shortcode() {
 		$shortcode_array = array(
-			'desc1' => __( 'Use the shortcode [MYCURRENTUSERLEVEL] for displaying current Membership Level', 'points-and-rewards-for-woocommerce' ),
-			'desc2' => __( 'Use the shortcode [MYCURRENTPOINT] for displaying the current Points of Users', 'points-and-rewards-for-woocommerce' ),
-			'desc3' => __( 'Use the shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ),
-			'desc4' => __( 'Use the shortcode [SHOW_POINTS_LOG] for displaying points log anywhere on site', 'points-and-rewards-for-woocommerce' ),
+			'desc1' => __( 'Use the shortcode [MYCURRENTUSERLEVEL] to display the current Membership Level.', 'points-and-rewards-for-woocommerce' ),
+			'desc2' => __( 'Use the shortcode [MYCURRENTPOINT] to display the current Points of Users.', 'points-and-rewards-for-woocommerce' ),
+			'desc3' => __( 'Use the shortcode [SIGNUPNOTIFICATION] to display the notification anywhere on the site.', 'points-and-rewards-for-woocommerce' ),
+			'desc4' => __( 'Use the shortcode [SHOW_POINTS_LOG] to display the points log anywhere on the website.', 'points-and-rewards-for-woocommerce' ),
 		);
 		return apply_filters( 'wps_wpr_show_shortcoe_text', $shortcode_array );
 	}

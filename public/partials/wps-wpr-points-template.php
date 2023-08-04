@@ -123,7 +123,7 @@ if ( ! is_array( $coupon_settings ) ) {
 			$date_format           = get_option( 'date_format' );
 			$expiry_date_timestamp = strtotime( $wps_user_point_expiry );
 			$expirydate_format     = date_i18n( $date_format, $expiry_date_timestamp );
-			echo '<p class=wps_wpr_points_expiry> ' . esc_html_e( 'Get Expired: ', 'points-and-rewards-for-woocommerce' ) . esc_html( $expirydate_format ) . '</p>';
+			echo '<p class=wps_wpr_points_expiry> ' . esc_html_e( 'Expiring On: ', 'points-and-rewards-for-woocommerce' ) . esc_html( $expirydate_format ) . '</p>';
 		}
 	}
 	?>

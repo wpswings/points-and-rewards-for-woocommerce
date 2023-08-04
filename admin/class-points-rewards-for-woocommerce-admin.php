@@ -1064,11 +1064,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'type'  => 'title',
 				),
 				array(
-					'title'    => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
+					'title'    => __( 'Wallet points setting', 'points-and-rewards-for-woocommerce' ),
 					'type'     => 'checkbox',
 					'desc'     => __( 'Enable Wallet points setting', 'points-and-rewards-for-woocommerce' ),
 					'id'       => 'wps_wpr_general_setting_wallet_enablee',
-					'desc_tip' => __( 'Check this box to enable points conversion to the amount on the wallet.', 'points-and-rewards-for-woocommerce' ),
+					'desc_tip' => __( 'Toggle this box to enable points conversion to the amount on the wallet.', 'points-and-rewards-for-woocommerce' ),
 					'default'  => 0,
 				),
 				array(
@@ -1446,11 +1446,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'type'  => 'title',
 				),
 				array(
-					'title'    => __( 'Enable Renewal Subscription Point Settings', 'points-and-rewards-for-woocommerce' ),
+					'title'    => __( 'Renewal Subscription Point Settings', 'points-and-rewards-for-woocommerce' ),
 					'type'     => 'checkbox',
-					'desc'     => __( 'Enable this setting to give points when subscription is renewal', 'points-and-rewards-for-woocommerce' ),
+					'desc'     => __( 'Toggle This to Give Points, Only When the Subscription is Renewed.', 'points-and-rewards-for-woocommerce' ),
 					'id'       => 'wps_wpr_enable_subscription_renewal_settings',
-					'desc_tip' => __( 'Check this box to give points only when subscription is renewal', 'points-and-rewards-for-woocommerce' ),
+					'desc_tip' => __( 'Toggle this box to give points only when subscription is renewal', 'points-and-rewards-for-woocommerce' ),
 					'default'  => 0,
 				),
 				array(
@@ -1460,14 +1460,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'id'                => 'wps_wpr_subscription__renewal_points',
 					'custom_attributes' => array( 'min' => '"1"' ),
 					'class'             => 'input-text wps_wpr_new_woo_ver_style_text',
-					'desc_tip'          => __( 'Entered Points will be awarded to user when subscription is renewal', 'points-and-rewards-for-woocommerce' ),
+					'desc_tip'          => __( 'Entered Points Will be Awarded to The User When Their Subscription is Renewed', 'points-and-rewards-for-woocommerce' ),
 				),
 				array(
-					'title'    => __( 'Enable to show message on Account Page', 'points-and-rewards-for-woocommerce' ),
+					'title'    => __( 'Show message on Account Page', 'points-and-rewards-for-woocommerce' ),
 					'type'     => 'checkbox',
-					'desc'     => __( 'Enable this setting to show message on account page for user acknowledge', 'points-and-rewards-for-woocommerce' ),
+					'desc'     => __( 'Enable this setting to show a message on the account page for user acknowledgment', 'points-and-rewards-for-woocommerce' ),
 					'id'       => 'wps_wpr_enable__renewal_message_settings',
-					'desc_tip' => __( 'Check this box to show message on account page for user to know how much he/she will earn', 'points-and-rewards-for-woocommerce' ),
+					'desc_tip' => __( 'Toggle This to Show a Message on the Accounts Page for Users to Know How Much They Will Earn', 'points-and-rewards-for-woocommerce' ),
 					'default'  => 0,
 				),
 				array(
@@ -1475,8 +1475,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'type'     => 'text',
 					'id'       => 'wps_wpr_subscription__renewal_message',
 					'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
-					'desc'     => __( 'Entered message will shown on the user Account Page. Please enter message including [Points] this shortcode.', 'points-and-rewards-for-woocommerce' ),
-					'desc_tip' => __( 'Please enter some message for user to know about renewal points', 'points-and-rewards-for-woocommerce' ),
+					'desc'     => __( 'The entered message will be shown on the user’s Account Page. Please enter a message including the [Points] shortcode', 'points-and-rewards-for-woocommerce' ),
+					'desc_tip' => __( 'Message for Users To Know About Referral Points', 'points-and-rewards-for-woocommerce' ),
 				),
 				array(
 					'type' => 'sectionend',

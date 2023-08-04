@@ -1593,7 +1593,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									</thead>
 									<?php
 									foreach ( $point_log['admin_points'] as $key => $value ) {
-										$value['sign']   = isset( $value['sign'] ) ? $value['sign'] : '+/-';
+										$value['sign']   = isset( $value['sign'] ) ? $value['sign'] : '+';
 										$value['reason'] = isset( $value['reason'] ) ? $value['reason'] : __( 'Updated By Admin', 'points-and-rewards-for-woocommerce' );
 										?>
 										<tr valign="top">

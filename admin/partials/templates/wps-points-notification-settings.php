@@ -27,7 +27,7 @@ $wps_settings = array(
 		'type'     => 'checkbox',
 		'id'       => 'wps_wpr_notification_setting_enable',
 		'class'    => 'input-text',
-		'desc_tip' => __( 'Check this box to enable the points notification.', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Toggle this box to enable the points notification.', 'points-and-rewards-for-woocommerce' ),
 		'desc'     => __( 'Enable Points Notification', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
@@ -51,7 +51,7 @@ $wps_settings = array(
 		'id'       => 'wps_wpr_email_discription_custom_id',
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
-		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points, ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username and ', 'points-and-rewards-for-woocommerce' ) . __( 'in this section do not use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode ', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points. Use ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username. ', 'points-and-rewards-for-woocommerce' ) . __( 'Note : Do not use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in this section ', 'points-and-rewards-for-woocommerce' ),
 		'default'  => __( 'Your points are updated and your total points are ', 'points-and-rewards-for-woocommerce' ) . '[Total Points].',
 	),
 	array(
@@ -75,7 +75,7 @@ $wps_settings = array(
 		'id'       => 'wps_wpr_signup_email_discription_custom_id',
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
-		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode to be placed Signup Points dynamically, ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode to place Signup points dynamically. Use ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode to place username. Use ', 'points-and-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' to place Referral points and ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total points.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => __( 'You have received [Points] points and your total points are [Total Points].', 'points-and-rewards-for-woocommerce' ),
 
 	),
@@ -101,7 +101,7 @@ $wps_settings = array(
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => __( 'You have received [Points] points and your total points are [Total Points].', 'points-and-rewards-for-woocommerce' ),
-		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of Product Purchase Points ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points ', 'points-and-rewards-for-woocommerce' ) . '[Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode to place the product purchase points. Use ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode to place the username. Use ', 'points-and-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of referral points. Use ', 'points-and-rewards-for-woocommerce' ) . '[Per Currency Spent Points]' . __( ' in place of Per Currency spent points and ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
 
 	),
 	array(
@@ -126,7 +126,7 @@ $wps_settings = array(
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => __( 'You have received [Points] points and your total points are [Total Points].', 'points-and-rewards-for-woocommerce' ),
-		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of per currency spent points ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of per currency spent points. Use ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username. Use ', 'points-and-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points and Use  ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
 
 	),
 	array(
@@ -151,7 +151,7 @@ $wps_settings = array(
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => __( 'You have received ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' points and your total points are ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]',
-		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of per currency spent points ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of per currency spent points, ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of a username, ', 'points-and-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points, and ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
 
 
 	),
@@ -176,8 +176,8 @@ $wps_settings = array(
 		'id'       => 'wps_wpr_membership_email_discription_custom_id',
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
-		'default'  => __( 'Your User Level has been Upgraded to [USERLEVEL]. And Now You will get some offers on some products.', 'points-and-rewards-for-woocommerce' ),
-		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[USERLEVEL]' . __( ' shortcode in place of User Level ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ),
+		'default'  => __( 'Your User Level has been Upgraded to [USERLEVEL] and Now You will get more offers on some products.', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[USERLEVEL]' . __( ' shortcode in place of User Level and ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username. ', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type' => 'sectionend',
@@ -201,7 +201,7 @@ $wps_settings = array(
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => __( 'Your [DEDUCTEDPOINT] has been deducted from your total points as you have request for your refund, and your Total Point are [TOTALPOINTS].', 'points-and-rewards-for-woocommerce' ),
-		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[DEDUCTEDPOINT]' . __( ' shortcode in place of points which has been deducted ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Remaining Points.', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[DEDUCTEDPOINT]' . __( ' shortcode in place of points which have been deducted, ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username, and ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Remaining Point.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type' => 'sectionend',
@@ -225,7 +225,7 @@ $wps_settings = array(
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => __( 'Your [DEDUCTCARTPOINT] Points have been deducted from your account, now your Total Points are [TOTALPOINTS].', 'points-and-rewards-for-woocommerce' ),
-		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[DEDUCTCARTPOINT]' . __( ' shortcode in place of points which has been deducted ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[DEDUCTCARTPOINT]' . __( ' shortcode in place of points which have been deducted,  ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username, and ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type' => 'sectionend',
@@ -248,8 +248,8 @@ $wps_settings = array(
 		'id'       => 'wps_wpr_point_on_order_total_range_desc',
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
-		'default'  => __( 'Your [ORDERTOTALPOINT] Points have been added in now your Total Points are [TOTALPOINTS].', 'points-and-rewards-for-woocommerce' ),
-		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[ORDERTOTALPOINT]' . __( ' shortcode in place of points which has been added ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
+		'default'  => __( 'Your [ORDERTOTALPOINT] Points have been added. Now your Total Points are [TOTALPOINTS].', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[ORDERTOTALPOINT]' . __( ' shortcode in place of points which have been added. Use ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username and ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type' => 'sectionend',
@@ -272,8 +272,8 @@ $wps_settings = array(
 		'id'       => 'wps_wpr_order_rewards_points_description',
 		'class'    => 'input-text',
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
-		'default'  => __( 'Your [REWARDTOTALPOINT] Points have been added in now your Total Points are [TOTALPOINTS].', 'points-and-rewards-for-woocommerce' ),
-		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[REWARDTOTALPOINT]' . __( ' shortcode in place of points which has been added ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
+		'default'  => __( 'Your [REWARDTOTALPOINT] Points have been added. Now your Total Points are [TOTALPOINTS].', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[REWARDTOTALPOINT]' . __( ' shortcode in place of points which have been added, ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username, and ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type' => 'sectionend',
