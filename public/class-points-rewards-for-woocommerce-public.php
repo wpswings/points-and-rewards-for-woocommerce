@@ -1614,7 +1614,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( isset( WC()->cart ) ) {
 				foreach ( WC()->cart->get_cart() as $cart ) {
 					if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
-						$applied__points += $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
+						$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
 					}
 				}
 			}
@@ -1791,7 +1791,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
 					$wps_wpr_points = WC()->session->get( 'wps_cart_points' );
 					$wps_fee_on_cart = ( $wps_wpr_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
-					$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+					$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 					// apply points on subtotal.
 					$subtotal = $cart->get_subtotal();
 					if ( $subtotal > $wps_fee_on_cart ) {
@@ -1809,7 +1809,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						if ( ! $woocommerce->cart->has_discount( $cart_discount ) ) {
 							if ( $woocommerce->cart->applied_coupons ) {
 								foreach ( $woocommerce->cart->applied_coupons as $code ) {
-									if ( $cart_discount === $code ) {
+									if ( strtolower( $cart_discount ) === strtolower( $code ) ) {
 										return;
 									}
 								}
@@ -1829,7 +1829,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * This function is used to apply discount using coupon.
 	 *
 	 * @param string $response response.
-	 * @param object $coupon_data coupon data.
+	 * @param string $coupon_data coupon data.
 	 * @return string
 	 */
 	public function wps_wpr_validate_virtual_coupon_for_points( $response, $coupon_data ) {
@@ -1842,7 +1842,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					if ( ! empty( WC()->cart ) ) {
 						$my_cart_change_return = apply_filters( 'wps_cart_content_check_for_sale_item', WC()->cart->get_cart() );
 					}
-					$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+					$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 					if ( '1' == $my_cart_change_return ) {
 						return;
 					} else {
@@ -1877,7 +1877,7 @@ class Points_Rewards_For_WooCommerce_Public {
 									}
 									// WOOCS - WooCommerce Currency Switcher Compatibility.
 									$wps_fee_on_cart = apply_filters( 'wps_wpr_show_conversion_price', $wps_fee_on_cart );
-									if ( $coupon_data == $cart_discount ) {
+									if ( strtolower( $coupon_data ) == strtolower( $cart_discount ) ) {
 										$discount_type = 'fixed_cart';
 										$coupon = array(
 											'id' => time() . rand( 2, 9 ),
@@ -2083,8 +2083,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_woocommerce_cart_totals_fee_html( $cart_totals_fee_html, $fee ) {
 		if ( isset( $fee ) && ! empty( $fee ) ) {
 			$fee_name      = $fee->name;
-			$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
-			if ( isset( $fee_name ) && $cart_discount == $fee_name ) {
+			$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+			if ( isset( $fee_name ) && strtolower( $cart_discount ) == strtolower( $fee_name ) ) {
 				$cart_totals_fee_html = $cart_totals_fee_html . '<a href="javascript:void(0);" id="wps_wpr_remove_cart_point">' . __( '[Remove]', 'points-and-rewards-for-woocommerce' ) . '</a>';
 			}
 		}
@@ -2103,7 +2103,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
 		$response['result']  = false;
 		$response['message'] = __( 'Failed to Remove Cart Discount', 'points-and-rewards-for-woocommerce' );
-		$cart_discount       = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+		$cart_discount       = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 		$coupon_code         = isset( $_POST['coupon_code'] ) && ! empty( $_POST['coupon_code'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon_code'] ) ) : '';
 		if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
 			WC()->session->__unset( 'wps_cart_points' );
@@ -2177,7 +2177,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					if ( ! empty( $coupon_data ) ) {
 
 						$coupon_name   = $coupon_data['code'];
-						$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+						$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 						if ( strtolower( $cart_discount ) == strtolower( $coupon_name ) ) {
 
 							$coupon_meta   = $coupon_data['meta_data'][0]->get_data();
@@ -2685,8 +2685,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param array  $object  object of the add fee.
 	 */
 	public function wps_wpr_fee_tax_calculation( $fee_taxes, $fee, $object ) {
-		$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
-		if ( $cart_discount == $fee->object->name ) {
+		$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+		if ( strtolower( $cart_discount ) == strtolower( $fee->object->name ) ) {
 			foreach ( $fee_taxes as $key => $value ) {
 				$fee_taxes[ $key ] = 0;
 			}
@@ -2772,7 +2772,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( isset( WC()->cart ) ) {
 				foreach ( WC()->cart->get_cart() as $cart ) {
 					if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
-						$applied__points += $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
+						$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
 					}
 				}
 			}
@@ -3039,7 +3039,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @return string
 	 */
 	public function wps_wpr_filter_woocommerce_coupon_label( $sprintf, $coupon ) {
-		$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+		$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 		$coupon_data   = $coupon->get_data();
 		if ( ! empty( $coupon_data ) ) {
 			if ( strtolower( $coupon_data['code'] ) === strtolower( $cart_discount ) ) {
@@ -3058,7 +3058,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @return string
 	 */
 	public function wps_wpr_par_virtual_coupon_remove( $coupon_html, $coupon, $discount_amount_html ) {
-		$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+		$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 		$coupon_data   = $coupon->get_data();
 		if ( ! empty( $coupon_data ) ) {
 			if ( strtolower( $coupon_data['code'] ) === strtolower( $cart_discount ) ) {
@@ -3147,7 +3147,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( isset( WC()->cart ) ) {
 					foreach ( WC()->cart->get_cart() as $cart ) {
 						if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
-							$applied__points += $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
+							$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
 						}
 					}
 				}
@@ -3217,7 +3217,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( isset( WC()->cart ) ) {
 					foreach ( WC()->cart->get_cart() as $cart ) {
 						if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
-							$applied__points += $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
+							$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
 						}
 					}
 				}
@@ -3525,7 +3525,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							if ( ! empty( $coupon_data ) ) {
 
 								$coupon_name   = $coupon_data['code'];
-								$cart_discount = __( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+								$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 
 								if ( strtolower( $cart_discount ) == strtolower( $coupon_name ) ) {
 
