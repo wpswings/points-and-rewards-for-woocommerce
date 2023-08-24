@@ -1138,6 +1138,13 @@ label[for=wps_wpr_email] {
     padding-top: 15px;
 }
 
+input.wps_wpr_days_after_user_play_again {
+    min-height: 30px;
+    min-width: 150px;
+    margin-right: 15px;
+    padding: 5px 10px;
+}
+
 @media screen and (max-width: 768px) {
 
     .wps_wpr_general_label {

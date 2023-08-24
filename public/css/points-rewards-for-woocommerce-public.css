@@ -1302,6 +1302,10 @@ button.wps_wpr_container-popup-claim:focus {
 #wps_wpr_show_claim_msg {
     font-weight: 600;
     display: none;
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
 }
 
 /* Popup end */

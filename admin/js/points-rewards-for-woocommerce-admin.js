@@ -333,7 +333,7 @@
 			// validate segments values
 			if ( wps_wpr_segments_validation() ) {
   
-			  var new_row = '<tr class="wps_wpr_add_game_segment_dynamically"><td><input type="text" name="wps_wpr_enter_segment_name[]" id="wps_wpr_enter_segment_name" value="" required></td><td><input type="number" name="wps_wpr_enter_segment_points[]" id="wps_wpr_enter_segment_points" value="" required></td><td><input type="number" name="wps_wpr_enter_sgemnet_font_size[]" id="wps_wpr_enter_sgemnet_font_size" value="" required></td><td><input type="color" name="wps_wpr_enter_segment_color[]" id="wps_wpr_enter_segment_color[]" class="wps_wpr_enter_segment_color" value=""></td><td><input type="button" name="wps_wpr_remove_game_segment" id="wps_wpr_remove_game_segment" value="+"></td></tr>';
+			  var new_row = '<tr class="wps_wpr_add_game_segment_dynamically"><td><input type="text" name="wps_wpr_enter_segment_name[]" id="wps_wpr_enter_segment_name" value="" required></td><td><input type="number" name="wps_wpr_enter_segment_points[]" id="wps_wpr_enter_segment_points" value="" required></td><td><input type="number" max="20" name="wps_wpr_enter_sgemnet_font_size[]" id="wps_wpr_enter_sgemnet_font_size" value="" required></td><td><input type="color" name="wps_wpr_enter_segment_color[]" id="wps_wpr_enter_segment_color[]" class="wps_wpr_enter_segment_color" value=""></td><td><input type="button" name="wps_wpr_remove_game_segment" id="wps_wpr_remove_game_segment" value="+"></td></tr>';
 			  jQuery('.wps_wpr_segment_gamification_settings_wrappers').append( new_row );
 			} else {
 			  
@@ -354,7 +354,7 @@
 		} else {
   
 		  // show alert msg when segment reached.
-		  alert( 'You Can Add Only 12 Segments in Win Wheel' );
+		  alert( wps_wpr_object.segment_reached_msg );
 		}
 	 });
   
@@ -369,7 +369,7 @@
 			jQuery(this).parents('.wps_wpr_add_game_segment_dynamically').remove();
 		  } else {
   
-			alert( 'Win Wheel cannot have less then 6 Segments' );
+			alert( wps_wpr_object.segment_limit_msg );
 		  }
 		}
 	  })

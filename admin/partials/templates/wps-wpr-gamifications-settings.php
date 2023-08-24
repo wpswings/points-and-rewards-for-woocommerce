@@ -157,7 +157,7 @@ function wps_wpr_rand_color() {
 			</section>
 			<section>
 				<article>
-					<label for="wps_wpr_days_after_user_play_again"><?php esc_html_e( 'Specify the Duration', 'ultimate-woocommerce-points-and-rewards' ); ?></label>
+					<label for="wps_wpr_days_after_user_play_again"><?php esc_html_e( 'Specify the Duration ( days )', 'ultimate-woocommerce-points-and-rewards' ); ?></label>
 					<div class="wps_wpr_play_again_wrapper">
 						<input type="number" min="0" name="wps_wpr_days_after_user_play_again" class="wps_wpr_days_after_user_play_again" value="<?php echo esc_html( $wps_wpr_days_after_user_play_again ); ?>">
 						<span class="wps_wpr_play_again_notices wps_wpr_label_notice"><?php esc_html_e( 'Admins can set a cooldown period after which users can play the game again.', 'ultimate-woocommerce-points-and-rewards' ); ?></span>
@@ -187,7 +187,7 @@ function wps_wpr_rand_color() {
 											<tr class="wps_wpr_add_game_segment_dynamically">
 												<td><input type="text" name="wps_wpr_enter_segment_name[]" id="wps_wpr_enter_segment_name" class="wps_wpr_enter_segment_name" value="<?php echo ! empty( $wps_wpr_enter_segment_name[ $key ] ) ? esc_html( $wps_wpr_enter_segment_name[ $key ] ) : ''; ?>" required></td>
 												<td><input type="number" name="wps_wpr_enter_segment_points[]" id="wps_wpr_enter_segment_points" class="wps_wpr_enter_segment_points" value="<?php echo ! empty( $wps_wpr_enter_segment_points[ $key ] ) ? esc_html( $wps_wpr_enter_segment_points[ $key ] ) : ''; ?>" required></td>
-												<td><input type="number" name="wps_wpr_enter_sgemnet_font_size[]" id="wps_wpr_enter_sgemnet_font_size" class="wps_wpr_enter_sgemnet_font_size" value="<?php echo ! empty( $wps_wpr_enter_sgemnet_font_size[ $key ] ) ? esc_html( $wps_wpr_enter_sgemnet_font_size[ $key ] ) : ''; ?>" required></td>
+												<td><input type="number" max="20" name="wps_wpr_enter_sgemnet_font_size[]" id="wps_wpr_enter_sgemnet_font_size" class="wps_wpr_enter_sgemnet_font_size" value="<?php echo ! empty( $wps_wpr_enter_sgemnet_font_size[ $key ] ) ? esc_html( $wps_wpr_enter_sgemnet_font_size[ $key ] ) : ''; ?>" required></td>
 												<td><input type="color" name="wps_wpr_enter_segment_color[]" id="wps_wpr_enter_segment_color" class="wps_wpr_enter_segment_color" value="<?php echo ! empty( $wps_wpr_enter_segment_color[ $key ] ) ? esc_html( $wps_wpr_enter_segment_color[ $key ] ) : ''; ?>" required></td>
 												<?php
 												if ( $key > 0 ) {
@@ -209,7 +209,7 @@ function wps_wpr_rand_color() {
 										<tr class="wps_wpr_add_game_segment_dynamically">
 											<td><input type="text" name="wps_wpr_enter_segment_name[]" id="wps_wpr_enter_segment_name" class="wps_wpr_enter_segment_name" value="<?php echo esc_html( 'Segment - ' . $seg_count ); ?>" required></td>
 											<td><input type="number" name="wps_wpr_enter_segment_points[]" id="wps_wpr_enter_segment_points" class="wps_wpr_enter_segment_points" value="<?php echo esc_html( $points ); ?>" required></td>
-											<td><input type="number" name="wps_wpr_enter_sgemnet_font_size[]" id="wps_wpr_enter_sgemnet_font_size" class="wps_wpr_enter_sgemnet_font_size" value="<?php echo esc_html( '15' ); ?>" required></td>
+											<td><input type="number" max="20" name="wps_wpr_enter_sgemnet_font_size[]" id="wps_wpr_enter_sgemnet_font_size" class="wps_wpr_enter_sgemnet_font_size" value="<?php echo esc_html( '15' ); ?>" required></td>
 											<td><input type="color" name="wps_wpr_enter_segment_color[]" id="wps_wpr_enter_segment_color" class="wps_wpr_enter_segment_color" value="<?php echo esc_html( wps_wpr_rand_color() ); ?>" required></td>
 										</tr>
 										<?php
