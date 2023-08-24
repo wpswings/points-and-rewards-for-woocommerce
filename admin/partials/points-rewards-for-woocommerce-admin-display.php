@@ -61,6 +61,10 @@ $wps_wpr_setting_tab = array(
 		'title' => __( 'Order Total Points', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-order-total.php',
 	),
+	'gamification-settings' => array(
+		'title' => __( 'Gamification Settings', 'points-and-rewards-for-woocommerce' ),
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-gamifications-settings.php',
+	),
 );
 
 if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {

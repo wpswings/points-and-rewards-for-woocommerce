@@ -59,7 +59,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -84,7 +84,21 @@ class Points_Rewards_For_WooCommerce_Public {
 		$current_points = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
 		$current_points = ! empty( $current_points ) && ! is_null( $current_points ) ? $current_points : 0;
 
-		wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.js', array( 'jquery', 'clipboard' ), $this->version, false );
+		// get gamification settings.
+		$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
+		$wps_wpr_game_color        = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_color'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enter_segment_color'] : array();
+		$wps_wpr_select_spin_stop  = ! empty( $wps_wpr_save_gami_setting['wps_wpr_select_spin_stop'] ) ? $wps_wpr_save_gami_setting['wps_wpr_select_spin_stop'] : array();
+
+		// check game features is enable.enqueue gamification js.
+		if ( $this->wps_wpr_check_gamification_is_enable() && $this->wps_wpr_win_wheel_page_display() && empty( get_user_meta( get_current_user_id(), 'wps_wpr_check_game_points_assign_timing', true ) ) ) {
+
+			wp_enqueue_script( 'wps-wpr-tween-max', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-tween-max.js', array(), $this->version, true );
+			wp_enqueue_script( 'wps-wpr-wheel-class', WPS_RWPR_DIR_URL . 'public/js/points-and-rewads-win-wheel.js', array(), $this->version, true );
+			wp_enqueue_script( 'wps-wpr-game-main-file', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-gamification-public.js', array( 'jquery' ), $this->version, true );
+		}
+
+		// main js file enqueue.
+		wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.js', array( 'jquery', 'clipboard', 'wps-wpr-wheel-class', 'wps-wpr-tween-max', 'wps-wpr-game-main-file' ), $this->version, false );
 		$wps_wpr = array(
 			'ajaxurl'                    => admin_url( 'admin-ajax.php' ),
 			'message'                    => esc_html__( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
@@ -105,13 +119,10 @@ class Points_Rewards_For_WooCommerce_Public {
 			'is_restrict_message_enable' => $this->wps_wpr_is_rewards_restrict_message_settings_enable(), // Restrict rewards points settings features.
 			'is_restrict_status_set'     => ! empty( $_GET['status'] ) ? sanitize_text_field( wp_unslash( $_GET['status'] ) ) : '',
 			'wps_restrict_rewards_msg'   => $wps_wpr_restricted_cart_page_msg,
+			'wps_wpr_game_setting'       => $wps_wpr_game_color,
+			'wps_wpr_select_spin_stop'   => $wps_wpr_select_spin_stop,
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
-
-		if ( is_account_page() ) {
-			wp_enqueue_script( 'wps_wpr_fb_js', WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public-fb.js', array(), $this->version, false );
-		}
-
 	}
 
 	/**
@@ -3083,6 +3094,9 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( '1' === $wps_wpr_checkout_page_apply_point_section ) {
 			add_shortcode( 'WPS_CHECKOUT_PAGE_SECTION', array( $this, 'wps_wpr_create_checkout_page_shortcode' ) );
 		}
+
+		// calling to function to grant permission.
+		$this->wps_wpr_grant_permission_to_pay_again();
 	}
 
 	/**
@@ -3509,5 +3523,303 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 		return $validate;
+	}
+
+	/** +++++ Gamification Features */
+
+	/**
+	 * This function is used to check game functionality is enable.
+	 *
+	 * @return bool
+	 */
+	public function wps_wpr_check_gamification_is_enable() {
+
+		$game_enable                          = false;
+		$wps_wpr_save_gami_setting            = get_option( 'wps_wpr_save_gami_setting', array() );
+		$wps_wpr_enable_gamification_settings = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enable_gamification_settings'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enable_gamification_settings'] : 'no';
+		if ( 'yes' === $wps_wpr_enable_gamification_settings ) {
+
+			$game_enable = true;
+		}
+		return $game_enable;
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_show_canvas_icons() {
+
+		// if not login than retrun from here.
+		if ( ! is_user_logged_in() ) {
+
+			return;
+		}
+
+		// if game points is rewarded than retur from here.
+		if ( ! empty( get_user_meta( get_current_user_id(), 'wps_wpr_check_game_points_assign_timing', true ) ) ) {
+
+			return;
+		}
+
+		if ( $this->wps_wpr_check_gamification_is_enable() ) {
+			if ( $this->wps_wpr_win_wheel_page_display() ) {
+
+				$wps_wpr_save_gami_setting       = get_option( 'wps_wpr_save_gami_setting', array() );
+				$wps_wpr_save_gami_setting       = ! empty( $wps_wpr_save_gami_setting ) && is_array( $wps_wpr_save_gami_setting ) ? $wps_wpr_save_gami_setting : array();
+				$wps_wpr_enter_segment_name      = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_name'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enter_segment_name'] : array();
+				$wps_wpr_enter_segment_color     = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_color'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enter_segment_color'] : array();
+				$wps_wpr_enter_segment_points    = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] : array();
+				$wps_wpr_enter_sgemnet_font_size = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_sgemnet_font_size'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enter_sgemnet_font_size'] : array();
+				?>
+				<div class="wps_wpr_wheel_icon <?php echo esc_html( $this->wps_wpr_canvas_icon_position_class() ); ?>">
+					<div class="wps_wpr_icon_wheel_tooltip">
+						<?php
+						esc_html_e( 'Click here to play the game', 'points-and-rewards-for-woocommerce' );
+						?>
+					</div>
+					<canvas id="wps_wpr_spin_canvas_id" width="150" height="150"></canvas>
+				</div>
+
+				<!-- Main Wheel Start and limit segment name to 10 letters only-->
+				<div class="wps_wpr_wheel_icon_main">
+					<span class="wps_wpr_container-close">+</span>
+					<div class="wps_wpr_container-shadow"></div>
+					<div class="wps_wpr_container">
+						<audio controls class="wps_wpr_audio-spin">
+							<source src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/audio/spin.wav' ); ?>" type="audio/wav">
+						</audio>
+						<div id="wps_wpr_spinWheelButton">Spin</div>
+						<div class="wps_wpr_wheel">
+							<?php
+							if ( ! empty( $wps_wpr_enter_segment_name ) && is_array( $wps_wpr_enter_segment_name ) ) {
+								foreach ( $wps_wpr_enter_segment_name as $key => $game_value ) {
+									?>
+									<div class="wps_wpr_number" style="--color:<?php echo esc_html( $wps_wpr_enter_segment_color[ $key ] ); ?>"><input type="text" value="<?php echo esc_html( $wps_wpr_enter_segment_name[ $key ] ); ?>" data-attr="<?php echo esc_html( $wps_wpr_enter_segment_points[ $key ] ); ?>" readonly /></div>
+									<?php
+								}
+							}
+							?>
+						</div>
+					</div>
+					<div class="wps_wpr_container-popup">
+						<audio controls class="wps_wpr_audio-cheer">
+							<source src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/audio/applose.wav' ); ?>" type="audio/wav">
+						</audio>
+						<div class="wps_wpr_container-popup-gif">
+							<canvas id="wps_wpr-canvas"></canvas>
+						</div>
+						<div class="wps_wpr_container-popup-in">
+							<span class="wps_wpr_container-popup-close">+</span>
+							<div class="wps_wpr_container-popup-content">
+								<div class="wps_wpr_container-popup-val"><?php esc_html_e( 'Hurray! You have got', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps_wpr-val"></span></div>
+								<input type="hidden" class="wps_wpr_user_claim_points" value="">
+							</div>
+							<button class="wps_wpr_container-popup-claim"><?php esc_html_e( 'Claim Now', 'points-and-rewards-for-woocommerce' ); ?></button>
+							<p id="wps_wpr_show_claim_msg"></p>
+						</div>
+					</div>
+				</div>
+				<!-- Main Wheel ends -->
+				<?php
+			}
+		}
+	}
+
+	/**
+	 * This function is used add class in Canvas Icon.
+	 *
+	 * @return string
+	 */
+	public function wps_wpr_canvas_icon_position_class() {
+
+		$wps_canvas_class = '';
+		if ( $this->wps_wpr_check_gamification_is_enable() ) {
+
+			$wps_wpr_save_gami_setting    = get_option( 'wps_wpr_save_gami_setting', array() );
+			$wps_wpr_select_icon_position = ! empty( $wps_wpr_save_gami_setting['wps_wpr_select_icon_position'] ) ? $wps_wpr_save_gami_setting['wps_wpr_select_icon_position'] : 'top_right';
+
+			switch ( $wps_wpr_select_icon_position ) {
+
+				case 'top_left':
+					$wps_canvas_class = 'wps_wpr_canvas_top_left_position';
+					break;
+				case 'top_right':
+					$wps_canvas_class = 'wps_wpr_canvas_top_right_position';
+					break;
+				case 'middle_left':
+					$wps_canvas_class = 'wps_wpr_canvas_middle_left_position';
+					break;
+				case 'middle_right':
+					$wps_canvas_class = 'wps_wpr_canvas_middle_right_position';
+					break;
+				case 'bottom_left':
+					$wps_canvas_class = 'wps_wpr_canvas_bottom_left_position';
+					break;
+				case 'bottom_right':
+					$wps_canvas_class = 'wps_wpr_canvas_bottom_right_position';
+					break;
+				default:
+					$wps_canvas_class = 'wps_wpr_canvas_top_right_position';
+			}
+		}
+		return $wps_canvas_class;
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @return bool
+	 */
+	public function wps_wpr_win_wheel_page_display() {
+		global $wp_query;
+
+		if ( $this->wps_wpr_check_gamification_is_enable() ) {
+			$is_selected                   = false;
+			$wps_wpr_save_gami_setting     = get_option( 'wps_wpr_save_gami_setting', array() );
+			$wps_wpr_select_win_wheel_page = ! empty( $wps_wpr_save_gami_setting['wps_wpr_select_win_wheel_page'] ) ? $wps_wpr_save_gami_setting['wps_wpr_select_win_wheel_page'] : array();
+
+			if ( empty( $wps_wpr_select_win_wheel_page ) ) {
+
+				$is_selected = true;
+			} elseif ( is_single() ) {
+
+				$page_id = 'details';
+				if ( in_array( $page_id, $wps_wpr_select_win_wheel_page ) ) {
+
+					$is_selected = true;
+				}
+			} elseif ( ! is_shop() && ! is_home() ) {
+
+				$page    = $wp_query->get_queried_object();
+				$page_id = isset( $page->ID ) ? $page->ID : '';
+				if ( in_array( $page_id, $wps_wpr_select_win_wheel_page ) ) {
+
+					$is_selected = true;
+				}
+			} elseif ( is_shop() ) {
+				$page_id = wc_get_page_id( 'shop' );
+				if ( in_array( $page_id, $wps_wpr_select_win_wheel_page ) ) {
+
+					$is_selected = true;
+				}
+			} else {
+
+				$is_selected = false;
+			}
+		}
+		return $is_selected;
+	}
+
+	/**
+	 * This function is used to assign user claim points.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_assign_claim_points() {
+
+		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
+		$response           = array();
+		$response['result'] = false;
+		$response['msg']    = esc_html__( 'Failed', 'points-and-rewards-for-woocommerce' );
+		if ( isset( $_POST['claim_points'] ) ) {
+
+			$wps_claim_points = ! empty( $_POST['claim_points'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_points'] ) ) : 0;
+			if ( $wps_claim_points > 0 ) {
+
+				// Next play date cal.
+				$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
+				$schedule_date             = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] : 0;
+				if ( $schedule_date > 0 ) {
+
+					$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
+					update_user_meta( get_current_user_id(), 'wps_wpr_check_game_points_assign_timing', $next_date );
+				}
+
+				$user_get_points = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+				$user_get_points = ! empty( $user_get_points ) ? (int) $user_get_points : 0;
+
+				$wps_updated_points = (int) $user_get_points + $wps_claim_points;
+				update_user_meta( get_current_user_id(), 'wps_wpr_points', $wps_updated_points );
+
+				// calling function for creating points log.
+				$this->wps_wpr_create_game_points_logs( $wps_claim_points, get_current_user_id(), $wps_updated_points );
+
+				$response['result'] = true;
+				$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
+			}
+		}
+		wp_send_json( $response );
+		wp_die();
+	}
+
+	/**
+	 * This function is used to game points logs.
+	 *
+	 * @param  string $wps_claim_points   wps_claim_points.
+	 * @param  string $user_id            user_id.
+	 * @param  string $wps_updated_points wps_updated_points.
+	 * @return void
+	 */
+	public function wps_wpr_create_game_points_logs( $wps_claim_points, $user_id, $wps_updated_points ) {
+
+		$today_date               = date_i18n( 'Y-m-d h:i:sa' );
+		$wps_wpr_game_points_logs = get_user_meta( $user_id, 'points_details', true );
+		$wps_wpr_game_points_logs = ! empty( $wps_wpr_game_points_logs ) && is_array( $wps_wpr_game_points_logs ) ? $wps_wpr_game_points_logs : array();
+
+		if ( isset( $wps_wpr_game_points_logs['game_claim_points'] ) && ! empty( $wps_wpr_game_points_logs['game_claim_points'] ) ) {
+			$daily_login_arr = array(
+				'game_claim_points' => $wps_claim_points,
+				'date'              => $today_date,
+			);
+			$wps_wpr_game_points_logs['game_claim_points'][] = $daily_login_arr;
+
+		} else {
+			if ( ! is_array( $wps_wpr_game_points_logs ) ) {
+				$wps_wpr_game_points_logs = array();
+			}
+			$daily_login_arr = array(
+				'game_claim_points' => $wps_claim_points,
+				'date'              => $today_date,
+			);
+			$wps_wpr_game_points_logs['game_claim_points'][] = $daily_login_arr;
+		}
+		update_user_meta( $user_id, 'points_details', $wps_wpr_game_points_logs );
+
+		// Sending mail as well.
+		$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
+		if ( is_array( $wps_wpr_notificatin_array ) && ! empty( $wps_wpr_notificatin_array ) ) {
+
+			$wps_wpr_email_subject     = isset( $wps_wpr_notificatin_array['wps_wpr_game_points_mail_subject'] ) ? $wps_wpr_notificatin_array['wps_wpr_game_points_mail_subject'] : '';
+			$wps_wpr_email_discription = isset( $wps_wpr_notificatin_array['wps_wpr_game_points_email_description'] ) ? $wps_wpr_notificatin_array['wps_wpr_game_points_email_description'] : '';
+			$wps_wpr_email_discription = str_replace( '[GAMEPOINTS]', $wps_claim_points, $wps_wpr_email_discription );
+			$wps_wpr_email_discription = str_replace( '[TOTALPOINTS]', $wps_updated_points, $wps_wpr_email_discription );
+
+			/*check is mail notification is enable or not*/
+			$check_enable = apply_filters( 'wps_wpr_check_custom_points_notification_enable', true, 'game_points_notify' );
+			if ( Points_Rewards_For_WooCommerce_Admin::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
+				$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
+				$email_status   = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+			}
+		}
+	}
+
+	/**
+	 * This function is used to grat permission to play game again.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_grant_permission_to_pay_again() {
+
+		$current_date  = strtotime( gmdate( 'Y-m-d' ) );
+		$schedule_date = get_user_meta( get_current_user_id(), 'wps_wpr_check_game_points_assign_timing' );
+
+		if ( ! empty( $schedule_date ) && is_array( $schedule_date ) ) {
+			if ( $current_date >= $schedule_date[0] ) {
+
+				delete_user_meta( get_current_user_id(), 'wps_wpr_check_game_points_assign_timing' );
+			}
+		}
 	}
 }
