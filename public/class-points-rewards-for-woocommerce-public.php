@@ -94,11 +94,11 @@ class Points_Rewards_For_WooCommerce_Public {
 
 			wp_enqueue_script( 'wps-wpr-tween-max', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-tween-max.js', array(), $this->version, true );
 			wp_enqueue_script( 'wps-wpr-wheel-class', WPS_RWPR_DIR_URL . 'public/js/points-and-rewads-win-wheel.js', array(), $this->version, true );
-			wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-gamification-public.js', array( 'jquery', 'wps-wpr-wheel-class', 'wps-wpr-tween-max' ), $this->version, true );
+			wp_enqueue_script( 'wps-wpr-game-public-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-gamification-public.js', array( 'jquery', 'wps-wpr-wheel-class', 'wps-wpr-tween-max' ), $this->version, true );
 		}
 
 		// main js file enqueue.
-		wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.js', array( 'jquery', 'clipboard' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.min.js', array( 'jquery', 'clipboard' ), $this->version, false );
 		$wps_wpr = array(
 			'ajaxurl'                    => admin_url( 'admin-ajax.php' ),
 			'message'                    => esc_html__( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
@@ -544,6 +544,9 @@ class Points_Rewards_For_WooCommerce_Public {
 				}
 			}
 		}
+
+		// calling function to unset points session.
+		$this->wps_wpr_unset_points_session_while_points_negative();
 	}
 
 	/**
@@ -3834,6 +3837,35 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( $current_date >= $schedule_date[0] ) {
 
 				delete_user_meta( get_current_user_id(), 'wps_wpr_check_game_points_assign_timing' );
+			}
+		}
+	}
+
+	/**
+	 * This function is used to unset session points.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_unset_points_session_while_points_negative() {
+
+		if ( is_user_logged_in() ) {
+
+			$exist_points = (int) get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+			if ( null !== WC() ) {
+
+				if ( isset( WC()->session ) && WC()->session->has_session() ) {
+					if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
+
+						$applied_points = (int) WC()->session->get( 'wps_cart_points' );
+						if ( $exist_points <= 0 ) {
+
+							WC()->session->__unset( 'wps_cart_points' );
+						} elseif ( $applied_points > $exist_points ) {
+
+							WC()->session->set( 'wps_cart_points', $exist_points );
+						}
+					}
+				}
 			}
 		}
 	}
