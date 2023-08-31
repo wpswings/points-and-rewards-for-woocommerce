@@ -371,12 +371,12 @@ class WPSwings_Onboarding_Helper {
 			),
 
 			rand() => array(
-				'id' => 'onboard-email',
-				'label' => esc_html__( 'What is the best email address to contact you?', 'points-and-rewards-for-woocommerce' ),
-				'type' => 'email',
-				'name' => 'email',
-				'value' => $current_user_email,
-				'required' => 'yes',
+				'id'          => 'onboard-email',
+				'label'       => esc_html__( 'What is the best email address to contact you?', 'points-and-rewards-for-woocommerce' ),
+				'type'        => 'email',
+				'name'        => 'email',
+				'value'       => $current_user_email,
+				'required'    => 'yes',
 				'extra-class' => '',
 			),
 

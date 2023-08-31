@@ -98,7 +98,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 						</a>
 					</li>
 					<li class="wps_wpr_get_pro">
-						<a href="https://www.youtube.com/watch?v=WWktrnAI88U&list=PLwUHVEkPKlHlxoQ27Qxkd8buLx_LPtPBh&index=1" target="_blank">
+						<a href="https://www.youtube.com/watch?v=9BFowjkTU2Q" target="_blank">
 							<img src="<?php echo esc_url( WPS_RWPR_DIR_URL ) . 'admin/images/wps-youtube-dash.svg'; ?>" class="wps_wpr_dash_video_svg_img" alt="Demo image">
 							<span class="wps_wpr_contact_doc_text"><?php esc_html_e( 'Video', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</a>
