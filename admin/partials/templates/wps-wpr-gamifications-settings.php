@@ -80,38 +80,38 @@ function wps_wpr_rand_color() {
 ?>
 
 <div class="wps_wpr_user_gamifications_main_wrappers">
-	<h4 class="wps_wpr_gamifications_settings_heading"><?php esc_html_e( 'Gamification Settings', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+	<h4 class="wps_wpr_gamifications_settings_heading"><?php esc_html_e( 'Gamification Settings', 'points-and-rewards-for-woocommerce' ); ?></h4>
 	<input type="hidden" name="wps_wpr_gamification_setting_nonce" id="wps_wpr_gamification_setting_nonce" value="<?php echo esc_html( wp_create_nonce( 'gamification-setting-nonce' ) ); ?>">
 	<form method="POST" action="" class="wps_wpr_gamification_form">
 		<main class="wps_wpr_main_gamification_wrapper">
 			<section>
 				<article>
-					<label for="wps_wpr_enable_gamification_settings"><?php esc_html_e( 'Enable Gamification Settings', 'ultimate-woocommerce-points-and-rewards' ); ?></label>
+					<label for="wps_wpr_enable_gamification_settings"><?php esc_html_e( 'Enable Gamification Settings', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_gamification_setting_wrapper">
 						<input type="checkbox" name="wps_wpr_enable_gamification_settings" class="wps_wpr_enable_gamification_settings" value="yes" <?php checked( $wps_wpr_enable_gamification_settings, 'yes' ); ?>>
-						<span class="wps_wpr_enable_gamification_notices wps_wpr_label_notice"><?php esc_html_e( 'Check this box to enable this settings.', 'ultimate-woocommerce-points-and-rewards' ); ?></span>
+						<span class="wps_wpr_enable_gamification_notices wps_wpr_label_notice"><?php esc_html_e( 'Check this box to enable this settings.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 			</section>
 			<section>
 				<article>
-					<label for="wps_wpr_select_icon_position"><?php esc_html_e( 'Select Canvas Icon Position', 'ultimate-woocommerce-points-and-rewards' ); ?></label>
+					<label for="wps_wpr_select_icon_position"><?php esc_html_e( 'Select Canvas Icon Position', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_select_icon_wrapper">
 						<select id="wps_wpr_select_icon_position" name="wps_wpr_select_icon_position">
-							<option value="top_left" <?php selected( $wps_wpr_select_icon_position, 'top_left' ); ?>><?php esc_html_e( 'Top Left', 'ultimate-woocommerce-points-and-rewards' ); ?></option>
-							<option value="top_right" <?php selected( $wps_wpr_select_icon_position, 'top_right' ); ?>><?php esc_html_e( 'Top Right', 'ultimate-woocommerce-points-and-rewards' ); ?></option>
-							<option value="middle_left" <?php selected( $wps_wpr_select_icon_position, 'middle_left' ); ?>><?php esc_html_e( 'Middle Left', 'ultimate-woocommerce-points-and-rewards' ); ?></option>
-							<option value="middle_right" <?php selected( $wps_wpr_select_icon_position, 'middle_right' ); ?>><?php esc_html_e( 'Middle Right', 'ultimate-woocommerce-points-and-rewards' ); ?></option>
-							<option value="bottom_left" <?php selected( $wps_wpr_select_icon_position, 'bottom_left' ); ?>><?php esc_html_e( 'Bottom Left', 'ultimate-woocommerce-points-and-rewards' ); ?></option>
-							<option value="bottom_right" <?php selected( $wps_wpr_select_icon_position, 'bottom_right' ); ?>><?php esc_html_e( 'Bottom Right', 'ultimate-woocommerce-points-and-rewards' ); ?></option>
+							<option value="top_left" <?php selected( $wps_wpr_select_icon_position, 'top_left' ); ?>><?php esc_html_e( 'Top Left', 'points-and-rewards-for-woocommerce' ); ?></option>
+							<option value="top_right" <?php selected( $wps_wpr_select_icon_position, 'top_right' ); ?>><?php esc_html_e( 'Top Right', 'points-and-rewards-for-woocommerce' ); ?></option>
+							<option value="middle_left" <?php selected( $wps_wpr_select_icon_position, 'middle_left' ); ?>><?php esc_html_e( 'Middle Left', 'points-and-rewards-for-woocommerce' ); ?></option>
+							<option value="middle_right" <?php selected( $wps_wpr_select_icon_position, 'middle_right' ); ?>><?php esc_html_e( 'Middle Right', 'points-and-rewards-for-woocommerce' ); ?></option>
+							<option value="bottom_left" <?php selected( $wps_wpr_select_icon_position, 'bottom_left' ); ?>><?php esc_html_e( 'Bottom Left', 'points-and-rewards-for-woocommerce' ); ?></option>
+							<option value="bottom_right" <?php selected( $wps_wpr_select_icon_position, 'bottom_right' ); ?>><?php esc_html_e( 'Bottom Right', 'points-and-rewards-for-woocommerce' ); ?></option>
 						</select>
-						<span class="wps_wpr_select_icon_notices wps_wpr_label_notice"><?php esc_html_e( 'Choose Win Wheel Icon position where you want show.', 'ultimate-woocommerce-points-and-rewards' ); ?></span>
+						<span class="wps_wpr_select_icon_notices wps_wpr_label_notice"><?php esc_html_e( 'Choose Win Wheel Icon position where you want show.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 			</section>
 			<section>
 				<article>
-					<label for="wps_wpr_select_win_wheel_page"><?php esc_html_e( 'Select Pages To Show Win Wheel', 'ultimate-woocommerce-points-and-rewards' ); ?></label>
+					<label for="wps_wpr_select_win_wheel_page"><?php esc_html_e( 'Select Pages To Show Win Wheel', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_select_win_wheel_wrapper">
 						<select id="wps_wpr_select_win_wheel_page" name="wps_wpr_select_win_wheel_page[]" multiple>
 							<?php
@@ -122,13 +122,13 @@ function wps_wpr_rand_color() {
 							}
 							?>
 						</select>
-						<span class="wps_wpr_select_win_wheel_page_notices wps_wpr_label_notice"><?php esc_html_e( 'Choose Win Wheel Pages', 'ultimate-woocommerce-points-and-rewards' ); ?></span>
+						<span class="wps_wpr_select_win_wheel_page_notices wps_wpr_label_notice"><?php esc_html_e( 'Choose Win Wheel Pages', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 			</section>
 			<section>
 				<article>
-					<label for="wps_wpr_select_spin_stop"><?php esc_html_e( 'Choose Segments To Stop Spinner', 'ultimate-woocommerce-points-and-rewards' ); ?></label>
+					<label for="wps_wpr_select_spin_stop"><?php esc_html_e( 'Choose Segments To Stop Spinner', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_select_win_wheel_wrapper">
 						<select id="wps_wpr_select_spin_stop" name="wps_wpr_select_spin_stop[]" multiple>
 							<?php
@@ -151,30 +151,30 @@ function wps_wpr_rand_color() {
 							}
 							?>
 						</select>
-						<span class="wps_wpr_select__spin_stop_notices wps_wpr_label_notice"><?php esc_html_e( 'Choose Segments on which spinner is stop, else it will stop randomly', 'ultimate-woocommerce-points-and-rewards' ); ?></span>
+						<span class="wps_wpr_select__spin_stop_notices wps_wpr_label_notice"><?php esc_html_e( 'Choose Segments on which spinner is stop, else it will stop randomly', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 			</section>
 			<section>
 				<article>
-					<label for="wps_wpr_days_after_user_play_again"><?php esc_html_e( 'Specify the Duration ( days )', 'ultimate-woocommerce-points-and-rewards' ); ?></label>
+					<label for="wps_wpr_days_after_user_play_again"><?php esc_html_e( 'Specify the Duration ( days )', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_play_again_wrapper">
 						<input type="number" min="0" name="wps_wpr_days_after_user_play_again" class="wps_wpr_days_after_user_play_again" value="<?php echo esc_html( $wps_wpr_days_after_user_play_again ); ?>">
-						<span class="wps_wpr_play_again_notices wps_wpr_label_notice"><?php esc_html_e( 'Admin can set a cooldown period after which users can play the game again.', 'ultimate-woocommerce-points-and-rewards' ); ?></span>
+						<span class="wps_wpr_play_again_notices wps_wpr_label_notice"><?php esc_html_e( 'Admin can set a cooldown period after which users can play the game again.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 			</section>
 			<div class="wps_wpr_win_wheel_segments_data">
 				<div>
-					<h4 for="wps_wpr_win_wheel_segments_settings"><?php esc_html_e( 'Win Wheel Segments Settings', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+					<h4 for="wps_wpr_win_wheel_segments_settings"><?php esc_html_e( 'Win Wheel Segments Settings', 'points-and-rewards-for-woocommerce' ); ?></h4>
 					<div class="wps_wpr_win_wheel_segments_data-table">
 						<table class="wps_wpr_segment_gamification_settings_wrappers">
 							<thead>
 								<tr>
-									<th><?php esc_html_e( 'Segment Name', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
-									<th><?php esc_html_e( 'Segment Points', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
-									<th><?php esc_html_e( 'Segment Font Size', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
-									<th><?php esc_html_e( 'Segment Color', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
+									<th><?php esc_html_e( 'Segment Name', 'points-and-rewards-for-woocommerce' ); ?></th>
+									<th><?php esc_html_e( 'Segment Points', 'points-and-rewards-for-woocommerce' ); ?></th>
+									<th><?php esc_html_e( 'Segment Font Size', 'points-and-rewards-for-woocommerce' ); ?></th>
+									<th><?php esc_html_e( 'Segment Color', 'points-and-rewards-for-woocommerce' ); ?></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -201,7 +201,7 @@ function wps_wpr_rand_color() {
 												<?php
 												if ( $key > $wps_wpr_remove_segments_counter ) {
 													?>
-													<td><input type="button" name="wps_wpr_remove_game_segment" id="wps_wpr_remove_game_segment" class="wps_wpr_remove_game_segment" value="<?php esc_html_e( '+', 'ultimate-woocommerce-points-and-rewards' ); ?>"></td>
+													<td><input type="button" name="wps_wpr_remove_game_segment" id="wps_wpr_remove_game_segment" class="wps_wpr_remove_game_segment" value="<?php esc_html_e( '+', 'points-and-rewards-for-woocommerce' ); ?>"></td>
 													<?php
 												}
 												?>
@@ -230,10 +230,10 @@ function wps_wpr_rand_color() {
 							</tbody>
 						</table>
 					</div>
-					<input type="button" name="wps_wpr_gamification_fields_add" id="wps_wpr_gamification_fields_add" value="<?php esc_html_e( '+', 'ultimate-woocommerce-points-and-rewards' ); ?>" data-count="<?php echo esc_html( $count ); ?>">
+					<input type="button" name="wps_wpr_gamification_fields_add" id="wps_wpr_gamification_fields_add" value="<?php esc_html_e( '+', 'points-and-rewards-for-woocommerce' ); ?>" data-count="<?php echo esc_html( $count ); ?>">
 				</div>
 			</div>
 		</main>
-		<input type="submit" name="wps_wpr_save_gamification_settings" id="wps_wpr_save_gamification_settings" value="<?php esc_html_e( 'Save Changes', 'ultimate-woocommerce-points-and-rewards' ); ?>">
+		<input type="submit" name="wps_wpr_save_gamification_settings" id="wps_wpr_save_gamification_settings" value="<?php esc_html_e( 'Save Changes', 'points-and-rewards-for-woocommerce' ); ?>">
 	</form>
 </div>
