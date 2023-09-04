@@ -142,7 +142,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="wps-overview__keywords-item">
 				<div class="wps-overview__keywords-card">
 					<div class="wps-overview__keywords-image wps_youtube">	
-					<iframe width="170%" height="200" src="https://www.youtube.com/embed/8W9K6avWESE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<iframe width="170%" height="200" src="https://www.youtube.com/embed/9BFowjkTU2Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					</div>
 
 				</div>

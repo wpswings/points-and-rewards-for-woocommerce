@@ -68,17 +68,17 @@ input#wps_cart_points {
     color: green
 }
 
-.wps_wpr_wrapper_button a{
+.wps_wpr_wrapper_button a {
     display: inline-block
 }
 
-.wps_wpr_wrapper_button a img{
+.wps_wpr_wrapper_button a img {
     max-height: 28px;
     max-width: 28px;
     transition: transform 0.3s;
 }
 
-.wps_wpr_wrapper_button a:hover img{
+.wps_wpr_wrapper_button a:hover img {
     transform: scale(1.1);
 }
 
@@ -824,3 +824,521 @@ input#wps_wpr_some_custom_points {
         margin-top: 10px
     }
 }
+
+/* +++++++ Gamification CSS start here. +++++++ */
+
+:root {
+    --08-black: rgba(0, 0, 0, 0.8);
+}
+
+.wps_wpr_wheel_icon {
+    position: fixed;
+    display: block;
+    z-index: 9999999999999;
+    padding: 0px;
+    opacity: 1;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.wps_wpr_wheel_icon .wps_wpr_icon_wheel_tooltip {
+    background-color: var(--08-black);
+    padding: 4px 10px;
+    font-size: 14px;
+    position: absolute;
+    width: 100%;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    top: 45px;
+    opacity: 0;
+}
+
+.wps_wpr_wheel_icon .wps_wpr_icon_wheel_tooltip:before {
+    position: absolute;
+    top: 20px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-width: 8px;
+    border-style: solid;
+}
+
+.wps_wpr_wheel_icon:hover .wps_wpr_icon_wheel_tooltip {
+    opacity: 1 !important;
+}
+
+/* Top Left start */
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_top_left_position {
+    top: 0;
+    left: -75px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_top_left_position:hover {
+    left: 0;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_top_left_position .wps_wpr_icon_wheel_tooltip {
+    left: 150px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_top_left_position .wps_wpr_icon_wheel_tooltip::before {
+    left: -15px;
+    border-right: 15px solid var(--08-black);
+    border-left: 0;
+}
+
+/* Top right start */
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_top_right_position {
+    top: 0;
+    right: -75px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_top_right_position:hover {
+    right: 0;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_top_right_position .wps_wpr_icon_wheel_tooltip {
+    right: 150px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_top_right_position .wps_wpr_icon_wheel_tooltip::before {
+    right: -15px;
+    border-left: 15px solid var(--08-black);
+    border-right: 0;
+}
+
+/* Middle Left start */
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_middle_left_position {
+    top: 50%;
+    transform: translateY(-50%);
+    left: -75px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_middle_left_position:hover {
+    left: 0;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_middle_left_position .wps_wpr_icon_wheel_tooltip {
+    left: 150px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_middle_left_position .wps_wpr_icon_wheel_tooltip::before {
+    left: -15px;
+    border-right: 15px solid var(--08-black);
+    border-left: 0;
+}
+
+/* Middle right start */
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_middle_right_position {
+    top: 50%;
+    transform: translateY(-50%);
+    right: -75px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_middle_right_position:hover {
+    right: 0;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_middle_right_position .wps_wpr_icon_wheel_tooltip {
+    right: 150px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_middle_right_position .wps_wpr_icon_wheel_tooltip::before {
+    right: -15px;
+    border-left: 15px solid var(--08-black);
+    border-right: 0;
+}
+
+/* Bottom Left start */
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_bottom_left_position {
+    bottom: 0;
+    left: -75px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_bottom_left_position:hover {
+    left: 0;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_bottom_left_position .wps_wpr_icon_wheel_tooltip {
+    left: 150px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_bottom_left_position .wps_wpr_icon_wheel_tooltip::before {
+    left: -15px;
+    border-right: 15px solid var(--08-black);
+    border-left: 0;
+}
+
+/* Bottom right start */
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_bottom_right_position {
+    bottom: 0;
+    right: -75px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_bottom_right_position:hover {
+    right: 0;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_bottom_right_position .wps_wpr_icon_wheel_tooltip {
+    right: 150px;
+}
+
+.wps_wpr_wheel_icon.wps_wpr_canvas_bottom_right_position .wps_wpr_icon_wheel_tooltip::before {
+    right: -15px;
+    border-left: 15px solid var(--08-black);
+    border-right: 0;
+}
+
+/* Win wheel main start */
+:root {
+    --wheel-width: 500px;
+    --wheel-border-color: #fff;
+    --wheel-border-width: 4px;
+    --wheel-spin-speed: 5s;
+    --pointer-width: 80px;
+    --pointer-color: #fff;
+    --pointer-text-color: #000;
+    --pointer-text-size: 14px;
+    --shadow-color: #fff;
+    --btn-pr-color: #333;
+    --btn-txt-color: #fff;
+    --success-color: #4ac600;
+    /* Maximum font size user can input */
+    --label-font-size: 20px; 
+}
+
+@keyframes rotate_wheel {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.wps_wpr_wheel_icon_main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9999999999;
+    display: none;
+}
+
+.wps_wpr_container-close,
+.wps_wpr_container-popup-close {
+    display: inline-flex;
+    width: 36px;
+    aspect-ratio: 1;
+    line-height: 0;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #000;
+    z-index: 1;
+    font-size: 36px;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.wps_wpr_container-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: var(--shadow-color);
+    opacity: 0.8;
+}
+
+.wps_wpr_wheel_icon_main .wps_wpr_container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    max-width: var(--wheel-width);
+    width: calc(100% - 20px);
+    aspect-ratio: 1;
+    box-shadow: 0 0 0 var(--wheel-border-width) var(--wheel-border-color), 0 0 10px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-out;
+    overflow: hidden;
+}
+
+.wps_wpr_wheel_icon_main .wps_wpr_container.wps_wpr-container--show {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.wps_wpr_wheel_icon_main #wps_wpr_spinWheelButton {
+    width: var(--pointer-width);
+    aspect-ratio: 1;
+    font-size: var(--pointer-text-size);
+    font-weight: 600;
+    border-radius: 50%;
+    background: var(--pointer-color);
+    color: var(--pointer-text-color);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    z-index: 9;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px, 0 0 0 10px #fff inset, 0 0 8px 8px rgba(0, 0, 0, 0.5) inset;
+}
+
+.wps_wpr_wheel_icon_main #wps_wpr_spinWheelButton:before {
+    position: absolute;
+    content: '';
+    top: -200px;
+    bottom: -200px;
+    left: -200px;
+    right: -200px;
+    border-radius: 50%;
+}
+
+.wps_wpr_wheel_icon_main #wps_wpr_spinWheelButton:after {
+    position: absolute;
+    content: "";
+    width: 30px;
+    height: 36px;
+    background: var(--pointer-color);
+    bottom: calc(100% - 6px);
+    left: 50%;
+    transform: translate(-50%, 0);
+    clip-path: polygon(50% 0%, 15% 100%, 85% 100%);
+}
+
+.wps_wpr_wheel_icon_main .wps_wpr_wheel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: transform var(--wheel-spin-speed) ease-in-out;
+    /*animation: rotate_wheel 12s linear infinite forwards;*/
+}
+
+.wps_wpr_wheel_icon_main .wps_wpr_wheel:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    background: radial-gradient(transparent 65%, rgba(0, 0, 0, 0.5) 76%);
+}
+
+.wps_wpr_wheel_icon_main .wps_wpr_wheel .wps_wpr_number {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background: var(--color);
+    transform-origin: bottom right;
+    /*    transform: rotate(calc(36deg * var(--fs)));
+    clip-path: polygon(0 0, 74% 0, 100% 100%, 0 74%);*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+.wps_wpr_wheel_icon_main .wps_wpr_wheel .wps_wpr_number input {
+    background: transparent;
+    color: #fff;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    user-select: none;
+    position: relative;
+    transform: rotate(45deg);
+    font-size: var(--label-font-size);
+    font-weight: 600;
+    width: 100%;
+    max-width: 175px;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}
+
+.wps_wpr_wheel_icon_main .wps_wpr_wheel .wps_wpr_number:after {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--wheel-border-color);
+    left: 29%;
+    top: 29%;
+    transform-origin: bottom left;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Popup start */
+.wps_wpr_container-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+.wps_wpr_container-popup-gif {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: none;
+}
+
+.wps_wpr_container-popup-gif img {
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+}
+
+.wps_wpr_container-popup-in {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    max-width: 300px;
+    aspect-ratio: 1;
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    transition: transform 0.3s ease-out;
+    border: 2px solid #dcdcdc;
+}
+
+.wps_wpr_container-popup-in.wps_wpr_container-popup-in--show {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.wps_wpr_container-popup-in:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 0 5px 5px;
+    height: 15px;
+    width: 100%;
+    background: var(--success-color);
+}
+
+.wps_wpr_container-popup-val {
+    font-size: 24px;
+    color: #000;
+    line-height: 1.25;
+    margin: 0 0 15px;
+}
+
+.wps_wpr_container-popup-val .wps_wpr-val {
+    display: block;
+    font-weight: 600;
+    line-height: 1.5;
+    font-size: 48px;
+    color: var(--success-color);
+}
+
+.wps_wpr_container-popup-close {
+    top: 10px;
+    right: 10px;
+}
+
+button.wps_wpr_container-popup-claim {
+    font-size: 18px;
+    background: var(--btn-pr-color);
+    border: 1px solid var(--btn-pr-color);
+    border-radius: 5px;
+    color: var(--btn-txt-color);
+    line-height: 1.5;
+    min-height: 30px;
+    padding: 10px 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+button.wps_wpr_container-popup-claim:hover,
+button.wps_wpr_container-popup-claim:focus {
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    color: var(--btn-pr-color);
+}
+
+#wps_wpr_show_claim_msg {
+    font-weight: 600;
+    display: none;
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Popup end */
+
+/* Audio effects start */
+.wps_wpr_wheel_icon_main audio {
+    display: none;
+}
+
+/* Audio effects end */
+
+/* Media screen start */
+
+@media screen and (max-width: 520px) {
+    .wps_wpr_wheel_icon_main #wps_wpr_spinWheelButton {
+        width: calc(var(--pointer-width) * 0.8);
+    }
+
+    .wps_wpr_wheel_icon_main #wps_wpr_spinWheelButton:after {
+        width: 20px;
+        height: 26px;
+    }
+
+    .wps_wpr_wheel_icon_main .wps_wpr_wheel .wps_wpr_number input {
+        font-size: calc(var(--label-font-size)*0.7);
+        max-width: 100px;
+    }
+
+    .wps_wpr_container-popup-in{
+        width: calc(100% - 40px);
+    }
+}
+
+/* Media screen end */
+
+/* Win wheel main end */

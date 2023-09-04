@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</p>
 					</div>
 					<div class="wps_wpr_premium_upgrade_btn">
-						<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" class="wps_wpr_premium--cta"><?php esc_html_e( 'UPGRADE', 'points-and-rewards-for-woocommerce' ); ?></a>
+						<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" class="wps_wpr_premium--cta"><?php esc_html_e( 'UPGRADE', 'points-and-rewards-for-woocommerce' ); ?></a>
 					</div>
 				</div>
 			</div>
@@ -125,7 +125,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</p>
 					</div>
 					<div class="wps_wpr_premium_upgrade_btn">
-						<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" class="wps_wpr_premium--cta"><?php esc_html_e( 'UPGRADE', 'points-and-rewards-for-woocommerce' ); ?></a>
+						<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" class="wps_wpr_premium--cta"><?php esc_html_e( 'UPGRADE', 'points-and-rewards-for-woocommerce' ); ?></a>
 					</div>
 				</div>
 			</div>

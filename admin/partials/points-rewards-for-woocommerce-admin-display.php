@@ -61,6 +61,10 @@ $wps_wpr_setting_tab = array(
 		'title' => __( 'Order Total Points', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-order-total.php',
 	),
+	'gamification-settings' => array(
+		'title' => __( 'Gamification Settings', 'points-and-rewards-for-woocommerce' ),
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-gamifications-settings.php',
+	),
 );
 
 if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
@@ -94,7 +98,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 						</a>
 					</li>
 					<li class="wps_wpr_get_pro">
-						<a href="https://www.youtube.com/watch?v=WWktrnAI88U&list=PLwUHVEkPKlHlxoQ27Qxkd8buLx_LPtPBh&index=1" target="_blank">
+						<a href="https://www.youtube.com/watch?v=9BFowjkTU2Q" target="_blank">
 							<img src="<?php echo esc_url( WPS_RWPR_DIR_URL ) . 'admin/images/wps-youtube-dash.svg'; ?>" class="wps_wpr_dash_video_svg_img" alt="Demo image">
 							<span class="wps_wpr_contact_doc_text"><?php esc_html_e( 'Video', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</a>
@@ -109,7 +113,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 					if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 						?>
 						<li class="wps_wpr_get_pro">
-							<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a>
+							<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a>
 						</li>
 						<?php
 					}
@@ -121,7 +125,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 		wp_nonce_field( 'wps-wpr-nonce', 'wps-wpr-nonce' );
 		if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-			$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.8.0' );
+			$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '1.9.0' );
 			$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
 			$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
 			$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );

@@ -934,3 +934,234 @@ img.wps_wpr_dash_video_svg_img {
     font-size: 12px;
     letter-spacing: 0.4px;
 }
+
+/* Gamification feature setting start */
+
+.wps_wpr_main_gamification_wrapper section {
+    padding: 0 20px;
+}
+
+.wps_wpr_main_gamification_wrapper section:nth-of-type(even) {
+    background: #f4f4f4;
+}
+
+.wps_wpr_main_gamification_wrapper section:hover {
+    background: #e4f3ff;
+}
+
+.wps_wpr_user_gamifications_main_wrappers h4 {
+    padding: 8px 20px;
+    background-color: #2196f3;
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 15px 0 0;
+}
+
+.wps_wpr_user_gamifications_main_wrappers article {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 15px 0;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 20px;
+}
+
+.wps_wpr_main_gamification_wrapper select {
+    padding: 5px 10px;
+}
+
+.wps_wpr_main_gamification_wrapper select,
+.wps_wpr_main_gamification_wrapper .select2 {
+    min-height: 30px;
+    min-width: 150px;
+    margin-right: 15px;
+}
+
+.wps_wpr_main_gamification_wrapper .wps_wpr_label_notice {
+    font-weight: 400;
+    font-size: 16px;
+}
+
+table.wps_wpr_segment_gamification_settings_wrappers {
+    width: 100%;
+}
+
+table.wps_wpr_segment_gamification_settings_wrappers td,
+table.wps_wpr_segment_gamification_settings_wrappers th {
+    text-align: left;
+    padding: 5px;
+}
+
+table.wps_wpr_segment_gamification_settings_wrappers td img {
+    display: none;
+}
+
+table.wps_wpr_segment_gamification_settings_wrappers td:last-child {
+    min-width: 40px;
+}
+
+#wps_rwpr_setting_wrapper table.wps_wpr_segment_gamification_settings_wrappers td input[type=text],
+#wps_rwpr_setting_wrapper table.wps_wpr_segment_gamification_settings_wrappers td input[type=number],
+#wps_rwpr_setting_wrapper table.wps_wpr_segment_gamification_settings_wrappers td input[type=color] {
+    width: 100%;
+    max-width: 100%;
+    padding: 5px 10px;
+    min-height: 30px;
+}
+
+#wps_rwpr_setting_wrapper input#wps_wpr_gamification_fields_add {
+    width: 100%;
+    max-width: 80px;
+    aspect-ratio: 1;
+    font-size: 32px;
+    line-height: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    margin: -33px auto 0;
+    appearance: none;
+    justify-content: center;
+    background: #b3ddff;
+    color: #2196f3;
+    border-radius: 50%;
+    position: relative;
+    border: 5px solid #fff;
+    cursor: pointer;
+}
+
+#wps_rwpr_setting_wrapper table.wps_wpr_segment_gamification_settings_wrappers td input#wps_wpr_remove_game_segment {
+    font-size: 24px;
+    line-height: 0;
+    padding: 0;
+    margin: 0;
+    background: #ffc8c9;
+    color: #d63638;
+    border-radius: 50%;
+    position: relative;
+    border: 2px solid #fff;
+    cursor: pointer;
+    transform: rotate(45deg);
+    width: 50px;
+    height: 50px;
+}
+
+input#wps_wpr_save_gamification_settings {
+    background: #2196f3;
+    color: #fff;
+    padding: 8px 25px;
+    height: auto;
+    text-shadow: none;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: Lato, sans-serif;
+    text-transform: capitalize;
+    border-radius: 40px;
+    line-height: 2;
+    margin: 0 0 25px;
+    border: 2px solid #2196f3;
+    cursor: pointer;
+}
+
+#wps_rwpr_setting_wrapper table.wps_wpr_segment_gamification_settings_wrappers td input.wps_wpr_enter_segment_color {
+    padding: 0;
+    border: none;
+    margin: 0;
+    background: none;
+    height: 45px;
+}
+
+@media screen and (max-width:768px) {
+
+    table.wps_wpr_segment_gamification_settings_wrappers td,
+    table.wps_wpr_segment_gamification_settings_wrappers th {
+        min-width: 150px;
+    }
+
+    .wps_wpr_user_gamifications_main_wrappers article {
+        grid-template-columns: 1fr;
+    }
+
+    .wps_wpr_main_gamification_wrapper .wps_wpr_label_notice {
+        display: block;
+        margin: 0;
+    }
+
+    .wps_wpr_win_wheel_segments_data-table {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+}
+
+/* Gamification feature setting end */
+
+/* General Fixes in overall Dashoard start*/
+
+#wps_rwpr_setting_wrapper input {
+    margin-right: 15px;
+}
+
+#wps_rwpr_setting_wrapper input#wps_wpr_cart_points_rate,
+#wps_rwpr_setting_wrapper input#wps_wpr_coupon_conversion_points {
+    margin: 0;
+}
+
+.wps_rwpr_header_content_right ul li {
+    margin: 5px;
+}
+
+/* Overview page */
+#wps_rwpr_setting_wrapper .wps-overview__content>h3 {
+    margin-bottom: 15px;
+}
+
+/* General */
+label[for=wps_wpr_facebook],
+label[for=wps_wpr_twitter],
+label[for=wps_wpr_email] {
+    margin-right: 15px;
+}
+
+/* Point table */
+.wps_wpr_points_table_second_wrappers table.wps_wpr_general_setting td {
+    padding-left: 0;
+}
+
+/* Membership */
+.wps_wpr_membership_setting.mwp_wpr_settings p.description {
+    padding-left: 10px;
+}
+
+/* License Page */
+.wps_rwpr_content_template .points-and-rewards-for-woocommerce-pro-license-sec {
+    padding-top: 15px;
+}
+
+input.wps_wpr_days_after_user_play_again {
+    min-height: 30px;
+    min-width: 150px;
+    margin-right: 15px;
+    padding: 5px 10px;
+}
+
+@media screen and (max-width: 768px) {
+
+    .wps_wpr_general_label {
+        padding: 10px 0 0;
+    }
+
+    .wps_wpr_points_table_second_wrappers table.wps_wpr_general_setting td {
+        text-align: left;
+    }
+
+    .wps_rwpr_main_template input[type=text] {
+        width: auto;
+    }
+
+    #wps_rwpr_setting_wrapper input#wps_wpr_points_on_previous_order {
+        min-height: 40px;
+    }
+}
+
+/* General Fixes in overall Dashoard end*/
