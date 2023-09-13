@@ -23,7 +23,7 @@ if ( isset( $_POST['wps_wpr_gamification_setting_nonce'] ) ) {
 	if ( wp_verify_nonce( ! empty( $_POST['wps_wpr_gamification_setting_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_gamification_setting_nonce'] ) ) : '', 'gamification-setting-nonce' ) ) {
 		if ( isset( $_POST['wps_wpr_save_gamification_settings'] ) ) {
 
-			$wps_wpr_user_gamification_settings                                         = array();
+			$wps_wpr_user_gamification_settings = array();
 			$wps_wpr_user_gamification_settings['wps_wpr_enable_gamification_settings'] = ! empty( $_POST['wps_wpr_enable_gamification_settings'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_gamification_settings'] ) ) : '';
 			$wps_wpr_user_gamification_settings['wps_wpr_select_icon_position']         = ! empty( $_POST['wps_wpr_select_icon_position'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_select_icon_position'] ) ) : '';
 			$wps_wpr_user_gamification_settings['wps_wpr_select_win_wheel_page']        = ! empty( $_POST['wps_wpr_select_win_wheel_page'] ) ? map_deep( wp_unslash( $_POST['wps_wpr_select_win_wheel_page'] ), 'sanitize_text_field' ) : array();

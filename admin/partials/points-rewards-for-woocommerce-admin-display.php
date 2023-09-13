@@ -23,53 +23,55 @@ if ( class_exists( 'WPSwings_Onboarding_Helper' ) ) {
 }
 
 $wps_wpr_setting_tab = array(
-	'overview-setting' => array(
+	'overview-setting'     => array(
 		'title'     => __( 'Overview', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . '/admin/partials/templates/wps-wpr-overview-settings.php',
 	),
-	'general-setting' => array(
+	'general-setting'       => array(
 		'title'     => __( 'General', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . '/admin/partials/templates/wps-generral-settings2.php',
 	),
-	'coupon-setting' => array(
-
+	'coupon-setting'        => array(
 		'title'     => apply_filters( 'wps_coupon_tab_text', __( 'Per Currency Points Settings', 'points-and-rewards-for-woocommerce' ) ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-coupon-settings.php',
 	),
-	'points-table' => array(
+	'points-table'          => array(
 		'title'     => __( 'Points Table', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/class-points-log-list-table.php',
 	),
-	'points-notification' => array(
+	'points-notification'   => array(
 		'title'     => __( 'Points Notification', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-points-notification-settings.php',
 	),
-	'membership' => array(
-		'title' => __( 'Membership', 'points-and-rewards-for-woocommerce' ),
+	'membership'            => array(
+		'title'     => __( 'Membership', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-membership-settings.php',
 	),
 	'assign-product-points' => array(
-		'title' => __( 'Assign Product Points', 'points-and-rewards-for-woocommerce' ),
+		'title'     => __( 'Assign Product Points', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-assign-pro-points.php',
 	),
-
-	'other-setting' => array(
-		'title' => __( 'Other Settings', 'points-and-rewards-for-woocommerce' ),
+	'other-setting'         => array(
+		'title'     => __( 'Other Settings', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-other-setting.php',
 	),
-	'order-total-points' => array(
-		'title' => __( 'Order Total Points', 'points-and-rewards-for-woocommerce' ),
+	'order-total-points'    => array(
+		'title'     => __( 'Order Total Points', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-order-total.php',
 	),
 	'gamification-settings' => array(
-		'title' => __( 'Gamification Settings', 'points-and-rewards-for-woocommerce' ),
+		'title'     => __( 'Gamification Settings', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-gamifications-settings.php',
+	),
+	'user-badges-settings'  => array(
+		'title'     => __( 'User Level & Badges', 'points-and-rewards-for-woocommerce' ),
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-user-badges-settings.php',
 	),
 );
 
 if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 	$wps_wpr_setting_tab['premium_plugin'] = array(
-		'title' => esc_html__( 'Premium Features', 'points-and-rewards-for-woocommerce' ),
+		'title'     => esc_html__( 'Premium Features', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-premium-features.php',
 	);
 }

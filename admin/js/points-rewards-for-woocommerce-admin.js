@@ -318,7 +318,8 @@
 		jQuery(".notice-success").remove();
 	  });
   
-	  // Gamification Features Start Here.
+	  /** =========== Gamification Features Start Here =========== */
+
 	  jQuery(document).find('#wps_wpr_select_win_wheel_page').select2();
 	  jQuery(document).find('#wps_wpr_select_spin_stop').select2();
   
@@ -425,6 +426,115 @@
 		
 		return result;
 	 }
-  
+
+	 /** ============ User Badges Feature Start here. ============== */
+	 
+	 // Open Custom media window to select images.
+	jQuery(document).on('click', '.wps_wpr_add_user_badges_img', open_custom_media_window);
+	function open_custom_media_window() {
+
+		if (this.window === undefined) {
+			this.window = wp.media({
+				title: 'Insert Image',
+				library: { type: 'image' },
+				multiple: false,
+				button: { text: 'Insert Image' }
+			});
+
+			var self = this;
+			this.window.on('select', function () {
+				var response = self.window.state().get('selection').first().toJSON();
+				jQuery(self).nextAll('.wps_wpr_image_attachment_id').val(response.sizes.thumbnail.url);
+				jQuery(self).prevAll('.wps_wpr_icon_user_badges').attr('src', response.sizes.thumbnail.url);
+				jQuery(self).prevAll('.wps_wpr_icon_user_badges').show();
+			});
+		}
+
+		this.window.open();
+		return false;
+	}
+
+	// Add badges fields dynamic.wps_wpr_gamification_fields_add
+	jQuery(document).on('click', '#wps_wpr_user_badges_fields_add', function(){
+		if ( true === jQuery('.wps_wpr_enable_user_badges_settings').prop('checked') ) {
+
+			if ( wps_wpr_badges_validation() ) {
+
+				var new_row = '<tr class="wps_wpr_add_user_badges_dynamic"><td><input type="text" name="wps_wpr_enter_badges_name[]" id="wps_wpr_enter_badges_name" class="wps_wpr_enter_badges_name" value="" required></td><td><input type="number" min="1" name="wps_wpr_badges_threshold_points[]" id="wps_wpr_badges_threshold_points" class="wps_wpr_badges_threshold_points" value="" required></td><td><input type="number" min="1" name="wps_wpr_badges_rewards_points[]" id="wps_wpr_badges_rewards_points" class="wps_wpr_badges_rewards_points" value="" required></td><td><img src="" class="wps_wpr_icon_user_badges" style="display: none;"><input type="button" class="wps_wpr_add_user_badges_img" value="Badges"><input type="hidden" name="wps_wpr_image_attachment_id[]" class="wps_wpr_image_attachment_id" value=""/></td><td><input type="button" name="wps_wpr_remove_user_badges" id="wps_wpr_remove_user_badges" class="wps_wpr_remove_user_badges" value="Remove"></td></tr>';
+				jQuery('.wps_wpr_user_badges_table_settings_wrappers').append( new_row );
+			} else {
+
+				jQuery('.notice.notice-error.is-dismissible').each(function(){
+					jQuery(this).remove();
+				});
+				jQuery('.notice.notice-success.is-dismissible').each(function(){
+					jQuery(this).remove();
+				});
+	
+				jQuery('html, body').animate({
+					scrollTop: jQuery(".wps_rwpr_header").offset().top
+				}, 800);
+				var empty_message = '<div class="notice notice-error is-dismissible"><p><strong>Some Fields are empty!</strong></p></div>';
+				jQuery(empty_message).insertBefore(jQuery('.wps_wpr_user_badges_main_wrappers'));
+			}
+		}
 	});
+
+	// Remove user badges.
+	jQuery(document).on('click', '#wps_wpr_remove_user_badges', function(){
+		// check setting is enable.
+		if ( true == jQuery('.wps_wpr_enable_user_badges_settings').prop('checked') ) {
+			if ( jQuery('.wps_wpr_add_user_badges_dynamic').length > 2 ) {
+
+				jQuery(this).parents('.wps_wpr_add_user_badges_dynamic').remove();
+			} else {
+
+				alert( wps_wpr_object.segment_limit_msg );
+			}
+		}
+	})
+
+	// Validating badges.
+	function wps_wpr_badges_validation() {
+  
+		var result      = true;
+		var badges_name = [];
+		var i           = 0
+		jQuery(document).find('.wps_wpr_enter_badges_name').each(function(){
+		  badges_name.push( jQuery(this).val() );
+		  if ( ! jQuery(this).val() ) {
+  
+			++i;
+		  }
+		});
+		  
+		var threshold_points = [];
+		var x                = 0;
+		jQuery(document).find('.wps_wpr_badges_threshold_points').each(function(){
+		  threshold_points.push( jQuery(this).val() );
+		  if ( ! jQuery(this).val() ) {
+  
+			++x;
+		  }
+		});
+  
+		var badges_rewards_points = [];
+		var y                     = 0;
+		jQuery(document).find('.wps_wpr_badges_rewards_points').each(function(){
+		  badges_rewards_points.push( jQuery(this).val() );
+		  if ( ! jQuery(this).val() ) {
+  
+			++y;
+		  }
+		});
+  
+		if ( i > 0 || x > 0 || y > 0 ) {
+  
+		  result = false;
+		}
+		
+		return result;
+	 }
+  
+});
   
