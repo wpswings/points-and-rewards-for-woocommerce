@@ -87,15 +87,6 @@
     max-width: unset;
 }
 
-@media only screen and (max-width: 782px) {
-    #wps_rwpr_setting_wrapper input[type="checkbox"]:before {
-        font: normal 22px/1 dashicons;
-        width: 25px;
-        height: 25px;
-        margin: -5px 0 0 -7px;
-    }
-}
-
 @media only screen and (max-width: 480px) {
 
     #wps_wpr_coupon_conversion_points,

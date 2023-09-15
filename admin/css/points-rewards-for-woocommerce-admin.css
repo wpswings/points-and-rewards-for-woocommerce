@@ -331,6 +331,7 @@ a.wps_wpr_premium--cta {
     color: #555d66;
     font-size: 16px;
     flex: 0 0 80%;
+    max-width: 80%;
     padding: 10px 30px 10px 40px;
     position: relative;
     line-height: 28px
@@ -850,7 +851,7 @@ img.wps_wpr_dash_video_svg_img {
 }
 
 #wps_rwpr_setting_wrapper input[type=checkbox]:checked::before {
-    left: calc(100% - 10px);
+    left: calc(100% - 10px) !important;
     box-shadow: -2px 0 5px rgba(0, 0, 0, .2);
     background: #2196f3;
     margin: 0;
@@ -1162,6 +1163,91 @@ input.wps_wpr_days_after_user_play_again {
     #wps_rwpr_setting_wrapper input#wps_wpr_points_on_previous_order {
         min-height: 40px;
     }
+
+    .wps_rwpr_content_template {
+        max-width: 100%;
+    }
+
 }
 
 /* General Fixes in overall Dashoard end*/
+/* General Fixes in Badge Dashoard end*/
+
+.wps_wpr_user_badges_table_wrap {
+    margin: 20px 0 0;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+table.wps_wpr_user_badges_table_settings_wrappers {
+    width: 100%;
+    text-align: left;
+}
+
+.wps_wpr_user_badges_table_settings_wrappers .wps_wpr_icon_user_badges {
+    max-height: 40px;
+    max-width: 40px;
+}
+
+#wps_rwpr_setting_wrapper input.wps_wpr_add_more_btn_badge {
+    border-radius: 5px;
+    border: 1px solid #2196f3;
+    background: white;
+    color: #2196f3;
+    line-height: 1;
+    display: inline-block;
+    min-height: 30px;
+    font-size: 16px;
+    margin: 10px 10px 20px;
+    cursor: pointer;
+}
+
+#wps_rwpr_setting_wrapper .wps_wpr_user_badges_table_settings_wrappers input {
+    margin-right: 10px;
+}
+
+#wps_rwpr_setting_wrapper input.wps_wpr_remove_user_badges {
+    border-radius: 50%;
+    border: 1px solid #f00;
+    background: white;
+    color: #f00;
+    line-height: 1;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    font-size: 20px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.wps_wpr_icon_user_badges_wrap {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.wps_wpr_user_badges_table_settings_wrappers .wps_wpr_add_user_badges_img {
+    border-radius: 5px;
+    border: 1px solid #2196f3;
+    background: #2196f3;
+    color: #fff;
+    line-height: 1;
+    display: inline-block;
+    min-height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.wps_wpr_add_more_btn_badge:hover {
+    background: #2196f3;
+    color: #fff;
+}
+
+#wps_rwpr_setting_wrapper input.wps_wpr_add_more_btn_badge:hover {
+    background: none;
+}
+
+/* General Fixes in Badge Dashoard end*/

@@ -60,23 +60,23 @@ $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wp
 ?>
 
 <div class="wps_wpr_user_badges_main_wrappers">
-	<h4 class="wps_wpr_user_badges_settings_heading"><?php esc_html_e( 'User Level & Badges Settings', 'points-and-rewards-for-woocommerce' ); ?></h4>
-	<input type="hidden" name="wps_wpr_user_badges_setting_nonce" id="wps_wpr_user_badges_setting_nonce" value="<?php echo esc_html( wp_create_nonce( 'user-badges-setting-nonce' ) ); ?>">
 	<form method="POST" action="" class="wps_wpr_user_badges_form">
 		<main class="wps_wpr_main_user_badges_wrapper">
-			<section>
-				<article>
-					<label for="wps_wpr_enable_user_badges_settings"><?php esc_html_e( 'Enable User Badges Settings', 'points-and-rewards-for-woocommerce' ); ?></label>
-					<div class="wps_wpr_enable_user_badges_setting_wrapper">
+			<section class="wps_wpr_general_row_wrap">
+				<div class="wps_wpr_user_badges_settings_heading wps_wpr_general_sign_title"><?php esc_html_e( 'User Level & Badges Settings', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<input type="hidden" name="wps_wpr_user_badges_setting_nonce" id="wps_wpr_user_badges_setting_nonce" value="<?php echo esc_html( wp_create_nonce( 'user-badges-setting-nonce' ) ); ?>">
+				<article class="wps_wpr_general_row">
+					<label for="wps_wpr_enable_user_badges_settings" class="wps_wpr_general_label"><?php esc_html_e( 'Enable User Badges Settings', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_enable_user_badges_settings" class="wps_wpr_enable_user_badges_settings" value="yes" <?php checked( 'yes', 'yes' ); ?>>
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Check this box to enable this settings.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 			</section>
-			<section>
+			<section class="wps_wpr_general_row_wrap">
 				<div class="wps_wpr_user_badges_data_wrapper">
-					<h4 for="wps_wpr_user__badges_settings"><?php esc_html_e( 'User Badges Settings', 'points-and-rewards-for-woocommerce' ); ?></h4>
-					<div class="wps_wpr_win_wheel_segments_data-table">
+					<div class="wps_wpr_user__badges_settings wps_wpr_general_sign_title"><?php esc_html_e( 'User Badges Settings', 'points-and-rewards-for-woocommerce' ); ?></div>
+					<div class="wps_wpr_general_row wps_wpr_user_badges_table_wrap">
 						<table class="wps_wpr_user_badges_table_settings_wrappers">
 							<thead>
 								<tr>
@@ -105,17 +105,20 @@ $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wp
 												<td><input type="number" min="1" name="wps_wpr_badges_threshold_points[]" id="wps_wpr_badges_threshold_points" class="wps_wpr_badges_threshold_points" value="<?php echo esc_html( $wps_wpr_badges_threshold_points[ $key ] ); ?>" required></td>
 												<td><input type="number" min="1" name="wps_wpr_badges_rewards_points[]" id="wps_wpr_badges_rewards_points" class="wps_wpr_badges_rewards_points" value="<?php echo esc_html( $wps_wpr_badges_rewards_points[ $key ] ); ?>" required></td>
 												<td>
-													<img src="<?php echo esc_url( $wps_wpr_image_attachment_id[ $key ] ); ?>" class="wps_wpr_icon_user_badges">
-													<input type="button" class="wps_wpr_add_user_badges_img" value="<?php esc_html_e( 'Badges', 'points-and-rewards-for-woocommerce' ); ?>">
-													<input type="hidden" name="wps_wpr_image_attachment_id[]" class="wps_wpr_image_attachment_id" value="<?php echo esc_url( $wps_wpr_image_attachment_id[ $key ] ); ?>"/>
+													<div class="wps_wpr_icon_user_badges_wrap">
+														<img src="<?php echo esc_url( $wps_wpr_image_attachment_id[ $key ] ); ?>" class="wps_wpr_icon_user_badges">
+														<input type="button" class="wps_wpr_add_user_badges_img" value="<?php esc_html_e( 'Upload', 'points-and-rewards-for-woocommerce' ); ?>">
+														<input type="hidden" name="wps_wpr_image_attachment_id[]" class="wps_wpr_image_attachment_id" value="<?php echo esc_url( $wps_wpr_image_attachment_id[ $key ] ); ?>"/>
+													</div>
 												</td>
 												<?php
 												if ( $key > $wps_wpr_remove_badges_counter ) {
 													?>
-													<td><input type="button" name="wps_wpr_remove_user_badges" id="wps_wpr_remove_user_badges" class="wps_wpr_remove_user_badges" value="Remove"></td>
+													<td><input type="button" name="wps_wpr_remove_user_badges" id="wps_wpr_remove_user_badges" class="wps_wpr_remove_user_badges" value="+"></td>
 													<?php
 												}
 												?>
+												<td style="width: 60px;"></td>
 											</tr>
 											<?php
 										}
@@ -134,10 +137,13 @@ $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wp
 											<td><input type="number" min="1" name="wps_wpr_badges_threshold_points[]" id="wps_wpr_badges_threshold_points" class="wps_wpr_badges_threshold_points" value="<?php echo esc_html( $default_threshold_points ); ?>" required></td>
 											<td><input type="number" min="1" name="wps_wpr_badges_rewards_points[]" id="wps_wpr_badges_rewards_points" class="wps_wpr_badges_rewards_points" value="<?php echo esc_html( $default_badge_award_points ); ?>" required></td>
 											<td>
-												<img src="<?php echo esc_url( $img_array_store[ $i ] ); ?>" class="wps_wpr_icon_user_badges">
-												<input type="button" class="wps_wpr_add_user_badges_img" value="<?php esc_html_e( 'Badges', 'points-and-rewards-for-woocommerce' ); ?>">
-												<input type="hidden" name="wps_wpr_image_attachment_id[]" class="wps_wpr_image_attachment_id" value="<?php echo esc_url( $img_array_store[ $i ] ); ?>"/>
+												<div class="wps_wpr_icon_user_badges_wrap">
+													<img src="<?php echo esc_url( $img_array_store[ $i ] ); ?>" class="wps_wpr_icon_user_badges">
+													<input type="button" class="wps_wpr_add_user_badges_img" value="<?php esc_html_e( 'Upload', 'points-and-rewards-for-woocommerce' ); ?>">
+													<input type="hidden" name="wps_wpr_image_attachment_id[]" class="wps_wpr_image_attachment_id" value="<?php echo esc_url( $img_array_store[ $i ] ); ?>"/>
+												</div>
 											</td>
+											<td style="width: 60px;"></td>
 										</tr>
 										<?php
 										$default_threshold_points   += 5000;
@@ -148,10 +154,10 @@ $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wp
 							</tbody>
 						</table>
 					</div>
-					<input type="button" name="wps_wpr_user_badges_fields_add" id="wps_wpr_user_badges_fields_add" value="<?php esc_html_e( 'Add More', 'points-and-rewards-for-woocommerce' ); ?>">
+					<input type="button" name="wps_wpr_user_badges_fields_add" id="wps_wpr_user_badges_fields_add" class="wps_wpr_add_more_btn_badge" value="Add More">
 				</div>
 			</section>
 		</main>
-		<input type="submit" name="wps_wpr_save_user_badges_settings" id="wps_wpr_save_user_badges_settings" value="<?php esc_html_e( 'Save Changes', 'points-and-rewards-for-woocommerce' ); ?>">
+		<input type="submit" name="wps_wpr_save_user_badges_settings" class="button-primary woocommerce-save-button wps_wpr_save_changes" id="wps_wpr_save_user_badges_settings" value="<?php esc_html_e( 'Save Changes', 'points-and-rewards-for-woocommerce' ); ?>">
 	</form>
 </div>

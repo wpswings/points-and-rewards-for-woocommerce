@@ -60,7 +60,6 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
-
 	}
 
 	/**

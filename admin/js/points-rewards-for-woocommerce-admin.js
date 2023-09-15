@@ -455,22 +455,22 @@
 	}
 
 	// Add badges fields dynamic.wps_wpr_gamification_fields_add
-	jQuery(document).on('click', '#wps_wpr_user_badges_fields_add', function(){
-		if ( true === jQuery('.wps_wpr_enable_user_badges_settings').prop('checked') ) {
+	jQuery(document).on('click', '#wps_wpr_user_badges_fields_add', function() {
+		if (true === jQuery('.wps_wpr_enable_user_badges_settings').prop('checked')) {
 
-			if ( wps_wpr_badges_validation() ) {
+			if (wps_wpr_badges_validation()) {
 
-				var new_row = '<tr class="wps_wpr_add_user_badges_dynamic"><td><input type="text" name="wps_wpr_enter_badges_name[]" id="wps_wpr_enter_badges_name" class="wps_wpr_enter_badges_name" value="" required></td><td><input type="number" min="1" name="wps_wpr_badges_threshold_points[]" id="wps_wpr_badges_threshold_points" class="wps_wpr_badges_threshold_points" value="" required></td><td><input type="number" min="1" name="wps_wpr_badges_rewards_points[]" id="wps_wpr_badges_rewards_points" class="wps_wpr_badges_rewards_points" value="" required></td><td><img src="" class="wps_wpr_icon_user_badges" style="display: none;"><input type="button" class="wps_wpr_add_user_badges_img" value="Badges"><input type="hidden" name="wps_wpr_image_attachment_id[]" class="wps_wpr_image_attachment_id" value=""/></td><td><input type="button" name="wps_wpr_remove_user_badges" id="wps_wpr_remove_user_badges" class="wps_wpr_remove_user_badges" value="Remove"></td></tr>';
-				jQuery('.wps_wpr_user_badges_table_settings_wrappers').append( new_row );
+				var new_row = '<tr class="wps_wpr_add_user_badges_dynamic"><td><input type="text" name="wps_wpr_enter_badges_name[]" id="wps_wpr_enter_badges_name" class="wps_wpr_enter_badges_name" value="" required></td><td><input type="number" min="1" name="wps_wpr_badges_threshold_points[]" id="wps_wpr_badges_threshold_points" class="wps_wpr_badges_threshold_points" value="" required></td><td><input type="number" min="1" name="wps_wpr_badges_rewards_points[]" id="wps_wpr_badges_rewards_points" class="wps_wpr_badges_rewards_points" value="" required></td><td><div class="wps_wpr_icon_user_badges_wrap"><img src="' + wps_wpr_object.wps_badge_image + '" class="wps_wpr_icon_user_badges"><input type="button" class="wps_wpr_add_user_badges_img" value="Upload"><input type="hidden" name="wps_wpr_image_attachment_id[]" class="wps_wpr_image_attachment_id" value="' + wps_wpr_object.wps_badge_image + '"/></div></td><td style="width: 60px;"><input type="button" name="wps_wpr_remove_user_badges" id="wps_wpr_remove_user_badges" class="wps_wpr_remove_user_badges" value="+"></td></tr>';
+				jQuery('.wps_wpr_user_badges_table_settings_wrappers').append(new_row);
 			} else {
 
-				jQuery('.notice.notice-error.is-dismissible').each(function(){
+				jQuery('.notice.notice-error.is-dismissible').each(function() {
 					jQuery(this).remove();
 				});
-				jQuery('.notice.notice-success.is-dismissible').each(function(){
+				jQuery('.notice.notice-success.is-dismissible').each(function() {
 					jQuery(this).remove();
 				});
-	
+
 				jQuery('html, body').animate({
 					scrollTop: jQuery(".wps_rwpr_header").offset().top
 				}, 800);
