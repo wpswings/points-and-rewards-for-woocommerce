@@ -75,7 +75,6 @@ class Points_Rewards_For_WooCommerce_Settings {
 		<p class="description"><?php esc_html_e( 'Use the shortcode [MYCURRENTPOINT] for displaying the current Points of Users', 'points-and-rewards-for-woocommerce' ); ?></p>
 		<p class="description"><?php esc_html_e( 'Use the shortcode [SIGNUPNOTIFICATION] for displaying notification anywhere on site', 'points-and-rewards-for-woocommerce' ); ?></p>	
 		<?php
-
 	}
 
 	/**
@@ -140,8 +139,8 @@ class Points_Rewards_For_WooCommerce_Settings {
 				);
 					wp_editor( $content, $editor_id, $settings );
 				?>
-				</label>	
-				<?php
+			</label>	
+			<?php
 		}
 	}
 
@@ -171,7 +170,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 					'textarea_rows'    => 5,
 					'textarea_name'    => $value_id,
 				);
-					wp_editor( $content, $editor_id, $settings );
+				wp_editor( $content, $editor_id, $settings );
 				?>
 			</label>	
 			<?php
@@ -272,7 +271,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 				value="<?php echo esc_html( $wps_signup_value ); ?>" name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>"
 				class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php echo ( array_key_exists( 'desc', $value ) ) ? esc_html( $value['desc'] ) : ''; ?>
 		</label>
-			<?php
+		<?php
 	}
 
 	/**
@@ -338,7 +337,6 @@ class Points_Rewards_For_WooCommerce_Settings {
 							echo esc_html( $attribute_name );
 							$allowed_tags = $this->wps_wpr_allowed_html();
 							echo wp_kses( "=$attribute_val", $allowed_tags );
-
 						}
 					}
 					?>
@@ -380,7 +378,6 @@ class Points_Rewards_For_WooCommerce_Settings {
 			$wps_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) );
 			if ( wp_verify_nonce( $wps_wpr_nonce, 'wps-wpr-nonce' ) ) {
 				$_POST[ $name ] = isset( $_POST[ $name ] ) ? 1 : 0;
-
 			}
 		}
 	}
@@ -398,7 +395,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 			$wps_wpr_nonce = sanitize_text_field( wp_unslash( $post['wps-wpr-nonce'] ) );
 			if ( wp_verify_nonce( $wps_wpr_nonce, 'wps-wpr-nonce' ) ) {
 				$post[ $name ] = ( isset( $post[ $name ] ) && ! empty( $post[ $name ] ) ) ? wp_kses_post( wp_unslash( $post[ $name ] ) ) : '';
-					return $post[ $name ]; // PHPCS:Ignore WordPress.Security.EscapeIutput.IutputNotEscaped
+				return $post[ $name ]; // PHPCS:Ignore WordPress.Security.EscapeIutput.IutputNotEscaped
 			}
 		}
 	}

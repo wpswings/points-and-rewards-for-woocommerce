@@ -1267,16 +1267,16 @@ class Points_Rewards_For_WooCommerce_Admin {
 			);
 			$user_post_meta_keys = apply_filters( 'wps_userpost_meta_keys_pro', $user_post_meta_keys );
 			foreach ( $user_post_meta_keys as $index => $meta_key ) {
-
+				// hpos.
 				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-				$meta_value = get_post_meta( $order_id, $meta_key, true );
+				$meta_value = wps_wpr_hpos_get_meta_data( $order_id, $meta_key, true );
 				if ( ! empty( $meta_value ) || '0' === $meta_value ) {
 
-					update_post_meta( $order_id, $new_key, $meta_value );
-					update_user_meta( $order_id, 'copy_' . $meta_key, $meta_value );
-					delete_post_meta( $order_id, $meta_key );
+					wps_wpr_hpos_update_meta_data( $order_id, $new_key, $meta_value );
+					wps_wpr_hpos_update_meta_data( $order_id, 'copy_' . $meta_key, $meta_value );
+					wps_wpr_hpos_delete_meta_data( $order_id, $meta_key );
 				} else {
-					delete_post_meta( $order_id, $meta_key );
+					wps_wpr_hpos_delete_meta_data( $order_id, $meta_key );
 				}
 			}
 		}
@@ -1311,8 +1311,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 				'mwb_wpr_birthday_points_year',
 			);
 			foreach ( $user_meta_keys as $index => $meta_key ) {
-						$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-						$meta_value = get_user_meta( $user_id, $meta_key, true );
+				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
+				$meta_value = get_user_meta( $user_id, $meta_key, true );
 				if ( ! empty( $meta_value ) || '0' === $meta_value ) {
 					update_user_meta( $user_id, $new_key, $meta_value );
 					update_user_meta( $user_id, 'copy_' . $meta_key, $meta_value );
@@ -1519,7 +1519,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$wps_wpr_subscription__renewal_points         = ! empty( $wps_wpr_general_settings['wps_wpr_subscription__renewal_points'] ) ? $wps_wpr_general_settings['wps_wpr_subscription__renewal_points'] : 0;
 
 			if ( '1' == $wps_wpr_enable_subscription_renewal_settings ) {
-				$wps_wpr_renewal_points_awarded = get_post_meta( $order_id, 'wps_wpr_renewal_points_awarded', true );
+				// hpos.
+				$wps_wpr_renewal_points_awarded = wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_renewal_points_awarded', true );
 
 				if ( empty( $wps_wpr_renewal_points_awarded ) ) {
 					if ( 'processing' === $order_status ) {
@@ -1544,8 +1545,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 						update_user_meta( $user_id, 'wps_wpr_points', $wps_wpr_total_points );
 						update_user_meta( $user_id, 'points_details', $wps_points_details );
-						update_post_meta( $order_id, 'wps_wpr_renewal_points_awarded', 'done' );
-						update_post_meta( $order_id, 'wps_wpr_subscription_renewal_awarded_points', $wps_wpr_subscription__renewal_points );
+						// hpos.
+						wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_renewal_points_awarded', 'done' );
+						wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_subscription_renewal_awarded_points', $wps_wpr_subscription__renewal_points );
 
 						if ( self::wps_wpr_check_mail_notfication_is_enable() ) {
 
@@ -1610,10 +1612,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 					$negative = 0;
 					$positive = 0;
 					foreach ( $orders as $order_id ) {
-
-						$per_curreny_points_check = get_post_meta( $order_id, "$order_id#item_conversion_id", true );
-						$referral_purchase_check  = get_post_meta( $order_id, 'wps_wpr_awarded_referral_purchase_points', true );
-						$order_total_points_check = get_post_meta( $order_id, "$order_id#points_assignedon_order_total", true );
+						// hpos.
+						$per_curreny_points_check = wps_wpr_hpos_get_meta_data( $order_id, "$order_id#item_conversion_id", true );
+						$referral_purchase_check  = wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_awarded_referral_purchase_points', true );
+						$order_total_points_check = wps_wpr_hpos_get_meta_data( $order_id, "$order_id#points_assignedon_order_total", true );
 
 						if ( ! empty( $per_curreny_points_check ) || ! empty( $referral_purchase_check ) || ! empty( $order_total_points_check ) ) {
 
@@ -1667,8 +1669,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function wps_wpr_add_points_on_old_orders( $order, $rewards_points ) {
 
 		if ( ! empty( $order ) ) {
-
-			$wps_wpr_assign_points_to_old_orders = get_post_meta( $order->get_id(), 'wps_wpr_assign_points_to_old_orders', true );
+			// hpos.
+			$wps_wpr_assign_points_to_old_orders = wps_wpr_hpos_get_meta_data( $order->get_id(), 'wps_wpr_assign_points_to_old_orders', true );
 			if ( empty( $wps_wpr_assign_points_to_old_orders ) ) {
 
 				$get_points     = get_user_meta( $order->get_user_id(), 'wps_wpr_points', true );
@@ -1676,7 +1678,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$updated_points = (int) $get_points + $rewards_points;
 
 				update_user_meta( $order->get_user_id(), 'wps_wpr_points', $updated_points );
-				update_post_meta( $order->get_id(), 'wps_wpr_assign_points_to_old_orders', 'done' );
+				wps_wpr_hpos_update_meta_data( $order->get_id(), 'wps_wpr_assign_points_to_old_orders', 'done' );
 
 				// calling function to create logs.
 				$this->wps_wpr_create_log_for_previous_order( $order->get_user_id(), $rewards_points, $order->get_id() );
