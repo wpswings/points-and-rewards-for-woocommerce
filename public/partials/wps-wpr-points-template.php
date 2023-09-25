@@ -18,16 +18,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 /*
 Declarations
 */
-$user_id = get_current_user_id();
-$my_role = ! empty( get_user_meta( $user_id, 'membership_level', true ) ) ? get_user_meta( $user_id, 'membership_level', true ) : '';
+$user_id                             = get_current_user_id();
+$my_role                             = ! empty( get_user_meta( $user_id, 'membership_level', true ) ) ? get_user_meta( $user_id, 'membership_level', true ) : '';
+$get_points                          = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+$get_points                          = ! empty( $get_points ) ? $get_points : 0;
+$wps_wpr_overall__accumulated_points = get_user_meta( $user_id, 'wps_wpr_overall__accumulated_points', true );
+$wps_wpr_overall__accumulated_points = ! empty( $wps_wpr_overall__accumulated_points ) ? $wps_wpr_overall__accumulated_points : 0;
+
 if ( isset( $_POST['wps_wpr_save_level'] ) && isset( $_POST['membership-save-level'] ) && isset( $_POST['wps_wpr_membership_roles'] ) && sanitize_text_field( wp_unslash( $_POST['wps_wpr_membership_roles'] ) ) != $my_role ) {
 	$wps_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['membership-save-level'] ) );
 
 	if ( wp_verify_nonce( $wps_wpr_nonce, 'membership-save-level' ) ) {
 		$selected_role             = isset( $_POST['wps_wpr_membership_roles'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_membership_roles'] ) ) : '';// phpcs:ignore WordPress.Security.NonceVerification
-		$user_id                   = get_current_user_id();
 		$user                      = get_user_by( 'ID', $user_id );
-		$get_points                = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 		$membership_detail         = get_user_meta( $user_id, 'points_details', true );
 		$today_date                = date_i18n( 'Y-m-d h:i:sa', current_time( 'timestamp', 0 ) );
 		$expiration_date           = '';
@@ -49,7 +52,7 @@ if ( isset( $_POST['wps_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 				update_user_meta( $user_id, 'membership_level', $selected_role );
 				update_user_meta( $user_id, 'membership_expiration', $expiration_date );
 				/*Send mail*/
-				$user = get_user_by( 'ID', $user_id );
+				$user              = get_user_by( 'ID', $user_id );
 				$wps_wpr_shortcode = array(
 					'[USERLEVEL]' => $selected_role,
 					'[USERNAME]'  => $user->user_login,
@@ -65,7 +68,6 @@ if ( isset( $_POST['wps_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 	}
 }
 
-$user_id = get_current_user_id();
 /* Get points of the User*/
 $get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 /* Get points of the Membership Level*/
@@ -83,7 +85,6 @@ $wps_ways_to_gain_points_value = ! empty( $general_settings['wps_wpr_general_way
 $membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
 $wps_wpr_mem_enable        = isset( $membership_settings_array['wps_wpr_membership_setting_enable'] ) ? intval( $membership_settings_array['wps_wpr_membership_setting_enable'] ) : 0;
 $coupon_settings           = get_option( 'wps_wpr_coupons_gallery', true );
-$get_points                = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 $coupon_redeem_price       = ( isset( $coupon_settings['coupon_redeem_price'] ) && null != $coupon_settings['coupon_redeem_price'] ) ? $coupon_settings['coupon_redeem_price'] : 1;
 $coupon_redeem_points      = ( isset( $coupon_settings['coupon_redeem_points'] ) && null != $coupon_settings['coupon_redeem_points'] ) ? intval( $coupon_settings['coupon_redeem_points'] ) : 1;
 
@@ -99,19 +100,20 @@ $get_referral_invite = get_user_meta( $user_id, 'wps_points_referral_invite', tr
 if ( ! is_array( $coupon_settings ) ) {
 	$coupon_settings = array();
 }
+
+do_action( 'wps_wpr_top_account_page_section_hook', $user_id );
 ?>
+
 <div class="wps_wpr_points_wrapper_with_exp">
-	<div class="wps_wpr_points_only"><p class="wps_wpr_heading_para" >
-		<span class="wps_wpr_heading"><?php echo esc_html( $wps_text_points_value ) . ':'; ?></span></p>
-		<?php
-		$get_points = get_user_meta( $user_id, 'wps_wpr_points', true );
-		$get_point  = get_user_meta( $user_id, 'points_details', true );
-		?>
-		<span class="wps_wpr_heading" id="wps_wpr_points_only">
-			<?php
-			echo ( isset( $get_points ) && null != $get_points ) ? esc_html( $get_points ) : 0;
-			?>
-		</span>
+	<div class="wps_wpr_points_only wps_wpr_show_points_on_account_page">
+		<div class="wps_wpr_heading_para">
+			<span class="wps_wpr_heading"><?php echo esc_html( $wps_text_points_value ) . ':'; ?></span>
+			<span class="wps_wpr_total_earn_points"><?php echo esc_html( $get_points ); ?></span>
+		</div>
+		<div class="wps_wpr_heading_para">
+			<span class="wps_wpr_heading"><?php esc_html_e( 'Overall Accumulated Points : ', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<span class="wps_wpr_total_earn_points"><?php echo esc_html( $wps_wpr_overall__accumulated_points ); ?></span>
+		</div>
 	</div>
 	<?php
 	if ( isset( $wps_user_point_expiry ) && ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {
@@ -127,39 +129,32 @@ if ( ! is_array( $coupon_settings ) ) {
 		}
 	}
 	?>
-</div>		
-<span class="wps_wpr_view_log">
-	<a href="
-	<?php
-	echo esc_url( wc_get_endpoint_url( 'view-log' ) );
-	?>
-	">
-	<?php
-	esc_html_e( 'View Point Log', 'points-and-rewards-for-woocommerce' );
-	?>
-	</a>
-</span>
+</div>
+
 <?php
 if ( isset( $wps_ways_to_gain_points_value ) && ! empty( $wps_ways_to_gain_points_value ) ) {
 	?>
 	<div class ="wps_ways_to_gain_points_section">
-	<p class="wps_wpr_heading"><?php echo esc_html__( 'Ways to gain more points:', 'points-and-rewards-for-woocommerce' ); ?></p>
-			<?php
-			$wps_ways_to_gain_points_value = str_replace( '[Comment Points]', $wps_comment_value, $wps_ways_to_gain_points_value );
-			$wps_ways_to_gain_points_value = str_replace( '[Refer Points]', $wps_refer_value, $wps_ways_to_gain_points_value );
-			$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $wps_per_currency_spent_points, $wps_ways_to_gain_points_value );
-			$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $wps_per_currency_spent_price, $wps_ways_to_gain_points_value );
-			echo '<fieldset class="wps_wpr_each_section">' . wp_kses_post( $wps_ways_to_gain_points_value ) . '</fieldset>';
-			?>
-
+		<p class="wps_wpr_heading"><?php echo esc_html__( 'Ways to gain more points:', 'points-and-rewards-for-woocommerce' ); ?>
+			<span class="wps_wpr_view_log">
+				<a href="<?php echo esc_url( wc_get_endpoint_url( 'view-log' ) ); ?>"><?php esc_html_e( 'View Point Log', 'points-and-rewards-for-woocommerce' ); ?></a>
+			</span>
+		</p>
+		<?php
+		$wps_ways_to_gain_points_value = str_replace( '[Comment Points]', $wps_comment_value, $wps_ways_to_gain_points_value );
+		$wps_ways_to_gain_points_value = str_replace( '[Refer Points]', $wps_refer_value, $wps_ways_to_gain_points_value );
+		$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $wps_per_currency_spent_points, $wps_ways_to_gain_points_value );
+		$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $wps_per_currency_spent_price, $wps_ways_to_gain_points_value );
+		echo '<fieldset class="wps_wpr_each_section">' . wp_kses_post( $wps_ways_to_gain_points_value ) . '</fieldset>';
+		?>
 	</div>
 	<?php
 }
+
 if ( $wps_wpr_mem_enable ) {
 	$enable_drop              = false;
 	$wps_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
 	?>
-
 	<p class="wps_wpr_heading"><?php esc_html_e( 'Membership List', 'points-and-rewards-for-woocommerce' ); ?></p>
 		<?php
 		if ( isset( $wps_user_level ) && ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
@@ -310,7 +305,6 @@ if ( $wps_wpr_mem_enable ) {
 						</td>
 					</tr>
 					<?php
-
 					if ( $values['Points'] == $get_points || $values['Points'] < $get_points ) {
 						$enable_drop = true;
 					}
@@ -321,6 +315,7 @@ if ( $wps_wpr_mem_enable ) {
 		</table>
 	<?php
 }
+
 if ( isset( $enable_drop ) && $enable_drop ) {
 	if ( isset( $wps_user_level ) && ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
 		unset( $wps_wpr_membership_roles[ $wps_user_level ] );
@@ -356,6 +351,7 @@ if ( isset( $enable_drop ) && $enable_drop ) {
 		<?php
 	}
 }
+
 do_action( 'wps_wpr_add_coupon_generation', $user_id );
 ?>
 <br>

@@ -546,6 +546,8 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// calling function to unset points session.
 		$this->wps_wpr_unset_points_session_while_points_negative();
+		// calling function to calculate overall points.
+		$this->wps_wpr_overall_accumulated_points();
 	}
 
 	/**
@@ -3088,15 +3090,6 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * Shortcode to show points log on WordPress pages.
-	 *
-	 * @return void
-	 */
-	public function wps_wpr_shortocde_to_show_points_log() {
-		add_shortcode( 'SHOW_POINTS_LOG', array( $this, 'wps_wpr_create_points_log_shortocde' ) );
-	}
-
-	/**
 	 * This function is used to create points log shortcode.
 	 *
 	 * @return object
@@ -3128,7 +3121,8 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( '1' === $wps_wpr_checkout_page_apply_point_section ) {
 			add_shortcode( 'WPS_CHECKOUT_PAGE_SECTION', array( $this, 'wps_wpr_create_checkout_page_shortcode' ) );
 		}
-
+		// Shortcode to show points log on WordPress pages.
+		add_shortcode( 'SHOW_POINTS_LOG', array( $this, 'wps_wpr_create_points_log_shortocde' ) );
 		// calling to function to grant permission.
 		$this->wps_wpr_grant_permission_to_pay_again();
 	}
@@ -3891,6 +3885,187 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 				}
 			}
+		}
+	}
+
+	/** +++++++++ User Badges Features +++++++++++ */
+
+	/**
+	 * This function is used to calculate overall total accumulated points.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_overall_accumulated_points() {
+
+		if ( is_user_logged_in() ) {
+
+			$updated_points = 0;
+			$get_points     = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+			$get_points     = ! empty( $get_points ) ? $get_points : 0;
+			$silver_points  = get_user_meta( get_current_user_id(), 'wps_wpr_overall__accumulated_points', true );
+			$silver_points  = ! empty( $silver_points ) ? $silver_points : 0;
+			$random_points  = get_user_meta( get_current_user_id(), 'wps_wpr_store_random_points', true );
+			$random_points  = ! empty( $random_points ) ? $random_points : 0;
+
+			// check if points is not equal than update original points.
+			if ( $get_points !== $random_points ) {
+				if ( $get_points > $random_points ) {
+
+					$updated_points = (int) $get_points - $random_points;
+					update_user_meta( get_current_user_id(), 'wps_wpr_store_random_points', $get_points );
+				} else {
+
+					update_user_meta( get_current_user_id(), 'wps_wpr_store_random_points', $get_points );
+				}
+			}
+
+			// if value is in minus than assign zero.
+			if ( $updated_points < 0 ) {
+
+				$updated_points = 0;
+			}
+
+			// updating overall accumulated points.
+			if ( $updated_points > 0 ) {
+
+				$updated_silver_points = (int) $silver_points + $updated_points;
+				update_user_meta( get_current_user_id(), 'wps_wpr_overall__accumulated_points', $updated_silver_points );
+			} elseif ( $get_points > $silver_points ) {
+
+				$updated_silver_points = (int) $get_points - $silver_points;
+				$updated_silver_points = (int) $silver_points + $updated_silver_points;
+				update_user_meta( get_current_user_id(), 'wps_wpr_overall__accumulated_points', $updated_silver_points );
+			}
+
+			// calling function to assign user badges.
+			$this->wps_wpr_assign_user_bagdes_level();
+		}
+	}
+
+	/**
+	 * This function is used to assign user badges to users.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_assign_user_bagdes_level() {
+
+		// get badges values.
+		$wps_wpr_user_badges_setting         = get_option( 'wps_wpr_user_badges_setting', array() );
+		$wps_wpr_user_badges_setting         = ! empty( $wps_wpr_user_badges_setting ) && is_array( $wps_wpr_user_badges_setting ) ? $wps_wpr_user_badges_setting : array();
+		$wps_wpr_enable_user_badges_settings = ! empty( $wps_wpr_user_badges_setting['wps_wpr_enable_user_badges_settings'] ) ? $wps_wpr_user_badges_setting['wps_wpr_enable_user_badges_settings'] : 'no';
+		$wps_wpr_enter_badges_name           = ! empty( $wps_wpr_user_badges_setting['wps_wpr_enter_badges_name'] ) ? $wps_wpr_user_badges_setting['wps_wpr_enter_badges_name'] : array();
+		$wps_wpr_badges_threshold_points     = ! empty( $wps_wpr_user_badges_setting['wps_wpr_badges_threshold_points'] ) ? $wps_wpr_user_badges_setting['wps_wpr_badges_threshold_points'] : array();
+		$wps_wpr_badges_rewards_points       = ! empty( $wps_wpr_user_badges_setting['wps_wpr_badges_rewards_points'] ) ? $wps_wpr_user_badges_setting['wps_wpr_badges_rewards_points'] : array();
+		$wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wps_wpr_image_attachment_id'] ) ? $wps_wpr_user_badges_setting['wps_wpr_image_attachment_id'] : array();		
+
+		if ( 'yes' === $wps_wpr_enable_user_badges_settings ) {
+			if ( ! empty( $wps_wpr_enter_badges_name[0] ) && ! empty( $wps_wpr_badges_threshold_points[0] ) && ! empty( $wps_wpr_badges_rewards_points[0] ) ) {
+
+				$flag                                = false;
+				$index                               = 0;
+				$wps_user_points                     = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+				$wps_user_points                     = ! empty( $wps_user_points ) ? $wps_user_points : 0;
+				$wps_wpr_overall__accumulated_points = get_user_meta( get_current_user_id(), 'wps_wpr_overall__accumulated_points', true );
+				$wps_wpr_overall__accumulated_points = ! empty( $wps_wpr_overall__accumulated_points ) ? $wps_wpr_overall__accumulated_points : 0;
+				$wps_wpr_assigned_badges_level_name  = get_user_meta( get_current_user_id(), 'wps_wpr_assigned_badges_level_name', true );
+				$wps_wpr_index_check                 = get_user_meta( get_current_user_id(), 'wps_wpr_index_check', true );
+				$wps_wpr_index_check                 = ! empty( $wps_wpr_index_check ) ? $wps_wpr_index_check : -1;
+
+				if ( count( $wps_wpr_enter_badges_name ) === count( $wps_wpr_badges_threshold_points ) && count( $wps_wpr_badges_threshold_points ) === count( $wps_wpr_badges_rewards_points ) ) {
+					foreach ( $wps_wpr_enter_badges_name as $key => $badges_level_name ) {
+
+						if ( $wps_wpr_overall__accumulated_points >= $wps_wpr_badges_threshold_points[ $key ] ) {
+							if ( $badges_level_name !== $wps_wpr_assigned_badges_level_name ) {
+
+								if ( $key > $wps_wpr_index_check ) {
+
+									$index = $key;
+									$flag  = true;
+								}
+							}
+						}
+					}
+
+					if ( $flag ) {
+
+						$updated_points = (int) $wps_user_points + $wps_wpr_badges_rewards_points[ $index ];
+						update_user_meta( get_current_user_id(), 'wps_wpr_points', $updated_points );
+						update_user_meta( get_current_user_id(), 'wps_wpr_assigned_badges_icon', $wps_wpr_image_attachment_id[ $index ] );
+						update_user_meta( get_current_user_id(), 'wps_wpr_assigned_badges_level_name', $wps_wpr_enter_badges_name[ $index ] );
+						update_user_meta( get_current_user_id(), 'wps_wpr_index_check', $index );
+
+						// calling function to creare points log.
+						$this->wps_wpr_create_user_badges_log( get_current_user_id(), $wps_wpr_badges_rewards_points[ $index ], $updated_points );
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to create points log for user badges features.
+	 *
+	 * @param string $user_id user_id.
+	 * @param string $updated_points updated_points.
+	 * @return void
+	 */
+	public function wps_wpr_create_user_badges_log( $user_id, $badges_points, $updated_points ) {
+
+		$user_badges_log = get_user_meta( $user_id, 'points_details', true );
+		$user_badges_log = ! empty( $user_badges_log ) && is_array( $user_badges_log ) ? $user_badges_log : array();
+		if ( ! empty( $user_badges_log['user_badges_rewards_points'] ) ) {
+
+			$user_badges_arr = array(
+				'user_badges_rewards_points' => $badges_points,
+				'date'                       => date_i18n( 'Y-m-d h:i:sa' ),
+			);
+			$user_badges_log['user_badges_rewards_points'][] = $user_badges_arr;
+		} else {
+
+			$user_badges_arr = array(
+				'user_badges_rewards_points' => $badges_points,
+				'date'                       => date_i18n( 'Y-m-d h:i:sa' ),
+			);
+			$user_badges_log['user_badges_rewards_points'][] = $user_badges_arr;
+		}
+		update_user_meta( $user_id, 'points_details', $user_badges_log );
+
+		// Sending mail as well.
+		$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
+		if ( is_array( $wps_wpr_notificatin_array ) && ! empty( $wps_wpr_notificatin_array ) ) {
+
+			$wps_wpr_email_subject     = isset( $wps_wpr_notificatin_array['wps_wpr_badges_points_mail_subject'] ) ? $wps_wpr_notificatin_array['wps_wpr_badges_points_mail_subject'] : '';
+			$wps_wpr_email_discription = isset( $wps_wpr_notificatin_array['wps_wpr_badges_points_email_description'] ) ? $wps_wpr_notificatin_array['wps_wpr_badges_points_email_description'] : '';
+			$wps_wpr_email_discription = str_replace( '[BADGESPOINTS]', $badges_points, $wps_wpr_email_discription );
+			$wps_wpr_email_discription = str_replace( '[TOTALPOINTS]', $updated_points, $wps_wpr_email_discription );
+
+			/*check is mail notification is enable or not*/
+			$check_enable = apply_filters( 'wps_wpr_check_custom_points_notification_enable', true, 'badges_points_notify' );
+			if ( Points_Rewards_For_WooCommerce_Admin::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
+				$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
+				$email_status   = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+			}
+		}
+	}
+
+	/**
+	 * This function is used to show earn user badges.
+	 *
+	 * @param  string $user_id user id.
+	 * @return void
+	 */
+	public function wps_wpr_display_earn_user_badges( $user_id ) {
+
+		// get badges values.
+		$wps_wpr_user_badges_setting         = get_option( 'wps_wpr_user_badges_setting', array() );
+		$wps_wpr_user_badges_setting         = ! empty( $wps_wpr_user_badges_setting ) && is_array( $wps_wpr_user_badges_setting ) ? $wps_wpr_user_badges_setting : array();
+		$wps_wpr_enable_user_badges_settings = ! empty( $wps_wpr_user_badges_setting['wps_wpr_enable_user_badges_settings'] ) ? $wps_wpr_user_badges_setting['wps_wpr_enable_user_badges_settings'] : 'no';
+		$wps_wpr_assigned_badges_icon        = get_user_meta( $user_id, 'wps_wpr_assigned_badges_icon', true );
+		$wps_wpr_assigned_badges_level_name  = get_user_meta( $user_id, 'wps_wpr_assigned_badges_level_name', true );
+
+		if ( 'yes' === $wps_wpr_enable_user_badges_settings ) {
+			echo '<img src="' . esc_html( $wps_wpr_assigned_badges_icon ) . '">';
+			echo esc_html( $wps_wpr_assigned_badges_level_name );
 		}
 	}
 }

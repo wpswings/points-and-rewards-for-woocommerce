@@ -489,7 +489,7 @@
 				jQuery(this).parents('.wps_wpr_add_user_badges_dynamic').remove();
 			} else {
 
-				alert( wps_wpr_object.segment_limit_msg );
+				alert( 'This is the default setting, you cannot remove it!!' );
 			}
 		}
 	})

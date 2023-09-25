@@ -170,7 +170,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'wps_badge_image'     => esc_html__( WPS_RWPR_DIR_URL . 'admin/images/vip.png', ),
 				);
 
-				wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
+				wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
 				wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
 			}
 		}

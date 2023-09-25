@@ -527,8 +527,9 @@ input#wps_cart_points {
     vertical-align: middle
 }
 
-.wps_wpr_points_wrapper_with_exp {
-    float: left
+.wps_wpr_total_earn_points {
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .wps_wpr_view_log_notice {
@@ -1313,6 +1314,14 @@ button.wps_wpr_container-popup-claim:focus {
 /* Audio effects start */
 .wps_wpr_wheel_icon_main audio {
     display: none;
+}
+
+.wps_wpr_show_points_on_account_page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 /* Audio effects end */

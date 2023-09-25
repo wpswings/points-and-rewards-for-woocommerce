@@ -277,11 +277,8 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_cart_totals_coupon_html', $plugin_public, 'wps_wpr_par_virtual_coupon_remove', 30, 3 );
 			// Paypal Issue Change End.
 
-			// Shortcode to show points log.
-			$this->loader->add_action( 'plugins_loaded', $plugin_public, 'wps_wpr_shortocde_to_show_points_log' );
 			// Shortcode to show apply points section.
 			$this->loader->add_action( 'plugins_loaded', $plugin_public, 'wps_wpr_shortocde_to_show_apply_points_section' );
-
 			// WOOCS - WooCommerce Currency Switcher Compatibility.
 			if ( is_plugin_active( 'woocommerce-currency-switcher/index.php' ) ) {
 				$this->loader->add_filter( 'wps_wpr_show_conversion_price', $plugin_public, 'wps_wpr_conversion_price_callback', 10, 1 );
@@ -296,6 +293,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_footer', $plugin_public, 'wps_wpr_show_canvas_icons' );
 			// assign claim points.
 			$this->loader->add_action( 'wp_ajax_assign_claim_points', $plugin_public, 'wps_wpr_assign_claim_points' );
+			$this->loader->add_action( 'wps_wpr_top_account_page_section_hook', $plugin_public, 'wps_wpr_display_earn_user_badges', 10, 1 );
 		}
 	}
 

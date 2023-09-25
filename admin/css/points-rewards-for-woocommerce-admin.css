@@ -1187,7 +1187,8 @@ table.wps_wpr_user_badges_table_settings_wrappers {
 
 .wps_wpr_user_badges_table_settings_wrappers .wps_wpr_icon_user_badges {
     max-height: 40px;
-    max-width: 40px;
+    width: 30px;
+    height: auto;
 }
 
 #wps_rwpr_setting_wrapper input.wps_wpr_add_more_btn_badge {
