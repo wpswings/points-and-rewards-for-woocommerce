@@ -235,7 +235,6 @@ if ( $activated ) {
 	 * admin-specific hooks, and public-facing site hooks.
 	 */
 	require plugin_dir_path( __FILE__ ) . 'includes/class-points-rewards-for-woocommerce.php';
-
 	add_shortcode( 'MYCURRENTPOINT', 'wps_wpr_mytotalpoint_shortcode' );
 
 	/**
