@@ -1251,4 +1251,14 @@ table.wps_wpr_user_badges_table_settings_wrappers {
     background: none;
 }
 
+select.wps_wpr_choose_badges_position {
+    width: 120px;
+    height: 35px;
+}
+
+input#wps_wpr_user_badges_fields_add:hover {
+    background-color: #2196f3 !important;
+    color: #fff;
+}
+
 /* General Fixes in Badge Dashoard end*/

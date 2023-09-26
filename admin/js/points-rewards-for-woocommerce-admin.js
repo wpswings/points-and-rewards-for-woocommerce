@@ -454,87 +454,16 @@
 		return false;
 	}
 
-	// Add badges fields dynamic.wps_wpr_gamification_fields_add
-	jQuery(document).on('click', '#wps_wpr_user_badges_fields_add', function() {
-		if (true === jQuery('.wps_wpr_enable_user_badges_settings').prop('checked')) {
+	// if pro is not activated than show notice for user.
+	jQuery('.wps_wpr_pro_plugin_notices').hide();
+	if ( wps_wpr_object.check_pro_activate ) {
+		jQuery(document).on('click', '#wps_wpr_user_badges_fields_add', function(){
 
-			if (wps_wpr_badges_validation()) {
-
-				var new_row = '<tr class="wps_wpr_add_user_badges_dynamic"><td><input type="text" name="wps_wpr_enter_badges_name[]" id="wps_wpr_enter_badges_name" class="wps_wpr_enter_badges_name" value="" required></td><td><input type="number" min="1" name="wps_wpr_badges_threshold_points[]" id="wps_wpr_badges_threshold_points" class="wps_wpr_badges_threshold_points" value="" required></td><td><input type="number" min="1" name="wps_wpr_badges_rewards_points[]" id="wps_wpr_badges_rewards_points" class="wps_wpr_badges_rewards_points" value="" required></td><td><div class="wps_wpr_icon_user_badges_wrap"><img src="' + wps_wpr_object.wps_badge_image + '" class="wps_wpr_icon_user_badges"><input type="button" class="wps_wpr_add_user_badges_img" value="Upload"><input type="hidden" name="wps_wpr_image_attachment_id[]" class="wps_wpr_image_attachment_id" value="' + wps_wpr_object.wps_badge_image + '"/></div></td><td style="width: 60px;"><input type="button" name="wps_wpr_remove_user_badges" id="wps_wpr_remove_user_badges" class="wps_wpr_remove_user_badges" value="+"></td></tr>';
-				jQuery('.wps_wpr_user_badges_table_settings_wrappers').append(new_row);
-			} else {
-
-				jQuery('.notice.notice-error.is-dismissible').each(function() {
-					jQuery(this).remove();
-				});
-				jQuery('.notice.notice-success.is-dismissible').each(function() {
-					jQuery(this).remove();
-				});
-
-				jQuery('html, body').animate({
-					scrollTop: jQuery(".wps_rwpr_header").offset().top
-				}, 800);
-				var empty_message = '<div class="notice notice-error is-dismissible"><p><strong>Some Fields are empty!</strong></p></div>';
-				jQuery(empty_message).insertBefore(jQuery('.wps_wpr_user_badges_main_wrappers'));
-			}
-		}
-	});
-
-	// Remove user badges.
-	jQuery(document).on('click', '#wps_wpr_remove_user_badges', function(){
-		// check setting is enable.
-		if ( true == jQuery('.wps_wpr_enable_user_badges_settings').prop('checked') ) {
-			if ( jQuery('.wps_wpr_add_user_badges_dynamic').length > 2 ) {
-
-				jQuery(this).parents('.wps_wpr_add_user_badges_dynamic').remove();
-			} else {
-
-				alert( 'This is the default setting, you cannot remove it!!' );
-			}
-		}
-	})
-
-	// Validating badges.
-	function wps_wpr_badges_validation() {
-  
-		var result      = true;
-		var badges_name = [];
-		var i           = 0
-		jQuery(document).find('.wps_wpr_enter_badges_name').each(function(){
-		  badges_name.push( jQuery(this).val() );
-		  if ( ! jQuery(this).val() ) {
-  
-			++i;
-		  }
+			jQuery(document).find('.wps_wpr_object_purchase').remove();
+			var pro_plugin_msg = '<div class="wps_wpr_object_purchase"><p>' + wps_wpr_object.badge_pro__text + ' <a target="_blanck" href="' + wps_wpr_object.pro_link + '">' + wps_wpr_object.pro_link_text + "</a></p></div>";
+			jQuery('.wps_wpr_pro_plugin_notices').show();
+			jQuery('.wps_wpr_pro_plugin_notices').append( pro_plugin_msg );
 		});
-		  
-		var threshold_points = [];
-		var x                = 0;
-		jQuery(document).find('.wps_wpr_badges_threshold_points').each(function(){
-		  threshold_points.push( jQuery(this).val() );
-		  if ( ! jQuery(this).val() ) {
-  
-			++x;
-		  }
-		});
-  
-		var badges_rewards_points = [];
-		var y                     = 0;
-		jQuery(document).find('.wps_wpr_badges_rewards_points').each(function(){
-		  badges_rewards_points.push( jQuery(this).val() );
-		  if ( ! jQuery(this).val() ) {
-  
-			++y;
-		  }
-		});
-  
-		if ( i > 0 || x > 0 || y > 0 ) {
-  
-		  result = false;
-		}
-		
-		return result;
-	 }
-  
+	}
 });
   

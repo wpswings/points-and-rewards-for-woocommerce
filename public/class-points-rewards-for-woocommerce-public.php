@@ -4049,7 +4049,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * This function is used to show earn user badges.
+	 * This function is used to show earn user badges.Gold Member for Points and Rewards
 	 *
 	 * @param  string $user_id user id.
 	 * @return void
@@ -4060,12 +4060,31 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_user_badges_setting         = get_option( 'wps_wpr_user_badges_setting', array() );
 		$wps_wpr_user_badges_setting         = ! empty( $wps_wpr_user_badges_setting ) && is_array( $wps_wpr_user_badges_setting ) ? $wps_wpr_user_badges_setting : array();
 		$wps_wpr_enable_user_badges_settings = ! empty( $wps_wpr_user_badges_setting['wps_wpr_enable_user_badges_settings'] ) ? $wps_wpr_user_badges_setting['wps_wpr_enable_user_badges_settings'] : 'no';
+		$wps_wpr_enable_to_show_bades        = ! empty( $wps_wpr_user_badges_setting['wps_wpr_enable_to_show_bades'] ) ? $wps_wpr_user_badges_setting['wps_wpr_enable_to_show_bades'] : 'no';
+		$wps_wpr_choose_badges_position      = ! empty( $wps_wpr_user_badges_setting['wps_wpr_choose_badges_position'] ) ? $wps_wpr_user_badges_setting['wps_wpr_choose_badges_position'] : 'center';
 		$wps_wpr_assigned_badges_icon        = get_user_meta( $user_id, 'wps_wpr_assigned_badges_icon', true );
 		$wps_wpr_assigned_badges_level_name  = get_user_meta( $user_id, 'wps_wpr_assigned_badges_level_name', true );
+		$wps_wpr_overall__accumulated_points = get_user_meta( get_current_user_id(), 'wps_wpr_overall__accumulated_points', true );
+		$wps_wpr_overall__accumulated_points = ! empty( $wps_wpr_overall__accumulated_points ) ? $wps_wpr_overall__accumulated_points : 0;
 
 		if ( 'yes' === $wps_wpr_enable_user_badges_settings ) {
-			echo '<img src="' . esc_html( $wps_wpr_assigned_badges_icon ) . '">';
-			echo esc_html( $wps_wpr_assigned_badges_level_name );
+			if ( 'yes' === $wps_wpr_enable_to_show_bades ) {
+				?>
+				<div id="wps-par__badge-wrap" class="wps-par__badge-wrap wps-badge-<?php echo esc_html( $wps_wpr_choose_badges_position ); ?>">
+					<div class="wps-par__badge-img-wrap">
+						<div class="wps-par__badge-img">
+							<img src="<?php echo esc_url( $wps_wpr_assigned_badges_icon ); ?>" alt="">
+						</div>
+					</div>
+					<div class="wps-par__badge-label">
+						<div class="wps_wpr_account_page_badge_name_wrapper"><?php echo esc_html( $wps_wpr_assigned_badges_level_name ); ?></div>
+						<span>
+							<?php echo esc_html__( 'Congratulations! You have earned ', 'points-and-rewards-for-woocommerce' ) . esc_html( $wps_wpr_assigned_badges_level_name ) . esc_html__( ' badge for earning ', 'points-and-rewards-for-woocommerce' ) . esc_html( $wps_wpr_overall__accumulated_points ) . esc_html__( ' points.', 'points-and-rewards-for-woocommerce' ); ?>
+						</span>
+					</div>
+				</div>
+				<?php
+			}
 		}
 	}
 }
