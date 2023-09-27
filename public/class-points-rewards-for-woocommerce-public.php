@@ -3697,7 +3697,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * Undocumented function.
+	 * This function is used to show canvas on wordpress page.
 	 *
 	 * @return bool
 	 */
@@ -3805,7 +3805,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_game_points_logs = ! empty( $wps_wpr_game_points_logs ) && is_array( $wps_wpr_game_points_logs ) ? $wps_wpr_game_points_logs : array();
 
 		if ( isset( $wps_wpr_game_points_logs['game_claim_points'] ) && ! empty( $wps_wpr_game_points_logs['game_claim_points'] ) ) {
-			$daily_login_arr = array(
+			$daily_login_arr                                 = array(
 				'game_claim_points' => $wps_claim_points,
 				'date'              => $today_date,
 			);
@@ -3815,7 +3815,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( ! is_array( $wps_wpr_game_points_logs ) ) {
 				$wps_wpr_game_points_logs = array();
 			}
-			$daily_login_arr = array(
+			$daily_login_arr                                 = array(
 				'game_claim_points' => $wps_claim_points,
 				'date'              => $today_date,
 			);
@@ -4005,8 +4005,9 @@ class Points_Rewards_For_WooCommerce_Public {
 	/**
 	 * This function is used to create points log for user badges features.
 	 *
-	 * @param string $user_id user_id.
-	 * @param string $updated_points updated_points.
+	 * @param  string $user_id        user_id.
+	 * @param  string $badges_points  badges_points.
+	 * @param  string $updated_points updated_points.
 	 * @return void
 	 */
 	public function wps_wpr_create_user_badges_log( $user_id, $badges_points, $updated_points ) {
@@ -4015,14 +4016,14 @@ class Points_Rewards_For_WooCommerce_Public {
 		$user_badges_log = ! empty( $user_badges_log ) && is_array( $user_badges_log ) ? $user_badges_log : array();
 		if ( ! empty( $user_badges_log['user_badges_rewards_points'] ) ) {
 
-			$user_badges_arr = array(
+			$user_badges_arr                                 = array(
 				'user_badges_rewards_points' => $badges_points,
 				'date'                       => date_i18n( 'Y-m-d h:i:sa' ),
 			);
 			$user_badges_log['user_badges_rewards_points'][] = $user_badges_arr;
 		} else {
 
-			$user_badges_arr = array(
+			$user_badges_arr                                 = array(
 				'user_badges_rewards_points' => $badges_points,
 				'date'                       => date_i18n( 'Y-m-d h:i:sa' ),
 			);
