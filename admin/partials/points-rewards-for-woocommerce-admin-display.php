@@ -85,6 +85,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 ?>
 <div class="wrap woocommerce" id="wps_rwpr_setting_wrapper">
 	<form enctype="multipart/form-data" action="" id="mainform"  method="post">
+		<div class="wps_wpr_show_version_on_dashboard"><span><?php echo esc_html( 'v' . REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION ); ?></span></div>
 		<div class="wps_rwpr_header">
 			<div class="wps_rwpr_header_content_left">
 				<div>

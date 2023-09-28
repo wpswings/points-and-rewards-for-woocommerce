@@ -87,6 +87,13 @@
     max-width: unset;
 }
 
+ul.wps-overview__features {
+    list-style: disc;
+}
+.wps_wpr_overview_remove_anchor_underline {
+    text-decoration: none;
+}
+
 @media only screen and (max-width: 480px) {
 
     #wps_wpr_coupon_conversion_points,
