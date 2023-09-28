@@ -1708,7 +1708,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					if ( 'yes' == get_post_meta( $cart['product_id'], 'wps_product_purchase_points_only', true ) ) {
 						if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
 
-							$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
+							$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] * $cart['quantity'];
 						}
 					}
 
