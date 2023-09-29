@@ -1281,4 +1281,16 @@ input#wps_wpr_user_badges_fields_add:hover {
     background-color: #2196f3 !important;
 }
 
+.wps-offer-notice.notice.notice-warning {
+    padding: 0;
+    border: none;
+    margin-left: 2px;
+    margin-right: 20px;
+  }
+  .wps-offer-notice.notice.notice-warning a img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
 /* General Fixes in Badge Dashoard end*/

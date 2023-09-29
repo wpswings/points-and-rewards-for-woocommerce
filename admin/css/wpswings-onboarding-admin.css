@@ -446,4 +446,16 @@ a.wps-wpr-go-pro {
   border-radius: 5px;
 }
 
+.wps-offer-notice.notice.notice-warning {
+  padding: 0;
+  border: none;
+  margin-left: 2px;
+  margin-right: 20px;
+}
+.wps-offer-notice.notice.notice-warning a img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /*end of deactivating popup css*/

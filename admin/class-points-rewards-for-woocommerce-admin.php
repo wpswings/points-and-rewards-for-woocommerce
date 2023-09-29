@@ -906,6 +906,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 				wp_schedule_event( $time, 'daily', 'wps_wpr_check_for_notification_update' );
 			}
 		}
+
+		// calling to create crone for banner image.
+		$this->wps_wpr_set_cron_for_plugin_banner_notification();
 	}
 
 	/**
@@ -1722,5 +1725,95 @@ class Points_Rewards_For_WooCommerce_Admin {
 			}
 			update_user_meta( $user_id, 'points_details', $previous_order_logs );
 		}
+	}
+
+	/** +++++++++++ Plugin Banner Notification ++++++++++++++ */
+
+	/**
+	 * This function is used to create crone for banner image.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_set_cron_for_plugin_banner_notification() {
+
+		$wps_wpr_offset = get_option( 'gmt_offset' );
+		$wps_wpr_time   = time() + $wps_wpr_offset * 60 * 60;
+		if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
+
+			wp_schedule_event( $wps_wpr_time, 'daily', 'wps_wgm_check_for_notification_update' );
+		}
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_save_banner_notice_message() {
+
+		$wps_notification_data = $this->wps_wpr_get_update_banner_notification_data();
+		if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
+
+			$banner_id    = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_id'] : '';
+			$banner_image = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_image'] : '';
+			$banner_url   = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_url'] : '';
+			$banner_type  = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_type'] : '';
+
+			update_option( 'wps_wgm_notify_new_banner_id', $banner_id );
+			update_option( 'wps_wgm_notify_new_banner_image', $banner_image );
+			update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
+
+			if ( 'regular' == $banner_type ) {
+				update_option( 'wps_wgm_notify_hide_baneer_notification', '' );
+			}
+		}
+	}
+
+	/**
+	 * This function is used to get banner data from api.
+	 *
+	 * @return array
+	 */
+	public function wps_wpr_get_update_banner_notification_data() {
+		$wps_notification_data = array();
+		$url                   = 'https://demo.wpswings.com/client-notification/woo-gift-cards-lite/wps-client-notify.php';
+		$attr                  = array(
+			'action'         => 'wps_notification_fetch',
+			'plugin_version' => REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION,
+		);
+		$query                 = esc_url_raw( add_query_arg( $attr, $url ) );
+		$response              = wp_remote_get(
+			$query,
+			array(
+				'timeout'   => 20,
+				'sslverify' => false,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			$error_message = $response->get_error_message();
+			echo '<p><strong>' . esc_html__( 'Something went wrong: ', 'points-and-rewards-for-woocommerce' ) . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+		} else {
+			$wps_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
+		}
+		return $wps_notification_data;
+	}
+
+	/**
+	 * Calling ajax to save banner id.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_dismiss_notice__banner_callback() {
+		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wpr-verify-nonce' ) ) {
+
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+			if ( isset( $banner_id ) && '' != $banner_id ) {
+
+				update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
+			}
+			wp_send_json_success();
+		}
+		wp_die();
 	}
 }

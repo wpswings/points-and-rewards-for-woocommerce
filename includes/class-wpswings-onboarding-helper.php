@@ -192,6 +192,7 @@ class WPSwings_Onboarding_Helper {
 				array(
 					'ajaxurl'                => admin_url( 'admin-ajax.php' ),
 					'auth_nonce'             => wp_create_nonce( 'wps_onboarding_nonce' ),
+					'banner_nonce'           => wp_create_nonce( 'wps-wpr-verify-nonce' ),
 					'current_screen'         => $pagenow,
 					'current_supported_slug' => apply_filters( 'wps_deactivation_supported_slug', array() ),
 				)

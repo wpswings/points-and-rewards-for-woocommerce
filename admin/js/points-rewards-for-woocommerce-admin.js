@@ -465,5 +465,21 @@
 			jQuery('.wps_wpr_pro_plugin_notices').append( pro_plugin_msg );
 		});
 	}
+
+	// plugin banner ajax.
+	jQuery(document).on( 'click', '#dismiss-banner', function(){
+		var data = {
+			action:'wps_wpr_ajax_banner_action',
+			wps_nonce:wps_wpr_object.wps_wpr_nonce
+		};
+		jQuery.ajax({
+			url: wps_wpr_object.ajaxurl,
+			type: "POST",
+			data: data,
+			success: function(response) {
+				window.location.reload();
+			}
+		});
+	});
 });
   

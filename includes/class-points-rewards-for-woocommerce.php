@@ -199,9 +199,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $plugin_admin, 'wps_wpr_subscription_renewal_point', 10, 1 );
 		}
 		$this->loader->add_filter( 'admin_notices', $plugin_admin, 'wps_wpr_updgrade_notice' );
-
 		// assign points on previous order.
 		$this->loader->add_action( 'wp_ajax_assign_points_on_previous_order', $plugin_admin, 'wps_wpr_assign_points_on_previous_order_call' );
+		// plugin banner notification.
+		$this->loader->add_action( 'wps_wgm_check_for_notification_update', $plugin_admin, 'wps_wpr_save_banner_notice_message' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_ajax_banner_action', $plugin_admin, 'wps_wpr_dismiss_notice__banner_callback' );
 	}
 
 	/**
