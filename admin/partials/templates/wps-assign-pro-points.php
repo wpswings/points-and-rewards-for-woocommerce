@@ -138,13 +138,13 @@ $wps_wpr_assign_product_table_settings = array(
 		'desc_tip' => __( 'Toggle This to Assign Points to All Products at Once. Untoggle to Remove Assigned Points to All Products at Once.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title'            => __( 'Enter Assign Global Product Points', 'points-and-rewards-for-woocommerce' ),
-		'type'             => 'number',
-		'desc'             => __( 'Enter Global Product Points', 'points-and-rewards-for-woocommerce' ),
-		'id'               => 'wps_wpr_pro_points_to_all',
-		'desc_tip'         => __( 'Entered Points are assigned to All Products.', 'points-and-rewards-for-woocommerce' ),
-		'custom_attribute' => array( 'min' => '"1"' ),
-		'class'            => 'input-text wps_wpr_common_width',
+		'title'             => __( 'Enter Assign Global Product Points', 'points-and-rewards-for-woocommerce' ),
+		'type'              => 'number',
+		'desc'              => __( 'Enter Global Product Points', 'points-and-rewards-for-woocommerce' ),
+		'id'                => 'wps_wpr_pro_points_to_all',
+		'desc_tip'          => __( 'Entered Points are assigned to All Products.', 'points-and-rewards-for-woocommerce' ),
+		'custom_attributes' => array( 'min' => '"1"' ),
+		'class'             => 'input-text wps_wpr_common_width',
 	),
 );
 $wps_wpr_assign_product_table_settings = apply_filters( 'wps_wpr_assign_product_points_settings', $wps_wpr_assign_product_table_settings );

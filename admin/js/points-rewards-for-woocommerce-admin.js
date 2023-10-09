@@ -466,6 +466,31 @@
 		});
 	}
 
+	// threshold amount in incremented order.
+	jQuery(document).on('keyup', '.wps_wpr_badges_threshold_points', function(){
+		
+		var current_threshold  = parseInt( jQuery(this).val() );
+		var previous_threshold = parseInt( jQuery(this).closest('.wps_wpr_add_user_badges_dynamic').prev('tr').find('.wps_wpr_badges_threshold_points').val() );
+		
+		if ( current_threshold < previous_threshold ) {
+
+			jQuery(this).focus();
+			jQuery(this).css( 'border', '2px solid red' );
+			jQuery('.wps_wpr_show_incremented_warning_msg').show();
+			jQuery('.wps_wpr_show_incremented_warning_msg').html( wps_wpr_object.threshold_warning_msg );
+			jQuery('.wps_wpr_add_more_btn_badge').prop( 'disabled', true );
+			jQuery('#wps_wpr_save_user_badges_settings').prop( 'disabled', true );
+		} else {
+
+			jQuery(this).blur();
+			jQuery(this).removeAttr('style');
+			jQuery('.wps_wpr_show_incremented_warning_msg').hide();
+			jQuery('.wps_wpr_show_incremented_warning_msg').html( '' );
+			jQuery('.wps_wpr_add_more_btn_badge').prop( 'disabled', false );
+			jQuery('#wps_wpr_save_user_badges_settings').prop( 'disabled', false );
+		}
+	});
+
 	// plugin banner ajax.
 	jQuery(document).on( 'click', '#dismiss-banner', function(){
 		var data = {

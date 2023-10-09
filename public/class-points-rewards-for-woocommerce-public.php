@@ -4070,21 +4070,24 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		if ( 'yes' === $wps_wpr_enable_user_badges_settings ) {
 			if ( 'yes' === $wps_wpr_enable_to_show_bades ) {
-				?>
-				<div id="wps-par__badge-wrap" class="wps-par__badge-wrap wps-badge-<?php echo esc_html( $wps_wpr_choose_badges_position ); ?>">
-					<div class="wps-par__badge-img-wrap">
-						<div class="wps-par__badge-img">
-							<img src="<?php echo esc_url( $wps_wpr_assigned_badges_icon ); ?>" alt="">
+				if ( ! empty( $wps_wpr_assigned_badges_level_name ) ) {
+
+					?>
+					<div id="wps-par__badge-wrap" class="wps-par__badge-wrap wps-badge-<?php echo esc_html( $wps_wpr_choose_badges_position ); ?>">
+						<div class="wps-par__badge-img-wrap">
+							<div class="wps-par__badge-img">
+								<img src="<?php echo esc_url( $wps_wpr_assigned_badges_icon ); ?>" alt="">
+							</div>
+						</div>
+						<div class="wps-par__badge-label">
+							<div class="wps_wpr_account_page_badge_name_wrapper"><?php echo esc_html( $wps_wpr_assigned_badges_level_name ); ?></div>
+							<span>
+								<?php echo esc_html__( 'Congratulations! You have earned ', 'points-and-rewards-for-woocommerce' ) . esc_html( $wps_wpr_assigned_badges_level_name ) . esc_html__( ' badge for earning ', 'points-and-rewards-for-woocommerce' ) . esc_html( $wps_wpr_overall__accumulated_points ) . esc_html__( ' points.', 'points-and-rewards-for-woocommerce' ); ?>
+							</span>
 						</div>
 					</div>
-					<div class="wps-par__badge-label">
-						<div class="wps_wpr_account_page_badge_name_wrapper"><?php echo esc_html( $wps_wpr_assigned_badges_level_name ); ?></div>
-						<span>
-							<?php echo esc_html__( 'Congratulations! You have earned ', 'points-and-rewards-for-woocommerce' ) . esc_html( $wps_wpr_assigned_badges_level_name ) . esc_html__( ' badge for earning ', 'points-and-rewards-for-woocommerce' ) . esc_html( $wps_wpr_overall__accumulated_points ) . esc_html__( ' points.', 'points-and-rewards-for-woocommerce' ); ?>
-						</span>
-					</div>
-				</div>
-				<?php
+					<?php
+				}
 			}
 		}
 	}

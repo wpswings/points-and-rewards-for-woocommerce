@@ -1286,11 +1286,20 @@ input#wps_wpr_user_badges_fields_add:hover {
     border: none;
     margin-left: 2px;
     margin-right: 20px;
-  }
-  .wps-offer-notice.notice.notice-warning a img {
+}
+
+.wps-offer-notice.notice.notice-warning a img {
     display: block;
     width: 100%;
     height: auto;
-  }
+}
+
+.wps_wpr_show_incremented_warning_msg {
+    color: red;
+    display: none;
+    font-weight: 500;
+    margin-left: 15px;
+    margin-top: 5px;
+}
 
 /* General Fixes in Badge Dashoard end*/

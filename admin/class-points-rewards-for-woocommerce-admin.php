@@ -88,7 +88,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 				wp_enqueue_style( 'woocommerce_admin_styles' );
 				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION );
-				// Sticky-JS.
 				wp_enqueue_script( 'sticky_js', WPS_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), WC_VERSION, true );
 				wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery' ), WC_VERSION, true );
 				wp_enqueue_media();
@@ -131,44 +130,45 @@ class Points_Rewards_For_WooCommerce_Admin {
 				}
 				$url     = admin_url( 'admin.php?page=wps-wpr-setting' );
 				$wps_wpr = array(
-					'ajaxurl'             => admin_url( 'admin-ajax.php' ),
-					'validpoint'          => __( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
-					'Labelname'           => __( 'Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
-					'Labeltext'           => __( 'Enter Level', 'points-and-rewards-for-woocommerce' ),
-					'Points'              => __( 'Enter Points', 'points-and-rewards-for-woocommerce' ),
-					'Categ_text'          => __( 'Select Product Category', 'points-and-rewards-for-woocommerce' ),
-					'Remove_text'         => __( 'Remove', 'points-and-rewards-for-woocommerce' ),
-					'Categ_option'        => $option_categ,
-					'Prod_text'           => __( 'Select Product', 'points-and-rewards-for-woocommerce' ),
-					'Discounttext'        => __( 'Enter Discount (%)', 'points-and-rewards-for-woocommerce' ),
-					'error_notice'        => __( 'Fields cannot be empty', 'points-and-rewards-for-woocommerce' ),
-					'LevelName_notice'    => __( 'Please Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
-					'LevelValue_notice'   => __( 'Please Enter valid Points', 'points-and-rewards-for-woocommerce' ),
-					'CategValue_notice'   => __( 'Please select a category', 'points-and-rewards-for-woocommerce' ),
-					'ProdValue_notice'    => __( 'Please select a product', 'points-and-rewards-for-woocommerce' ),
-					'Discount_notice'     => __( 'Please enter a valid discount', 'points-and-rewards-for-woocommerce' ),
-					'success_assign'      => __( 'Points are assigned successfully!', 'points-and-rewards-for-woocommerce' ),
-					'error_assign'        => __( 'Enter Some Valid Points!', 'points-and-rewards-for-woocommerce' ),
-					'success_remove'      => __( 'Points are removed successfully!', 'points-and-rewards-for-woocommerce' ),
-					'Days'                => __( 'Days', 'points-and-rewards-for-woocommerce' ),
-					'Weeks'               => __( 'Weeks', 'points-and-rewards-for-woocommerce' ),
-					'Months'              => __( 'Months', 'points-and-rewards-for-woocommerce' ),
-					'Years'               => __( 'Years', 'points-and-rewards-for-woocommerce' ),
-					'Exp_period'          => __( 'Expiration Period', 'points-and-rewards-for-woocommerce' ),
-					'wps_wpr_url'         => $url,
-					'reason'              => __( 'Please enter Remark', 'points-and-rewards-for-woocommerce' ),
-					'wps_wpr_nonce'       => wp_create_nonce( 'wps-wpr-verify-nonce' ),
-					'check_pro_activate'  => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
-					'pro_text'            => __( 'Please purchase the pro plugin to add multiple memberships.', 'points-and-rewards-for-woocommerce' ),
-					'pro_link_text'       => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
-					'pro_link'            => 'https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro',
-					'success_update'      => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
-					'support_confirm'     => __( 'Email sent successfully', 'points-and-rewards-for-woocommerce' ),
-					'negative'            => __( 'Negative Values Not Allowed', 'points-and-rewards-for-woocommerce' ),
-					'segment_reached_msg' => esc_html__( 'You Can Add Only 12 Segments in Win Wheel', 'points-and-rewards-for-woocommerce' ),
-					'segment_limit_msg'   => esc_html__( 'Win Wheel cannot have less then 6 Segments', 'points-and-rewards-for-woocommerce' ),
-					'wps_badge_image'     => esc_html__( WPS_RWPR_DIR_URL . 'admin/images/vip.png', ),
-					'badge_pro__text'     => esc_html__( 'Please purchase the pro plugin to add multiple Badges.', 'points-and-rewards-for-woocommerce' ),
+					'ajaxurl'               => admin_url( 'admin-ajax.php' ),
+					'validpoint'            => __( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
+					'Labelname'             => __( 'Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
+					'Labeltext'             => __( 'Enter Level', 'points-and-rewards-for-woocommerce' ),
+					'Points'                => __( 'Enter Points', 'points-and-rewards-for-woocommerce' ),
+					'Categ_text'            => __( 'Select Product Category', 'points-and-rewards-for-woocommerce' ),
+					'Remove_text'           => __( 'Remove', 'points-and-rewards-for-woocommerce' ),
+					'Categ_option'          => $option_categ,
+					'Prod_text'             => __( 'Select Product', 'points-and-rewards-for-woocommerce' ),
+					'Discounttext'          => __( 'Enter Discount (%)', 'points-and-rewards-for-woocommerce' ),
+					'error_notice'          => __( 'Fields cannot be empty', 'points-and-rewards-for-woocommerce' ),
+					'LevelName_notice'      => __( 'Please Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
+					'LevelValue_notice'     => __( 'Please Enter valid Points', 'points-and-rewards-for-woocommerce' ),
+					'CategValue_notice'     => __( 'Please select a category', 'points-and-rewards-for-woocommerce' ),
+					'ProdValue_notice'      => __( 'Please select a product', 'points-and-rewards-for-woocommerce' ),
+					'Discount_notice'       => __( 'Please enter a valid discount', 'points-and-rewards-for-woocommerce' ),
+					'success_assign'        => __( 'Points are assigned successfully!', 'points-and-rewards-for-woocommerce' ),
+					'error_assign'          => __( 'Enter Some Valid Points!', 'points-and-rewards-for-woocommerce' ),
+					'success_remove'        => __( 'Points are removed successfully!', 'points-and-rewards-for-woocommerce' ),
+					'Days'                  => __( 'Days', 'points-and-rewards-for-woocommerce' ),
+					'Weeks'                 => __( 'Weeks', 'points-and-rewards-for-woocommerce' ),
+					'Months'                => __( 'Months', 'points-and-rewards-for-woocommerce' ),
+					'Years'                 => __( 'Years', 'points-and-rewards-for-woocommerce' ),
+					'Exp_period'            => __( 'Expiration Period', 'points-and-rewards-for-woocommerce' ),
+					'wps_wpr_url'           => $url,
+					'reason'                => __( 'Please enter Remark', 'points-and-rewards-for-woocommerce' ),
+					'wps_wpr_nonce'         => wp_create_nonce( 'wps-wpr-verify-nonce' ),
+					'check_pro_activate'    => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
+					'pro_text'              => __( 'Please purchase the pro plugin to add multiple memberships.', 'points-and-rewards-for-woocommerce' ),
+					'pro_link_text'         => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
+					'pro_link'              => 'https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro',
+					'success_update'        => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
+					'support_confirm'       => __( 'Email sent successfully', 'points-and-rewards-for-woocommerce' ),
+					'negative'              => __( 'Negative Values Not Allowed', 'points-and-rewards-for-woocommerce' ),
+					'segment_reached_msg'   => esc_html__( 'You Can Add Only 12 Segments in Win Wheel', 'points-and-rewards-for-woocommerce' ),
+					'segment_limit_msg'     => esc_html__( 'Win Wheel cannot have less then 6 Segments', 'points-and-rewards-for-woocommerce' ),
+					'wps_badge_image'       => esc_html__( WPS_RWPR_DIR_URL . 'admin/images/vip.png', ),
+					'badge_pro__text'       => esc_html__( 'Please purchase the pro plugin to add multiple Badges.', 'points-and-rewards-for-woocommerce' ),
+					'threshold_warning_msg' => esc_html__( 'Threshold points should be greater than previous threshold points !', 'points-and-rewards-for-woocommerce' ),
 				);
 
 				wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
@@ -759,7 +759,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="wps_wpr_membership_discount">
-						<input type="number" min="1" value="<?php echo esc_html( $this->check_is_not_empty( isset( $value['Discount'] ) ? $value['Discount'] : '' ) ); ?>" name="wps_wpr_membership_discount_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_discount_<?php echo esc_html( $count ); ?>" class="input-text" required>
+						<input type="number" min="1" max="100" value="<?php echo esc_html( $this->check_is_not_empty( isset( $value['Discount'] ) ? $value['Discount'] : '' ) ); ?>" name="wps_wpr_membership_discount_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_discount_<?php echo esc_html( $count ); ?>" class="input-text" required>
 						</label>			
 					</td>
 					<input type = "hidden" value="<?php echo esc_html( $count ); ?>" name="hidden_count">
@@ -864,17 +864,17 @@ class Points_Rewards_For_WooCommerce_Admin {
 		<tr valign="top">
 			<td class="forminp forminp-text">
 				<label for="wps_wpr_thankyouorder_minimum">
-					<input type="text" name="wps_wpr_thankyouorder_minimum[]" class="wps_wpr_thankyouorder_minimum input-text wc_input_price"  placeholder = "No minimum"  value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? esc_html( $thankyouorder_min[ $key ] ) : ''; ?>">
+					<input type="number" min="1" name="wps_wpr_thankyouorder_minimum[]" class="wps_wpr_thankyouorder_minimum input-text wc_input_price"  placeholder = "No minimum"  value="<?php echo ( ! empty( $thankyouorder_min[ $key ] ) ) ? esc_html( $thankyouorder_min[ $key ] ) : ''; ?>">
 				</label>
 			</td>
 			<td class="forminp forminp-text">
 				<label for="wps_wpr_thankyouorder_maximum">
-					<input type="text" name="wps_wpr_thankyouorder_maximum[]" class="wps_wpr_thankyouorder_maximum"  placeholder = "No maximum"  value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>" required>
+					<input type="number" min="1" name="wps_wpr_thankyouorder_maximum[]" class="wps_wpr_thankyouorder_maximum"  placeholder = "No maximum"  value="<?php echo ( ! empty( $thankyouorder_max[ $key ] ) ) ? esc_html( $thankyouorder_max[ $key ] ) : ''; ?>" required>
 				</label>
 			</td>
 			<td class="forminp forminp-text">
 				<label for="wps_wpr_thankyouorder_current_type">
-					<input type="text" name="wps_wpr_thankyouorder_current_type[]" class="wps_wpr_thankyouorder_current_type input-text wc_input_price"  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? esc_html( $thankyouorder_value[ $key ] ) : ''; ?>">
+					<input type="number" min="1" name="wps_wpr_thankyouorder_current_type[]" class="wps_wpr_thankyouorder_current_type input-text wc_input_price"  value="<?php echo ( ! empty( $thankyouorder_value[ $key ] ) ) ? esc_html( $thankyouorder_value[ $key ] ) : ''; ?>">
 				</label>
 			</td>    
 			<?php if ( ! empty( $key ) ) : ?>                       

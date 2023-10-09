@@ -176,6 +176,7 @@ $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wp
 							</tbody>
 						</table>
 					</div>
+					<div class="wps_wpr_show_incremented_warning_msg"></div>
 					<div class="wps_wpr_pro_plugin_notices"></div>
 					<input type="button" name="wps_wpr_user_badges_fields_add" id="wps_wpr_user_badges_fields_add" class="wps_wpr_add_more_btn_badge" value="<?php esc_html_e( 'Add More', 'points-and-rewards-for-woocommerce' ); ?>">
 				</div>

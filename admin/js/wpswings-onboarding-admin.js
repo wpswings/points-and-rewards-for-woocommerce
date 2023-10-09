@@ -184,7 +184,7 @@ jQuery(document).ready( function($) {
 			type: "POST",
 			data: data,
 			success: function(response) {
-				// window.location.reload();
+				window.location.reload();
 			}
 		});
 	});
