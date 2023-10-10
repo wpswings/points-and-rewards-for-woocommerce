@@ -166,7 +166,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					'negative'              => __( 'Negative Values Not Allowed', 'points-and-rewards-for-woocommerce' ),
 					'segment_reached_msg'   => esc_html__( 'You Can Add Only 12 Segments in Win Wheel', 'points-and-rewards-for-woocommerce' ),
 					'segment_limit_msg'     => esc_html__( 'Win Wheel cannot have less then 6 Segments', 'points-and-rewards-for-woocommerce' ),
-					'wps_badge_image'       => esc_html__( WPS_RWPR_DIR_URL . 'admin/images/vip.png', ),
+					'wps_badge_image'       => esc_html( WPS_RWPR_DIR_URL . 'admin/images/vip.png', ),
 					'badge_pro__text'       => esc_html__( 'Please purchase the pro plugin to add multiple Badges.', 'points-and-rewards-for-woocommerce' ),
 					'threshold_warning_msg' => esc_html__( 'Threshold points should be greater than previous threshold points !', 'points-and-rewards-for-woocommerce' ),
 				);

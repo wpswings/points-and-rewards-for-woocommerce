@@ -80,16 +80,16 @@ function wps_wpr_rand_color() {
 ?>
 
 <div class="wps_wpr_user_gamifications_main_wrappers">
-	<h4 class="wps_wpr_gamifications_settings_heading"><?php esc_html_e( 'Gamification Settings', 'points-and-rewards-for-woocommerce' ); ?></h4>
+	<h4 class="wps_wpr_gamifications_settings_heading"><?php esc_html_e( 'Gamification', 'points-and-rewards-for-woocommerce' ); ?></h4>
 	<input type="hidden" name="wps_wpr_gamification_setting_nonce" id="wps_wpr_gamification_setting_nonce" value="<?php echo esc_html( wp_create_nonce( 'gamification-setting-nonce' ) ); ?>">
 	<form method="POST" action="" class="wps_wpr_gamification_form">
 		<main class="wps_wpr_main_gamification_wrapper">
 			<section>
 				<article>
-					<label for="wps_wpr_enable_gamification_settings"><?php esc_html_e( 'Enable Gamification Settings', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<label for="wps_wpr_enable_gamification_settings"><?php esc_html_e( 'Enable Gamification', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_gamification_setting_wrapper">
 						<input type="checkbox" name="wps_wpr_enable_gamification_settings" class="wps_wpr_enable_gamification_settings" value="yes" <?php checked( $wps_wpr_enable_gamification_settings, 'yes' ); ?>>
-						<span class="wps_wpr_enable_gamification_notices wps_wpr_label_notice"><?php esc_html_e( 'Check this box to enable this settings.', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<span class="wps_wpr_enable_gamification_notices wps_wpr_label_notice"><?php esc_html_e( 'Toggle this to enable this settings.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 			</section>
@@ -166,7 +166,7 @@ function wps_wpr_rand_color() {
 			</section>
 			<div class="wps_wpr_win_wheel_segments_data">
 				<div>
-					<h4 for="wps_wpr_win_wheel_segments_settings"><?php esc_html_e( 'Win Wheel Segments Settings', 'points-and-rewards-for-woocommerce' ); ?></h4>
+					<h4 for="wps_wpr_win_wheel_segments_settings"><?php esc_html_e( 'Win Wheel Segments', 'points-and-rewards-for-woocommerce' ); ?></h4>
 					<div class="wps_wpr_win_wheel_segments_data-table">
 						<table class="wps_wpr_segment_gamification_settings_wrappers">
 							<thead>

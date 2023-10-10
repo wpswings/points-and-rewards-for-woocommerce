@@ -60,11 +60,11 @@ $wps_wpr_setting_tab = array(
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-order-total.php',
 	),
 	'gamification-settings' => array(
-		'title'     => __( 'Gamification Settings', 'points-and-rewards-for-woocommerce' ),
+		'title'     => __( 'Gamification', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-gamifications-settings.php',
 	),
 	'user-badges-settings'  => array(
-		'title'     => __( 'User Level & Badges', 'points-and-rewards-for-woocommerce' ),
+		'title'     => __( 'Badges', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-user-badges-settings.php',
 	),
 );
