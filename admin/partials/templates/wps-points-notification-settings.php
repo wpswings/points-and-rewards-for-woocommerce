@@ -302,6 +302,30 @@ $wps_settings = array(
 	array(
 		'type' => 'sectionend',
 	),
+	array(
+		'title' => __( 'User Badges Points Notifications', 'points-and-rewards-for-woocommerce' ),
+		'type'  => 'title',
+	),
+	array(
+		'title'    => __( 'Email Subject', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'text',
+		'id'       => 'wps_wpr_badges_points_mail_subject',
+		'class'    => 'input-text',
+		'desc_tip' => __( 'Input subject for the email.', 'points-and-rewards-for-woocommerce' ),
+		'default'  => __( 'Points Added', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'title'    => __( 'Email Description', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'textarea_email',
+		'id'       => 'wps_wpr_badges_points_email_description',
+		'class'    => 'input-text',
+		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
+		'default'  => __( 'Your [BADGESPOINTS] Points have been added. Now your Total Points are [TOTALPOINTS].', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[BADGESPOINTS]' . __( ' shortcode in place of points which have been added ', 'points-and-rewards-for-woocommerce' ) . __( ' and ', 'points-and-rewards-for-woocommerce' ) . '[TOTALPOINTS]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'type' => 'sectionend',
+	),
 );
 
 $wps_settings = apply_filters( 'wps_wpr_email_notification_settings', $wps_settings );

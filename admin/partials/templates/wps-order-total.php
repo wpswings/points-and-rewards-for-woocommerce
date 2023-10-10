@@ -47,7 +47,7 @@ $wps_wpr_order_total_points_settings = array(
 	),
 	array(
 		'type'  => 'create_order_total_points',
-		'title' => __( 'Enter Points  within Order Range', 'points-and-rewards-for-woocommerce' ),
+		'title' => __( 'Enter Points within Order Range', 'points-and-rewards-for-woocommerce' ),
 	),
 );
 if ( isset( $_POST['wps_wpr_save_order_totalsettings'] ) && isset( $_POST['wps-wpr-nonce'] ) ) {

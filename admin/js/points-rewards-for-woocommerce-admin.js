@@ -318,7 +318,8 @@
 		jQuery(".notice-success").remove();
 	  });
   
-	  // Gamification Features Start Here.
+	  /** =========== Gamification Features Start Here =========== */
+
 	  jQuery(document).find('#wps_wpr_select_win_wheel_page').select2();
 	  jQuery(document).find('#wps_wpr_select_spin_stop').select2();
   
@@ -425,6 +426,85 @@
 		
 		return result;
 	 }
-  
+
+	 /** ============ User Badges Feature Start here. ============== */
+	 
+	 // Open Custom media window to select images.
+	jQuery(document).on('click', '.wps_wpr_add_user_badges_img', open_custom_media_window);
+	function open_custom_media_window() {
+
+		if (this.window === undefined) {
+			this.window = wp.media({
+				title: 'Insert Image',
+				library: { type: 'image' },
+				multiple: false,
+				button: { text: 'Insert Image' }
+			});
+
+			var self = this;
+			this.window.on('select', function () {
+				var response = self.window.state().get('selection').first().toJSON();
+				jQuery(self).nextAll('.wps_wpr_image_attachment_id').val(response.sizes.thumbnail.url);
+				jQuery(self).prevAll('.wps_wpr_icon_user_badges').attr('src', response.sizes.thumbnail.url);
+				jQuery(self).prevAll('.wps_wpr_icon_user_badges').show();
+			});
+		}
+
+		this.window.open();
+		return false;
+	}
+
+	// if pro is not activated than show notice for user.
+	jQuery('.wps_wpr_pro_plugin_notices').hide();
+	if ( wps_wpr_object.check_pro_activate ) {
+		jQuery(document).on('click', '#wps_wpr_user_badges_fields_add', function(){
+
+			jQuery(document).find('.wps_wpr_object_purchase').remove();
+			var pro_plugin_msg = '<div class="wps_wpr_object_purchase"><p>' + wps_wpr_object.badge_pro__text + ' <a target="_blanck" href="' + wps_wpr_object.pro_link + '">' + wps_wpr_object.pro_link_text + "</a></p></div>";
+			jQuery('.wps_wpr_pro_plugin_notices').show();
+			jQuery('.wps_wpr_pro_plugin_notices').append( pro_plugin_msg );
+		});
+	}
+
+	// threshold amount in incremented order.
+	jQuery(document).on('keyup', '.wps_wpr_badges_threshold_points', function(){
+		
+		var current_threshold  = parseInt( jQuery(this).val() );
+		var previous_threshold = parseInt( jQuery(this).closest('.wps_wpr_add_user_badges_dynamic').prev('tr').find('.wps_wpr_badges_threshold_points').val() );
+		
+		if ( current_threshold < previous_threshold ) {
+
+			jQuery(this).focus();
+			jQuery(this).css( 'border', '2px solid red' );
+			jQuery('.wps_wpr_show_incremented_warning_msg').show();
+			jQuery('.wps_wpr_show_incremented_warning_msg').html( wps_wpr_object.threshold_warning_msg );
+			jQuery('.wps_wpr_add_more_btn_badge').prop( 'disabled', true );
+			jQuery('#wps_wpr_save_user_badges_settings').prop( 'disabled', true );
+		} else {
+
+			jQuery(this).blur();
+			jQuery(this).removeAttr('style');
+			jQuery('.wps_wpr_show_incremented_warning_msg').hide();
+			jQuery('.wps_wpr_show_incremented_warning_msg').html( '' );
+			jQuery('.wps_wpr_add_more_btn_badge').prop( 'disabled', false );
+			jQuery('#wps_wpr_save_user_badges_settings').prop( 'disabled', false );
+		}
 	});
+
+	// plugin banner ajax.
+	jQuery(document).on( 'click', '#dismiss-banner', function(){
+		var data = {
+			action:'wps_wpr_ajax_banner_action',
+			wps_nonce:wps_wpr_object.wps_wpr_nonce
+		};
+		jQuery.ajax({
+			url: wps_wpr_object.ajaxurl,
+			type: "POST",
+			data: data,
+			success: function(response) {
+				window.location.reload();
+			}
+		});
+	});
+});
   

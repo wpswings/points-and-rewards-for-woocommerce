@@ -87,13 +87,11 @@
     max-width: unset;
 }
 
-@media only screen and (max-width: 782px) {
-    #wps_rwpr_setting_wrapper input[type="checkbox"]:before {
-        font: normal 22px/1 dashicons;
-        width: 25px;
-        height: 25px;
-        margin: -5px 0 0 -7px;
-    }
+ul.wps-overview__features {
+    list-style: disc;
+}
+.wps_wpr_overview_remove_anchor_underline {
+    text-decoration: none;
 }
 
 @media only screen and (max-width: 480px) {

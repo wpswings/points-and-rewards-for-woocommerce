@@ -1323,6 +1323,37 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					</div>
 					<?php
 				}
+				if ( array_key_exists( 'user_badges_rewards_points', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Badge Level Earn Points', 'points-and-rewards-for-woocommerce' ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
+								<thead>
+									<tr valign="top">
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+									</tr>
+								</thead>
+								<?php
+								foreach ( $point_log['user_badges_rewards_points'] as $key => $value ) {
+									?>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['user_badges_rewards_points'] ); ?> </td>
+									</tr>
+									<?php
+								}
+								?>
+						</table>
+					</div>
+					<?php
+				}
 				if ( array_key_exists( 'award_points_on_previous_order', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">

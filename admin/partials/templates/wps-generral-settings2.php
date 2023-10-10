@@ -209,7 +209,7 @@ $wps_wpr_general_settings = array(
 				'curr'              => '',
 			),
 			array(
-				'type'              => 'text',
+				'type'              => 'number',
 				'id'                => 'wps_wpr_cart_price_rate',
 				'class'             => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price',
 				'custom_attributes' => array( 'min' => '"1"' ),

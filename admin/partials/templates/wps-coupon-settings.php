@@ -38,7 +38,7 @@ $wps_wpr_coupon_settings = array(
 			array(
 
 				array(
-					'type'              => 'text',
+					'type'              => 'number',
 					'id'                => 'wps_wpr_coupon_conversion_points',
 					'class'             => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text',
 					'custom_attributes' => array( 'min' => '"1"' ),
