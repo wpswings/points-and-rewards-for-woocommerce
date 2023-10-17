@@ -59,7 +59,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -120,6 +120,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			'wps_restrict_rewards_msg'   => $wps_wpr_restricted_cart_page_msg,
 			'wps_wpr_game_setting'       => $wps_wpr_game_color,
 			'wps_wpr_select_spin_stop'   => $wps_wpr_select_spin_stop,
+			'wps_is_user_login'          => is_user_logged_in(),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 	}
@@ -3580,12 +3581,6 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_show_canvas_icons() {
 
-		// if not login than retrun from here.
-		if ( ! is_user_logged_in() ) {
-
-			return;
-		}
-
 		// if game points is rewarded than retur from here.
 		if ( ! empty( get_user_meta( get_current_user_id(), 'wps_wpr_check_game_points_assign_timing', true ) ) ) {
 
@@ -3651,6 +3646,15 @@ class Points_Rewards_For_WooCommerce_Public {
 					</div>
 				</div>
 				<!-- Main Wheel ends -->
+
+				<!-- Create a pop-up for Guest user to show message for login and play the game. -->
+				<div class="wps_wpr_guest_user_main_wrapper">
+					<div class="wps_wpr_guest_user_contain_wrapper">
+						<span class="wps_wpr_guest_close_btn">&times;</span>
+						<div class="wps_wpr_guest_popup_title"><?php esc_html_e( 'Oops! You are not logged in.', 'points-and-rewards-for-woocommerce' ); ?></div>
+						<div class="wps_wpr_para"><?php esc_html_e( 'To play the game, please ', 'points-and-rewards-for-woocommerce' ); ?><a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>"><?php esc_html_e( 'click here', 'points-and-rewards-for-woocommerce' ); ?></a><?php esc_html_e( ' to login.', 'points-and-rewards-for-woocommerce' ); ?></div>
+					</div>
+				</div>
 				<?php
 			}
 		}
