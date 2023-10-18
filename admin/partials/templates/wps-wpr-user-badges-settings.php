@@ -27,6 +27,7 @@ if ( isset( $_POST['wps_wpr_user_badges_setting_nonce'] ) ) {
 			$wps_wpr_store_user_badges_settings['wps_wpr_enable_user_badges_settings'] = ! empty( $_POST['wps_wpr_enable_user_badges_settings'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_user_badges_settings'] ) ) : 'no';
 			$wps_wpr_store_user_badges_settings['wps_wpr_enable_to_show_bades']        = ! empty( $_POST['wps_wpr_enable_to_show_bades'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_to_show_bades'] ) ) : 'no';
 			$wps_wpr_store_user_badges_settings['wps_wpr_choose_badges_position']      = ! empty( $_POST['wps_wpr_choose_badges_position'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_choose_badges_position'] ) ) : 'center';
+			$wps_wpr_store_user_badges_settings['wps_wpr_show_accumulated_points']     = ! empty( $_POST['wps_wpr_show_accumulated_points'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_show_accumulated_points'] ) ) : 'no';
 			$wps_wpr_store_user_badges_settings['wps_wpr_enter_badges_name']           = ! empty( $_POST['wps_wpr_enter_badges_name'] ) ? map_deep( wp_unslash( $_POST['wps_wpr_enter_badges_name'] ), 'sanitize_text_field' ) : array();
 			$wps_wpr_store_user_badges_settings['wps_wpr_badges_threshold_points']     = ! empty( $_POST['wps_wpr_badges_threshold_points'] ) ? map_deep( wp_unslash( $_POST['wps_wpr_badges_threshold_points'] ), 'sanitize_text_field' ) : array();
 			$wps_wpr_store_user_badges_settings['wps_wpr_badges_rewards_points']       = ! empty( $_POST['wps_wpr_badges_rewards_points'] ) ? map_deep( wp_unslash( $_POST['wps_wpr_badges_rewards_points'] ), 'sanitize_text_field' ) : array();
@@ -57,6 +58,7 @@ $wps_wpr_user_badges_setting         = ! empty( $wps_wpr_user_badges_setting ) &
 $wps_wpr_enable_user_badges_settings = ! empty( $wps_wpr_user_badges_setting['wps_wpr_enable_user_badges_settings'] ) ? $wps_wpr_user_badges_setting['wps_wpr_enable_user_badges_settings'] : 'no';
 $wps_wpr_enable_to_show_bades        = ! empty( $wps_wpr_user_badges_setting['wps_wpr_enable_to_show_bades'] ) ? $wps_wpr_user_badges_setting['wps_wpr_enable_to_show_bades'] : 'no';
 $wps_wpr_choose_badges_position      = ! empty( $wps_wpr_user_badges_setting['wps_wpr_choose_badges_position'] ) ? $wps_wpr_user_badges_setting['wps_wpr_choose_badges_position'] : 'center';
+$wps_wpr_show_accumulated_points     = ! empty( $wps_wpr_user_badges_setting['wps_wpr_show_accumulated_points'] ) ? $wps_wpr_user_badges_setting['wps_wpr_show_accumulated_points'] : 'no';
 $wps_wpr_enter_badges_name           = ! empty( $wps_wpr_user_badges_setting['wps_wpr_enter_badges_name'] ) ? $wps_wpr_user_badges_setting['wps_wpr_enter_badges_name'] : array();
 $wps_wpr_badges_threshold_points     = ! empty( $wps_wpr_user_badges_setting['wps_wpr_badges_threshold_points'] ) ? $wps_wpr_user_badges_setting['wps_wpr_badges_threshold_points'] : array();
 $wps_wpr_badges_rewards_points       = ! empty( $wps_wpr_user_badges_setting['wps_wpr_badges_rewards_points'] ) ? $wps_wpr_user_badges_setting['wps_wpr_badges_rewards_points'] : array();
@@ -77,7 +79,7 @@ $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wp
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
-					<label for="wps_wpr_enable_to_show_bades" class="wps_wpr_general_label"><?php esc_html_e( 'Enable To Show User Badges', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<label for="wps_wpr_enable_to_show_bades" class="wps_wpr_general_label"><?php esc_html_e( 'Show User Badges', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_show_badges_setting_wrapper wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_enable_to_show_bades" class="wps_wpr_enable_to_show_bades" value="yes" <?php checked( $wps_wpr_enable_to_show_bades, 'yes' ); ?>>
 						<span class="wps_wpr_show_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Toggle this to show assigned user badges on My Account page.', 'points-and-rewards-for-woocommerce' ); ?></span>
@@ -92,6 +94,13 @@ $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wp
 							<option value="right" <?php selected( $wps_wpr_choose_badges_position, 'right' ); ?>><?php esc_html_e( 'Right', 'points-and-rewards-for-woocommerce' ); ?></option>
 						</select>
 						<span class="wps_wpr_badges_position_notices wps_wpr_label_notice"><?php esc_html_e( 'Choose badges position to show on My Account Page.', 'points-and-rewards-for-woocommerce' ); ?></span>
+					</div>
+				</article>
+				<article class="wps_wpr_general_row">
+					<label for="wps_wpr_show_accumulated_points" class="wps_wpr_general_label"><?php esc_html_e( 'Show Total Earning Points', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<div class="wps_wpr_show_accumulated_setting_wrapper wps_wpr_general_content">
+						<input type="checkbox" name="wps_wpr_show_accumulated_points" class="wps_wpr_show_accumulated_points" value="yes" <?php checked( $wps_wpr_show_accumulated_points, 'yes' ); ?>>
+						<span class="wps_wpr_show_accumulated_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Toggle this to show overall accumulated points on My Account page.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 			</section>
