@@ -248,19 +248,19 @@
 			jQuery(document)
 			  .find("#wps_wpr_membership_level_name_" + e)
 			  .attr("required", !1),
-			  jQuery(document)
+			jQuery(document)
 				.find("#wps_wpr_membership_level_value_" + e)
 				.attr("required", !1),
-			  jQuery(document)
+			jQuery(document)
 				.find("#wps_wpr_membership_expiration_days_" + e)
 				.attr("required", !1),
-			  jQuery(document)
+			jQuery(document)
 				.find("#wps_wpr_membership_expiration_" + e)
 				.attr("required", !1),
-			  jQuery(document)
+			jQuery(document)
 				.find("#wps_wpr_membership_category_list_" + e)
 				.attr("required", !1),
-			  jQuery(document)
+			jQuery(document)
 				.find("#wps_wpr_membership_discount_" + e)
 				.attr("required", !1);
 		  });
@@ -270,21 +270,21 @@
 		  .find(".wps_wpr_repeat")
 		  .each(function (e, r) {
 			jQuery(document)
-			  .find("#wps_wpr_membership_level_name_" + e)
-			  .attr("required", !0),
-			  jQuery(document)
+				.find("#wps_wpr_membership_level_name_" + e)
+				.attr("required", !0),
+			jQuery(document)
 				.find("#wps_wpr_membership_level_value_" + e)
 				.attr("required", !0),
-			  jQuery(document)
+			jQuery(document)
 				.find("#wps_wpr_membership_expiration_days_" + e)
 				.attr("required", !0),
-			  jQuery(document)
+			jQuery(document)
 				.find("#wps_wpr_membership_expiration_" + e)
 				.attr("required", !0),
-			  jQuery(document)
+			jQuery(document)
 				.find("#wps_wpr_membership_category_list_" + e)
 				.attr("required", !0),
-			  jQuery(document)
+			jQuery(document)
 				.find("#wps_wpr_membership_discount_" + e)
 				.attr("required", !0);
 		  });

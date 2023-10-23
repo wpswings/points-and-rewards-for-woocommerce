@@ -980,6 +980,9 @@ class Points_Rewards_For_WooCommerce_Public {
 				return;
 			}
 
+			// assign points according to user membership level.
+			$this->wps_wpr_assign_membership_rewards_points( $order_id, $old_status, $new_status );
+
 			$user = get_user_by( 'ID', $user_id );
 			if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features_order', false, $user ) ) {
 				return;
@@ -4091,6 +4094,122 @@ class Points_Rewards_For_WooCommerce_Public {
 						</div>
 					</div>
 					<?php
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to assign membership points on the basis of user membership level.
+	 *
+	 * @param  string $order_id   order_id.
+	 * @param  string $old_status old_status.
+	 * @param  string $new_status new_status.
+	 * @return bool
+	 */
+	public function wps_wpr_assign_membership_rewards_points( $order_id, $old_status, $new_status ) {
+
+		$updated_points        = 0;
+		$calculated_points     = 0;
+		$order                 = wc_get_order( $order_id );
+		$user_id               = $order->get_user_id();
+		$membership_level_name = ! empty( get_user_meta( $user_id, 'membership_level', true ) ) ? get_user_meta( $user_id, 'membership_level', true ) : '';
+		// if membership not assign than return from here.
+		if ( empty( $membership_level_name ) ) {
+			return false;
+		}
+
+		// get membership setting here.
+		$wps_wpr_membership_settings = get_option( 'wps_wpr_membership_settings', array() );
+		$membership_roles            = ! empty( $wps_wpr_membership_settings['membership_roles'] ) ? $wps_wpr_membership_settings['membership_roles'] : array();
+		$is_enable_mem_reward_points = ! empty( $membership_roles[ $membership_level_name ]['enable_mem_reward_points'] ) ? $membership_roles[ $membership_level_name ]['enable_mem_reward_points'] : '0';
+		$assign_mem_points_type      = ! empty( $membership_roles[ $membership_level_name ]['assign_mem_points_type'] ) ? $membership_roles[ $membership_level_name ]['assign_mem_points_type'] : '';
+		$mem_rewards_points_val      = ! empty( $membership_roles[ $membership_level_name ]['mem_rewards_points_val'] ) ? $membership_roles[ $membership_level_name ]['mem_rewards_points_val'] : 0;
+
+		// check membership rewards features is enable.
+		if ( '1' === $is_enable_mem_reward_points ) {
+			if ( 'completed' === $new_status ) {
+
+				$user_points                       = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
+				$mem_logs                          = get_user_meta( $user_id, 'points_details', true );
+				$mem_logs                          = ! empty( $mem_logs ) && is_array( $mem_logs ) ? $mem_logs : array();
+				$wps_wpr_already_assign_mem_points = wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_already_assign_mem_points', true );
+				if ( empty( $wps_wpr_already_assign_mem_points ) ) {
+
+					// check rewards.
+					if ( $mem_rewards_points_val > 0 ) {
+						// check points rewards points type.
+						if ( 'fixed' === $assign_mem_points_type ) {
+
+							$calculated_points = $mem_rewards_points_val;
+							$updated_points    = (int) $user_points + $mem_rewards_points_val;
+						} else {
+
+							$calculated_points = (int) ( $order->get_total() * $mem_rewards_points_val ) / 100;
+							$updated_points    = $user_points + $calculated_points;
+						}
+
+						// if updated points is greater than zero.
+						if ( $updated_points > 0 ) {
+
+							if ( ! empty( $mem_logs['membership_level_rewards_points'] ) ) {
+
+								$user_badges_arr                              = array(
+									'membership_level_rewards_points' => $calculated_points,
+									'date'                            => date_i18n( 'Y-m-d h:i:sa' ),
+								);
+								$mem_logs['membership_level_rewards_points'][] = $user_badges_arr;
+							} else {
+
+								$user_badges_arr                              = array(
+									'membership_level_rewards_points' => $calculated_points,
+									'date'                            => date_i18n( 'Y-m-d h:i:sa' ),
+								);
+								$mem_logs['membership_level_rewards_points'][] = $user_badges_arr;
+							}
+
+							update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+							wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_already_assign_mem_points', 'done' );
+							wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_reward_assign_mem_points', $calculated_points );
+							update_user_meta( $user_id, 'points_details', $mem_logs );
+						}
+					}
+				}
+			}
+
+			// Points will be manage when order is refunded or cancelled.
+			if ( 'completed' === $old_status && ( 'cancelled' === $new_status || 'refunded' === $new_status ) ) {
+
+				$users_points                     = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
+				$mem__refund_logs                 = get_user_meta( $user_id, 'points_details', true );
+				$mem__refund_logs                 = ! empty( $mem__refund_logs ) && is_array( $mem__refund_logs ) ? $mem__refund_logs : array();
+				$wps_wpr_reward_assign_mem_points = wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_reward_assign_mem_points', true );
+				$wps_wpr_mem_points_refund_check  = wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_mem_points_refund_check', true );
+
+				if ( empty( $wps_wpr_mem_points_refund_check ) ) {
+					if ( $wps_wpr_reward_assign_mem_points > 0 ) {
+
+						$updated_points = (int) $users_points - $wps_wpr_reward_assign_mem_points;
+						if ( ! empty( $mem__refund_logs['membership_level_points_refunded'] ) ) {
+
+							$user_badges_arr                                       = array(
+								'membership_level_points_refunded' => $wps_wpr_reward_assign_mem_points,
+								'date'                            => date_i18n( 'Y-m-d h:i:sa' ),
+							);
+							$mem__refund_logs['membership_level_points_refunded'][] = $user_badges_arr;
+						} else {
+
+							$user_badges_arr                                        = array(
+								'membership_level_points_refunded' => $wps_wpr_reward_assign_mem_points,
+								'date'                            => date_i18n( 'Y-m-d h:i:sa' ),
+							);
+							$mem__refund_logs['membership_level_points_refunded'][] = $user_badges_arr;
+						}
+
+						update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+						update_user_meta( $user_id, 'points_details', $mem__refund_logs );
+						wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_mem_points_refund_check', 'done' );
+					}
 				}
 			}
 		}
