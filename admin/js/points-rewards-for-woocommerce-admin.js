@@ -506,5 +506,21 @@
 			}
 		});
 	});
+
+	// restrict rewards fields to enter more than 100.
+	jQuery(document).on('change', '.wps_wpr_assign_mem_rewards_points', function(){
+
+		var count = jQuery(this).prop('id');
+		count     = count.replace( 'wps_wpr_choose_mem_points_type_', '' );
+		var check = jQuery('#wps_wpr_choose_mem_points_type_' + count).val();
+
+		if ( 'percent' === check ) {
+
+			jQuery('#wps_wpr_assign_mem_points_val_' + count).attr('max', 100);
+		} else {
+
+			jQuery('#wps_wpr_assign_mem_points_val_' + count).removeAttr('max');
+		}
+	});
 });
   

@@ -788,7 +788,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="wps_wpr_choose_mem_points_type">
-							<select name="wps_wpr_choose_mem_points_type_<?php echo esc_html( $count ); ?>" id="wps_wpr_choose_mem_points_type_<?php echo esc_html( $count ); ?>">
+							<select name="wps_wpr_choose_mem_points_type_<?php echo esc_html( $count ); ?>" id="wps_wpr_choose_mem_points_type_<?php echo esc_html( $count ); ?>" class="wps_wpr_assign_mem_rewards_points">
 								<option value="fixed" <?php selected( ! empty( $value['assign_mem_points_type'] ) ? $value['assign_mem_points_type'] : '', 'fixed' ); ?>><?php esc_html_e( 'Fixed', 'points-and-rewards-for-woocommerce' ); ?></option>
 								<option value="percent" <?php selected( ! empty( $value['assign_mem_points_type'] ) ? $value['assign_mem_points_type'] : '', 'percent' ); ?>><?php esc_html_e( 'Percent', 'points-and-rewards-for-woocommerce' ); ?></option>
 							</select>

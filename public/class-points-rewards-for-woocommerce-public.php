@@ -3183,6 +3183,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0"><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
 								<p><?php esc_html_e( 'Your available points:', 'points-and-rewards-for-woocommerce' ); ?>
 								<?php echo esc_html( $get_points ); ?></p>
+								<p class="wps_wpr_show_restrict_message"></p>
 							</div>	
 							<?php
 						} else {
