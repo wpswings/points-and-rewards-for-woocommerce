@@ -2025,13 +2025,12 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( 1 === $wps_wpr_enable_to_show_order_reward_message ) {
 
 					// Get all user completed order.
-					$wps_customer_orders = get_posts(
+					$wps_customer_orders = wc_get_orders(
 						array(
-							'numberposts' => -1,
-							'meta_key'    => '_customer_user',
-							'meta_value'  => $user_id,
-							'post_type'   => wc_get_order_types(),
+							'post_type'   => array( 'shop_order' ),
 							'post_status' => array( 'wc-completed' ),
+							'numberposts' => -1,
+							'customer_id' => $user_id,
 						)
 					);
 
@@ -3413,13 +3412,12 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( 1 === $wps_wpr_enable_order_rewards_settings ) {
 
 			// get particular user completed order.
-			$customer_orders = get_posts(
+			$customer_orders = wc_get_orders(
 				array(
-					'numberposts' => -1,
-					'meta_key'    => '_customer_user',
-					'meta_value'  => $user_id,
-					'post_type'   => wc_get_order_types(),
+					'post_type'   => array( 'shop_order' ),
 					'post_status' => array( 'wc-completed' ),
+					'numberposts' => -1,
+					'customer_id' => $user_id,
 				)
 			);
 
