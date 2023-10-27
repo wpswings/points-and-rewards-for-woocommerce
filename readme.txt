@@ -1,12 +1,12 @@
- === Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, Referral Points, User Badges & Gamification ===
+=== Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, Referral Points, User Badges, and Gamification ===
 Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points, rewards, points and rewards, loyalty, referrals, woocommerce points and rewards, points rewards, reward system, gamification, badges
 Requires at least: 5.5.0
-Tested up to: 6.3.1
+Tested up to: 6.3.2
 WC requires at least: 5.5.0
-WC tested up to: 8.1.1
-Stable tag: 2.0.0
+WC tested up to: 8.2.1
+Stable tag: 2.0.1
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -30,10 +30,10 @@ Points and Rewards for WooCommerce is a points management plugin that engages cu
 
 Plus, we understand the importance of aesthetics. Merchants can easily customize badge images to align with their brand. It's a powerful, flexible, and visually appealing way to boost customer loyalty!
  
-NOTE: The merchants can only add two user levels in the free version. The pro version on the other hand offers unlimited user levels and badges kinds.
+> **NOTE:** The merchants can only add two user levels in the free version. The pro version on the other hand offers unlimited user levels and badges kinds.
 
-
-**2) Gamification**: WooCommerce rewards plugin now enables merchants to make their websites more engaging and interesting with gamification. After enabling the settings your customers will get a chance to spin the “win-wheel” and earn rewards. The settings of this feature are completely dynamic. The merchants will be able to fully customize the win-wheel. Admins take the reins! Tailor your win-wheel down to the last detail: choose positions, colors, and segments, and set the points for each section. Craft an experience that's uniquely yours. Decide whether customers can spin freely or implement cooldown periods. Keep the engagement level just right for your audience.
+**2) Gamification**: The WooCommerce rewards plugin now enables merchants to make their websites more engaging and interesting with gamification. After enabling the settings your customers will get a chance to spin the “win-wheel” and earn rewards. The settings of this feature are completely dynamic. The merchants will be able to fully customize the win-wheel. Admins take the reins! Tailor your win-wheel down to the last detail: choose positions, colors, and segments, and set the points for each section. Craft an experience that's uniquely yours. Decide whether customers can spin freely or implement cooldown periods. Keep the engagement level just right for your audience.
+After the enhancement, the guest users can also see the wheel but will have to log in to be awarded the WooCommerce loyalty points. 
 
 **3) Restrict Rewards Points**: With this feature of the WooCommerce loyalty program plugin, merchants can restrict customers from earning reward points on the purchase of products that the customers have bought by redeeming their existing reward points.  
 
@@ -81,12 +81,12 @@ NOTE: The merchants can only add two user levels in the free version. The pro ve
 * Merchants can now restrict customers from earning points on the purchase of items that they have purchased by redeeming the existing rewards points.  
 * Offer WooCommerce loyalty points and rewards on previous orders 
 * Offer woo points and rewards on signups, referrals, purchases, etc. to engage your customers 
-* Create a membership program to reward loyal customers with exclusive membership rewards
+* Create a membership program to reward loyal customers with exclusive membership rewards. Merchants can grant exclusive WooCommerce loyalty points based on membership levels.
 * Track the points transaction of every customer with a point log report
 * Manually update the points and rewards of your customers from the points table feature
 * Notify customers through email for every point transaction
 * Offer WooCommerce rewards points in different languages with WPML Multilingual support
-* Change the value for woo points and rewards on the order total and cart redemption
+* Change the value for WooCommerce points and rewards on the order total and cart redemption.
 * Assign a similar point value to all simple products with a global point-assigned feature
 * Offer a specific number of points and rewards for a set price range of the order value
 * Hooks to extend the WooCommerce loyalty points tab for the admin.
@@ -94,12 +94,13 @@ NOTE: The merchants can only add two user levels in the free version. The pro ve
 == POINTS AND REWARDS PLUGIN MEETS YOUR REQUIREMENT, SO == 
 
 [**Download Now!!**](https://downloads.wordpress.org/plugin/points-and-rewards-for-woocommerce.zip)
+
 == POINTS AND REWARDS  PLUGIN COMPATIBILITIES == 
 * The WooCommerce points and rewards plugin is compatible with [**Ultimate Gift Cards for WooCommerce**](https://wordpress.org/plugins/woo-gift-cards-lite/) and [**Gift Cards for WooCommerce Pro**](https://wpswings.com/product/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-pro&utm_medium=par-org-page&utm_campaign=giftcards-pro) Plugin. This allows the merchants to give a specific set of points on the purchase of gift card products.
 * WooCommerce rewards plugin is compatible with [**Wallet System for WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**WooCommerce  Wallet System Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-wallet-pro&utm_medium=par-org-page&utm_campaign=wallet-pro/) plugin. This compatibility allows you to convert your earned points and rewards into wallet credit based on a specific conversion rate. The admin can set points conversion into wallet credit he wants to allow. 
 For example, 10 points equals 2 wallet credits. Customers can later use this wallet credit for purchases in the store.
 
-* The WooCommerce points system is compatible with [**Currency Switcher for WooCommerce**](https://wordpress.org/plugins/woocommerce-currency-switcher/).The Currency Switcher for WooCommerce plugin allows your customers to select the currency unit for their purchase. They can choose from the currencies for the Points and Rewards plugin. This increases the user experience. All transactions will happen in the currency they select. For example, if 10 points = $1, but the customer chooses INR as a switch, it will show as 10 points = ₹82.36.
+* The WooCommerce Points and Rewards Plugin is compatible with [**Currency Switcher for WooCommerce**](https://wordpress.org/plugins/woocommerce-currency-switcher/).The Currency Switcher for WooCommerce plugin allows your customers to select the currency unit for their purchase. They can choose from the currencies for the Points and Rewards plugin. This increases the user experience. All transactions will happen in the currency they select. For example, if 10 points = $1, but the customer chooses INR as a switch, it will show as 10 points = ₹82.36.
 
 * The WooCommerce loyalty points plugin is compatible with [**WooCommerce PayPal Payment**](https://wordpress.org/plugins/woocommerce-paypal-payments/) for operating secure online payments.
 
@@ -113,7 +114,7 @@ For example, if User A has bought a subscription product from your website for t
 
 == WHAT PREMIUM VERSION OF WOOCOMMERCE POINTS AND REWARDS OFFERS == 
 
-**1) Assign Products Points Feature**:  Merchants can assign reward points to the products as well as different categories. 
+**1) Assign Products Points Feature**:  Merchants can assign reward points to the products as well as different categories using Points and Rewards for WooCommerce
 
 **2) Referral Purchase Point**: The customer can earn points if their referrer makes a purchase using their referral link.
 
@@ -139,11 +140,13 @@ Points and Rewards for WooCommerce help merchants create a points-based loyalty 
 * [**Points and Rewards for WooCommerce Pro Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-doc&utm_medium=par-org-page&utm_campaign=par-pro-doc)
 
 == SUPPORT ==
-If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-org-page&utm_campaign=official) or connect with us then [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-par-submit-query&utm_medium=par-org-page&utm_campaign=submit-query)
+If you need support or have questions, kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=par-org-page&utm_campaign=official) and discover all types of [**WooCommerce Extensions**](https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-par-shop&utm_medium=par-org-page&utm_campaign=woocommerce-plugins) for your eCommerce store.
 
-> If our documentation doesn’t contain the solution to your problem, you can visit the [**WP Swings Forums Community**](https://forums.wpswings.com/?utm_source=wpswings-forums&utm_medium=par-org-page&utm_campaign=forum)
+> If our documentation doesn’t contain the solution to your problem, you can visit the [**WP Swings Forums Community**](https://forums.wpswings.com/?utm_source=wpswings-forums&utm_medium=par-org-page&utm_campaign=forum) or [**Generate a ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-par-submit-query&utm_medium=par-org-page&utm_campaign=submit-query)
 
 > Create and Revamp your eCommerce store with [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-par-services&utm_medium=par-org-page&utm_campaign=woocommerce-services)
+
+> Get Huge Discounts on Points and Rewards plugin during BFCM Sales 2023 – [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-par-offers&utm_medium=par-org-page&utm_campaign=offers)
 
 
 == Installation ==
@@ -251,6 +254,12 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 2.0.1 - Released on 27 October 2023 =
+* New: Compatible with the latest WP (6.3.2) & WC (8.2.1)
+* Enhance: Badges features (Admin has control to show accumulated points )
+* Enhance: Gamification features (Guest users can also have visibility for gamification )
+* Enhance: Membership features (Option to reward the user with points according to his membership level)
+
 = 2.0.0 - Released on 10 October 2023 =
 * New: User Badges Features
 * New: Compatible with latest WP ( 6.3.1 ) & WC ( 8.1.1 )
@@ -332,10 +341,10 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 * New: Compatible with the latest WC 6.9.4 and WP 6.0.2
 * Upgrade: Change the message on the popup modal when the referral purchase type is selected as a percentage.
 * Upgrade: Enhance sorting in the points table
-* Upgrade: Update view points log on the admin panel
+* Upgrade: Update viewpoints log on the admin panel
 * Fix: When the order is canceled it is refunded more than one time
 * Fix: String translation issues
-* Fix: Applied points goes into negative
+* Fix: Applied points go into negative
 
 = 1.2.9 - Released on 05 August 2022 =
 * New: Option to redirect referral user on any page
@@ -383,7 +392,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 * New: Compatible with [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**Wallet System For WooCommerce Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-wallet-pro&utm_medium=par-org-page&utm_campaign=wallet-pro)
 * New: Compatibility with WC 5.9.0 and WP 5.8.2
 * Fix: Refund issues solved
-* Fix: Few minor bugs
+* Fix: Minor bugs
 
 = 1.2.0 - Released on 16 October 2021 =
 * Fixed: Designing Fixes
@@ -455,12 +464,10 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 * First version
 
 == Upgrade Notice ==
-= 2.0.0 - Released on 10 October 2023 =
-* New: User Badges Features
-* New: Compatible with latest WP ( 6.3.1 ) & WC ( 8.1.1 )
-* Enhance: Overview section
-* Fix: General issues
-* Fix: Points Discount issues
 
-
+= 2.0.1 - Released on 27 October 2023 =
+* New: Compatible with the latest WP (6.3.2) & WC (8.2.1)
+* Enhance: Badges features (Admin has control to show accumulated points )
+* Enhance: Gamification features (Guest users can also have visibility for Gamification )
+* Enhance: Membership features (Option to reward the user with points according to his membership level)
 

@@ -559,7 +559,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param array $value value of one array.
 	 */
 	public function wps_wpr_membership_role( $count, $key, $value ) {
-
 		?>
 		<div id ="wps_wpr_parent_repeatable_<?php echo esc_html( $count ); ?>" data-id="<?php echo esc_html( $count ); ?>" class="wps_wpr_repeat">
 			<table class="wps_wpr_repeatable_section">
@@ -760,9 +759,57 @@ class Points_Rewards_For_WooCommerce_Admin {
 						?>
 						<label for="wps_wpr_membership_discount">
 						<input type="number" min="1" max="100" value="<?php echo esc_html( $this->check_is_not_empty( isset( $value['Discount'] ) ? $value['Discount'] : '' ) ); ?>" name="wps_wpr_membership_discount_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_discount_<?php echo esc_html( $count ); ?>" class="input-text" required>
-						</label>			
+						</label>	
 					</td>
-					<input type = "hidden" value="<?php echo esc_html( $count ); ?>" name="hidden_count">
+				</tr>
+				<tr valign="top">
+					<th>
+						<label for="wps_wpr_enable_to_rewards_with_points"><?php esc_html_e( 'Rewards Members with points', 'points-and-rewards-for-woocommerce' ); ?></label>
+					</th>
+					<td class="forminp forminp-text">
+						<?php
+						$allowed_tags          = $this->wps_wpr_allowed_html();
+						$attribute_description = __( 'Check this box to rewards user with points on the basis of his membership level.', 'points-and-rewards-for-woocommerce' );
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
+						?>
+						<label for="wps_wpr_enable_to_rewards_with_points">
+							<input type="checkbox" name="wps_wpr_enable_to_rewards_with_points_<?php echo esc_html( $count ); ?>" id="wps_wpr_enable_to_rewards_with_points_<?php echo esc_html( $count ); ?>" value="1" <?php checked( ! empty( $value['enable_mem_reward_points'] ) ? $value['enable_mem_reward_points'] : '0', 1 ); ?>>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="wps_wpr_mem_reward_type"><?php esc_html_e( 'Rewards Points type', 'points-and-rewards-for-woocommerce' ); ?></label>
+					</th>
+					<td class="forminp forminp-text">
+						<?php
+						$allowed_tags          = $this->wps_wpr_allowed_html();
+						$attribute_description = __( 'Assign points type, percentage will calculate on the basis of user cart sub total.', 'points-and-rewards-for-woocommerce' );
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
+						?>
+						<label for="wps_wpr_choose_mem_points_type">
+							<select name="wps_wpr_choose_mem_points_type_<?php echo esc_html( $count ); ?>" id="wps_wpr_choose_mem_points_type_<?php echo esc_html( $count ); ?>" class="wps_wpr_assign_mem_rewards_points">
+								<option value="fixed" <?php selected( ! empty( $value['assign_mem_points_type'] ) ? $value['assign_mem_points_type'] : '', 'fixed' ); ?>><?php esc_html_e( 'Fixed', 'points-and-rewards-for-woocommerce' ); ?></option>
+								<option value="percent" <?php selected( ! empty( $value['assign_mem_points_type'] ) ? $value['assign_mem_points_type'] : '', 'percent' ); ?>><?php esc_html_e( 'Percent', 'points-and-rewards-for-woocommerce' ); ?></option>
+							</select>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="wps_wpr_mem_rewards_points"><?php esc_html_e( 'Enter Points', 'points-and-rewards-for-woocommerce' ); ?></label>
+					</th>
+					<td class="forminp forminp-text">
+						<?php
+						$allowed_tags          = $this->wps_wpr_allowed_html();
+						$attribute_description = __( 'Please enter the value that will be assigned to the user when the order is completed.', 'points-and-rewards-for-woocommerce' );
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
+						?>
+						<label for="wps_wpr_assign_mem_points_val">
+							<input type="number" min="0" name="wps_wpr_assign_mem_points_val_<?php echo esc_html( $count ); ?>" id="wps_wpr_assign_mem_points_val_<?php echo esc_html( $count ); ?>" value="<?php echo esc_html( ! empty( $value['mem_rewards_points_val'] ) ? $value['mem_rewards_points_val'] : 0 ); ?>">
+						</label>
+					</td>
+					<input type="hidden" value="<?php echo esc_html( $count ); ?>" name="hidden_count">
 				</tr>
 				<?php do_action( 'wps_wpr_add_membership', $count ); ?>
 			</table>

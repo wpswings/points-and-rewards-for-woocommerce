@@ -25,6 +25,10 @@ $get_points                          = ! empty( $get_points ) ? $get_points : 0;
 $wps_wpr_overall__accumulated_points = get_user_meta( $user_id, 'wps_wpr_overall__accumulated_points', true );
 $wps_wpr_overall__accumulated_points = ! empty( $wps_wpr_overall__accumulated_points ) ? $wps_wpr_overall__accumulated_points : 0;
 
+// get badges setting here.
+$wps_wpr_user_badges_setting     = get_option( 'wps_wpr_user_badges_setting', array() );
+$wps_wpr_show_accumulated_points = ! empty( $wps_wpr_user_badges_setting['wps_wpr_show_accumulated_points'] ) ? $wps_wpr_user_badges_setting['wps_wpr_show_accumulated_points'] : 'no';
+
 if ( isset( $_POST['wps_wpr_save_level'] ) && isset( $_POST['membership-save-level'] ) && isset( $_POST['wps_wpr_membership_roles'] ) && sanitize_text_field( wp_unslash( $_POST['wps_wpr_membership_roles'] ) ) != $my_role ) {
 	$wps_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['membership-save-level'] ) );
 
@@ -110,10 +114,17 @@ do_action( 'wps_wpr_top_account_page_section_hook', $user_id );
 			<span class="wps_wpr_heading"><?php echo esc_html( $wps_text_points_value ) . ':'; ?></span>
 			<span class="wps_wpr_total_earn_points"><?php echo esc_html( $get_points ); ?></span>
 		</div>
-		<div class="wps_wpr_heading_para">
-			<span class="wps_wpr_heading"><?php esc_html_e( 'Overall Accumulated Points : ', 'points-and-rewards-for-woocommerce' ); ?></span>
-			<span class="wps_wpr_total_earn_points"><?php echo esc_html( $wps_wpr_overall__accumulated_points ); ?></span>
-		</div>
+		<?php
+		// Show overall earning points.
+		if ( 'yes' === $wps_wpr_show_accumulated_points ) {
+			?>
+			<div class="wps_wpr_heading_para">
+				<span class="wps_wpr_heading"><?php esc_html_e( 'Overall Accumulated Points : ', 'points-and-rewards-for-woocommerce' ); ?></span>
+				<span class="wps_wpr_total_earn_points"><?php echo esc_html( $wps_wpr_overall__accumulated_points ); ?></span>
+			</div>
+			<?php
+		}
+		?>
 	</div>
 	<?php
 	if ( isset( $wps_user_point_expiry ) && ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {

@@ -106,13 +106,29 @@
 
         // Show Win Wheel when click on Canvas.
         jQuery(document).on('click', '.wps_wpr_wheel_icon', function() {
+
             jQuery(this).hide();
             $('.wps_wpr_container-close').css('visibility', 'visible');
-            jQuery('.wps_wpr_wheel_icon_main').show();
-            setTimeout(function() {
-                jQuery('.wps_wpr_container').addClass('wps_wpr-container--show');
-            }, 200);
+
+            // if user is login than open win wheel else show notice for login.
+            if ( wps_wpr.wps_is_user_login ) {
+
+                jQuery('.wps_wpr_wheel_icon_main').show();
+                setTimeout(function() {
+                    jQuery('.wps_wpr_container').addClass('wps_wpr-container--show');
+                }, 200);
+            } else {
+
+                jQuery('.wps_wpr_guest_user_main_wrapper').show();
+            }
         })
+
+        // close guest user pop-up.
+        jQuery(document).on('click', '.wps_wpr_guest_close_btn', function(){
+
+            jQuery('.wps_wpr_guest_user_main_wrapper').hide();
+            jQuery('.wps_wpr_wheel_icon').show();
+        });
 
         let wheel        = jQuery('.wps_wpr_wheel');
         let spinBtn      = jQuery('#wps_wpr_spinWheelButton');
