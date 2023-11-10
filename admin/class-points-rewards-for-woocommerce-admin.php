@@ -1543,7 +1543,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
-	 * This function is used to awarded user with points when order is renewal.You will earn [Points] points when your subscription should be renewal.
+	 * This function is used to awarded user with points when order is renewal.
 	 *
 	 * @param int $order_id $order id.
 	 * @return void
