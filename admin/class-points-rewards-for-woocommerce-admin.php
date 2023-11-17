@@ -1863,4 +1863,254 @@ class Points_Rewards_For_WooCommerce_Admin {
 		}
 		wp_die();
 	}
+
+	/**
+	 * This function is used to create meta fields for PAR compatibility.
+	 *
+	 * @param array  $settings_fields settings_fields.
+	 * @param object $instance instance.
+	 * @param object $post post.
+	 * @return void
+	 */
+	public function wps_wpr_membership_meta_fields( $settings_fields, $instance, $post ) {
+
+		$wps_wpr_enable_points_settings          = get_post_meta( $post->ID, 'wps_wpr_enable_points_settings', true );
+		$wps_wpr_membership_assign_points_values = get_post_meta( $post->ID, 'wps_wpr_membership_assign_points_values', true );
+		?>
+		<input type="hidden" name="wps_wpr_membership_compatible_nonce" value="<?php echo esc_html( wp_create_nonce( 'membership-compatible-nonce' ) ); ?>">
+		<h2 class="wps_membership_offer_title">
+			<?php esc_html_e( 'Points and Rewards Section', 'membership-for-woocommerce' ); ?>
+		</h2>
+		<h3>
+			<?php esc_html_e( 'You can assign points to user when this membership will be purchased by user.', 'membership-for-woocommerce' ); ?>
+		</h3>
+		<h5>
+			<?php esc_html_e( 'Note : Points should be assign only when status of membership is completed.', 'membership-for-woocommerce' ); ?>
+		</h5>
+		<table>
+			<tr>
+				<th scope="row" class="titledesc">
+					<label for="wps_wpr_enable_points_settings"><?php esc_html_e( 'Enable Points Settings', 'membership-for-woocommerce' ); ?></label>
+					<td>
+						<?php
+							$description = esc_html__( 'Please enable this settings to assign points to users.', 'membership-for-woocommerce' );
+							$instance->tool_tip( $description );
+						?>
+					</td>
+				</th>
+				<td id="mfw_free_shipping" class="forminp forminp-text">
+					<input type="checkbox"  class="wps_wpr_enable_points_settings" name="wps_wpr_enable_points_settings" value="yes" <?php checked( 'yes', $wps_wpr_enable_points_settings ); ?>>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" class="titledesc">
+					<label for="wps_wpr_membership_assign_points_values"><?php esc_html_e( 'Enter Points', 'membership-for-woocommerce' ); ?></label>
+					<td>
+						<?php
+							$description = esc_html__( 'Entered points should be assign to user when order status is completed.', 'membership-for-woocommerce' );
+							$instance->tool_tip( $description );
+						?>
+					</td>
+				</th>
+				<td id="mfw_free_shipping" class="forminp forminp-text">
+					<input type="number" class="wps_wpr_membership_assign_points_values" name="wps_wpr_membership_assign_points_values" value="<?php echo esc_html( $wps_wpr_membership_assign_points_values ); ?>">
+				</td>
+			</tr>
+		</table>
+		<?php
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param  string $post_id post_id.
+	 * @return void
+	 */
+	public function wps_wpr_save_membership_fields( $post_id ) {
+
+		// Return if doing autosave.
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		// Return if doing ajax :: Quick edits.
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			return;
+		}
+
+		// Return on post trash, quick-edit, new post.
+		if ( empty( $_POST['action'] ) || 'editpost' != $_POST['action'] ) {
+			return;
+		}
+
+		$wps_wpr_membership_compatible_nonce = ! empty( $_POST['wps_wpr_membership_compatible_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_membership_compatible_nonce'] ) ) : '';
+		if ( wp_verify_nonce( $wps_wpr_membership_compatible_nonce, 'membership-compatible-nonce' ) ) {
+
+			$wps_wpr_enable_points_settings          = ! empty( $_POST['wps_wpr_enable_points_settings'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_points_settings'] ) ) : 'no';
+			$wps_wpr_membership_assign_points_values = ! empty( $_POST['wps_wpr_membership_assign_points_values'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_membership_assign_points_values'] ) ) : 0;
+			update_post_meta( $post_id, 'wps_wpr_enable_points_settings', $wps_wpr_enable_points_settings );
+			update_post_meta( $post_id, 'wps_wpr_membership_assign_points_values', $wps_wpr_membership_assign_points_values );
+		}
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param string $data data.
+	 * @return void
+	 */
+	public function wps_wpr_assign_points_to_user_call( $data ) {
+
+		$user_id = ! empty( $data['user_id'] ) ? sanitize_text_field( wp_unslash( $data['user_id'] ) ) : 0;
+		if ( $user_id > 0 ) {
+
+			$post_id       = ! empty( $data['post_id'] ) ? sanitize_text_field( wp_unslash( $data['post_id'] ) ) : 0;
+			$member_status = ! empty( $data['member_status'] ) ? sanitize_text_field( wp_unslash( $data['member_status'] ) ) : '';
+			$plan_id       = ! empty( $data['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $data['members_plan_assign'] ) ) : 0;
+			if ( 'complete' === $member_status ) {
+				if ( $plan_id > 0 ) {
+
+					$get_points                              = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
+					$mem_assign_points_log                   = get_user_meta( $user_id, 'points_details', true );
+					$mem_assign_points_log                   = ! empty( $mem_assign_points_log ) && is_array( $mem_assign_points_log ) ? $mem_assign_points_log : array();
+					$wps_wpr_enable_points_settings          = get_post_meta( $plan_id, 'wps_wpr_enable_points_settings', true );
+					$wps_wpr_membership_assign_points_values = ! empty( get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
+					if ( 'yes' === $wps_wpr_enable_points_settings ) {
+
+						$updated_points = (int) $get_points + $wps_wpr_membership_assign_points_values;
+						if ( ! empty( $mem_assign_points_log['member_assign_rewards_points'] ) ) {
+
+							$arr = array();
+							$arr = array(
+								'member_assign_rewards_points' => $wps_wpr_membership_assign_points_values,
+								'date'                         => date_i18n( 'Y-m-d h:i:sa' ),
+								'membership_name'              => get_the_title( $plan_id ),
+							);
+							$mem_assign_points_log['member_assign_rewards_points'][] = $arr;
+						} else {
+
+							$arr = array();
+							$arr = array(
+								'member_assign_rewards_points' => $wps_wpr_membership_assign_points_values,
+								'date'                         => date_i18n( 'Y-m-d h:i:sa' ),
+								'membership_name'              => get_the_title( $plan_id ),
+							);
+							$mem_assign_points_log['member_assign_rewards_points'][] = $arr;
+						}
+						update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+						update_user_meta( $user_id, 'points_details', $mem_assign_points_log );
+						update_post_meta( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', $wps_wpr_membership_assign_points_values );
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param string $post_id post id.
+	 * @return void
+	 */
+	public function wps_wps_assign_points_member_edit_page( $post_id ) {
+
+		// Return if doing autosave.
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		// Return if doing ajax.
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			return;
+		}
+
+		// Return on post trash, quick-edit, new post.
+		if ( empty( $_POST['save'] ) ) {
+			return;
+		}
+
+		// Nonce verification.
+		check_admin_referer( 'wps_members_creation_nonce', 'wps_members_nonce_field' );
+
+		$user_id = ! empty( $_POST['user_ID'] ) ? sanitize_text_field( wp_unslash( $_POST['user_ID'] ) ) : 0;
+		if ( $user_id > 0 ) {
+
+			$member_status = ! empty( $_POST['member_status'] ) ? sanitize_text_field( wp_unslash( $_POST['member_status'] ) ) : '';
+			$plan_id       = ! empty( $_POST['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $_POST['members_plan_assign'] ) ) : 0;
+			if ( 'complete' === $member_status ) {
+				if ( $plan_id > 0 ) {
+
+					$get_points                              = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
+					$mem_assign_points_log                   = get_user_meta( $user_id, 'points_details', true );
+					$mem_assign_points_log                   = ! empty( $mem_assign_points_log ) && is_array( $mem_assign_points_log ) ? $mem_assign_points_log : array();
+					$wps_wpr_enable_points_settings          = get_post_meta( $plan_id, 'wps_wpr_enable_points_settings', true );
+					$wps_wpr_membership_assign_points_values = ! empty( get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
+					if ( 'yes' === $wps_wpr_enable_points_settings ) {
+
+						$updated_points = (int) $get_points + $wps_wpr_membership_assign_points_values;
+						if ( ! empty( $mem_assign_points_log['member_assign_rewards_points'] ) ) {
+
+							$arr = array();
+							$arr = array(
+								'member_assign_rewards_points' => $wps_wpr_membership_assign_points_values,
+								'date'                         => date_i18n( 'Y-m-d h:i:sa' ),
+								'membership_name'              => get_the_title( $plan_id ),
+							);
+							$mem_assign_points_log['member_assign_rewards_points'][] = $arr;
+						} else {
+
+							$arr = array();
+							$arr = array(
+								'member_assign_rewards_points' => $wps_wpr_membership_assign_points_values,
+								'date'                         => date_i18n( 'Y-m-d h:i:sa' ),
+								'membership_name'              => get_the_title( $plan_id ),
+							);
+							$mem_assign_points_log['member_assign_rewards_points'][] = $arr;
+						}
+						update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+						update_user_meta( $user_id, 'points_details', $mem_assign_points_log );
+						update_post_meta( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', $wps_wpr_membership_assign_points_values );
+					}
+				}
+			} elseif ( 'cancelled' === $member_status ) {
+				if ( $plan_id > 0 ) {
+
+					$wps_wpr_membership_plugin_assign_points_rewarded_done = get_post_meta( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', true );
+					if ( $wps_wpr_membership_plugin_assign_points_rewarded_done > 0 ) {
+
+						$get_points                              = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
+						$mem_assign_points_refund_log            = get_user_meta( $user_id, 'points_details', true );
+						$mem_assign_points_refund_log            = ! empty( $mem_assign_points_refund_log ) && is_array( $mem_assign_points_refund_log ) ? $mem_assign_points_refund_log : array();
+						$wps_wpr_enable_points_settings          = get_post_meta( $plan_id, 'wps_wpr_enable_points_settings', true );
+						$wps_wpr_membership_assign_points_values = ! empty( get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
+						if ( 'yes' === $wps_wpr_enable_points_settings ) {
+
+							$updated_points = (int) $get_points - $wps_wpr_membership_assign_points_values;
+							if ( ! empty( $mem_assign_points_refund_log['refund_member_assign_rewards_points'] ) ) {
+
+								$arr = array();
+								$arr = array(
+									'refund_member_assign_rewards_points' => $wps_wpr_membership_assign_points_values,
+									'date'                                => date_i18n( 'Y-m-d h:i:sa' ),
+									'membership_name'                     => get_the_title( $plan_id ),
+								);
+								$mem_assign_points_refund_log['refund_member_assign_rewards_points'][] = $arr;
+							} else {
+
+								$arr = array();
+								$arr = array(
+									'refund_member_assign_rewards_points' => $wps_wpr_membership_assign_points_values,
+									'date'                                => date_i18n( 'Y-m-d h:i:sa' ),
+									'membership_name'                     => get_the_title( $plan_id ),
+								);
+								$mem_assign_points_refund_log['refund_member_assign_rewards_points'][] = $arr;
+							}
+							update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+							update_user_meta( $user_id, 'points_details', $mem_assign_points_refund_log );
+						}
+					}
+				}
+			}
+		}
+	}
 }

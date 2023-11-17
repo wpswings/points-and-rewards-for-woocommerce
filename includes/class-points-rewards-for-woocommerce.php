@@ -57,6 +57,13 @@ class Points_Rewards_For_Woocommerce {
 	protected $version;
 
 	/**
+	 * Responsible for maintaining all action that run on onboarding form.
+	 *
+	 * @var string
+	 */
+	protected $onboard;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -204,6 +211,13 @@ class Points_Rewards_For_Woocommerce {
 		// plugin banner notification.
 		$this->loader->add_action( 'wps_wgm_check_for_notification_update', $plugin_admin, 'wps_wpr_save_banner_notice_message' );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_ajax_banner_action', $plugin_admin, 'wps_wpr_dismiss_notice__banner_callback' );
+		// membership plugin compatible.
+		if ( function_exists( 'wps_membership_check_plugin_enable' ) && wps_membership_check_plugin_enable() ) {
+			$this->loader->add_action( 'wps_wpr_extend_membership_metabox_field', $plugin_admin, 'wps_wpr_membership_meta_fields', 10, 3 );
+			$this->loader->add_action( 'save_post_wps_cpt_membership', $plugin_admin, 'wps_wpr_save_membership_fields' );
+			$this->loader->add_action( 'wps_wpr_assign_points_to_user', $plugin_admin, 'wps_wpr_assign_points_to_user_call', 10, 1 );
+			$this->loader->add_action( 'edit_post_wps_cpt_members', $plugin_admin, 'wps_wps_assign_points_member_edit_page', 10, 1 );
+		}
 	}
 
 	/**
