@@ -63,19 +63,19 @@ if ( ! ( array_key_exists( 'woocommerce/woocommerce.php', $active_plugins ) || i
 $plug = get_plugins();
 if ( $activated ) {
 
+	// HPOS Compatibility and cart and checkout block.
 	// Declare HPOS compatibility.
-	add_action( 'before_woocommerce_init', 'wps_wpr_declare_hpos_compatibility' );
-	/**
-	 * This function is used to declare HPOS compatibility.
-	 *
-	 * @return void
-	 */
-	function wps_wpr_declare_hpos_compatibility() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	add_action(
+		'before_woocommerce_init',
+		function() {
+			if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+			}
+			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+			}
 		}
-	}
+	);
 
 	/**
 	 * Define the constatant of the plugin.

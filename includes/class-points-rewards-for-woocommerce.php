@@ -252,12 +252,14 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_wps_wpr_apply_fee_on_cart_subtotal', $plugin_public, 'wps_wpr_apply_fee_on_cart_subtotal' );
 			$this->loader->add_action( 'woocommerce_cart_calculate_fees', $plugin_public, 'wps_wpr_woocommerce_cart_custom_points' );
 			$this->loader->add_action( 'woocommerce_before_cart_contents', $plugin_public, 'wps_wpr_woocommerce_before_cart_contents' );
+			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_woocommerce_before_cart_contents' );
 			$this->loader->add_filter( 'woocommerce_cart_totals_fee_html', $plugin_public, 'wps_wpr_woocommerce_cart_totals_fee_html', 10, 2 );
 			$this->loader->add_action( 'wp_ajax_wps_wpr_remove_cart_point', $plugin_public, 'wps_wpr_remove_cart_point' );
 			/*Apply points on the cart sub total*/
 			$this->loader->add_filter( 'wc_get_template', $plugin_public, 'wps_overwrite_form_temp', 10, 2 );
 			/*Update order meta of the order*/
-			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta', 10, 2 );
+			// cart block change.
+			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta', 10, 1 );
 			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'wps_wpr_woocommerce_add_cart_item_data', 10, 4 );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'wps_wpr_woocommerce_get_item_data', 10, 2 );
 			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'wps_display_product_points', 7 );

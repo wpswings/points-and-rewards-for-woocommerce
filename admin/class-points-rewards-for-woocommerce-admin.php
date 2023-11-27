@@ -1913,7 +1913,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					</td>
 				</th>
 				<td id="mfw_free_shipping" class="forminp forminp-text">
-					<input type="number" class="wps_wpr_membership_assign_points_values" name="wps_wpr_membership_assign_points_values" value="<?php echo esc_html( $wps_wpr_membership_assign_points_values ); ?>">
+					<input type="number" min="1" class="wps_wpr_membership_assign_points_values" name="wps_wpr_membership_assign_points_values" value="<?php echo esc_html( $wps_wpr_membership_assign_points_values ); ?>">
 				</td>
 			</tr>
 		</table>
@@ -2032,7 +2032,13 @@ class Points_Rewards_For_WooCommerce_Admin {
 		// Nonce verification.
 		check_admin_referer( 'wps_members_creation_nonce', 'wps_members_nonce_field' );
 
-		$user_id = ! empty( $_POST['user_ID'] ) ? sanitize_text_field( wp_unslash( $_POST['user_ID'] ) ) : 0;
+		$billing_email = ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '';
+		if ( empty( $billing_email ) ) {
+			return;
+		}
+
+		$user_ob = get_user_by( 'email', $billing_email );
+		$user_id = ! empty( $user_ob->ID ) ? $user_ob->ID : 0;
 		if ( $user_id > 0 ) {
 
 			$member_status = ! empty( $_POST['member_status'] ) ? sanitize_text_field( wp_unslash( $_POST['member_status'] ) ) : '';
