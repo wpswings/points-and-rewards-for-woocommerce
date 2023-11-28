@@ -1907,7 +1907,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					<label for="wps_wpr_membership_assign_points_values"><?php esc_html_e( 'Enter Points', 'membership-for-woocommerce' ); ?></label>
 					<td>
 						<?php
-							$description = esc_html__( 'Entered points should be assign to user when order status is completed.', 'membership-for-woocommerce' );
+							$description = esc_html__( 'Points should be assigned to the user when the order status is marked as completed.', 'membership-for-woocommerce' );
 							$instance->tool_tip( $description );
 						?>
 					</td>
@@ -2000,6 +2000,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
 						update_user_meta( $user_id, 'points_details', $mem_assign_points_log );
 						update_post_meta( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', $wps_wpr_membership_assign_points_values );
+						update_post_meta( $post_id, 'wps_wpr_assign_user_id', $user_id );
 					}
 				}
 			}
@@ -2032,13 +2033,16 @@ class Points_Rewards_For_WooCommerce_Admin {
 		// Nonce verification.
 		check_admin_referer( 'wps_members_creation_nonce', 'wps_members_nonce_field' );
 
-		$billing_email = ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '';
-		if ( empty( $billing_email ) ) {
-			return;
+		$wps_wpr_assign_user_id = get_post_meta( $post_id, 'wps_wpr_assign_user_id', true );
+		$billing_email          = ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '';
+		if ( ! empty( $billing_email ) ) {
+			$user_ob = get_user_by( 'email', $billing_email );
+			$user_id = ! empty( $user_ob->ID ) ? $user_ob->ID : 0;
+		} else {
+
+			$user_id = $wps_wpr_assign_user_id;
 		}
 
-		$user_ob = get_user_by( 'email', $billing_email );
-		$user_id = ! empty( $user_ob->ID ) ? $user_ob->ID : 0;
 		if ( $user_id > 0 ) {
 
 			$member_status = ! empty( $_POST['member_status'] ) ? sanitize_text_field( wp_unslash( $_POST['member_status'] ) ) : '';

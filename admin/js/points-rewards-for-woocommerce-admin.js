@@ -522,5 +522,24 @@
 			jQuery('#wps_wpr_assign_mem_points_val_' + count).removeAttr('max');
 		}
 	});
+
+	// restrict to enter alphabet in per currecny fields.
+	jQuery(document).on('mouseleave', '#wps_wpr_coupon_conversion_points', function(){
+		this.value = this.value.replace(/[^0-9]/g, '');
+	});
+
+	// restrict to enter alphabet in redemption settings.
+	jQuery(document).on('mouseleave', '#wps_wpr_cart_price_rate', function(){
+		this.value = this.value.replace(/[^0-9]/g, '');
+	});
+
+	jQuery(document).on('mouseleave', '#wps_wpr_coupon_redeem_price', function(){
+		this.value = this.value.replace(/[^0-9]/g, '');
+	});
+
+	// restrict to enter alphabet in purchase through settings.
+	jQuery(document).on('mouseleave', '#wps_wpr_product_purchase_price', function(){
+		this.value = this.value.replace(/[^0-9]/g, '');
+	})
 });
   

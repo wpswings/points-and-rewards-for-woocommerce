@@ -59,7 +59,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -2467,6 +2467,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$_product                  = wc_get_product( $product_id );
 		$product_is_variable       = $this->wps_wpr_check_whether_product_is_variable( $_product );
 		$reg_price                 = $_product->get_price();
+		$reg_price                 = ! empty( $reg_price ) ? $reg_price : 0;
 		$prod_type                 = $_product->get_type();
 		$user_level                = get_user_meta( $user_id, 'membership_level', true );
 		$wps_wpr_mem_expr          = get_user_meta( $user_id, 'membership_expiration', true );
@@ -2576,11 +2577,13 @@ class Points_Rewards_For_WooCommerce_Public {
 			$_product            = wc_get_product( $product_id );
 			$product_is_variable = $this->wps_wpr_check_whether_product_is_variable( $_product );
 			$reg_price           = $_product->get_price();
+			$reg_price           = ! empty( $reg_price ) ? $reg_price : 0;
 
 			if ( isset( $value['variation_id'] ) && ! empty( $value['variation_id'] ) ) {
 				$variation_id     = $value['variation_id'];
 				$variable_product = wc_get_product( $variation_id );
 				$variable_price   = $variable_product->get_price();
+				$variable_price   = ! empty( $variable_price ) ? $variable_price : 0;
 			}
 
 			if ( isset( $wps_wpr_mem_expr ) && ! empty( $wps_wpr_mem_expr ) && $today_date <= $wps_wpr_mem_expr ) {
