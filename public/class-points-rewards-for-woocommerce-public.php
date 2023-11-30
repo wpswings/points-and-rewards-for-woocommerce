@@ -971,8 +971,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			/*Get the conversion value of the coupon*/
 			$wps_wpr_coupon_conversion_enable = $this->is_order_conversion_enabled();
 			/*Get the order from the order id*/
-			$order   = wc_get_order( $order_id );
-			$user_id = absint( $order->get_user_id() );
+			$order      = wc_get_order( $order_id );
+			$user_id    = absint( $order->get_user_id() );
+			$today_date = date_i18n( 'Y-m-d h:i:sa' );
 			if ( empty( $user_id ) || is_null( $user_id ) ) {
 
 				return;

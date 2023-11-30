@@ -351,17 +351,21 @@ if ( $activated ) {
 	 */
 	function wps_wpr_set_the_wordpress_date_format( $saved_date ) {
 
-		if ( get_locale() == 'zh_TW' ) {
-			return $saved_date;
-		}
+		if ( ! empty( $saved_date ) ) {
 
-		$saved_date  = strtotime( $saved_date );
-		$date_format = get_option( 'date_format', 'Y-m-d' );
-		$time_format = get_option( 'time_format', 'g:i a' );
-		$wp_date     = date_i18n( $date_format, $saved_date );
-		$wp_time     = date_i18n( $time_format, $saved_date );
-		$return_date = $wp_date . ' ' . $wp_time;
-		return $return_date;
+			if ( get_locale() == 'zh_TW' ) {
+				return $saved_date;
+			}
+
+			$saved_date  = strtotime( $saved_date );
+			$date_format = get_option( 'date_format', 'Y-m-d' );
+			$time_format = get_option( 'time_format', 'g:i a' );
+			$wp_date     = date_i18n( $date_format, $saved_date );
+			$wp_time     = date_i18n( $time_format, $saved_date );
+			$return_date = $wp_date . ' ' . $wp_time;
+			return $return_date;
+		}
+		return $saved_date;
 	}
 
 	if ( ! function_exists( 'array_key_first' ) ) {
