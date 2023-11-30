@@ -124,6 +124,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			'wps_wpr_game_setting'       => $wps_wpr_game_color,
 			'wps_wpr_select_spin_stop'   => $wps_wpr_select_spin_stop,
 			'wps_is_user_login'          => is_user_logged_in(),
+			'get_min_redeem_req'         => $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' ),
+			'is_cart_redeem_sett_enable' => $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' ),
+			'is_checkout_redeem_enable'  => $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' ),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 	}

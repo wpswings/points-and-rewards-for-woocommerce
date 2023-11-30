@@ -3,55 +3,67 @@
     
     jQuery(document).ready(function($){
 
-		const { registerCheckoutFilters } = window.wc.blocksCheckout;
-		const modifyCartItemClass = ( defaultValue, extensions, args ) => {
-			const isCartContext = args?.context === 'cart';
+		// ============= Append Add a points section html ============
 
-			if ( ! isCartContext ) {
-				return defaultValue;
+		// show html on cart page.
+		if ( 1 == wps_wpr.is_cart_redeem_sett_enable ) {
+
+			if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+
+				setTimeout(() => {
+					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+	
+						jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
+					}
+				}, 1000);
+
+				jQuery(document).on('mouseover', '.woocommerce-cart.woocommerce-page', function(){
+					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+	
+						jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
+					}
+				});
 			}
-
-			return 'my-custom-class';
-		};
-
-		registerCheckoutFilters( 'example-extension', {
-			cartItemClass: modifyCartItemClass,
-		} );
-
-		// Append Add a points section html.
-		if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
-
-			setTimeout(() => {
-				if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
-
-					jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
-					jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
-				}
-			}, 1000);
-
-			jQuery(document).on('mouseover', '.woocommerce-cart.woocommerce-page', function(){
-				if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
-
-					jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
-					jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
-				}
-			});
-
-			jQuery(document).on('mouseover', '.woocommerce-checkout.woocommerce-page', function(){
-				if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
-
-					jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
-					jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
-				}
-			});
 		}
 
-		// Append Points apply section.
+		// show html on checkout page.
+		if ( 1 == wps_wpr.is_checkout_redeem_enable ) {
+			if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+
+				setTimeout(() => {
+					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+
+						jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
+					}
+				}, 1000);
+
+				jQuery(document).on('mouseover', '.woocommerce-checkout.woocommerce-page', function(){
+					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+
+						jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
+					}
+				});
+			}
+		}
+
+		// Append Points apply section on cart and checkout page.
 		jQuery(document).on('click', '#wps_wpr_button_to_add_points_section', function(e){
+
 			e.preventDefault();
 			jQuery(this).hide();
-			jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div class="wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="Points"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="Apply Points" data-order-limit="0">Apply Points</button></div>');
-			jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div class="wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="Points"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="Apply Points" data-order-limit="0">Apply Points</button></div>');
+
+			var minimum_redeem_points   = parseInt( wps_wpr.get_min_redeem_req );
+			var wps_user_current_points = parseInt( wps_wpr.wps_user_current_points );
+			if ( minimum_redeem_points <= wps_user_current_points ) {
+
+				jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div class="wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="Points"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="Apply Points" data-order-limit="0">Apply Points</button></div>');
+				jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div class="wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="Points"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="Apply Points" data-order-limit="0">Apply Points</button></div>');
+			} else {
+
+				var required_points = parseInt( minimum_redeem_points - wps_user_current_points );
+				jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append( 'You require : ' + required_points + ' more to get redeem' );
+				jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append( 'You require : ' + required_points + ' more to get redeem' );;
+			}
 		});
 
 		// Remove coupon when cart block enable.
