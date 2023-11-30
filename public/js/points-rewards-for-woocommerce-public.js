@@ -37,6 +37,11 @@
                     $('.wps_wpr_restrict_user_message').hide();
                     $('.wps_wpr_show_restrict_message').html(wps_wpr.wps_restrict_rewards_msg);
                     $('.wps_wpr_show_restrict_message').css('color', 'red');
+                    setTimeout(() => {
+                        
+                        jQuery(document).find('.wp-block-woocommerce-cart-order-summary-coupon-form-block.wc-block-components-totals-wrapper').append(wps_wpr.wps_restrict_rewards_msg);
+                        jQuery(document).find('.wp-block-woocommerce-cart-order-summary-coupon-form-block.wc-block-components-totals-wrapper').css('color', 'red');
+                    }, 2000);
                 }
 
                 // get current url and reset url.
