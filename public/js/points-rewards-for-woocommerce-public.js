@@ -37,6 +37,11 @@
                     $('.wps_wpr_restrict_user_message').hide();
                     $('.wps_wpr_show_restrict_message').html(wps_wpr.wps_restrict_rewards_msg);
                     $('.wps_wpr_show_restrict_message').css('color', 'red');
+                    setTimeout(() => {
+                        
+                        jQuery(document).find('.wp-block-woocommerce-cart-order-summary-coupon-form-block.wc-block-components-totals-wrapper').append(wps_wpr.wps_restrict_rewards_msg);
+                        jQuery(document).find('.wp-block-woocommerce-cart-order-summary-coupon-form-block.wc-block-components-totals-wrapper').css('color', 'red');
+                    }, 2000);
                 }
 
                 // get current url and reset url.
@@ -127,12 +132,14 @@
                                     unblock($('.woocommerce-cart-form'));
                                     unblock($('.woocommerce-cart-form'));
 
-                                    if (!wps_wpr.checkout_page) {
-                                        $('html, body').animate({
-                                                scrollTop: jQuery(".woocommerce-cart-form").offset().top
-                                            },
-                                            800
-                                        );
+                                    if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+                                        if (!wps_wpr.checkout_page) {
+                                            $('html, body').animate({
+                                                    scrollTop: jQuery(".woocommerce-cart-form").offset().top
+                                                },
+                                                800
+                                            );
+                                        }
                                     }
                                     // Restrict rewards points settings features.
                                     if (wps_wpr.is_restrict_message_enable) {
@@ -143,14 +150,23 @@
                                         if (window.history != 'undefined' && window.history.pushState != 'undefined') {
                                             window.history.pushState({ path: newUrl }, '', newUrl);
                                         }
-                                        setTimeout(() => {
+
+                                        if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+                                            setTimeout(() => {
+                                                location.reload();
+                                            }, 1500);
+                                        } else {
                                             location.reload();
-                                        }, 1500);
+                                        }
                                     } else {
 
-                                        setTimeout(() => {
+                                        if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+                                            setTimeout(() => {
+                                                location.reload();
+                                            }, 1500);
+                                        } else {
                                             location.reload();
-                                        }, 1500);
+                                        }
                                     }
                                 }
                             });

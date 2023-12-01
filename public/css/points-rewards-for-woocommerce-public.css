@@ -1432,6 +1432,23 @@ button.wps_wpr_container-popup-claim:focus {
 
 /* Media screen start */
 
+
+div#wps_wpr_button_to_add_points_section {
+    padding: 5px 16px;
+}
+
+.wps_wpr_append_points_apply_html {
+    padding: 5px 16px;
+}
+.wps_wpr_append_points_apply_html input#wps_cart_points,.wps_wpr_append_points_apply_html button#wps_cart_points_apply {
+    margin: 5px 0 10px;
+    min-height: 30px;
+    width: 100%;
+    display: block;
+    padding: 10px;
+    max-width: 100%;
+}
+
 @media screen and (max-width: 520px) {
     .wps_wpr_wheel_icon_main #wps_wpr_spinWheelButton {
         width: calc(var(--pointer-width) * 0.8);

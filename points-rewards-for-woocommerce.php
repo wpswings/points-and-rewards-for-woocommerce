@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           2.0.1
+ * Version:           2.1.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
@@ -22,9 +22,9 @@
  * Domain Path:       /languages
  *
  * Requires at least    : 5.5.0
- * Tested up to         : 6.3.2
+ * Tested up to         : 6.4.1
  * WC requires at least : 5.5.0
- * WC tested up to      : 8.2.1
+ * WC tested up to      : 8.3.0
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -63,19 +63,19 @@ if ( ! ( array_key_exists( 'woocommerce/woocommerce.php', $active_plugins ) || i
 $plug = get_plugins();
 if ( $activated ) {
 
+	// HPOS Compatibility and cart and checkout block.
 	// Declare HPOS compatibility.
-	add_action( 'before_woocommerce_init', 'wps_wpr_declare_hpos_compatibility' );
-	/**
-	 * This function is used to declare HPOS compatibility.
-	 *
-	 * @return void
-	 */
-	function wps_wpr_declare_hpos_compatibility() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	add_action(
+		'before_woocommerce_init',
+		function() {
+			if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+			}
+			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+			}
 		}
-	}
+	);
 
 	/**
 	 * Define the constatant of the plugin.
@@ -84,7 +84,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.0.1' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.1.0' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -351,17 +351,21 @@ if ( $activated ) {
 	 */
 	function wps_wpr_set_the_wordpress_date_format( $saved_date ) {
 
-		if ( get_locale() == 'zh_TW' ) {
-			return $saved_date;
-		}
+		if ( ! empty( $saved_date ) ) {
 
-		$saved_date  = strtotime( $saved_date );
-		$date_format = get_option( 'date_format', 'Y-m-d' );
-		$time_format = get_option( 'time_format', 'g:i a' );
-		$wp_date     = date_i18n( $date_format, $saved_date );
-		$wp_time     = date_i18n( $time_format, $saved_date );
-		$return_date = $wp_date . ' ' . $wp_time;
-		return $return_date;
+			if ( get_locale() == 'zh_TW' ) {
+				return $saved_date;
+			}
+
+			$saved_date  = strtotime( $saved_date );
+			$date_format = get_option( 'date_format', 'Y-m-d' );
+			$time_format = get_option( 'time_format', 'g:i a' );
+			$wp_date     = date_i18n( $date_format, $saved_date );
+			$wp_time     = date_i18n( $time_format, $saved_date );
+			$return_date = $wp_date . ' ' . $wp_time;
+			return $return_date;
+		}
+		return $saved_date;
 	}
 
 	if ( ! function_exists( 'array_key_first' ) ) {
@@ -699,7 +703,7 @@ if ( $activated ) {
 					$wps_par_pro_license_key = get_option( 'ultimate_woocommerce_points_and_rewards_lcns_key', '' );
 					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_LICENSE_KEY' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_LICENSE_KEY', $wps_par_pro_license_key );
 					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_BASE_FILE' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_BASE_FILE', 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' );
-					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION', '2.0.1' );
+					! defined( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION' ) && define( 'ULTIMATE_WOOCOMMERCE_POINTS_AND_REWARDS_VERSION', '2.1.0' );
 				}
 				require_once $update_file;
 			}
@@ -748,7 +752,7 @@ if ( $activated ) {
 	function wps_wpr_show_notice_on_plugin_dashboard() {
 		if ( class_exists( 'Points_Rewards_For_WooCommerce_Admin' ) ) {
 
-			$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '2.0.1' );
+			$wps_par_get_count = new Points_Rewards_For_WooCommerce_Admin( 'points-and-rewards-for-woocommerce', '2.1.0' );
 			$wps_pending_par   = $wps_par_get_count->wps_par_get_count( 'wc-pending' );
 			$wps_pending_par   = ! empty( $wps_pending_par ) && is_array( $wps_pending_par ) ? count( $wps_pending_par ) : 0;
 			$wps_count_users   = $wps_par_get_count->wps_par_get_count_users( 'users' );

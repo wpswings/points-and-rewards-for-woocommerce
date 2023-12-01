@@ -59,7 +59,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -96,6 +96,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			wp_enqueue_script( 'wps-wpr-game-public-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-gamification-public.js', array( 'jquery', 'wps-wpr-wheel-class', 'wps-wpr-tween-max' ), $this->version, true );
 		}
 
+		wp_register_script( 'wp-wps-wpr-cart-class', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-cart-checkout-block.js', array(), $this->version, true );
+		wp_enqueue_script( 'wp-wps-wpr-cart-class' );
+
 		// main js file enqueue.
 		wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.min.js', array( 'jquery', 'clipboard' ), $this->version, false );
 		$wps_wpr = array(
@@ -121,6 +124,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			'wps_wpr_game_setting'       => $wps_wpr_game_color,
 			'wps_wpr_select_spin_stop'   => $wps_wpr_select_spin_stop,
 			'wps_is_user_login'          => is_user_logged_in(),
+			'get_min_redeem_req'         => $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' ),
+			'is_cart_redeem_sett_enable' => $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' ),
+			'is_checkout_redeem_enable'  => $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' ),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 	}
@@ -968,8 +974,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			/*Get the conversion value of the coupon*/
 			$wps_wpr_coupon_conversion_enable = $this->is_order_conversion_enabled();
 			/*Get the order from the order id*/
-			$order   = wc_get_order( $order_id );
-			$user_id = absint( $order->get_user_id() );
+			$order      = wc_get_order( $order_id );
+			$user_id    = absint( $order->get_user_id() );
+			$today_date = date_i18n( 'Y-m-d h:i:sa' );
 			if ( empty( $user_id ) || is_null( $user_id ) ) {
 
 				return;
@@ -2177,7 +2184,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param int   $order_id id of the order.
 	 * @param array $data data of the order.
 	 */
-	public function wps_wpr_woocommerce_checkout_update_order_meta( $order_id, $data ) {
+	public function wps_wpr_woocommerce_checkout_update_order_meta( $order ) {
 		$user_id    = get_current_user_id();
 		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 		/*Get the cart points rate*/
@@ -2186,8 +2193,8 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Get the cart price rate*/
 		$wps_wpr_cart_price_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
 		$wps_wpr_cart_price_rate = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
-		/*Order*/
-		$order = wc_get_order( $order_id );
+		// cart block change.
+		$order_id = $order->get_id();
 		if ( isset( $order ) && ! empty( $order ) ) {
 
 			// Paypal Issue Change Start.
@@ -2464,6 +2471,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$_product                  = wc_get_product( $product_id );
 		$product_is_variable       = $this->wps_wpr_check_whether_product_is_variable( $_product );
 		$reg_price                 = $_product->get_price();
+		$reg_price                 = ! empty( $reg_price ) ? $reg_price : 0;
 		$prod_type                 = $_product->get_type();
 		$user_level                = get_user_meta( $user_id, 'membership_level', true );
 		$wps_wpr_mem_expr          = get_user_meta( $user_id, 'membership_expiration', true );
@@ -2484,7 +2492,8 @@ class Points_Rewards_For_WooCommerce_Public {
 							if ( is_array( $values['Product'] ) && ! empty( $values['Product'] ) ) {
 								if ( in_array( $product_id, $values['Product'] ) && ! $product_is_variable && ! $this->check_exclude_sale_products( $product_data ) ) {
 
-									$new_price = $reg_price - ( $reg_price * $values['Discount'] ) / 100;
+									$discounts = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
+									$new_price = $reg_price - ( $reg_price * $discounts ) / 100;
 									$price     = '<del>' . wc_price( $reg_price ) . $product_data->get_price_suffix() . '</del><ins>' . wc_price( $new_price ) . $product_data->get_price_suffix() . '</ins>';// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								}
 							} elseif ( ! $this->check_exclude_sale_products( $product_data ) ) {
@@ -2497,7 +2506,8 @@ class Points_Rewards_For_WooCommerce_Public {
 										if ( in_array( $cat_id, $values['Prod_Categ'] ) || in_array( $parent_cat, $values['Prod_Categ'] ) ) {
 											if ( ! empty( $reg_price ) ) {
 
-												$new_price = $reg_price - ( $reg_price * $values['Discount'] ) / 100;
+												$discounts = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
+												$new_price = $reg_price - ( $reg_price * $discounts ) / 100;
 												$price     = '<del>' . wc_price( $reg_price ) . $product_data->get_price_suffix() . '</del><ins>' . wc_price( $new_price ) . $product_data->get_price_suffix() . '</ins>';// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 											}
 										}
@@ -2571,11 +2581,13 @@ class Points_Rewards_For_WooCommerce_Public {
 			$_product            = wc_get_product( $product_id );
 			$product_is_variable = $this->wps_wpr_check_whether_product_is_variable( $_product );
 			$reg_price           = $_product->get_price();
+			$reg_price           = ! empty( $reg_price ) ? $reg_price : 0;
 
 			if ( isset( $value['variation_id'] ) && ! empty( $value['variation_id'] ) ) {
 				$variation_id     = $value['variation_id'];
 				$variable_product = wc_get_product( $variation_id );
 				$variable_price   = $variable_product->get_price();
+				$variable_price   = ! empty( $variable_price ) ? $variable_price : 0;
 			}
 
 			if ( isset( $wps_wpr_mem_expr ) && ! empty( $wps_wpr_mem_expr ) && $today_date <= $wps_wpr_mem_expr ) {
@@ -2591,7 +2603,8 @@ class Points_Rewards_For_WooCommerce_Public {
 								if ( in_array( $product_id, $values['Product'] ) && ! $this->check_exclude_sale_products( $_product ) ) {
 									if ( ! $product_is_variable ) {
 
-										$new_price = $reg_price - ( $reg_price * $values['Discount'] ) / 100;
+										$discounts = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
+										$new_price = $reg_price - ( $reg_price * $discounts ) / 100;
 										// WOOCS - WooCommerce Currency Switcher Compatibility.
 										$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
 										if ( $woo_ver < '3.0.0' ) {
@@ -2601,7 +2614,8 @@ class Points_Rewards_For_WooCommerce_Public {
 										}
 									} elseif ( $product_is_variable ) {
 
-										$new_price = $variable_price - ( $variable_price * $values['Discount'] ) / 100;
+										$discounts = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
+										$new_price = $variable_price - ( $variable_price * $discounts ) / 100;
 										// WOOCS - WooCommerce Currency Switcher Compatibility.
 										$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
 										if ( $woo_ver < '3.0.0' ) {
@@ -2623,7 +2637,8 @@ class Points_Rewards_For_WooCommerce_Public {
 										if ( in_array( $cat_id, $values['Prod_Categ'] ) || in_array( $parent_cat, $values['Prod_Categ'] ) ) {
 											if ( ! $product_is_variable ) {
 
-												$new_price = $reg_price - ( $reg_price * $values['Discount'] ) / 100;
+												$discounts = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
+												$new_price = $reg_price - ( $reg_price * $discounts ) / 100;
 												// WOOCS - WooCommerce Currency Switcher Compatibility.
 												$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
 												if ( $woo_ver < '3.0.0' ) {
@@ -2633,7 +2648,8 @@ class Points_Rewards_For_WooCommerce_Public {
 												}
 											} elseif ( $product_is_variable ) {
 
-												$new_price = $variable_price - ( $variable_price * $values['Discount'] ) / 100;
+												$discounts = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
+												$new_price = $variable_price - ( $variable_price * $discounts ) / 100;
 												// WOOCS - WooCommerce Currency Switcher Compatibility.
 												$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
 												if ( $woo_ver < '3.0.0' ) {
