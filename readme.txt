@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points, rewards, points and rewards, loyalty, referrals, woocommerce points and rewards, points rewards, reward system, gamification, badges
 Requires at least: 5.5.0
-Tested up to: 6.3.2
+Tested up to: 6.4.1
 WC requires at least: 5.5.0
-WC tested up to: 8.2.1
-Stable tag: 2.0.1
+WC tested up to: 8.3.0
+Stable tag: 2.1.0
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -32,7 +32,7 @@ Plus, we understand the importance of aesthetics. Merchants can easily customize
  
 > **NOTE:** The merchants can only add two user levels in the free version. The pro version on the other hand offers unlimited user levels and badges kinds.
 
-**2) Gamification**: The WooCommerce rewards plugin now enables merchants to make their websites more engaging and interesting with gamification. After enabling the settings your customers will get a chance to spin the “win-wheel” and earn rewards. The settings of this feature are completely dynamic. The merchants will be able to fully customize the win-wheel. Admins take the reins! Tailor your win-wheel down to the last detail: choose positions, colors, and segments, and set the points for each section. Craft an experience that's uniquely yours. Decide whether customers can spin freely or implement cooldown periods. Keep the engagement level just right for your audience.
+**2) Gamification**: The WooCommerce rewards plugin now enables merchants to make their websites more engaging and interesting with gamification settings. After enabling the settings your customers will get a chance to spin the “win-wheel” and earn rewards and points. The settings of this feature are completely dynamic. The merchants will be able to fully customize the win-wheel. Admins take the reins! Tailor your win-wheel down to the last detail: choose positions, colors, and segments, and set the loyalty points for each section. Craft an experience that's uniquely yours. Decide whether customers can spin freely or implement cooldown periods. Keep the engagement level just right for your audience. 
 After the enhancement, the guest users can also see the wheel but will have to log in to be awarded the WooCommerce loyalty points. 
 
 **3) Restrict Rewards Points**: With this feature of the WooCommerce loyalty program plugin, merchants can restrict customers from earning reward points on the purchase of products that the customers have bought by redeeming their existing reward points.  
@@ -41,20 +41,20 @@ After the enhancement, the guest users can also see the wheel but will have to l
 
 **5) Order Reward Points**: With the WooCommerce point reward system, the admin can select the maximum number of orders for the customers to earn a certain number of points and rewards. For example, if the admin has set the maximum number of orders to 10 and the number of points to 5. Then, the customer will earn 5 points, after successfully ordering 10 times from the website. 
 
-**6) WooCommerce Rewards Points on Actions**: With WooCommerce Points and Rewards plugin, customers have the opportunity to earn points for rewards through various activities like:
+**6) WooCommerce Rewards Points on Actions**: With the WooCommerce Points and Rewards plugin, customers have the opportunity to earn points for rewards through various activities like:
 
 * **Sign Up:** Merchants can offer reward points and rewards on unique customer sign-ups.
 * **Referrals:** When user A shares his referral link and user B signs up using user A’s referral link, user A receives reward points. With the WordPress point system plugin, users can share their referral links on Facebook, Twitter, Email, and WhatsApp directly from their accounts.
 * **Total Amount Spent:** Merchants can set the WooCommerce loyalty points for rewards to be credited to the customer’s account against each penny they spend on their store via the conversion feature.
 * **On Purchase Of Product:** Merchants can assign global WooCommerce points and rewards value to all simple products of their store so the customer gets the same number of points on the purchase of any product.
-* **On A Set Range Of Order Total:** The Merchant can set the number of points the customer will get if his order value lies within a set range.
+* **On A Set Range Of Order Total:** The merchant can set the number of rewards and points the customer will get if his order value lies within a set range.
 
 
 **7) Easy Woo Points Redemption**: In the WooCommerce loyalty program plugin, customers can redeem their Woo points either on the cart or at the checkout page by entering the points in the “Apply Points” field. Merchant can select where he wants to show the “Apply Points” field, on a cart or at the checkout page. He can also set the conversion rule to determine the value of points and rewards using the conversion table feature.
 
 **For Example:** If the order costs $20 and the customer has 10 points in his account, the merchant can determine whether the customer will get a discount of 10, 5, or 2 dollars by redeeming those 10 points.
 
-**8) Membership System For Exclusive Offers**: Merchants can create their own membership system based on the WooCommerce Loyalty Program plugin. This helps them to offer exclusive discounts to customers based on the points they collect. Merchants can add WooCommerce reward discounts on some categories and their products. If the customer subscribes to the membership, he can purchase those discounted products.
+**8) Membership System For Exclusive Offers**: Merchants can create their own membership system based on the WooCommerce Loyalty Program plugin. This helps them to offer exclusive discounts to customers based on the loyalty points they collect. Merchants can add WooCommerce reward discounts on some categories and their products. If the customer subscribes to the membership, he can purchase those discounted products. Merchants can grant exclusive WooCommerce points based on membership levels.
 
 **9) WooCommerce Points Log Report**: In the WooCommerce rewards plugin, the WooCommerce points Log Report feature is available for both customers and the admin:
 
@@ -77,17 +77,17 @@ After the enhancement, the guest users can also see the wheel but will have to l
 == WITH THE WOOCOMMERCE POINTS AND REWARDS SYSTEM PLUGIN YOU CAN: == 
 
 * Encourage your customers to earn reward points by awarding them with user badges for different levels. 
-* Utilize the gamification feature to elevate your websites by enabling customers to spin the wheel and unlock rewards, enhancing interaction and excitement
-* Merchants can now restrict customers from earning points on the purchase of items that they have purchased by redeeming the existing rewards points.  
+* Utilize the gamification feature that takes your WooCommerce loyalty program to the next level, and elevates your websites by enabling customers to spin the wheel and unlock rewards, enhancing interaction and excitement.
+* Merchants can now restrict customers from earning WooCommerce rewards on the purchase of items that they have purchased by redeeming the existing rewards points.   
 * Offer WooCommerce loyalty points and rewards on previous orders 
 * Offer woo points and rewards on signups, referrals, purchases, etc. to engage your customers 
-* Create a membership program to reward loyal customers with exclusive membership rewards. Merchants can grant exclusive WooCommerce loyalty points based on membership levels.
-* Track the points transaction of every customer with a point log report
+* Create a membership program to reward loyal customers with exclusive membership rewards and points. Merchants can grant exclusive WooCommerce loyalty points based on membership levels. 
+* Track the loyalty points transaction of every customer with a point log report
 * Manually update the points and rewards of your customers from the points table feature
-* Notify customers through email for every point transaction
+* Notify customers through email for every rewards and point transaction
 * Offer WooCommerce rewards points in different languages with WPML Multilingual support
 * Change the value for WooCommerce points and rewards on the order total and cart redemption.
-* Assign a similar point value to all simple products with a global point-assigned feature
+* Assign a similar loyalty point value to all simple products with a global point-assigned feature
 * Offer a specific number of points and rewards for a set price range of the order value
 * Hooks to extend the WooCommerce loyalty points tab for the admin.
 
@@ -96,6 +96,9 @@ After the enhancement, the guest users can also see the wheel but will have to l
 [**Download Now!!**](https://downloads.wordpress.org/plugin/points-and-rewards-for-woocommerce.zip)
 
 == POINTS AND REWARDS  PLUGIN COMPATIBILITIES == 
+
+* WooCommerce Points and Rewards is now compatible with [**Membership with WooCommerce**](https://wordpress.org/plugins/membership-for-woocommerce/) and [**Membership for WooCommerce Pro**](https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=par-org-page&utm_campaign=membership-pro). This allows the admins to award a specific set of points, after the successful completion of a Membership Plan - gold, silver, platinum, or any other kind of plan.
+
 * The WooCommerce points and rewards plugin is compatible with [**Ultimate Gift Cards for WooCommerce**](https://wordpress.org/plugins/woo-gift-cards-lite/) and [**Gift Cards for WooCommerce Pro**](https://wpswings.com/product/gift-cards-for-woocommerce-pro?utm_source=wpswings-giftcards-pro&utm_medium=par-org-page&utm_campaign=giftcards-pro) Plugin. This allows the merchants to give a specific set of points on the purchase of gift card products.
 * WooCommerce rewards plugin is compatible with [**Wallet System for WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/) and [**WooCommerce  Wallet System Pro**](https://wpswings.com/product/wallet-system-for-woocommerce-pro/?utm_source=wpswings-wallet-pro&utm_medium=par-org-page&utm_campaign=wallet-pro/) plugin. This compatibility allows you to convert your earned points and rewards into wallet credit based on a specific conversion rate. The admin can set points conversion into wallet credit he wants to allow. 
 For example, 10 points equals 2 wallet credits. Customers can later use this wallet credit for purchases in the store.
@@ -116,13 +119,13 @@ For example, if User A has bought a subscription product from your website for t
 
 **1) Assign Products Points Feature**:  Merchants can assign reward points to the products as well as different categories using Points and Rewards for WooCommerce
 
-**2) Referral Purchase Point**: The customer can earn points if their referrer makes a purchase using their referral link.
+**2) Referral Purchase Point**: The customer can earn loyalty points if their referrer makes a purchase using their referral link.
 
-**3) Purchase through Points**: Users can also purchase items with just points, through the Purchase through Points feature.
+**3) Purchase through Points**: Users can also purchase items with just rewards and points, through the Purchase through Points feature.
 
 **4) Point Expiration**: The admin can set the expiration period for the points earned by the customers from the Points Expiration setting of the WooCommerce rewards plugin.
 
-**5) Multi-Level Membership**: The admin can create multiple tiers of the membership and add the required number of points to join it.
+**5) Multi-Level Membership**: The admin can create multiple tiers of the membership and add the required number of WooCommerce rewards to join it.
 
 **6) API Settings**: API settings for integrating the WooCommerce Rewards plugin with other applications have been provided for the admin. Admin can get complete user details through API settings.
 
@@ -146,7 +149,7 @@ If you need support or have questions, kindly use our online chat window [**here
 
 > Create and Revamp your eCommerce store with [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-par-services&utm_medium=par-org-page&utm_campaign=woocommerce-services)
 
-> Get Huge Discounts on Points and Rewards plugin during BFCM Sales 2023 – [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-par-offers&utm_medium=par-org-page&utm_campaign=offers)
+> Get Huge Discounts on Points and Rewards plugin during Christmas Sales 2023 – [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-par-offers&utm_medium=par-org-page&utm_campaign=offers)
 
 
 == Installation ==
@@ -174,7 +177,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 9. **Membership Setting** - Add membership level and provide a discount on membership
 10. **Upgrade User Level** - Customers can upgrade their membership and get the benefits.
 11. **Assign Product Points** - Customers can purchase and get the assigned points.
-12. **Order Total Point** - Can provide points to the customer on the basis of their order total
+12. **Order Total Point** - Can provide points to the customer based on their order total
 13. **Gamification Settings** - Allows customers to spin the wheel, and earn rewards 
 14. **User Level & Badges** - Badges that represent different levels of achievement
 
@@ -221,7 +224,7 @@ You can view, add, or remove the users’ points manually through the points tab
 =Is there any feature in the WooCommerce rewards points plugin by which we can give the points on the order total?=
 Yes. Through the “Order Total Points” setting, the admin can offer points on the order total. Merchants can set the number of points a customer will receive if his order value lies within a set price range. **For example**: Merchants can offer 100 points whenever a customer spends an amount between 100 to 300 dollars. So you can add 100 in as the minimum and 300 as the maximum price and the customer will receive 100 points whenever they spend this much amount.
 
-To enable this feature, go to your WordPress Dashboard > WooCommerce > Points and Rewards > Order Total Points and click on the checkbox that says “Enable the settings for the orders”. Then set the maximum and minimum price on which you want to offer points to your customers. And enter the number of points you will offer if a customer spends the set amount at your store. Save Changes and your customers will receive points if they shop within the set range of amounts.
+To enable this feature, go to your WordPress Dashboard > WooCommerce > Points and Rewards > Order Total Points and click on the checkbox that says “Enable the settings for the orders”. Then set the maximum and minimum price on which you want to offer points to your customers. Enter the number of points you will offer if a customer spends the set amount at your store. Save Changes and your customers will receive points if they shop within the set range of amounts.
 
 Admins can also create memberships using this plugin to offer exclusive discounts to customers. Customers can join the membership using the earned points.
 
@@ -253,6 +256,10 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 2.1.0 - Released on 1 December 2023 =
+* New: Compatible with Membership Plugin
+* New : Compatible with latest WP( 6.4.1 ) & WC( 8.3.1 )
 
 = 2.0.1 - Released on 27 October 2023 =
 * New: Compatible with the latest WP (6.3.2) & WC (8.2.1)
@@ -465,9 +472,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.0.1 - Released on 27 October 2023 =
-* New: Compatible with the latest WP (6.3.2) & WC (8.2.1)
-* Enhance: Badges features (Admin has control to show accumulated points )
-* Enhance: Gamification features (Guest users can also have visibility for Gamification )
-* Enhance: Membership features (Option to reward the user with points according to his membership level)
+= 2.1.0 - Released on 1 December 2023 =
+* New: Compatible with Membership Plugin
+* New : Compatible with latest WP( 6.4.1 ) & WC( 8.3.1 )
 

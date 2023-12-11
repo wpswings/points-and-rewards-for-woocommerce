@@ -127,6 +127,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			'get_min_redeem_req'         => $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' ),
 			'is_cart_redeem_sett_enable' => $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' ),
 			'is_checkout_redeem_enable'  => $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' ),
+			'points_coupon_name'         => esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 	}
@@ -2175,16 +2176,20 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * This function will update the user points as they purchased products through points
+	 * This function will update the user points as they purchased products through points.
 	 *
-	 * @name wps_wpr_woocommerce_checkout_update_order_meta..
-	 * @since 1.0.0
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
-	 * @param int   $order_id id of the order.
-	 * @param array $data data of the order.
+	 * @param  object $order_data order_data.
+	 * @return void
 	 */
-	public function wps_wpr_woocommerce_checkout_update_order_meta( $order ) {
+	public function wps_wpr_woocommerce_checkout_update_order_meta( $order_data ) {
+
+		// This function is triggered by two hooks, so we need to verify whether the parameter is an ID or an object.
+		if ( ! is_object( $order_data ) ) {
+			$order = wc_get_order( $order_data );
+		} else {
+			$order = $order_data;
+		}
+
 		$user_id    = get_current_user_id();
 		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 		/*Get the cart points rate*/
@@ -4229,4 +4234,5 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 	}
+
 }
