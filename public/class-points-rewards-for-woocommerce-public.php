@@ -127,6 +127,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			'get_min_redeem_req'         => $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' ),
 			'is_cart_redeem_sett_enable' => $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' ),
 			'is_checkout_redeem_enable'  => $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' ),
+			'points_coupon_name'         => esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 	}
@@ -651,6 +652,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Create the Referral Signup*/
 		if ( 'reference_details' == $type || 'ref_product_detail' == $type ) {
 			$get_referral_detail = get_user_meta( $user_id, 'points_details', true );
+			$get_referral_detail = ! empty( $get_referral_detail ) && is_array( $get_referral_detail ) ? $get_referral_detail : array();
 
 			if ( isset( $get_referral_detail[ $type ] ) && ! empty( $get_referral_detail[ $type ] ) ) {
 				$custom_array = array(
@@ -677,6 +679,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Here is cart discount through the points*/
 		if ( 'cart_subtotal_point' == $type || 'product_details' == $type || 'registration' == $type || 'points_on_order' == $type || 'membership' == $type ) {
 			$cart_subtotal_point_arr = get_user_meta( $user_id, 'points_details', true );
+			$cart_subtotal_point_arr = ! empty( $cart_subtotal_point_arr ) && is_array( $cart_subtotal_point_arr ) ? $cart_subtotal_point_arr : array();
 			if ( isset( $cart_subtotal_point_arr[ $type ] ) && ! empty( $cart_subtotal_point_arr[ $type ] ) ) {
 				$cart_array = array(
 					$type => $points,
@@ -699,6 +702,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		if ( 'Receiver_point_details' == $type || 'Sender_point_details' == $type ) {
 			$wps_points_sharing = get_user_meta( $user_id, 'points_details', true );
+			$wps_points_sharing = ! empty( $wps_points_sharing ) && is_array( $wps_points_sharing ) ? $wps_points_sharing : array();
 			if ( isset( $wps_points_sharing[ $type ] ) && ! empty( $wps_points_sharing[ $type ] ) ) {
 				$custom_array = array(
 					$type => $points,
@@ -724,6 +728,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( $points > 0 ) {
 			if ( 'pro_conversion_points' == $type ) {
 				$get_referral_detail = get_user_meta( $user_id, 'points_details', true );
+				$get_referral_detail = ! empty( $get_referral_detail ) && is_array( $get_referral_detail ) ? $get_referral_detail : array();
 				if ( isset( $get_referral_detail[ $type ] ) && ! empty( $get_referral_detail[ $type ] ) ) {
 					$custom_array = array(
 						$type => $points,
@@ -1160,6 +1165,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							$wps_total_points_par     = get_user_meta( $user_id, 'wps_wpr_points', true );
 							$wps_points_newly_updated = (int) ( $wps_total_points_par + $value_to_refund );
 							$wps_refer_deduct_points  = get_user_meta( $user_id, 'points_details', true );
+							$wps_refer_deduct_points  = ! empty( $wps_refer_deduct_points ) && is_array( $wps_refer_deduct_points ) ? $wps_refer_deduct_points : array();
 							if ( isset( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) && ! empty( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) ) {
 
 								$wps_par_refund_purchase = array();
@@ -1207,6 +1213,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								$wps_total_points_par            = get_user_meta( $user_id, 'wps_wpr_points', true );
 								$wps_points_newly_updated        = (int) ( $wps_total_points_par - $value_to_refund );
 								$wps_subscription_renewal_refund = get_user_meta( $user_id, 'points_details', true );
+								$wps_subscription_renewal_refund = ! empty( $wps_subscription_renewal_refund ) && is_array( $wps_subscription_renewal_refund ) ? $wps_subscription_renewal_refund : array();
 								if ( isset( $wps_subscription_renewal_refund['refund_subscription__renewal_points'] ) && ! empty( $wps_subscription_renewal_refund['refund_subscription__renewal_points'] ) ) {
 
 									$wps_par_refund_purchase = array();
@@ -1258,6 +1265,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 							$get_points  = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 							$points_log  = get_user_meta( $user_id, 'points_details', true );
+							$points_log  = ! empty( $points_log ) && is_array( $points_log ) ? $points_log : array();
 							$all_refunds = $order->get_refunds();
 
 							/*total calculation of the points*/
@@ -1336,6 +1344,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 						$wps_wpr_items       = $item->get_meta_data();
 						$deduction_of_points = get_user_meta( $user_id, 'points_details', true );
+						$deduction_of_points = ! empty( $deduction_of_points ) && is_array( $deduction_of_points ) ? $deduction_of_points : array();
 
 						foreach ( $wps_wpr_items as $key => $wps_wpr_value ) {
 							$wps_wpr_assign_products_points = get_option( 'wps_wpr_assign_products_points', true );
@@ -1437,6 +1446,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$user_id             = $order->get_user_id();
 			$get_points          = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 			$deduction_of_points = get_user_meta( $user_id, 'points_details', true );
+			$deduction_of_points = ! empty( $deduction_of_points ) && is_array( $deduction_of_points ) ? $deduction_of_points : array();
 
 			/*Get the user*/
 			$user = get_user_by( 'ID', $user_id );
@@ -2175,16 +2185,20 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * This function will update the user points as they purchased products through points
+	 * This function will update the user points as they purchased products through points.
 	 *
-	 * @name wps_wpr_woocommerce_checkout_update_order_meta..
-	 * @since 1.0.0
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
-	 * @param int   $order_id id of the order.
-	 * @param array $data data of the order.
+	 * @param  object $order_data order_data.
+	 * @return void
 	 */
-	public function wps_wpr_woocommerce_checkout_update_order_meta( $order ) {
+	public function wps_wpr_woocommerce_checkout_update_order_meta( $order_data ) {
+
+		// This function is triggered by two hooks, so we need to verify whether the parameter is an ID or an object.
+		if ( ! is_object( $order_data ) ) {
+			$order = wc_get_order( $order_data );
+		} else {
+			$order = $order_data;
+		}
+
 		$user_id    = get_current_user_id();
 		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 		/*Get the cart points rate*/
@@ -3028,6 +3042,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$response['result']  = true;
 				$response['message'] = esc_html__( 'successfully transfered', 'points-and-rewards-for-woocommerce' );
 				$points_log          = get_user_meta( $user_id, 'points_details', true );
+				$points_log          = ! empty( $points_log ) && is_array( $points_log ) ? $points_log : array();
 				if ( isset( $points_log['points_deduct_wallet'] ) && ! empty( $points_log['points_deduct_wallet'] ) ) {
 
 					$points_bday_arr = array();
@@ -4229,4 +4244,5 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 	}
+
 }

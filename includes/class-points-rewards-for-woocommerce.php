@@ -79,7 +79,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '2.1.0';
+			$this->version = '2.1.1';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -257,9 +257,9 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_wps_wpr_remove_cart_point', $plugin_public, 'wps_wpr_remove_cart_point' );
 			/*Apply points on the cart sub total*/
 			$this->loader->add_filter( 'wc_get_template', $plugin_public, 'wps_overwrite_form_temp', 10, 2 );
-			/*Update order meta of the order*/
 			// cart block change.
-			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta', 10, 1 );
+			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta' );
+			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta' );
 			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'wps_wpr_woocommerce_add_cart_item_data', 10, 4 );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'wps_wpr_woocommerce_get_item_data', 10, 2 );
 			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'wps_display_product_points', 7 );

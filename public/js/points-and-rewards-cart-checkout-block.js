@@ -69,42 +69,45 @@
 		// Remove coupon when cart block enable.
 		setTimeout(() => {
 			
-			jQuery('.wc-block-components-chip__remove').attr('onclick','on_cart_click()');
+			jQuery('.wc-block-components-chip__remove').attr('onclick','on_cart_click(this)');
 		}, 2000);
 
 		$(document).on('click',
 			'.wc-block-components-chip__remove .wc-block-components-chip__remove-icon',
 			function(e) {
 				e.preventDefault();
-				var $this = $(this);
+				var coupon_name = jQuery(this).closest('.wc-block-components-chip__remove').prev().prev().html();
+				if ( coupon_name.toLowerCase() == wps_wpr.points_coupon_name.toLowerCase() ) {
 
-				var data = {
-					action: 'wps_wpr_remove_cart_point',
-					coupon_code: $(this).data('coupon'),
-					wps_nonce: wps_wpr.wps_wpr_nonce,
-					is_checkout: wps_wpr.is_checkout
-				};
-				$.ajax({
-					url: wps_wpr.ajaxurl,
-					type: "POST",
-					data: data,
-					dataType: 'json',
-					success: function(response) {
-						if (response.result == true) {
-							$('#wps_cart_points').val('');
-							if (wps_wpr.is_checkout) {
-								setTimeout(function() {
-									$this.closest('tr.cart-discount').remove();
-									jQuery(document.body).trigger("update_checkout");
-								}, 200);
+					var $this = $(this);
+					var data = {
+						action: 'wps_wpr_remove_cart_point',
+						coupon_code: $(this).data('coupon'),
+						wps_nonce: wps_wpr.wps_wpr_nonce,
+						is_checkout: wps_wpr.is_checkout
+					};
+					$.ajax({
+						url: wps_wpr.ajaxurl,
+						type: "POST",
+						data: data,
+						dataType: 'json',
+						success: function(response) {
+							if (response.result == true) {
+								$('#wps_cart_points').val('');
+								if (wps_wpr.is_checkout) {
+									setTimeout(function() {
+										$this.closest('tr.cart-discount').remove();
+										jQuery(document.body).trigger("update_checkout");
+									}, 200);
+								}
+								location.reload();
 							}
+						},
+						complete: function() {
 							location.reload();
 						}
-					},
-					complete: function() {
-						location.reload();
-					}
-				});
+					});
+				}
 			}
 		);
 
@@ -112,32 +115,36 @@
 })(jQuery);
 
 // Remove coupon when cart block enable.
-function on_cart_click() {
-	var $this = jQuery(this);
-	var data = {
-		action: 'wps_wpr_remove_cart_point',
-		wps_nonce: wps_wpr.wps_wpr_nonce,
-		is_checkout: wps_wpr.is_checkout
-	};
-	jQuery.ajax({
-		url: wps_wpr.ajaxurl,
-		type: "POST",
-		data: data,
-		dataType: 'json',
-		success: function(response) {
-			if (response.result == true) {
-				jQuery('#wps_cart_points').val('');
-				if (wps_wpr.is_checkout) {
-					setTimeout(function() {
-						$this.closest('tr.cart-discount').remove();
-						jQuery(document.body).trigger("update_checkout");
-					}, 200);
+function on_cart_click(data) {
+	var coupon_name = jQuery(data).closest('.wc-block-components-chip__remove').prev().prev().html();
+	if ( coupon_name.toLowerCase() == wps_wpr.points_coupon_name.toLowerCase() ) {
+
+		var $this = jQuery(this);
+		var data = {
+			action: 'wps_wpr_remove_cart_point',
+			wps_nonce: wps_wpr.wps_wpr_nonce,
+			is_checkout: wps_wpr.is_checkout
+		};
+		jQuery.ajax({
+			url: wps_wpr.ajaxurl,
+			type: "POST",
+			data: data,
+			dataType: 'json',
+			success: function(response) {
+				if (response.result == true) {
+					jQuery('#wps_cart_points').val('');
+					if (wps_wpr.is_checkout) {
+						setTimeout(function() {
+							$this.closest('tr.cart-discount').remove();
+							jQuery(document.body).trigger("update_checkout");
+						}, 200);
+					}
+					location.reload();
 				}
+			},
+			complete: function() {
 				location.reload();
 			}
-		},
-		complete: function() {
-			location.reload();
-		}
-	});
+		});
+	}
 }
