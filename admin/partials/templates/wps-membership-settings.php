@@ -14,6 +14,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 /**
  * Check the allowed the html in for the html.
  *
@@ -180,6 +181,7 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 		</table>
 	</div>
 	<p class="submit">
+		<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
 		<input type="submit" value='<?php esc_attr_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_membership">
 	</p>
 	<?php

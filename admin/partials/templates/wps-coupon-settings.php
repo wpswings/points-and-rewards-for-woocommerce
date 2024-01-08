@@ -59,10 +59,18 @@ $wps_wpr_coupon_settings = array(
 		),
 	),
 	array(
+		'title'    => __( 'Show Per Currecny Discount Notice', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'id'       => 'wps_wpr_per_currency_discount_notice',
+		'class'    => 'input-text',
+		'desc'     => __( 'Toggle this setting to show per currecny discount message on Cart Page', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Please enable this setting to display discount message on Cart Page.', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
 		'type' => 'sectionend',
 	),
-
 );
+
 $wps_wpr_coupon_settings = apply_filters( 'wps_wpr_coupon_settings', $wps_wpr_coupon_settings );
 $current_tab             = 'wps_wpr_coupons_tab';
 if ( isset( $_POST['wps_wpr_save_coupon'] ) && isset( $_POST['wps-wpr-nonce'] ) ) {
@@ -90,11 +98,8 @@ if ( isset( $_POST['wps_wpr_save_coupon'] ) && isset( $_POST['wps-wpr-nonce'] ) 
 		}
 	}
 }
-?>
-<?php
+
 $coupon_settings = get_option( 'wps_wpr_coupons_gallery', true );
-?>
-<?php
 if ( ! is_array( $coupon_settings ) ) :
 	$coupon_settings = array();
 endif;
@@ -159,5 +164,6 @@ endif;
 </div>
 <div class="clear"></div>	
 <p class="submit">
+	<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
 	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_coupon">
 </p>

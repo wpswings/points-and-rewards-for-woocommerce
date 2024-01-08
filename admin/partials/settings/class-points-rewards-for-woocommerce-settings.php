@@ -433,7 +433,6 @@ class Points_Rewards_For_WooCommerce_Settings {
 				<?php
 			}
 		}
-
 	}
 
 	/**

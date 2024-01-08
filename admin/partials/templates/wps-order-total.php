@@ -14,6 +14,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 /**
  * Check the allowed the html.
  *
@@ -121,5 +122,6 @@ $wps_wpr_order_total_points_settings = apply_filters( 'wps_wpr_order_total_point
 	</table>
 </div>
 <p class="submit">
+	<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
 	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_order_totalsettings">
 </p>

@@ -407,7 +407,8 @@ a.wps_wpr_premium--cta {
 
 .wps_wpr_general_label label {
     width: 150px;
-    display: inline-block
+    display: inline-block;
+    word-wrap: break-word;
 }
 
 .wps_wpr_general_row_wrap {
@@ -1261,20 +1262,10 @@ input#wps_wpr_user_badges_fields_add:hover {
     color: #fff;
 }
 
-.wps_wpr_show_version_on_dashboard {
-    text-align: right;
-    position: relative;
-    top: 20px;
-}
-
-.wps_wpr_show_version_on_dashboard span {
-    background-color: #2196f3;
-    color: #fff;
-    font-size: 15px;
-    font-weight: bold;
-    border-radius: 4px;
-    margin-right: 35px;
-    padding: 0 12px;
+h3.wps_rwpr_setting_title span {
+    font-size: 14px;
+    color: #969696;
+    margin: 0 0 0 10px;
 }
 
 .wp-admin.wp-core-ui .select2-container--default .select2-results__option--highlighted[aria-selected] {
@@ -1300,6 +1291,31 @@ input#wps_wpr_user_badges_fields_add:hover {
     font-weight: 500;
     margin-left: 15px;
     margin-top: 5px;
+}
+
+/* ========= css for dummy html ========= */
+.wps_wpr_reset_user_loader, .wps_wpr_export_user_loader {
+    display: none;
+}
+
+input#wps_wpr_reset_user_points {
+    background-color : #d22e2e;
+    border : 0;
+}
+
+.wps_sample_export img {
+    max-width: 30px;
+    margin-left: 20px;
+    vertical-align: middle;
+}
+
+.wps_wpr_doc_video_wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wps_wpr_doc_video_wrapper a:nth-of-type(1) {
+    margin-right: 2px;
 }
 
 /* General Fixes in Badge Dashoard end*/

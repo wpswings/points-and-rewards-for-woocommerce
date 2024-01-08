@@ -40,9 +40,13 @@
     height: auto;
 }
 
+.wps-overview__keywords-card {
+    text-align: center;
+}
+
 .wps-overview__keywords-image {
     max-width: 200px;
-    margin: 0;
+    margin: 0 auto;
 }
 
 .wps_youtube iframe {

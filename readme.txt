@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points, rewards, points and rewards, loyalty, referrals, woocommerce points and rewards, points rewards, reward system, gamification, badges
 Requires at least: 5.5.0
-Tested up to: 6.4.1
+Tested up to: 6.4.2
 WC requires at least: 5.5.0
-WC tested up to: 8.3.0
-Stable tag: 2.1.0
+WC tested up to: 8.3.1
+Stable tag: 2.1.1
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -30,7 +30,7 @@ Points and Rewards for WooCommerce is a points management plugin that engages cu
 
 Plus, we understand the importance of aesthetics. Merchants can easily customize badge images to align with their brand. It's a powerful, flexible, and visually appealing way to boost customer loyalty!
  
-> **NOTE:** The merchants can only add two user levels in the free version. The pro version on the other hand offers unlimited user levels and badges kinds.
+> **NOTE:** The merchants can only add two user levels in the free version. The pro version on the other hand offers unlimited user levels and badges.
 
 **2) Gamification**: The WooCommerce rewards plugin now enables merchants to make their websites more engaging and interesting with gamification settings. After enabling the settings your customers will get a chance to spin the “win-wheel” and earn rewards and points. The settings of this feature are completely dynamic. The merchants will be able to fully customize the win-wheel. Admins take the reins! Tailor your win-wheel down to the last detail: choose positions, colors, and segments, and set the loyalty points for each section. Craft an experience that's uniquely yours. Decide whether customers can spin freely or implement cooldown periods. Keep the engagement level just right for your audience. 
 After the enhancement, the guest users can also see the wheel but will have to log in to be awarded the WooCommerce loyalty points. 
@@ -257,6 +257,11 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 2.1.1 - Released on 12 December 2023 =
+* New: Compatible with latest WP (6.4.2) and WC (8.3.1)
+* Fix: Coupon remove issues
+* Fix: Points deduct issues
+
 = 2.1.0 - Released on 1 December 2023 =
 * New: Compatible with Membership Plugin
 * New : Compatible with latest WP( 6.4.1 ) & WC( 8.3.1 )
@@ -472,7 +477,8 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.1.0 - Released on 1 December 2023 =
-* New: Compatible with Membership Plugin
-* New : Compatible with latest WP( 6.4.1 ) & WC( 8.3.1 )
+= 2.1.1 - Released on 12 December 2023 =
+* New: Compatible with latest WP( 6.4.2 ) and WC( 8.3.1 )
+* Fix: Coupon remove issues
+* Fix: Points deduct issues
 

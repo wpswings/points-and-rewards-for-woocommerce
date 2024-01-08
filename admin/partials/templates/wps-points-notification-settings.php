@@ -14,6 +14,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 include_once WPS_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
 $settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 
@@ -112,11 +113,11 @@ $wps_settings = array(
 		'type'  => 'title',
 	),
 	array(
-		'title'         => __( 'Email Subject', 'points-and-rewards-for-woocommerce' ),
-		'type'          => 'text',
-		'id'            => 'wps_wpr_amount_email_subject',
-		'class'             => 'input-text',
-		'desc_tip'      => __( 'Input subject for the email.', 'points-and-rewards-for-woocommerce' ),
+		'title'     => __( 'Email Subject', 'points-and-rewards-for-woocommerce' ),
+		'type'      => 'text',
+		'id'        => 'wps_wpr_amount_email_subject',
+		'class'     => 'input-text',
+		'desc_tip'  => __( 'Input subject for the email.', 'points-and-rewards-for-woocommerce' ),
 		'default'   => __( 'Order Amount Points Notification', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
@@ -127,7 +128,6 @@ $wps_settings = array(
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => __( 'You have received [Points] points and your total points are [Total Points].', 'points-and-rewards-for-woocommerce' ),
 		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of per currency spent points. Use ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of username. Use ', 'points-and-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points and Use  ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
-
 	),
 	array(
 		'type' => 'sectionend',
@@ -152,8 +152,6 @@ $wps_settings = array(
 		'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => __( 'You have received ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' points and your total points are ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]',
 		'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[Points]' . __( ' shortcode in place of per currency spent points, ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of a username, ', 'points-and-rewards-for-woocommerce' ) . '[Refer Points]' . __( ' in place of Referral points, and ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
-
-
 	),
 	array(
 		'type' => 'sectionend',
@@ -331,6 +329,7 @@ $wps_settings = array(
 $wps_settings = apply_filters( 'wps_wpr_email_notification_settings', $wps_settings );
 $current_tab  = 'wps_wpr_notificatin_tab';
 if ( isset( $_POST['wps_wpr_save_notification'] ) && isset( $_POST['wps-wpr-nonce'] ) ) {
+
 	$wps_nonce = sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) );
 	if ( wp_verify_nonce( $wps_nonce, 'wps-wpr-nonce' ) ) {
 		if ( 'wps_wpr_notificatin_tab' == $current_tab ) {
@@ -343,6 +342,7 @@ if ( isset( $_POST['wps_wpr_save_notification'] ) && isset( $_POST['wps-wpr-nonc
 
 			if ( ! empty( $wps_wpr_post_data ) && is_array( $wps_wpr_post_data ) ) {
 				foreach ( $wps_wpr_post_data as $key => $value ) {
+
 					$value                             = $settings_obj->wps_rwpr_filter_subj_email_notification_settings( $wps_wpr_post_data, $key );
 					$wps_wpr_notificatin_array[ $key ] = $value;
 				}
@@ -360,54 +360,55 @@ if ( isset( $_POST['wps_wpr_save_notification'] ) && isset( $_POST['wps-wpr-nonc
 }
 
 $wps_wpr_notification_settings = get_option( 'wps_wpr_notificatin_array', true );
-if ( ! is_array( $wps_wpr_notification_settings ) ) :
+if ( ! is_array( $wps_wpr_notification_settings ) ) {
+
 	$wps_wpr_notification_settings = array();
-endif;
-?>
-<?php do_action( 'wps_wpr_add_notice' ); ?>
+}
+do_action( 'wps_wpr_add_notice' ); ?>
 <div class="wps_wpr_table">
 	<div class="wps_wpr_general_wrapper">
-<?php
-foreach ( $wps_settings as $key => $value ) {
-	if ( 'title' == $value['type'] ) {
-		?>
-		<div class="wps_wpr_general_row_wrap">
-			<?php
-			$settings_obj->wps_rwpr_generate_heading( $value );
-	}
-	if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) {
-		?>
-			<div class="wps_wpr_general_row">
-			<?php $settings_obj->wps_rwpr_generate_label( $value ); ?>
-				<div class="wps_wpr_general_content">
-				<?php
-				$settings_obj->wps_rwpr_generate_tool_tip( $value );
-				if ( 'checkbox' == $value['type'] ) {
-					$settings_obj->wps_rwpr_generate_checkbox_html( $value, $wps_wpr_notification_settings );
-				}
-				if ( 'textarea_email' == $value['type'] ) {
-					echo esc_html( $value['desc'] );
-					$settings_obj->wps_rwpr_generate_wp_editor( $value, $wps_wpr_notification_settings );
-				}
-				if ( 'text' == $value['type'] ) {
-					$settings_obj->wps_rwpr_generate_text_html( $value, $wps_wpr_notification_settings );
-				}
-				do_action( 'wps_wpr_additional_points_notification_settings', $value, $wps_wpr_notification_settings );
-				?>
-				</div>
-			</div>
-			<?php
-	}
-	if ( 'sectionend' == $value['type'] ) {
-		?>
-</div> 
 		<?php
-	}
-}
-?>
+		foreach ( $wps_settings as $key => $value ) {
+			if ( 'title' == $value['type'] ) {
+				?>
+				<div class="wps_wpr_general_row_wrap">
+				<?php
+				$settings_obj->wps_rwpr_generate_heading( $value );
+			}
+			if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) {
+				?>
+				<div class="wps_wpr_general_row">
+				<?php $settings_obj->wps_rwpr_generate_label( $value ); ?>
+					<div class="wps_wpr_general_content">
+					<?php
+					$settings_obj->wps_rwpr_generate_tool_tip( $value );
+					if ( 'checkbox' == $value['type'] ) {
+						$settings_obj->wps_rwpr_generate_checkbox_html( $value, $wps_wpr_notification_settings );
+					}
+					if ( 'textarea_email' == $value['type'] ) {
+						echo esc_html( $value['desc'] );
+						$settings_obj->wps_rwpr_generate_wp_editor( $value, $wps_wpr_notification_settings );
+					}
+					if ( 'text' == $value['type'] ) {
+						$settings_obj->wps_rwpr_generate_text_html( $value, $wps_wpr_notification_settings );
+					}
+					do_action( 'wps_wpr_additional_points_notification_settings', $value, $wps_wpr_notification_settings );
+					?>
+					</div>
+				</div>
+				<?php
+			}
+			if ( 'sectionend' == $value['type'] ) {
+				?>
+				</div> 
+				<?php
+			}
+		}
+		?>
 	</div>
 </div>
 <div class="clear"></div>
 <p class="submit">
+	<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
 	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_notification">
 </p>	

@@ -14,8 +14,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 include_once WPS_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
-$settings_obj = new Points_Rewards_For_WooCommerce_Settings();
+$settings_obj             = new Points_Rewards_For_WooCommerce_Settings();
 $wps_wpr_general_settings = array(
 	array(
 		'title' => __( 'Enable', 'points-and-rewards-for-woocommerce' ),
@@ -231,6 +232,14 @@ $wps_wpr_general_settings = array(
 		'desc'     => __( 'Allow Customers to Apply Points During Checkout', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
+		'title'    => __( 'Show Redeem Notice on Cart Page', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'id'       => 'wps_wpr_show_redeem_notice',
+		'desc_tip' => __( 'Toggle This To Show redeem notice on Cart Page', 'points-and-rewards-for-woocommerce' ),
+		'class'    => 'input-text',
+		'desc'     => __( 'Please enable this setting to show redemption message on Cart Page', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
 		'type' => 'sectionend',
 	),
 	array(
@@ -288,15 +297,13 @@ $wps_wpr_general_settings = array(
 );
 
 $wps_wpr_general_settings = apply_filters( 'wps_wpr_general_settings', $wps_wpr_general_settings );
-$current_tab = 'wps_wpr_general_setting';
+$current_tab              = 'wps_wpr_general_setting';
 if ( isset( $_POST['wps_wpr_save_general'] ) && isset( $_POST['wps-wpr-nonce'] ) ) {
+
 	$wps_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) );
 	if ( wp_verify_nonce( $wps_wpr_nonce, 'wps-wpr-nonce' ) ) {
-		?>
-		<?php
 		if ( 'wps_wpr_general_setting' == $current_tab ) {
 
-			/* Save Settings and check is not empty*/
 			$postdata = $_POST;
 			$postdata = $settings_obj->check_is_settings_is_not_empty( $wps_wpr_general_settings, $postdata );
 			/* End of the save Settings and check is not empty*/
@@ -314,26 +321,26 @@ if ( isset( $_POST['wps_wpr_save_general'] ) && isset( $_POST['wps-wpr-nonce'] )
 		}
 	}
 }
+
+$general_settings = get_option( 'wps_wpr_settings_gallery', true );
+if ( ! is_array( $general_settings ) ) {
+
+	$general_settings = array();
+}
+do_action( 'wps_wpr_add_notice' );
 ?>
-	<?php $general_settings = get_option( 'wps_wpr_settings_gallery', true ); ?>
-	<?php
-	if ( ! is_array( $general_settings ) ) :
-		$general_settings = array();
-endif;
-	?>
-	<?php do_action( 'wps_wpr_add_notice' ); ?>
-	<div class="wps_wpr_table">
-		<div class="wps_wpr_general_wrapper">
-				<?php
-				foreach ( $wps_wpr_general_settings as $key => $value ) {
-					if ( 'title' == $value['type'] ) {
-						?>
-					<div class="wps_wpr_general_row_wrap">
-						<?php $settings_obj->wps_rwpr_generate_heading( $value ); ?>
-					<?php } ?>
-					<?php if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) { ?>
+<div class="wps_wpr_table">
+	<div class="wps_wpr_general_wrapper">
+			<?php
+			foreach ( $wps_wpr_general_settings as $key => $value ) {
+				if ( 'title' == $value['type'] ) {
+					?>
+				<div class="wps_wpr_general_row_wrap">
+					<?php $settings_obj->wps_rwpr_generate_heading( $value ); ?>
+				<?php } ?>
+				<?php if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) { ?>
 				<div class="wps_wpr_general_row">
-						<?php $settings_obj->wps_rwpr_generate_label( $value ); ?>
+					<?php $settings_obj->wps_rwpr_generate_label( $value ); ?>
 					<div class="wps_wpr_general_content">
 						<?php
 						$settings_obj->wps_rwpr_generate_tool_tip( $value );
@@ -378,16 +385,17 @@ endif;
 						?>
 					</div>
 				</div>
-				<?php } ?>
-					<?php if ( 'sectionend' == $value['type'] ) : ?>
-				</div>	
-				<?php endif; ?>
-			<?php } ?> 		
-		</div>
+			<?php } ?>
+				<?php if ( 'sectionend' == $value['type'] ) : ?>
+			</div>	
+			<?php endif; ?>
+		<?php } ?> 		
 	</div>
-	<div class="clear"></div>
-	<p class="submit">
-		<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_general">
-	</p>
-	<?php
+</div>
+<div class="clear"></div>
+<p class="submit">
+	<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
+	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_general">
+</p>
+<?php
 
