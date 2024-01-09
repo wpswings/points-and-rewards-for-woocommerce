@@ -60,10 +60,10 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    content: "\f198";
+    content: "\f160";
     font-family: 'dashicons';
     font-size: 24px;
-    color: #93ce00;
+    color: #8ebf13;
 }
 
 .wps_wpr_points_table_second_wrappers.wps_wpr_pro_plugin_settings:after,
@@ -77,7 +77,7 @@
 }
 
 .wps_wpr_general_content.wps_wpr_pro_plugin_settings:after {
-    content: "\f198";
+    content: "\f160";
     right: -10px;
     top: calc(50% + 2px);
     transform: translateY(-50%);
@@ -173,16 +173,16 @@
     text-decoration: none;
     color: #fff;
     display: inline-block;
-    background: #93ce00;
+    background: #8ebf13;
     padding: 10px 20px;
     border-radius: 5px;
-    border: 1px solid #93ce00;
+    border: 1px solid #8ebf13;
     transition: all 0.3s ease;
 }
 
 .wps-wpr__popup-dummy-for-pro .dummy_popup-content a:hover {
     background: transparent;
-    color: #93ce00;
+    color: #8ebf13;
 }
 
 .wps-wpr__popup-dummy-for-pro .dummy_popup-content a:focus {
@@ -211,7 +211,7 @@
 
 @media screen and (max-width: 992px) {
     .wps_wpr_general_content.wps_wpr_pro_plugin_settings:after {
-        content: "\f198";
+        content: "\f160";
         right: -10px;
         top: calc(100% - 30px);
         transform: unset;
