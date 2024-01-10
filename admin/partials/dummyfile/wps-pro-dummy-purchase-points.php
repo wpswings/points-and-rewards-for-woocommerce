@@ -183,8 +183,8 @@ $general_settings            = ! empty( $general_settings ) && is_array( $genera
 <div class="wps_table">
 	<h4><?php esc_html_e( 'Purchase Product Through Points Only', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
 	<p class="wps_wpr_section_notice"><?php esc_html_e( 'This is a category-wise setting to assign points to a product of categories. Enter some valid points for assigning, and leave blank fields to remove assigned points.', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
-	<div class="wps_wpr_categ_details wps_wpr_pro_plugin_settings">
-		<table class="form-table wps_wpr_pro_points_setting mwp_wpr_settings">
+	<div class="wps_wpr_categ_details">
+		<table class="form-table wps_wpr_pro_points_setting mwp_wpr_settings wps_wpr_pro_plugin_settings">
 			<tbody>
 				<tr>
 					<th class="titledesc"><?php esc_html_e( 'Categories', 'ultimate-woocommerce-points-and-rewards' ); ?></th>

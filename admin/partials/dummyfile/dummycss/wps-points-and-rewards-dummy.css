@@ -48,7 +48,7 @@
     display: none;
 }
 
-#wps_rwpr_setting_wrapper .wps_wpr_pro_points_setting input[type=number] {
+#wps_rwpr_setting_wrapper .wps_wpr_pro_plugin_settings input[type=number] {
     width: 100%;
 }
 

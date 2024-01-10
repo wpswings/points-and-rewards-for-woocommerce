@@ -296,6 +296,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		/* Get the points of the points details*/
 		$today_date   = date_i18n( 'Y-m-d h:i:sa' );
 		$admin_points = get_user_meta( $user_id, 'points_details', true );
+		$admin_points = ! empty( $admin_points ) && is_array( $admin_points ) ? $admin_points : array();
 		if ( isset( $points ) && ! empty( $points ) ) {
 			/* Check the type of the array*/
 			if ( 'admin_points' == $type && ! empty( $data ) ) {

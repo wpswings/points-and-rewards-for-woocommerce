@@ -36,6 +36,7 @@ if ( isset( $_POST['wps_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 		$selected_role             = isset( $_POST['wps_wpr_membership_roles'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_membership_roles'] ) ) : '';// phpcs:ignore WordPress.Security.NonceVerification
 		$user                      = get_user_by( 'ID', $user_id );
 		$membership_detail         = get_user_meta( $user_id, 'points_details', true );
+		$membership_detail         = ! empty( $membership_detail ) && is_array( $membership_detail ) ? $membership_detail : array();
 		$today_date                = date_i18n( 'Y-m-d h:i:sa', current_time( 'timestamp', 0 ) );
 		$expiration_date           = '';
 		$membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
