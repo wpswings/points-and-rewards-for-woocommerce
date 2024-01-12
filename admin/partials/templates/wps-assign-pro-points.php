@@ -207,7 +207,7 @@ $wps_wpr_assign_product_table_settings = apply_filters( 'wps_wpr_assign_product_
 </div>
 <div class="clear"></div>
 <p class="submit">
-<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
+	<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
 	<input type="submit" value='<?php esc_attr_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_select_all_products">
 </p>
 <?php do_action( 'wps_wpr_product_assign_points' ); ?>

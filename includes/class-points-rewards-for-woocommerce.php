@@ -322,6 +322,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_wpr_top_account_page_section_hook', $plugin_public, 'wps_wpr_display_earn_user_badges', 10, 1 );
 			// cart/checkout block js.
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
+			$this->loader->add_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_before', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
 		}
 	}
 
