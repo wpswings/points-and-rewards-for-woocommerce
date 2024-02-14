@@ -90,8 +90,6 @@
                     var order_limit = $(this).data('order-limit');
                     var message = '';
                     var html = '';
-                    var wps_wpr_cart_points_rate = wps_wpr.wps_wpr_cart_points_rate;
-                    var wps_wpr_cart_price_rate = wps_wpr.wps_wpr_cart_price_rate;
                     var wps_cart_points = $('#wps_cart_points').val().trim();
 
                     $("#wps_wpr_cart_points_notice").html("");

@@ -330,7 +330,12 @@ if ( $wps_wpr_mem_enable ) {
 
 if ( isset( $enable_drop ) && $enable_drop ) {
 	if ( isset( $wps_user_level ) && ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
-		unset( $wps_wpr_membership_roles[ $wps_user_level ] );
+
+		$mem_expire_time = get_user_meta( $user_id, 'membership_expiration', true );
+		if ( $mem_expire_time > gmdate( 'Y-m-d' ) ) {
+
+			unset( $wps_wpr_membership_roles[ $wps_user_level ] );
+		}
 	}
 	if ( ! empty( $wps_wpr_membership_roles ) && is_array( $wps_wpr_membership_roles ) ) {
 		?>

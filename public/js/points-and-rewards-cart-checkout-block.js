@@ -110,7 +110,18 @@
 				}
 			}
 		);
+		
+		// update page when cart and checkout total earning points functionality enable.
+		if ( '1' == wps_wpr_cart_block_obj.wps_wpr_cart_page_total_earning_points ) {
 
+			jQuery(document).on('click', '.wc-block-components-quantity-selector__button.wc-block-components-quantity-selector__button--plus', function(){
+				wps_wpr_refresh_cart_page();
+			});
+
+			jQuery(document).on('click', '.wc-block-components-quantity-selector__button.wc-block-components-quantity-selector__button--minus', function(){
+				wps_wpr_refresh_cart_page();
+			});
+		}
 	});
 })(jQuery);
 
@@ -147,4 +158,24 @@ function on_cart_click(data) {
 			}
 		});
 	}
+}
+
+function wps_wpr_refresh_cart_page() {
+	var cart_checkout_qtyt = jQuery(this).closest('.wc-block-components-quantity-selector').find('.wc-block-components-quantity-selector__input').val();
+	var data               = {
+		'action'             : 'updating_total_earning_points',
+		'nonce'              : wps_wpr_cart_block_obj.wps_wpr_nonce,
+		'cart_checkout_qtyt' : cart_checkout_qtyt
+	};
+	jQuery.ajax({
+		url     : wps_wpr_cart_block_obj.ajaxurl,
+		method  : 'POST',
+		data    : data,
+		success : function( response ) {
+			setTimeout(() => {
+				
+				window.location.reload();
+			}, 1500);
+		}
+	});
 }
