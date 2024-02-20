@@ -1804,17 +1804,17 @@ class Points_Rewards_For_WooCommerce_Public {
 
 							// get cart subtotal and minus sale product price and minus points discount price.
 							$cart__subtotal = ! empty( WC()->cart->get_subtotal() ) && WC()->cart->get_subtotal() > 0 ? WC()->cart->get_subtotal() : 0;
-							$cart__subtotal = (int) $cart__subtotal - $wps_wpr_check_points_discount_applied_amount;
-							$cart_price     = (int) $cart__subtotal - $product_sale__price;
+							$cart__subtotal = $cart__subtotal - $wps_wpr_check_points_discount_applied_amount;
+							$cart_price     = $cart__subtotal - $product_sale__price;
 						}
 
 						// check points is equal/lower than product price after sale product price calculated.
 						if ( $wps_cart_points <= $cart_price ) {
 
-							$wps_cart_points = (int) $wps_cart_points;
+							$wps_cart_points = $wps_cart_points;
 						} else {
 
-							$wps_cart_points = (int) $cart_price;
+							$wps_cart_points = $cart_price;
 						}
 					}
 				}
