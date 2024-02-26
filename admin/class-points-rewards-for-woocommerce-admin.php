@@ -78,19 +78,19 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
-
 		if ( isset( $screen->id ) ) {
-			$pagescreen = $screen->id;
 
+			$pagescreen = $screen->id;
 			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
 
 				wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 				wp_enqueue_style( 'woocommerce_admin_styles' );
-				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION );
-				wp_enqueue_script( 'sticky_js', WPS_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), WC_VERSION, true );
+				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION, true );
 				wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery' ), WC_VERSION, true );
+				wp_enqueue_script( 'sticky_js', WPS_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), WC_VERSION, true );
 				wp_enqueue_media();
+
 				$locale  = localeconv();
 				$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
 				$params  = array(
@@ -111,14 +111,15 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'export_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_exporter' ) ),
 					),
 				);
-				wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
 
+				wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
 				wp_enqueue_script( 'woocommerce_admin' );
 				$args_cat     = array( 'taxonomy' => 'product_cat' );
 				$categories   = get_terms( $args_cat );
 				$option_categ = array();
 				if ( isset( $categories ) && ! empty( $categories ) ) {
 					foreach ( $categories as $category ) {
+
 						$catid   = $category->term_id;
 						$catname = $category->name;
 
@@ -128,6 +129,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						);
 					}
 				}
+
 				$url     = admin_url( 'admin.php?page=wps-wpr-setting' );
 				$wps_wpr = array(
 					'ajaxurl'               => admin_url( 'admin-ajax.php' ),
@@ -173,40 +175,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 				wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
 				wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
-			}
-		}
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @param  string $hook       The name of page.
-	 * @since    1.0.0
-	 */
-	public function swal_enqueue_scripts( $hook ) {
-
-		$screen = get_current_screen();
-		if ( isset( $screen->id ) ) {
-
-			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
-
-				wp_enqueue_script( 'wps_my_par_custom_js', plugin_dir_url( __FILE__ ) . 'js/points-rewards-for-woocommerce-admin-swal.js', array( 'jquery' ), $this->version, false );
-				wp_enqueue_script( $this->plugin_name . '-swal', plugin_dir_url( __FILE__ ) . 'js/swal.js', array( 'jquery' ), $this->version, false );
-				wp_enqueue_script( $this->plugin_name . '-swall', plugin_dir_url( __FILE__ ) . 'js/swall.js', array( 'jquery' ), $this->version, false );
-				wp_localize_script(
-					'wps_my_par_custom_js',
-					'localised',
-					array(
-						'ajaxurl'               => admin_url( 'admin-ajax.php' ),
-						'nonce'                 => wp_create_nonce( 'wps-wpr-verify-nonce' ),
-						'callback'              => 'ajax_callbacks',
-						'pending_count'         => ! empty( $this->wps_par_get_count( 'pending' ) ) && is_array( $this->wps_par_get_count( 'pending' ) ) ? $this->wps_par_get_count( 'pending' ) : 0,
-						'pending_orders'        => $this->wps_par_get_count( 'pending', 'orders' ),
-						'completed_orders'      => $this->wps_par_get_count( 'done', 'orders' ),
-						'completed_users'       => ! empty( $this->wps_par_get_count_users( 'users' ) ) && is_array( $this->wps_par_get_count_users( 'users' ) ) ? $this->wps_par_get_count_users( 'users' ) : 0,
-						'completed_users_count' => ! empty( $this->wps_par_get_count_users( 'users' ) ) && is_array( $this->wps_par_get_count_users( 'users' ) ) ? count( $this->wps_par_get_count_users( 'users' ) ) : 0,
-					)
-				);
 			}
 		}
 	}
@@ -276,21 +244,22 @@ class Points_Rewards_For_WooCommerce_Admin {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
 		if ( isset( $_POST['points'] ) && is_numeric( $_POST['points'] ) && isset( $_POST['user_id'] ) && isset( $_POST['sign'] ) && isset( $_POST['reason'] ) ) {
 
-			$user_id = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
-			/* Get the user points*/
+			$user_id    = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
 			$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-			/* Get the Input Values*/
-			$points = sanitize_text_field( wp_unslash( $_POST['points'] ) );
-			$sign   = sanitize_text_field( wp_unslash( $_POST['sign'] ) );
-			$reason = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
-			/* calculate users points*/
+			$points     = sanitize_text_field( wp_unslash( $_POST['points'] ) );
+			$sign       = sanitize_text_field( wp_unslash( $_POST['sign'] ) );
+			$reason     = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
+
 			if ( '+' === $sign ) {
+
 				$total_points = $get_points + $points;
 			} elseif ( '-' === $sign ) {
 				if ( $points <= $get_points ) {
+
 					$total_points = $get_points - $points;
 				} else {
-					$points = $get_points;
+
+					$points       = $get_points;
 					$total_points = $get_points - $points;
 				}
 			}
@@ -327,10 +296,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 		/* Get the points of the points details*/
 		$today_date   = date_i18n( 'Y-m-d h:i:sa' );
 		$admin_points = get_user_meta( $user_id, 'points_details', true );
+		$admin_points = ! empty( $admin_points ) && is_array( $admin_points ) ? $admin_points : array();
 		if ( isset( $points ) && ! empty( $points ) ) {
 			/* Check the type of the array*/
 			if ( 'admin_points' == $type && ! empty( $data ) ) {
 				if ( isset( $admin_points['admin_points'] ) && ! empty( $admin_points['admin_points'] ) ) {
+
 					$admin_array                    = array();
 					$admin_array                    = array(
 						'admin_points' => $points,
@@ -340,6 +311,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					);
 					$admin_points['admin_points'][] = $admin_array;
 				} else {
+
 					if ( ! is_array( $admin_points ) ) {
 						$admin_points = array();
 					}
@@ -378,6 +350,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( 'admin_notification' == $type ) {
 			/* Check is settings array is not empty*/
 			if ( is_array( $wps_wpr_notificatin_array ) && ! empty( $wps_wpr_notificatin_array ) ) {
+
 				/*Get the mail subject*/
 				$wps_wpr_email_subject = $this->wps_wpr_get_subject( 'wps_wpr_email_subject' );
 				/*Get the mail custom description*/
@@ -933,7 +906,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 		<?php
 	}
 
-
 	/**
 	 * This function is used to set cron if user want to get support.
 	 *
@@ -1178,311 +1150,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 		$arrayend   = array_splice( $arr, $index );
 		$arraystart = array_splice( $arr, 0, $index );
 		return ( array_merge( $arraystart, $inserted_array, $arrayend ) );
-	}
-
-	/**
-	 * Undocumented function
-	 *
-	 * @return void
-	 */
-	public function wpswing_migrate_code() {
-		wps_wpr_convert_db_keys();
-	}
-
-	/**
-	 * Order count.
-	 *
-	 * @param string $type type.
-	 * @param string $action action.
-	 * @since    1.0.0
-	 */
-	public function wps_par_get_count( $type = 'all', $action = 'count' ) {
-		switch ( $type ) {
-			case 'pending':
-				$product_meta_array = array(
-					'mwb_product_points_enable',
-					'mwb_points_product_value',
-					'mwb_product_purchase_points_only',
-					'mwb_points_product_purchase_value',
-					'mwb_product_purchase_through_point_disable',
-					'mwb_wpr_variable_points',
-					'mwb_wpr_variable_points_purchase',
-					'mwb_wpr_points_coupon',
-				);
-
-				$order_meta_array = array(
-					'mwb_cart_discount#$fee_id',
-					'mwb_cart_discount#points',
-				);
-
-				$result = get_posts(
-					array(
-						'post_type'   => 'shop_order',
-						'meta_key'    => $order_meta_array, // phpcs:ignore
-						'post_status' => array( 'wc-pending', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed' ),
-						'numberposts' => -1,
-						'fields'      => 'ids',
-					)
-				);
-
-				$simple_product = get_posts(
-					array(
-						'post_type'   => 'product',
-						'meta_key'    => $product_meta_array, // phpcs:ignore
-						'post_status' => array( 'publish', 'draft', 'trash', 'wc-pending', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed' ),
-						'numberposts' => -1,
-						'fields'      => 'ids',
-					)
-				);
-
-				$variable_product = get_posts(
-					array(
-						'post_type'   => 'product_variation',
-						'post_status' => array( 'publish', 'draft', 'trash', 'wc-pending', 'wc-processing', 'wc-on-hold', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed' ),
-						'numberposts' => -1,
-						'meta_key'    => $product_meta_array, // phpcs:ignore
-						'fields'      => 'ids',
-					)
-				);
-
-				if ( ! empty( $result ) && is_array( $result ) && ! empty( $simple_product ) && is_array( $simple_product ) ) {
-					$result = array_merge( $result, $simple_product );
-				}
-				if ( ! empty( $result ) && is_array( $result ) && ! empty( $variable_product ) && is_array( $variable_product ) ) {
-					$result = array_merge( $result, $variable_product );
-				}
-				break;
-			default:
-				$result = false;
-				break;
-		}
-
-		if ( empty( $result ) && ! is_array( $result ) ) {
-			return array();
-		}
-
-		if ( 'count' === $action ) {
-			$result = ! empty( $result ) ? count( $result ) : 0;
-		}
-		return $result;
-	}
-
-	/**
-	 * Ajax Call back.
-	 */
-	public function ajax_callbacks() {
-
-		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
-		$event = ! empty( $_POST['event'] ) ? sanitize_text_field( wp_unslash( $_POST['event'] ) ) : '';
-		if ( method_exists( $this, $event ) ) {
-			$data = $this->$event( $_POST );
-		} else {
-			$data = esc_html__( 'method not found', 'one-click-upsell-addon' );
-		}
-		echo wp_json_encode( $data );
-		wp_die();
-	}
-
-	/**
-	 * Import order callback.
-	 *
-	 * @param array $posted_data The $_POST data.
-	 */
-	public function import_single_order( $posted_data = array() ) {
-
-		$orders = ! empty( $posted_data['orders'] ) ? $posted_data['orders'] : array();
-		if ( empty( $orders ) ) {
-			return array();
-		}
-
-		// Remove this order from request.
-		foreach ( $orders as $key => $order ) {
-
-			$order_id = ! empty( $order ) ? $order : false;
-			unset( $orders[ $key ] );
-			break;
-		}
-		// Attempt for one order.
-		if ( ! empty( $order_id ) ) {
-			$user_post_meta_keys = array(
-				'mwb_cart_discount#$fee_id',
-				'mwb_cart_discount#points',
-				'mwb_product_points_enable',
-				'mwb_points_product_value',
-				'mwb_wpr_points_coupon',
-				'mwb_product_purchase_points_only',
-				'mwb_points_product_purchase_value',
-				'mwb_product_purchase_through_point_disable',
-				'mwb_wpr_variable_points',
-				'mwb_wpr_variable_points_purchase',
-			);
-			$user_post_meta_keys = apply_filters( 'wps_userpost_meta_keys_pro', $user_post_meta_keys );
-			foreach ( $user_post_meta_keys as $index => $meta_key ) {
-				// hpos.
-				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-				$meta_value = wps_wpr_hpos_get_meta_data( $order_id, $meta_key, true );
-				if ( ! empty( $meta_value ) || '0' === $meta_value ) {
-
-					wps_wpr_hpos_update_meta_data( $order_id, $new_key, $meta_value );
-					wps_wpr_hpos_update_meta_data( $order_id, 'copy_' . $meta_key, $meta_value );
-					wps_wpr_hpos_delete_meta_data( $order_id, $meta_key );
-				} else {
-					wps_wpr_hpos_delete_meta_data( $order_id, $meta_key );
-				}
-			}
-		}
-		return compact( 'orders' );
-	}
-
-	/**
-	 * Import_users_wps function
-	 *
-	 * @param array $posted_data for posted array.
-	 * @return users
-	 */
-	public function import_users_wps( $posted_data = array() ) {
-		$users = ! empty( $posted_data['users'] ) ? $posted_data['users'] : array();
-		if ( empty( $users ) ) {
-			return array();
-		}
-		foreach ( $users as $key => $user ) {
-			$user_id = ! empty( $user['ID'] ) ? $user['ID'] : false;
-			unset( $users[ $key ] );
-			break;
-		}
-		if ( ! empty( $user_id ) ) {
-
-			$user_meta_keys = array(
-				'mwb_points_referral',
-				'mwb_points_referral_invite',
-				'mwb_wpr_points',
-				'mwb_wpr_no_of_orders',
-				'mwb_wpr_user_log',
-				'mwb_wpr_points_expiration_date',
-				'mwb_wpr_birthday_points_year',
-			);
-			foreach ( $user_meta_keys as $index => $meta_key ) {
-				$new_key    = str_replace( 'mwb_', 'wps_', $meta_key );
-				$meta_value = get_user_meta( $user_id, $meta_key, true );
-				if ( ! empty( $meta_value ) || '0' === $meta_value ) {
-					update_user_meta( $user_id, $new_key, $meta_value );
-					update_user_meta( $user_id, 'copy_' . $meta_key, $meta_value );
-					delete_user_meta( $user_id, $meta_key );
-				} else {
-					delete_user_meta( $user_id, $meta_key );
-				}
-			}
-		}
-		return compact( 'users' );
-	}
-
-	/**
-	 * Migration to new domain notice.
-	 */
-	public function wps_wpr_updgrade_notice() {
-		$screen = get_current_screen();
-
-		if ( isset( $screen->id ) ) {
-			$pagescreen = $screen->id;
-
-			if ( 'woocommerce_page_wps-rwpr-setting' !== $pagescreen ) {
-				return;
-			}
-		}
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		$tab                = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-		$wps__order_count   = $this->wps_par_get_count( 'pending' );
-		$wps__order_count   = ! empty( $wps__order_count ) && is_array( $wps__order_count ) ? count( $wps__order_count ) : 0;
-		$wps_meta_key_count = $this->wps_par_get_count_users( 'users' );
-		$wps_meta_key_count = ! empty( $wps_meta_key_count ) && is_array( $wps_meta_key_count ) ? count( $wps_meta_key_count ) : 0;
-		if ( 'wps-rwpr-setting' === $tab && ( 0 !== $wps__order_count ) || ( 0 !== $wps_meta_key_count ) ) {
-			?>
-
-		<tr class="plugin-update-tr active notice-warning notice-alt">
-			<td colspan="4" class="plugin-update colspanchange">
-				<div class="notice notice-error inline update-message notice-alt">
-					<div class='wps-notice-title wps-notice-section'>
-						<p><strong>IMPORTANT NOTICE:</strong></p>
-					</div>
-					<div class='wps-notice-content wps-notice-section'>
-						<p>The latest  Update includes some substantial changes across different areas of plugin<strong> Please Migrate your data by clicking on Start Migration<strong></p>
-					</div>
-					<div class="treat-wrapper">
-						<button class="treat-button">Start Migration!</button>
-					</div>
-				</div>
-			</td>
-		</tr>
-		<style>
-			.treat-button {
-			font-family: "Fascinate Inline", cursive;
-			-webkit-appearance: none;
-				-moz-appearance: none;
-					appearance: none;
-			background: linear-gradient(to bottom, #F46001, #E14802);
-			border: none;
-			color: #FFF;
-			border-radius: 2em;
-			padding: 0.6em 1.5em;
-			width: 200px;
-			font-size: 20px;
-			overflow: hidden;
-			-webkit-user-select: none;
-				-moz-user-select: none;
-				-ms-user-select: none;
-					user-select: none;
-			cursor: pointer;
-			z-index: 1;
-			box-shadow: 0 0 1em rgba(255, 255, 255, 0.2);
-			transition: transform 0.1s cubic-bezier(0.5, 0, 0.5, 1), box-shadow 0.2s;
-			outline: none;
-			}
-			.treat-button:hover {
-			box-shadow: 0 0 2em rgba(255, 255, 255, 0.3);
-			}
-			.wps-notice-section > p:before {
-				content: none;
-			}
-		</style>
-			<?php
-		}
-	}
-
-	/**
-	 * Wps_par_get_count_users function
-	 *
-	 * @param string $type for type.
-	 * @param string $action for action .
-	 * @return $result
-	 */
-	public function wps_par_get_count_users( $type = 'all', $action = 'count' ) {
-		switch ( $type ) {
-			case 'users':
-				$user_array = array(
-					'mwb_points_referral',
-					'mwb_points_referral_invite',
-					'mwb_wpr_points',
-					'mwb_wpr_no_of_orders',
-					'mwb_wpr_user_log',
-					'mwb_wpr_points_expiration_date',
-					'mwb_wpr_birthday_points_year',
-				);
-				$result = get_users(
-					array(
-						'limit'    => - 1,
-						'meta_key' => $user_array, // phpcs:ignore
-						'fields'   => array( 'ID' ),
-					)
-				);
-				break;
-			default:
-				$result = false;
-				break;
-		}
-		if ( empty( $result ) ) {
-			return array();
-		}
-		return $result;
 	}
 
 	/**
@@ -1864,6 +1531,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 		wp_die();
 	}
 
+	/*** +++++++ Membership Plugin Compatibility. ++++++++ */
+
 	/**
 	 * This function is used to create meta fields for PAR compatibility.
 	 *
@@ -1874,8 +1543,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_membership_meta_fields( $settings_fields, $instance, $post ) {
 
-		$wps_wpr_enable_points_settings          = get_post_meta( $post->ID, 'wps_wpr_enable_points_settings', true );
-		$wps_wpr_membership_assign_points_values = get_post_meta( $post->ID, 'wps_wpr_membership_assign_points_values', true );
+		$wps_wpr_enable_points_settings          = wps_wpr_hpos_get_meta_data( $post->ID, 'wps_wpr_enable_points_settings', true );
+		$wps_wpr_membership_assign_points_values = wps_wpr_hpos_get_meta_data( $post->ID, 'wps_wpr_membership_assign_points_values', true );
 		?>
 		<input type="hidden" name="wps_wpr_membership_compatible_nonce" value="<?php echo esc_html( wp_create_nonce( 'membership-compatible-nonce' ) ); ?>">
 		<h2 class="wps_membership_offer_title">
@@ -1921,7 +1590,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
-	 * Undocumented function.
+	 * This function is used to save membership settings data.
 	 *
 	 * @param  string $post_id post_id.
 	 * @return void
@@ -1948,13 +1617,13 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 			$wps_wpr_enable_points_settings          = ! empty( $_POST['wps_wpr_enable_points_settings'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_points_settings'] ) ) : 'no';
 			$wps_wpr_membership_assign_points_values = ! empty( $_POST['wps_wpr_membership_assign_points_values'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_membership_assign_points_values'] ) ) : 0;
-			update_post_meta( $post_id, 'wps_wpr_enable_points_settings', $wps_wpr_enable_points_settings );
-			update_post_meta( $post_id, 'wps_wpr_membership_assign_points_values', $wps_wpr_membership_assign_points_values );
+			wps_wpr_hpos_update_meta_data( $post_id, 'wps_wpr_enable_points_settings', $wps_wpr_enable_points_settings );
+			wps_wpr_hpos_update_meta_data( $post_id, 'wps_wpr_membership_assign_points_values', $wps_wpr_membership_assign_points_values );
 		}
 	}
 
 	/**
-	 * Undocumented function.
+	 * This function is used to assign points when membership is purchased and completed.
 	 *
 	 * @param string $data data.
 	 * @return void
@@ -1973,8 +1642,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 					$get_points                              = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
 					$mem_assign_points_log                   = get_user_meta( $user_id, 'points_details', true );
 					$mem_assign_points_log                   = ! empty( $mem_assign_points_log ) && is_array( $mem_assign_points_log ) ? $mem_assign_points_log : array();
-					$wps_wpr_enable_points_settings          = get_post_meta( $plan_id, 'wps_wpr_enable_points_settings', true );
-					$wps_wpr_membership_assign_points_values = ! empty( get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
+					$wps_wpr_enable_points_settings          = wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_enable_points_settings', true );
+					$wps_wpr_membership_assign_points_values = ! empty( wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
 					if ( 'yes' === $wps_wpr_enable_points_settings ) {
 
 						$updated_points = (int) $get_points + $wps_wpr_membership_assign_points_values;
@@ -1999,8 +1668,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 						}
 						update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
 						update_user_meta( $user_id, 'points_details', $mem_assign_points_log );
-						update_post_meta( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', $wps_wpr_membership_assign_points_values );
-						update_post_meta( $post_id, 'wps_wpr_assign_user_id', $user_id );
+						wps_wpr_hpos_update_meta_data( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', $wps_wpr_membership_assign_points_values );
+						wps_wpr_hpos_update_meta_data( $post_id, 'wps_wpr_assign_user_id', $user_id );
 					}
 				}
 			}
@@ -2008,7 +1677,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
-	 * Undocumented function.
+	 * This function is used to assign points when membership is purchased and completed.
 	 *
 	 * @param string $post_id post id.
 	 * @return void
@@ -2033,7 +1702,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		// Nonce verification.
 		check_admin_referer( 'wps_members_creation_nonce', 'wps_members_nonce_field' );
 
-		$wps_wpr_assign_user_id = get_post_meta( $post_id, 'wps_wpr_assign_user_id', true );
+		$wps_wpr_assign_user_id = wps_wpr_hpos_get_meta_data( $post_id, 'wps_wpr_assign_user_id', true );
 		$billing_email          = ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '';
 		if ( ! empty( $billing_email ) ) {
 			$user_ob = get_user_by( 'email', $billing_email );
@@ -2053,8 +1722,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 					$get_points                              = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
 					$mem_assign_points_log                   = get_user_meta( $user_id, 'points_details', true );
 					$mem_assign_points_log                   = ! empty( $mem_assign_points_log ) && is_array( $mem_assign_points_log ) ? $mem_assign_points_log : array();
-					$wps_wpr_enable_points_settings          = get_post_meta( $plan_id, 'wps_wpr_enable_points_settings', true );
-					$wps_wpr_membership_assign_points_values = ! empty( get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
+					$wps_wpr_enable_points_settings          = wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_enable_points_settings', true );
+					$wps_wpr_membership_assign_points_values = ! empty( wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
 					if ( 'yes' === $wps_wpr_enable_points_settings ) {
 
 						$updated_points = (int) $get_points + $wps_wpr_membership_assign_points_values;
@@ -2079,20 +1748,20 @@ class Points_Rewards_For_WooCommerce_Admin {
 						}
 						update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
 						update_user_meta( $user_id, 'points_details', $mem_assign_points_log );
-						update_post_meta( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', $wps_wpr_membership_assign_points_values );
+						wps_wpr_hpos_update_meta_data( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', $wps_wpr_membership_assign_points_values );
 					}
 				}
 			} elseif ( 'cancelled' === $member_status ) {
 				if ( $plan_id > 0 ) {
 
-					$wps_wpr_membership_plugin_assign_points_rewarded_done = get_post_meta( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', true );
+					$wps_wpr_membership_plugin_assign_points_rewarded_done = wps_wpr_hpos_get_meta_data( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', true );
 					if ( $wps_wpr_membership_plugin_assign_points_rewarded_done > 0 ) {
 
 						$get_points                              = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
 						$mem_assign_points_refund_log            = get_user_meta( $user_id, 'points_details', true );
 						$mem_assign_points_refund_log            = ! empty( $mem_assign_points_refund_log ) && is_array( $mem_assign_points_refund_log ) ? $mem_assign_points_refund_log : array();
-						$wps_wpr_enable_points_settings          = get_post_meta( $plan_id, 'wps_wpr_enable_points_settings', true );
-						$wps_wpr_membership_assign_points_values = ! empty( get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? get_post_meta( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
+						$wps_wpr_enable_points_settings          = wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_enable_points_settings', true );
+						$wps_wpr_membership_assign_points_values = ! empty( wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
 						if ( 'yes' === $wps_wpr_enable_points_settings ) {
 
 							$updated_points = (int) $get_points - $wps_wpr_membership_assign_points_values;
@@ -2122,5 +1791,29 @@ class Points_Rewards_For_WooCommerce_Admin {
 				}
 			}
 		}
+	}
+
+	/** Migration functions */
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param  string $count count.
+	 * @return bool
+	 */
+	public function wps_par_get_count( $count = '' ) {
+
+		return 0;
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param string $count count.
+	 * @return bool
+	 */
+	public function wps_par_get_count_users( $count = '' ) {
+
+		return 0;
 	}
 }

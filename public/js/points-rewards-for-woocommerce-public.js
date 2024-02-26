@@ -90,8 +90,6 @@
                     var order_limit = $(this).data('order-limit');
                     var message = '';
                     var html = '';
-                    var wps_wpr_cart_points_rate = wps_wpr.wps_wpr_cart_points_rate;
-                    var wps_wpr_cart_price_rate = wps_wpr.wps_wpr_cart_price_rate;
                     var wps_cart_points = $('#wps_cart_points').val().trim();
 
                     $("#wps_wpr_cart_points_notice").html("");
@@ -173,20 +171,28 @@
                         } else if (order_limit !== 'undefined' && order_limit !== '' && order_limit !== null && order_limit > 0) {
                             if ($(".woocommerce-cart-form").offset()) {
                                 $(".wps_error").remove();
-                                $('html, body').animate({
-                                        scrollTop: $(".woocommerce-cart-form").offset().top
-                                    },
-                                    800
-                                );
+                                if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+                                    if (!wps_wpr.checkout_page) {
+                                        $('html, body').animate({
+                                                scrollTop: $(".woocommerce-cart-form").offset().top
+                                            },
+                                            800
+                                        );
+                                    }
+                                }
                                 var assing_message = '<ul class="woocommerce-error wps_error" role="alert"><li>' + wps_wpr.above_order_limit + '</li></ul>';
                                 $(assing_message).insertBefore($('.woocommerce-cart-form'));
                             } else {
                                 $(".wps_error").remove();
-                                $('html, body').animate({
-                                        scrollTop: $(".custom_point_checkout").offset().top
-                                    },
-                                    800
-                                );
+                                if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+                                    if (wps_wpr.checkout_page) {
+                                        $('html, body').animate({
+                                                scrollTop: $(".custom_point_checkout").offset().top
+                                            },
+                                            800
+                                        );
+                                    }
+                                }
                                 var assing_message = '<ul class="woocommerce-error wps_error" role="alert"><li>' + wps_wpr.above_order_limit + '</li></ul>';
                                 $(assing_message).insertBefore($('.custom_point_checkout'));
                             }
@@ -194,20 +200,28 @@
                         } else {
                             if ($(".woocommerce-cart-form").offset()) {
                                 $(".wps_error").remove();
-                                $('html, body').animate({
-                                        scrollTop: $(".woocommerce-cart-form").offset().top
-                                    },
-                                    800
-                                );
+                                if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+                                    if (!wps_wpr.checkout_page) {
+                                        $('html, body').animate({
+                                                scrollTop: $(".woocommerce-cart-form").offset().top
+                                            },
+                                            800
+                                        );
+                                    }
+                                }
                                 var assing_message = '<ul class="woocommerce-error wps_error" role="alert"><li>' + wps_wpr.not_suffient + '</li></ul>';
                                 $(assing_message).insertBefore($('.woocommerce-cart-form'));
                             } else {
                                 $(".wps_error").remove();
-                                $('html, body').animate({
-                                        scrollTop: $(".custom_point_checkout").offset().top
-                                    },
-                                    800
-                                );
+                                if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
+                                    if (!wps_wpr.checkout_page) {
+                                        $('html, body').animate({
+                                                scrollTop: $(".custom_point_checkout").offset().top
+                                            },
+                                            800
+                                        );
+                                    }
+                                }
                                 var assing_message = '<ul class="woocommerce-error wps_error" role="alert"><li>' + wps_wpr.not_suffient + '</li></ul>';
                                 $(assing_message).insertBefore($('.custom_point_checkout'));
                             }

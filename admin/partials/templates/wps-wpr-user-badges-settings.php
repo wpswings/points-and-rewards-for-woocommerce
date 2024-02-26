@@ -69,7 +69,7 @@ $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wp
 	<form method="POST" action="" class="wps_wpr_user_badges_form">
 		<main class="wps_wpr_main_user_badges_wrapper">
 			<section class="wps_wpr_general_row_wrap">
-				<div class="wps_wpr_user_badges_settings_heading wps_wpr_general_sign_title"><?php esc_html_e( 'Badges', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<div class="wps_wpr_user_badges_settings_heading wps_wpr_general_sign_title wps_wpr_doc_video_wrapper"><?php esc_html_e( 'Badges', 'points-and-rewards-for-woocommerce' ); ?><div class="wps_wpr_doc_video"><a href="https://docs.wpswings.com/user-badges-and-levels/?utm_source=wpswings-user-badges-doc&utm_medium=par-org-page&utm_campaign=user-badges-documentation" target="_blank" class="button"><?php esc_html_e( 'Docs', 'points-and-rewards-for-woocommerce' ); ?></a><a href="https://www.youtube.com/watch?v=DQ2iN9GHVK8" target="_blank" class="button"><?php esc_html_e( 'Video', 'points-and-rewards-for-woocommerce' ); ?></a></div></div>
 				<input type="hidden" name="wps_wpr_user_badges_setting_nonce" id="wps_wpr_user_badges_setting_nonce" value="<?php echo esc_html( wp_create_nonce( 'user-badges-setting-nonce' ) ); ?>">
 				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_enable_user_badges_settings" class="wps_wpr_general_label"><?php esc_html_e( 'Enable Badges', 'points-and-rewards-for-woocommerce' ); ?></label>

@@ -14,6 +14,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 include_once WPS_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
 $settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 
@@ -127,12 +128,12 @@ $wps_wpr_other_settings = array(
 );
 
 $wps_wpr_other_settings = apply_filters( 'wps_wpr_others_settings', $wps_wpr_other_settings );
-/*Save Settings*/
-$current_tab = 'wps_wpr_othersetting_tab';
-
+$current_tab            = 'wps_wpr_othersetting_tab';
 if ( isset( $_POST['wps_wpr_save_othersetting'] ) && isset( $_POST['wps-wpr-nonce'] ) ) {
+
 	$wps_par_nonce = sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) );
 	if ( wp_verify_nonce( $wps_par_nonce, 'wps-wpr-nonce' ) ) {
+
 		unset( $_POST['wps_wpr_save_othersetting'] );
 		$other_settings = array();
 		/* Check if input is not empty, if empty then assign them default value*/
@@ -151,7 +152,7 @@ if ( isset( $_POST['wps_wpr_save_othersetting'] ) && isset( $_POST['wps-wpr-nonc
 		do_action( 'wps_wpr_save_other_settings', $postdata );
 	}
 }
-/* Get Saved settings*/
+
 $other_settings = get_option( 'wps_wpr_other_settings', array() );
 ?>
 <?php do_action( 'wps_wpr_add_notice' ); ?>
@@ -219,5 +220,6 @@ $other_settings = get_option( 'wps_wpr_other_settings', array() );
 		</div>
 	</div>
 <p class="submit">
+	<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
 	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_othersetting">
 </p>

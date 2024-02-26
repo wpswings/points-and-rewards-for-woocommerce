@@ -23,12 +23,11 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * @link https://www.wpswings.com/
  */
 class Membership_Log_List_Table extends WP_List_Table {
+
 	/**
 	 * This variable used for the totoal data.
 	 *
-	 * @var $example_data
-	 * @author makewebbetter<webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
+	 * @var array
 	 */
 	public $example_data;
 
@@ -52,6 +51,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 		);
 		return $columns;
 	}
+
 	/**
 	 * This show points table list.
 	 *
@@ -79,8 +79,6 @@ class Membership_Log_List_Table extends WP_List_Table {
 				return false;
 		}
 	}
-
-
 
 	/**
 	 * Perform admin bulk action setting for points table.
@@ -111,6 +109,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 			}
 		}
 	}
+
 	/**
 	 * Returns an associative array containing the bulk action
 	 *
@@ -175,7 +174,6 @@ class Membership_Log_List_Table extends WP_List_Table {
 				'total_pages' => ceil( $total_items / $per_page ),
 			)
 		);
-
 	}
 
 	/**
@@ -246,7 +244,6 @@ class Membership_Log_List_Table extends WP_List_Table {
 			),
 			array(
 				'key' => 'wps_wpr_points',
-
 			),
 		);
 
@@ -273,10 +270,10 @@ class Membership_Log_List_Table extends WP_List_Table {
 }
 ?>
 <h3 class="wp-heading-inline" id="wps_wpr_points_table_heading">
-	<?php esc_html_e( 'Membership Log', 'points-and-rewards-for-woocommerce' ); ?></h3>
+	<?php esc_html_e( 'Membership Log', 'points-and-rewards-for-woocommerce' ); ?>
+</h3>
 <form method="post">
-	<input type="hidden" name="page"
-		value="points_log_list_table">
+	<input type="hidden" name="page" value="points_log_list_table">
 	<?php wp_nonce_field( 'membership-log', 'membership-log' ); ?>
 	<?php
 	$mylisttable = new Membership_Log_List_Table();

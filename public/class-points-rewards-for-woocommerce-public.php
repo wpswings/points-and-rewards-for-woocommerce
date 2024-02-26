@@ -75,9 +75,6 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		$coupon_settings          = get_option( 'wps_wpr_coupons_gallery', array() );
 		$wps_minimum_points_value = isset( $coupon_settings['wps_wpr_general_minimum_value'] ) ? $coupon_settings['wps_wpr_general_minimum_value'] : 50;
-		$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
-
-		$wps_wpr_cart_price_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
 
 		// get user current points.
 		$current_points = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
@@ -96,9 +93,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			wp_enqueue_script( 'wps-wpr-game-public-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-gamification-public.js', array( 'jquery', 'wps-wpr-wheel-class', 'wps-wpr-tween-max' ), $this->version, true );
 		}
 
-		wp_register_script( 'wp-wps-wpr-cart-class', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-cart-checkout-block.js', array(), $this->version, true );
-		wp_enqueue_script( 'wp-wps-wpr-cart-class' );
-
 		// main js file enqueue.
 		wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.min.js', array( 'jquery', 'clipboard' ), $this->version, false );
 		$wps_wpr = array(
@@ -110,8 +104,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			'minimum_points_text'        => __( 'The minimum Points Required To Convert Points To Coupons is ', 'points-and-rewards-for-woocommerce' ) . $wps_minimum_points_value,
 			'wps_wpr_custom_notice'      => __( 'The number of points you had entered will get deducted from your Account', 'points-and-rewards-for-woocommerce' ),
 			'wps_wpr_nonce'              => wp_create_nonce( 'wps-wpr-verify-nonce' ),
-			'wps_wpr_cart_points_rate'   => $wps_wpr_cart_points_rate,
-			'wps_wpr_cart_price_rate'    => $wps_wpr_cart_price_rate,
 			'not_allowed'                => __( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' ),
 			'not_suffient'               => __( 'You do not have a sufficient amount of points', 'points-and-rewards-for-woocommerce' ),
 			'above_order_limit'          => __( 'Entered points do not apply to this order.', 'points-and-rewards-for-woocommerce' ),
@@ -130,6 +122,26 @@ class Points_Rewards_For_WooCommerce_Public {
 			'points_coupon_name'         => esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
+	}
+
+	/**
+	 * This function is used to enequeue cart/block file.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_enqueue_cart_block_file() {
+
+		$wps_wpr_other_settings                 = get_option( 'wps_wpr_other_settings', true );
+		$wps_wpr_other_settings                 = ! empty( $wps_wpr_other_settings ) && is_array( $wps_wpr_other_settings ) ? $wps_wpr_other_settings : array();
+		$wps_wpr_cart_page_total_earning_points = ! empty( $wps_wpr_other_settings['wps_wpr_cart_page_total_earning_points'] ) ? $wps_wpr_other_settings['wps_wpr_cart_page_total_earning_points'] : 0;
+		wp_register_script( 'wp-wps-wpr-cart-class', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-cart-checkout-block.js', array(), $this->version, true );
+		wp_enqueue_script( 'wp-wps-wpr-cart-class' );
+		$wps_wpr = array(
+			'ajaxurl'                                => admin_url( 'admin-ajax.php' ),
+			'wps_wpr_nonce'                          => wp_create_nonce( 'wps-wpr-verify-nonce' ),
+			'wps_wpr_cart_page_total_earning_points' => $wps_wpr_cart_page_total_earning_points,
+		);
+		wp_localize_script( 'wp-wps-wpr-cart-class', 'wps_wpr_cart_block_obj', $wps_wpr );
 	}
 
 	/**
@@ -1040,7 +1052,7 @@ class Points_Rewards_For_WooCommerce_Public {
 									$item_points       += (int) $wps_wpr_points;
 									$wps_wpr_one_email = true;
 									$product_id        = $item->get_product_id();
-									$check_enable      = get_post_meta( $product_id, 'wps_product_points_enable', 'no' );
+									$check_enable      = wps_wpr_hpos_get_meta_data( $product_id, 'wps_product_points_enable', 'no' );
 									if ( 'yes' == $check_enable ) {
 										// hpos.
 										wps_wpr_hpos_update_meta_data( $order_id, "$order_id#$wps_wpr_value->id#set", 'set' );
@@ -1715,6 +1727,13 @@ class Points_Rewards_For_WooCommerce_Public {
 			$get_points      = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
 			$get_points      = ! empty( $get_points ) && $get_points > 0 ? $get_points : 0;
 
+			// Redemption Conversion rate calculate.
+			$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
+			$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+			$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
+			$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+			$wps_cart_points          = ( $wps_cart_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+
 			// deduct points if Points Discount is applied.
 			$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
 			$get_points                                   = (int) $get_points - $wps_wpr_check_points_discount_applied_amount;
@@ -1722,11 +1741,12 @@ class Points_Rewards_For_WooCommerce_Public {
 			// deduct points if discount applied via product edit page( purchase throught only points ).
 			$applied__points     = 0;
 			$product_sale__price = 0;
+			$discount_value      = 0;
 			if ( isset( WC()->cart ) ) {
 				foreach ( WC()->cart->get_cart() as $cart ) {
 
 					// purchase through points only data.
-					if ( 'yes' == get_post_meta( $cart['product_id'], 'wps_product_purchase_points_only', true ) ) {
+					if ( 'yes' == wps_wpr_hpos_get_meta_data( $cart['product_id'], 'wps_product_purchase_points_only', true ) ) {
 						if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
 
 							$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] * $cart['quantity'];
@@ -1741,6 +1761,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 				}
 			}
+
 			// purchase through points only data.
 			$get_points = (int) $get_points - $applied__points;
 
@@ -1754,22 +1775,46 @@ class Points_Rewards_For_WooCommerce_Public {
 
 					// check sale restrict features is enable.
 					if ( 1 === $restrict_sale_on_cart ) {
+
+						$wps_user_level            = get_user_meta( get_current_user_id(), 'membership_level', true );
+						$membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
+						$wps_wpr_membership_roles  = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
+						if ( ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
+							if ( is_array( $wps_wpr_membership_roles ) && ! empty( $wps_wpr_membership_roles ) ) {
+								// get membership discount amount.
+								foreach ( $wps_wpr_membership_roles as $wps_role => $values ) {
+									if ( ! is_array( $values ) ) {
+										return;
+									}
+									if ( $wps_role == $wps_user_level ) {
+
+										$discount_value = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
+										break;
+									}
+								}
+							}
+						}
+
+						// calculate membership discount on sale product.
+						$discouted_sale_price = ( $product_sale__price * $discount_value ) / 100;
+						$product_sale__price  = $product_sale__price - $discouted_sale_price;
+
 						$cart_price = 0;
 						if ( isset( WC()->cart ) ) {
 
 							// get cart subtotal and minus sale product price and minus points discount price.
 							$cart__subtotal = ! empty( WC()->cart->get_subtotal() ) && WC()->cart->get_subtotal() > 0 ? WC()->cart->get_subtotal() : 0;
-							$cart__subtotal = (int) $cart__subtotal - $wps_wpr_check_points_discount_applied_amount;
-							$cart_price     = (int) $cart__subtotal - $product_sale__price;
+							$cart__subtotal = $cart__subtotal - $wps_wpr_check_points_discount_applied_amount;
+							$cart_price     = $cart__subtotal - $product_sale__price;
 						}
 
 						// check points is equal/lower than product price after sale product price calculated.
 						if ( $wps_cart_points <= $cart_price ) {
 
-							$wps_cart_points = (int) $wps_cart_points;
+							$wps_cart_points = $wps_cart_points;
 						} else {
 
-							$wps_cart_points = (int) $cart_price;
+							$wps_cart_points = $cart_price;
 						}
 					}
 				}
@@ -1821,15 +1866,10 @@ class Points_Rewards_For_WooCommerce_Public {
 				$wps_wpr_custom_points_on_cart     = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
 				$wps_wpr_custom_points_on_checkout = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' );
 			if ( isset( $user_id ) && ! empty( $user_id ) && ( 1 == $wps_wpr_custom_points_on_cart || 1 == $wps_wpr_custom_points_on_checkout ) ) {
-				/*Get the cart point rate*/
-				$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
-				$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
-				$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
-				$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
 
 				if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
-					$wps_wpr_points  = WC()->session->get( 'wps_cart_points' );
-					$wps_fee_on_cart = ( $wps_wpr_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+
+					$wps_fee_on_cart = WC()->session->get( 'wps_cart_points' );
 					$cart_discount   = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 					// apply points on subtotal.
 					$subtotal = $cart->get_subtotal();
@@ -1885,24 +1925,17 @@ class Points_Rewards_For_WooCommerce_Public {
 					if ( '1' == $my_cart_change_return ) {
 						return;
 					} else {
-							$user_id = get_current_user_ID();
-							/*Check is custom points on cart is enable*/
-							$wps_wpr_custom_points_on_cart     = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
-							$wps_wpr_custom_points_on_checkout = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' );
+						$user_id = get_current_user_ID();
+						/*Check is custom points on cart is enable*/
+						$wps_wpr_custom_points_on_cart     = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+						$wps_wpr_custom_points_on_checkout = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' );
 						if ( isset( $user_id ) && ! empty( $user_id ) && ( 1 == $wps_wpr_custom_points_on_cart || 1 == $wps_wpr_custom_points_on_checkout ) ) {
-							/*Get the cart point rate*/
-							$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
-							$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
-							$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
-							$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
 
 							if ( isset( WC()->session ) && WC()->session->has_session() ) {
 								if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
-									$wps_wpr_points  = WC()->session->get( 'wps_cart_points' );
-									$wps_fee_on_cart = ( $wps_wpr_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
 
 									global $woocommerce;
-
+									$wps_fee_on_cart = WC()->session->get( 'wps_cart_points' );
 									// apply points on subtotal.
 									$subtotal = $woocommerce->cart->get_subtotal();
 									// WOOCS - WooCommerce Currency Switcher Compatibility.
@@ -1968,6 +2001,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Check is custom points on cart is enable*/
 		$wps_wpr_custom_points_on_checkout = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' );
 		$wps_wpr_custom_points_on_cart     = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+		$wps_wpr_show_redeem_notice        = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_redeem_notice' );
 		/*Get the Notification*/
 		$wps_wpr_notification_color = $this->wps_wpr_get_other_settings( 'wps_wpr_notification_color' );
 		$wps_wpr_notification_color = ( ! empty( $wps_wpr_notification_color ) ) ? $wps_wpr_notification_color : '#55b3a5';
@@ -1981,45 +2015,50 @@ class Points_Rewards_For_WooCommerce_Public {
 		$user_id = get_current_user_ID();
 
 		// show message on cart page for redemption settings.
-		if ( ( 1 == $wps_wpr_custom_points_on_cart || 1 === $wps_wpr_custom_points_on_checkout ) && isset( $user_id ) && ! empty( $user_id ) ) {
-			?>
-			<div class="woocommerce-message wps_wpr_cart_redemption__notice" id="wps_wpr_order_notice" style="background-color: <?php echo esc_html( $wps_wpr_notification_color ); ?>;"><?php esc_html_e( 'Here is the Discount Rule for Applying your Points to Cart Total', 'points-and-rewards-for-woocommerce' ); ?>
-				<span class="wps_wpr_show_redemption_conversion_rate">
-					<?php
-					// WOOCS - WooCommerce Currency Switcher Compatibility.
-					$allowed_tags = $this->wps_wpr_allowed_html();
-					echo esc_html( $wps_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $allowed_tags );
-					?>
-				</span>
-			</div>
-			<div class="wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_notice"></div>
-			<div class="wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_success"></div>
-			<?php
+		if ( ( 1 == $wps_wpr_custom_points_on_cart || 1 === $wps_wpr_custom_points_on_checkout ) && ! empty( $user_id ) ) {
+			if ( $wps_wpr_show_redeem_notice ) {
+				?>
+				<div class="woocommerce-message wps_wpr_cart_redemption__notice" id="wps_wpr_order_notice" style="background-color: <?php echo esc_html( $wps_wpr_notification_color ); ?>;"><?php esc_html_e( 'Here is the Discount Rule for Applying your Points to Cart Total', 'points-and-rewards-for-woocommerce' ); ?>
+					<span class="wps_wpr_show_redemption_conversion_rate">
+						<?php
+						// WOOCS - WooCommerce Currency Switcher Compatibility.
+						$allowed_tags = $this->wps_wpr_allowed_html();
+						echo esc_html( $wps_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $allowed_tags );
+						?>
+					</span>
+				</div>
+				<div class="wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_notice"></div>
+				<div class="wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_success"></div>
+				<?php
+			}
 		}
 
 		// show message on cart page for per currency earn points.
+		$wps_wpr_per_currency_discount_notice = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_per_currency_discount_notice' );
 		if ( $this->is_order_conversion_enabled() ) {
-			$order_conversion_rate = $this->order_conversion_rate();
-			?>
-			<div class="woocommerce-message" id="wps_wpr_order_notice" style="background-color: <?php echo esc_html( $wps_wpr_notification_color ); ?>">
-				<?php
-				esc_html_e( 'Place Order and Earn Reward Points in Return.', 'points-and-rewards-for-woocommerce' );
+			if ( $wps_wpr_per_currency_discount_notice ) {
+				$order_conversion_rate = $this->order_conversion_rate();
 				?>
-				<p style="background-color: 
+				<div class="woocommerce-message" id="wps_wpr_order_notice" style="background-color: <?php echo esc_html( $wps_wpr_notification_color ); ?>">
+					<?php
+					esc_html_e( 'Place Order and Earn Reward Points in Return.', 'points-and-rewards-for-woocommerce' );
+					?>
+					<p style="background-color: 
+					<?php
+					echo esc_html( $wps_wpr_notification_color ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
+					">
+					<?php
+					// WOOCS - WooCommerce Currency Switcher Compatibility.
+					esc_html_e( 'Conversion Rate: ', 'points-and-rewards-for-woocommerce' );
+					$allowed_tags = $this->wps_wpr_allowed_html();
+					echo wp_kses_post( $order_conversion_rate['curr'] ) . ' ' . wp_kses_post( apply_filters( 'wps_wpr_show_conversion_price', $order_conversion_rate['Points'] ) ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
+					</p>
+				</div>
 				<?php
-				echo esc_html( $wps_wpr_notification_color ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				?>
-				">
-				<?php
-				// WOOCS - WooCommerce Currency Switcher Compatibility.
-				esc_html_e( 'Conversion Rate: ', 'points-and-rewards-for-woocommerce' );
-				$allowed_tags = $this->wps_wpr_allowed_html();
-				echo wp_kses_post( $order_conversion_rate['curr'] ) . ' ' . wp_kses_post( apply_filters( 'wps_wpr_show_conversion_price', $order_conversion_rate['Points'] ) ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				?>
-				</p>
-			</div>
-			<?php
+			}
 		}
 
 		// ==== Order Rewards Points message show here ====
@@ -2069,6 +2108,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				}
 			}
 		}
+		do_action( 'wps_wpr_show_total_earning_points', $wps_wpr_notification_color );
 	}
 
 	/**
@@ -2201,12 +2241,6 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		$user_id    = get_current_user_id();
 		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-		/*Get the cart points rate*/
-		$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
-		$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
-		/*Get the cart price rate*/
-		$wps_wpr_cart_price_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
-		$wps_wpr_cart_price_rate = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
 		// cart block change.
 		$order_id = $order->get_id();
 		if ( isset( $order ) && ! empty( $order ) ) {
@@ -2229,8 +2263,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
 							// hpos.
 							wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#$fee_id', $coupon_amount );
-							$fee_to_point    = ceil( ( $wps_wpr_cart_points_rate * $coupon_amount ) / $wps_wpr_cart_price_rate );
-							$fee_to_point    = apply_filters( 'wps_round_down_cart_total_value_amount', $fee_to_point, $wps_wpr_cart_points_rate, $coupon_amount, $wps_wpr_cart_price_rate );
+							$fee_to_point    = ceil( $coupon_amount );
 							$remaining_point = $get_points - $fee_to_point;
 							if ( $remaining_point < 0 ) {
 								$remaining_point = 0;
@@ -2315,14 +2348,14 @@ class Points_Rewards_For_WooCommerce_Public {
 			$quantity = 1;
 		}
 
-		$check_enable = get_post_meta( $product_id, 'wps_product_points_enable', 'no' );
+		$check_enable = wps_wpr_hpos_get_meta_data( $product_id, 'wps_product_points_enable', 'no' );
 		if ( 'yes' == $check_enable ) {
 			/*Check is exists the variation id*/
 			if ( isset( $variation_id ) && ! empty( $variation_id ) && $variation_id > 0 ) {
-				$get_product_points          = get_post_meta( $variation_id, 'wps_wpr_variable_points', 1 );
+				$get_product_points          = wps_wpr_hpos_get_meta_data( $variation_id, 'wps_wpr_variable_points', 1 );
 				$item_meta['wps_wpm_points'] = (int) $get_product_points * (int) $quantity;
 			} else {
-				$get_product_points          = get_post_meta( $product_id, 'wps_points_product_value', 1 );
+				$get_product_points          = wps_wpr_hpos_get_meta_data( $product_id, 'wps_points_product_value', 1 );
 				$item_meta['wps_wpm_points'] = (int) $get_product_points * (int) $quantity;
 			}
 			$the_cart_data ['product_meta'] = array( 'meta_data' => $item_meta );
@@ -2384,10 +2417,10 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_assign_pro_text = $this->wps_wpr_get_general_settings( 'wps_wpr_assign_pro_text' );
 		$product_is_variable     = $this->wps_wpr_check_whether_product_is_variable( $product );
 		/*Check is global per product points is enable or not*/
-		$check_enable = get_post_meta( $post->ID, 'wps_product_points_enable', 'no' );
+		$check_enable = wps_wpr_hpos_get_meta_data( $post->ID, 'wps_product_points_enable', 'no' );
 		if ( 'yes' == $check_enable ) {
 			if ( ! $product_is_variable ) {
-				$get_product_points = get_post_meta( $post->ID, 'wps_points_product_value', 1 );
+				$get_product_points = wps_wpr_hpos_get_meta_data( $post->ID, 'wps_points_product_value', 1 );
 				echo '<span class=wps_wpr_product_point style=background-color:' . esc_html( $wps_wpr_notification_color ) . '>' . esc_html( $wps_wpr_assign_pro_text ) . ' : ' . esc_html( $get_product_points );
 				esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' );
 				echo '</span>';
@@ -2557,7 +2590,6 @@ class Points_Rewards_For_WooCommerce_Public {
 		return $exclude;
 	}
 
-
 	/**
 	 * This function will add discounted price in cart page.
 	 *
@@ -2710,11 +2742,11 @@ class Points_Rewards_For_WooCommerce_Public {
 								if ( $this->wps_wpr_check_whether_product_is_variable( $product ) ) {
 									if ( isset( $cart[ $key ]['variation_id'] ) && ! empty( $cart[ $key ]['variation_id'] ) ) {
 
-										$get_product_points = get_post_meta( $cart[ $key ]['variation_id'], 'wps_wpr_variable_points', 1 );
+										$get_product_points = wps_wpr_hpos_get_meta_data( $cart[ $key ]['variation_id'], 'wps_wpr_variable_points', 1 );
 									}
 								} else {
 									if ( isset( $cart[ $key ]['product_id'] ) && ! empty( $cart[ $key ]['product_id'] ) ) {
-										$get_product_points = get_post_meta( $cart[ $key ]['product_id'], 'wps_points_product_value', 1 );
+										$get_product_points = wps_wpr_hpos_get_meta_data( $cart[ $key ]['product_id'], 'wps_points_product_value', 1 );
 									}
 								}
 							}
@@ -2939,8 +2971,8 @@ class Points_Rewards_For_WooCommerce_Public {
 
 					if ( isset( $cart_contents[ $key ]['variation_id'] ) && ! empty( $cart_contents[ $key ]['variation_id'] ) ) {
 
-						$get_product_points = get_post_meta( $cart_contents[ $key ]['variation_id'], 'wps_wpr_variable_points', 1 );
-						$check_enable       = get_post_meta( $cart_contents[ $key ]['product_id'], 'wps_product_points_enable', 'no' );
+						$get_product_points = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['variation_id'], 'wps_wpr_variable_points', 1 );
+						$check_enable       = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['product_id'], 'wps_product_points_enable', 'no' );
 
 						$cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
 						if ( ! is_bool( $global_enable ) && isset( $global_enable['wps_wpr_global_product_enable'] ) ) {
@@ -2957,10 +2989,10 @@ class Points_Rewards_For_WooCommerce_Public {
 				} else {
 					if ( isset( $cart_contents[ $key ]['product_id'] ) && ! empty( $cart_contents[ $key ]['product_id'] ) ) {
 
-						$get_product_points = get_post_meta( $cart_contents[ $key ]['product_id'], 'wps_points_product_value', 1 );
+						$get_product_points = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['product_id'], 'wps_points_product_value', 1 );
 						$cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
 					}
-					$check_enable = get_post_meta( $cart_contents[ $key ]['product_id'], 'wps_product_points_enable', 'no' );
+					$check_enable = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['product_id'], 'wps_product_points_enable', 'no' );
 					if ( ! is_bool( $global_enable ) && isset( $global_enable['wps_wpr_global_product_enable'] ) ) {
 						if ( '0' == $global_enable['wps_wpr_global_product_enable'] && ( 'no' == $check_enable ) ) {
 
@@ -3734,7 +3766,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * This function is used to show canvas on wordpress page.
+	 * This function is used to show canvas on Wordpress page.
 	 *
 	 * @return bool
 	 */

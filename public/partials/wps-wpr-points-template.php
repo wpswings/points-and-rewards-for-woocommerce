@@ -36,6 +36,7 @@ if ( isset( $_POST['wps_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 		$selected_role             = isset( $_POST['wps_wpr_membership_roles'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_membership_roles'] ) ) : '';// phpcs:ignore WordPress.Security.NonceVerification
 		$user                      = get_user_by( 'ID', $user_id );
 		$membership_detail         = get_user_meta( $user_id, 'points_details', true );
+		$membership_detail         = ! empty( $membership_detail ) && is_array( $membership_detail ) ? $membership_detail : array();
 		$today_date                = date_i18n( 'Y-m-d h:i:sa', current_time( 'timestamp', 0 ) );
 		$expiration_date           = '';
 		$membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
@@ -329,7 +330,12 @@ if ( $wps_wpr_mem_enable ) {
 
 if ( isset( $enable_drop ) && $enable_drop ) {
 	if ( isset( $wps_user_level ) && ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
-		unset( $wps_wpr_membership_roles[ $wps_user_level ] );
+
+		$mem_expire_time = get_user_meta( $user_id, 'membership_expiration', true );
+		if ( $mem_expire_time > gmdate( 'Y-m-d' ) ) {
+
+			unset( $wps_wpr_membership_roles[ $wps_user_level ] );
+		}
 	}
 	if ( ! empty( $wps_wpr_membership_roles ) && is_array( $wps_wpr_membership_roles ) ) {
 		?>

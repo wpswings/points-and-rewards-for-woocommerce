@@ -80,7 +80,7 @@ function wps_wpr_rand_color() {
 ?>
 
 <div class="wps_wpr_user_gamifications_main_wrappers">
-	<h4 class="wps_wpr_gamifications_settings_heading"><?php esc_html_e( 'Gamification', 'points-and-rewards-for-woocommerce' ); ?></h4>
+	<h4 class="wps_wpr_gamifications_settings_heading wps_wpr_doc_video_wrapper"><?php esc_html_e( 'Gamification', 'points-and-rewards-for-woocommerce' ); ?><div class="wps_wpr_doc_video"><a href="https://docs.wpswings.com/gamification/?utm_source=wpswings-gamification-doc&utm_medium=par-org-page&utm_campaign=gamification-documentation" target="_blank" class="button"><?php esc_html_e( 'Docs', 'points-and-rewards-for-woocommerce' ); ?></a><a href="https://www.youtube.com/watch?v=DQ2iN9GHVK8" target="_blank" class="button"><?php esc_html_e( 'Video', 'points-and-rewards-for-woocommerce' ); ?></a></div></h4>
 	<input type="hidden" name="wps_wpr_gamification_setting_nonce" id="wps_wpr_gamification_setting_nonce" value="<?php echo esc_html( wp_create_nonce( 'gamification-setting-nonce' ) ); ?>">
 	<form method="POST" action="" class="wps_wpr_gamification_form">
 		<main class="wps_wpr_main_gamification_wrapper">

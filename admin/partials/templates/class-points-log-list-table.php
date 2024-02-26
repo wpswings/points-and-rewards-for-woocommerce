@@ -485,21 +485,21 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									if ( 'left' == $column_id ) {
 
 										$wps_split   = explode( '#', $key );
-										$column_name = get_post_meta( $wps_split[1], 'coupon_amount', true );
+										$column_name = wps_wpr_hpos_get_meta_data( $wps_split[1], 'coupon_amount', true );
 										echo esc_html( get_woocommerce_currency_symbol() ) . esc_html( $column_name );
 									} elseif ( 'camount' == $column_id ) {
 
 										$wps_split   = explode( '#', $key );
-										$column_name = get_post_meta( $wps_split[1], 'wps_coupon_static_amount', true );
+										$column_name = wps_wpr_hpos_get_meta_data( $wps_split[1], 'wps_coupon_static_amount', true );
 										echo esc_html( get_woocommerce_currency_symbol() ) . esc_html( $column_name );
 									} elseif ( 'expiry' == $column_id ) {
 										if ( WC()->version < '3.0.6' ) {
 
-											$column_name = get_post_meta( $wps_split[1], 'expiry_date', true );
+											$column_name = wps_wpr_hpos_get_meta_data( $wps_split[1], 'expiry_date', true );
 											echo esc_html( $column_name );
 										} else {
 
-											$column_name = get_post_meta( $wps_split[1], 'date_expires', true );
+											$column_name = wps_wpr_hpos_get_meta_data( $wps_split[1], 'date_expires', true );
 											if ( ! empty( $column_name ) ) {
 
 												$dt = new DateTime( "@$column_name" );
@@ -539,6 +539,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 
 		$user_id      = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
 		$point_log    = get_user_meta( $user_id, 'points_details', true );
+		$point_log    = ! empty( $point_log ) && is_array( $point_log ) ? $point_log : array();
 		$total_points = get_user_meta( $user_id, 'wps_wpr_points', true );
 		?>
 		<h3 class="wp-heading-inline" id="wps_wpr_points_table_heading"><?php esc_html_e( 'Points Earned on Order Total Listed on Points Table', 'points-and-rewards-for-woocommerce' ); ?></h3>
