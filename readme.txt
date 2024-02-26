@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points, rewards, points and rewards, loyalty, referrals, woocommerce points and rewards, points rewards, reward system, gamification, badges
 Requires at least: 5.5.0
-Tested up to: 6.4.2
+Tested up to: 6.4.3
 WC requires at least: 5.5.0
-WC tested up to: 8.4.0
-Stable tag: 2.1.2
+WC tested up to: 8.6.1
+Stable tag: 2.1.3
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -262,6 +262,12 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 2.1.3 - Released on 26 February 2024 =  
+* New: Compatible with latest WP( 6.4.3 ) & WC(8.6.1)
+* Fix: Thank page shortcode issues
+* Fix: Membership discount issues with sale product
+* Fix: Decimal points redeem issues
+
 = 2.1.2 - Released on 15 January 2024 =
 * New: Option to enable/disable redemption notice.
 * New: Option to enable/disable per currency notice.
@@ -490,11 +496,9 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.1.2 - Released on 15 January 2024 =
-* New: Option to enable/disable redemption notice.
-* New: Option to enable/disable per currency notice.
-* New: Go-Pro tag
-* New: Compatible with latest WP(6.4.2) & WC(8.4.0)
-* Fix: Order cancel issues
-
+= 2.1.3 - Released on 26 February 2024 =  
+* New: Compatible with latest WP( 6.4.3 ) & WC(8.6.1)
+* Fix: Thank page shortcode issues
+* Fix: Membership discount issues with sale product
+* Fix: Decimal points redeem issues
 
