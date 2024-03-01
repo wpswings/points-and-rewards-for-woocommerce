@@ -262,9 +262,13 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 2.1.4 - Released on 1 March 2024 =  
+* Fix: Email Issues
+
+
 = 2.1.3 - Released on 26 February 2024 =  
 * New: Compatible with latest WP( 6.4.3 ) & WC(8.6.1)
-* Fix: Thank page shortcode issues
+* Fix: Thank you page shortcode issues
 * Fix: Membership discount issues with sale product
 * Fix: Decimal points redeem issues
 
@@ -496,9 +500,5 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.1.3 - Released on 26 February 2024 =  
-* New: Compatible with latest WP( 6.4.3 ) & WC(8.6.1)
-* Fix: Thank page shortcode issues
-* Fix: Membership discount issues with sale product
-* Fix: Decimal points redeem issues
-
+= 2.1.4 - Released on 1 March 2024 =  
+* Fix: Email Issues

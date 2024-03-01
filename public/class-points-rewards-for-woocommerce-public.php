@@ -2259,6 +2259,12 @@ class Points_Rewards_For_WooCommerce_Public {
 
 							$coupon_meta   = $coupon_data['meta_data'][0]->get_data();
 							$coupon_amount = $coupon_meta['value']['amount'];
+							// Redemption Conversion rate calculate.
+							$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
+							$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+							$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
+							$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+							$coupon_amount            = ( ( $coupon_amount * $wps_wpr_cart_price_rate ) * $wps_wpr_cart_points_rate );
 							// WOOCS - WooCommerce Currency Switcher Compatibility.
 							$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
 							// hpos.
@@ -2278,7 +2284,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							/*Unset the session*/
 							if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
 								// hpos.
-								wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#points', WC()->session->get( 'wps_cart_points' ) );
+								wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#points', $coupon_amount );
 								WC()->session->__unset( 'wps_cart_points' );
 							}
 						}
