@@ -20,7 +20,7 @@ if ( ! defined( 'WPS_PAR_ONBOARD_PLUGIN_NAME' ) ) {
 }
 
 if ( class_exists( 'WPSwings_Onboarding_Helper' ) ) {
-	$this->onboard = new WPSwings_Onboarding_Helper();
+	$onboard = new WPSwings_Onboarding_Helper();
 }
 
 $wps_wpr_setting_tab = array(
