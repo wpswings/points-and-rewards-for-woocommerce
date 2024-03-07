@@ -408,7 +408,7 @@
 
                     // set claim points to show on pop-up.
                     $('.wps_wpr_container-popup-val .wps_wpr-val').empty();
-                    $('.wps_wpr_container-popup-val .wps_wpr-val').append(closestElement + ' Points');
+                    $('.wps_wpr_container-popup-val .wps_wpr-val').append(closestElement + ' ' + wps_wpr.wps_points_name );
                     // set claim points to rewards user.
                     jQuery('.wps_wpr_user_claim_points').val(closestElement);
                 });

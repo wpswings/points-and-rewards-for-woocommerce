@@ -120,6 +120,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			'is_cart_redeem_sett_enable' => $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' ),
 			'is_checkout_redeem_enable'  => $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' ),
 			'points_coupon_name'         => esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' ),
+			'wps_points_name'            => esc_html__( 'Points', 'points-and-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 	}
@@ -2264,7 +2265,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
 							$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
 							$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
-							$coupon_amount            = ( ( $coupon_amount * $wps_wpr_cart_price_rate ) * $wps_wpr_cart_points_rate );
+							$coupon_amount            = $coupon_amount / ( $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
 							// WOOCS - WooCommerce Currency Switcher Compatibility.
 							$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
 							// hpos.
