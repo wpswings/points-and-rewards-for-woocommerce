@@ -6,7 +6,7 @@ Requires at least: 5.5.0
 Tested up to: 6.4.3
 WC requires at least: 5.5.0
 WC tested up to: 8.6.1
-Stable tag: 2.1.3
+Stable tag: 2.1.5
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -262,6 +262,9 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 2.1.5 - Released on 7 March 2024 =  
+* Fix: Translation issues
+
 = 2.1.4 - Released on 1 March 2024 =  
 * Fix: Email Issues
 
@@ -500,5 +503,5 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.1.4 - Released on 1 March 2024 =  
-* Fix: Email Issues
+= 2.1.5 - Released on 7 March 2024 =  
+* Fix: Translation issues
