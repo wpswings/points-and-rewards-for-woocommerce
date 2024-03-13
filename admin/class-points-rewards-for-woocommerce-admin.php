@@ -1816,4 +1816,114 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 		return 0;
 	}
+
+	/**
+	 * Multivendor X plugin Compatibility.
+	 */
+
+	/**
+	 * Add wallet for vendor module function.
+	 *
+	 * @param [type] $payment_mode is the payment method.
+	 * @return mixed
+	 */
+	public function wsfw_admin_mvx_list_mxfdxfodules( $payment_mode ) {
+
+		$payment_mode['par_payment'] = __( 'Points', 'multivendorx' );
+		return $payment_mode;
+	}
+
+	/**
+	 * Add status to order function
+	 *
+	 * @param [type] $payment_mode is the payment status.
+	 * @return mixed
+	 */
+	public function wsfw_mvx_parent_order_to_vendor_order_statuses_to_sync( $payment_mode ) {
+
+		$payment_mode = array( 'on-hold', 'pending', 'processing', 'cancelled', 'failed', 'completed' );
+		return $payment_mode;
+	}
+
+	/**
+	 * Add status to order function through multivendor
+	 *
+	 * @param [type] $order_id is the order id.
+	 * @param [type] $old_status is the previous status.
+	 * @param [type] $new_status is the new status.
+	 * @return void
+	 */
+	public function wps_wpr_assign_vendor_commission_points( $order_id, $old_status, $new_status ) {
+
+		if ( $old_status != $new_status ) {
+			if ( 'completed' === $new_status || 'processing' === $new_status ) {
+
+				if ( function_exists( 'mvx_get_order' ) ) {
+
+					$is_vendor_order = ( $order_id ) ? mvx_get_order( $order_id ) : false;
+					if ( $is_vendor_order ) {
+						if ( class_exists( 'MVX_Commission' ) ) {
+
+							$order                       = wc_get_order( $order_id );
+							$wps_wpr_paid_status_through = wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_paid_status_through', true );
+							if ( empty( $wps_wpr_paid_status_through ) ) {
+
+								$obj           = new MVX_Commission();
+								$commission_id = wps_wpr_hpos_get_meta_data( $order_id, '_commission_id', true );
+								if ( ! empty( $commission_id ) ) {
+
+									$commission        = $obj->get_commission( $commission_id );
+									$vendor            = $commission->vendor;
+									$commission_status = get_post_meta( $commission_id, '_paid_status', true );
+									$commission_amount = get_post_meta( $commission_id, '_commission_amount', true );
+									$payment_method    = get_user_meta( $vendor->id, '_vendor_payment_mode', true );
+									update_post_meta( $commission_id, '_paid_status', 'paid' );
+
+									if ( empty( $commission_amount ) ) {
+										return;
+									}
+
+									if ( 'par_payment' == $payment_method || 'points' == $payment_method ) {
+
+										wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_paid_status_through', 'wps_wpr_paid' );
+										$wps_wpr_vendor_commission_amount_assigned = wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_vendor_commission_amount_assigned', true );
+										if ( empty( $wps_wpr_vendor_commission_amount_assigned ) ) {
+
+											$get_points       = get_user_meta( $vendor->id, 'wps_wpr_points', true );
+											$get_points       = empty( $get_points ) ? 0 : $get_points;
+											$get_points       = $get_points + $commission_amount;
+											$mem__refund_logs = get_user_meta( $vendor->id, 'points_details', true );
+											$mem__refund_logs = ! empty( $mem__refund_logs ) && is_array( $mem__refund_logs ) ? $mem__refund_logs : array();
+											if ( ! empty( $mem__refund_logs['wps_vendor_commissions_amount'] ) ) {
+
+												$user_badges_arr                                       = array(
+													'wps_vendor_commissions_amount' => $commission_amount,
+													'date'                          => date_i18n( 'Y-m-d h:i:sa' ),
+													'order_id'                      => $order_id,
+												);
+												$mem__refund_logs['wps_vendor_commissions_amount'][] = $user_badges_arr;
+											} else {
+
+												$user_badges_arr                                        = array(
+													'wps_vendor_commissions_amount' => $commission_amount,
+													'date'                          => date_i18n( 'Y-m-d h:i:sa' ),
+													'order_id'                      => $order_id,
+												);
+												$mem__refund_logs['wps_vendor_commissions_amount'][] = $user_badges_arr;
+											}
+
+											update_user_meta( $vendor->id, 'wps_wpr_points', $get_points );
+											update_user_meta( $vendor->id, 'points_details', $mem__refund_logs );
+											wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_vendor_commission_amount_assigned', 'done' );
+											$obj->add_commission_note( $commission_id, __( 'Commission paid to vendor through points', 'multivendorx' ), $vendor->id );
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

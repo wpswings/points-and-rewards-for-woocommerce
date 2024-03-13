@@ -4284,4 +4284,15 @@ class Points_Rewards_For_WooCommerce_Public {
 		}
 	}
 
+	/** Add PAR module function
+	 *
+	 * @param [type] $payment_mode payment method for par.
+	 * @return mixed
+	 */
+	public function wps_wpr_admin_mvx_list_modules( $payment_mode ) {
+
+		$payment_mode['par_payment'] = __( 'Points', 'wallet-system-for-woocommerce' );
+		return $payment_mode;
+	}
+
 }

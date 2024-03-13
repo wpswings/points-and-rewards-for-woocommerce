@@ -2404,9 +2404,9 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		if ( ! empty( $screen ) && ! empty( $screen->id ) ) {
 			if ( ! empty( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
 
-				wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.1.5' );
+				wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.2.0' );
 				wp_enqueue_style( 'wps_wpr_dummy_css_file' );
-				wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.1.5', true );
+				wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.2.0', true );
 				wp_enqueue_script( 'wps_wpr_dummy_js_file' );
 				wp_localize_script(
 					'wps_wpr_dummy_js_file',

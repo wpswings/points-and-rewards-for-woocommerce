@@ -713,6 +713,40 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 			</div>
 			<?php
 		}
+		if ( array_key_exists( 'wps_vendor_commissions_amount', $point_log ) ) {
+			?>
+			<div class="wps_wpr_slide_toggle">
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Vendor commission points', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+
+				<table class="wps_wpr_common_table">
+					<thead>
+						<tr>
+							<th class="wps-wpr-view-log-Date">
+								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+							</th>
+							<th class="wps-wpr-view-log-Status">
+								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+							</th>
+							<th class="wps-wpr-view-log-Status">
+								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Order No.', 'points-and-rewards-for-woocommerce' ); ?></span>
+							</th>
+						</tr>
+					</thead>
+					<?php
+					foreach ( $point_log['wps_vendor_commissions_amount'] as $key => $value ) {
+						?>
+						<tr>
+							<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
+							<td><?php echo '+' . esc_html( $value['wps_vendor_commissions_amount'] ); ?></td>
+							<td><?php echo esc_html( $value['order_id'] ); ?></td>
+						</tr>
+						<?php
+					}
+					?>
+				</table>
+			</div>
+			<?php
+		}
 		if ( array_key_exists( 'game_claim_points', $point_log ) ) {
 			?>
 			<div class="wps_wpr_slide_toggle">

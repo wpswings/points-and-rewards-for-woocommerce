@@ -79,7 +79,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '2.1.5';
+			$this->version = '2.2.0';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -226,6 +226,10 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_wpr_assign_points_to_user', $plugin_admin, 'wps_wpr_assign_points_to_user_call', 10, 1 );
 			$this->loader->add_action( 'edit_post_wps_cpt_members', $plugin_admin, 'wps_wps_assign_points_member_edit_page', 10, 1 );
 		}
+		// Multivendor X compatibility.
+		$this->loader->add_filter( 'mvx_vendor_payment_mode', $plugin_admin, 'wsfw_admin_mvx_list_mxfdxfodules' );
+		$this->loader->add_filter( 'mvx_parent_order_to_vendor_order_statuses_to_sync', $plugin_admin, 'wsfw_mvx_parent_order_to_vendor_order_statuses_to_sync', 10, 1 );
+		$this->loader->add_filter( 'woocommerce_order_status_changed', $plugin_admin, 'wps_wpr_assign_vendor_commission_points', 10, 3 );
 	}
 
 	/**
@@ -323,6 +327,8 @@ class Points_Rewards_For_Woocommerce {
 			// cart/checkout block js.
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_before', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
+			// Multivendor X compatibility.
+			$this->loader->add_filter( 'mvx_available_payment_gateways', $plugin_public, 'wps_wpr_admin_mvx_list_modules', 10 );
 		}
 	}
 
