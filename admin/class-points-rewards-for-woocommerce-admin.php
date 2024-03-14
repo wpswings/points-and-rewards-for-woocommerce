@@ -1548,21 +1548,21 @@ class Points_Rewards_For_WooCommerce_Admin {
 		?>
 		<input type="hidden" name="wps_wpr_membership_compatible_nonce" value="<?php echo esc_html( wp_create_nonce( 'membership-compatible-nonce' ) ); ?>">
 		<h2 class="wps_membership_offer_title">
-			<?php esc_html_e( 'Points and Rewards Section', 'membership-for-woocommerce' ); ?>
+			<?php esc_html_e( 'Points and Rewards Section', 'points-and-rewards-for-woocommerce' ); ?>
 		</h2>
 		<h3>
-			<?php esc_html_e( 'You can assign points to user when this membership will be purchased by user.', 'membership-for-woocommerce' ); ?>
+			<?php esc_html_e( 'You can assign points to user when this membership will be purchased by user.', 'points-and-rewards-for-woocommerce' ); ?>
 		</h3>
 		<h5>
-			<?php esc_html_e( 'Note : Points should be assign only when status of membership is completed.', 'membership-for-woocommerce' ); ?>
+			<?php esc_html_e( 'Note : Points should be assign only when status of membership is completed.', 'points-and-rewards-for-woocommerce' ); ?>
 		</h5>
 		<table>
 			<tr>
 				<th scope="row" class="titledesc">
-					<label for="wps_wpr_enable_points_settings"><?php esc_html_e( 'Enable Points Settings', 'membership-for-woocommerce' ); ?></label>
+					<label for="wps_wpr_enable_points_settings"><?php esc_html_e( 'Enable Points Settings', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<td>
 						<?php
-							$description = esc_html__( 'Please enable this settings to assign points to users.', 'membership-for-woocommerce' );
+							$description = esc_html__( 'Please enable this settings to assign points to users.', 'points-and-rewards-for-woocommerce' );
 							$instance->tool_tip( $description );
 						?>
 					</td>
@@ -1573,10 +1573,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 			</tr>
 			<tr>
 				<th scope="row" class="titledesc">
-					<label for="wps_wpr_membership_assign_points_values"><?php esc_html_e( 'Enter Points', 'membership-for-woocommerce' ); ?></label>
+					<label for="wps_wpr_membership_assign_points_values"><?php esc_html_e( 'Enter Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<td>
 						<?php
-							$description = esc_html__( 'Points should be assigned to the user when the order status is marked as completed.', 'membership-for-woocommerce' );
+							$description = esc_html__( 'Points should be assigned to the user when the order status is marked as completed.', 'points-and-rewards-for-woocommerce' );
 							$instance->tool_tip( $description );
 						?>
 					</td>
