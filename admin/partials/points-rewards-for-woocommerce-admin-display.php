@@ -126,9 +126,10 @@ if ( ! current_user_can( 'manage_options' ) ) {
 				<div class="wps_rwpr_navigator_template">
 					<div class="hubwoo-navigations">
 						<?php
+						$secure_nonce = wp_create_nonce( 'wps-par-admin-nonce' );
 						if ( ! empty( $wps_wpr_setting_tab ) && is_array( $wps_wpr_setting_tab ) ) {
 							foreach ( $wps_wpr_setting_tab as $key => $wps_tab ) {
-								if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+								if ( wp_verify_nonce( $secure_nonce, 'wps-par-admin-nonce' ) ) {
 									if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
 										?>
 										<div class="wps_rwpr_tabs">
@@ -160,10 +161,11 @@ if ( ! current_user_can( 'manage_options' ) ) {
 					<img src="<?php echo esc_url( WPS_RWPR_DIR_URL ); ?>public/images/loading.gif">
 				</div>
 				<?php
+				$secure_nonce = wp_create_nonce( 'wps-par-admin-nonce' );
 				if ( ! empty( $wps_wpr_setting_tab ) && is_array( $wps_wpr_setting_tab ) ) {
 
 					foreach ( $wps_wpr_setting_tab as $key => $wps_file ) {
-						if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+						if ( wp_verify_nonce( $secure_nonce, 'wps-par-admin-nonce' ) ) {
 							if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
 								$include_tab = $wps_file['file_path'];
 								?>
