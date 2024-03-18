@@ -2402,24 +2402,26 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 
 		$screen = get_current_screen();
 		if ( ! empty( $screen ) && ! empty( $screen->id ) ) {
-			if ( ! empty( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
+			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+				if ( ! empty( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
 
-				wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.2.0' );
-				wp_enqueue_style( 'wps_wpr_dummy_css_file' );
-				wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.2.0', true );
-				wp_enqueue_script( 'wps_wpr_dummy_js_file' );
-				wp_localize_script(
-					'wps_wpr_dummy_js_file',
-					'wps_dummy_obj',
-					array(
-						'api_tabs'       => esc_html__( 'API Settings', 'points-and-rewards-for-woocommerce' ),
-						'pur_points_tab' => esc_html__( 'Product Purchase Points', 'points-and-rewards-for-woocommerce' ),
-						'expire_tab'     => esc_html__( 'Points Expiration', 'points-and-rewards-for-woocommerce' ),
-						'addon_tabs'     => esc_html__( 'Notification Addon', 'points-and-rewards-for-woocommerce' ),
-					),
-				);
+					wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.2.0' );
+					wp_enqueue_style( 'wps_wpr_dummy_css_file' );
+					wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.2.0', true );
+					wp_enqueue_script( 'wps_wpr_dummy_js_file' );
+					wp_localize_script(
+						'wps_wpr_dummy_js_file',
+						'wps_dummy_obj',
+						array(
+							'api_tabs'       => esc_html__( 'API Settings', 'points-and-rewards-for-woocommerce' ),
+							'pur_points_tab' => esc_html__( 'Product Purchase Points', 'points-and-rewards-for-woocommerce' ),
+							'expire_tab'     => esc_html__( 'Points Expiration', 'points-and-rewards-for-woocommerce' ),
+							'addon_tabs'     => esc_html__( 'Notification Addon', 'points-and-rewards-for-woocommerce' ),
+						),
+					);
 
-				$this->wps_wpr_dummy_pro_popup();
+					$this->wps_wpr_dummy_pro_popup();
+				}
 			}
 		}
 	}
@@ -2430,19 +2432,22 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 	 * @return void
 	 */
 	public function wps_wpr_dummy_pro_popup() {
-		if ( ! empty( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
-			?>
-			<div class="wps-wpr__popup-dummy-for-pro" style="display: none;">
-				<div class="dummy_popup-shadow"></div>
-				<div class="dummy_popup-content">
-					<span class="dummy_popup-close dashicons dashicons-no-alt"></span>
-					<img src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/images/go-pro.png' ); ?>" alt="Go Pro Image" width="100" height="auto">
-					<h3><?php esc_html_e( 'To access more functionalities, try out our PRO plugin.', 'points-and-rewards-for-woocommerce' ); ?></h3>
-					<p><?php esc_html_e( 'Enjoy Referral Purchase Points, easy coupon generation, Multi-level Membership, and special birthday rewards. Elevate your experience!.', 'points-and-rewards-for-woocommerce' ); ?></p>
-					<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro/" target="_blank"><?php esc_html_e( 'Go PRO Now!', 'points-and-rewards-for-woocommerce' ); ?></a>
+		if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+			if ( ! empty( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
+
+				?>
+				<div class="wps-wpr__popup-dummy-for-pro" style="display: none;">
+					<div class="dummy_popup-shadow"></div>
+					<div class="dummy_popup-content">
+						<span class="dummy_popup-close dashicons dashicons-no-alt"></span>
+						<img src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/images/go-pro.png' ); ?>" alt="Go Pro Image" width="100" height="auto">
+						<h3><?php esc_html_e( 'To access more functionalities, try out our PRO plugin.', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p><?php esc_html_e( 'Enjoy Referral Purchase Points, easy coupon generation, Multi-level Membership, and special birthday rewards. Elevate your experience!.', 'points-and-rewards-for-woocommerce' ); ?></p>
+						<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro/" target="_blank"><?php esc_html_e( 'Go PRO Now!', 'points-and-rewards-for-woocommerce' ); ?></a>
+					</div>
 				</div>
-			</div>
-			<?php
+				<?php
+			}
 		}
 	}
 

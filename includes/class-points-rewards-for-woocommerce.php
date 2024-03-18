@@ -329,6 +329,8 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_before', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
 			// Multivendor X compatibility.
 			$this->loader->add_filter( 'mvx_available_payment_gateways', $plugin_public, 'wps_wpr_admin_mvx_list_modules', 10 );
+			// verify cart page nonce.
+			$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $plugin_public, 'wps_wpr_verify_cart_page_nonce' );
 		}
 	}
 

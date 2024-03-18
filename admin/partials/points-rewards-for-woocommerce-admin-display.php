@@ -128,25 +128,27 @@ if ( ! current_user_can( 'manage_options' ) ) {
 						<?php
 						if ( ! empty( $wps_wpr_setting_tab ) && is_array( $wps_wpr_setting_tab ) ) {
 							foreach ( $wps_wpr_setting_tab as $key => $wps_tab ) {
-								if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
-									?>
-									<div class="wps_rwpr_tabs">
-										<a class="wps_gw_nav_tab nav-tab nav-tab-active " href="?page=wps-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
-									</div>
-									<?php
-								} else {
-									if ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
+								if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+									if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
 										?>
 										<div class="wps_rwpr_tabs">
-											<a class="wps_gw_nav_tab nav-tab nav-tab-active" href="?page=wps-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
+											<a class="wps_gw_nav_tab nav-tab nav-tab-active " href="?page=wps-rwpr-setting&nonce=<?php echo esc_html( wp_create_nonce( 'par_main_setting' ) ); ?>&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
 										</div>
 										<?php
 									} else {
-										?>
-										<div class="wps_rwpr_tabs">
-											<a class="wps_gw_nav_tab nav-tab " href="?page=wps-rwpr-setting&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
-										</div>
-										<?php
+										if ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
+											?>
+											<div class="wps_rwpr_tabs">
+												<a class="wps_gw_nav_tab nav-tab nav-tab-active" href="?page=wps-rwpr-setting&nonce=<?php echo esc_html( wp_create_nonce( 'par_main_setting' ) ); ?>&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
+											</div>
+											<?php
+										} else {
+											?>
+											<div class="wps_rwpr_tabs">
+												<a class="wps_gw_nav_tab nav-tab " href="?page=wps-rwpr-setting&nonce=<?php echo esc_html( wp_create_nonce( 'par_main_setting' ) ); ?>&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
+											</div>
+											<?php
+										}
 									}
 								}
 							}
@@ -161,20 +163,22 @@ if ( ! current_user_can( 'manage_options' ) ) {
 				if ( ! empty( $wps_wpr_setting_tab ) && is_array( $wps_wpr_setting_tab ) ) {
 
 					foreach ( $wps_wpr_setting_tab as $key => $wps_file ) {
-						if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
-							$include_tab = $wps_file['file_path'];
-							?>
-							<div class="wps_rwpr_content_template">
-								<?php include_once $include_tab; ?>
-							</div>
-							<?php
-						} elseif ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
-							?>
-							<div class="wps_rwpr_content_template">
-								<?php include_once $wps_file['file_path']; ?>
-							</div>
-							<?php
-							break;
+						if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+							if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
+								$include_tab = $wps_file['file_path'];
+								?>
+								<div class="wps_rwpr_content_template">
+									<?php include_once $include_tab; ?>
+								</div>
+								<?php
+							} elseif ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
+								?>
+								<div class="wps_rwpr_content_template">
+									<?php include_once $wps_file['file_path']; ?>
+								</div>
+								<?php
+								break;
+							}
 						}
 					}
 				}

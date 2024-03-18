@@ -292,25 +292,27 @@ class Points_Log_List_Table extends WP_List_Table {
 	 */
 	public function wps_wpr_usort_reorder( $cloumna, $cloumnb ) {
 
-		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'id';
-		$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'desc';
-		if ( is_numeric( $cloumna[ $orderby ] ) && is_numeric( $cloumnb[ $orderby ] ) ) {
-			if ( $cloumna[ $orderby ] == $cloumnb[ $orderby ] ) {
+		if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+			$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'id';
+			$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'desc';
+			if ( is_numeric( $cloumna[ $orderby ] ) && is_numeric( $cloumnb[ $orderby ] ) ) {
+				if ( $cloumna[ $orderby ] == $cloumnb[ $orderby ] ) {
 
-				return 0;
-			} elseif ( $cloumna[ $orderby ] < $cloumnb[ $orderby ] ) {
+					return 0;
+				} elseif ( $cloumna[ $orderby ] < $cloumnb[ $orderby ] ) {
 
-				$result = -1;
-				return ( 'asc' === $order ) ? $result : -$result;
-			} elseif ( $cloumna[ $orderby ] > $cloumnb[ $orderby ] ) {
+					$result = -1;
+					return ( 'asc' === $order ) ? $result : -$result;
+				} elseif ( $cloumna[ $orderby ] > $cloumnb[ $orderby ] ) {
 
-				$result = 1;
+					$result = 1;
+					return ( 'asc' === $order ) ? $result : -$result;
+				}
+			} else {
+
+				$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
 				return ( 'asc' === $order ) ? $result : -$result;
 			}
-		} else {
-
-			$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
-			return ( 'asc' === $order ) ? $result : -$result;
 		}
 	}
 
@@ -351,10 +353,12 @@ class Points_Log_List_Table extends WP_List_Table {
 			'fields' => 'ID',
 		);
 
-		if ( isset( $_REQUEST['s'] ) ) {
+		if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+			if ( isset( $_REQUEST['s'] ) ) {
 
-			$wps_request_search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
-			$args['search']     = '*' . $wps_request_search . '*';
+				$wps_request_search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
+				$args['search']     = '*' . $wps_request_search . '*';
+			}
 		}
 
 		$user_data   = new WP_User_Query( $args );

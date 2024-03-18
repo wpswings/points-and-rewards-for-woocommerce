@@ -80,101 +80,102 @@ class Points_Rewards_For_WooCommerce_Admin {
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
 
-			$pagescreen = $screen->id;
-			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
+			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+				if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] || 'product' == $screen->id ) {
 
-				wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
-				wp_enqueue_style( 'woocommerce_admin_menu_styles' );
-				wp_enqueue_style( 'woocommerce_admin_styles' );
-				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION, true );
-				wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery' ), WC_VERSION, true );
-				wp_enqueue_script( 'sticky_js', WPS_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), WC_VERSION, true );
-				wp_enqueue_media();
+					wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
+					wp_enqueue_style( 'woocommerce_admin_menu_styles' );
+					wp_enqueue_style( 'woocommerce_admin_styles' );
+					wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION, true );
+					wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery' ), WC_VERSION, true );
+					wp_enqueue_script( 'sticky_js', WPS_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), WC_VERSION, true );
+					wp_enqueue_media();
 
-				$locale  = localeconv();
-				$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
-				$params  = array(
-					/* translators: %s: decimal */
-					'i18n_decimal_error'               => sprintf( __( 'Please enter the decimal (%s) format without thousand separators.', 'points-and-rewards-for-woocommerce' ), $decimal ),
-					/* translators: %s: price decimal separator */
-					'i18n_mon_decimal_error'           => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.', 'points-and-rewards-for-woocommerce' ), wc_get_price_decimal_separator() ),
-					'i18n_country_iso_error'           => __( 'Please enter the country code with two capital letters.', 'points-and-rewards-for-woocommerce' ),
-					'i18_sale_less_than_regular_error' => __( 'Please enter the value less than the regular price.', 'points-and-rewards-for-woocommerce' ),
-					'decimal_point'                    => $decimal,
-					'mon_decimal_point'                => wc_get_price_decimal_separator(),
-					'strings'                          => array(
-						'import_products' => __( 'Import', 'points-and-rewards-for-woocommerce' ),
-						'export_products' => __( 'Export', 'points-and-rewards-for-woocommerce' ),
-					),
-					'urls'                             => array(
-						'import_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_importer' ) ),
-						'export_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_exporter' ) ),
-					),
-				);
+					$locale  = localeconv();
+					$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
+					$params  = array(
+						/* translators: %s: decimal */
+						'i18n_decimal_error'               => sprintf( __( 'Please enter the decimal (%s) format without thousand separators.', 'points-and-rewards-for-woocommerce' ), $decimal ),
+						/* translators: %s: price decimal separator */
+						'i18n_mon_decimal_error'           => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.', 'points-and-rewards-for-woocommerce' ), wc_get_price_decimal_separator() ),
+						'i18n_country_iso_error'           => __( 'Please enter the country code with two capital letters.', 'points-and-rewards-for-woocommerce' ),
+						'i18_sale_less_than_regular_error' => __( 'Please enter the value less than the regular price.', 'points-and-rewards-for-woocommerce' ),
+						'decimal_point'                    => $decimal,
+						'mon_decimal_point'                => wc_get_price_decimal_separator(),
+						'strings'                          => array(
+							'import_products' => __( 'Import', 'points-and-rewards-for-woocommerce' ),
+							'export_products' => __( 'Export', 'points-and-rewards-for-woocommerce' ),
+						),
+						'urls'                             => array(
+							'import_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_importer' ) ),
+							'export_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_exporter' ) ),
+						),
+					);
 
-				wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
-				wp_enqueue_script( 'woocommerce_admin' );
-				$args_cat     = array( 'taxonomy' => 'product_cat' );
-				$categories   = get_terms( $args_cat );
-				$option_categ = array();
-				if ( isset( $categories ) && ! empty( $categories ) ) {
-					foreach ( $categories as $category ) {
+					wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
+					wp_enqueue_script( 'woocommerce_admin' );
+					$args_cat     = array( 'taxonomy' => 'product_cat' );
+					$categories   = get_terms( $args_cat );
+					$option_categ = array();
+					if ( isset( $categories ) && ! empty( $categories ) ) {
+						foreach ( $categories as $category ) {
 
-						$catid   = $category->term_id;
-						$catname = $category->name;
+							$catid   = $category->term_id;
+							$catname = $category->name;
 
-						$option_categ[] = array(
-							'id'       => $catid,
-							'cat_name' => $catname,
-						);
+							$option_categ[] = array(
+								'id'       => $catid,
+								'cat_name' => $catname,
+							);
+						}
 					}
+
+					$url     = admin_url( 'admin.php?page=wps-wpr-setting' );
+					$wps_wpr = array(
+						'ajaxurl'               => admin_url( 'admin-ajax.php' ),
+						'validpoint'            => __( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
+						'Labelname'             => __( 'Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
+						'Labeltext'             => __( 'Enter Level', 'points-and-rewards-for-woocommerce' ),
+						'Points'                => __( 'Enter Points', 'points-and-rewards-for-woocommerce' ),
+						'Categ_text'            => __( 'Select Product Category', 'points-and-rewards-for-woocommerce' ),
+						'Remove_text'           => __( 'Remove', 'points-and-rewards-for-woocommerce' ),
+						'Categ_option'          => $option_categ,
+						'Prod_text'             => __( 'Select Product', 'points-and-rewards-for-woocommerce' ),
+						'Discounttext'          => __( 'Enter Discount (%)', 'points-and-rewards-for-woocommerce' ),
+						'error_notice'          => __( 'Fields cannot be empty', 'points-and-rewards-for-woocommerce' ),
+						'LevelName_notice'      => __( 'Please Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
+						'LevelValue_notice'     => __( 'Please Enter valid Points', 'points-and-rewards-for-woocommerce' ),
+						'CategValue_notice'     => __( 'Please select a category', 'points-and-rewards-for-woocommerce' ),
+						'ProdValue_notice'      => __( 'Please select a product', 'points-and-rewards-for-woocommerce' ),
+						'Discount_notice'       => __( 'Please enter a valid discount', 'points-and-rewards-for-woocommerce' ),
+						'success_assign'        => __( 'Points are assigned successfully!', 'points-and-rewards-for-woocommerce' ),
+						'error_assign'          => __( 'Enter Some Valid Points!', 'points-and-rewards-for-woocommerce' ),
+						'success_remove'        => __( 'Points are removed successfully!', 'points-and-rewards-for-woocommerce' ),
+						'Days'                  => __( 'Days', 'points-and-rewards-for-woocommerce' ),
+						'Weeks'                 => __( 'Weeks', 'points-and-rewards-for-woocommerce' ),
+						'Months'                => __( 'Months', 'points-and-rewards-for-woocommerce' ),
+						'Years'                 => __( 'Years', 'points-and-rewards-for-woocommerce' ),
+						'Exp_period'            => __( 'Expiration Period', 'points-and-rewards-for-woocommerce' ),
+						'wps_wpr_url'           => $url,
+						'reason'                => __( 'Please enter Remark', 'points-and-rewards-for-woocommerce' ),
+						'wps_wpr_nonce'         => wp_create_nonce( 'wps-wpr-verify-nonce' ),
+						'check_pro_activate'    => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
+						'pro_text'              => __( 'Please purchase the pro plugin to add multiple memberships.', 'points-and-rewards-for-woocommerce' ),
+						'pro_link_text'         => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
+						'pro_link'              => 'https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro',
+						'success_update'        => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
+						'support_confirm'       => __( 'Email sent successfully', 'points-and-rewards-for-woocommerce' ),
+						'negative'              => __( 'Negative Values Not Allowed', 'points-and-rewards-for-woocommerce' ),
+						'segment_reached_msg'   => esc_html__( 'You Can Add Only 12 Segments in Win Wheel', 'points-and-rewards-for-woocommerce' ),
+						'segment_limit_msg'     => esc_html__( 'Win Wheel cannot have less then 6 Segments', 'points-and-rewards-for-woocommerce' ),
+						'wps_badge_image'       => esc_html( WPS_RWPR_DIR_URL . 'admin/images/vip.png', ),
+						'badge_pro__text'       => esc_html__( 'Please purchase the pro plugin to add multiple Badges.', 'points-and-rewards-for-woocommerce' ),
+						'threshold_warning_msg' => esc_html__( 'Threshold points should be greater than previous threshold points !', 'points-and-rewards-for-woocommerce' ),
+					);
+
+					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
+					wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
 				}
-
-				$url     = admin_url( 'admin.php?page=wps-wpr-setting' );
-				$wps_wpr = array(
-					'ajaxurl'               => admin_url( 'admin-ajax.php' ),
-					'validpoint'            => __( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
-					'Labelname'             => __( 'Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
-					'Labeltext'             => __( 'Enter Level', 'points-and-rewards-for-woocommerce' ),
-					'Points'                => __( 'Enter Points', 'points-and-rewards-for-woocommerce' ),
-					'Categ_text'            => __( 'Select Product Category', 'points-and-rewards-for-woocommerce' ),
-					'Remove_text'           => __( 'Remove', 'points-and-rewards-for-woocommerce' ),
-					'Categ_option'          => $option_categ,
-					'Prod_text'             => __( 'Select Product', 'points-and-rewards-for-woocommerce' ),
-					'Discounttext'          => __( 'Enter Discount (%)', 'points-and-rewards-for-woocommerce' ),
-					'error_notice'          => __( 'Fields cannot be empty', 'points-and-rewards-for-woocommerce' ),
-					'LevelName_notice'      => __( 'Please Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
-					'LevelValue_notice'     => __( 'Please Enter valid Points', 'points-and-rewards-for-woocommerce' ),
-					'CategValue_notice'     => __( 'Please select a category', 'points-and-rewards-for-woocommerce' ),
-					'ProdValue_notice'      => __( 'Please select a product', 'points-and-rewards-for-woocommerce' ),
-					'Discount_notice'       => __( 'Please enter a valid discount', 'points-and-rewards-for-woocommerce' ),
-					'success_assign'        => __( 'Points are assigned successfully!', 'points-and-rewards-for-woocommerce' ),
-					'error_assign'          => __( 'Enter Some Valid Points!', 'points-and-rewards-for-woocommerce' ),
-					'success_remove'        => __( 'Points are removed successfully!', 'points-and-rewards-for-woocommerce' ),
-					'Days'                  => __( 'Days', 'points-and-rewards-for-woocommerce' ),
-					'Weeks'                 => __( 'Weeks', 'points-and-rewards-for-woocommerce' ),
-					'Months'                => __( 'Months', 'points-and-rewards-for-woocommerce' ),
-					'Years'                 => __( 'Years', 'points-and-rewards-for-woocommerce' ),
-					'Exp_period'            => __( 'Expiration Period', 'points-and-rewards-for-woocommerce' ),
-					'wps_wpr_url'           => $url,
-					'reason'                => __( 'Please enter Remark', 'points-and-rewards-for-woocommerce' ),
-					'wps_wpr_nonce'         => wp_create_nonce( 'wps-wpr-verify-nonce' ),
-					'check_pro_activate'    => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
-					'pro_text'              => __( 'Please purchase the pro plugin to add multiple memberships.', 'points-and-rewards-for-woocommerce' ),
-					'pro_link_text'         => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
-					'pro_link'              => 'https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro',
-					'success_update'        => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
-					'support_confirm'       => __( 'Email sent successfully', 'points-and-rewards-for-woocommerce' ),
-					'negative'              => __( 'Negative Values Not Allowed', 'points-and-rewards-for-woocommerce' ),
-					'segment_reached_msg'   => esc_html__( 'You Can Add Only 12 Segments in Win Wheel', 'points-and-rewards-for-woocommerce' ),
-					'segment_limit_msg'     => esc_html__( 'Win Wheel cannot have less then 6 Segments', 'points-and-rewards-for-woocommerce' ),
-					'wps_badge_image'       => esc_html( WPS_RWPR_DIR_URL . 'admin/images/vip.png', ),
-					'badge_pro__text'       => esc_html__( 'Please purchase the pro plugin to add multiple Badges.', 'points-and-rewards-for-woocommerce' ),
-					'threshold_warning_msg' => esc_html__( 'Threshold points should be greater than previous threshold points !', 'points-and-rewards-for-woocommerce' ),
-				);
-
-				wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
-				wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
 			}
 		}
 	}
@@ -991,30 +992,31 @@ class Points_Rewards_For_WooCommerce_Admin {
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
 
-			$pagescreen = $screen->id;
-			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] || 'product' == $pagescreen ) {
+			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+				if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] || 'product' == $screen->id ) {
 
-				$notification_id = get_option( 'wps_wpr_notify_new_msg_id', false );
-				if ( isset( $notification_id ) && '' !== $notification_id ) {
+					$notification_id = get_option( 'wps_wpr_notify_new_msg_id', false );
+					if ( isset( $notification_id ) && '' !== $notification_id ) {
 
-					$hidden_id            = get_option( 'wps_wpr_notify_hide_notification', false );
-					$notification_message = get_option( 'wps_wpr_notify_new_message', '' );
-					if ( isset( $hidden_id ) && $hidden_id < $notification_id ) {
-						if ( '' !== $notification_message ) {
+						$hidden_id            = get_option( 'wps_wpr_notify_hide_notification', false );
+						$notification_message = get_option( 'wps_wpr_notify_new_message', '' );
+						if ( isset( $hidden_id ) && $hidden_id < $notification_id ) {
+							if ( '' !== $notification_message ) {
 
-							?>
-							<div class="notice is-dismissible notice-info" id="dismiss_notice">
-								<div class="notice-container">
-									<div class="notice-image">
-										<img src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/images/wpswings_logo.png' ); ?>" alt="WP Swings">
-									</div> 
-									<div class="notice-content">
-										<?php echo wp_kses_post( $notification_message ); ?>
-									</div>				
+								?>
+								<div class="notice is-dismissible notice-info" id="dismiss_notice">
+									<div class="notice-container">
+										<div class="notice-image">
+											<img src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/images/wpswings_logo.png' ); ?>" alt="WP Swings">
+										</div> 
+										<div class="notice-content">
+											<?php echo wp_kses_post( $notification_message ); ?>
+										</div>				
+									</div>
+									<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
 								</div>
-								<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
-							</div>
-							<?php
+								<?php
+							}
 						}
 					}
 				}

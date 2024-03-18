@@ -319,7 +319,7 @@ class WPSwings_Onboarding_Helper {
 			 * Email field with label. ( auto filled with admin email )
 			 */
 
-			rand() => array(
+			wp_rand() => array(
 				'id'          => 'monthly-revenue',
 				'label'       => esc_html__( 'What is your monthly revenue?', 'points-and-rewards-for-woocommerce' ),
 				'type'        => 'radio',
@@ -336,7 +336,7 @@ class WPSwings_Onboarding_Helper {
 				),
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id'          => 'industry_type',
 				'label'       => esc_html__( 'What industry defines your business?', 'points-and-rewards-for-woocommerce' ),
 				'type'        => 'select',
@@ -371,7 +371,7 @@ class WPSwings_Onboarding_Helper {
 				),
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id'          => 'onboard-email',
 				'label'       => esc_html__( 'What is the best email address to contact you?', 'points-and-rewards-for-woocommerce' ),
 				'type'        => 'email',
@@ -381,7 +381,7 @@ class WPSwings_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id'          => 'onboard-number',
 				'label'       => esc_html__( 'What is your contact number?', 'points-and-rewards-for-woocommerce' ),
 				'type'        => 'text',
@@ -391,7 +391,7 @@ class WPSwings_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id'          => 'store-name',
 				'label'       => '',
 				'type'        => 'hidden',
@@ -401,7 +401,7 @@ class WPSwings_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id'          => 'store-url',
 				'label'       => '',
 				'type'        => 'hidden',
@@ -411,7 +411,7 @@ class WPSwings_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id'          => 'show-counter',
 				'label'       => '',
 				'type'        => 'hidden',
@@ -420,7 +420,7 @@ class WPSwings_Onboarding_Helper {
 				'required'    => '',
 				'extra-class' => '',
 			),
-			rand() => array(
+			wp_rand() => array(
 				'id'          => 'plugin-name',
 				'label'       => '',
 				'type'        => 'hidden',
@@ -468,7 +468,7 @@ class WPSwings_Onboarding_Helper {
 			 * Email field with label. ( auto filled with admin email )
 			 */
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'deactivation-reason',
 				'label' => '',
 				'type' => 'radio',
@@ -487,7 +487,7 @@ class WPSwings_Onboarding_Helper {
 				),
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'deactivation-reason-text',
 				'label' => 'Let us know why you are deactivating {plugin-name} so we can improve the plugin',
 				'type' => 'textarea',
@@ -497,7 +497,7 @@ class WPSwings_Onboarding_Helper {
 				'extra-class' => 'wps-keep-hidden',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'admin-email',
 				'label' => '',
 				'type' => 'hidden',
@@ -507,7 +507,7 @@ class WPSwings_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'store-name',
 				'label' => '',
 				'type' => 'hidden',
@@ -517,7 +517,7 @@ class WPSwings_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'store-url',
 				'label' => '',
 				'type' => 'hidden',
@@ -527,7 +527,7 @@ class WPSwings_Onboarding_Helper {
 				'extra-class' => '',
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id' => 'plugin-name',
 				'label' => '',
 				'type' => 'hidden',
@@ -748,7 +748,7 @@ class WPSwings_Onboarding_Helper {
 			}
 		} catch ( Exception $e ) {
 
-			echo json_encode( $e->getMessage() );
+			echo wp_json_encode( $e->getMessage() );
 			wp_die();
 		}
 
@@ -756,7 +756,7 @@ class WPSwings_Onboarding_Helper {
 			$get_skipped_timstamp = update_option( 'onboarding-data-sent', 'sent' );
 		}
 
-		echo json_encode( $formatted_data );
+		echo wp_json_encode( $formatted_data );
 		wp_die();
 	}
 
@@ -803,7 +803,7 @@ class WPSwings_Onboarding_Helper {
 	public function skip_onboarding_popup() {
 
 		$get_skipped_timstamp = update_option( 'onboarding-data-skipped', time() );
-		echo json_encode( 'true' );
+		echo wp_json_encode( 'true' );
 		wp_die();
 	}
 
@@ -815,11 +815,12 @@ class WPSwings_Onboarding_Helper {
 	 */
 	public function add_wps_additional_validation( $result = true ) {
 
-		if ( ! empty( $_GET['tab'] ) && 'general-setting' !== $_GET['tab'] ) {
+		if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting', ) ) {
+			if ( ! empty( $_GET['tab'] ) && 'general-setting' !== $_GET['tab'] ) {
 
-			$result = false;
+				$result = false;
+			}
 		}
-
 		return $result;
 	}
 
@@ -909,7 +910,7 @@ class WPSwings_Onboarding_Helper {
 
 		$headers = 'Content-Type: application/json';
 
-		$form_data = json_encode(
+		$form_data = wp_json_encode(
 			array(
 				'fields' => $form_data,
 				'context'  => array(

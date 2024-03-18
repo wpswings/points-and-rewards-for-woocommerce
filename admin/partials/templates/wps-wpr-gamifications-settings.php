@@ -75,7 +75,7 @@ $wps_wpr_enter_segment_color     = ! empty( $wps_wpr_save_gami_setting['wps_wpr_
  */
 function wps_wpr_rand_color() {
 
-	return '#' . str_pad( dechex( mt_rand( 0, 0xFFFFFF ) ), 6, '0', STR_PAD_LEFT );
+	return '#' . str_pad( dechex( wp_rand( 0, 0xFFFFFF ) ), 6, '0', STR_PAD_LEFT );
 }
 ?>
 
