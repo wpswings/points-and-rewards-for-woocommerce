@@ -2265,7 +2265,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 						if ( strtolower( $cart_discount ) == strtolower( $coupon_name ) ) {
 
-							$coupon_meta   = $coupon_data['meta_data'][0]->get_data();
+							$coupon_meta   = (int) $coupon_data['meta_data'][0]->get_data();
 							$coupon_amount = $coupon_meta['value']['amount'];
 							// Redemption Conversion rate calculate.
 							$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
