@@ -85,6 +85,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		add_action( 'wps_wpr_others_settings', array( $this, 'wps_wpr_other_dummy_settings' ) );
 		add_filter( 'wps_rwpr_add_setting_tab', array( $this, 'wps_add_points_dummy_notification_addon_settings_tab' ), 22, 1 );
 		add_filter( 'wps_rwpr_add_setting_tab', array( $this, 'wps_add_api_dummy_settings_tab' ), 23, 1 );
+		add_filter( 'wps_wpr_others_settings', array( $this, 'wps_wpr_total_earning_dummy_points_settings' ), 10, 1 );
 	}
 
 	/**
@@ -2449,6 +2450,45 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				<?php
 			}
 		}
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param  array $wps_wpr_other_settings wps_wpr_other_settings.
+	 * @return array
+	 */
+	public function wps_wpr_total_earning_dummy_points_settings( $wps_wpr_other_settings ) {
+
+		$other_settings = array(
+			array(
+				'title' => __( 'Display Total Earning Points', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'  => 'title',
+			),
+			array(
+				'title'    => __( 'Toggle to show the total earning points on the Cart page', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'     => 'checkbox',
+				'id'       => 'wps_wpr_cart_page_total_earning_points',
+				'class'    => 'input-text wps_wpr_pro_plugin_settings',
+				'desc_tip' => __( 'Inform the user about the number of points they will earn by placing this order.', 'ultimate-woocommerce-points-and-rewards' ),
+				'default'  => 0,
+				'desc'     => __( 'Toggle this setting if you want to display the total earning points of an order on the cart page', 'ultimate-woocommerce-points-and-rewards' ),
+			),
+			array(
+				'title'    => __( 'Toggle to show the total earning points on the Checkout page', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'     => 'checkbox',
+				'id'       => 'wps_wpr_checkout_page_total_earning_points',
+				'class'    => 'input-text wps_wpr_pro_plugin_settings',
+				'desc_tip' => __( 'Inform the user about the number of points they will earn by placing this order.', 'ultimate-woocommerce-points-and-rewards' ),
+				'default'  => 0,
+				'desc'     => __( 'Toggle this setting if you want to display the total earning points of an order on the checkout page', 'ultimate-woocommerce-points-and-rewards' ),
+			),
+			array(
+				'type' => 'sectionend',
+			),
+		);
+		$wps_wpr_other_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_other_settings, $other_settings, 25 );
+		return $wps_wpr_other_settings;
 	}
 
 }
