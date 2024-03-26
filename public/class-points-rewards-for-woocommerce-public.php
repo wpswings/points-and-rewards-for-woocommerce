@@ -93,6 +93,13 @@ class Points_Rewards_For_WooCommerce_Public {
 			wp_enqueue_script( 'wps-wpr-game-public-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-gamification-public.js', array( 'jquery', 'wps-wpr-wheel-class', 'wps-wpr-tween-max' ), $this->version, true );
 		}
 
+		// verify nonce for restriction points earning.
+		$wps_active_status = '';
+		if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'wps-wpr-verify-nonce' ) ) {
+
+			$wps_active_status = ! empty( $_GET['status'] ) ? sanitize_text_field( wp_unslash( $_GET['status'] ) ) : '';
+		}
+
 		// main js file enqueue.
 		wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.min.js', array( 'jquery', 'clipboard' ), $this->version, false );
 		$wps_wpr = array(
@@ -111,7 +118,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			'checkout_page'              => is_checkout(),
 			'wps_user_current_points'    => $current_points,
 			'is_restrict_message_enable' => $this->wps_wpr_is_rewards_restrict_message_settings_enable(), // Restrict rewards points settings features.
-			'is_restrict_status_set'     => ! empty( $_GET['status'] ) ? sanitize_text_field( wp_unslash( $_GET['status'] ) ) : '',
+			'is_restrict_status_set'     => $wps_active_status,
 			'wps_restrict_rewards_msg'   => $wps_wpr_restricted_cart_page_msg,
 			'wps_wpr_game_setting'       => $wps_wpr_game_color,
 			'wps_wpr_select_spin_stop'   => $wps_wpr_select_spin_stop,
@@ -1953,7 +1960,7 @@ class Points_Rewards_For_WooCommerce_Public {
 									if ( strtolower( $coupon_data ) == strtolower( $cart_discount ) ) {
 										$discount_type = 'fixed_cart';
 										$coupon        = array(
-											'id'                         => time() . rand( 2, 9 ),
+											'id'                         => time() . wp_rand( 2, 9 ),
 											'amount'                     => $wps_fee_on_cart,
 											'individual_use'             => false,
 											'product_ids'                => array(),
@@ -2258,8 +2265,8 @@ class Points_Rewards_For_WooCommerce_Public {
 						$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 						if ( strtolower( $cart_discount ) == strtolower( $coupon_name ) ) {
 
-							$coupon_meta   = $coupon_data['meta_data'][0]->get_data();
-							$coupon_amount = $coupon_meta['value']['amount'];
+							$coupon        = new WC_Coupon( $coupon_name );
+							$coupon_amount = $coupon->get_amount();
 							// Redemption Conversion rate calculate.
 							$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
 							$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
@@ -2345,6 +2352,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param int   $quantity quantity of the cart.
 	 */
 	public function wps_wpr_woocommerce_add_cart_item_data( $the_cart_data, $product_id, $variation_id, $quantity ) {
+		// verifying nonce.
+		if ( ! wp_verify_nonce( ! empty( $_POST['wps_wpr_verify_cart_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_verify_cart_nonce'] ) ) : '', 'wps-cart-nonce' ) ) {
+			return;
+		}
 		/*Get the quantitiy of the product*/
 		if ( ! empty( $_REQUEST['quantity'] ) && isset( $_REQUEST['quantity'] ) ) {
 			$wps_get_quantity = sanitize_text_field( wp_unslash( $_REQUEST['quantity'] ) );
@@ -4282,6 +4293,28 @@ class Points_Rewards_For_WooCommerce_Public {
 				}
 			}
 		}
+	}
+
+	/** Add PAR module function.
+	 *
+	 * @param [type] $payment_mode payment method for par.
+	 * @return mixed
+	 */
+	public function wps_wpr_admin_mvx_list_modules( $payment_mode ) {
+
+		$payment_mode['par_payment'] = __( 'Points', 'wallet-system-for-woocommerce' );
+		return $payment_mode;
+	}
+
+	/**
+	 * This function is used to verify nonce on cart page.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_verify_cart_page_nonce() {
+		?>
+		<input type="hidden" name="wps_wpr_verify_cart_nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-cart-nonce' ) ); ?>">
+		<?php
 	}
 
 }

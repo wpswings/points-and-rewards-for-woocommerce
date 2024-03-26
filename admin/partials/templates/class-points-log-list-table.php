@@ -292,25 +292,27 @@ class Points_Log_List_Table extends WP_List_Table {
 	 */
 	public function wps_wpr_usort_reorder( $cloumna, $cloumnb ) {
 
-		$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'id';
-		$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'desc';
-		if ( is_numeric( $cloumna[ $orderby ] ) && is_numeric( $cloumnb[ $orderby ] ) ) {
-			if ( $cloumna[ $orderby ] == $cloumnb[ $orderby ] ) {
+		if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+			$orderby = ( ! empty( $_REQUEST['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) : 'id';
+			$order   = ( ! empty( $_REQUEST['order'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) : 'desc';
+			if ( is_numeric( $cloumna[ $orderby ] ) && is_numeric( $cloumnb[ $orderby ] ) ) {
+				if ( $cloumna[ $orderby ] == $cloumnb[ $orderby ] ) {
 
-				return 0;
-			} elseif ( $cloumna[ $orderby ] < $cloumnb[ $orderby ] ) {
+					return 0;
+				} elseif ( $cloumna[ $orderby ] < $cloumnb[ $orderby ] ) {
 
-				$result = -1;
-				return ( 'asc' === $order ) ? $result : -$result;
-			} elseif ( $cloumna[ $orderby ] > $cloumnb[ $orderby ] ) {
+					$result = -1;
+					return ( 'asc' === $order ) ? $result : -$result;
+				} elseif ( $cloumna[ $orderby ] > $cloumnb[ $orderby ] ) {
 
-				$result = 1;
+					$result = 1;
+					return ( 'asc' === $order ) ? $result : -$result;
+				}
+			} else {
+
+				$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
 				return ( 'asc' === $order ) ? $result : -$result;
 			}
-		} else {
-
-			$result = strcmp( $cloumna[ $orderby ], $cloumnb[ $orderby ] );
-			return ( 'asc' === $order ) ? $result : -$result;
 		}
 	}
 
@@ -351,10 +353,12 @@ class Points_Log_List_Table extends WP_List_Table {
 			'fields' => 'ID',
 		);
 
-		if ( isset( $_REQUEST['s'] ) ) {
+		if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
+			if ( isset( $_REQUEST['s'] ) ) {
 
-			$wps_request_search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
-			$args['search']     = '*' . $wps_request_search . '*';
+				$wps_request_search = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
+				$args['search']     = '*' . $wps_request_search . '*';
+			}
 		}
 
 		$user_data   = new WP_User_Query( $args );
@@ -1409,6 +1413,41 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 									<tr valign="top">
 										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['membership_level_points_refunded'] ); ?> </td>
+									</tr>
+									<?php
+								}
+								?>
+						</table>
+					</div>
+					<?php
+				}
+				if ( array_key_exists( 'wps_vendor_commissions_amount', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Vendor commission points', 'points-and-rewards-for-woocommerce' ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
+								<thead>
+									<tr valign="top">
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Order No.', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+									</tr>
+								</thead>
+								<?php
+								foreach ( $point_log['wps_vendor_commissions_amount'] as $key => $value ) {
+									?>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['wps_vendor_commissions_amount'] ); ?> </td>
+										<td class="forminp forminp-text"><?php echo esc_html( $value['order_id'] ); ?> </td>
 									</tr>
 									<?php
 								}

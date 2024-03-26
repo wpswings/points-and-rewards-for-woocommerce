@@ -144,7 +144,7 @@
 
                                         // set new url from here.
                                         var oldURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
-                                        var newUrl = oldURL + "?status=" + "active";
+                                        var newUrl = oldURL + "?status=" + "active" + "&nonce=" + wps_wpr.wps_wpr_nonce;
                                         if (window.history != 'undefined' && window.history.pushState != 'undefined') {
                                             window.history.pushState({ path: newUrl }, '', newUrl);
                                         }
