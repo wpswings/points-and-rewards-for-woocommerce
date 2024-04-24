@@ -1300,6 +1300,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 			return false;
 		}
 
+		if ( wps_wpr_restrict_user_fun() ) {
+
+			return;
+		}
+
 		$offset             = 0;
 		$order_per_page     = 200;
 		$response           = array();
@@ -1858,6 +1863,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function wps_wpr_assign_vendor_commission_points( $order_id, $old_status, $new_status ) {
 
 		if ( $old_status != $new_status ) {
+			if ( wps_wpr_restrict_user_fun() ) {
+
+				return;
+			}
 			if ( 'completed' === $new_status || 'processing' === $new_status ) {
 
 				if ( function_exists( 'mvx_get_order' ) ) {
@@ -1927,5 +1936,25 @@ class Points_Rewards_For_WooCommerce_Admin {
 				}
 			}
 		}
+	}
+
+	/**
+	 * This function is used to restrict user from points table.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_restrict_user_from_points_table() {
+
+		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+		$checked = ! empty( $_POST['checked'] ) ? sanitize_text_field( wp_unslash( $_POST['checked'] ) ) : 'no';
+		$user_id = ! empty( $_POST['user_id'] ) ? sanitize_text_field( wp_unslash( $_POST['user_id'] ) ) : 0;
+		if ( 'yes' === $checked ) {
+
+			update_user_meta( $user_id, 'wps_wpr_restrict_user', $checked );
+		} else {
+
+			update_user_meta( $user_id, 'wps_wpr_restrict_user', 'no' );
+		}
+		wp_die();
 	}
 }

@@ -230,6 +230,7 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_filter( 'mvx_vendor_payment_mode', $plugin_admin, 'wsfw_admin_mvx_list_mxfdxfodules' );
 		$this->loader->add_filter( 'mvx_parent_order_to_vendor_order_statuses_to_sync', $plugin_admin, 'wsfw_mvx_parent_order_to_vendor_order_statuses_to_sync', 10, 1 );
 		$this->loader->add_filter( 'woocommerce_order_status_changed', $plugin_admin, 'wps_wpr_assign_vendor_commission_points', 10, 3 );
+		$this->loader->add_action( 'wp_ajax_restrict_user_from_points_table', $plugin_admin, 'wps_wpr_restrict_user_from_points_table' );
 	}
 
 	/**

@@ -516,6 +516,22 @@ if ( $activated ) {
 	function wps_wpr_remove_cron_for_banner_update() {
 		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
 	}
+
+	/**
+	 * This function is used to restrict user.
+	 *
+	 * @return bool
+	 */
+	function wps_wpr_restrict_user_fun() {
+
+		$wps_wpr_restrict_user = get_user_meta( get_current_user_id(), 'wps_wpr_restrict_user', true );
+		$check_enable          = false;
+		if ( 'yes' === $wps_wpr_restrict_user ) {
+
+			$check_enable = true;
+		}
+		return $check_enable;
+	}
 } else {
 
 	// WooCommerce is not active so deactivate this plugin.

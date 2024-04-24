@@ -52,13 +52,14 @@ class Points_Log_List_Table extends WP_List_Table {
 
 		$columns = array(
 			'cb'             => '<input type="checkbox" />',
-			'user_name'      => __( 'User Name', 'points-and-rewards-for-woocommerce' ),
-			'user_email'     => __( 'User Email', 'points-and-rewards-for-woocommerce' ),
-			'user_points'    => __( 'Total Points', 'points-and-rewards-for-woocommerce' ),
+			'user_name'      => __( 'Name', 'points-and-rewards-for-woocommerce' ),
+			'user_email'     => __( 'Email', 'points-and-rewards-for-woocommerce' ),
+			'user_points'    => __( 'Points', 'points-and-rewards-for-woocommerce' ),
 			'sign'           => __( 'Choose +/-', 'points-and-rewards-for-woocommerce' ),
 			'add_sub_points' => __( 'Enter Points', 'points-and-rewards-for-woocommerce' ),
 			'reason'         => __( 'Enter Remark', 'points-and-rewards-for-woocommerce' ),
 			'details'        => __( 'Action', 'points-and-rewards-for-woocommerce' ),
+			'ban_user'       => __( 'Restrict User', 'points-and-rewards-for-woocommerce' ),
 
 		);
 		return $columns;
@@ -83,7 +84,7 @@ class Points_Log_List_Table extends WP_List_Table {
 
 			case 'user_name':
 				$actions = array(
-					'view_point_log' => '<a href="' . WPS_RWPR_HOME_URL . 'admin.php?page=wps-rwpr-setting&tab=points-table&user_id=' . $item['id'] . '&action=view_point_log">' . __( 'View Point Log', 'points-and-rewards-for-woocommerce' ) . '</a>',
+					'view_point_log' => '<a href="' . WPS_RWPR_HOME_URL . 'admin.php?page=wps-rwpr-setting&tab=points-table&user_id=' . $item['id'] . '&action=view_point_log&nonce=' . wp_create_nonce( 'par_main_setting' ) . '">' . __( 'View Point Log', 'points-and-rewards-for-woocommerce' ) . '</a>',
 
 				);
 				$actions = apply_filters( 'wps_add_coupon_details', $actions, $item['id'] );
@@ -103,7 +104,8 @@ class Points_Log_List_Table extends WP_List_Table {
 				return $html;
 			case 'details':
 				return $this->view_html( $item['id'] );
-
+			case 'ban_user':
+				return $this->wps_wpr_ban_use( $item['id'] );
 			default:
 				return false;
 		}
@@ -121,6 +123,23 @@ class Points_Log_List_Table extends WP_List_Table {
 	public function view_html( $user_id ) {
 
 		echo '<a  href="javascript:void(0)" class="wps_points_update button button-primary wps_wpr_save_changes" data-id="' . esc_html( $user_id ) . '">' . esc_html__( 'Update', 'points-and-rewards-for-woocommerce' ) . '</a>';
+	}
+
+	/**
+	 * This function is used to restrict user.
+	 *
+	 * @param string $user_id user_id.
+	 * @return void
+	 */
+	public function wps_wpr_ban_use( $user_id ) {
+
+		$wps_wpr_restrict_user = get_user_meta( $user_id, 'wps_wpr_restrict_user', true );
+		?>
+		<label class="wps_wpr_wrapper_toggle">
+			<input type="checkbox" class="wps_wpr_restrict_user" data-id="<?php echo esc_html( $user_id ); ?>" value="yes" <?php checked( $wps_wpr_restrict_user, 'yes' ); ?>>
+			<span class="wps_wpr_sliders wps_wpr_rounds"></span>
+		</label>
+		<?php
 	}
 
 	/**

@@ -125,6 +125,31 @@ $wps_wpr_other_settings = array(
 	array(
 		'type' => 'sectionend',
 	),
+	array(
+		'title' => __( 'New Layout', 'points-and-rewards-for-woocommerce' ),
+		'type'  => 'title',
+	),
+	array(
+		'title'    => __( 'Points Tab New layout', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'id'       => 'wps_wpr_choose_account_page_temp',
+		'class'    => 'input-text',
+		'desc_tip' => __( 'To utilize the new template for the My Account section within the points tab.', 'points-and-rewards-for-woocommerce' ),
+		'default'  => 0,
+		'desc'     => __( ' Activate this setting to enable the new layout for the points tab. ', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'id'       => 'wps_wpr_points_tab_layout_color',
+		'type'     => 'color',
+		'title'    => __( 'Choose the color scheme for the Points tab layout', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'The selected color will be displayed on the Points tab layout on the My Account page.', 'points-and-rewards-for-woocommerce' ),
+		'class'    => 'input-text',
+		'desc'     => __( 'Enable Point Sharing', 'points-and-rewards-for-woocommerce' ),
+		'default'  => '#0094ff',
+	),
+	array(
+		'type' => 'sectionend',
+	),
 );
 
 $wps_wpr_other_settings = apply_filters( 'wps_wpr_others_settings', $wps_wpr_other_settings );
