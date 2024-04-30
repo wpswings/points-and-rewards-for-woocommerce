@@ -126,7 +126,7 @@ $wps_wpr_other_settings = array(
 		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'New Layout', 'points-and-rewards-for-woocommerce' ),
+		'title' => __( 'Point Tab Layout Setting', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'title',
 	),
 	array(
