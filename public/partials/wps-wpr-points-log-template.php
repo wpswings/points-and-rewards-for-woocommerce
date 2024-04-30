@@ -16,52 +16,37 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 	if ( isset( $point_log ) && is_array( $point_log ) && null != $point_log ) {
 		?>
 		<h2><?php esc_html_e( ' Point Log Table', 'points-and-rewards-for-woocommerce' ); ?></h2>
-		<?php if ( array_key_exists( 'registration', $point_log ) || array_key_exists( 'import_points', $point_log ) ) { ?>
+		<?php
+		if ( array_key_exists( 'registration', $point_log ) ) {
+			?>
 			<div class="wps_wpr_slide_toggle">
-				<table class="wps_wpr_common_table">
-					<thead>
-						<tr>
-							<th class="wps-wpr-view-log-Date">
-								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
-							</th>
-							<th class="wps-wpr-view-log-Status">
-								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
-							</th>
-						</tr>
-					</thead>
-					<tr>
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Signup Event', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+				<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+				<div class="wps_wpr_points_view"> 
+					<table class="wps_wpr_common_table">
+						<thead>
+								<tr>
+									<th class="wps-wpr-view-log-Date">
+										<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+									</th>
+									<th class="wps-wpr-view-log-Status">
+										<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+									</th>
+								</tr>
+							</thead> 
 						<?php
-						if ( array_key_exists( 'registration', $point_log ) ) {
+						foreach ( $point_log['registration'] as $key => $value ) {
 							?>
-
-							<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Signup Event', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
-							<td>
-								<?php
-								echo esc_html( wps_wpr_set_the_wordpress_date_format( $point_log['registration']['0']['date'] ) );
-								?>
-							</td>
-							<td>
-								<?php
-								echo '+' . esc_html( $point_log['registration']['0']['registration'] );
-								?>
-							</td>
+							<tr>
+								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $point_log['registration']['0']['date'] ) ); ?></td>
+								<td><?php echo '+' . esc_html( $point_log['registration']['0']['registration'] ); ?></td>
+							</tr>
 							<?php
 						}
 						?>
-					</tr>
-					<tr>
-						<?php
-						if ( array_key_exists( 'import_points', $point_log ) ) {
-							?>
-
-							<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $point_log['import_points']['0']['date'] ) ); ?></td>
-							<td><?php echo '+' . esc_html( $point_log['import_points']['0']['import_points'] ); ?></td>
-							<?php
-						}
-						?>
-					</tr>
-				</table>
-			</div> 
+					</table>
+				</div>
+			</div>
 			<?php
 		}
 		if ( array_key_exists( 'refund_points_applied_on_cart', $point_log ) ) {

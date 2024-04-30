@@ -319,7 +319,16 @@ if ( $wps_wpr_mem_enable ) {
 								}
 								do_action( 'wps_wpr_membership_expiry_date_for_user', $user_id, $values, $wps_role );
 								if ( $wps_role == $wps_user_level ) {
-									echo '<img class="wps_wpr_tick" src = "' . esc_url( WPS_RWPR_DIR_URL ) . 'public/images/tick.png">';
+
+									$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
+									$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
+									$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
+									if ( '1' === $wps_wpr_choose_account_page_temp ) {
+										echo '<img class="wps_wpr_tick" src = "' . esc_url( WPS_RWPR_DIR_URL ) . 'public/images/tick2.svg">';
+									} else {
+
+										echo '<img class="wps_wpr_tick" src = "' . esc_url( WPS_RWPR_DIR_URL ) . 'public/images/tick.png">';
+									}
 								}
 								?>
 							</td>

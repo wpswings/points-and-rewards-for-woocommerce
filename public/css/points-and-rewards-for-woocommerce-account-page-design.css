@@ -423,7 +423,7 @@
 .wps_wpr_main_section_all_wrap table.shop_table td img.wps_wpr_tick {
     position: absolute;
     top: 10px;
-    left: 5px;
+    right: 10px;
     width: 24px;
     height: 24px;
     float: unset;

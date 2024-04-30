@@ -82,10 +82,10 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		add_action( 'wps_wpr_product_assign_points', array( $this, 'wps_wpr_add_dummy_new_catories_wise_settings' ) );
 		add_filter( 'wps_rwpr_add_setting_tab', array( $this, 'wps_add_dummy_purchase_through_points_settings_tab' ), 20, 1 );
 		add_filter( 'wps_wpr_show_shortcoe_text', array( $this, 'wps_wpr_show_dummy_referral_link_shortcoe' ) );
-		add_action( 'wps_wpr_others_settings', array( $this, 'wps_wpr_other_dummy_settings' ) );
+		add_action( 'wps_wpr_others_settings', array( $this, 'wps_wpr_other_dummy_settings' ), 10, 1 );
 		add_filter( 'wps_rwpr_add_setting_tab', array( $this, 'wps_add_points_dummy_notification_addon_settings_tab' ), 22, 1 );
 		add_filter( 'wps_rwpr_add_setting_tab', array( $this, 'wps_add_api_dummy_settings_tab' ), 23, 1 );
-		add_filter( 'wps_wpr_others_settings', array( $this, 'wps_wpr_total_earning_dummy_points_settings' ), 10, 1 );
+		add_filter( 'wps_wpr_others_settings', array( $this, 'wps_wpr_total_earning_dummy_points_settings' ), 12, 1 );
 	}
 
 	/**
@@ -2487,7 +2487,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_other_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_other_settings, $other_settings, 25 );
+		$wps_wpr_other_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_other_settings, $other_settings, 24 );
 		return $wps_wpr_other_settings;
 	}
 

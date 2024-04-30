@@ -1027,10 +1027,12 @@ class Points_Rewards_For_WooCommerce_Public {
 		// check allowed user for points features.
 		if ( $old_status != $new_status ) {
 
+			// restrict user from points table.
 			if ( wps_wpr_restrict_user_fun() ) {
 
 				return;
 			}
+
 			$points_key_priority_high              = false;
 			$wps_wpr_one_email                     = false;
 			$item_points                           = 0;
@@ -2398,6 +2400,12 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param int   $quantity quantity of the cart.
 	 */
 	public function wps_wpr_woocommerce_add_cart_item_data( $the_cart_data, $product_id, $variation_id, $quantity ) {
+		// restrict user from points table.
+		if ( wps_wpr_restrict_user_fun() ) {
+
+			return $the_cart_data;
+		}
+
 		// verifying nonce.
 		if ( ! wp_verify_nonce( ! empty( $_POST['wps_wpr_verify_cart_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_verify_cart_nonce'] ) ) : '', 'wps-cart-nonce' ) ) {
 			return;
@@ -2467,6 +2475,12 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_display_product_points() {
+		// restrict user from points table.
+		if ( wps_wpr_restrict_user_fun() ) {
+
+			return;
+		}
+
 		// check allowed user for points features.
 		if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
 			return;
@@ -3037,6 +3051,12 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_woocommerce_content_change( $cart_contents ) {
 
+		// restrict user from points table.
+		if ( wps_wpr_restrict_user_fun() ) {
+
+			return $cart_contents;
+		}
+
 		if ( ! empty( $cart_contents ) ) {
 			foreach ( $cart_contents as $key => $value ) {
 
@@ -3436,7 +3456,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @return string
 	 */
 	public function wps_wpr_conversion_price_callback( $amounts ) {
-		if ( class_exists( 'WOOCS' ) && function_exists( 'woocs_exchange_value' ) ) {
+		if ( class_exists( 'WOOCS' ) ) {
 
 			global $WOOCS;
 			$amount = $WOOCS->woocs_exchange_value( $amounts );
@@ -3459,7 +3479,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 			if ( $WOOCS->is_multiple_allowed ) {
 				$currrent = $WOOCS->current_currency;
-				if ( $currrent != $WOOCS->default_currency && function_exists( 'get_currencies' ) ) {
+				if ( $currrent != $WOOCS->default_currency ) {
 
 					$currencies = $WOOCS->get_currencies();
 					$rate       = $currencies[ $currrent ]['rate'];
@@ -3485,7 +3505,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			global $WOOCS;
 			// hpos.
 			$wps_currency = wps_wpr_hpos_get_meta_data( $order_id, '_order_currency', true );
-			if ( $wps_currency == $WOOCS->default_currency && function_exists( 'get_currencies' ) ) {
+			if ( $wps_currency == $WOOCS->default_currency ) {
 
 				$currencies  = $WOOCS->get_currencies();
 				$rate        = $currencies[ $wps_currency ]['rate'];
