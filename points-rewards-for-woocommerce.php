@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           2.2.0
+ * Version:           2.3.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
@@ -24,7 +24,7 @@
  * Requires at least    : 5.5.0
  * Tested up to         : 6.4.3
  * WC requires at least : 5.5.0
- * WC tested up to      : 8.7.0
+ * WC tested up to      : 8.8.3
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -77,7 +77,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.2.0' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.3.0' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -515,6 +515,22 @@ if ( $activated ) {
 	 */
 	function wps_wpr_remove_cron_for_banner_update() {
 		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
+	}
+
+	/**
+	 * This function is used to restrict user.
+	 *
+	 * @return bool
+	 */
+	function wps_wpr_restrict_user_fun() {
+
+		$wps_wpr_restrict_user = get_user_meta( get_current_user_id(), 'wps_wpr_restrict_user', true );
+		$check_enable          = false;
+		if ( 'yes' === $wps_wpr_restrict_user ) {
+
+			$check_enable = true;
+		}
+		return $check_enable;
 	}
 } else {
 

@@ -41,7 +41,7 @@
 			"align-items": "center",
 		  }),
 		e(document).on("click", ".wps_wpr_common_slider", function () {
-		  e(this).next(".wps_wpr_points_view").slideToggle("slow"),
+		  e(this).next(".wps_wpr_points_view").slideToggle("fast"),
 			e(this).toggleClass("active");
 		}),
 		e(document).find("#wps_wpr_restrictions_for_purchasing_cat").select2(),
@@ -541,5 +541,42 @@
 	jQuery(document).on('mouseleave', '#wps_wpr_product_purchase_price', function(){
 		this.value = this.value.replace(/[^0-9]/g, '');
 	})
+
+
+	// restrict user from points table.
+	jQuery(document).on('change', '.wps_wpr_restrict_user', function(){
+
+		var user_id = jQuery(this).attr('data-id');
+		if ( jQuery(this).is(':checked') ) {
+			
+			var checked = jQuery(this).val();
+			wps_wpr_restrict_user_call( user_id, checked );
+		} else {
+
+			wps_wpr_restrict_user_call( user_id, 'no' );
+		}
+	});
+
+	/**
+	 * 
+	 * @param {int} user_id user_id.
+	 * @param {string} checked checked.
+	 */
+	function wps_wpr_restrict_user_call( user_id, checked ) {
+		var data    = {
+			'action'  : 'restrict_user_from_points_table',
+			wps_nonce : wps_wpr_object.wps_wpr_nonce,
+			'user_id' : user_id,
+			'checked' : checked,
+		};
+		jQuery.ajax({
+			'url'    : wps_wpr_object.ajaxurl,
+			'method' : 'POST',
+			'data'   : data,
+			success  : function(response) {
+				console.log(response);
+			}
+		});
+	}
 });
   

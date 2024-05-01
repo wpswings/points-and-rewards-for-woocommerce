@@ -1446,6 +1446,21 @@ button.wps_wpr_container-popup-claim:focus {
     font-size: 12px;
 }
 
+.wps_wpr_slide_toggle .wps_wpr_points_view {
+    overflow: auto;
+    display: none;
+}
+
+.wps_wpr_slide_toggle .wps_wpr_points_view table th {
+    min-width: 155px;
+    width: 100%;
+}
+
+.wps_wpr_slide_toggle .wps_wpr_points_view table {
+    min-width: 375px;
+    display: block;
+}
+
 /* Media screen start */
 
 

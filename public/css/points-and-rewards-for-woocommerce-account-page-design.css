@@ -1,0 +1,725 @@
+:root {
+    --wps-wpr-primary: #0094FF;
+}
+
+.wps_wpr_main_section_all_wrap input:focus,
+.wps_wpr_main_section_all_wrap a:focus,
+.wps_wpr_main_section_all_wrap select:focus,
+.wps_wpr_main_section_all_wrap button:focus {
+    outline: none;
+}
+
+.wps_wpr_badge_way_points_main_wrap a:focus {
+    outline: none;
+}
+
+.wps_wpr_main_section_all_wrap {
+    padding: 25px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin: 0 0 30px;
+    position: relative;
+    background: #fff;
+}
+
+.wps_wpr_badge_way_points_main_wrap {
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    gap: 10px;
+    align-items: flex-start;
+    margin: 0 0 30px;
+}
+
+.wps_wpr_badge_way_points_main_wrap #wps-par__badge-wrap {
+    display: flex;
+    gap: 10px;
+    padding: 0;
+}
+
+.wps_wpr_badge_way_points_main_wrap #wps-par__badge-wrap .wps-par__badge-label,
+.wps_wpr_badge_way_points_main_wrap #wps-par__badge-wrap span {
+    text-align: left;
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps-par__badge-img {
+    width: 120px;
+    height: 120px;
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps_wpr_show_points_on_account_page .wps_wpr_heading_para {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 5px;
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps_wpr_show_points_on_account_page .wps_wpr_heading_para .wps_wpr_heading {
+    font-size: 16px;
+    margin: 0 !important;
+    line-height: 1.25;
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps_wpr_show_points_on_account_page .wps_wpr_heading_para:first-of-type {
+    color: var(--wps-wpr-primary);
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps_wpr_points_wrapper_with_exp {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps_wpr_points_wrapper_with_exp .wps_wpr_show_points_on_account_page {
+    padding: 20px;
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps_wpr_points_wrapper_with_exp .wps_wpr_view_log {
+    float: unset;
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps_wpr_points_wrapper_with_exp .wps_wpr_view_log a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+    display: block;
+    text-align: center;
+    background: var(--wps-wpr-primary);
+    border-radius: 0 0 5px 5px;
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps_wpr_show_points_on_account_page .wps_wpr_heading_para span {
+    display: inline-block;
+    line-height: 1.25;
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps_wpr_account_page_badge_name_wrapper {
+    font-size: 28px;
+    line-height: 1.25;
+    margin: 0 0 10px;
+}
+
+.wps_wpr_badge_way_points_main_wrap .wps-par__badge-label span {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.25;
+    max-width: 100%;
+    opacity: 0.9;
+}
+
+.wps_ways_to_gain_points_section,
+.wps_wpr_subscription_notice_wrap {
+    display: grid;
+    align-items: center;
+    gap: 10px;
+    grid-template-columns: 180px 1fr;
+    margin: 0 0 30px;
+    padding: 15px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.wps_wpr_subscription_notice_wrap {
+    grid-template-columns: 220px 1fr;
+}
+
+.wps_ways_to_gain_points_section .wps_wpr_each_section,
+.wps_wpr_subscription_notice_wrap .wps_wpr_each_section {
+    border: none !important;
+    margin: 0 !important;
+    box-shadow: unset;
+    background: transparent;
+    padding: 0;
+    line-height: 1.25;
+    font-size: 14px;
+}
+
+.wps_ways_to_gain_points_section p.wps_wpr_heading,
+.wps_wpr_subscription_notice_wrap p.wps_wpr_heading {
+    margin: 0 !important;
+    font-size: 16px;
+    line-height: 1.25;
+    border-right: 5px solid var(--wps-wpr-primary);
+    padding-right: 20px;
+}
+
+.wps_ways_to_gain_points_section:before,
+.wps_wpr_subscription_notice_wrap:before {
+    content: '';
+    position: absolute;
+    background: var(--wps-wpr-primary);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.05;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_heading {
+    font-size: 18px;
+    line-height: 1.25;
+    margin: 0;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_membership_with_img,
+.wps_wpr_main_section_all_wrap .wps_wpr_each_section,
+.wps_wpr_main_section_all_wrap .points_log {
+    border: none !important;
+    margin: 0 !important;
+    padding: 0;
+    box-shadow: none;
+    background: none;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_wrapper_button {
+    position: absolute;
+    top: 24px;
+    right: 25px;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_wrapper_button .wps_wpr_common_class {
+    max-height: 24px;
+    margin: 0 5px 0 0;
+    max-width: 24px;
+    box-shadow: none;
+    overflow: unset;
+    cursor: pointer;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_wrapper_button img {
+    height: 24px;
+    width: 24px;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_wrapper_button a:hover,
+.wps_wpr_main_section_all_wrap .wps_wpr_wrapper_button button:hover {
+    filter: grayscale(1);
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_refrral_code_copy {
+    display: block;
+    position: relative;
+    background: #f4f4f4;
+    padding: 10px 50px 10px 10px;
+    border-radius: 5px;
+    margin: 0 0 5px;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_refrral_code_copy p#wps_wpr_copy {
+    float: unset;
+    width: 100%;
+    margin: 0;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_refrral_code_copy p#wps_wpr_copy code {
+    background: transparent;
+    padding: 0;
+    line-height: 1.25;
+    border: none;
+    white-space: pre-wrap;
+    margin: 0;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_refrral_code_copy .wps_wpr_btn_copy {
+    position: absolute;
+    right: 0;
+    width: 36px;
+    top: 50%;
+    transform: translate(0, -50%);
+    box-shadow: none;
+    margin: 0;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_refrral_code_copy+.wps_wpr_message {
+    font-size: 14px;
+    color: var(--wps-wpr-primary);
+    margin: 0 0 10px;
+    line-height: 1.25;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_refrral_code_copy+.wps_wpr_message~.wps_wpr_each_section {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    line-height: 1.25;
+    font-size: 14px;
+    flex-wrap: wrap;
+}
+
+.wps_wpr_main_section_all_wrap #wps_wpr_referal_points_notification {
+    flex: 1 0 100%;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_shared_points_code {
+    border: 1px dashed #1e1e1e;
+    border-radius: 5px;
+    padding: 10px 36px 10px 10px;
+    position: relative;
+    flex: 0 0 150px;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_shared_points_code+.wps-wpr_note {
+    flex: 1 0 150px;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_shared_points_code .wps_wpr_btn_copy {
+    width: 36px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    box-shadow: none;
+    margin: 0;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_shared_points_code p#wps_copy {
+    margin: 0;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_wrapper_button .wps_wpr_common_class+.wps-wpr__email-input {
+    position: absolute;
+    right: 0;
+    padding: 10px;
+    background: #fff;
+    width: 220px;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    top: 32px;
+    border: 1px solid #f4f4f4;
+    border-radius: 5px;
+    display: none;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_wrapper_button .wps_wpr_common_class+.wps-wpr__email-input input#wps_wpr_enter_emaill {
+    width: 100% !important;
+    margin: 0;
+    padding: 0;
+    min-height: 33px;
+    font-size: 14px;
+    color: var(--wps-wpr-primary);
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_wrapper_button .wps_wpr_common_class+.wps-wpr__email-input input#wps_wpr_point {
+    font-size: 14px;
+    padding: 10px;
+    line-height: 1.25;
+    border-radius: 5px;
+    background: var(--wps-wpr-primary);
+    color: #fff;
+}
+
+.wps_account_wrapper.wps_wpr_main_section_all_wrap .wps_wpr_heading {
+    padding-right: 112px;
+}
+
+.wps_wpr_membership_with_img-wrap,
+.wps_wpr_coupon_listing_wrap .points_log {
+    overflow: auto;
+    max-height: 400px;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_membership_with_img-wrap table.shop_table,
+.wps_wpr_main_section_all_wrap.wps_wpr_coupon_listing_wrap .points_log table.shop_table {
+    min-width: 375px;
+    margin: 0 !important;
+    width: 100%;
+}
+
+.wps_wpr_main_section_all_wrap table.shop_table thead tr {
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.wps_wpr_main_section_all_wrap table.shop_table tr {
+    position: relative;
+}
+
+.wps_wpr_main_section_all_wrap table.shop_table tr td {
+    font-size: 16px;
+    line-height: 1.25;
+    padding: 12px;
+    background: transparent;
+    text-align: center;
+    border: none;
+}
+
+.wps_wpr_main_section_all_wrap table.shop_table thead tr th {
+    font-size: 16px;
+    line-height: 1.25;
+    padding: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.wps_wpr_main_section_all_wrap .wps_wpr_membership_with_img-wrap table.shop_table td a {
+    color: var(--wps-wpr-primary);
+    display: inline-block;
+    text-decoration: underline;
+}
+
+.wps_wpr_main_section_all_wrap table.shop_table th:first-of-type,
+.wps_wpr_main_section_all_wrap table.shop_table td:first-of-type {
+    text-align: left;
+}
+
+.wps_wpr_main_section_all_wrap.wps_wpr_coupon_conversion_list_wrap label,
+.wps_wpr_main_section_all_wrap.wps_wpr_wallet_conversion_wrap label,
+.wps_wpr_main_section_all_wrap.wps_wpr_upgrade_level_main_wrap .wps_wpr_membership_message {
+    display: none !important;
+}
+
+.wps_wpr_coupon_conversion_list_wrap form p.woocommerce-FormRow,
+.wps_wpr_wallet_conversion_wrap form p.woocommerce-FormRow,
+.wps_wpr_upgrade_level_main_wrap form p.woocommerce-FormRow {
+    margin: 0;
+}
+
+.wps_wpr_upgrade_level_main_wrap fieldset.wps_wpr_each_section #wps_wpr_membership {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.wps_wpr_upgrade_level_main_wrap fieldset.wps_wpr_each_section #wps_wpr_membership input[type=button],
+.wps_wpr_upgrade_level_main_wrap fieldset.wps_wpr_each_section #wps_wpr_membership input[type=submit] {
+    float: unset;
+    height: 46px;
+    border-radius: 5px;
+    line-height: 1.25;
+    color: #fff;
+    background: var(--wps-wpr-primary);
+    flex: 1 0 150px;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.wps_wpr_upgrade_level_main_wrap fieldset.wps_wpr_each_section #wps_wpr_membership select {
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 1.25;
+    height: 46px;
+    margin: 0;
+    max-width: calc(100%);
+    float: unset;
+    flex: 1 0 50%;
+    min-width: 200px;
+    background: transparent;
+}
+
+.wps_wpr_upgrade_level_main_wrap fieldset.wps_wpr_each_section #wps_wpr_membership:after {
+    display: none;
+}
+
+.wps_wpr_main_section_all_wrap table.shop_table td img.wps_wpr_tick {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    float: unset;
+    border-radius: 0;
+}
+
+.wps_wpr_membership_list_main_wrap .wps_wpr_upgrade_level {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    border: 1px solid #f4f4f4;
+    border-right: 0;
+    color: var(--wps-wpr-primary);
+    display: inline-block;
+    background: #fff;
+    max-width: 220px;
+    line-height: 1.25;
+    font-size: 14px;
+    z-index: 1;
+}
+
+.wps_wpr_main_section_all_wrap form {
+    margin: 0;
+}
+
+.wps_wpr_wallet_conversion_wrap.wps_wpr_main_section_all_wrap .wps-wpr_enter-points-wrap,
+.wps_wpr_coupon_conversion_list_wrap .wps-wpr_enter-points-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    align-items: center;
+}
+
+.wps_wpr_wallet_conversion_wrap.wps_wpr_main_section_all_wrap form#points_wallet input[type=number],
+.wps_wpr_coupon_conversion_list_wrap #points_form input[type=number]#wps_custom_point_num {
+    flex: 1 0 50%;
+    min-width: 200px;
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    max-width: 100%;
+    padding: 9px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.25;
+    min-height: 44px;
+}
+
+.wps_wpr_wallet_conversion_wrap.wps_wpr_main_section_all_wrap form#points_wallet p#wps_wpr_wallet_notification,
+.wps_wpr_coupon_conversion_list_wrap p#wps_wpr_points_notification,
+p#wps_wpr_shared_points_notification {
+    position: absolute;
+    bottom: 3px;
+    color: green;
+    right: 25px;
+    font-size: 14px;
+    margin: 0;
+}
+
+.wps_wpr_wallet_conversion_wrap.wps_wpr_main_section_all_wrap form#points_wallet p#wps_wpr_wallet_notification b,
+.wps_wpr_coupon_conversion_list_wrap p#wps_wpr_points_notification b,
+p#wps_wpr_shared_points_notification b {
+    font-weight: 400;
+}
+
+.wps_wpr_wallet_conversion_wrap.wps_wpr_main_section_all_wrap form#points_wallet input[type=button],
+.wps_wpr_coupon_conversion_list_wrap #points_form input[type=button].wps_wpr_custom_coupon,
+.wps_wpr_share_points_wrap.wps_wpr_main_section_all_wrap .wps_wpr_each_section input[type=button]#wps_wpr_share_point {
+    height: 46px;
+    border-radius: 5px;
+    line-height: 1.25;
+    color: #fff;
+    background: var(--wps-wpr-primary);
+    flex: 1 0 150px;
+    font-size: 16px;
+    text-align: center;
+    margin: 0;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.wps_wpr_share_points_wrap.wps_wpr_main_section_all_wrap .wps_wpr_each_section input[type=button]#wps_wpr_share_point {
+    flex: 1 0 80px;
+    cursor: pointer;
+}
+
+.wps_wpr_wallet_conversion_wrap .wps_wpr_each_section>p,
+.wps_wpr_coupon_conversion_list_wrap .wps_wpr_each_section>p {
+    font-size: 14px;
+    color: var(--wps-wpr-primary);
+    margin: 0 0 10px;
+}
+
+.wps_wpr_share_points_wrap.wps_wpr_main_section_all_wrap .wps_wpr_each_section {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.wps_wpr_share_points_wrap.wps_wpr_main_section_all_wrap .wps_wpr_each_section input[type=email] {
+    width: 80% !important;
+    flex: 1 0 40%;
+    min-width: 200px;
+}
+
+.wps_wpr_share_points_wrap.wps_wpr_main_section_all_wrap .wps_wpr_each_section input[type=number] {
+    min-width: 150px;
+    width: 80% !important;
+    flex: 1 0 25%;
+}
+
+.wps_wpr_share_points_wrap.wps_wpr_main_section_all_wrap .wps_wpr_each_section input {
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    padding: 9px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.25;
+    min-height: 44px;
+}
+.wps_wpr_points_wrapper_with_exp .wps_wpr_points_expiry {
+    color: #ff0000;
+    padding: 0 20px;
+    font-size: 12px;
+    line-height: 1.25;
+    font-weight: 400;
+    margin: -10px 0 8px;
+}
+
+/* Points Table start */
+.wps_wpr_slide_toggle .wps_wpr_view_log_notice {
+    background: transparent;
+    color: var(--wps-wpr-primary);
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 10px;
+}
+
+.wps_wpr_view_log_notice.wps_wpr_common_slider a.wps_wpr_open_toggle:before,
+.wps_wpr_view_log_notice.wps_wpr_common_slider a.wps_wpr_open_toggle:after {
+    background: var(--wps-wpr-primary);
+}
+
+.wps_wpr_slide_toggle table thead th,
+.wps_wpr_slide_toggle table tbody tr:nth-of-type(even) {
+    background: #f8f8f8;
+}
+
+.wps_wpr_slide_toggle table thead th,
+.wps_wpr_slide_toggle table tbody td {
+    padding: 10px;
+    background: transparent !important;
+    width: 100%;
+    text-align: left;
+    vertical-align: top;
+    min-width: 155px;
+}
+
+.wps_wpr_slide_toggle table th {
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.wps_wpr_slide_toggle table.wps_wpr_total_points td:last-of-type {
+    text-align: right;
+}
+
+.wps_wpr_slide_toggle table.wps_wpr_total_points td h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.wps_wpr_slide_toggle table.wps_wpr_total_points td:last-of-type h4 {
+    color: var(--wps-wpr-primary);
+}
+
+.wps_wpr_slide_toggle .wps_wpr_points_view {
+    overflow: auto;
+    display: none;
+}
+
+.wps_wpr_slide_toggle .wps_wpr_points_view table {
+    min-width: 375px;
+    display: block;
+}
+
+/* Points Table end */
+
+/* Popup start */
+
+.wps_wpr_popup_wrapper .wps_wpr_popup_content_section {
+    border: none;
+}
+
+.wps_wpr_popup_wrapper .wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_popup_notice_section {
+    background: var(--wps-wpr-primary);
+    position: relative;
+    text-align: left;
+    padding: 15px 50px 15px 15px;
+}
+
+.wps_wpr_popup_wrapper .wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_popup_notice_section .wps_wpr_close {
+    width: 30px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.wps_wpr_popup_wrapper .wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_popup_notice_section .wps_wpr_intro_text {
+    line-height: 1.5;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    width: 100%;
+}
+
+.wps_wpr_popup_wrapper .wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_cat_wrapper {
+    width: 100%;
+    margin: 0;
+}
+
+.wps_wpr_popup_wrapper .wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_cat_wrapper a {
+    border-color: var(--wps-wpr-primary);
+    color: var(--wps-wpr-primary);
+}
+
+.wps_wpr_popup_wrapper .wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_cat_wrapper a:hover {
+    background: var(--wps-wpr-primary);
+    color: #fff;
+}
+
+.wps_wpr_popup_wrapper .wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_popup_cat {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+#main-content .wps_wpr_popup_content_section .wps_wpr_popup_content ul {
+    padding: 0;
+}
+
+/* Popup ends */
+
+@media screen and (max-width: 768px) {
+
+    .wps_wpr_badge_way_points_main_wrap,
+    .wps_wpr_subscription_notice_wrap,
+    .wps_ways_to_gain_points_section {
+        grid-template-columns: 1fr;
+    }
+
+    .wps_wpr_badge_way_points_main_wrap #wps-par__badge-wrap {
+        flex-direction: column;
+    }
+
+    .wps_wpr_badge_way_points_main_wrap #wps-par__badge-wrap .wps-par__badge-label,
+    .wps_wpr_badge_way_points_main_wrap #wps-par__badge-wrap span {
+        text-align: center;
+    }
+
+    .wps_wpr_subscription_notice_wrap .wps_wpr_heading,
+    .wps_ways_to_gain_points_section .wps_wpr_heading {
+        border: none !important;
+        padding: 0;
+    }
+
+    .wps_wpr_badge_way_points_main_wrap .wps-par__badge-img {
+        height: 90px;
+        width: 90px;
+    }
+
+    .wps_wpr_badge_way_points_main_wrap .wps_wpr_account_page_badge_name_wrapper {
+        font-size: 20px;
+        margin: 0 0 5px;
+    }
+
+    .wps_wpr_popup_wrapper .wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_popup_cat {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+}
+
+@media screen and (max-width: 520px) {
+
+    .wps_wpr_popup_wrapper .wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_popup_cat {
+        grid-template-columns: 1fr;
+    }
+
+}
