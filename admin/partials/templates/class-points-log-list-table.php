@@ -1580,6 +1580,68 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					</div>
 					<?php
 				}
+				if ( array_key_exists( 'payment_methods_points', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Earn points through payment method', 'points-and-rewards-for-woocommerce' ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
+								<thead>
+									<tr valign="top">
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+									</tr>
+								</thead>
+								<?php
+								foreach ( $point_log['payment_methods_points'] as $key => $value ) {
+									?>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['payment_methods_points'] ); ?> </td>
+									</tr>
+									<?php
+								}
+								?>
+						</table>
+					</div>
+					<?php
+				}
+				if ( array_key_exists( 'refund_payment_points_details', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points earned via payment method refunded', 'points-and-rewards-for-woocommerce' ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
+								<thead>
+									<tr valign="top">
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+									</tr>
+								</thead>
+								<?php
+								foreach ( $point_log['refund_payment_points_details'] as $key => $value ) {
+									?>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['refund_payment_points_details'] ); ?> </td>
+									</tr>
+									<?php
+								}
+								?>
+						</table>
+					</div>
+					<?php
+				}
 				if ( array_key_exists( 'api_membership_logs', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
