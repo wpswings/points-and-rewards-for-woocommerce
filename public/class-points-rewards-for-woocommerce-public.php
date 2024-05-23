@@ -2408,7 +2408,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// verifying nonce.
 		if ( ! wp_verify_nonce( ! empty( $_POST['wps_wpr_verify_cart_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_verify_cart_nonce'] ) ) : '', 'wps-cart-nonce' ) ) {
-			return;
+			return $the_cart_data;
 		}
 		/*Get the quantitiy of the product*/
 		if ( ! empty( $_REQUEST['quantity'] ) && isset( $_REQUEST['quantity'] ) ) {
