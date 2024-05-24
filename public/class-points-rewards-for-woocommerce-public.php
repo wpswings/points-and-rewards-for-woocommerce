@@ -64,7 +64,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
 		$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
 		$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
-		if ( '1' === $wps_wpr_choose_account_page_temp ) {
+		if ( 1 === $wps_wpr_choose_account_page_temp ) {
 
 			wp_enqueue_style( 'wps-account-page-design', WPS_RWPR_DIR_URL . 'public/css/points-and-rewards-for-woocommerce-account-page-design.css', array(), $this->version, 'all' );
 		}
@@ -145,7 +145,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
 		$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
 		$wps_wpr_points_tab_layout_color  = ! empty( $wps_wpr_other_settings['wps_wpr_points_tab_layout_color'] ) ? $wps_wpr_other_settings['wps_wpr_points_tab_layout_color'] : '#0094ff';
-		if ( '1' === $wps_wpr_choose_account_page_temp ) {
+		if ( 1 === $wps_wpr_choose_account_page_temp ) {
 
 			wp_register_script( 'wp-wps-account-page-design', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-for-woocommerce-account-page-design.js', array(), $this->version, true );
 			wp_enqueue_script( 'wp-wps-account-page-design' );

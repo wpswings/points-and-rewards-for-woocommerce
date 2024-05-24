@@ -164,7 +164,7 @@ $wps_wpr_other_settings = array(
 		'desc'     => __( 'Activate this setting to reward users according to their order payment method.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title'    => __( 'Select Payment', 'ultimate-woocommerce-points-and-rewards' ),
+		'title'    => __( 'Select Payment Method', 'ultimate-woocommerce-points-and-rewards' ),
 		'type'     => 'select',
 		'id'       => 'wps_wpr_choose_payment_method',
 		'class'    => 'wc-enhanced-select',

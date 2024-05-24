@@ -607,10 +607,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 * @return void
 	 */
 	public function wps_wpr_generate_select_dropdown( $value, $general_settings ) {
-		$selectedvalue = isset( $general_settings[ $value['id'] ] ) ? ( $general_settings[ $value['id'] ] ) : array();
-		if ( '' == $selectedvalue ) {
-			$selectedvalue = '';
-		}
+		$selectedvalue = isset( $general_settings[ $value['id'] ] ) ? ( $general_settings[ $value['id'] ] ) : '';
 		?>
 		<label for="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>">
 			<select name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" 
