@@ -64,7 +64,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
 		$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
 		$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
-		if ( '1' === $wps_wpr_choose_account_page_temp ) {
+		if ( 1 === $wps_wpr_choose_account_page_temp ) {
 
 			wp_enqueue_style( 'wps-account-page-design', WPS_RWPR_DIR_URL . 'public/css/points-and-rewards-for-woocommerce-account-page-design.css', array(), $this->version, 'all' );
 		}
@@ -137,6 +137,8 @@ class Points_Rewards_For_WooCommerce_Public {
 			'is_checkout_redeem_enable'  => $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' ),
 			'points_coupon_name'         => esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' ),
 			'wps_points_name'            => esc_html__( 'Points', 'points-and-rewards-for-woocommerce' ),
+			'points_message_require'     => esc_html__( 'You require : ', 'points-and-rewards-for-woocommerce' ),
+			'points_more_to_redeem'      => esc_html__( ' points more to get redeem', 'points-and-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 
@@ -145,7 +147,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
 		$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
 		$wps_wpr_points_tab_layout_color  = ! empty( $wps_wpr_other_settings['wps_wpr_points_tab_layout_color'] ) ? $wps_wpr_other_settings['wps_wpr_points_tab_layout_color'] : '#0094ff';
-		if ( '1' === $wps_wpr_choose_account_page_temp ) {
+		if ( 1 === $wps_wpr_choose_account_page_temp ) {
 
 			wp_register_script( 'wp-wps-account-page-design', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-for-woocommerce-account-page-design.js', array(), $this->version, true );
 			wp_enqueue_script( 'wp-wps-account-page-design' );
@@ -2408,7 +2410,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// verifying nonce.
 		if ( ! wp_verify_nonce( ! empty( $_POST['wps_wpr_verify_cart_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_verify_cart_nonce'] ) ) : '', 'wps-cart-nonce' ) ) {
-			return;
+			return $the_cart_data;
 		}
 		/*Get the quantitiy of the product*/
 		if ( ! empty( $_REQUEST['quantity'] ) && isset( $_REQUEST['quantity'] ) ) {

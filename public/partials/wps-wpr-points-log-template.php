@@ -259,6 +259,64 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 			</div>
 			<?php
 		}
+		if ( array_key_exists( 'payment_methods_points', $point_log ) ) {
+			?>
+			<div class="wps_wpr_slide_toggle">
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Earn points through payment method', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+				<div class="wps_wpr_points_view">
+					<table class="wps_wpr_common_table">
+						<thead>
+							<tr>
+								<th class="wps-wpr-view-log-Date">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+								</th>
+								<th class="wps-wpr-view-log-Status">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								</th>
+							</tr>
+						</thead>
+						<?php foreach ( $point_log['payment_methods_points'] as $key => $value ) { ?>
+							<tr>
+								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
+								<td><?php echo '+' . esc_html( $value['payment_methods_points'] ); ?></td>
+							</tr>
+							<?php
+						}
+						?>
+					</table>
+				</div>
+			</div>
+			<?php
+		}
+		if ( array_key_exists( 'refund_payment_points_details', $point_log ) ) {
+			?>
+			<div class="wps_wpr_slide_toggle">
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Points earned via payment method refunded', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+				<div class="wps_wpr_points_view">
+					<table class="wps_wpr_common_table">
+						<thead>
+							<tr>
+								<th class="wps-wpr-view-log-Date">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+								</th>
+								<th class="wps-wpr-view-log-Status">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								</th>
+							</tr>
+						</thead>
+						<?php foreach ( $point_log['refund_payment_points_details'] as $key => $value ) { ?>
+							<tr>
+								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
+								<td><?php echo '-' . esc_html( $value['refund_payment_points_details'] ); ?></td>
+							</tr>
+							<?php
+						}
+						?>
+					</table>
+				</div>
+			</div>
+			<?php
+		}
 		if ( array_key_exists( 'refund_subscription__renewal_points', $point_log ) ) {
 			?>
 			<div class="wps_wpr_slide_toggle">

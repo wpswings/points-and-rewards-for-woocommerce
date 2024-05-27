@@ -573,4 +573,64 @@ class Points_Rewards_For_WooCommerce_Settings {
 		);
 		return apply_filters( 'wps_wpr_show_shortcoe_text', $shortcode_array );
 	}
+
+	/**
+	 * This functions is used to get all pages for redirect user using referral link.
+	 *
+	 * @return pages
+	 */
+	public function wps_wpr_list_payment_method() {
+
+		$wps_wpr_payment_ids = array();
+		if ( null !== WC() && null !== WC()->payment_gateways->get_available_payment_gateways() ) {
+			foreach ( WC()->payment_gateways->get_available_payment_gateways() as $gateway ) {
+
+				if ( 'yes' === $gateway->enabled ) {
+					if ( 'cod' === $gateway->id || 'bacs' === $gateway->id || 'cheque' === $gateway->id ) {
+
+						$wps_wpr_payment_ids[] = array(
+							'id'   => $gateway->id,
+							'name' => $gateway->title,
+						);
+					}
+				}
+			}
+		}
+		return apply_filters( 'wps_wpr_add_extra_payment_method', $wps_wpr_payment_ids );
+	}
+
+	/**
+	 * This function is used to create select dropdown.
+	 *
+	 * @param array $value value.
+	 * @param array $general_settings general settings.
+	 * @return void
+	 */
+	public function wps_wpr_generate_select_dropdown( $value, $general_settings ) {
+		$selectedvalue = isset( $general_settings[ $value['id'] ] ) ? ( $general_settings[ $value['id'] ] ) : '';
+		?>
+		<label for="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>">
+			<select name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" 
+			<?php if ( array_key_exists( 'select', $value ) ) : ?>
+			<?php endif; ?>
+				class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"
+				<?php
+				if ( array_key_exists( 'custom_attribute', $value ) ) {
+					foreach ( $value['custom_attribute'] as $attribute_name => $attribute_val ) {
+						echo wp_kses_post( $attribute_name . '=' . $attribute_val );
+					}
+				}
+				if ( is_array( $value['options'] ) && ! empty( $value['options'] ) ) {
+					foreach ( $value['options'] as $option ) {
+						?>
+						><option value="<?php echo esc_html( $option['id'] ); ?>" <?php echo selected( $selectedvalue, $option['id'] ); ?> ><?php echo esc_html( $option['name'] ); ?></option>
+						<?php
+					}
+				}
+				?>
+			</select>
+		</label>
+		<?php
+	}
+
 }

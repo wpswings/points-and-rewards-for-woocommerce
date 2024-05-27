@@ -1867,6 +1867,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 				return;
 			}
+
+			// assigning payment method points.
+			$this->wps_wpr_rewards_payment_method_points( $order_id, $old_status, $new_status );
+
 			if ( 'completed' === $new_status || 'processing' === $new_status ) {
 
 				if ( function_exists( 'mvx_get_order' ) ) {
@@ -1957,4 +1961,107 @@ class Points_Rewards_For_WooCommerce_Admin {
 		}
 		wp_die();
 	}
+
+	/**
+	 * This function is used to give points according to the user selected payment method while placing the order.
+	 *
+	 * @param int    $order_id    order id.
+	 * @param string $old_status old status.
+	 * @param string $new_status new status.
+	 * @return void
+	 */
+	public function wps_wpr_rewards_payment_method_points( $order_id, $old_status, $new_status ) {
+
+		$wps_wpr_other_settings                  = get_option( 'wps_wpr_other_settings', array() );
+		$wps_wpr_other_settings                  = ! empty( $wps_wpr_other_settings ) && is_array( $wps_wpr_other_settings ) ? $wps_wpr_other_settings : array();
+		$wps_wpr_enable_payment_rewards_settings = ! empty( $wps_wpr_other_settings['wps_wpr_enable_payment_rewards_settings'] ) ? $wps_wpr_other_settings['wps_wpr_enable_payment_rewards_settings'] : 0;
+		$wps_wpr_choose_payment_method           = ! empty( $wps_wpr_other_settings['wps_wpr_choose_payment_method'] ) ? $wps_wpr_other_settings['wps_wpr_choose_payment_method'] : '';
+		$wps_wpr_payment_method_rewards_points   = ! empty( $wps_wpr_other_settings['wps_wpr_payment_method_rewards_points'] ) ? $wps_wpr_other_settings['wps_wpr_payment_method_rewards_points'] : 0;
+		if ( 1 === $wps_wpr_enable_payment_rewards_settings ) {
+
+			$order   = wc_get_order( $order_id );
+			$user_id = $order->get_user_id();
+			// if guest user than return from here.
+			if ( empty( $user_id ) ) {
+
+				return;
+			}
+
+			if ( $order->get_payment_method() === $wps_wpr_choose_payment_method ) {
+				// assign points when order is completed.
+				if ( 'completed' === $new_status ) {
+
+					$wps_wpr_payment_rewards_done = get_post_meta( $order_id, 'wps_wpr_payment_rewards_done', true );
+					if ( empty( $wps_wpr_payment_rewards_done ) ) {
+
+						$get_points              = get_user_meta( $user_id, 'wps_wpr_points', true );
+						$get_points              = ! empty( $get_points ) ? $get_points : 0;
+						$payment_rewards_details = get_user_meta( $user_id, 'points_details', true );
+						$payment_rewards_details = ! empty( $payment_rewards_details ) && is_array( $payment_rewards_details ) ? $payment_rewards_details : array();
+						$updated_points          = (int) $get_points + $wps_wpr_payment_method_rewards_points;
+
+						if ( isset( $payment_rewards_details['payment_methods_points'] ) && ! empty( $payment_rewards_details['payment_methods_points'] ) ) {
+
+							$arr = array(
+								'date'                   => date_i18n( 'Y-m-d h:i:sa' ),
+								'payment_methods_points' => $wps_wpr_payment_method_rewards_points,
+							);
+							$payment_rewards_details['payment_methods_points'][] = $arr;
+						} else {
+
+							$arr = array(
+								'date'                   => date_i18n( 'Y-m-d h:i:sa' ),
+								'payment_methods_points' => $wps_wpr_payment_method_rewards_points,
+							);
+							$payment_rewards_details['payment_methods_points'][] = $arr;
+						}
+
+						update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+						update_user_meta( $user_id, 'points_details', $payment_rewards_details );
+						update_post_meta( $order_id, 'wps_wpr_payment_rewards_done', 'done' );
+						update_post_meta( $order_id, 'wps_wpr_payment_method_rewards_points', $wps_wpr_payment_method_rewards_points );
+					}
+				}
+
+				// refund points when order is cancelled or refunded.
+				if ( 'completed' === $old_status && ( 'refunded' === $new_status || 'cancelled' === $new_status ) ) {
+
+					$wps_wpr_payment_points_refunded = get_post_meta( $order_id, 'wps_wpr_payment_points_refunded', true );
+					if ( empty( $wps_wpr_payment_points_refunded ) ) {
+
+						$wps_wpr_payment_method_rewards_points = get_post_meta( $order_id, 'wps_wpr_payment_method_rewards_points', true );
+						if ( $wps_wpr_payment_method_rewards_points > 0 ) {
+
+							$user_points            = get_user_meta( $user_id, 'wps_wpr_points', true );
+							$user_points            = ! empty( $user_points ) ? $user_points : 0;
+							$payment_refund_details = get_user_meta( $user_id, 'points_details', true );
+							$payment_refund_details = ! empty( $payment_refund_details ) && is_array( $payment_refund_details ) ? $payment_refund_details : array();
+							$updated_points         = (int) $user_points - $wps_wpr_payment_method_rewards_points;
+
+							if ( isset( $payment_refund_details['refund_payment_points_details'] ) && ! empty( $payment_refund_details['refund_payment_points_details'] ) ) {
+
+								$arr = array(
+									'date'                          => date_i18n( 'Y-m-d h:i:sa' ),
+									'refund_payment_points_details' => $wps_wpr_payment_method_rewards_points,
+								);
+								$payment_refund_details['refund_payment_points_details'][] = $arr;
+							} else {
+
+								$arr = array(
+									'date'                          => date_i18n( 'Y-m-d h:i:sa' ),
+									'refund_payment_points_details' => $wps_wpr_payment_method_rewards_points,
+								);
+								$payment_refund_details['refund_payment_points_details'][] = $arr;
+							}
+
+							update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+							update_user_meta( $user_id, 'points_details', $payment_refund_details );
+							update_post_meta( $order_id, 'wps_wpr_payment_points_refunded', 'done' );
+						}
+					}
+				}
+			}
+		}
+	}
+
 }
