@@ -61,8 +61,8 @@
 			} else {
 
 				var required_points = parseInt( minimum_redeem_points - wps_user_current_points );
-				jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append( 'You require : ' + required_points + ' more to get redeem' );
-				jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append( 'You require : ' + required_points + ' more to get redeem' );;
+				jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append( wps_wpr.points_message_require + required_points + wps_wpr.points_more_to_redeem );
+				jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append( wps_wpr.points_message_require + required_points + wps_wpr.points_more_to_redeem );
 			}
 		});
 
