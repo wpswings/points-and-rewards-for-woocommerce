@@ -20,11 +20,12 @@
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
  * Text Domain:       points-and-rewards-for-woocommerce
  * Domain Path:       /languages
+ * Requires Plugins: woocommerce
  *
  * Requires at least    : 5.5.0
- * Tested up to         : 6.5.3
+ * Tested up to         : 6.5.4
  * WC requires at least : 5.5.0
- * WC tested up to      : 8.9.1
+ * WC tested up to      : 8.9.2
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
