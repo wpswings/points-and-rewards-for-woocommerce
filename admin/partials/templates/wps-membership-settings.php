@@ -160,8 +160,9 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 							$settings_obj->wps_rwpr_generate_checkbox_html( $value, $membership_settings_array );
 						}
 						if ( array_key_exists( 'memebrship_log', $value ) ) {
+							$wps_wpr_nonce = wp_create_nonce( 'par_main_setting' );
 							?>
-							<a href="<?php echo esc_url( admin_url( 'admin.php?page=wps-rwpr-setting&tab=membership&action=view_membership_log' ) ); ?>" class="wps_wpr_membership_log"><?php esc_html_e( 'Membership Log', 'points-and-rewards-for-woocommerce' ); ?></a>
+							<a href="<?php echo esc_url( admin_url( 'admin.php?page=wps-rwpr-setting&nonce=' . $wps_wpr_nonce . '&tab=membership&action=view_membership_log' ) ); ?>" class="wps_wpr_membership_log"><?php esc_html_e( 'Membership Log', 'points-and-rewards-for-woocommerce' ); ?></a>
 							<?php
 						}
 						if ( 'create_member' == $value['type'] ) {
