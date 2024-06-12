@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 2.3.1\n"
-"POT-Creation-Date: 2024-05-27 16:59+0530\n"
+"Project-Id-Version: Points and Rewards for WooCommerce 2.3.2\n"
+"POT-Creation-Date: 2024-06-12 11:16+0530\n"
 "PO-Revision-Date: 2023-12-01 10:33+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -1936,7 +1936,7 @@ msgstr ""
 #: admin/partials/templates/wps-assign-pro-points.php:211
 #: admin/partials/templates/wps-coupon-settings.php:168
 #: admin/partials/templates/wps-generral-settings2.php:398
-#: admin/partials/templates/wps-membership-settings.php:185
+#: admin/partials/templates/wps-membership-settings.php:186
 #: admin/partials/templates/wps-order-total.php:126
 #: admin/partials/templates/wps-other-setting.php:284
 #: admin/partials/templates/wps-points-notification-settings.php:413
@@ -2328,7 +2328,7 @@ msgstr ""
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:100
 #: admin/partials/templates/wps-wpr-gamifications-settings.php:83
 #: admin/partials/templates/wps-wpr-user-badges-settings.php:72
-#: points-rewards-for-woocommerce.php:115
+#: points-rewards-for-woocommerce.php:116
 msgid "Video"
 msgstr ""
 
@@ -2424,7 +2424,7 @@ msgid "Delete"
 msgstr ""
 
 #: admin/partials/templates/class-membership-log-list-table.php:278
-#: admin/partials/templates/wps-membership-settings.php:164
+#: admin/partials/templates/wps-membership-settings.php:165
 msgid "Membership Log"
 msgstr ""
 
@@ -3330,13 +3330,13 @@ msgstr ""
 msgid "Create Member"
 msgstr ""
 
-#: admin/partials/templates/wps-membership-settings.php:170
+#: admin/partials/templates/wps-membership-settings.php:171
 msgid ""
 "Please do not change the \"Level Name\" once it will be saved, as it became "
 "the key for the Membership User"
 msgstr ""
 
-#: admin/partials/templates/wps-membership-settings.php:171
+#: admin/partials/templates/wps-membership-settings.php:172
 msgid "Add Another Level"
 msgstr ""
 
@@ -4335,48 +4335,48 @@ msgstr ""
 msgid "Skip For Now"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:113
+#: points-rewards-for-woocommerce.php:114
 msgid "Demo"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:114
+#: points-rewards-for-woocommerce.php:115
 msgid "Documentation"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:116
+#: points-rewards-for-woocommerce.php:117
 msgid "Support"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:117
+#: points-rewards-for-woocommerce.php:118
 msgid "Services"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:245
+#: points-rewards-for-woocommerce.php:246
 msgid "Your Current Point"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:267
+#: points-rewards-for-woocommerce.php:268
 msgid "Your Current Membership Level is"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:291
+#: points-rewards-for-woocommerce.php:292
 #: public/partials/wps-wpr-points-template.php:235
 msgid "You will get "
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:291
+#: points-rewards-for-woocommerce.php:292
 msgid " points for SignUp"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:324
+#: points-rewards-for-woocommerce.php:325
 msgid "Settings"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:329
+#: points-rewards-for-woocommerce.php:330
 msgid "GO PRO"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:566
+#: points-rewards-for-woocommerce.php:567
 msgid ""
 "WooCommerce is not activated, Please activate WooCommerce first to activate "
 "Points and Rewards for WooCommerce."
