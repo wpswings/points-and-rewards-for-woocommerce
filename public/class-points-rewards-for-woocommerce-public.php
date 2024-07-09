@@ -3281,11 +3281,11 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_cart_page_apply_point_section     = ! empty( $wps_wpr_other_settings['wps_wpr_cart_page_apply_point_section'] ) ? $wps_wpr_other_settings['wps_wpr_cart_page_apply_point_section'] : '';
 		$wps_wpr_checkout_page_apply_point_section = ! empty( $wps_wpr_other_settings['wps_wpr_checkout_page_apply_point_section'] ) ? $wps_wpr_other_settings['wps_wpr_checkout_page_apply_point_section'] : '';
 		// Shotcode to show apply points section on cart page.
-		if ( '1' === $wps_wpr_cart_page_apply_point_section ) {
+		if ( 1 === $wps_wpr_cart_page_apply_point_section ) {
 			add_shortcode( 'WPS_CART_PAGE_SECTION', array( $this, 'wps_wpr_create_cart_apply_point_shotcode' ) );
 		}
 		// Shortcode to show apply points section on checkout page.
-		if ( '1' === $wps_wpr_checkout_page_apply_point_section ) {
+		if ( 1 === $wps_wpr_checkout_page_apply_point_section ) {
 			add_shortcode( 'WPS_CHECKOUT_PAGE_SECTION', array( $this, 'wps_wpr_create_checkout_page_shortcode' ) );
 		}
 		// Shortcode to show points log on WordPress pages.
