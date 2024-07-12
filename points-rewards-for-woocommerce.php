@@ -23,9 +23,9 @@
  * Requires Plugins: woocommerce
  *
  * Requires at least    : 5.5.0
- * Tested up to         : 6.5.4
+ * Tested up to         : 6.5.5
  * WC requires at least : 5.5.0
- * WC tested up to      : 8.9.3
+ * WC tested up to      : 9.1.1
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
