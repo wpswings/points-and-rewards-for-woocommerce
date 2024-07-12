@@ -627,6 +627,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param int $customer_id  user id of the customer.
 	 */
 	public function wps_wpr_new_customer_registerd( $customer_id ) {
+
 		// check allowed user for points features.
 		if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features_signup', false, $customer_id ) ) {
 			return;
@@ -634,54 +635,61 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( get_user_by( 'ID', $customer_id ) ) {
 			$enable_wps_signup = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup' );
 			if ( $enable_wps_signup ) {
-				$wps_signup_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
-				/*Update User Points*/
-				update_user_meta( $customer_id, 'wps_wpr_points', $wps_signup_value );
-				/*Update the points Details of the users*/
-				$data = array();
-				$this->wps_wpr_update_points_details( $customer_id, 'registration', $wps_signup_value, $data );
-				/*Send Email to user For the signup*/
-				$this->wps_wpr_send_notification_mail( $customer_id, 'signup_notification' );
+
+				$cookie_val                            = isset( $_COOKIE['wps_wpr_cookie_set'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wps_wpr_cookie_set'] ) ) : '';
+				$wps_signup_value                      = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
+				$wps_wpr_signup_referral_points_option = ! empty( $this->wps_wpr_get_general_settings( 'wps_wpr_signup_referral_points_option' ) ) ? $this->wps_wpr_get_general_settings( 'wps_wpr_signup_referral_points_option' ) : 'one';
+				if ( 'two' === $wps_wpr_signup_referral_points_option && ! empty( $cookie_val ) ) {
+
+					// assign signup points to only referred user.
+					update_user_meta( $customer_id, 'wps_wpr_points', $wps_signup_value );
+					$data = array();
+					$this->wps_wpr_update_points_details( $customer_id, 'registration', $wps_signup_value, $data );
+					$this->wps_wpr_send_notification_mail( $customer_id, 'signup_notification' );
+				} elseif ( 'one' === $wps_wpr_signup_referral_points_option ) {
+
+					// assign signup points to all users.
+					update_user_meta( $customer_id, 'wps_wpr_points', $wps_signup_value );
+					$data = array();
+					$this->wps_wpr_update_points_details( $customer_id, 'registration', $wps_signup_value, $data );
+					$this->wps_wpr_send_notification_mail( $customer_id, 'signup_notification' );
+				}
 			}
+
+			// Assign referral points.
 			$enable_wps_refer = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_refer_enable' );
-			/*Check for the Referral*/
 			if ( $enable_wps_refer ) {
+
 				$wps_refer_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_refer_value' );
-				$wps_refer_value = ( 0 == $wps_refer_value ) ? 1 : $wps_refer_value;
-				/*Get Data from the Cookies*/
-				$cookie_val   = isset( $_COOKIE['wps_wpr_cookie_set'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wps_wpr_cookie_set'] ) ) : '';
-				$retrive_data = $cookie_val;
-				if ( ! empty( $retrive_data ) ) {
+				$wps_refer_value = ! empty( $wps_refer_value ) ? $wps_refer_value : 1;
+				$cookie_val      = isset( $_COOKIE['wps_wpr_cookie_set'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wps_wpr_cookie_set'] ) ) : '';
+				if ( ! empty( $cookie_val ) ) {
 					$args['meta_query'] = array(
 						array(
 							'key'     => 'wps_points_referral',
-							'value'   => trim( $retrive_data ),
+							'value'   => trim( $cookie_val ),
 							'compare' => '==',
 						),
 					);
+
 					$refere_data = get_users( $args );
 					$refere_id   = $refere_data[0]->data->ID;
-					$refere      = get_user_by( 'ID', $refere_id );
-					/*Check */
-					$get_points = (int) get_user_meta( $refere_id, 'wps_wpr_points', true );
-					if ( empty( $get_points ) ) {
-						$get_points = 0;
-					}
+					$get_points  = get_user_meta( $refere_id, 'wps_wpr_points', true );
+					$get_points  = ! empty( $get_points ) ? (int) $get_points : 0;
 					update_option( 'refereeid', $get_points );
+
+					// filter that will add restriction.
 					$wps_wpr_referral_program = true;
-					/*filter that will add restriction*/
 					$wps_wpr_referral_program = apply_filters( 'wps_wpr_referral_points', $wps_wpr_referral_program, $customer_id, $refere_id );
 					if ( $wps_wpr_referral_program ) {
+
 						$total_points = (int) ( $get_points + $wps_refer_value );
-						/*update the points of the referred user*/
+						// update the points of the referred user.
 						update_user_meta( $refere_id, 'wps_wpr_points', $total_points );
 						$data = array(
 							'referr_id' => $customer_id,
 						);
 
-						/*
-						Update the points Details of the users
-						*/
 						$this->wps_wpr_update_points_details( $refere_id, 'reference_details', $wps_refer_value, $data );
 						/*Send Email to user For the signup*/
 						$this->wps_wpr_send_notification_mail( $refere_id, 'referral_notification' );
@@ -1654,16 +1662,31 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_notification_color = $this->wps_wpr_get_other_settings( 'wps_wpr_notification_color' );
 		$wps_wpr_notification_color = ( ! empty( $wps_wpr_notification_color ) ) ? $wps_wpr_notification_color : '#55b3a5';
 
-		$wps_wpr_signup_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
-		$enable_wps_signup    = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup' );
+		$wps_wpr_signup_value                  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
+		$enable_wps_signup                     = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup' );
+		$wps_wpr_signup_referral_points_option = ! empty( $this->wps_wpr_get_general_settings( 'wps_wpr_signup_referral_points_option' ) ) ? $this->wps_wpr_get_general_settings( 'wps_wpr_signup_referral_points_option' ) : 'one';
 		if ( $enable_wps_signup ) {
-			?>
-			<div class="woocommerce-message" style="background-color<?php echo esc_attr( $wps_wpr_notification_color ); ?>">
-				<?php
-				echo esc_html__( 'You will Get ', 'points-and-rewards-for-woocommerce' ) . esc_html( $wps_wpr_signup_value ) . esc_html__( ' Points on a successful Sign-Up', 'points-and-rewards-for-woocommerce' )
+			if ( 'two' === $wps_wpr_signup_referral_points_option ) {
+
 				?>
-			</div>
-			<?php
+				<div class="woocommerce-message" style="background-color<?php echo esc_attr( $wps_wpr_notification_color ); ?>">
+					<?php
+					/* translators: %s: signup points value */
+					echo sprintf( esc_html__( 'You will get %s points for a successful signup using a referral link.', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_wpr_signup_value ) );
+					?>
+				</div>
+				<?php
+			} else {
+
+				?>
+				<div class="woocommerce-message" style="background-color<?php echo esc_attr( $wps_wpr_notification_color ); ?>">
+					<?php
+					/* translators: %s: signup points value */
+					echo sprintf( esc_html__( 'You will get %s points for a successful signup.', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_wpr_signup_value ) );
+					?>
+				</div>
+				<?php
+			}
 		}
 	}
 
@@ -2345,6 +2368,12 @@ class Points_Rewards_For_WooCommerce_Public {
 								wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#points', $coupon_amount );
 								WC()->session->__unset( 'wps_cart_points' );
 							}
+
+							// updating redeemed points.
+							$wps_wpr_redeemed_points  = get_user_meta( $user_id, 'wps_wpr_redeemed_points', true );
+							$wps_wpr_redeemed_points  = ! empty( $wps_wpr_redeemed_points ) ? (int) $wps_wpr_redeemed_points : 0;
+							$wps_wpr_redeemed_points += $fee_to_point;
+							update_user_meta( $user_id, 'wps_wpr_redeemed_points', $wps_wpr_redeemed_points );
 						}
 					}
 				}
@@ -4136,7 +4165,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_enter_badges_name           = ! empty( $wps_wpr_user_badges_setting['wps_wpr_enter_badges_name'] ) ? $wps_wpr_user_badges_setting['wps_wpr_enter_badges_name'] : array();
 		$wps_wpr_badges_threshold_points     = ! empty( $wps_wpr_user_badges_setting['wps_wpr_badges_threshold_points'] ) ? $wps_wpr_user_badges_setting['wps_wpr_badges_threshold_points'] : array();
 		$wps_wpr_badges_rewards_points       = ! empty( $wps_wpr_user_badges_setting['wps_wpr_badges_rewards_points'] ) ? $wps_wpr_user_badges_setting['wps_wpr_badges_rewards_points'] : array();
-		$wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wps_wpr_image_attachment_id'] ) ? $wps_wpr_user_badges_setting['wps_wpr_image_attachment_id'] : array();		
+		$wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wps_wpr_image_attachment_id'] ) ? $wps_wpr_user_badges_setting['wps_wpr_image_attachment_id'] : array();
 
 		if ( 'yes' === $wps_wpr_enable_user_badges_settings ) {
 			if ( ! empty( $wps_wpr_enter_badges_name[0] ) && ! empty( $wps_wpr_badges_threshold_points[0] ) && ! empty( $wps_wpr_badges_rewards_points[0] ) ) {

@@ -671,7 +671,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 
 = 2.3.2 - Released on 12 June 2024 =
-* New : Compatible with latest WP(6.9.4) & WC(8.9.3)
+* New : Compatible with latest WP(6.5.4) & WC(8.9.3)
 
 
 = 2.3.1 - Released on 27 May  2024 =
@@ -1644,4 +1644,4 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 
 = 2.3.2 - Released on 12 June 2024 =
-* New : Compatible with latest WP(6.9.4) & WC(8.9.3)
+* New :Compatible with latest WP(6.5.4) & WC(8.9.3)

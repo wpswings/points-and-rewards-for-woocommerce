@@ -633,4 +633,19 @@ class Points_Rewards_For_WooCommerce_Settings {
 		<?php
 	}
 
+	/**
+	 * Creating radion button html.
+	 *
+	 * @param  array $value            value.
+	 * @param  array $general_settings general_settings.
+	 * @return void
+	 */
+	public function wps_wps_generate_radio_html( $value, $general_settings ) {
+		$wps_signup_value = isset( $general_settings[ $value['id'] ] ) ? ( $general_settings[ $value['id'] ] ) : 'one';
+		?>
+		<label>&nbsp;&nbsp;&nbsp;<input type="radio" value="one" <?php checked( 'one', $wps_signup_value ); ?> name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php esc_html_e( 'Assign to all users', 'points-and-rewards-for-woocommerce' ); ?></label>&nbsp;&nbsp;&nbsp;
+		<label><input type="radio" value="two" <?php checked( 'two', $wps_signup_value ); ?> name="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" id="<?php echo ( array_key_exists( 'id', $value ) ) ? esc_html( $value['id'] ) : ''; ?>" class="<?php echo ( array_key_exists( 'class', $value ) ) ? esc_html( $value['class'] ) : ''; ?>"><?php esc_html_e( 'Only referred users', 'points-and-rewards-for-woocommerce' ); ?></label>
+		<?php
+	}
+
 }
