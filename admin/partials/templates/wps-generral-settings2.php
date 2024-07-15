@@ -48,13 +48,6 @@ $wps_wpr_general_settings = array(
 		'desc'     => __( 'Enable Signup Points for Rewards', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title'    => __( 'Select the option to assign points', 'points-and-rewards-for-woocommerce' ),
-		'type'     => 'radio_button',
-		'id'       => 'wps_wpr_signup_referral_points_option',
-		'class'    => 'input-text',
-		'desc_tip' => __( 'Select the option to assign points for signups.', 'points-and-rewards-for-woocommerce' ),
-	),
-	array(
 		'title'             => __( 'Enter Signup Points', 'points-and-rewards-for-woocommerce' ),
 		'type'              => 'number',
 		'default'           => 1,

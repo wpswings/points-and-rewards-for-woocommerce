@@ -633,27 +633,20 @@ class Points_Rewards_For_WooCommerce_Public {
 			return;
 		}
 		if ( get_user_by( 'ID', $customer_id ) ) {
+
 			$enable_wps_signup = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup' );
-			if ( $enable_wps_signup ) {
+			$cookie_val        = isset( $_COOKIE['wps_wpr_cookie_set'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wps_wpr_cookie_set'] ) ) : '';
 
-				$cookie_val                            = isset( $_COOKIE['wps_wpr_cookie_set'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wps_wpr_cookie_set'] ) ) : '';
-				$wps_signup_value                      = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
-				$wps_wpr_signup_referral_points_option = ! empty( $this->wps_wpr_get_general_settings( 'wps_wpr_signup_referral_points_option' ) ) ? $this->wps_wpr_get_general_settings( 'wps_wpr_signup_referral_points_option' ) : 'one';
-				if ( 'two' === $wps_wpr_signup_referral_points_option && ! empty( $cookie_val ) ) {
+			if ( $enable_wps_signup && ! apply_filters( 'wps_wpr_check_referral_cookie', $cookie_val, $customer_id ) ) {
 
-					// assign signup points to only referred user.
-					update_user_meta( $customer_id, 'wps_wpr_points', $wps_signup_value );
-					$data = array();
-					$this->wps_wpr_update_points_details( $customer_id, 'registration', $wps_signup_value, $data );
-					$this->wps_wpr_send_notification_mail( $customer_id, 'signup_notification' );
-				} elseif ( 'one' === $wps_wpr_signup_referral_points_option ) {
-
-					// assign signup points to all users.
-					update_user_meta( $customer_id, 'wps_wpr_points', $wps_signup_value );
-					$data = array();
-					$this->wps_wpr_update_points_details( $customer_id, 'registration', $wps_signup_value, $data );
-					$this->wps_wpr_send_notification_mail( $customer_id, 'signup_notification' );
-				}
+				$wps_signup_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
+				/*Update User Points*/
+				update_user_meta( $customer_id, 'wps_wpr_points', $wps_signup_value );
+				/*Update the points Details of the users*/
+				$data = array();
+				$this->wps_wpr_update_points_details( $customer_id, 'registration', $wps_signup_value, $data );
+				/*Send Email to user For the signup*/
+				$this->wps_wpr_send_notification_mail( $customer_id, 'signup_notification' );
 			}
 
 			// Assign referral points.
