@@ -381,6 +381,9 @@ do_action( 'wps_wpr_add_notice' );
 							$settings_obj->wps_wpr_custom_editor( $value, $general_settings );
 							echo wp_kses_post( $value['desc2'] );
 						}
+						if ( 'radio_button' == $value['type'] ) {
+							$settings_obj->wps_wps_generate_radio_html( $value, $general_settings );
+						}
 						do_action( 'wps_wpr_additional_general_settings', $value, $general_settings );
 						?>
 					</div>

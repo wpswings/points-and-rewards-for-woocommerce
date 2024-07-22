@@ -55,12 +55,12 @@ class Points_Log_List_Table extends WP_List_Table {
 			'user_name'      => __( 'Name', 'points-and-rewards-for-woocommerce' ),
 			'user_email'     => __( 'Email', 'points-and-rewards-for-woocommerce' ),
 			'user_points'    => __( 'Points', 'points-and-rewards-for-woocommerce' ),
+			'redeemed_point' => __( 'Redeem Points', 'points-and-rewards-for-woocommerce' ),
 			'sign'           => __( 'Choose +/-', 'points-and-rewards-for-woocommerce' ),
 			'add_sub_points' => __( 'Enter Points', 'points-and-rewards-for-woocommerce' ),
 			'reason'         => __( 'Enter Remark', 'points-and-rewards-for-woocommerce' ),
 			'details'        => __( 'Action', 'points-and-rewards-for-woocommerce' ),
 			'ban_user'       => __( 'Restrict User', 'points-and-rewards-for-woocommerce' ),
-
 		);
 		return $columns;
 	}
@@ -78,8 +78,6 @@ class Points_Log_List_Table extends WP_List_Table {
 	public function column_default( $item, $column_name ) {
 
 		$wps_user = get_user_by( 'id', $item['id'] );
-		$points   = ! empty( get_user_meta( $item['id'], 'wps_wpr_points', true ) ) ? get_user_meta( $item['id'], 'wps_wpr_points', true ) : 0;
-
 		switch ( $column_name ) {
 
 			case 'user_name':
@@ -92,7 +90,9 @@ class Points_Log_List_Table extends WP_List_Table {
 			case 'user_email':
 				return '<b>' . $wps_user->user_email . '</b>';
 			case 'user_points':
-				return '<b>' . $points . '</b>';
+				return '<b>' . ! empty( get_user_meta( $item['id'], 'wps_wpr_points', true ) ) ? get_user_meta( $item['id'], 'wps_wpr_points', true ) : 0 . '</b>';
+			case 'redeemed_point':
+				return '<b>' . ! empty( get_user_meta( $item['id'], 'wps_wpr_redeemed_points', true ) ) ? (int) get_user_meta( $item['id'], 'wps_wpr_redeemed_points', true ) : 0 . '</b>';
 			case 'sign':
 				$html = '<select id="wps_sign' . $item['id'] . '" ><option value="+">+</option><option value="-">-</option></select>';
 				return $html;
