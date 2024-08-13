@@ -45,6 +45,7 @@
 			e(this).toggleClass("active");
 		}),
 		e(document).find("#wps_wpr_restrictions_for_purchasing_cat").select2(),
+		e(document).find("#wps_wpr_restrict_redeem_points_category_wise").select2(),
 		e(".wps_points_update").click(function () {
 		  var r = e(this).data("id"),
 			i = e(document)

@@ -1858,7 +1858,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								// get membership discount amount.
 								foreach ( $wps_wpr_membership_roles as $wps_role => $values ) {
 									if ( ! is_array( $values ) ) {
-										return;
+										break;
 									}
 									if ( $wps_role == $wps_user_level ) {
 
@@ -1894,6 +1894,8 @@ class Points_Rewards_For_WooCommerce_Public {
 				}
 			}
 
+			// check points redeem restriction by category.
+			$wps_cart_points = apply_filters( 'wps_wpr_restrict_redeem_points_by_category_wise', $wps_cart_points );
 			// Applied points here.
 			if ( $get_points > 0 && $wps_cart_points > 0 ) {
 				if ( $get_points >= $wps_cart_points ) {
