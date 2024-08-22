@@ -1980,6 +1980,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 		$wps_wpr_enable_payment_rewards_settings = ! empty( $wps_wpr_other_settings['wps_wpr_enable_payment_rewards_settings'] ) ? $wps_wpr_other_settings['wps_wpr_enable_payment_rewards_settings'] : 0;
 		$wps_wpr_choose_payment_method           = ! empty( $wps_wpr_other_settings['wps_wpr_choose_payment_method'] ) ? $wps_wpr_other_settings['wps_wpr_choose_payment_method'] : '';
 		$wps_wpr_payment_method_rewards_points   = ! empty( $wps_wpr_other_settings['wps_wpr_payment_method_rewards_points'] ) ? $wps_wpr_other_settings['wps_wpr_payment_method_rewards_points'] : 0;
+		$wps_wpr_restrict_rewards_points         = ! empty( $wps_wpr_other_settings['wps_wpr_restrict_rewards_points'] ) ? $wps_wpr_other_settings['wps_wpr_restrict_rewards_points'] : '';
+
+		// if restriction not to earn settings is enable than return from here.
+		if ( 1 == $wps_wpr_restrict_rewards_points ) {
+
+			return false;
+		}
+
 		if ( 1 === $wps_wpr_enable_payment_rewards_settings ) {
 
 			$order   = wc_get_order( $order_id );

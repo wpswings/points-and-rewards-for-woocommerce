@@ -638,8 +638,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 			$enable_wps_signup = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup' );
 			$cookie_val        = isset( $_COOKIE['wps_wpr_cookie_set'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wps_wpr_cookie_set'] ) ) : '';
-
-			if ( $enable_wps_signup && false == apply_filters( 'wps_wpr_check_referral_cookie', $cookie_val, $customer_id ) ) {
+			if ( $enable_wps_signup && apply_filters( 'wps_wpr_check_referral_cookie', true, $cookie_val, $customer_id ) ) {
 
 				$wps_signup_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
 				/*Update User Points*/
@@ -846,60 +845,63 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @param string $type    Type of the mail.
 	 */
 	public function wps_wpr_send_notification_mail( $user_id, $type ) {
-		$user                      = get_user_by( 'ID', $user_id );
-		$user_name                 = $user->user_login;
-		$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
-		$total_points              = get_user_meta( $user_id, 'wps_wpr_points', true );
-		/*check if not empty the notification array*/
-		if ( ! empty( $wps_wpr_notificatin_array ) && is_array( $wps_wpr_notificatin_array ) ) {
-			/*Get the Email Subject*/
-			if ( 'signup_notification' == $type ) {
-				$wps_wpr_email_subject = self::wps_wpr_get_email_notification_description( 'wps_wpr_signup_email_subject' );
-				/*Get the Email Description*/
-				$wps_wpr_email_discription = self::wps_wpr_get_email_notification_description( 'wps_wpr_signup_email_discription_custom_id' );
-				/*SignUp value*/
-				$wps_signup_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
-				/*Referral value*/
-				$wps_refer_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_refer_value' );
-				$wps_refer_value = ( 0 == $wps_refer_value ) ? 1 : $wps_refer_value;
+		$user = get_user_by( 'ID', $user_id );
+		if ( ! empty( $user_id ) && $user ) {
 
-				$wps_wpr_email_discription = str_replace( '[Points]', $wps_signup_value, $wps_wpr_email_discription );
-				$wps_wpr_email_discription = str_replace( '[Total Points]', $total_points, $wps_wpr_email_discription );
-				$wps_wpr_email_discription = str_replace( '[Refer Points]', $wps_refer_value, $wps_wpr_email_discription );
-				$wps_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $wps_wpr_email_discription );
-				$check_enable              = apply_filters( 'wps_wpr_check_custom_points_notification_enable', true, 'signup_notification' );
+			$user_name                 = $user->user_login;
+			$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
+			$total_points              = get_user_meta( $user_id, 'wps_wpr_points', true );
+			/*check if not empty the notification array*/
+			if ( ! empty( $wps_wpr_notificatin_array ) && is_array( $wps_wpr_notificatin_array ) ) {
+				/*Get the Email Subject*/
+				if ( 'signup_notification' == $type ) {
+					$wps_wpr_email_subject = self::wps_wpr_get_email_notification_description( 'wps_wpr_signup_email_subject' );
+					/*Get the Email Description*/
+					$wps_wpr_email_discription = self::wps_wpr_get_email_notification_description( 'wps_wpr_signup_email_discription_custom_id' );
+					/*SignUp value*/
+					$wps_signup_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
+					/*Referral value*/
+					$wps_refer_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_refer_value' );
+					$wps_refer_value = ( 0 == $wps_refer_value ) ? 1 : $wps_refer_value;
 
-				/*check is mail notification is enable or not*/
-				if ( Points_Rewards_For_WooCommerce_Admin::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
+					$wps_wpr_email_discription = str_replace( '[Points]', $wps_signup_value, $wps_wpr_email_discription );
+					$wps_wpr_email_discription = str_replace( '[Total Points]', $total_points, $wps_wpr_email_discription );
+					$wps_wpr_email_discription = str_replace( '[Refer Points]', $wps_refer_value, $wps_wpr_email_discription );
+					$wps_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $wps_wpr_email_discription );
+					$check_enable              = apply_filters( 'wps_wpr_check_custom_points_notification_enable', true, 'signup_notification' );
 
-					/*Send the email to user related to the signup*/
-					$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
-					$email_status = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+					/*check is mail notification is enable or not*/
+					if ( Points_Rewards_For_WooCommerce_Admin::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
+
+						/*Send the email to user related to the signup*/
+						$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
+						$email_status = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+					}
 				}
-			}
 
-			if ( 'referral_notification' == $type ) {
-				$wps_wpr_email_subject = self::wps_wpr_get_email_notification_description( 'wps_wpr_referral_email_subject' );
-				/*Get the Email Description*/
-				$wps_wpr_email_discription = self::wps_wpr_get_email_notification_description( 'wps_wpr_referral_email_discription_custom_id' );
-				/*SignUp value*/
-				$wps_signup_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
-				/*Referral value*/
-				$wps_refer_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_refer_value' );
-				$wps_refer_value = ( 0 == $wps_refer_value ) ? 1 : $wps_refer_value;
+				if ( 'referral_notification' == $type ) {
+					$wps_wpr_email_subject = self::wps_wpr_get_email_notification_description( 'wps_wpr_referral_email_subject' );
+					/*Get the Email Description*/
+					$wps_wpr_email_discription = self::wps_wpr_get_email_notification_description( 'wps_wpr_referral_email_discription_custom_id' );
+					/*SignUp value*/
+					$wps_signup_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
+					/*Referral value*/
+					$wps_refer_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_refer_value' );
+					$wps_refer_value = ( 0 == $wps_refer_value ) ? 1 : $wps_refer_value;
 
-				$wps_wpr_email_discription = str_replace( '[Points]', $wps_refer_value, $wps_wpr_email_discription );
-				$wps_wpr_email_discription = str_replace( '[Total Points]', $total_points, $wps_wpr_email_discription );
-				$wps_wpr_email_discription = str_replace( '[Refer Points]', $wps_refer_value, $wps_wpr_email_discription );
-				$wps_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $wps_wpr_email_discription );
-				$check_enable = apply_filters( 'wps_wpr_check_custom_points_notification_enable', true, 'referral_notification' );
+					$wps_wpr_email_discription = str_replace( '[Points]', $wps_refer_value, $wps_wpr_email_discription );
+					$wps_wpr_email_discription = str_replace( '[Total Points]', $total_points, $wps_wpr_email_discription );
+					$wps_wpr_email_discription = str_replace( '[Refer Points]', $wps_refer_value, $wps_wpr_email_discription );
+					$wps_wpr_email_discription = str_replace( '[USERNAME]', $user_name, $wps_wpr_email_discription );
+					$check_enable = apply_filters( 'wps_wpr_check_custom_points_notification_enable', true, 'referral_notification' );
 
-				/*check is mail notification is enable or not*/
-				if ( Points_Rewards_For_WooCommerce_Admin::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
+					/*check is mail notification is enable or not*/
+					if ( Points_Rewards_For_WooCommerce_Admin::wps_wpr_check_mail_notfication_is_enable() && $check_enable ) {
 
-					/*Send the email to user related to the signup*/
-					$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
-					$email_status   = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+						/*Send the email to user related to the signup*/
+						$customer_email = WC()->mailer()->emails['wps_wpr_email_notification'];
+						$email_status   = $customer_email->trigger( $user_id, $wps_wpr_email_discription, $wps_wpr_email_subject );
+					}
 				}
 			}
 		}
