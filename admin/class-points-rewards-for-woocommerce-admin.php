@@ -2113,7 +2113,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 								<td class="wps_wpr_pro_plugin_settings">
 									<p class="wps_wpr_export_paragraph"><input type="button" id="wps_wpr_export_points_table_data" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Export', 'ultimate-woocommerce-points-and-rewards' ); ?>" />
 									<img class="wps_wpr_export_user_loader" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/loading.gif' ); ?>"></p>
-									<span class="wps_wpr_export_table_notice"><?php esc_html_e( 'Exporting table please wait...', 'ultimate-woocommerce-points-and-rewards' ); ?></span>
 								</td>
 								<?php
 							}

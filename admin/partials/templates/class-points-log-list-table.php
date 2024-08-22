@@ -90,7 +90,7 @@ class Points_Log_List_Table extends WP_List_Table {
 			case 'user_email':
 				return '<b>' . $wps_user->user_email . '</b>';
 			case 'user_points':
-				return '<b>' . ! empty( get_user_meta( $item['id'], 'wps_wpr_points', true ) ) ? get_user_meta( $item['id'], 'wps_wpr_points', true ) : 0 . '</b>';
+				return '<b>' . ! empty( get_user_meta( $item['id'], 'wps_wpr_points', true ) ) && get_user_meta( $item['id'], 'wps_wpr_points', true ) > 0 ? get_user_meta( $item['id'], 'wps_wpr_points', true ) : 0 . '</b>';
 			case 'redeemed_point':
 				return '<b>' . ! empty( get_user_meta( $item['id'], 'wps_wpr_redeemed_points', true ) ) ? (int) get_user_meta( $item['id'], 'wps_wpr_redeemed_points', true ) : 0 . '</b>';
 			case 'sign':
@@ -2094,7 +2094,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 	<div class="wps_wpr_points_table_second_wrappers">
 		<h3 class="wp-heading-inline" id="wps_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-and-rewards-for-woocommerce' ); ?></h3>
 		<p><?php esc_html_e( 'Number of items per page', 'points-and-rewards-for-woocommerce' ); ?></p>
-		<input type="number" max="200" name="wps_wpr_number_items_per_page" id="wps_wpr_number_items_per_page" value="<?php echo esc_html( ! empty( get_option( 'wps_wpr_number_items_per_page' ) ) ? get_option( 'wps_wpr_number_items_per_page' ) : 10 ); ?>">
+		<input type="number" max="200" min="1" name="wps_wpr_number_items_per_page" id="wps_wpr_number_items_per_page" value="<?php echo esc_html( ! empty( get_option( 'wps_wpr_number_items_per_page' ) ) ? get_option( 'wps_wpr_number_items_per_page' ) : 10 ); ?>">
 		<input type="hidden" name="wps_wpr_items_per_page_nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-items-per-page-nonce' ) ); ?>">
 		<input type="submit" name="wps_wpr_save_items_per_page" class="button button-primary" id="wps_wpr_save_items_per_page" value="<?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?>">
 	</div>

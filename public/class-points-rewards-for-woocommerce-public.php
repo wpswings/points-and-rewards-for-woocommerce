@@ -639,7 +639,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$enable_wps_signup = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup' );
 			$cookie_val        = isset( $_COOKIE['wps_wpr_cookie_set'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wps_wpr_cookie_set'] ) ) : '';
 
-			if ( $enable_wps_signup && ! apply_filters( 'wps_wpr_check_referral_cookie', $cookie_val, $customer_id ) ) {
+			if ( $enable_wps_signup && false == apply_filters( 'wps_wpr_check_referral_cookie', $cookie_val, $customer_id ) ) {
 
 				$wps_signup_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_signup_value' );
 				/*Update User Points*/

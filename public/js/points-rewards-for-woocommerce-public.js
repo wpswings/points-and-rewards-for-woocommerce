@@ -70,13 +70,14 @@
                     );
                 }
             );
+
             /*Slide toggle on tables*/
             $(document).on(
                 'click',
                 '.wps_wpr_common_slider',
                 function() {
-                    $(this).siblings('.wps_wpr_points_view').show("fast");
-                    $(this).children('.wps_wpr_open_toggle').toggleClass('wps_wpr_plus_icon');
+
+                    jQuery(this).siblings('.wps_wpr_points_view').slideToggle();
                 }
             );
 
