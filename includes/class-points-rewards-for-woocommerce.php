@@ -233,6 +233,12 @@ class Points_Rewards_For_Woocommerce {
 
 		// restrict user from points table.
 		$this->loader->add_action( 'wp_ajax_restrict_user_from_points_table', $plugin_admin, 'wps_wpr_restrict_user_from_points_table' );
+		// import functionality from org.
+		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+
+			$this->loader->add_action( 'wps_wpr_add_additional_import_points', $plugin_admin, 'wps_wpr_add_additional_import_points', 10 );
+		}
+		$this->loader->add_action( 'wp_ajax_wps_large_scv_import', $plugin_admin, 'wps_large_scv_import' );
 	}
 
 	/**

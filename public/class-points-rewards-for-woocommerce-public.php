@@ -179,6 +179,8 @@ class Points_Rewards_For_WooCommerce_Public {
 				'ajaxurl'                                => admin_url( 'admin-ajax.php' ),
 				'wps_wpr_nonce'                          => wp_create_nonce( 'wps-wpr-verify-nonce' ),
 				'wps_wpr_cart_page_total_earning_points' => $wps_wpr_cart_page_total_earning_points,
+				'current__points'                        => ! empty( get_user_meta( get_current_user_id(), 'wps_wpr_points', true ) ) ? get_user_meta( get_current_user_id(), 'wps_wpr_points', true ) : 0,
+				'available_points_msg'                   => esc_html__( 'Your available points', 'points-and-rewards-for-woocommerce' ),
 			);
 			wp_localize_script( 'wp-wps-wpr-cart-class', 'wps_wpr_cart_block_obj', $wps_wpr );
 		}
@@ -674,20 +676,40 @@ class Points_Rewards_For_WooCommerce_Public {
 					// filter that will add restriction.
 					$wps_wpr_referral_program = true;
 					$wps_wpr_referral_program = apply_filters( 'wps_wpr_referral_points', $wps_wpr_referral_program, $customer_id, $refere_id );
+
+					// store all referral user name.
+					$wps_store_referral_user_ids = get_user_meta( $refere_id, 'wps_store_referral_user_ids', true );
+					$wps_store_referral_user_ids = ! empty( $wps_store_referral_user_ids ) && is_array( $wps_store_referral_user_ids ) ? $wps_store_referral_user_ids : array();
+					if ( isset( $wps_store_referral_user_ids['wps_store_referral_user_ids'] ) && ! empty( $wps_store_referral_user_ids['wps_store_referral_user_ids'] ) ) {
+
+						$custom_array = array(
+							'refered_user' => $customer_id,
+						);
+						$wps_store_referral_user_ids['wps_store_referral_user_ids'][] = $custom_array;
+					} else {
+
+						$custom_array = array(
+							'refered_user' => $customer_id,
+						);
+						$wps_store_referral_user_ids['wps_store_referral_user_ids'][] = $custom_array;
+					}
+					update_user_meta( $refere_id, 'wps_store_referral_user_ids', $wps_store_referral_user_ids );
+
 					if ( $wps_wpr_referral_program ) {
 
 						$total_points = (int) ( $get_points + $wps_refer_value );
 						// update the points of the referred user.
 						update_user_meta( $refere_id, 'wps_wpr_points', $total_points );
-						$data = array(
-							'referr_id' => $customer_id,
-						);
 
-						$this->wps_wpr_update_points_details( $refere_id, 'reference_details', $wps_refer_value, $data );
+						$wps_store_referral_user_ids = get_user_meta( $refere_id, 'wps_store_referral_user_ids', true );
+						$wps_store_referral_user_ids = ! empty( $wps_store_referral_user_ids ) && is_array( $wps_store_referral_user_ids ) ? $wps_store_referral_user_ids : array();
+						$this->wps_wpr_update_points_details( $refere_id, 'reference_details', $wps_refer_value, $wps_store_referral_user_ids );
 						/*Send Email to user For the signup*/
 						$this->wps_wpr_send_notification_mail( $refere_id, 'referral_notification' );
 						/*Destroy the cookie*/
 						$this->wps_wpr_destroy_cookie();
+						$wps_store_referral_user_ids = array();
+						update_user_meta( $refere_id, 'wps_store_referral_user_ids', $wps_store_referral_user_ids );
 					}
 				}
 			}
@@ -718,7 +740,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$custom_array = array(
 					$type => $points,
 					'date' => $today_date,
-					'refered_user' => $data['referr_id'],
+					'refered_user' => $data['wps_store_referral_user_ids'],
 				);
 				$get_referral_detail[ $type ][] = $custom_array;
 			} else {
@@ -728,7 +750,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$get_referral_detail[ $type ][] = array(
 					$type => $points,
 					'date' => $today_date,
-					'refered_user' => $data['referr_id'],
+					'refered_user' => $data['wps_store_referral_user_ids'],
 				);
 			}
 
@@ -1697,19 +1719,16 @@ class Points_Rewards_For_WooCommerce_Public {
 
 			return;
 		}
+
 		// get shortcode setting values.
 		$wps_wpr_other_settings                = get_option( 'wps_wpr_other_settings', array() );
 		$wps_wpr_other_settings                = ! empty( $wps_wpr_other_settings ) && is_array( $wps_wpr_other_settings ) ? $wps_wpr_other_settings : array();
 		$wps_wpr_cart_page_apply_point_section = ! empty( $wps_wpr_other_settings['wps_wpr_cart_page_apply_point_section'] ) ? $wps_wpr_other_settings['wps_wpr_cart_page_apply_point_section'] : '';
 		// check if shortcode is exist then return from here.
-		if ( '1' === $wps_wpr_cart_page_apply_point_section ) {
-			$content = get_the_content();
-			if ( ! empty( $content ) ) {
-				$shortcode = '[WPS_CART_PAGE_SECTION';
-				$check     = strpos( $content, $shortcode );
-				if ( true == $check ) {
-					return;
-				}
+		if ( '1' == $wps_wpr_cart_page_apply_point_section && ! empty( get_the_content() ) ) {
+			if ( true == strpos( get_the_content(), '[WPS_CART_PAGE_SECTION' ) ) {
+
+				return;
 			}
 		}
 
@@ -2933,14 +2952,10 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_other_settings                    = ! empty( $wps_wpr_other_settings ) && is_array( $wps_wpr_other_settings ) ? $wps_wpr_other_settings : array();
 		$wps_wpr_checkout_page_apply_point_section = ! empty( $wps_wpr_other_settings['wps_wpr_checkout_page_apply_point_section'] ) ? $wps_wpr_other_settings['wps_wpr_checkout_page_apply_point_section'] : '';
 		// check if shortcode is exist then return from here.
-		if ( '1' === $wps_wpr_checkout_page_apply_point_section ) {
-			$content = get_the_content();
-			if ( ! empty( $content ) ) {
-				$shortcode = '[WPS_CHECKOUT_PAGE_SECTION';
-				$check     = strpos( $content, $shortcode );
-				if ( true == $check ) {
-					return;
-				}
+		if ( '1' == $wps_wpr_checkout_page_apply_point_section && ! empty( get_the_content() ) ) {
+			if ( true == strpos( get_the_content(), '[WPS_CHECKOUT_PAGE_SECTION' ) ) {
+
+				return;
 			}
 		}
 

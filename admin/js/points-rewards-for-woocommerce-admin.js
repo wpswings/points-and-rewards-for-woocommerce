@@ -579,5 +579,91 @@
 			}
 		});
 	}
+
+	// +++++++++++   Import user points functionality start here   ++++++++++++
+
+	// Importing table points.
+	jQuery(document).on('click','.wps_import',function(e){
+		e.preventDefault();
+		var userpoints_csv_import = jQuery('#userpoints_csv_import').val();
+		if ( '' === userpoints_csv_import ) {
+
+			alert( wps_wpr_object.invalid_files );
+			return false;
+		} else {
+			
+			jQuery('.wps_wpr_export_points_table_main_wrap').show();
+		}
+	});
+
+	// validate radio button and perform import event.
+	jQuery(document).on('click', '#wps_wpr_confirm_import_option', function(){
+
+		var wps_wpr_export_table_option = jQuery('.wps_wpr_export_table_option:checked').val();
+		if ( '' == wps_wpr_export_table_option || undefined == wps_wpr_export_table_option ) {
+
+			jQuery('.wps_wpr_export_table_option').focus();
+			jQuery('.wps_wpr_radion_button_notice').show();
+			jQuery('.wps_wpr_radion_button_notice').html(wps_wpr_object.radio_validate_msg);
+		} else {
+
+			jQuery('.wps_wpr_radion_button_notice').hide();
+			jQuery('.wps_wpr_radion_button_notice').html('');
+			jQuery('.wps_wpr_export_points_table_main_wrap').hide();
+			jQuery("#wps_wpr_loader").show();
+
+			var form_data = new FormData(jQuery('form#mainform')[0]);
+			form_data.append( 'action', 'wps_large_scv_import' );
+			form_data.append( 'wps_wpr_export_table_option', wps_wpr_export_table_option );
+			form_data.append( 'wps_nonce', wps_wpr_object.wps_wpr_nonce );
+			form_data.append('start', 0);
+			wps_wpr_process_csv_chunk(form_data);
+		}
+	});
+
+	// hide import pop-up.
+	jQuery(document).on('click', '.wps_wpr_export_shadow, .wps_wpr_export_close', function(){
+		jQuery('.wps_wpr_export_points_table_main_wrap').hide();
+	});
+
+	// perform recursive ajax.
+	function wps_wpr_process_csv_chunk(form_data) {
+
+		jQuery.ajax({
+			type        : "POST",
+			dataType    : "json",
+			url         : wps_wpr_object.ajaxurl,
+			data        : form_data,
+			processData : false,
+			contentType : false,
+			success: function(response) {
+
+				console.log('Progress: ' + response.progress + '%');
+				if ( response.result == false ) {
+
+					alert( response.msg );
+					jQuery("#wps_wpr_loader").hide();
+					return false;
+				} else {
+
+					if ( ! response.finished ) {
+
+						// Prepare data for next chunk.
+						form_data.set('start', response.start);
+						wps_wpr_process_csv_chunk(form_data); // Recursive call for next chunk.
+					} else {
+
+						jQuery("#wps_wpr_loader").hide();
+						alert(wps_wpr_object.csv_import_success_msg);
+						location.reload();
+					}
+				}
+			},
+			error: function(xhr, status, error) {
+				jQuery("#wps_wpr_loader").hide();
+				alert('Error: ' + xhr.responseText);
+			}
+		});
+	}
 });
   
