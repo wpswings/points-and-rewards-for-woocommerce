@@ -1,12 +1,12 @@
-=== Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, Referral Points, Reward for Points, User Badges, and Gamification ===
+=== Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, Point Rewards, Referral Points, Reward for Points, User Badges, and Gamification ===
 Contributors: wpswings
 Donate link: https://wpswings.com/
-Tags:points and rewards, loyalty, referrals, reward for points, gamification
+Tags:points and rewards, loyalty, referral points plugin, reward for points, gamification
 Requires at least: 5.5.0
-Tested up to: 6.6.6
+Tested up to: 6.6.1
 WC requires at least: 5.5.0
-WC tested up to: 9.1.2
-Stable tag: 2.4.0
+WC tested up to: 9.2.2
+Stable tag: 2.4.1
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -464,6 +464,11 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 2.4.1 - Released on 23 August 2024 =
+* New : Import points features
+* New : Compatibility with latest WP(6.6.1) & WC(9.2.2)
+* Fix    : Minor fixes
+
 = 2.4.0 - Released on 19 July 2024 =
 * New : Add section to show total points redeemed by user
 * New : Compatibility with latest WP( 6.6 ) & WC( 9.1.2 )
@@ -879,7 +884,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.4.0 - Released on 19 July 2024 =
-* New : Add section to show total points redeemed by user
-* New : Compatibility with latest WP( 6.6 ) & WC( 9.1.2 )
-* Fix : Total earning points notice
+= 2.4.1 - Released on 23 August 2024 =
+* New : Import points features
+* New : Compatibility with latest WP(6.6.1) & WC(9.2.2)
+* Fix    : Minor fixes
