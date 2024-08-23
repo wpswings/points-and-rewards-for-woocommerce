@@ -358,6 +358,15 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'desc_tip'          => esc_html__( 'Enter the min points you want the user to redeem points.', 'ultimate-woocommerce-points-and-rewards' ),
 				'desc'              => __( 'Enter the minimum points you want the user to redeem.', 'ultimate-woocommerce-points-and-rewards' ),
 			),
+			array(
+				'title'    => __( 'Restrict points redemption by category', 'ultimate-woocommerce-points-and-rewards' ),
+				'id'       => 'wps_wpr_restrict_redeem_points_category_wise',
+				'class'    => 'wps_wpr_pro_plugin_settings',
+				'type'     => 'search&select',
+				'multiple' => 'multiple',
+				'desc_tip' => __( 'Select the categories in which you want to allow customers to redeem points.', 'ultimate-woocommerce-points-and-rewards' ),
+				'options'  => $this->wps_wpr_dummy_all_pages(),
+			),
 		);
 
 		$key = (int) $this->wps_wpr_dummy_get_key( $settings );
