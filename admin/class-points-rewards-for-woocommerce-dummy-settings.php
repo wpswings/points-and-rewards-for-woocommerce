@@ -2162,7 +2162,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 	 * @return array
 	 */
 	public function wps_wpr_show_dummy_referral_link_shortcoe( $shortcode_array ) {
-		$shortcode_array['desc5'] = __( 'Use shortcode [WPS_REFERRAL_LINK] for displaying referral link anywhere on site', 'ultimate-woocommerce-points-and-rewards' );
+		$shortcode_array['desc5'] = __( 'In addition, our pro plugin will offer a customizable referral link shortcode for enhanced user engagement.', 'ultimate-woocommerce-points-and-rewards' );
 		return $shortcode_array;
 	}
 

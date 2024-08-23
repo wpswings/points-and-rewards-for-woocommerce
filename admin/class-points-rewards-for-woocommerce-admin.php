@@ -1968,10 +1968,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * This function is used to give points according to the user selected payment method while placing the order.
 	 *
-	 * @param int    $order_id    order id.
-	 * @param string $old_status old status.
-	 * @param string $new_status new status.
-	 * @return void
+	 * @param  int    $order_id    order id.
+	 * @param  string $old_status old status.
+	 * @param  string $new_status new status.
+	 * @return bool
 	 */
 	public function wps_wpr_rewards_payment_method_points( $order_id, $old_status, $new_status ) {
 
@@ -2287,6 +2287,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @return bool
 	 */
 	public function wps_update_points_of_users( $wps_user_email, $wps_user_points ) {
+		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
 		$user                        = get_user_by( 'email', $wps_user_email );
 		$wps_wpr_export_table_option = ! empty( $_POST['wps_wpr_export_table_option'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_export_table_option'] ) ) : 'add';
 		if ( isset( $user ) ) {
