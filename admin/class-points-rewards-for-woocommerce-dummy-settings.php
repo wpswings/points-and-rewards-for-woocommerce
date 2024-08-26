@@ -61,7 +61,6 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		add_action( 'wps_wpr_additional_general_settings', array( $this, 'wps_wpr_additional_dummy_cart_points_settings' ), 10, 2 );
 		add_filter( 'wps_wpr_coupon_settings', array( $this, 'wps_wpr_add_dummy_per_currrency_on_subtotal_option' ), 20 );
 		add_filter( 'wps_wpr_coupon_settings', array( $this, 'wps_wpr_dummy_add_coupon_settings' ) );
-		add_action( 'wps_wpr_add_additional_import_points', array( $this, 'wps_wpr_add_dummy_additional_import_points' ), 10 );
 		add_filter( 'wps_wpr_email_notification_settings', array( $this, 'wps_wpr_add_dummy_email_notification_settings_custom_notification_callback' ), 20 );
 		add_filter( 'wps_wpr_email_notification_settings', array( $this, 'wps_wpr_add_dummy_email_notification_settings_signup_notification_callback' ), 20 );
 		add_filter( 'wps_wpr_email_notification_settings', array( $this, 'wps_wpr_add_dummy_email_notification_settings_product_purchase_notification_callback' ), 20 );
@@ -358,6 +357,15 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'class'             => 'wps_wpr_pro_plugin_settings',
 				'desc_tip'          => esc_html__( 'Enter the min points you want the user to redeem points.', 'ultimate-woocommerce-points-and-rewards' ),
 				'desc'              => __( 'Enter the minimum points you want the user to redeem.', 'ultimate-woocommerce-points-and-rewards' ),
+			),
+			array(
+				'title'    => __( 'Restrict points redemption by category', 'ultimate-woocommerce-points-and-rewards' ),
+				'id'       => 'wps_wpr_restrict_redeem_points_category_wise',
+				'class'    => 'wps_wpr_pro_plugin_settings',
+				'type'     => 'search&select',
+				'multiple' => 'multiple',
+				'desc_tip' => __( 'Select the categories in which you want to allow customers to redeem points.', 'ultimate-woocommerce-points-and-rewards' ),
+				'options'  => $this->wps_wpr_dummy_all_pages(),
 			),
 		);
 
@@ -932,76 +940,6 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 
 		$coupon_settings = $this->wps_dummy_insert_keys_value_pair( $coupon_settings, $new_inserted_array, 4 );
 		return $coupon_settings;
-	}
-
-	/**
-	 * Undocumented function.
-	 *
-	 * @return void
-	 */
-	public function wps_wpr_add_dummy_additional_import_points() {
-		?>
-		<div class="wps_wpr_import_userspoints">
-			<div class="wps_wpr_points_table_second_wrappers wps_wpr_pro_plugin_settings">
-				<h3 class="wps_wpr_heading"><?php esc_html_e( 'Import/Export Users Points', 'ultimate-woocommerce-points-and-rewards' ); ?></h3>
-				<table class="form-table wps_wpr_general_setting">
-					<tbody>
-						<tr valign="top">
-							<td colspan="3" class="wps_wpr_instructions_tabledata">
-								<h3><?php esc_html_e( 'Instructions', 'ultimate-woocommerce-points-and-rewards' ); ?></h3>
-								<p> 1 - <?php esc_html_e( 'To import user points. You need to choose a CSV file and click Import.', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
-								<p> 2 - <?php esc_html_e( 'CSV for users points must have 3 columns in this order(User Email, Points, Reason Also the first row must have respective headings).', 'ultimate-woocommerce-points-and-rewards' ); ?> </p>
-								<p> 3 - <?php esc_html_e( 'Click on Export Button to export points table data.', 'ultimate-woocommerce-points-and-rewards' ); ?> </p>
-							</td>
-						</tr>
-						<tr>
-							<th><?php esc_html_e( 'Choose a CSV file:', 'ultimate-woocommerce-points-and-rewards' ); ?>
-							</th>
-							<td>
-								<input class="wps_wpr_csv_custom_userpoints_import wps_wpr_disabled_pro_plugin" name="userpoints_csv_import" id="userpoints_csv_import" type="file" size="25" value="" aria-required="true" />
-								<input type="hidden" value="134217728" name="max_file_size"><br>
-								<small><?php esc_html_e( 'Maximum size:128 MB', 'ultimate-woocommerce-points-and-rewards' ); ?></small>
-							</td>
-							<td>
-								<a href="<?php echo esc_url( plugin_dir_url( __FILE__ ) ); ?>/uploads/wps_wpr_userpoints_sample.csv"><?php esc_html_e( 'Export Demo CSV', 'ultimate-woocommerce-points-and-rewards' ); ?>
-								<span class="wps_sample_export"><img src="<?php echo esc_url( plugin_dir_url( __FILE__ ) ); ?>/images/download.png"></span>
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<p id="wps_import_content"><input name="wps_wpr_csv_custom_userpoints_import" id="wps_wpr_csv_custom_userpoints_import" class="button-primary woocommerce-save-button wps_import wps_wpr_disabled_pro_plugin" type="submit" value="<?php esc_html_e( 'Import', 'ultimate-woocommerce-points-and-rewards' ); ?>" /></p>
-							</td>
-							<td>
-								<p class="wps_wpr_export_paragraph"><input type="button" id="wps_wpr_export_points_table_data" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Export', 'ultimate-woocommerce-points-and-rewards' ); ?>" />
-								<img class="wps_wpr_export_user_loader" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/loading.gif' ); ?>"></p>
-								<span class="wps_wpr_export_table_notice"><?php esc_html_e( 'Exporting table please wait...', 'ultimate-woocommerce-points-and-rewards' ); ?></span>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="wps_wpr_points_table_second_wrappers wps_wpr_pro_plugin_settings">
-				<h3 class="wps_wpr_heading"><?php esc_html_e( 'Reset Users Points', 'ultimate-woocommerce-points-and-rewards' ); ?></h3>
-				<table class="form-table wps_wpr_general_setting">
-					<tbody>
-						<tr valign="top">
-							<td class="wps_wpr_instructions_tabledata">
-								<p><?php esc_html_e( 'To Reset Points of all users in a single go, click on Reset Points Button.', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
-								<p><?php esc_html_e( 'Please note that resetting the points will remove all existing points of user and assigned zero(0)', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
-							</td>
-							<td class="wps_wpr_instructions_tabledata_btn">
-								<p class="wps_wpr_reset_user_paragraph"><input type="button" id="wps_wpr_reset_user_points" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Reset Points', 'ultimate-woocommerce-points-and-rewards' ); ?>" />
-								<img class="wps_wpr_reset_user_loader" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/loading.gif' ); ?>"></p>
-								<span class="wps_wpr_reset_user_notice"></span>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<?php wp_nonce_field( 'wps_upload_csv', 'wps_wpr_nonce' ); ?>
-		</div>
-		<?php
 	}
 
 	/**
@@ -2233,7 +2171,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 	 * @return array
 	 */
 	public function wps_wpr_show_dummy_referral_link_shortcoe( $shortcode_array ) {
-		$shortcode_array['desc5'] = __( 'Use shortcode [WPS_REFERRAL_LINK] for displaying referral link anywhere on site', 'ultimate-woocommerce-points-and-rewards' );
+		$shortcode_array['desc5'] = __( 'In addition, our pro plugin will offer a customizable referral link shortcode for enhanced user engagement.', 'ultimate-woocommerce-points-and-rewards' );
 		return $shortcode_array;
 	}
 
@@ -2406,9 +2344,9 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
 				if ( ! empty( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
 
-					wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.4.0' );
+					wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.4.1' );
 					wp_enqueue_style( 'wps_wpr_dummy_css_file' );
-					wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.4.0', true );
+					wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.4.1', true );
 					wp_enqueue_script( 'wps_wpr_dummy_js_file' );
 					wp_localize_script(
 						'wps_wpr_dummy_js_file',

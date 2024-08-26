@@ -39,8 +39,8 @@
                     $('.wps_wpr_show_restrict_message').css('color', 'red');
                     setTimeout(() => {
                         
-                        jQuery(document).find('.wp-block-woocommerce-cart-order-summary-coupon-form-block.wc-block-components-totals-wrapper').append(wps_wpr.wps_restrict_rewards_msg);
-                        jQuery(document).find('.wp-block-woocommerce-cart-order-summary-coupon-form-block.wc-block-components-totals-wrapper').css('color', 'red');
+                        jQuery(document).find('.wp-block-woocommerce-cart-order-summary-coupon-form-block.wc-block-components-totals-wrapper').append('<div class="wps_wpr_color_for_restriction_msg">' + wps_wpr.wps_restrict_rewards_msg + '</div>');
+                        $('.wps_wpr_color_for_restriction_msg').css('color', 'red');
                     }, 2000);
                 }
 
@@ -70,13 +70,14 @@
                     );
                 }
             );
+
             /*Slide toggle on tables*/
             $(document).on(
                 'click',
                 '.wps_wpr_common_slider',
                 function() {
-                    $(this).siblings('.wps_wpr_points_view').show("fast");
-                    $(this).children('.wps_wpr_open_toggle').toggleClass('wps_wpr_plus_icon');
+
+                    jQuery(this).siblings('.wps_wpr_points_view').slideToggle();
                 }
             );
 

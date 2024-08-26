@@ -1329,12 +1329,36 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 						<?php
 						foreach ( $point_log['reference_details'] as $key => $value ) {
 							$user_name = '';
-							if ( isset( $value['refered_user'] ) && ! empty( $value['refered_user'] ) ) {
-								$user      = get_user_by( 'ID', $value['refered_user'] );
-								if ( isset( $user ) && ! empty( $user ) ) {
-									$user_name = $user->user_login;
-								} else {
-									$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
+							if ( count( $value['refered_user'] ) > 0 ) {
+
+								$count     = count( $value['refered_user'] );
+								$user_list = '';
+								for ( $i = 0; $i < $count; $i++ ) {
+
+									$user = get_user_by( 'ID', $value['refered_user'][ $i ]['refered_user'] );
+									if ( isset( $user ) && ! empty( $user ) ) {
+										if ( 0 == $i ) {
+
+											if ( $count > 1 ) {
+
+												$user_name = '<span class="wps_wpr_all_referral_name">' . $user->user_login . ' + ' . ( $count - 1 ) . ' More</span>';
+											} else {
+
+												$user_name = $user->user_login;
+											}
+										} else {
+
+											$user_list .= $user->user_login . ', ';
+										}
+									} else {
+
+										$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
+									}
+								}
+
+								if ( ! empty( $user_list ) ) {
+
+									$user_name .= '<span class="wps_wpr_all_referral_view">' . rtrim( $user_list, ', ' ) . '</span>';
 								}
 							}
 							?>
@@ -1344,9 +1368,9 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 								<td>
 									<?php
 									if ( isset( $user ) && ! empty( $user ) ) {
-										echo esc_html( $user_name );
+										echo wp_kses_post( $user_name );
 									} else {
-										echo esc_html( $user_name );
+										echo wp_kses_post( $user_name );
 									}
 									?>
 								</td>

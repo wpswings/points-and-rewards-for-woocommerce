@@ -1503,3 +1503,18 @@ div#wps_wpr_button_to_add_points_section {
 /* Media screen end */
 
 /* Win wheel main end */
+
+/* Referral CSS */
+
+span.wps_wpr_all_referral_name {
+
+    display: inline-block;
+}
+
+span.wps_wpr_all_referral_view {
+    display: none;
+}
+
+span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wpr_all_referral_view:hover {
+    display: inline-block;
+}

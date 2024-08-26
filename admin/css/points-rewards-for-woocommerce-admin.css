@@ -1372,3 +1372,85 @@ input#wps_wpr_reset_user_points {
 }
 
 /* General Fixes in Badge Dashoard end*/
+
+/* Import Popup start */
+
+.wps_wpr_export_points_table_main_wrap {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99999;
+  }
+  
+  .wps_wpr_export_shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+  }
+  
+  .wps_wpr_export_points_table_in {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    padding: 25px 15px;
+    border-radius: 5px;
+  }
+  
+  .wps_wpr_export_points_table_in h4 {
+    margin: 0 0 15px;
+  }
+  
+  .wps_wpr_export_points_table_in label {
+    margin: 0 10px 0 0;
+    cursor: pointer;
+  }
+  
+  #wps_rwpr_setting_wrapper .wps_wpr_export_points_table_in label input[type=radio] {
+    margin: 0 5px 0 0;
+  }
+  
+  .wps_wpr_export_points_table_options {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .wps_wpr_export_close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 28px;
+    line-height: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .wps_wpr_confirm_import_option_wrap {
+    margin: 20px 0 0;
+  }
+  
+  .wps_wpr_confirm_import_option_wrap input[type=button] {
+    margin: 0;
+  }
+  
+  .wps_wpr_radion_button_notice {
+    color: red;
+    display: none;
+    font-weight: 500;
+    margin: 10px 0 0;
+  }
+  
+  /* Import Popup End */
