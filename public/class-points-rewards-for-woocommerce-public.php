@@ -4482,4 +4482,18 @@ class Points_Rewards_For_WooCommerce_Public {
 		<?php
 	}
 
+	/**
+	 * This function is used to make PAR compatible with Dokan Plugin.
+	 *
+	 * @param  bool   $valid valid.
+	 * @param  object $coupon coupon.
+	 * @param  array  $available_vendors available vendors.
+	 * @param  array  $available_products available products.
+	 * @return mixed
+	 */
+	public function wps_wpr_dokan_plugin_compatibility( $valid, $coupon, $available_vendors, $available_products ) {
+
+		return dokan_pro()->coupon->is_admin_coupon_valid( $coupon, $available_vendors, $available_products, array(), $valid );
+	}
+
 }
