@@ -731,7 +731,8 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		$today_date = date_i18n( 'Y-m-d h:i:sa' );
 		/*Create the Referral Signup*/
-		if ( 'reference_details' == $type || 'ref_product_detail' == $type ) {
+		if ( 'reference_details' == $type ) {
+
 			$get_referral_detail = get_user_meta( $user_id, 'points_details', true );
 			$get_referral_detail = ! empty( $get_referral_detail ) && is_array( $get_referral_detail ) ? $get_referral_detail : array();
 
@@ -750,6 +751,32 @@ class Points_Rewards_For_WooCommerce_Public {
 					$type => $points,
 					'date' => $today_date,
 					'refered_user' => $data['wps_store_referral_user_ids'],
+				);
+			}
+
+			/*Update the user meta for the points details*/
+			update_user_meta( $user_id, 'points_details', $get_referral_detail );
+		}
+
+		// referral product purchase points.
+		if ( 'ref_product_detail' == $type ) {
+
+			$get_referral_detail = get_user_meta( $user_id, 'points_details', true );
+			$get_referral_detail = ! empty( $get_referral_detail ) && is_array( $get_referral_detail ) ? $get_referral_detail : array();
+
+			if ( isset( $get_referral_detail[ $type ] ) && ! empty( $get_referral_detail[ $type ] ) ) {
+				$custom_array = array(
+					$type => $points,
+					'date' => $today_date,
+					'refered_user' => $data['referr_id'],
+				);
+				$get_referral_detail[ $type ][] = $custom_array;
+			} else {
+
+				$get_referral_detail[ $type ][] = array(
+					$type => $points,
+					'date' => $today_date,
+					'refered_user' => $data['referr_id'],
 				);
 			}
 

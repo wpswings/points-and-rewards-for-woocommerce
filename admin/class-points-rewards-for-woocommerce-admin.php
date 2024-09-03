@@ -586,55 +586,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 						?>
 						<input type="number" min="1" value="<?php echo esc_html( $exp_num ); ?>" name="wps_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" class="input-text" required>
 						<select id="wps_wpr_membership_expiration_days_<?php echo esc_html( $count ); ?>" name="wps_wpr_membership_expiration_days_<?php echo esc_html( $count ); ?>">
-						<option value="days"
-						<?php
-						if ( isset( $value['Exp_Days'] ) ) {
-							if ( 'days' == $value['Exp_Days'] ) {
-								?>
-							selected="selected"
-								<?php
-							}
-						}
-						?>
-						>
-						<?php esc_html_e( 'Days', 'points-and-rewards-for-woocommerce' ); ?>
-						</option>
-						<option value="weeks"
-						<?php
-						if ( isset( $value['Exp_Days'] ) ) {
-							if ( 'weeks' == $value['Exp_Days'] ) {
-								?>
-							selected="selected"
-								<?php
-							}
-						}
-						?>
-						><?php esc_html_e( 'Weeks', 'points-and-rewards-for-woocommerce' ); ?>
-						</option>
-						<option value="months"
-						<?php
-						if ( isset( $value['Exp_Days'] ) ) {
-							if ( 'months' == $value['Exp_Days'] ) {
-								?>
-							selected="selected"
-								<?php
-							}
-						}
-						?>
-						><?php esc_html_e( 'Months', 'points-and-rewards-for-woocommerce' ); ?>
-						</option>
-						<option value="years"
-						<?php
-						if ( isset( $value['Exp_Days'] ) ) {
-							if ( 'years' == $value['Exp_Days'] ) {
-								?>
-							selected="selected"
-								<?php
-							}
-						}
-						?>
-						><?php esc_html_e( 'Years', 'points-and-rewards-for-woocommerce' ); ?>
-						</option>	
+						<option value="<?php esc_html_e( 'days', 'points-and-rewards-for-woocommerce' ); ?>" <?php selected( esc_html__( 'days', 'points-and-rewards-for-woocommerce' ), isset( $value['Exp_Days'] ) ? $value['Exp_Days'] : '' ); ?>><?php esc_html_e( 'Days', 'points-and-rewards-for-woocommerce' ); ?></option>
+						<option value="<?php esc_html_e( 'weeks', 'points-and-rewards-for-woocommerce' ); ?>" <?php selected( esc_html__( 'weeks', 'points-and-rewards-for-woocommerce' ), isset( $value['Exp_Days'] ) ? $value['Exp_Days'] : '' ); ?>><?php esc_html_e( 'Weeks', 'points-and-rewards-for-woocommerce' ); ?></option>
+						<option value="<?php esc_html_e( 'months', 'points-and-rewards-for-woocommerce' ); ?>" <?php selected( esc_html__( 'months', 'points-and-rewards-for-woocommerce' ), isset( $value['Exp_Days'] ) ? $value['Exp_Days'] : '' ); ?>><?php esc_html_e( 'Months', 'points-and-rewards-for-woocommerce' ); ?></option>
+						<option value="<?php esc_html_e( 'years', 'points-and-rewards-for-woocommerce' ); ?>" <?php selected( esc_html__( 'years', 'points-and-rewards-for-woocommerce' ), isset( $value['Exp_Days'] ) ? $value['Exp_Days'] : '' ); ?>><?php esc_html_e( 'Years', 'points-and-rewards-for-woocommerce' ); ?></option>	
 						</select>		
 					</td>
 				</tr>
@@ -2216,7 +2171,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$chunk_size,
 			function( $chunk, &$handle, $iteration ) use ( &$imp_counter ) {
 				if ( 0 != $imp_counter ) {
-					$this->wps_update_points_of_users( $chunk[0], $chunk[1] );
+					$this->wps_update_points_of_users( $chunk[0], $chunk[1], $chunk[2] );
 				}
 				$imp_counter = 1;
 			}
@@ -2280,13 +2235,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
-	 * This function is used to update user points.
+	 * This function is used to update user points while importing csv file.
 	 *
-	 * @param string $wps_user_email user email.
-	 * @param int    $wps_user_points user points.
+	 * @param  string $wps_user_email wps_user_email.
+	 * @param  int    $wps_user_points wps_user_points.
+	 * @param  string $import_points_reason import_points_reason.
 	 * @return bool
 	 */
-	public function wps_update_points_of_users( $wps_user_email, $wps_user_points ) {
+	public function wps_update_points_of_users( $wps_user_email, $wps_user_points, $import_points_reason ) {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
 		$user                        = get_user_by( 'email', $wps_user_email );
 		$wps_wpr_export_table_option = ! empty( $_POST['wps_wpr_export_table_option'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_export_table_option'] ) ) : 'add';
@@ -2305,18 +2261,18 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$sign                  = '+';
 			if ( 'add' === $wps_wpr_export_table_option ) {
 
-				$wps_wpr_reason        = esc_html__( 'Updated By Admin', 'ultimate-woocommerce-points-and-rewards' );
+				$wps_wpr_reason        = $import_points_reason;
 				$sign                  = '+';
 				$wps_update_csv_points = $get_user_points + (int) $wps_user_points;
 			} elseif ( 'subtract' === $wps_wpr_export_table_option ) {
 
-				$wps_wpr_reason        = esc_html__( 'Updated By Admin', 'ultimate-woocommerce-points-and-rewards' );
+				$wps_wpr_reason        = $import_points_reason;
 				$sign                  = '-';
 				$wps_update_csv_points = $get_user_points - (int) $wps_user_points;
 			} elseif ( 'override' === $wps_wpr_export_table_option ) {
 
 				// translators: %s: get_user_points.
-				$wps_wpr_reason        = sprintf( esc_html__( 'Your %s points have been overridden by the Admin', 'ultimate-woocommerce-points-and-rewards' ), esc_html( $get_user_points ) );
+				$wps_wpr_reason        = $import_points_reason;
 				$wps_update_csv_points = (int) $wps_user_points;
 			}
 

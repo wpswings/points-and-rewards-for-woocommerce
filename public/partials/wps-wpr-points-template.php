@@ -167,12 +167,12 @@ if ( ! is_array( $coupon_settings ) ) {
 			</div>
 		</div>
 		<?php
-}
+	}
 
-if ( $wps_wpr_mem_enable ) {
-	$enable_drop              = false;
-	$wps_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
-	?>
+	if ( $wps_wpr_mem_enable ) {
+		$enable_drop              = false;
+		$wps_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
+		?>
 	<div class="wps_wpr_membership_list_main_wrap wps_wpr_main_section_all_wrap">
 		<p class="wps_wpr_heading"><?php esc_html_e( 'Membership List', 'points-and-rewards-for-woocommerce' ); ?></p>
 		<?php
@@ -211,13 +211,13 @@ if ( $wps_wpr_mem_enable ) {
 					</tr>
 				</thead>
 				<tbody>
-				<?php
-				if ( is_array( $wps_wpr_membership_roles ) && ! empty( $wps_wpr_membership_roles ) ) {
-					foreach ( $wps_wpr_membership_roles as $wps_role => $values ) {//phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-						if ( ! is_array( $values ) ) {
-							return;
-						}
-						?>
+					<?php
+					if ( is_array( $wps_wpr_membership_roles ) && ! empty( $wps_wpr_membership_roles ) ) {
+						foreach ( $wps_wpr_membership_roles as $wps_role => $values ) {//phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+							if ( ! is_array( $values ) ) {
+								return;
+							}
+							?>
 						<tr>
 							<td>
 								<?php
@@ -244,21 +244,21 @@ if ( $wps_wpr_mem_enable ) {
 											</div>
 											<div class="wps_wpr_popup_thumbnail_section">
 												<ul>
-												<?php
-												if ( is_array( $values['Product'] ) && ! empty( $values['Product'] ) ) {
-													foreach ( $values['Product'] as $key => $pro_id ) {
-														$pro_img = wp_get_attachment_image_src( get_post_thumbnail_id( $pro_id ), 'single-post-thumbnail' );
-														$_product = wc_get_product( $pro_id );
-														if ( is_object( $_product ) ) {
+													<?php
+													if ( is_array( $values['Product'] ) && ! empty( $values['Product'] ) ) {
+														foreach ( $values['Product'] as $key => $pro_id ) {
+															$pro_img = wp_get_attachment_image_src( get_post_thumbnail_id( $pro_id ), 'single-post-thumbnail' );
+															$_product = wc_get_product( $pro_id );
+															if ( is_object( $_product ) ) {
 
-															$price = $_product->get_price();
-															$product_name = $_product->get_title();
-														}
-														$pro_url = get_permalink( $pro_id );
-														if ( empty( $pro_img[0] ) ) {
-															$pro_img[0] = WPS_RWPR_DIR_URL . 'public/images/placeholder.png';
-														}
-														?>
+																$price = $_product->get_price();
+																$product_name = $_product->get_title();
+															}
+															$pro_url = get_permalink( $pro_id );
+															if ( empty( $pro_img[0] ) ) {
+																$pro_img[0] = WPS_RWPR_DIR_URL . 'public/images/placeholder.png';
+															}
+															?>
 														<li>
 															<a href="<?php echo esc_url( $pro_url ); ?>">
 																<span class="wps_wpr_thumbnail_img_wrap"><img src="<?php echo esc_url( $pro_img[0] ); ?>" alt=""></span>
@@ -266,14 +266,14 @@ if ( $wps_wpr_mem_enable ) {
 																<span class="wps_wpr_thumbnail_price_wrap"><?php echo wp_kses( wc_price( $price ), $this->wps_wpr_allowed_html() ); ?></span>
 															</a>
 														</li>		
-														<?php
-													}
-													?>
-													</ul>
-													<?php
-												} else {
-													if ( is_array( $values['Prod_Categ'] ) && ! empty( $values['Prod_Categ'] ) ) {
+															<?php
+														}
 														?>
+													</ul>
+														<?php
+													} else {
+														if ( is_array( $values['Prod_Categ'] ) && ! empty( $values['Prod_Categ'] ) ) {
+															?>
 														<div class="wps_wpr_popup_cat">
 
 															<?php
@@ -299,65 +299,65 @@ if ( $wps_wpr_mem_enable ) {
 															}
 															?>
 														</div>
-														<?php
+															<?php
+														}
 													}
-												}
-												?>
+													?>
 											</div>								
 										</div>
 									</div>
 								</div>
 							<td>
-								<?php
-								echo esc_html( $values['Points'] );
-								?>
+									<?php
+									echo esc_html( $values['Points'] );
+									?>
 							</td>
 							<td>
-								<?php
-								if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
-									echo esc_html( $values['Exp_Number'] ) . ' ' . esc_html( $values['Exp_Days'] );
-								}
-								do_action( 'wps_wpr_membership_expiry_date_for_user', $user_id, $values, $wps_role );
-								if ( $wps_role == $wps_user_level ) {
-
-									$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
-									$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
-									$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
-									if ( '1' === $wps_wpr_choose_account_page_temp ) {
-										echo '<img class="wps_wpr_tick" src = "' . esc_url( WPS_RWPR_DIR_URL ) . 'public/images/tick2.svg">';
-									} else {
-
-										echo '<img class="wps_wpr_tick" src = "' . esc_url( WPS_RWPR_DIR_URL ) . 'public/images/tick.png">';
+									<?php
+									if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+										echo esc_html( $values['Exp_Number'] ) . ' ' . esc_html( $values['Exp_Days'] );
 									}
-								}
-								?>
+									do_action( 'wps_wpr_membership_expiry_date_for_user', $user_id, $values, $wps_role );
+									if ( $wps_role == $wps_user_level ) {
+
+										$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
+										$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
+										$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
+										if ( '1' === $wps_wpr_choose_account_page_temp ) {
+											echo '<img class="wps_wpr_tick" src = "' . esc_url( WPS_RWPR_DIR_URL ) . 'public/images/tick2.svg">';
+										} else {
+
+											echo '<img class="wps_wpr_tick" src = "' . esc_url( WPS_RWPR_DIR_URL ) . 'public/images/tick.png">';
+										}
+									}
+									?>
 							</td>
 						</tr>
-						<?php
-						if ( $values['Points'] == $get_points || $values['Points'] < $get_points ) {
-							$enable_drop = true;
+							<?php
+							if ( $values['Points'] == $get_points || $values['Points'] < $get_points ) {
+								$enable_drop = true;
+							}
 						}
 					}
-				}
-				?>
+					?>
 				</tbody>
 			</table>
 		</div>
 	</div>
-	<?php
-}
-
-if ( isset( $enable_drop ) && $enable_drop ) {
-	if ( isset( $wps_user_level ) && ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
-
-		$mem_expire_time = get_user_meta( $user_id, 'membership_expiration', true );
-		if ( $mem_expire_time > gmdate( 'Y-m-d' ) ) {
-
-			unset( $wps_wpr_membership_roles[ $wps_user_level ] );
-		}
+		<?php
 	}
-	if ( ! empty( $wps_wpr_membership_roles ) && is_array( $wps_wpr_membership_roles ) ) {
-		?>
+
+	if ( isset( $enable_drop ) && $enable_drop ) {
+		if ( isset( $wps_user_level ) && ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
+
+			$mem_expire_time = get_user_meta( $user_id, 'membership_expiration', true );
+			if ( $mem_expire_time > gmdate( 'Y-m-d' ) ) {
+
+				unset( $wps_wpr_membership_roles[ $wps_user_level ] );
+			}
+		}
+		if ( ! empty( $wps_wpr_membership_roles ) && is_array( $wps_wpr_membership_roles ) ) {
+			?>
 		<div class="wps_wpr_upgrade_level_main_wrap wps_wpr_main_section_all_wrap">
 			<p class="wps_wpr_heading wps_wpr_membrship_update_heading"><?php echo esc_html_e( 'Upgrade User Level', 'points-and-rewards-for-woocommerce' ); ?></p>
 			<fieldset class="wps_wpr_each_section wps_wpr_membership_listing_class">	
@@ -386,21 +386,21 @@ if ( isset( $enable_drop ) && $enable_drop ) {
 				</form>
 			</fieldset>
 		</div>
-		<?php
+			<?php
+		}
 	}
-}
 
-do_action( 'wps_wpr_add_coupon_generation', $user_id );
-do_action( 'wps_wpr_list_coupons_generation', $user_id );
+	do_action( 'wps_wpr_add_coupon_generation', $user_id );
+	do_action( 'wps_wpr_list_coupons_generation', $user_id );
 
-/*Start of the Referral Section*/
-if ( $enable_wps_refer ) {
-	$public_obj = new Points_Rewards_For_WooCommerce_Public( 'points-and-rewards-for-woocommerce', '1.0.0' );
-	$public_obj->wps_wpr_get_referral_section( $user_id );
-}
-/* of the Referral Section*/
-do_action( 'wps_wpr_add_share_points', $user_id );
-$wps_wpr_user_can_send_point = get_option( 'wps_wpr_user_can_send_point', 0 );
+	/*Start of the Referral Section*/
+	if ( $enable_wps_refer ) {
+		$public_obj = new Points_Rewards_For_WooCommerce_Public( 'points-and-rewards-for-woocommerce', '1.0.0' );
+		$public_obj->wps_wpr_get_referral_section( $user_id );
+	}
+	/* of the Referral Section*/
+	do_action( 'wps_wpr_add_share_points', $user_id );
+	$wps_wpr_user_can_send_point = get_option( 'wps_wpr_user_can_send_point', 0 );
 
-/* Hooks to Extends the point tab */
-do_action( 'wps_extend_point_tab_section', $user_id );
+	/* Hooks to Extends the point tab */
+	do_action( 'wps_extend_point_tab_section', $user_id );

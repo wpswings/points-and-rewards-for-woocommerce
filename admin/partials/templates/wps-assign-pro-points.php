@@ -83,8 +83,9 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 				<?php
 			}
 		} else {
-			$wps_wpr_assing_product_points['wps_wpr_global_product_enable'] = 0;
-			$wps_wpr_assing_product_points['wps_wpr_pro_points_to_all'] = '';
+			$wps_wpr_assing_product_points['wps_wpr_global_product_enable']           = 0;
+			$wps_wpr_assing_product_points['wps_wpr_pro_points_to_all']               = '';
+			$wps_wpr_assing_product_points['wps_wpr_show_assign_points_on_shop_page'] = ! empty( $_POST['wps_wpr_show_assign_points_on_shop_page'] ) ? '1' : 0;
 			if ( is_array( $wps_wpr_assing_product_points ) && ! empty( $wps_wpr_assing_product_points ) ) {
 
 				update_option( 'wps_wpr_assign_products_points', $wps_wpr_assing_product_points );
@@ -142,7 +143,7 @@ $wps_wpr_assign_product_table_settings = array(
 		'desc'              => __( 'Enter Global Product Points', 'points-and-rewards-for-woocommerce' ),
 		'id'                => 'wps_wpr_pro_points_to_all',
 		'desc_tip'          => __( 'Entered Points are assigned to All Products.', 'points-and-rewards-for-woocommerce' ),
-		'custom_attributes' => array( 'min' => '"1"' ),
+		'custom_attributes' => array( 'min' => '"0"' ),
 		'class'             => 'input-text wps_wpr_common_width',
 	),
 );
