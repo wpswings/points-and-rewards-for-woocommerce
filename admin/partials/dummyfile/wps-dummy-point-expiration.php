@@ -44,7 +44,7 @@ $wps_points_exipration_array = array(
 		'type'              => 'number',
 		'default'           => 1,
 		'id'                => 'wps_wpr_points_expiration_threshold',
-		'custom_attributes' => array( 'min' => '"1"' ),
+		'custom_attributes' => array( 'min' => '"0"' ),
 		'class'             => 'input-text wps_wpr_common_width wps_wpr_pro_plugin_settings',
 		'desc_tip'          => __( 'Set the threshold for points expiration, The expiration period will be calculated when the threshold has been reached.', 'ultimate-woocommerce-points-and-rewards' ),
 	),
@@ -58,7 +58,7 @@ $wps_points_exipration_array = array(
 				'type'              => 'number',
 				'id'                => 'wps_wpr_points_expiration_time_num',
 				'class'             => 'input-text wps_wpr_common_width wps_wpr_pro_plugin_settings',
-				'custom_attributes' => array( 'min' => '"1"' ),
+				'custom_attributes' => array( 'min' => '"0"' ),
 				'desc_tip'          => __(
 					'Set the Time-Period for "When do the points need to expire?" It will calculated over the above Threshold Time',
 					'ultimate-woocommerce-points-and-rewards'

@@ -69,7 +69,7 @@ $wps_product_purchase_points = array(
 					'type'              => 'text',
 					'id'                => 'wps_wpr_product_purchase_price',
 					'class'             => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price wps_wpr_pro_plugin_settings',
-					'custom_attributes' => array( 'min' => '"1"' ),
+					'custom_attributes' => array( 'min' => '"0"' ),
 					'desc_tip'          => __(
 						'Entered points will be converted to price. (i.e., how many points will be equivalent to the product price)',
 						'ultimate-woocommerce-points-and-rewards'
@@ -82,7 +82,7 @@ $wps_product_purchase_points = array(
 					'type'              => 'number',
 					'id'                => 'wps_wpr_purchase_points',
 					'class'             => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
-					'custom_attributes' => array( 'min' => '"1"' ),
+					'custom_attributes' => array( 'min' => '"0"' ),
 					'desc_tip'          => __(
 						'Entered points will be converted to price.(i.e., how many points will be equivalent to the product price)',
 						'ultimate-woocommerce-points-and-rewards'
