@@ -157,6 +157,15 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				),
 			),
 			array(
+				'title'             => __( 'Minimum order total for referral purchase reward', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'              => 'number',
+				'default'           => 1,
+				'id'                => 'wps_wpr_minimum_order_total_for_referral_points',
+				'class'             => 'input-text wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
+				'custom_attributes' => array( 'min' => '1' ),
+				'desc_tip'          => __( 'Referral purchase points will be rewarded when the order total exceeds the minimum required amount.', 'ultimate-woocommerce-points-and-rewards' ),
+			),
+			array(
 				'title'    => __( 'Assign Only Referral Purchase Points', 'ultimate-woocommerce-points-and-rewards' ),
 				'type'     => 'checkbox',
 				'id'       => 'wps_wpr_general_refer_value_disable',

@@ -44,7 +44,7 @@ $wps_wpr_coupon_settings = array(
 					'custom_attributes' => array( 'min' => '"1"' ),
 					'desc'              => __( ' = ', 'points-and-rewards-for-woocommerce' ),
 					'curr'              => get_woocommerce_currency_symbol(),
-
+					'default'           => '1',
 				),
 				array(
 					'type'              => 'number',

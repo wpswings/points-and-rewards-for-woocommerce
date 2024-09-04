@@ -3825,6 +3825,12 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_show_canvas_icons() {
 
+		// blocked by admin.
+		if ( wps_wpr_restrict_user_fun() ) {
+
+			return;
+		}
+
 		// if game points is rewarded than retur from here.
 		if ( ! empty( get_user_meta( get_current_user_id(), 'wps_wpr_check_game_points_assign_timing', true ) ) ) {
 
