@@ -468,7 +468,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 50 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 51 );
 		return $wps_wpr_general_settings;
 	}
 
@@ -507,7 +507,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 50 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 51 );
 		return $wps_wpr_general_settings;
 	}
 
@@ -545,7 +545,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 50 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 51 );
 		return $wps_wpr_general_settings;
 	}
 
