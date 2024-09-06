@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<!-- +++++++++++++ Plugin Defination ++++++++++++ -->
 			<h3><?php echo esc_html_e( 'What is Points And Rewards For WooCommerce? ', 'points-and-rewards-for-woocommerce' ); ?></h3>
 			<p>
-				<?php esc_html_e( 'Points And Rewards For WooCommerce is a customer-oriented solution that aims to engage customers by offering them points for activities they perform on your WooCommerce store. For instance, signup, purchase, referrals, etc. Each Points earned can be redeemed by the shoppers on additional purchases. These reward points make the customers eligible for on-purchase discounts and participation in the membership program', 'points-and-rewards-for-woocommerce'	); ?>
+				<?php esc_html_e( 'Points And Rewards For WooCommerce is a customer-oriented solution that aims to engage customers by offering them points for activities they perform on your WooCommerce store. For instance, signup, purchase, referrals, etc. Each Points earned can be redeemed by the shoppers on additional purchases. These reward points make the customers eligible for on-purchase discounts and participation in the membership program', 'points-and-rewards-for-woocommerce' ); ?>
 			</p>
 
 			<!-- ++++++++++++ Plugin Demo Video +++++++++++ -->
