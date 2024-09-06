@@ -586,55 +586,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 						?>
 						<input type="number" min="1" value="<?php echo esc_html( $exp_num ); ?>" name="wps_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_expiration_<?php echo esc_html( $count ); ?>" class="input-text" required>
 						<select id="wps_wpr_membership_expiration_days_<?php echo esc_html( $count ); ?>" name="wps_wpr_membership_expiration_days_<?php echo esc_html( $count ); ?>">
-						<option value="days"
-						<?php
-						if ( isset( $value['Exp_Days'] ) ) {
-							if ( 'days' == $value['Exp_Days'] ) {
-								?>
-							selected="selected"
-								<?php
-							}
-						}
-						?>
-						>
-						<?php esc_html_e( 'Days', 'points-and-rewards-for-woocommerce' ); ?>
-						</option>
-						<option value="weeks"
-						<?php
-						if ( isset( $value['Exp_Days'] ) ) {
-							if ( 'weeks' == $value['Exp_Days'] ) {
-								?>
-							selected="selected"
-								<?php
-							}
-						}
-						?>
-						><?php esc_html_e( 'Weeks', 'points-and-rewards-for-woocommerce' ); ?>
-						</option>
-						<option value="months"
-						<?php
-						if ( isset( $value['Exp_Days'] ) ) {
-							if ( 'months' == $value['Exp_Days'] ) {
-								?>
-							selected="selected"
-								<?php
-							}
-						}
-						?>
-						><?php esc_html_e( 'Months', 'points-and-rewards-for-woocommerce' ); ?>
-						</option>
-						<option value="years"
-						<?php
-						if ( isset( $value['Exp_Days'] ) ) {
-							if ( 'years' == $value['Exp_Days'] ) {
-								?>
-							selected="selected"
-								<?php
-							}
-						}
-						?>
-						><?php esc_html_e( 'Years', 'points-and-rewards-for-woocommerce' ); ?>
-						</option>	
+						<option value="<?php esc_html_e( 'days', 'points-and-rewards-for-woocommerce' ); ?>" <?php selected( esc_html__( 'days', 'points-and-rewards-for-woocommerce' ), isset( $value['Exp_Days'] ) ? $value['Exp_Days'] : '' ); ?>><?php esc_html_e( 'Days', 'points-and-rewards-for-woocommerce' ); ?></option>
+						<option value="<?php esc_html_e( 'weeks', 'points-and-rewards-for-woocommerce' ); ?>" <?php selected( esc_html__( 'weeks', 'points-and-rewards-for-woocommerce' ), isset( $value['Exp_Days'] ) ? $value['Exp_Days'] : '' ); ?>><?php esc_html_e( 'Weeks', 'points-and-rewards-for-woocommerce' ); ?></option>
+						<option value="<?php esc_html_e( 'months', 'points-and-rewards-for-woocommerce' ); ?>" <?php selected( esc_html__( 'months', 'points-and-rewards-for-woocommerce' ), isset( $value['Exp_Days'] ) ? $value['Exp_Days'] : '' ); ?>><?php esc_html_e( 'Months', 'points-and-rewards-for-woocommerce' ); ?></option>
+						<option value="<?php esc_html_e( 'years', 'points-and-rewards-for-woocommerce' ); ?>" <?php selected( esc_html__( 'years', 'points-and-rewards-for-woocommerce' ), isset( $value['Exp_Days'] ) ? $value['Exp_Days'] : '' ); ?>><?php esc_html_e( 'Years', 'points-and-rewards-for-woocommerce' ); ?></option>	
 						</select>		
 					</td>
 				</tr>
@@ -2084,34 +2039,34 @@ class Points_Rewards_For_WooCommerce_Admin {
 		?>
 		<div class="wps_wpr_import_userspoints">
 			<div class="wps_wpr_points_table_second_wrappers">
-				<h3 class="wps_wpr_heading"><?php esc_html_e( 'Import', 'ultimate-woocommerce-points-and-rewards' ); ?></h3>
+				<h3 class="wps_wpr_heading"><?php esc_html_e( 'Import', 'points-and-rewards-for-woocommerce' ); ?></h3>
 				<table class="form-table wps_wpr_general_setting">
 					<tbody>
 						<tr valign="top">
 							<td colspan="3" class="wps_wpr_instructions_tabledata">
-								<h3><?php esc_html_e( 'Instructions', 'ultimate-woocommerce-points-and-rewards' ); ?></h3>
-								<p> 1 - <?php esc_html_e( 'To import user points. You need to choose a CSV file and click Import.', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
-								<p> 2 - <?php esc_html_e( 'CSV for users points must have 3 columns in this order(User Email, Points, Reason Also the first row must have respective headings).', 'ultimate-woocommerce-points-and-rewards' ); ?> </p>
+								<h3><?php esc_html_e( 'Instructions', 'points-and-rewards-for-woocommerce' ); ?></h3>
+								<p> 1 - <?php esc_html_e( 'To import user points. You need to choose a CSV file and click Import.', 'points-and-rewards-for-woocommerce' ); ?></p>
+								<p> 2 - <?php esc_html_e( 'CSV for users points must have 3 columns in this order(User Email, Points, Reason Also the first row must have respective headings).', 'points-and-rewards-for-woocommerce' ); ?> </p>
 							</td>
 						</tr>
 						<tr>
-							<th><?php esc_html_e( 'Choose a CSV file:', 'ultimate-woocommerce-points-and-rewards' ); ?>
+							<th><?php esc_html_e( 'Choose a CSV file:', 'points-and-rewards-for-woocommerce' ); ?>
 							</th>
 							<td>
 								<input class="wps_wpr_csv_custom_userpoints_import" name="userpoints_csv_import" id="userpoints_csv_import" type="file" size="25" value="" aria-required="true" />
 
 								<input type="hidden" value="134217728" name="max_file_size"><br>
-								<small><?php esc_html_e( 'Maximum size:128 MB', 'ultimate-woocommerce-points-and-rewards' ); ?></small>
+								<small><?php esc_html_e( 'Maximum size:128 MB', 'points-and-rewards-for-woocommerce' ); ?></small>
 							</td>
 							<td>
-								<a href="<?php echo esc_url( plugin_dir_url( __FILE__ ) ); ?>/uploads/wps_wpr_userpoints_sample.csv"><?php esc_html_e( 'Export Demo CSV', 'ultimate-woocommerce-points-and-rewards' ); ?>
+								<a href="<?php echo esc_url( plugin_dir_url( __FILE__ ) ); ?>/uploads/wps_wpr_userpoints_sample.csv"><?php esc_html_e( 'Export Demo CSV', 'points-and-rewards-for-woocommerce' ); ?>
 								<span class="wps_sample_export"><img src="<?php echo esc_url( plugin_dir_url( __FILE__ ) ); ?>/images/download.png"></span>
 								</a>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<p id="wps_import_content"><input type="submit" name="wps_wpr_csv_custom_userpoints_import" id="wps_wpr_csv_custom_userpoints_import" class="button-primary woocommerce-save-button wps_import" value="<?php esc_html_e( 'Import', 'ultimate-woocommerce-points-and-rewards' ); ?>" /></p>
+								<p id="wps_import_content"><input type="submit" name="wps_wpr_csv_custom_userpoints_import" id="wps_wpr_csv_custom_userpoints_import" class="button-primary woocommerce-save-button wps_import" value="<?php esc_html_e( 'Import', 'points-and-rewards-for-woocommerce' ); ?>" /></p>
 							</td>
 							<?php
 							$wps_active_plugin = get_plugins();
@@ -2119,7 +2074,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 							if ( ! array_key_exists( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php', $wps_active_plugin ) ) {
 								?>
 								<td class="wps_wpr_pro_plugin_settings">
-									<p class="wps_wpr_export_paragraph"><input type="button" id="wps_wpr_export_points_table_data" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Export', 'ultimate-woocommerce-points-and-rewards' ); ?>" />
+									<p class="wps_wpr_export_paragraph"><input type="button" id="wps_wpr_export_points_table_data" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Export', 'points-and-rewards-for-woocommerce' ); ?>" />
 									<img class="wps_wpr_export_user_loader" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/loading.gif' ); ?>"></p>
 								</td>
 								<?php
@@ -2135,16 +2090,16 @@ class Points_Rewards_For_WooCommerce_Admin {
 			if ( ! array_key_exists( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php', $wps_active_plugin ) ) {
 				?>
 				<div class="wps_wpr_points_table_second_wrappers wps_wpr_pro_plugin_settings">
-					<h3 class="wps_wpr_heading"><?php esc_html_e( 'Reset Users Points', 'ultimate-woocommerce-points-and-rewards' ); ?></h3>
+					<h3 class="wps_wpr_heading"><?php esc_html_e( 'Reset Users Points', 'points-and-rewards-for-woocommerce' ); ?></h3>
 					<table class="form-table wps_wpr_general_setting">
 						<tbody>
 							<tr valign="top">
 								<td class="wps_wpr_instructions_tabledata">
-									<p><?php esc_html_e( 'To Reset Points of all users in a single go, click on Reset Points Button.', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
-									<p><?php esc_html_e( 'Please note that resetting the points will remove all existing points of user and assigned zero(0)', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
+									<p><?php esc_html_e( 'To Reset Points of all users in a single go, click on Reset Points Button.', 'points-and-rewards-for-woocommerce' ); ?></p>
+									<p><?php esc_html_e( 'Please note that resetting the points will remove all existing points of user and assigned zero(0)', 'points-and-rewards-for-woocommerce' ); ?></p>
 								</td>
 								<td class="wps_wpr_instructions_tabledata_btn">
-									<p class="wps_wpr_reset_user_paragraph"><input type="button" id="wps_wpr_reset_user_points" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Reset Points', 'ultimate-woocommerce-points-and-rewards' ); ?>" />
+									<p class="wps_wpr_reset_user_paragraph"><input type="button" id="wps_wpr_reset_user_points" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Reset Points', 'points-and-rewards-for-woocommerce' ); ?>" />
 									<img class="wps_wpr_reset_user_loader" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/loading.gif' ); ?>"></p>
 									<span class="wps_wpr_reset_user_notice"></span>
 								</td>
@@ -2161,14 +2116,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 			<div class="wps_wpr_export_shadow"></div>
 			<div class="wps_wpr_export_points_table_in">
 				<div class="wps_wpr_export_close">&times;</div>
-				<h4><?php esc_html_e( 'Please choose an option : ', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+				<h4><?php esc_html_e( 'Please choose an option : ', 'points-and-rewards-for-woocommerce' ); ?></h4>
 				<div class="wps_wpr_export_points_table_options">
-					<label for="wps_wpr_add_points"><input type="radio" id="wps_wpr_add_points" name="wps_wpr_export_table_option" class="wps_wpr_export_table_option" value="add"><?php esc_html_e( 'Add Points', 'ultimate-woocommerce-points-and-rewards' ); ?></label>
-					<label for="wps_wpr_remove_points"><input type="radio" id="wps_wpr_remove_points" name="wps_wpr_export_table_option" class="wps_wpr_export_table_option" value="subtract"><?php esc_html_e( 'Substract Points', 'ultimate-woocommerce-points-and-rewards' )?></label>
-					<label for="wps_wpr_overrirde_points"><input type="radio" id="wps_wpr_overrirde_points" name="wps_wpr_export_table_option" class="wps_wpr_export_table_option" value="override"><?php esc_html_e( 'Override Points', 'ultimate-woocommerce-points-and-rewards' ); ?></label>
+					<label for="wps_wpr_add_points"><input type="radio" id="wps_wpr_add_points" name="wps_wpr_export_table_option" class="wps_wpr_export_table_option" value="add"><?php esc_html_e( 'Add Points', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<label for="wps_wpr_remove_points"><input type="radio" id="wps_wpr_remove_points" name="wps_wpr_export_table_option" class="wps_wpr_export_table_option" value="subtract"><?php esc_html_e( 'Substract Points', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<label for="wps_wpr_overrirde_points"><input type="radio" id="wps_wpr_overrirde_points" name="wps_wpr_export_table_option" class="wps_wpr_export_table_option" value="override"><?php esc_html_e( 'Override Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 				</div>
 				<div class="wps_wpr_confirm_import_option_wrap">
-					<input type="button" id="wps_wpr_confirm_import_option" class="button-primary woocommerce-save-button" value="<?php esc_html_e( 'Proceed', 'ultimate-woocommerce-points-and-rewards' ); ?>">
+					<input type="button" id="wps_wpr_confirm_import_option" class="button-primary woocommerce-save-button" value="<?php esc_html_e( 'Proceed', 'points-and-rewards-for-woocommerce' ); ?>">
 				</div>
 				<p class="wps_wpr_radion_button_notice"></p>
 			</div>
@@ -2193,7 +2148,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			wp_send_json(
 				array(
 					'result' => false,
-					'msg'    => esc_html__( 'File path missing.', 'ultimate-woocommerce-points-and-rewards' ),
+					'msg'    => esc_html__( 'File path missing.', 'points-and-rewards-for-woocommerce' ),
 				)
 			);
 			wp_die();
@@ -2203,7 +2158,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			wp_send_json(
 				array(
 					'result' => false,
-					'msg'    => esc_html__( 'Please choose a CSV file.', 'ultimate-woocommerce-points-and-rewards' ),
+					'msg'    => esc_html__( 'Please choose a CSV file.', 'points-and-rewards-for-woocommerce' ),
 				)
 			);
 			wp_die();
@@ -2216,7 +2171,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$chunk_size,
 			function( $chunk, &$handle, $iteration ) use ( &$imp_counter ) {
 				if ( 0 != $imp_counter ) {
-					$this->wps_update_points_of_users( $chunk[0], $chunk[1] );
+					$this->wps_update_points_of_users( $chunk[0], $chunk[1], $chunk[2] );
 				}
 				$imp_counter = 1;
 			}
@@ -2280,13 +2235,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
-	 * This function is used to update user points.
+	 * This function is used to update user points while importing csv file.
 	 *
-	 * @param string $wps_user_email user email.
-	 * @param int    $wps_user_points user points.
+	 * @param  string $wps_user_email wps_user_email.
+	 * @param  int    $wps_user_points wps_user_points.
+	 * @param  string $import_points_reason import_points_reason.
 	 * @return bool
 	 */
-	public function wps_update_points_of_users( $wps_user_email, $wps_user_points ) {
+	public function wps_update_points_of_users( $wps_user_email, $wps_user_points, $import_points_reason ) {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
 		$user                        = get_user_by( 'email', $wps_user_email );
 		$wps_wpr_export_table_option = ! empty( $_POST['wps_wpr_export_table_option'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_export_table_option'] ) ) : 'add';
@@ -2305,18 +2261,18 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$sign                  = '+';
 			if ( 'add' === $wps_wpr_export_table_option ) {
 
-				$wps_wpr_reason        = esc_html__( 'Updated By Admin', 'ultimate-woocommerce-points-and-rewards' );
+				$wps_wpr_reason        = $import_points_reason;
 				$sign                  = '+';
 				$wps_update_csv_points = $get_user_points + (int) $wps_user_points;
 			} elseif ( 'subtract' === $wps_wpr_export_table_option ) {
 
-				$wps_wpr_reason        = esc_html__( 'Updated By Admin', 'ultimate-woocommerce-points-and-rewards' );
+				$wps_wpr_reason        = $import_points_reason;
 				$sign                  = '-';
 				$wps_update_csv_points = $get_user_points - (int) $wps_user_points;
 			} elseif ( 'override' === $wps_wpr_export_table_option ) {
 
 				// translators: %s: get_user_points.
-				$wps_wpr_reason        = sprintf( esc_html__( 'Your %s points have been overridden by the Admin', 'ultimate-woocommerce-points-and-rewards' ), esc_html( $get_user_points ) );
+				$wps_wpr_reason        = $import_points_reason;
 				$wps_update_csv_points = (int) $wps_user_points;
 			}
 

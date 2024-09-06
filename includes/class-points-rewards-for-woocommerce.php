@@ -79,7 +79,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '2.4.1';
+			$this->version = '2.5.0';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -340,6 +340,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'mvx_available_payment_gateways', $plugin_public, 'wps_wpr_admin_mvx_list_modules', 10 );
 			// verify cart page nonce.
 			$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $plugin_public, 'wps_wpr_verify_cart_page_nonce' );
+			// Dokan Plugin Compatibility.
+			if ( is_plugin_active( 'dokan-pro/dokan-pro.php' ) && function_exists( 'dokan_pro' ) ) {
+
+				$this->loader->add_filter( 'dokan_ensure_admin_have_create_coupon', $plugin_public, 'wps_wpr_dokan_plugin_compatibility', PHP_INT_MAX, 4 );
+			}
 		}
 	}
 

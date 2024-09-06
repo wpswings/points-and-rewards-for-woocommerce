@@ -523,8 +523,8 @@ class Points_Rewards_For_WooCommerce_Public {
 			$html_div = '<div class="wps_wpr_wrapper_button">';
 			$content  = $content . $html_div;
 
-			$twitter_share_button  = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/Twitter.svg"></a></div>';
-			$facebook_share_button = '<div id="fb-root"></div><div class="fb-share-button wps_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/Facebook.svg"></a></div>';
+			$twitter_share_button  = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/xtwitter.svg"></a></div>';
+			$facebook_share_button = '<div id="fb-root"></div><div class="fb-share-button wps_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=' . urlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/Facebook.svg"></a></div>';
 			$mail_share_button     = '<a class="wps_wpr_mail_button wps_wpr_common_class" href="mailto:enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/email.svg"></a>';
 			$email_share_button    = apply_filters( 'wps_mail_box', $content, $user_id );
 			$whatsapp_share_button = '<a target="_blank" class="wps_wpr_whatsapp_share" href="https://api.whatsapp.com/send?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . WPS_RWPR_DIR_URL . 'public/images/WhatsApp.svg"></a>';
@@ -731,7 +731,8 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		$today_date = date_i18n( 'Y-m-d h:i:sa' );
 		/*Create the Referral Signup*/
-		if ( 'reference_details' == $type || 'ref_product_detail' == $type ) {
+		if ( 'reference_details' == $type ) {
+
 			$get_referral_detail = get_user_meta( $user_id, 'points_details', true );
 			$get_referral_detail = ! empty( $get_referral_detail ) && is_array( $get_referral_detail ) ? $get_referral_detail : array();
 
@@ -750,6 +751,32 @@ class Points_Rewards_For_WooCommerce_Public {
 					$type => $points,
 					'date' => $today_date,
 					'refered_user' => $data['wps_store_referral_user_ids'],
+				);
+			}
+
+			/*Update the user meta for the points details*/
+			update_user_meta( $user_id, 'points_details', $get_referral_detail );
+		}
+
+		// referral product purchase points.
+		if ( 'ref_product_detail' == $type ) {
+
+			$get_referral_detail = get_user_meta( $user_id, 'points_details', true );
+			$get_referral_detail = ! empty( $get_referral_detail ) && is_array( $get_referral_detail ) ? $get_referral_detail : array();
+
+			if ( isset( $get_referral_detail[ $type ] ) && ! empty( $get_referral_detail[ $type ] ) ) {
+				$custom_array = array(
+					$type => $points,
+					'date' => $today_date,
+					'refered_user' => $data['referr_id'],
+				);
+				$get_referral_detail[ $type ][] = $custom_array;
+			} else {
+
+				$get_referral_detail[ $type ][] = array(
+					$type => $points,
+					'date' => $today_date,
+					'refered_user' => $data['referr_id'],
 				);
 			}
 
@@ -3798,6 +3825,12 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_show_canvas_icons() {
 
+		// blocked by admin.
+		if ( wps_wpr_restrict_user_fun() ) {
+
+			return;
+		}
+
 		// if game points is rewarded than retur from here.
 		if ( ! empty( get_user_meta( get_current_user_id(), 'wps_wpr_check_game_points_assign_timing', true ) ) ) {
 
@@ -4453,6 +4486,20 @@ class Points_Rewards_For_WooCommerce_Public {
 		?>
 		<input type="hidden" name="wps_wpr_verify_cart_nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-cart-nonce' ) ); ?>">
 		<?php
+	}
+
+	/**
+	 * This function is used to make PAR compatible with Dokan Plugin.
+	 *
+	 * @param  bool   $valid valid.
+	 * @param  object $coupon coupon.
+	 * @param  array  $available_vendors available vendors.
+	 * @param  array  $available_products available products.
+	 * @return mixed
+	 */
+	public function wps_wpr_dokan_plugin_compatibility( $valid, $coupon, $available_vendors, $available_products ) {
+
+		return dokan_pro()->coupon->is_admin_coupon_valid( $coupon, $available_vendors, $available_products, array(), $valid );
 	}
 
 }

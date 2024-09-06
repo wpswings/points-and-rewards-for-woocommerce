@@ -18,47 +18,47 @@ $settings_obj = new Points_Rewards_For_WooCommerce_Dummy_Settings( '', '' );
 
 $wps_product_purchase_points = array(
 	array(
-		'title' => __( 'Purchase through Points', 'ultimate-woocommerce-points-and-rewards' ),
+		'title' => __( 'Purchase through Points', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'    => __( 'Purchase through Points', 'ultimate-woocommerce-points-and-rewards' ),
+		'title'    => __( 'Purchase through Points', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'checkbox',
-		'desc'     => __( 'Purchase Products through Points', 'ultimate-woocommerce-points-and-rewards' ),
+		'desc'     => __( 'Purchase Products through Points', 'points-and-rewards-for-woocommerce' ),
 		'id'       => 'wps_wpr_product_purchase_points',
 		'class'    => 'wps_wpr_pro_plugin_settings',
-		'desc_tip' => __( 'Check this box to enable purchasing products through points', 'ultimate-woocommerce-points-and-rewards' ),
+		'desc_tip' => __( 'Check this box to enable purchasing products through points', 'points-and-rewards-for-woocommerce' ),
 		'default'  => 0,
 	),
 	array(
-		'title'    => __( 'Restrictions for above setting', 'ultimate-woocommerce-points-and-rewards' ),
+		'title'    => __( 'Restrictions for above setting', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'checkbox',
-		'desc'     => __( 'Allow some of the products for purchasing through points', 'ultimate-woocommerce-points-and-rewards' ),
+		'desc'     => __( 'Allow some of the products for purchasing through points', 'points-and-rewards-for-woocommerce' ),
 		'id'       => 'wps_wpr_restrict_pro_by_points',
 		'class'    => 'wps_wpr_pro_plugin_settings',
-		'desc_tip' => __( 'Toggle This to Allow Some Products to Be Purchased Through Points', 'ultimate-woocommerce-points-and-rewards' ),
+		'desc_tip' => __( 'Toggle This to Allow Some Products to Be Purchased Through Points', 'points-and-rewards-for-woocommerce' ),
 		'default'  => 0,
 	),
 	array(
-		'title'    => __( 'Select Product Category', 'ultimate-woocommerce-points-and-rewards' ),
+		'title'    => __( 'Select Product Category', 'points-and-rewards-for-woocommerce' ),
 		'id'       => 'wps_wpr_restrictions_for_purchasing_cat',
 		'class'    => 'wps_wpr_pro_plugin_settings',
 		'type'     => 'search&select',
 		'multiple' => 'multiple',
-		'desc_tip' => __( 'Select those categories which you want to allow to customers for purchase that product through points.', 'ultimate-woocommerce-points-and-rewards' ),
+		'desc_tip' => __( 'Select those categories which you want to allow to customers for purchase that product through points.', 'points-and-rewards-for-woocommerce' ),
 		'options'  => $settings_obj->wps_wpr_get_dummy_category(),
 	),
 	array(
-		'title'    => __( 'Enter Text', 'ultimate-woocommerce-points-and-rewards' ),
+		'title'    => __( 'Enter Text', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'text',
 		'id'       => 'wps_wpr_purchase_product_text',
 		'class'    => 'text_points wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
-		'desc'     => esc_html__( 'The entered text will get displayed on the Single Product Page', 'ultimate-woocommerce-points-and-rewards' ),
-		'desc_tip' => __( 'The entered text will get displayed on the Single Product Page', 'ultimate-woocommerce-points-and-rewards' ),
-		'default'  => __( 'Use your Points for purchasing this Product', 'ultimate-woocommerce-points-and-rewards' ),
+		'desc'     => esc_html__( 'The entered text will get displayed on the Single Product Page', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'The entered text will get displayed on the Single Product Page', 'points-and-rewards-for-woocommerce' ),
+		'default'  => __( 'Use your Points for purchasing this Product', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title'       => __( 'Purchase Points Conversion', 'ultimate-woocommerce-points-and-rewards' ),
+		'title'       => __( 'Purchase Points Conversion', 'points-and-rewards-for-woocommerce' ),
 		'type'        => 'number_text',
 		'class'       => 'wps_wpr_pro_plugin_settings',
 		'number_text' => apply_filters(
@@ -69,12 +69,12 @@ $wps_product_purchase_points = array(
 					'type'              => 'text',
 					'id'                => 'wps_wpr_product_purchase_price',
 					'class'             => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price wps_wpr_pro_plugin_settings',
-					'custom_attributes' => array( 'min' => '"1"' ),
+					'custom_attributes' => array( 'min' => '"0"' ),
 					'desc_tip'          => __(
 						'Entered points will be converted to price. (i.e., how many points will be equivalent to the product price)',
-						'ultimate-woocommerce-points-and-rewards'
+						'points-and-rewards-for-woocommerce'
 					),
-					'desc'              => __( '=', 'ultimate-woocommerce-points-and-rewards' ),
+					'desc'              => __( '=', 'points-and-rewards-for-woocommerce' ),
 					'default'           => '1',
 					'curr'              => get_woocommerce_currency_symbol(),
 				),
@@ -82,24 +82,24 @@ $wps_product_purchase_points = array(
 					'type'              => 'number',
 					'id'                => 'wps_wpr_purchase_points',
 					'class'             => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
-					'custom_attributes' => array( 'min' => '"1"' ),
+					'custom_attributes' => array( 'min' => '"0"' ),
 					'desc_tip'          => __(
 						'Entered points will be converted to price.(i.e., how many points will be equivalent to the product price)',
-						'ultimate-woocommerce-points-and-rewards'
+						'points-and-rewards-for-woocommerce'
 					),
-					'desc'              => __( 'Points', 'ultimate-woocommerce-points-and-rewards' ),
+					'desc'              => __( 'Points', 'points-and-rewards-for-woocommerce' ),
 					'curr'              => '',
 				),
 			)
 		),
 	),
 	array(
-		'title'    => __( 'Make "Per Product Redemption" Readonly', 'ultimate-woocommerce-points-and-rewards' ),
+		'title'    => __( 'Make "Per Product Redemption" Readonly', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'checkbox',
-		'desc'     => __( 'Readonly for entering Number of Points for Redemption ', 'ultimate-woocommerce-points-and-rewards' ),
+		'desc'     => __( 'Readonly for entering Number of Points for Redemption ', 'points-and-rewards-for-woocommerce' ),
 		'id'       => 'wps_wpr_make_readonly',
 		'class'    => 'wps_wpr_pro_plugin_settings',
-		'desc_tip' => __( 'Check this box if you want to make the redemption box read-only(where the end-user can enter the number of points they want to redeem)', 'ultimate-woocommerce-points-and-rewards' ),
+		'desc_tip' => __( 'Check this box if you want to make the redemption box read-only(where the end-user can enter the number of points they want to redeem)', 'points-and-rewards-for-woocommerce' ),
 		'default'  => 0,
 	),
 	array(
@@ -175,21 +175,21 @@ $general_settings            = ! empty( $general_settings ) && is_array( $genera
 </div>
 <div class="clear"></div>
 <p class="submit">
-	<input type="submit" value='<?php esc_html_e( 'Save changes', 'ultimate-woocommerce-points-and-rewards' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes wps_wpr_disabled_pro_plugin" name="wps_wpr_save_product_purchase">
+	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes wps_wpr_disabled_pro_plugin" name="wps_wpr_save_product_purchase">
 </p>
 
 <!-- Category Listing -->
 
 <div class="wps_table">
-	<h4><?php esc_html_e( 'Purchase Product Through Points Only', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
-	<p class="wps_wpr_section_notice"><?php esc_html_e( 'This is a category-wise setting to assign points to a product of categories. Enter some valid points for assigning, and leave blank fields to remove assigned points.', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
+	<h4><?php esc_html_e( 'Purchase Product Through Points Only', 'points-and-rewards-for-woocommerce' ); ?></h4>
+	<p class="wps_wpr_section_notice"><?php esc_html_e( 'This is a category-wise setting to assign points to a product of categories. Enter some valid points for assigning, and leave blank fields to remove assigned points.', 'points-and-rewards-for-woocommerce' ); ?></p>
 	<div class="wps_wpr_categ_details">
 		<table class="form-table wps_wpr_pro_points_setting mwp_wpr_settings wps_wpr_pro_plugin_settings">
 			<tbody>
 				<tr>
-					<th class="titledesc"><?php esc_html_e( 'Categories', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
-					<th class="titledesc"><?php esc_html_e( 'Enter Points', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
-					<th class="titledesc"><?php esc_html_e( 'Assign/Remove', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
+					<th class="titledesc"><?php esc_html_e( 'Categories', 'points-and-rewards-for-woocommerce' ); ?></th>
+					<th class="titledesc"><?php esc_html_e( 'Enter Points', 'points-and-rewards-for-woocommerce' ); ?></th>
+					<th class="titledesc"><?php esc_html_e( 'Assign/Remove', 'points-and-rewards-for-woocommerce' ); ?></th>
 				</tr>
 				<?php
 				$args = array( 'taxonomy' => 'product_cat' );
@@ -203,7 +203,7 @@ $general_settings            = ! empty( $general_settings ) && is_array( $genera
 						<tr>
 							<td><?php echo esc_html( $catname ); ?></td>
 							<td><input type="number" min="1" name="wps_wpr_purchase_points_per_categ" id="wps_wpr_purchase_points_cat<?php echo esc_html( $catid ); ?>" value="<?php echo esc_html( $wps_wpr_purchase_categ_point ); ?>" class="input-text wps_wpr_new_woo_ver_style_text"></td>
-							<td><input type="button" value='<?php esc_html_e( 'Submit', 'ultimate-woocommerce-points-and-rewards' ); ?>' class="button-primary woocommerce-save-button wps_wpr_submit_purchase_points_per_category wps_wpr_disabled_pro_plugin" name="wps_wpr_submit_purchase_points_per_category" id="<?php echo esc_html( $catid ); ?>"></td>
+							<td><input type="button" value='<?php esc_html_e( 'Submit', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_submit_purchase_points_per_category wps_wpr_disabled_pro_plugin" name="wps_wpr_submit_purchase_points_per_category" id="<?php echo esc_html( $catid ); ?>"></td>
 						</tr>
 						<?php
 					}

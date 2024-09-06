@@ -121,13 +121,43 @@
 			dataType: "json",
 			success: function (e) {
 			  if ("success" == e.result) {
-				var i = e.data,
-				  p = "";
-				for (var s in i)
-				  p += '<option value="' + s + '">' + i[s] + "</option>";
-				jQuery("#wps_wpr_membership_product_list_" + r).html(p),
-				  jQuery("#wps_wpr_membership_product_list_" + r).select2(),
-				  jQuery("#wps_wpr_loader").hide();
+
+				var i             = e.data,
+				p                 = "";
+				var uniqueOptions = new Set();
+
+				// Store the previous selected value
+				var previousSelectedValue = jQuery("#wps_wpr_membership_product_list_" + r).val();
+
+				for (var s in i) {
+					if (!uniqueOptions.has(s)) {
+						uniqueOptions.add(s);
+						p += '<option value="' + s + '">' + i[s] + "</option>";
+					}
+				}
+
+				// Get the previous HTML content of the element
+				var previousValue = jQuery("#wps_wpr_membership_product_list_" + r).html();
+				p = previousValue + p;
+
+				// Update the HTML with unique options
+				jQuery("#wps_wpr_membership_product_list_" + r).html(p);
+
+				// Remove any duplicate <option> elements
+				jQuery("#wps_wpr_membership_product_list_" + r + " option").each(function() {
+					if (uniqueOptions.has(this.value)) {
+						uniqueOptions.delete(this.value); // Remove it from the set if it's already seen
+					} else {
+						jQuery(this).remove(); // Remove duplicate <option>
+					}
+				});
+
+				// Re-select the previous selected value
+				jQuery("#wps_wpr_membership_product_list_" + r).val(previousSelectedValue);
+
+				// Initialize or reinitialize the Select2 plugin
+				jQuery("#wps_wpr_membership_product_list_" + r).select2();
+				jQuery("#wps_wpr_loader").hide();
 			  }
 			},
 		  });

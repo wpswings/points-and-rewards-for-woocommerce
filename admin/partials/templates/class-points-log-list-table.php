@@ -1006,14 +1006,31 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 										<th scope="row" class="wps_wpr_head_titledesc">
 											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
 										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Product purchase by Referred User Points', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
 									</tr>
 								</thead>
 									<?php
 									foreach ( $point_log['ref_product_detail'] as $key => $value ) {
+										$user_name = '';
+										if ( isset( $value['refered_user'] ) && ! empty( $value['refered_user'] ) ) {
+											$user      = get_user_by( 'ID', $value['refered_user'] );
+											if ( isset( $user ) && ! empty( $user ) ) {
+												$user_name = $user->user_nicename;
+											} else {
+												$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
+											}
+										}
 										?>
-										<tr valign="top">
+										<tr>
 											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 											<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['ref_product_detail'] ); ?></td>
+											<td class="forminp forminp-text">
+												<?php
+												echo esc_html( $user_name );
+												?>
+											</td>
 										</tr>
 										<?php
 									}
@@ -1852,29 +1869,50 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 								<?php
 								foreach ( $point_log['reference_details'] as $key => $value ) {
 									$user_name = '';
-									if ( isset( $value['refered_user'] ) && ! empty( $value['refered_user'] ) ) {
-										$user = get_user_by( 'ID', $value['refered_user'] );
+									if ( count( $value['refered_user'] ) > 0 ) {
 
-										if ( isset( $user ) && ! empty( $user ) ) {
+										$count     = count( $value['refered_user'] );
+										$user_list = '';
+										for ( $i = 0; $i < $count; $i++ ) {
 
-											$user_name = $user->user_login;
-										} else {
+											$user = get_user_by( 'ID', $value['refered_user'][ $i ]['refered_user'] );
+											if ( isset( $user ) && ! empty( $user ) ) {
+												if ( 0 == $i ) {
 
-											$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
+													if ( $count > 1 ) {
+
+														$user_name = '<span class="wps_wpr_all_referral_name">' . $user->user_login . ' + ' . ( $count - 1 ) . ' More</span>';
+													} else {
+
+														$user_name = $user->user_login;
+													}
+												} else {
+
+													$user_list .= $user->user_login . ', ';
+												}
+											} else {
+
+												$user_name = esc_html__( 'This user doesn\'t exist', 'points-and-rewards-for-woocommerce' );
+											}
+										}
+
+										if ( ! empty( $user_list ) ) {
+
+											$user_name .= '<span class="wps_wpr_all_referral_view">' . rtrim( $user_list, ', ' ) . '</span>';
 										}
 									}
 									?>
-									<tr valign="top">
-										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['reference_details'] ); ?></td>
-										<td class="forminp forminp-text">
-										<?php
-										if ( isset( $user ) && ! empty( $user ) ) {
-											echo esc_html( $user_name );
-										} else {
-											echo esc_html( $user_name );
-										}
-										?>
+									<tr>
+									<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+									<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['reference_details'] ); ?></td>
+									<td class="forminp forminp-text">
+											<?php
+											if ( isset( $user ) && ! empty( $user ) ) {
+												echo wp_kses_post( $user_name );
+											} else {
+												echo wp_kses_post( $user_name );
+											}
+											?>
 										</td>
 									</tr>
 									<?php
