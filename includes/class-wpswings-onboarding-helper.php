@@ -156,7 +156,7 @@ class WPSwings_Onboarding_Helper {
 		 */
 		if ( $this->is_valid_page_screen() ) {
 
-			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_RWPR_DIR_URL . 'admin/css/wpswings-onboarding-admin.css', array(), '2.5.0', 'all' );
+			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_RWPR_DIR_URL . 'admin/css/wpswings-onboarding-admin.css', array(), '2.5.1', 'all' );
 			wp_enqueue_style( 'select2' );
 		}
 	}
@@ -182,7 +182,7 @@ class WPSwings_Onboarding_Helper {
 
 		if ( $this->is_valid_page_screen() ) {
 
-			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_RWPR_DIR_URL . 'admin/js/wpswings-onboarding-admin.js', array( 'jquery', 'select2' ), '2.5.0', true );
+			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_RWPR_DIR_URL . 'admin/js/wpswings-onboarding-admin.js', array( 'jquery', 'select2' ), '2.5.1', true );
 
 			global $pagenow;
 			$current_slug = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
