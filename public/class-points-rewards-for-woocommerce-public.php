@@ -2122,6 +2122,11 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
 			return;
 		}
+
+		if ( wps_wpr_restrict_user_fun() ) {
+
+			return;
+		}
 		/*Check is custom points on cart is enable*/
 		$wps_wpr_custom_points_on_checkout = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' );
 		$wps_wpr_custom_points_on_cart     = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
