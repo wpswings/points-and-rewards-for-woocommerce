@@ -69,7 +69,7 @@ $wps_wpr_setting_tab = array(
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-user-badges-settings.php',
 	),
 	'wps-wpr-user-report-settings'  => array(
-		'title'     => __( '', 'points-and-rewards-for-woocommerce' ),
+		'title'     => '',
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-user-report-settings.php',
 	),
 );

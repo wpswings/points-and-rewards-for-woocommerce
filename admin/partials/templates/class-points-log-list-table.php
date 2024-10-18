@@ -149,7 +149,7 @@ class Points_Log_List_Table extends WP_List_Table {
 	 * Undocumented function.
 	 *
 	 * @param  int $user_id user_id.
-	 * @return void
+	 * @return string
 	 */
 	public function wps_wpr_user_reports( $user_id ) {
 

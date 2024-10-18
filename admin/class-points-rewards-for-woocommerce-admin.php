@@ -1025,9 +1025,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * This function is used to display notoification bar at admin.
 	 *
-	 * @since 1.0.7
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
+	 * @return void
 	 */
 	public function wps_wpr_display_notification_bar() {
 		$screen = get_current_screen();
