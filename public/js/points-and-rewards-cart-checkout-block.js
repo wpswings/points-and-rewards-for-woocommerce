@@ -13,14 +13,14 @@
 				setTimeout(() => {
 					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
 	
-						jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
+						jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
 					}
 				}, 1000);
 
 				jQuery(document).on('mouseover', '.woocommerce-cart.woocommerce-page', function(){
 					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
 	
-						jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
+						jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
 					}
 				});
 			}
@@ -33,14 +33,14 @@
 				setTimeout(() => {
 					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
 
-						jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
+						jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
 					}
 				}, 1000);
 
 				jQuery(document).on('mouseover', '.woocommerce-checkout.woocommerce-page', function(){
 					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
 
-						jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">Add a points</a></div>');
+						jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
 					}
 				});
 			}
@@ -56,8 +56,8 @@
 			var wps_user_current_points = parseInt( wps_wpr.wps_user_current_points );
 			if ( minimum_redeem_points <= wps_user_current_points ) {
 
-				jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="Points"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="Apply Points" data-order-limit="0">Apply Points</button><p>' + wps_wpr_cart_block_obj. available_points_msg + ' : ' + wps_wpr_cart_block_obj.current__points + ' </p></div>');
-				jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="Points"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="Apply Points" data-order-limit="0">Apply Points</button><p>' + wps_wpr_cart_block_obj.available_points_msg + ' : ' + wps_wpr_cart_block_obj.current__points + ' </p></div>');
+				jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="' + wps_wpr.wps_points_name + '"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" data-order-limit="0">' + wps_wpr.wps_apply_points + '</button><p>' + wps_wpr_cart_block_obj. available_points_msg + ' : ' + wps_wpr_cart_block_obj.current__points + ' </p></div>');
+				jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="' + wps_wpr.wps_points_name + '"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" data-order-limit="0">' + wps_wpr.wps_apply_points + '</button><p>' + wps_wpr_cart_block_obj.available_points_msg + ' : ' + wps_wpr_cart_block_obj.current__points + ' </p></div>');
 			} else {
 
 				var required_points = parseInt( minimum_redeem_points - wps_user_current_points );

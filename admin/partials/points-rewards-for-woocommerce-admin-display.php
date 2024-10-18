@@ -68,6 +68,10 @@ $wps_wpr_setting_tab = array(
 		'title'     => __( 'Badges', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-user-badges-settings.php',
 	),
+	'wps-wpr-user-report-settings'  => array(
+		'title'     => '',
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-user-report-settings.php',
+	),
 );
 
 $wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );

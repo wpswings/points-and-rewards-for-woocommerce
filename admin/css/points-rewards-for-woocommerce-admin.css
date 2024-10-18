@@ -1468,3 +1468,25 @@ span.wps_wpr_all_referral_view {
 span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wpr_all_referral_view:hover {
     display: inline-block;
 }
+
+/* User Report CSS */
+.wps_wpr_user_reports {
+    margin: 20px 0 40px;
+    overflow: auto;
+}
+
+.wps_wpr_user_reports table td,.wps_wpr_user_reports table th {
+    border: 1px solid #ccc;
+    text-align: left;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.wps_wpr_user_reports table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.wps_wpr_user_reports table th {
+    background: #f2f2f2;
+}

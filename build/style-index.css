@@ -1,0 +1,146 @@
+/*!*******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/style.css ***!
+  \*******************************************************************************************************************************************************************/
+.wpsMsfWrapper {
+  height: 100%;
+  min-height: 100vh;
+}
+.wpsTypography {
+  text-align: center;
+}
+.wpsStepper {
+  height: 60px;
+  border-bottom: 1px solid #dcdcde;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+.wpsMsf {
+  background: rgb(255, 255, 255);
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1px solid rgb(226, 228, 231);
+  margin: 36px auto 16px;
+  padding: 30px;
+  padding-top: 22px;
+}
+.wpsMsf input[type=date], 
+.wpsMsf input[type=datetime-local], 
+.wpsMsf input[type=datetime], 
+.wpsMsf input[type=email], 
+.wpsMsf input[type=month], 
+.wpsMsf input[type=number], 
+.wpsMsf input[type=password], 
+.wpsMsf input[type=search], 
+.wpsMsf input[type=tel], 
+.wpsMsf input[type=text], 
+.wpsMsf input[type=time], 
+.wpsMsf input[type=url], 
+.wpsMsf input[type=week] {
+  padding: 18.5px 14px;
+  line-height: normal;
+  min-height: 1.1876em;
+  box-shadow: none;
+  border-radius: 0;
+  border: 0;
+  background: none;
+}
+.wps-title {
+  margin: 0;
+  margin-bottom: 25px;
+  color: #676767;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.3;
+  font-family: "Poppins", sans-serif;
+}
+.wpsButtonWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wpsHeadingWrap {
+  text-align: center;
+  padding-top: 50px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.wpsHeadingWrap h2 {
+  color: #202020;
+  font-size: 24px;
+  font-weight: 600;
+  margin:0;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  font-family: "Poppins", sans-serif;
+}
+.wpsHeadingWrap p {
+  color: #939299;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+}
+.wpsButtonWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wpsMsf .wpsFormLabel {
+  color: #939299;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+.wpsMsf .wpsFormRadio {
+  color: #939299;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.4;
+}
+form.wpsMsf h1 {
+  color: #202020;
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  padding-top: 10px;
+  text-align: center;
+}
+.wpsStepper {
+    height: 42px;
+    border-bottom: 1px solid #dcdcde;
+    background: #fff;
+}
+form.wpsMsf textarea {
+  padding: 9.5px 14px;
+  border: 1px solid #c7c7c7 !important;
+  font-size: 16px;
+  color: #2c3338;
+}
+form.wpsMsf textarea:focus {
+  border:1px solid #3f51b5 !important
+}
+form.wpsMsf textarea::-moz-placeholder {
+  color: #767676;
+}
+form.wpsMsf textarea::placeholder {
+  color: #767676;
+}
+.wpsCircularProgress {
+  text-align: center;
+  margin: 0 auto;
+  display: block !important;
+  margin-bottom: 30px;
+}
+@media screen and (max-width:991px) {
+  span.MuiTypography-root.MuiStepLabel-label {
+      display: none;
+  }
+  .wpsMsfWrapper .MuiStepper-root {
+      padding: 20px 5px;
+  }
+}
+
+/*# sourceMappingURL=style-index.css.map*/

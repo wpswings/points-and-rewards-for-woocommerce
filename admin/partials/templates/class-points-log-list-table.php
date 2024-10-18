@@ -61,6 +61,7 @@ class Points_Log_List_Table extends WP_List_Table {
 			'reason'         => __( 'Enter Remark', 'points-and-rewards-for-woocommerce' ),
 			'details'        => __( 'Action', 'points-and-rewards-for-woocommerce' ),
 			'ban_user'       => __( 'Restrict User', 'points-and-rewards-for-woocommerce' ),
+			'user_report'    => __( 'Report', 'points-and-rewards-for-woocommerce' ),
 		);
 		return $columns;
 	}
@@ -106,6 +107,8 @@ class Points_Log_List_Table extends WP_List_Table {
 				return $this->view_html( $item['id'] );
 			case 'ban_user':
 				return $this->wps_wpr_ban_use( $item['id'] );
+			case 'user_report':
+				return $this->wps_wpr_user_reports( $item['id'] );
 			default:
 				return false;
 		}
@@ -140,6 +143,26 @@ class Points_Log_List_Table extends WP_List_Table {
 			<span class="wps_wpr_sliders wps_wpr_rounds"></span>
 		</label>
 		<?php
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param  int $user_id user_id.
+	 * @return string
+	 */
+	public function wps_wpr_user_reports( $user_id ) {
+
+		$nonce = wp_create_nonce( 'par_main_setting' ); // Create nonce 'wps-par-admin-nonce' par_main_setting.
+		$url_report = esc_url( admin_url( 'admin.php?page=wps-rwpr-setting&nonce=' ) . $nonce . '&tab=wps-wpr-user-report-settings&wps_reports_userid=' . $user_id );
+
+		$data  = '';
+		$data .= '<span>';
+
+		$data .= '<a href="' . $url_report . '" title="View Reports" >';
+		$data .= '<img height="36" src="' . esc_url( WPS_RWPR_DIR_URL ) . 'admin/images/report-colored.png"></a>';
+		$data .= '</span>';
+		return $data;
 	}
 
 	/**

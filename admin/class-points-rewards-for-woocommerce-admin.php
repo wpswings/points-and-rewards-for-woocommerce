@@ -62,6 +62,16 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
 		}
+
+		$style_url        = WPS_RWPR_DIR_URL . 'build/style-index.css';
+		wp_enqueue_style(
+			'wps-admin-react-styles',
+			$style_url,
+			array(),
+			time(),
+			false
+		);
+
 		if ( 'woocommerce_page_wps-rwpr-setting' == $hook || 'woocommerce_page_wps-rwpr-setting' === $pagescreen ) {
 			wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'select2' );
@@ -178,9 +188,82 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
 					wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
+
+					// user report work.
+					if ( isset( $_GET['wps_reports_userid'] ) ) {
+
+						$user_id   = ! empty( $_GET['wps_reports_userid'] ) ? sanitize_text_field( wp_unslash( $_GET['wps_reports_userid'] ) ) : '';
+						$user_data = $this->wps_wpr_get_user_reports_data( $user_id );
+						// js for the multistep from.
+						$script_path      = WPS_RWPR_DIR_URL . 'build/index.js';
+						$path = preg_replace( '/\?v=[\d]+$/', '', $script_path );
+						// $fileTime = filemtime($path);
+						$script_asset_path = WPS_RWPR_DIR_URL . 'build/index.asset.php';
+						$script_asset      = file_exists( $script_asset_path )
+							? require $script_asset_path
+							: array(
+								'dependencies' => array(
+									'wp-hooks',
+									'wp-element',
+									'wp-i18n',
+									'wc-components',
+								),
+								'version'      => $path,
+							);
+						$script_url        = WPS_RWPR_DIR_URL . 'build/index.js';
+						wp_register_script(
+							'react-app-block',
+							$script_url,
+							$script_asset['dependencies'],
+							$script_asset['version'],
+							true
+						);
+
+						wp_enqueue_script( 'react-app-block' );
+						wp_localize_script(
+							'react-app-block',
+							'frontend_ajax_object',
+							array(
+								'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+								'wps_standard_nonce' => wp_create_nonce( 'ajax-nonce' ),
+								'name'            => $user_data['name'],
+								'email'           => $user_data['email'],
+								'membership_name' => $user_data['membership_name'],
+								'referral_count'  => $user_data['referral_count'],
+								'redeem_points'   => $user_data['redeem_points'],
+								'current_points'  => $user_data['current_points'],
+								'overall_points'  => $user_data['overall_points'],
+							)
+						);
+					}
 				}
 			}
 		}
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param  int $user_id user_id.
+	 * @return array
+	 */
+	public function wps_wpr_get_user_reports_data( $user_id ) {
+
+		$data = array();
+		if ( ! empty( $user_id ) ) {
+
+			$user = get_user_by( 'ID', $user_id );
+			$data = array(
+				'name'            => $user->display_name,
+				'email'           => $user->user_email,
+				'membership_name' => get_user_meta( $user_id, 'membership_level', true ),
+				'referral_count'  => ! empty( get_user_meta( $user_id, 'wps_referral_counting', true ) ) ? get_user_meta( $user_id, 'wps_referral_counting', true ) : 0,
+				'redeem_points'   => ! empty( get_user_meta( $user_id, 'wps_wpr_redeemed_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_redeemed_points', true ) : 0,
+				'current_points'  => ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0,
+				'overall_points'  => ! empty( get_user_meta( $user_id, 'wps_wpr_overall__accumulated_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_overall__accumulated_points', true ) : 0,
+			);
+		}
+		return $data;
 	}
 
 	/**
@@ -942,9 +1025,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * This function is used to display notoification bar at admin.
 	 *
-	 * @since 1.0.7
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
+	 * @return void
 	 */
 	public function wps_wpr_display_notification_bar() {
 		$screen = get_current_screen();
