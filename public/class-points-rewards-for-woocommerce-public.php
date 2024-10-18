@@ -139,6 +139,8 @@ class Points_Rewards_For_WooCommerce_Public {
 			'wps_points_name'            => esc_html__( 'Points', 'points-and-rewards-for-woocommerce' ),
 			'points_message_require'     => esc_html__( 'You require : ', 'points-and-rewards-for-woocommerce' ),
 			'points_more_to_redeem'      => esc_html__( ' points more to get redeem', 'points-and-rewards-for-woocommerce' ),
+			'wps_add_a_points'           => esc_html__( 'Add a points', 'points-and-rewards-for-woocommerce' ),
+			'wps_apply_points'           => esc_html__( 'Apply Points', 'points-and-rewards-for-woocommerce' ),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 
