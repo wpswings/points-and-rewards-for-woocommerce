@@ -3657,6 +3657,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_enable_order_rewards_settings = ! empty( $wps_wpr_settings_gallery['wps_wpr_enable_order_rewards_settings'] ) ? $wps_wpr_settings_gallery['wps_wpr_enable_order_rewards_settings'] : '';
 		$wps_wpr_number_of_reward_order        = ! empty( $wps_wpr_settings_gallery['wps_wpr_number_of_reward_order'] ) ? $wps_wpr_settings_gallery['wps_wpr_number_of_reward_order'] : 0;
 		$wps_wpr_number_of_rewards_points      = ! empty( $wps_wpr_settings_gallery['wps_wpr_number_of_rewards_points'] ) ? $wps_wpr_settings_gallery['wps_wpr_number_of_rewards_points'] : 0;
+		$wps_wpr_order_rewards_points_type     = ! empty( $wps_wpr_settings_gallery['wps_wpr_order_rewards_points_type'] ) ? $wps_wpr_settings_gallery['wps_wpr_order_rewards_points_type'] : 'fixed';
 
 		// check order rewards setting enable or not.
 		if ( 1 === $wps_wpr_enable_order_rewards_settings ) {
@@ -3681,7 +3682,23 @@ class Points_Rewards_For_WooCommerce_Public {
 					$wps_order_rewards_details = ! empty( $wps_order_rewards_details ) && is_array( $wps_order_rewards_details ) ? $wps_order_rewards_details : array();
 					$user_total_points         = get_user_meta( $user_id, 'wps_wpr_points', true );
 					$user_total_points         = ! empty( $user_total_points ) && ! is_null( $user_total_points ) ? $user_total_points : 0;
-					$updated_points            = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
+
+					$order_total = 0;
+					$order_count = count( $customer_orders );
+					for ( $i = 0; $i < $order_count; $i++ ) {
+
+						$order_total += $customer_orders[$i]->total;
+					}
+
+					if ( 'percent' === $wps_wpr_order_rewards_points_type ) {
+
+						$wps_wpr_number_of_rewards_points = ( $order_total * $wps_wpr_number_of_rewards_points ) / 100;
+						$updated_points                   = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
+					} else {
+
+
+						$updated_points = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
+					}
 
 					// create log for order rewards points.
 					if ( isset( $wps_order_rewards_details['order__rewards_points'] ) && ! empty( $wps_order_rewards_details['order__rewards_points'] ) ) {
@@ -4018,7 +4035,15 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( empty( $already_assign_check ) ) {
 
 				$wps_claim_points = ! empty( $_POST['claim_points'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_points'] ) ) : 0;
-				if ( $wps_claim_points > 0 ) {
+				// wallet compatibility.
+				$win_wheel_type = 'point';
+				$win_wheel_type = apply_filters( 'wps_wpr_gamification_feature_for_wallet', $win_wheel_type, $wps_claim_points );
+				if( 'wallet' == $win_wheel_type && $wps_claim_points > 0 ){
+
+					$response['result'] = true;
+					$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
+					// wallet compatibility.
+				} elseif ( 'point' == $win_wheel_type && $wps_claim_points > 0 ) {
 
 					// Next play date cal.
 					$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
