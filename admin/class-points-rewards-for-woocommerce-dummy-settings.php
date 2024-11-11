@@ -685,9 +685,6 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 	 * @return void
 	 */
 	public function wps_wpr_additional_dummy_cart_points_settings( $value, $general_settings ) {
-		if ( 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
-			$this->wps_wpr_generate_dummy_single_select_drop_down_with_key_value_pair( $value, $general_settings );
-		}
 		if ( 'search&select' == $value['type'] ) {
 			$this->wps_wpr_generate_dummy_search_select_html( $value, $general_settings );
 		}

@@ -15,6 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 include_once WPS_RWPR_DIR_PATH . 'admin/class-points-rewards-for-woocommerce-dummy-settings.php';
 $settings_obj = new Points_Rewards_For_WooCommerce_Dummy_Settings( '', '' );
+include_once WPS_RWPR_DIR_PATH . '/admin/partials/settings/class-points-rewards-for-woocommerce-settings.php';
+$settings_obj_two = new Points_Rewards_For_WooCommerce_Settings();
 
 $wps_api_array = array(
 	array(
@@ -74,7 +76,7 @@ $general_settings = ! empty( $general_settings ) && is_array( $general_settings 
 							$settings_obj->wps_rwpr_generate_dummy_text_html( $value, $general_settings );
 						}
 						if ( 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
-							$settings_obj->wps_wpr_generate_dummy_single_select_drop_down_with_key_value_pair( $value, $general_settings );
+							$settings_obj_two->wps_wpr_org_generate_single_select_drop_down_with_key_value_pair( $value, $general_settings );
 						}
 						?>
 					</div>
