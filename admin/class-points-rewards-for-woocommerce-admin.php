@@ -259,7 +259,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				'membership_name' => get_user_meta( $user_id, 'membership_level', true ),
 				'referral_count'  => ! empty( get_user_meta( $user_id, 'wps_referral_counting', true ) ) ? get_user_meta( $user_id, 'wps_referral_counting', true ) : 0,
 				'redeem_points'   => ! empty( get_user_meta( $user_id, 'wps_wpr_redeemed_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_redeemed_points', true ) : 0,
-				'current_points'  => ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0,
+				'current_points'  => ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? (float) get_user_meta( $user_id, 'wps_wpr_points', true ) : 0,
 				'overall_points'  => ! empty( get_user_meta( $user_id, 'wps_wpr_overall__accumulated_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_overall__accumulated_points', true ) : 0,
 			);
 		}
@@ -332,7 +332,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $_POST['points'] ) && is_numeric( $_POST['points'] ) && isset( $_POST['user_id'] ) && isset( $_POST['sign'] ) && isset( $_POST['reason'] ) ) {
 
 			$user_id    = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
-			$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+			$get_points = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 			$points     = sanitize_text_field( wp_unslash( $_POST['points'] ) );
 			$sign       = sanitize_text_field( wp_unslash( $_POST['sign'] ) );
 			$reason     = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
@@ -518,7 +518,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_get_user_points( $user_id ) {
 		$wps_wpr_total_points = 0;
-		$wps_wpr_points       = get_user_meta( $user_id, 'wps_wpr_points', true );
+		$wps_wpr_points       = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 
 		if ( ! empty( $wps_wpr_points ) ) {
 			$wps_wpr_total_points = $wps_wpr_points;
@@ -1439,7 +1439,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 				$get_points     = get_user_meta( $order->get_user_id(), 'wps_wpr_points', true );
 				$get_points     = ! empty( $get_points ) ? $get_points : 0;
-				$updated_points = (int) $get_points + $rewards_points;
+				$updated_points = (float) $get_points + $rewards_points;
 
 				update_user_meta( $order->get_user_id(), 'wps_wpr_points', $updated_points );
 				wps_wpr_hpos_update_meta_data( $order->get_id(), 'wps_wpr_assign_points_to_old_orders', 'done' );
@@ -1692,7 +1692,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					$wps_wpr_membership_assign_points_values = ! empty( wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
 					if ( 'yes' === $wps_wpr_enable_points_settings ) {
 
-						$updated_points = (int) $get_points + $wps_wpr_membership_assign_points_values;
+						$updated_points = (float) $get_points + $wps_wpr_membership_assign_points_values;
 						if ( ! empty( $mem_assign_points_log['member_assign_rewards_points'] ) ) {
 
 							$arr = array();
@@ -1772,7 +1772,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					$wps_wpr_membership_assign_points_values = ! empty( wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
 					if ( 'yes' === $wps_wpr_enable_points_settings ) {
 
-						$updated_points = (int) $get_points + $wps_wpr_membership_assign_points_values;
+						$updated_points = (float) $get_points + $wps_wpr_membership_assign_points_values;
 						if ( ! empty( $mem_assign_points_log['member_assign_rewards_points'] ) ) {
 
 							$arr = array();
@@ -1810,7 +1810,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						$wps_wpr_membership_assign_points_values = ! empty( wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) ) ? wps_wpr_hpos_get_meta_data( $plan_id, 'wps_wpr_membership_assign_points_values', true ) : 0;
 						if ( 'yes' === $wps_wpr_enable_points_settings ) {
 
-							$updated_points = (int) $get_points - $wps_wpr_membership_assign_points_values;
+							$updated_points = (float) $get_points - $wps_wpr_membership_assign_points_values;
 							if ( ! empty( $mem_assign_points_refund_log['refund_member_assign_rewards_points'] ) ) {
 
 								$arr = array();
@@ -2045,7 +2045,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						$get_points              = ! empty( $get_points ) ? $get_points : 0;
 						$payment_rewards_details = get_user_meta( $user_id, 'points_details', true );
 						$payment_rewards_details = ! empty( $payment_rewards_details ) && is_array( $payment_rewards_details ) ? $payment_rewards_details : array();
-						$updated_points          = (int) $get_points + $wps_wpr_payment_method_rewards_points;
+						$updated_points          = (float) $get_points + $wps_wpr_payment_method_rewards_points;
 
 						if ( isset( $payment_rewards_details['payment_methods_points'] ) && ! empty( $payment_rewards_details['payment_methods_points'] ) ) {
 
@@ -2083,7 +2083,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 							$user_points            = ! empty( $user_points ) ? $user_points : 0;
 							$payment_refund_details = get_user_meta( $user_id, 'points_details', true );
 							$payment_refund_details = ! empty( $payment_refund_details ) && is_array( $payment_refund_details ) ? $payment_refund_details : array();
-							$updated_points         = (int) $user_points - $wps_wpr_payment_method_rewards_points;
+							$updated_points         = (float) $user_points - $wps_wpr_payment_method_rewards_points;
 
 							if ( isset( $payment_refund_details['refund_payment_points_details'] ) && ! empty( $payment_refund_details['refund_payment_points_details'] ) ) {
 
@@ -2330,8 +2330,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $user ) ) {
 
 			$user_id         = $user->ID;
-			$get_user_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-			$get_user_points = ! empty( $get_user_points ) ? (int) $get_user_points : 0;
+			$get_user_points = get_user_meta( $user_id, 'wps_wpr_points', true );
+			$get_user_points = ! empty( $get_user_points ) ? (float) $get_user_points : 0;
 			$wps_user_points = ! empty( $wps_user_points ) ? $wps_user_points : 0;
 			$admin_points    = get_user_meta( $user_id, 'points_details', true );
 			$admin_points    = ! empty( $admin_points ) && is_array( $admin_points ) ? $admin_points : array();
@@ -2344,17 +2344,17 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 				$wps_wpr_reason        = $import_points_reason;
 				$sign                  = '+';
-				$wps_update_csv_points = $get_user_points + (int) $wps_user_points;
+				$wps_update_csv_points = $get_user_points + (float) $wps_user_points;
 			} elseif ( 'subtract' === $wps_wpr_export_table_option ) {
 
 				$wps_wpr_reason        = $import_points_reason;
 				$sign                  = '-';
-				$wps_update_csv_points = $get_user_points - (int) $wps_user_points;
+				$wps_update_csv_points = $get_user_points - (float) $wps_user_points;
 			} elseif ( 'override' === $wps_wpr_export_table_option ) {
 
 				// translators: %s: get_user_points.
 				$wps_wpr_reason        = $import_points_reason;
-				$wps_update_csv_points = (int) $wps_user_points;
+				$wps_update_csv_points = (float) $wps_user_points;
 			}
 
 			if ( isset( $wps_user_points ) && ! empty( $wps_user_points ) ) {

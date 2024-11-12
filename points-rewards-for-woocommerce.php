@@ -246,7 +246,7 @@ if ( $activated ) {
 			$wps_wpr_shortcode_text_point = __( 'Your Current Point', 'points-and-rewards-for-woocommerce' );
 		}
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
-			$get_points = (int) get_user_meta( $user_ID, 'wps_wpr_points', true );
+			$get_points = (float) get_user_meta( $user_ID, 'wps_wpr_points', true );
 			return '<div class="wps_wpr_shortcode_wrapper">' . $wps_wpr_shortcode_text_point . ' ' . $get_points . '</div>';
 		}
 	}

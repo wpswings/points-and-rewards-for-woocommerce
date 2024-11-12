@@ -87,7 +87,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// get user current points.
 		$current_points = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
-		$current_points = ! empty( $current_points ) && ! is_null( $current_points ) ? $current_points : 0;
+		$current_points = ! empty( $current_points ) && ! is_null( $current_points ) ? (float) $current_points : 0;
 
 		// get gamification settings.
 		$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
@@ -181,7 +181,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				'ajaxurl'                                => admin_url( 'admin-ajax.php' ),
 				'wps_wpr_nonce'                          => wp_create_nonce( 'wps-wpr-verify-nonce' ),
 				'wps_wpr_cart_page_total_earning_points' => $wps_wpr_cart_page_total_earning_points,
-				'current__points'                        => ! empty( get_user_meta( get_current_user_id(), 'wps_wpr_points', true ) ) ? get_user_meta( get_current_user_id(), 'wps_wpr_points', true ) : 0,
+				'current__points'                        => ! empty( get_user_meta( get_current_user_id(), 'wps_wpr_points', true ) ) ? (float) get_user_meta( get_current_user_id(), 'wps_wpr_points', true ) : 0,
 				'available_points_msg'                   => esc_html__( 'Your available points', 'points-and-rewards-for-woocommerce' ),
 			);
 			wp_localize_script( 'wp-wps-wpr-cart-class', 'wps_wpr_cart_block_obj', $wps_wpr );
@@ -671,7 +671,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					$refere_data = get_users( $args );
 					$refere_id   = $refere_data[0]->data->ID;
 					$get_points  = get_user_meta( $refere_id, 'wps_wpr_points', true );
-					$get_points  = ! empty( $get_points ) ? (int) $get_points : 0;
+					$get_points  = ! empty( $get_points ) ? (float) $get_points : 0;
 					update_option( 'refereeid', $get_points );
 
 					// filter that will add restriction.
@@ -698,7 +698,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 					if ( $wps_wpr_referral_program ) {
 
-						$total_points = (int) ( $get_points + $wps_refer_value );
+						$total_points = (float) ( $get_points + $wps_refer_value );
 						// update the points of the referred user.
 						update_user_meta( $refere_id, 'wps_wpr_points', $total_points );
 
@@ -1007,7 +1007,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$order_total = $order->get_total();
 			// WOOCS - WooCommerce Currency Switcher Compatibility.
 			$order_total  = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
-			$total_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+			$total_points = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 			/*Get the user*/
 			$user = get_user_by( 'ID', $user_id );
 			/*Get the user email*/
@@ -1025,7 +1025,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							$thankyouorder_min[ $key ] <= $order_total &&
 							$order_total <= $thankyouorder_max[ $key ]
 						) {
-							$wps_wpr_point = (int) $thankyouorder_value[ $key ];
+							$wps_wpr_point = (float) $thankyouorder_value[ $key ];
 							$total_points = $total_points + $wps_wpr_point;
 						}
 					} else if (
@@ -1034,7 +1034,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						empty( $thankyouorder_max[ $key ] )
 					) {
 						if ( $thankyouorder_min[ $key ] <= $order_total ) {
-							$wps_wpr_point = (int) $thankyouorder_value[ $key ];
+							$wps_wpr_point = (float) $thankyouorder_value[ $key ];
 							$total_points = $total_points + $wps_wpr_point;
 						}
 					}
@@ -1184,7 +1184,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								if ( 'set' != $item_conversion_id_set ) {
 
 									$user_id = $order->get_user_id();
-									$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+									$get_points = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 									/*total calculation of the points*/
 									$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
 									$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
@@ -1195,7 +1195,7 @@ class Points_Rewards_For_WooCommerce_Public {
 									$points_calculation = round( ( $order_total * $wps_wpr_coupon_conversion_points ) / $wps_wpr_coupon_conversion_price );
 									$points_calculation = apply_filters( 'wps_round_down_cart_total_value', $points_calculation, $order_total, $wps_wpr_coupon_conversion_points, $wps_wpr_coupon_conversion_price );
 									/*Total Point of the order*/
-									$total_points = intval( $points_calculation + $get_points );
+									$total_points = floatval( $points_calculation + $get_points );
 
 									$data = array(
 										'wps_par_order_id' => $order_id,
@@ -1233,7 +1233,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					if ( ! empty( $user_id ) ) {
 						$user       = get_user_by( 'ID', $user_id );
 						$user_email = $user->user_email;
-						$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+						$get_points = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 						$data       = array();
 						/*Update points details in woocommerce*/
 						$this->wps_wpr_update_points_details( $user_id, 'product_details', $item_points, $data );
@@ -1283,7 +1283,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 							$value_to_refund          = $value['cart_subtotal_point'];
 							$wps_total_points_par     = get_user_meta( $user_id, 'wps_wpr_points', true );
-							$wps_points_newly_updated = (int) ( $wps_total_points_par + $value_to_refund );
+							$wps_points_newly_updated = (float) ( $wps_total_points_par + $value_to_refund );
 							$wps_refer_deduct_points  = get_user_meta( $user_id, 'points_details', true );
 							$wps_refer_deduct_points  = ! empty( $wps_refer_deduct_points ) && is_array( $wps_refer_deduct_points ) ? $wps_refer_deduct_points : array();
 							if ( isset( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) && ! empty( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) ) {
@@ -1331,7 +1331,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 								$value_to_refund                 = $value['subscription_renewal_points'];
 								$wps_total_points_par            = get_user_meta( $user_id, 'wps_wpr_points', true );
-								$wps_points_newly_updated        = (int) ( $wps_total_points_par - $value_to_refund );
+								$wps_points_newly_updated        = (float) ( $wps_total_points_par - $value_to_refund );
 								$wps_subscription_renewal_refund = get_user_meta( $user_id, 'points_details', true );
 								$wps_subscription_renewal_refund = ! empty( $wps_subscription_renewal_refund ) && is_array( $wps_subscription_renewal_refund ) ? $wps_subscription_renewal_refund : array();
 								if ( isset( $wps_subscription_renewal_refund['refund_subscription__renewal_points'] ) && ! empty( $wps_subscription_renewal_refund['refund_subscription__renewal_points'] ) ) {
@@ -1383,7 +1383,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						$refund_per_currency_spend_points = wps_wpr_hpos_get_meta_data( $order_id, "$order_id#refund_per_currency_spend_points", true );
 						if ( empty( $refund_per_currency_spend_points ) || 'yes' != $refund_per_currency_spend_points ) {
 
-							$get_points  = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+							$get_points  = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 							$points_log  = get_user_meta( $user_id, 'points_details', true );
 							$points_log  = ! empty( $points_log ) && is_array( $points_log ) ? $points_log : array();
 							$all_refunds = $order->get_refunds();
@@ -1477,7 +1477,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 									if ( empty( $is_refunded ) || 'yes' != $is_refunded ) {
 
-										$get_points   = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+										$get_points   = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 										$deduct_point = $wps_wpr_value->value;
 										$total_points = $get_points - $deduct_point;
 
@@ -1564,7 +1564,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			// WOOCS - WooCommerce Currency Switcher Compatibility.
 			$order_total         = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $order_total );
 			$user_id             = $order->get_user_id();
-			$get_points          = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+			$get_points          = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 			$deduction_of_points = get_user_meta( $user_id, 'points_details', true );
 			$deduction_of_points = ! empty( $deduction_of_points ) && is_array( $deduction_of_points ) ? $deduction_of_points : array();
 
@@ -1773,7 +1773,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( 1 == $wps_wpr_custom_points_on_cart ) {
 
 			$user_id            = get_current_user_ID();
-			$get_points         = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+			$get_points         = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 			$get_min_redeem_req = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' );
 
 			if ( empty( $get_points ) ) {
@@ -1814,7 +1814,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							</div>	
 							<?php
 						} else {
-							$extra_req = abs( $get_min_redeem_req - $get_points );
+							$extra_req = ( $get_min_redeem_req - $get_points );
 							?>
 							<div class="wps_wpr_apply_custom_points">
 								<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
@@ -1860,7 +1860,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 			// deduct points if Points Discount is applied.
 			$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
-			$get_points                                   = (int) $get_points - $wps_wpr_check_points_discount_applied_amount;
+			$get_points                                   = (float) $get_points - $wps_wpr_check_points_discount_applied_amount;
 
 			// deduct points if discount applied via product edit page( purchase throught only points ).
 			$applied__points     = 0;
@@ -1887,7 +1887,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 
 			// purchase through points only data.
-			$get_points = (int) $get_points - $applied__points;
+			$get_points = (float) $get_points - $applied__points;
 
 			// Restriction on sale Product data.
 			$general_settings      = get_option( 'wps_wpr_settings_gallery' );
@@ -2371,7 +2371,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		}
 
 		$user_id    = get_current_user_id();
-		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+		$get_points = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 		// cart block change.
 		$order_id = $order->get_id();
 		if ( isset( $order ) && ! empty( $order ) ) {
@@ -2400,7 +2400,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
 							// hpos.
 							wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#$fee_id', $coupon_amount );
-							$fee_to_point    = ceil( $coupon_amount );
+							$fee_to_point    = ( $coupon_amount );
 							$remaining_point = $get_points - $fee_to_point;
 							if ( $remaining_point < 0 ) {
 								$remaining_point = 0;
@@ -2773,7 +2773,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		/*Expiration period of the membership*/
 		$wps_wpr_mem_expr = get_user_meta( $user_id, 'membership_expiration', true );
 		/*Get the user id of the user*/
-		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+		$get_points = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 		$membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
 		/*Get the membership level*/
 		$wps_wpr_membership_roles = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
@@ -3008,7 +3008,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 
 			// deduct points if Points Discount is applied.
-			$get_points                                   = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+			$get_points                                   = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 			$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
 			$get_points                                   = $get_points - $wps_wpr_check_points_discount_applied_amount;
 
@@ -3046,7 +3046,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				</div>
 					<?php
 				} else {
-					$extra_req = abs( $get_min_redeem_req - $get_points );
+					$extra_req = ( $get_min_redeem_req - $get_points );
 					?>
 				<div class="custom_point_checkout woocommerce-info wps_wpr_checkout_points_class">
 				<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
@@ -3233,7 +3233,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$user_id = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
 			$points  = sanitize_text_field( wp_unslash( $_POST['points'] ) );
 			/*Get all user points*/
-			$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+			$get_points = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 			if ( empty( $points ) ) {
 				$response['result']  = false;
 				$response['message'] = esc_html__( 'Sorry ! Not Transfered', 'points-and-rewards-for-woocommerce' );
@@ -3390,7 +3390,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
 			if ( 1 === $wps_wpr_custom_points_on_cart ) {
 				$user_id            = get_current_user_ID();
-				$get_points         = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+				$get_points         = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 				$get_min_redeem_req = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' );
 
 				if ( empty( $get_points ) ) {
@@ -3430,7 +3430,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							</div>	
 							<?php
 						} else {
-							$extra_req = abs( $get_min_redeem_req - $get_points );
+							$extra_req = ( $get_min_redeem_req - $get_points );
 							?>
 							<div class="wps_wpr_apply_custom_points">
 								<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
@@ -3472,7 +3472,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					$public_obj = new Points_Rewards_For_WooCommerce_Public( 'points-and-rewards-for-woocommerce', '1.0.0' );
 				}
 
-				$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+				$get_points = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
 				// deduct points if Points Discount is applied.
 				$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
 				$get_points                                   = $get_points - $wps_wpr_check_points_discount_applied_amount;
@@ -3510,7 +3510,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					</div>
 						<?php
 					} else {
-						$extra_req = abs( $get_min_redeem_req - $get_points );
+						$extra_req = ( $get_min_redeem_req - $get_points );
 						?>
 					<div class="custom_point_checkout woocommerce-info wps_wpr_checkout_points_class">
 						<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
@@ -3693,11 +3693,11 @@ class Points_Rewards_For_WooCommerce_Public {
 					if ( 'percent' === $wps_wpr_order_rewards_points_type ) {
 
 						$wps_wpr_number_of_rewards_points = ( $order_total * $wps_wpr_number_of_rewards_points ) / 100;
-						$updated_points                   = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
+						$updated_points                   = (float) $user_total_points + $wps_wpr_number_of_rewards_points;
 					} else {
 
 
-						$updated_points = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
+						$updated_points = (float) $user_total_points + $wps_wpr_number_of_rewards_points;
 					}
 
 					// create log for order rewards points.
@@ -4055,9 +4055,9 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 
 					$user_get_points = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
-					$user_get_points = ! empty( $user_get_points ) ? (int) $user_get_points : 0;
+					$user_get_points = ! empty( $user_get_points ) ? (float) $user_get_points : 0;
 
-					$wps_updated_points = (int) $user_get_points + $wps_claim_points;
+					$wps_updated_points = (float) $user_get_points + $wps_claim_points;
 					update_user_meta( get_current_user_id(), 'wps_wpr_points', $wps_updated_points );
 
 					// calling function for creating points log.
@@ -4154,7 +4154,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		if ( is_user_logged_in() ) {
 
-			$exist_points = (int) get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+			$exist_points = (float) get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
 			if ( null !== WC() ) {
 
 				if ( isset( WC()->session ) && WC()->session->has_session() ) {
@@ -4197,7 +4197,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( $get_points !== $random_points ) {
 				if ( $get_points > $random_points ) {
 
-					$updated_points = (int) $get_points - $random_points;
+					$updated_points = (float) $get_points - $random_points;
 					update_user_meta( get_current_user_id(), 'wps_wpr_store_random_points', $get_points );
 				} else {
 
@@ -4214,12 +4214,12 @@ class Points_Rewards_For_WooCommerce_Public {
 			// updating overall accumulated points.
 			if ( $updated_points > 0 ) {
 
-				$updated_silver_points = (int) $silver_points + $updated_points;
+				$updated_silver_points = (float) $silver_points + $updated_points;
 				update_user_meta( get_current_user_id(), 'wps_wpr_overall__accumulated_points', $updated_silver_points );
 			} elseif ( $get_points > $silver_points ) {
 
-				$updated_silver_points = (int) $get_points - $silver_points;
-				$updated_silver_points = (int) $silver_points + $updated_silver_points;
+				$updated_silver_points = (float) $get_points - $silver_points;
+				$updated_silver_points = (float) $silver_points + $updated_silver_points;
 				update_user_meta( get_current_user_id(), 'wps_wpr_overall__accumulated_points', $updated_silver_points );
 			}
 
@@ -4274,7 +4274,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 					if ( $flag ) {
 
-						$updated_points = (int) $wps_user_points + $wps_wpr_badges_rewards_points[ $index ];
+						$updated_points = (float) $wps_user_points + $wps_wpr_badges_rewards_points[ $index ];
 						update_user_meta( get_current_user_id(), 'wps_wpr_points', $updated_points );
 						update_user_meta( get_current_user_id(), 'wps_wpr_assigned_badges_icon', $wps_wpr_image_attachment_id[ $index ] );
 						update_user_meta( get_current_user_id(), 'wps_wpr_assigned_badges_level_name', $wps_wpr_enter_badges_name[ $index ] );
@@ -4425,10 +4425,10 @@ class Points_Rewards_For_WooCommerce_Public {
 						if ( 'fixed' === $assign_mem_points_type ) {
 
 							$calculated_points = $mem_rewards_points_val;
-							$updated_points    = (int) $user_points + $mem_rewards_points_val;
+							$updated_points    = (float) $user_points + $mem_rewards_points_val;
 						} else {
 
-							$calculated_points = (int) ( $order->get_total() * $mem_rewards_points_val ) / 100;
+							$calculated_points = (float) ( $order->get_total() * $mem_rewards_points_val ) / 100;
 							$updated_points    = $user_points + $calculated_points;
 						}
 
@@ -4472,7 +4472,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( empty( $wps_wpr_mem_points_refund_check ) ) {
 					if ( $wps_wpr_reward_assign_mem_points > 0 ) {
 
-						$updated_points = (int) $users_points - $wps_wpr_reward_assign_mem_points;
+						$updated_points = (float) $users_points - $wps_wpr_reward_assign_mem_points;
 						if ( ! empty( $mem__refund_logs['membership_level_points_refunded'] ) ) {
 
 							$user_badges_arr                                       = array(
