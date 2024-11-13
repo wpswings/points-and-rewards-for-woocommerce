@@ -275,19 +275,19 @@ $wps_wpr_general_settings = array(
 		'desc_tip'          => __( 'Set the number of points that user will get when reach the maximum number of order.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
-		'title' => __( 'Select Points Type', 'ultimate-woocommerce-points-and-rewards' ),
-		'id' => 'wps_wpr_order_rewards_points_type',
-		'class' => 'wps_wgm_new_woo_ver_style_select',
-		'type' => 'singleSelectDropDownWithKeyvalue',
-		'desc_tip' => __( 'Select the type to rewards points', 'ultimate-woocommerce-points-and-rewards' ),
+		'title'    => __( 'Select Points Type', 'points-and-rewards-for-woocommerce' ),
+		'id'       => 'wps_wpr_order_rewards_points_type',
+		'class'    => 'wps_wgm_new_woo_ver_style_select',
+		'type'     => 'singleSelectDropDownWithKeyvalue',
+		'desc_tip' => __( 'Select the type to rewards points', 'points-and-rewards-for-woocommerce' ),
 		'custom_attribute' => array(
 			array(
 				'id' => 'fixed',
-				'name' => __( 'Fixed', 'ultimate-woocommerce-points-and-rewards' ),
+				'name' => __( 'Fixed', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
 				'id' => 'percent',
-				'name' => __( 'Percentage', 'ultimate-woocommerce-points-and-rewards' ),
+				'name' => __( 'Percentage', 'points-and-rewards-for-woocommerce' ),
 			),
 		),
 	),

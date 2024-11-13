@@ -20,7 +20,7 @@ Declarations
 */
 $user_id                             = get_current_user_id();
 $my_role                             = ! empty( get_user_meta( $user_id, 'membership_level', true ) ) ? get_user_meta( $user_id, 'membership_level', true ) : '';
-$get_points                          = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
+$get_points                          = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 $get_points                          = ! empty( $get_points ) ? $get_points : 0;
 $wps_wpr_overall__accumulated_points = get_user_meta( $user_id, 'wps_wpr_overall__accumulated_points', true );
 $wps_wpr_overall__accumulated_points = ! empty( $wps_wpr_overall__accumulated_points ) ? $wps_wpr_overall__accumulated_points : 0;
@@ -74,7 +74,7 @@ if ( isset( $_POST['wps_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 }
 
 /* Get points of the User*/
-$get_points = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
+$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 /* Get points of the Membership Level*/
 $wps_user_level = get_user_meta( $user_id, 'membership_level', true );
 
@@ -113,7 +113,7 @@ if ( ! is_array( $coupon_settings ) ) {
 		<div class="wps_wpr_points_only wps_wpr_show_points_on_account_page">
 			<div class="wps_wpr_heading_para">
 				<span class="wps_wpr_heading"><?php echo esc_html( $wps_text_points_value ) . ':'; ?></span>
-				<span class="wps_wpr_total_earn_points"><?php echo esc_html( $get_points ); ?></span>
+				<span class="wps_wpr_total_earn_points"><?php echo esc_html( number_format( $get_points ) ); ?></span>
 			</div>
 			<?php
 			// Show overall earning points.
@@ -121,7 +121,7 @@ if ( ! is_array( $coupon_settings ) ) {
 				?>
 				<div class="wps_wpr_heading_para">
 					<span class="wps_wpr_heading"><?php esc_html_e( 'Overall Points : ', 'points-and-rewards-for-woocommerce' ); ?></span>
-					<span class="wps_wpr_total_earn_points"><?php echo esc_html( $wps_wpr_overall__accumulated_points ); ?></span>
+					<span class="wps_wpr_total_earn_points"><?php echo esc_html( number_format( $wps_wpr_overall__accumulated_points ) ); ?></span>
 				</div>
 				<?php
 			}

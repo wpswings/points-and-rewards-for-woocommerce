@@ -23,9 +23,9 @@
  * Requires Plugins: woocommerce
  *
  * Requires at least    : 5.5.0
- * Tested up to         : 6.6.2
+ * Tested up to         : 6.7
  * WC requires at least : 5.5.0
- * WC tested up to      : 9.3.3
+ * WC tested up to      : 9.4.1
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -246,7 +246,7 @@ if ( $activated ) {
 			$wps_wpr_shortcode_text_point = __( 'Your Current Point', 'points-and-rewards-for-woocommerce' );
 		}
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
-			$get_points = (float) get_user_meta( $user_ID, 'wps_wpr_points', true );
+			$get_points = (int) get_user_meta( $user_ID, 'wps_wpr_points', true );
 			return '<div class="wps_wpr_shortcode_wrapper">' . $wps_wpr_shortcode_text_point . ' ' . $get_points . '</div>';
 		}
 	}
