@@ -3701,7 +3701,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 					if ( 'percent' === $wps_wpr_order_rewards_points_type ) {
 
-						$wps_wpr_number_of_rewards_points = ( $order_total * $wps_wpr_number_of_rewards_points ) / 100;
+						$wps_wpr_number_of_rewards_points = ceil( ( $order_total * $wps_wpr_number_of_rewards_points ) / 100 );
 						$updated_points                   = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
 					} else {
 
