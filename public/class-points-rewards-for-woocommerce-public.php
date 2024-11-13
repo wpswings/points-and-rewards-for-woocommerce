@@ -1858,6 +1858,15 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
 			$wps_cart_points          = ( $wps_cart_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
 
+			// when points value is grater than price than convert points.
+			if ( $wps_wpr_cart_price_rate > $wps_wpr_cart_points_rate ) {
+
+				$get_points = ( $get_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+			} else {
+
+				$get_points = $get_points;
+			}
+
 			// deduct points if Points Discount is applied.
 			$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
 			$get_points                                   = (int) $get_points - $wps_wpr_check_points_discount_applied_amount;
@@ -4154,7 +4163,21 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		if ( is_user_logged_in() ) {
 
-			$exist_points = (int) get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+			$exist_points             = (int) get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+			$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
+			$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+			$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
+			$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+
+			// when points value is grater than price than convert points.
+			if ( $wps_wpr_cart_price_rate > $wps_wpr_cart_points_rate ) {
+
+				$exist_points = ( $exist_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+			} else {
+
+				$exist_points = $exist_points;
+			}
+
 			if ( null !== WC() ) {
 
 				if ( isset( WC()->session ) && WC()->session->has_session() ) {
