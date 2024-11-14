@@ -311,7 +311,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 = 2.5.2 - Released on 14 November 2024 = 
 * New: Assign points type options in Order Rewards Points Features.
 * New: Gamification features enhancement via Wallet Plugin
-* New: Compatibility with latest WP( 6.2.2 ) & WC( 9.3.3 )
+* New: Compatibility with latest WP( 6.7 ) & WC( 9.4.1 )
 
 = 2.5.1 - Released on 18 October 2024 = 
 * New: User Report via React
@@ -592,5 +592,5 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 = 2.5.2 - Released on 14 November 2024 = 
 * New: Assign points type options in Order Rewards Points Features.
 * New: Gamification features enhancement via Wallet Plugin
-* New: Compatibility with latest WP( 6.2.2 ) & WC( 9.3.3 )
+* New: Compatibility with latest WP( 6.7 ) & WC( 9.4.1 )
 
