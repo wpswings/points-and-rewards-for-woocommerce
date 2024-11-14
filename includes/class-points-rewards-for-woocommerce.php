@@ -79,7 +79,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '2.5.1';
+			$this->version = '2.5.2';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -155,7 +155,7 @@ class Points_Rewards_For_Woocommerce {
 	}
 
 	/**
-	 * Initialiation function to include mail teplate.
+	 * Initialiation function to include mail template.
 	 *
 	 * @since    1.0.0
 	 */

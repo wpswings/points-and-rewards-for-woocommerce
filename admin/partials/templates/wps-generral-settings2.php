@@ -275,6 +275,23 @@ $wps_wpr_general_settings = array(
 		'desc_tip'          => __( 'Set the number of points that user will get when reach the maximum number of order.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
+		'title'    => __( 'Select Points Type', 'points-and-rewards-for-woocommerce' ),
+		'id'       => 'wps_wpr_order_rewards_points_type',
+		'class'    => 'wps_wgm_new_woo_ver_style_select',
+		'type'     => 'singleSelectDropDownWithKeyvalue',
+		'desc_tip' => __( 'Select the type to rewards points', 'points-and-rewards-for-woocommerce' ),
+		'custom_attribute' => array(
+			array(
+				'id' => 'fixed',
+				'name' => __( 'Fixed', 'points-and-rewards-for-woocommerce' ),
+			),
+			array(
+				'id' => 'percent',
+				'name' => __( 'Percentage', 'points-and-rewards-for-woocommerce' ),
+			),
+		),
+	),
+	array(
 		'title'    => __( 'Show a message on the cart page', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'checkbox',
 		'id'       => 'wps_wpr_enable_to_show_order_reward_message',
@@ -383,6 +400,9 @@ do_action( 'wps_wpr_add_notice' );
 						}
 						if ( 'radio_button' == $value['type'] ) {
 							$settings_obj->wps_wps_generate_radio_html( $value, $general_settings );
+						}
+						if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) && 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
+							$settings_obj->wps_wpr_org_generate_single_select_drop_down_with_key_value_pair( $value, $general_settings );
 						}
 						do_action( 'wps_wpr_additional_general_settings', $value, $general_settings );
 						?>

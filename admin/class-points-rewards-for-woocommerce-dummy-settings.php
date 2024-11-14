@@ -542,6 +542,23 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'desc_tip'          => __( 'The Points New Customers Will Get After Their First Order', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
+				'title' => __( 'Select Points Type', 'ultimate-woocommerce-points-and-rewards' ),
+				'id' => 'wps_wpr_first_order_points_type',
+				'class' => 'wps_wgm_new_woo_ver_style_select wps_wpr_pro_plugin_settings',
+				'type' => 'singleSelectDropDownWithKeyvalue',
+				'desc_tip' => __( 'Select the discount Type to apply points', 'ultimate-woocommerce-points-and-rewards' ),
+				'custom_attribute' => array(
+					array(
+						'id' => 'fixed',
+						'name' => __( 'Fixed', 'ultimate-woocommerce-points-and-rewards' ),
+					),
+					array(
+						'id' => 'percent',
+						'name' => __( 'Percentage', 'ultimate-woocommerce-points-and-rewards' ),
+					),
+				),
+			),
+			array(
 				'type' => 'sectionend',
 			),
 		);
@@ -685,9 +702,6 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 	 * @return void
 	 */
 	public function wps_wpr_additional_dummy_cart_points_settings( $value, $general_settings ) {
-		if ( 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
-			$this->wps_wpr_generate_dummy_single_select_drop_down_with_key_value_pair( $value, $general_settings );
-		}
 		if ( 'search&select' == $value['type'] ) {
 			$this->wps_wpr_generate_dummy_search_select_html( $value, $general_settings );
 		}
@@ -2353,9 +2367,9 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
 				if ( ! empty( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
 
-					wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.5.1' );
+					wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.5.2' );
 					wp_enqueue_style( 'wps_wpr_dummy_css_file' );
-					wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.5.1', true );
+					wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.5.2', true );
 					wp_enqueue_script( 'wps_wpr_dummy_js_file' );
 					wp_localize_script(
 						'wps_wpr_dummy_js_file',

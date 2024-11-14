@@ -87,7 +87,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// get user current points.
 		$current_points = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
-		$current_points = ! empty( $current_points ) && ! is_null( $current_points ) ? $current_points : 0;
+		$current_points = ! empty( $current_points ) && ! is_null( $current_points ) ? (int) $current_points : 0;
 
 		// get gamification settings.
 		$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
@@ -181,7 +181,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				'ajaxurl'                                => admin_url( 'admin-ajax.php' ),
 				'wps_wpr_nonce'                          => wp_create_nonce( 'wps-wpr-verify-nonce' ),
 				'wps_wpr_cart_page_total_earning_points' => $wps_wpr_cart_page_total_earning_points,
-				'current__points'                        => ! empty( get_user_meta( get_current_user_id(), 'wps_wpr_points', true ) ) ? get_user_meta( get_current_user_id(), 'wps_wpr_points', true ) : 0,
+				'current__points'                        => ! empty( get_user_meta( get_current_user_id(), 'wps_wpr_points', true ) ) ? (int) get_user_meta( get_current_user_id(), 'wps_wpr_points', true ) : 0,
 				'available_points_msg'                   => esc_html__( 'Your available points', 'points-and-rewards-for-woocommerce' ),
 			);
 			wp_localize_script( 'wp-wps-wpr-cart-class', 'wps_wpr_cart_block_obj', $wps_wpr );
@@ -1857,6 +1857,15 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
 			$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
 			$wps_cart_points          = ( $wps_cart_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+
+			// when points value is grater than price than convert points.
+			if ( $wps_wpr_cart_price_rate > $wps_wpr_cart_points_rate ) {
+
+				$get_points = ( $get_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+			} else {
+
+				$get_points = $get_points;
+			}
 
 			// deduct points if Points Discount is applied.
 			$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
@@ -3657,6 +3666,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_enable_order_rewards_settings = ! empty( $wps_wpr_settings_gallery['wps_wpr_enable_order_rewards_settings'] ) ? $wps_wpr_settings_gallery['wps_wpr_enable_order_rewards_settings'] : '';
 		$wps_wpr_number_of_reward_order        = ! empty( $wps_wpr_settings_gallery['wps_wpr_number_of_reward_order'] ) ? $wps_wpr_settings_gallery['wps_wpr_number_of_reward_order'] : 0;
 		$wps_wpr_number_of_rewards_points      = ! empty( $wps_wpr_settings_gallery['wps_wpr_number_of_rewards_points'] ) ? $wps_wpr_settings_gallery['wps_wpr_number_of_rewards_points'] : 0;
+		$wps_wpr_order_rewards_points_type     = ! empty( $wps_wpr_settings_gallery['wps_wpr_order_rewards_points_type'] ) ? $wps_wpr_settings_gallery['wps_wpr_order_rewards_points_type'] : 'fixed';
 
 		// check order rewards setting enable or not.
 		if ( 1 === $wps_wpr_enable_order_rewards_settings ) {
@@ -3681,7 +3691,23 @@ class Points_Rewards_For_WooCommerce_Public {
 					$wps_order_rewards_details = ! empty( $wps_order_rewards_details ) && is_array( $wps_order_rewards_details ) ? $wps_order_rewards_details : array();
 					$user_total_points         = get_user_meta( $user_id, 'wps_wpr_points', true );
 					$user_total_points         = ! empty( $user_total_points ) && ! is_null( $user_total_points ) ? $user_total_points : 0;
-					$updated_points            = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
+
+					$order_total = 0;
+					$order_count = count( $customer_orders );
+					for ( $i = 0; $i < $order_count; $i++ ) {
+
+						$order_total += $customer_orders[$i]->total;
+					}
+
+					if ( 'percent' === $wps_wpr_order_rewards_points_type ) {
+
+						$wps_wpr_number_of_rewards_points = ceil( ( $order_total * $wps_wpr_number_of_rewards_points ) / 100 );
+						$updated_points                   = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
+					} else {
+
+
+						$updated_points = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
+					}
 
 					// create log for order rewards points.
 					if ( isset( $wps_order_rewards_details['order__rewards_points'] ) && ! empty( $wps_order_rewards_details['order__rewards_points'] ) ) {
@@ -4018,7 +4044,15 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( empty( $already_assign_check ) ) {
 
 				$wps_claim_points = ! empty( $_POST['claim_points'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_points'] ) ) : 0;
-				if ( $wps_claim_points > 0 ) {
+				// wallet compatibility.
+				$win_wheel_type = 'point';
+				$win_wheel_type = apply_filters( 'wps_wpr_gamification_feature_for_wallet', $win_wheel_type, $wps_claim_points );
+				if( 'wallet' == $win_wheel_type && $wps_claim_points > 0 ){
+
+					$response['result'] = true;
+					$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
+					// wallet compatibility.
+				} elseif ( 'point' == $win_wheel_type && $wps_claim_points > 0 ) {
 
 					// Next play date cal.
 					$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
@@ -4129,7 +4163,21 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		if ( is_user_logged_in() ) {
 
-			$exist_points = (int) get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+			$exist_points             = (int) get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+			$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
+			$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+			$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
+			$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+
+			// when points value is grater than price than convert points.
+			if ( $wps_wpr_cart_price_rate > $wps_wpr_cart_points_rate ) {
+
+				$exist_points = ( $exist_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+			} else {
+
+				$exist_points = $exist_points;
+			}
+
 			if ( null !== WC() ) {
 
 				if ( isset( WC()->session ) && WC()->session->has_session() ) {

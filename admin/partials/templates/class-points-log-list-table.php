@@ -91,7 +91,7 @@ class Points_Log_List_Table extends WP_List_Table {
 			case 'user_email':
 				return '<b>' . $wps_user->user_email . '</b>';
 			case 'user_points':
-				return '<b>' . ! empty( get_user_meta( $item['id'], 'wps_wpr_points', true ) ) && get_user_meta( $item['id'], 'wps_wpr_points', true ) > 0 ? get_user_meta( $item['id'], 'wps_wpr_points', true ) : 0 . '</b>';
+				return '<b>' . ! empty( get_user_meta( $item['id'], 'wps_wpr_points', true ) ) && get_user_meta( $item['id'], 'wps_wpr_points', true ) > 0 ? (int) get_user_meta( $item['id'], 'wps_wpr_points', true ) : 0 . '</b>';
 			case 'redeemed_point':
 				return '<b>' . ! empty( get_user_meta( $item['id'], 'wps_wpr_redeemed_points', true ) ) ? (int) get_user_meta( $item['id'], 'wps_wpr_redeemed_points', true ) : 0 . '</b>';
 			case 'sign':
@@ -586,7 +586,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		$user_id      = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
 		$point_log    = get_user_meta( $user_id, 'points_details', true );
 		$point_log    = ! empty( $point_log ) && is_array( $point_log ) ? $point_log : array();
-		$total_points = get_user_meta( $user_id, 'wps_wpr_points', true );
+		$total_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 		?>
 		<h3 class="wp-heading-inline" id="wps_wpr_points_table_heading"><?php esc_html_e( 'Points Earned on Order Total Listed on Points Table', 'points-and-rewards-for-woocommerce' ); ?></h3>
 		<?php

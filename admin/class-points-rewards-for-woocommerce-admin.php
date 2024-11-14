@@ -259,7 +259,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				'membership_name' => get_user_meta( $user_id, 'membership_level', true ),
 				'referral_count'  => ! empty( get_user_meta( $user_id, 'wps_referral_counting', true ) ) ? get_user_meta( $user_id, 'wps_referral_counting', true ) : 0,
 				'redeem_points'   => ! empty( get_user_meta( $user_id, 'wps_wpr_redeemed_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_redeemed_points', true ) : 0,
-				'current_points'  => ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0,
+				'current_points'  => ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? (int) get_user_meta( $user_id, 'wps_wpr_points', true ) : 0,
 				'overall_points'  => ! empty( get_user_meta( $user_id, 'wps_wpr_overall__accumulated_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_overall__accumulated_points', true ) : 0,
 			);
 		}
@@ -518,7 +518,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_get_user_points( $user_id ) {
 		$wps_wpr_total_points = 0;
-		$wps_wpr_points       = get_user_meta( $user_id, 'wps_wpr_points', true );
+		$wps_wpr_points       = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 
 		if ( ! empty( $wps_wpr_points ) ) {
 			$wps_wpr_total_points = $wps_wpr_points;
@@ -2330,7 +2330,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $user ) ) {
 
 			$user_id         = $user->ID;
-			$get_user_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+			$get_user_points = get_user_meta( $user_id, 'wps_wpr_points', true );
 			$get_user_points = ! empty( $get_user_points ) ? (int) $get_user_points : 0;
 			$wps_user_points = ! empty( $wps_user_points ) ? $wps_user_points : 0;
 			$admin_points    = get_user_meta( $user_id, 'points_details', true );
