@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags:points and rewards, loyalty, referrals, reward for points, gamification
 Requires at least: 5.5.0
-Tested up to: 6.7
+Tested up to: 6.7.1
 WC requires at least: 5.5.0
-WC tested up to: 9.4.1
-Stable tag: 2.5.2
+WC tested up to: 9.4.2
+Stable tag: 2.5.3
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -308,6 +308,9 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 2.5.3 - Released on 25 November 2024 = 
+* New : Compatible with latest WP( 6.7.1 ) & WC( 9.4.2 )
+
 = 2.5.2 - Released on 14 November 2024 = 
 * New: Assign points type options in Order Rewards Points Features.
 * New: Gamification features enhancement via Wallet Plugin
@@ -589,8 +592,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.5.2 - Released on 14 November 2024 = 
-* New: Assign points type options in Order Rewards Points Features.
-* New: Gamification features enhancement via Wallet Plugin
-* New: Compatibility with latest WP( 6.7 ) & WC( 9.4.1 )
+= 2.5.3 - Released on 25 November 2024 = 
+* New : Compatible with latest WP( 6.7.1 ) & WC( 9.4.2  )
+
 
