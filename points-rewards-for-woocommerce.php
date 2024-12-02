@@ -7,7 +7,9 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://wpswings.com/
+ * @link              https://wpswings.com/'dokan-lite'
+'dokan-lite'
+'dokan-lite'
  * @since             1.0.0
  * @package           points-and-rewards-for-wooCommerce
  *
@@ -23,9 +25,9 @@
  * Requires Plugins: woocommerce
  *
  * Requires at least    : 5.5.0
- * Tested up to         : 6.7
+ * Tested up to         : 6.7.1
  * WC requires at least : 5.5.0
- * WC tested up to      : 9.4.1
+ * WC tested up to      : 9.4.2
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
