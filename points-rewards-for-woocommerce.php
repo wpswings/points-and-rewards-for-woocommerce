@@ -27,7 +27,7 @@
  * Requires at least    : 5.5.0
  * Tested up to         : 6.7.1
  * WC requires at least : 5.5.0
- * WC tested up to      : 9.4.2
+ * WC tested up to      : 9.4.3
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -539,7 +539,7 @@ if ( $activated ) {
 	/**
 	 * This function is used to check whether subscription is active or not.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	function wps_wpr_check_is_subscription_plugin_active() {
 

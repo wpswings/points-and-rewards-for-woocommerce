@@ -91,7 +91,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 
 			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
-				if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] || 'product' == $screen->id ) {
+				if ( ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) || 'product' == $screen->id ) {
 
 					wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 					wp_enqueue_style( 'woocommerce_admin_menu_styles' );
@@ -1032,7 +1032,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 
 			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
-				if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] || 'product' == $screen->id ) {
+				if ( ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) || 'product' == $screen->id ) {
 
 					$notification_id = get_option( 'wps_wpr_notify_new_msg_id', false );
 					if ( isset( $notification_id ) && '' !== $notification_id ) {
