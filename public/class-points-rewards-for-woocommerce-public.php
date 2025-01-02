@@ -3336,7 +3336,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$coupon_data   = $coupon->get_data();
 		if ( ! empty( $coupon_data ) ) {
 			if ( strtolower( $coupon_data['code'] ) === strtolower( $cart_discount ) ) {
-				$coupon_html = $discount_amount_html . ' <a href="' . esc_url( add_query_arg( 'remove_coupon', urlencode( $coupon->get_code() ), defined( 'WOOCOMMERCE_CHECKOUT' ) ? wc_get_checkout_url() : wc_get_cart_url() ) ) . '" class="wps_remove_virtual_coupon" data-coupon="' . esc_attr( $coupon->get_code() ) . '">' . __( '[Remove]', 'woocommerce' ) . '</a>';
+				$coupon_html = $discount_amount_html . ' <a href="' . esc_url( add_query_arg( 'remove_coupon', urlencode( $coupon->get_code() ), defined( 'WOOCOMMERCE_CHECKOUT' ) ? wc_get_checkout_url() : wc_get_cart_url() ) ) . '" class="wps_remove_virtual_coupon" data-coupon="' . esc_attr( $coupon->get_code() ) . '">' . esc_html__( '[Remove]', 'points-and-rewards-for-woocommerce' ) . '</a>';
 			}
 		}
 		return $coupon_html;

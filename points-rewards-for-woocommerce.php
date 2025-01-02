@@ -7,9 +7,7 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://wpswings.com/'dokan-lite'
-'dokan-lite'
-'dokan-lite'
+ * @link              https://wpswings.com/
  * @since             1.0.0
  * @package           points-and-rewards-for-wooCommerce
  *

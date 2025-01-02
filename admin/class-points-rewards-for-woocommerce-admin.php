@@ -1743,7 +1743,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wsfw_admin_mvx_list_mxfdxfodules( $payment_mode ) {
 
-		$payment_mode['par_payment'] = __( 'Points', 'multivendorx' );
+		$payment_mode['par_payment'] = __( 'Points', 'points-and-rewards-for-woocommerce' );
 		return $payment_mode;
 	}
 
@@ -1840,7 +1840,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 											update_user_meta( $vendor->id, 'wps_wpr_points', $get_points );
 											update_user_meta( $vendor->id, 'points_details', $mem__refund_logs );
 											wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_vendor_commission_amount_assigned', 'done' );
-											$obj->add_commission_note( $commission_id, __( 'Commission paid to vendor through points', 'multivendorx' ), $vendor->id );
+											$obj->add_commission_note( $commission_id, __( 'Commission paid to vendor through points', 'points-and-rewards-for-woocommerce' ), $vendor->id );
 										}
 									}
 								}

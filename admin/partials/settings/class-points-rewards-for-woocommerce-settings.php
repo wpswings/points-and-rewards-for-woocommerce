@@ -153,7 +153,7 @@ class Points_Rewards_For_WooCommerce_Settings {
 	 */
 	public function wps_wpr_custom_editor( $value, $general_settings ) {
 		if ( isset( $value['id'] ) && ! empty( $value['id'] ) ) {
-			$wps_gain_points_content = ! empty( $general_settings[ $value['id'] ] ) ? $general_settings[ $value['id'] ] : __( '[Refer Points] for Referral Points[Per Currency Spent Points] for Per currency spent points and[Per Currency Spent Price] for per currency spent price' );
+			$wps_gain_points_content = ! empty( $general_settings[ $value['id'] ] ) ? $general_settings[ $value['id'] ] : __( '[Refer Points] for Referral Points[Per Currency Spent Points] for Per currency spent points and[Per Currency Spent Price] for per currency spent price', 'points-and-rewards-for-woocommerce' );
 			$value_id                = array_key_exists( 'id', $value ) ? $value['id'] : '';
 			?>
 			<label for="<?php echo esc_html( $value_id ); ?>">
