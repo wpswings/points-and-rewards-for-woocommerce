@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-12-06 14:16+0530\n"
-"PO-Revision-Date: 2024-12-06 14:17+0530\n"
+"POT-Creation-Date: 2025-01-02 15:06+0530\n"
+"PO-Revision-Date: 2025-01-02 15:06+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -2398,7 +2398,7 @@ msgstr ""
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:104
 #: admin/partials/templates/wps-wpr-gamifications-settings.php:83
 #: admin/partials/templates/wps-wpr-user-badges-settings.php:72
-#: points-rewards-for-woocommerce.php:118
+#: points-rewards-for-woocommerce.php:116
 msgid "Video"
 msgstr ""
 
@@ -4435,48 +4435,48 @@ msgstr ""
 msgid "Skip For Now"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:116
+#: points-rewards-for-woocommerce.php:114
 msgid "Demo"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:117
+#: points-rewards-for-woocommerce.php:115
 msgid "Documentation"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:119
+#: points-rewards-for-woocommerce.php:117
 msgid "Support"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:120
+#: points-rewards-for-woocommerce.php:118
 msgid "Services"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:248
+#: points-rewards-for-woocommerce.php:246
 msgid "Your Current Point"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:270
+#: points-rewards-for-woocommerce.php:268
 msgid "Your Current Membership Level is"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:294
+#: points-rewards-for-woocommerce.php:292
 #: public/partials/wps-wpr-points-template.php:235
 msgid "You will get "
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:294
+#: points-rewards-for-woocommerce.php:292
 msgid " points for SignUp"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:327
+#: points-rewards-for-woocommerce.php:325
 msgid "Settings"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:332
+#: points-rewards-for-woocommerce.php:330
 msgid "GO PRO"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:584
+#: points-rewards-for-woocommerce.php:582
 msgid ""
 "WooCommerce is not activated, Please activate WooCommerce first to activate "
 "Points and Rewards for WooCommerce."
