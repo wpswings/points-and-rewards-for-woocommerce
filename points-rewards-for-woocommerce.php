@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           2.5.3
+ * Version:           2.6.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
@@ -23,9 +23,9 @@
  * Requires Plugins: woocommerce
  *
  * Requires at least    : 5.5.0
- * Tested up to         : 6.7
+ * Tested up to         : 6.7.1
  * WC requires at least : 5.5.0
- * WC tested up to      : 9.4.1
+ * WC tested up to      : 9.5.1
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -78,7 +78,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.5.3' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.6.0' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -532,6 +532,21 @@ if ( $activated ) {
 			$check_enable = true;
 		}
 		return $check_enable;
+	}
+
+	/**
+	 * This function is used to check whether subscription is active or not.
+	 *
+	 * @return bool
+	 */
+	function wps_wpr_check_is_subscription_plugin_active() {
+
+		$flag = false;
+		if ( is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) || is_plugin_active( 'woocommerce-subscriptions/woocommerce-subscriptions.php' ) ) {
+
+			$flag = true;
+		}
+		return $flag;
 	}
 } else {
 

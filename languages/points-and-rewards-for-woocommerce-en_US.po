@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-11-13 18:25+0530\n"
-"PO-Revision-Date: 2024-11-13 18:25+0530\n"
+"POT-Creation-Date: 2025-01-02 15:06+0530\n"
+"PO-Revision-Date: 2025-01-02 15:06+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -33,15 +33,15 @@ msgid "Please enter the value less than the regular price."
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:116
-#: admin/class-points-rewards-for-woocommerce-admin.php:2123
-#: admin/class-points-rewards-for-woocommerce-admin.php:2150
+#: admin/class-points-rewards-for-woocommerce-admin.php:1994
+#: admin/class-points-rewards-for-woocommerce-admin.php:2021
 #: admin/partials/templates/class-points-log-list-table.php:2178
 #: admin/partials/templates/class-points-log-list-table.php:2203
 msgid "Import"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:117
-#: admin/class-points-rewards-for-woocommerce-admin.php:2158
+#: admin/class-points-rewards-for-woocommerce-admin.php:2029
 msgid "Export"
 msgstr ""
 
@@ -63,7 +63,7 @@ msgstr ""
 #: admin/class-points-rewards-for-woocommerce-admin.php:149
 #: admin/class-points-rewards-for-woocommerce-admin.php:645
 #: admin/class-points-rewards-for-woocommerce-admin.php:815
-#: admin/class-points-rewards-for-woocommerce-admin.php:1622
+#: admin/class-points-rewards-for-woocommerce-admin.php:1490
 #: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1870
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:191
 #: admin/partials/templates/class-points-log-list-table.php:60
@@ -331,7 +331,7 @@ msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:876
 #: admin/class-points-rewards-for-woocommerce-admin.php:899
-#: admin/class-points-rewards-for-woocommerce-admin.php:1878
+#: admin/class-points-rewards-for-woocommerce-admin.php:1746
 #: admin/class-points-rewards-for-woocommerce-dummy-settings.php:877
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:90
 #: admin/partials/templates/class-points-log-list-table.php:57
@@ -346,10 +346,10 @@ msgstr ""
 #: public/class-points-rewards-for-woocommerce-public.php:2634
 #: public/class-points-rewards-for-woocommerce-public.php:3051
 #: public/class-points-rewards-for-woocommerce-public.php:3061
-#: public/class-points-rewards-for-woocommerce-public.php:3434
-#: public/class-points-rewards-for-woocommerce-public.php:3445
-#: public/class-points-rewards-for-woocommerce-public.php:3516
-#: public/class-points-rewards-for-woocommerce-public.php:3525
+#: public/class-points-rewards-for-woocommerce-public.php:3436
+#: public/class-points-rewards-for-woocommerce-public.php:3447
+#: public/class-points-rewards-for-woocommerce-public.php:3518
+#: public/class-points-rewards-for-woocommerce-public.php:3527
 #: public/class-points-rewards-for-woocommerce-public.php:4531
 msgid "Points"
 msgstr ""
@@ -396,194 +396,196 @@ msgstr ""
 msgid "Entered amount to convert"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1208
-msgid "Subscription Points Settings"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1212
-msgid "Renewal Subscription Point Settings"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1214
-msgid "Toggle This to Give Points, Only When the Subscription is Renewed."
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1216
-msgid "Toggle this box to give points only when subscription is renewal"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1220
-msgid "Enter Subscription Renewal Points"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1226
-msgid ""
-"Entered Points Will be Awarded to The User When Their Subscription is Renewed"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1229
-msgid "Show message on Account Page"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1231
-msgid ""
-"Enable this setting to show a message on the account page for user "
-"acknowledgment"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1233
-msgid ""
-"Toggle This to Show a Message on the Accounts Page for Users to Know How "
-"Much They Will Earn"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1237
-msgid "Enter Renewal Message"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1241
-msgid ""
-"The entered message will be shown on the user’s Account Page. Please enter a "
-"message including the [Points] shortcode"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1242
-msgid "Message for Users To Know About Referral Points"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1313
-msgid "Subscription Renewal Points Notification"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1314
-msgid ""
-"You have received [Points] points and your total points are [Total Points]"
-msgstr ""
-
-#: admin/class-points-rewards-for-woocommerce-admin.php:1351
+#: admin/class-points-rewards-for-woocommerce-admin.php:1219
 msgid "Points not awarded"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1369
+#: admin/class-points-rewards-for-woocommerce-admin.php:1237
 msgid "Error Occurred"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1408
+#: admin/class-points-rewards-for-woocommerce-admin.php:1276
 msgid "Points awarded successfully"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1414
+#: admin/class-points-rewards-for-woocommerce-admin.php:1282
 msgid "Points already awarded on this orders"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1555
+#: admin/class-points-rewards-for-woocommerce-admin.php:1423
 msgid "Something went wrong: "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1597
+#: admin/class-points-rewards-for-woocommerce-admin.php:1465
 msgid "Points and Rewards Section"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1600
+#: admin/class-points-rewards-for-woocommerce-admin.php:1468
 msgid ""
 "You can assign points to user when this membership will be purchased by user."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1603
+#: admin/class-points-rewards-for-woocommerce-admin.php:1471
 msgid ""
 "Note : Points should be assign only when status of membership is completed."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1608
+#: admin/class-points-rewards-for-woocommerce-admin.php:1476
 msgid "Enable Points Settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1611
+#: admin/class-points-rewards-for-woocommerce-admin.php:1479
 msgid "Please enable this settings to assign points to users."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1625
+#: admin/class-points-rewards-for-woocommerce-admin.php:1493
 msgid ""
 "Points should be assigned to the user when the order status is marked as "
 "completed."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:1972
+#: admin/class-points-rewards-for-woocommerce-admin.php:1843
 msgid "Commission paid to vendor through points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2128
+#: admin/class-points-rewards-for-woocommerce-admin.php:1999
 msgid "Instructions"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2129
+#: admin/class-points-rewards-for-woocommerce-admin.php:2000
 msgid "To import user points. You need to choose a CSV file and click Import."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2130
+#: admin/class-points-rewards-for-woocommerce-admin.php:2001
 msgid ""
 "CSV for users points must have 3 columns in this order(User Email, Points, "
 "Reason Also the first row must have respective headings)."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2134
+#: admin/class-points-rewards-for-woocommerce-admin.php:2005
 msgid "Choose a CSV file:"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2140
+#: admin/class-points-rewards-for-woocommerce-admin.php:2011
 msgid "Maximum size:128 MB"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2143
+#: admin/class-points-rewards-for-woocommerce-admin.php:2014
 msgid "Export Demo CSV"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2174
+#: admin/class-points-rewards-for-woocommerce-admin.php:2045
 msgid "Reset Users Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2179
+#: admin/class-points-rewards-for-woocommerce-admin.php:2050
 msgid ""
 "To Reset Points of all users in a single go, click on Reset Points Button."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2180
+#: admin/class-points-rewards-for-woocommerce-admin.php:2051
 msgid ""
 "Please note that resetting the points will remove all existing points of "
 "user and assigned zero(0)"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2183
+#: admin/class-points-rewards-for-woocommerce-admin.php:2054
 #: admin/partials/templates/class-points-log-list-table.php:241
 msgid "Reset Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2200
+#: admin/class-points-rewards-for-woocommerce-admin.php:2071
 msgid "Please choose an option : "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2202
+#: admin/class-points-rewards-for-woocommerce-admin.php:2073
 msgid "Add Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2203
+#: admin/class-points-rewards-for-woocommerce-admin.php:2074
 msgid "Substract Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2204
+#: admin/class-points-rewards-for-woocommerce-admin.php:2075
 msgid "Override Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2207
+#: admin/class-points-rewards-for-woocommerce-admin.php:2078
 msgid "Proceed"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2232
+#: admin/class-points-rewards-for-woocommerce-admin.php:2103
 msgid "File path missing."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2242
+#: admin/class-points-rewards-for-woocommerce-admin.php:2113
 msgid "Please choose a CSV file."
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2272
+msgid "Subscription Points Settings"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2276
+msgid "Renewal Subscription Point Settings"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2278
+msgid "Toggle This to Give Points, Only When the Subscription is Renewed."
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2280
+msgid "Toggle this box to give points only when subscription is renewal"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2284
+msgid "Enter Subscription Renewal Points"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2290
+msgid ""
+"Entered Points Will be Awarded to The User When Their Subscription is Renewed"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2293
+msgid "Show message on Account Page"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2295
+msgid ""
+"Enable this setting to show a message on the account page for user "
+"acknowledgment"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2297
+msgid ""
+"Toggle This to Show a Message on the Accounts Page for Users to Know How "
+"Much They Will Earn"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2301
+msgid "Enter Renewal Message"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2305
+msgid ""
+"The entered message will be shown on the user’s Account Page. Please enter a "
+"message including the [Points] shortcode"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2306
+msgid "Message for Users To Know About Referral Points"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2378
+#: admin/class-points-rewards-for-woocommerce-admin.php:2465
+msgid "Subscription Renewal Points Notification"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2379
+#: admin/class-points-rewards-for-woocommerce-admin.php:2466
+msgid ""
+"You have received [Points] points and your total points are [Total Points]"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-dummy-settings.php:100
@@ -4474,7 +4476,7 @@ msgstr ""
 msgid "GO PRO"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:567
+#: points-rewards-for-woocommerce.php:582
 msgid ""
 "WooCommerce is not activated, Please activate WooCommerce first to activate "
 "Points and Rewards for WooCommerce."
@@ -4527,8 +4529,8 @@ msgstr ""
 #: public/class-points-rewards-for-woocommerce-public.php:2324
 #: public/class-points-rewards-for-woocommerce-public.php:2397
 #: public/class-points-rewards-for-woocommerce-public.php:2942
-#: public/class-points-rewards-for-woocommerce-public.php:3314
-#: public/class-points-rewards-for-woocommerce-public.php:3333
+#: public/class-points-rewards-for-woocommerce-public.php:3316
+#: public/class-points-rewards-for-woocommerce-public.php:3335
 #: public/class-points-rewards-for-woocommerce-public.php:3820
 msgid "Cart Discount"
 msgstr ""
@@ -4550,10 +4552,10 @@ msgstr ""
 #: public/class-points-rewards-for-woocommerce-public.php:1821
 #: public/class-points-rewards-for-woocommerce-public.php:3053
 #: public/class-points-rewards-for-woocommerce-public.php:3062
-#: public/class-points-rewards-for-woocommerce-public.php:3435
-#: public/class-points-rewards-for-woocommerce-public.php:3446
-#: public/class-points-rewards-for-woocommerce-public.php:3517
-#: public/class-points-rewards-for-woocommerce-public.php:3526
+#: public/class-points-rewards-for-woocommerce-public.php:3437
+#: public/class-points-rewards-for-woocommerce-public.php:3448
+#: public/class-points-rewards-for-woocommerce-public.php:3519
+#: public/class-points-rewards-for-woocommerce-public.php:3528
 msgid "Apply Points"
 msgstr ""
 
@@ -4580,19 +4582,19 @@ msgid "You will get %s points for a successful signup."
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1811
-#: public/class-points-rewards-for-woocommerce-public.php:3436
+#: public/class-points-rewards-for-woocommerce-public.php:3438
 msgid "Your available points:"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1822
 #: public/class-points-rewards-for-woocommerce-public.php:3063
-#: public/class-points-rewards-for-woocommerce-public.php:3447
-#: public/class-points-rewards-for-woocommerce-public.php:3527
+#: public/class-points-rewards-for-woocommerce-public.php:3449
+#: public/class-points-rewards-for-woocommerce-public.php:3529
 msgid "You require :"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:1824
-#: public/class-points-rewards-for-woocommerce-public.php:3449
+#: public/class-points-rewards-for-woocommerce-public.php:3451
 msgid "more to get redeem"
 msgstr ""
 
@@ -4616,7 +4618,7 @@ msgstr ""
 #: public/class-points-rewards-for-woocommerce-public.php:2196
 #: public/class-points-rewards-for-woocommerce-public.php:2598
 #: public/class-points-rewards-for-woocommerce-public.php:3054
-#: public/class-points-rewards-for-woocommerce-public.php:3518
+#: public/class-points-rewards-for-woocommerce-public.php:3520
 msgid " Points"
 msgstr ""
 
@@ -4629,7 +4631,7 @@ msgid "Conversion Rate: "
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:2306
-#: public/class-points-rewards-for-woocommerce-public.php:3337
+#: public/class-points-rewards-for-woocommerce-public.php:3339
 msgid "[Remove]"
 msgstr ""
 
@@ -4646,44 +4648,44 @@ msgid "Have A Points?"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:3063
-#: public/class-points-rewards-for-woocommerce-public.php:3527
+#: public/class-points-rewards-for-woocommerce-public.php:3529
 msgid "more points to get redeem"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3204
+#: public/class-points-rewards-for-woocommerce-public.php:3206
 msgid "Convert Points to Currency Wallet Conversion"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3207
+#: public/class-points-rewards-for-woocommerce-public.php:3209
 msgid "Points Conversion: "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3208
+#: public/class-points-rewards-for-woocommerce-public.php:3210
 msgid "points = "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3213
-#: public/class-points-rewards-for-woocommerce-public.php:3218
+#: public/class-points-rewards-for-woocommerce-public.php:3215
+#: public/class-points-rewards-for-woocommerce-public.php:3220
 msgid "Enter your points:"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3220
+#: public/class-points-rewards-for-woocommerce-public.php:3222
 msgid "Redeem to Wallet"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3248
+#: public/class-points-rewards-for-woocommerce-public.php:3250
 msgid "Sorry ! Not Transfered"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3260
+#: public/class-points-rewards-for-woocommerce-public.php:3262
 msgid "successfully transfered"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3619
+#: public/class-points-rewards-for-woocommerce-public.php:3620
 msgid "You will earn [Points] points when your subscription should be renewal."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3625
+#: public/class-points-rewards-for-woocommerce-public.php:3626
 msgid "Subscription Renewal Points Message :"
 msgstr ""
 

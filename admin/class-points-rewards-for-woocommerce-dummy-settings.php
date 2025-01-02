@@ -542,19 +542,19 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'desc_tip'          => __( 'The Points New Customers Will Get After Their First Order', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
-				'title' => __( 'Select Points Type', 'ultimate-woocommerce-points-and-rewards' ),
+				'title' => __( 'Select Points Type', 'points-and-rewards-for-woocommerce' ),
 				'id' => 'wps_wpr_first_order_points_type',
 				'class' => 'wps_wgm_new_woo_ver_style_select wps_wpr_pro_plugin_settings',
 				'type' => 'singleSelectDropDownWithKeyvalue',
-				'desc_tip' => __( 'Select the discount Type to apply points', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip' => __( 'Select the discount Type to apply points', 'points-and-rewards-for-woocommerce' ),
 				'custom_attribute' => array(
 					array(
 						'id' => 'fixed',
-						'name' => __( 'Fixed', 'ultimate-woocommerce-points-and-rewards' ),
+						'name' => __( 'Fixed', 'points-and-rewards-for-woocommerce' ),
 					),
 					array(
 						'id' => 'percent',
-						'name' => __( 'Percentage', 'ultimate-woocommerce-points-and-rewards' ),
+						'name' => __( 'Percentage', 'points-and-rewards-for-woocommerce' ),
 					),
 				),
 			),
@@ -1272,7 +1272,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'id'       => 'wps_wpr_point_sharing_description',
 				'class'    => 'input-text wps_wpr_pro_plugin_settings',
 				'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
-				'default'  => __( 'You have received', 'points-and-rewards-for-woocommerce' ) . '[RECEIVEDPOINT]' . __( 'by your one of the friends having an Email Id is' ) . '[SENDEREMAIL]' . __( 'and your total points are', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( '.', 'points-and-rewards-for-woocommerce' ),
+				'default'  => __( 'You have received', 'points-and-rewards-for-woocommerce' ) . '[RECEIVEDPOINT]' . __( 'by your one of the friends having an Email Id is', 'points-and-rewards-for-woocommerce' ) . '[SENDEREMAIL]' . __( 'and your total points are', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( '.', 'points-and-rewards-for-woocommerce' ),
 				'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[RECEIVEDPOINT]' . __( ' shortcode in place of points which have been received. Use ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of a username, ', 'points-and-rewards-for-woocommerce' ) . '[SENDEREMAIL]' . __( ' shortcode in place of the email id of the Sender, and ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
@@ -1304,7 +1304,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'id'       => 'wps_wpr_pro_pur_by_points_discription_custom_id',
 				'class'    => 'input-text wps_wpr_pro_plugin_settings',
 				'desc_tip' => __( 'Enter the Email Description for the user.', 'points-and-rewards-for-woocommerce' ),
-				'default'  => __( 'Product Purchased Point', 'points-and-rewards-for-woocommerce' ) . '[PROPURPOINTS]' . __( ' has been deducted from your points on purchasing, and your Total Points are ' ) . '[Total Points]' . __( '.', 'points-and-rewards-for-woocommerce' ),
+				'default'  => __( 'Product Purchased Point', 'points-and-rewards-for-woocommerce' ) . '[PROPURPOINTS]' . __( ' has been deducted from your points on purchasing, and your Total Points are ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( '.', 'points-and-rewards-for-woocommerce' ),
 				'desc'     => __( 'Use ', 'points-and-rewards-for-woocommerce' ) . '[PROPURPOINTS]' . __( ' shortcode in place of purchasing points, ', 'points-and-rewards-for-woocommerce' ) . '[USERNAME]' . __( ' shortcode in place of a username, and ', 'points-and-rewards-for-woocommerce' ) . '[Total Points]' . __( ' shortcode in place of Total Points.', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
@@ -2367,9 +2367,9 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
 				if ( ! empty( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
 
-					wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.5.3' );
+					wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.6.0' );
 					wp_enqueue_style( 'wps_wpr_dummy_css_file' );
-					wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.5.3', true );
+					wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.6.0', true );
 					wp_enqueue_script( 'wps_wpr_dummy_js_file' );
 					wp_localize_script(
 						'wps_wpr_dummy_js_file',

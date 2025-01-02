@@ -79,7 +79,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '2.5.3';
+			$this->version = '2.6.0';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -210,10 +210,8 @@ class Points_Rewards_For_Woocommerce {
 		// wallet compatibility.
 		$this->loader->add_filter( 'wps_wpr_general_settings', $plugin_admin, 'wps_wpr_wallet_order_point' );
 		// subscription compatibility.
-		if ( is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
-			$this->loader->add_filter( 'wps_wpr_general_settings', $plugin_admin, 'wps_wpr_subscription_settings' );
-			$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $plugin_admin, 'wps_wpr_subscription_renewal_point', 10, 1 );
-		}
+		$this->loader->add_filter( 'wps_wpr_general_settings', $plugin_admin, 'wps_wpr_subscription_settings' );
+		$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $plugin_admin, 'wps_wpr_subscription_renewal_point', 10, 1 );
 		// assign points on previous order.
 		$this->loader->add_action( 'wp_ajax_assign_points_on_previous_order', $plugin_admin, 'wps_wpr_assign_points_on_previous_order_call' );
 		// plugin banner notification.
@@ -271,7 +269,7 @@ class Points_Rewards_For_Woocommerce {
 			/*Add html in the cart for apply points*/
 			$this->loader->add_action( 'woocommerce_cart_actions', $plugin_public, 'wps_wpr_woocommerce_cart_coupon' );
 			$this->loader->add_action( 'wp_ajax_wps_wpr_apply_fee_on_cart_subtotal', $plugin_public, 'wps_wpr_apply_fee_on_cart_subtotal' );
-			$this->loader->add_action( 'woocommerce_cart_calculate_fees', $plugin_public, 'wps_wpr_woocommerce_cart_custom_points' );
+			$this->loader->add_action( 'woocommerce_cart_calculate_fees', $plugin_public, 'wps_wpr_woocommerce_cart_custom_points', PHP_INT_MAX );
 			$this->loader->add_action( 'woocommerce_before_cart_contents', $plugin_public, 'wps_wpr_woocommerce_before_cart_contents' );
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_woocommerce_before_cart_contents' );
 			$this->loader->add_filter( 'woocommerce_cart_totals_fee_html', $plugin_public, 'wps_wpr_woocommerce_cart_totals_fee_html', 10, 2 );
@@ -292,7 +290,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_update_cart_action_cart_updated', $plugin_public, 'wps_update_cart_points' );
 
 			// Paypal Issue Change start.
-			$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public, 'wps_wpr_woocommerce_cart_custom_points' );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $plugin_public, 'wps_wpr_woocommerce_cart_custom_points', PHP_INT_MAX );
 			// Paypal Issue Change End.
 
 			/*Make Tax calculation 0 on the fees applied on the points*/
@@ -311,9 +309,9 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_generate_custom_wallet', $plugin_public, 'wps_wpr_generate_custom_wallet' );
 
 			// Paypal Issue Change start.
-			$this->loader->add_filter( 'woocommerce_get_shop_coupon_data', $plugin_public, 'wps_wpr_validate_virtual_coupon_for_points', 10, 2 );
-			$this->loader->add_filter( 'woocommerce_cart_totals_coupon_label', $plugin_public, 'wps_wpr_filter_woocommerce_coupon_label', 10, 2 );
-			$this->loader->add_filter( 'woocommerce_cart_totals_coupon_html', $plugin_public, 'wps_wpr_par_virtual_coupon_remove', 30, 3 );
+			$this->loader->add_filter( 'woocommerce_get_shop_coupon_data', $plugin_public, 'wps_wpr_validate_virtual_coupon_for_points', PHP_INT_MAX, 2 );
+			$this->loader->add_filter( 'woocommerce_cart_totals_coupon_label', $plugin_public, 'wps_wpr_filter_woocommerce_coupon_label', PHP_INT_MAX, 2 );
+			$this->loader->add_filter( 'woocommerce_cart_totals_coupon_html', $plugin_public, 'wps_wpr_par_virtual_coupon_remove', PHP_INT_MAX, 3 );
 			// Paypal Issue Change End.
 
 			// Shortcode to show apply points section.

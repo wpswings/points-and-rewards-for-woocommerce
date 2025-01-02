@@ -1315,7 +1315,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 
 			// Refund subscription renewal awarded points when subscription is cancelled or refunded.
-			if ( is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
+			if ( wps_wpr_check_is_subscription_plugin_active() ) {
 				if ( array_key_exists( 'subscription_renewal_points', $wps_points_log ) ) {
 
 					$today_date = date_i18n( 'Y-m-d h:i:sa' );
@@ -3148,36 +3148,38 @@ class Points_Rewards_For_WooCommerce_Public {
 
 				$product       = wc_get_product( $cart_contents[ $key ]['product_id'] );
 				$global_enable = get_option( 'wps_wpr_assign_products_points', true );
-				if ( $product->get_type() == 'variable' ) {
+				if ( ! empty( $product ) ) {
+					if ( $product->get_type() == 'variable' ) {
 
-					if ( isset( $cart_contents[ $key ]['variation_id'] ) && ! empty( $cart_contents[ $key ]['variation_id'] ) ) {
+						if ( isset( $cart_contents[ $key ]['variation_id'] ) && ! empty( $cart_contents[ $key ]['variation_id'] ) ) {
 
-						$get_product_points = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['variation_id'], 'wps_wpr_variable_points', 1 );
-						$check_enable       = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['product_id'], 'wps_product_points_enable', 'no' );
+							$get_product_points = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['variation_id'], 'wps_wpr_variable_points', 1 );
+							$check_enable       = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['product_id'], 'wps_product_points_enable', 'no' );
 
-						$cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
-						if ( ! is_bool( $global_enable ) && isset( $global_enable['wps_wpr_global_product_enable'] ) ) {
-							if ( '0' == $global_enable['wps_wpr_global_product_enable'] && 'no' == $check_enable ) {
+							$cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
+							if ( ! is_bool( $global_enable ) && isset( $global_enable['wps_wpr_global_product_enable'] ) ) {
+								if ( '0' == $global_enable['wps_wpr_global_product_enable'] && 'no' == $check_enable ) {
+
+									unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
+								}
+							}
+							if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 
 								unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
 							}
 						}
-						if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+					} else {
+						if ( isset( $cart_contents[ $key ]['product_id'] ) && ! empty( $cart_contents[ $key ]['product_id'] ) ) {
 
-							unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
+							$get_product_points = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['product_id'], 'wps_points_product_value', 1 );
+							$cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
 						}
-					}
-				} else {
-					if ( isset( $cart_contents[ $key ]['product_id'] ) && ! empty( $cart_contents[ $key ]['product_id'] ) ) {
+						$check_enable = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['product_id'], 'wps_product_points_enable', 'no' );
+						if ( ! is_bool( $global_enable ) && isset( $global_enable['wps_wpr_global_product_enable'] ) ) {
+							if ( '0' == $global_enable['wps_wpr_global_product_enable'] && ( 'no' == $check_enable ) ) {
 
-						$get_product_points = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['product_id'], 'wps_points_product_value', 1 );
-						$cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] = (int) $get_product_points * (int) ( $cart_contents[ $key ]['quantity'] );
-					}
-					$check_enable = wps_wpr_hpos_get_meta_data( $cart_contents[ $key ]['product_id'], 'wps_product_points_enable', 'no' );
-					if ( ! is_bool( $global_enable ) && isset( $global_enable['wps_wpr_global_product_enable'] ) ) {
-						if ( '0' == $global_enable['wps_wpr_global_product_enable'] && ( 'no' == $check_enable ) ) {
-
-							unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
+								unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
+							}
 						}
 					}
 				}
@@ -3334,7 +3336,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$coupon_data   = $coupon->get_data();
 		if ( ! empty( $coupon_data ) ) {
 			if ( strtolower( $coupon_data['code'] ) === strtolower( $cart_discount ) ) {
-				$coupon_html = $discount_amount_html . ' <a href="' . esc_url( add_query_arg( 'remove_coupon', urlencode( $coupon->get_code() ), defined( 'WOOCOMMERCE_CHECKOUT' ) ? wc_get_checkout_url() : wc_get_cart_url() ) ) . '" class="wps_remove_virtual_coupon" data-coupon="' . esc_attr( $coupon->get_code() ) . '">' . __( '[Remove]', 'woocommerce' ) . '</a>';
+				$coupon_html = $discount_amount_html . ' <a href="' . esc_url( add_query_arg( 'remove_coupon', urlencode( $coupon->get_code() ), defined( 'WOOCOMMERCE_CHECKOUT' ) ? wc_get_checkout_url() : wc_get_cart_url() ) ) . '" class="wps_remove_virtual_coupon" data-coupon="' . esc_attr( $coupon->get_code() ) . '">' . esc_html__( '[Remove]', 'points-and-rewards-for-woocommerce' ) . '</a>';
 			}
 		}
 		return $coupon_html;
@@ -3609,26 +3611,24 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_show_subscription_message( $user_id ) {
 
-		if ( is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
-			if ( function_exists( 'wps_sfw_check_plugin_enable' ) && wps_sfw_check_plugin_enable() ) {
+		if ( wps_wpr_check_is_subscription_plugin_active() ) {
 
-				// Renewal setting values.
-				$wps_wpr_general_settings                 = get_option( 'wps_wpr_settings_gallery', array() );
-				$wps_wpr_subscription__renewal_points     = ! empty( $wps_wpr_general_settings['wps_wpr_subscription__renewal_points'] ) ? $wps_wpr_general_settings['wps_wpr_subscription__renewal_points'] : 0;
-				$wps_wpr_enable__renewal_message_settings = ! empty( $wps_wpr_general_settings['wps_wpr_enable__renewal_message_settings'] ) ? $wps_wpr_general_settings['wps_wpr_enable__renewal_message_settings'] : 0;
-				$wps_wpr_subscription__renewal_message    = ! empty( $wps_wpr_general_settings['wps_wpr_subscription__renewal_message'] ) ? $wps_wpr_general_settings['wps_wpr_subscription__renewal_message'] : esc_html__( 'You will earn [Points] points when your subscription should be renewal.', 'points-and-rewards-for-woocommerce' );
-				$wps_wpr_subscription__renewal_message    = str_replace( '[Points]', $wps_wpr_subscription__renewal_points, $wps_wpr_subscription__renewal_message );
+			// Renewal setting values.
+			$wps_wpr_general_settings                 = get_option( 'wps_wpr_settings_gallery', array() );
+			$wps_wpr_subscription__renewal_points     = ! empty( $wps_wpr_general_settings['wps_wpr_subscription__renewal_points'] ) ? $wps_wpr_general_settings['wps_wpr_subscription__renewal_points'] : 0;
+			$wps_wpr_enable__renewal_message_settings = ! empty( $wps_wpr_general_settings['wps_wpr_enable__renewal_message_settings'] ) ? $wps_wpr_general_settings['wps_wpr_enable__renewal_message_settings'] : 0;
+			$wps_wpr_subscription__renewal_message    = ! empty( $wps_wpr_general_settings['wps_wpr_subscription__renewal_message'] ) ? $wps_wpr_general_settings['wps_wpr_subscription__renewal_message'] : esc_html__( 'You will earn [Points] points when your subscription should be renewal.', 'points-and-rewards-for-woocommerce' );
+			$wps_wpr_subscription__renewal_message    = str_replace( '[Points]', $wps_wpr_subscription__renewal_points, $wps_wpr_subscription__renewal_message );
 
-				if ( '1' == $wps_wpr_enable__renewal_message_settings ) {
-					?>
-					<div class ="wps_wpr_subscription_notice_wrap">
-						<p class="wps_wpr_heading"><?php echo esc_html__( 'Subscription Renewal Points Message :', 'points-and-rewards-for-woocommerce' ); ?></p>
-						<?php
-						echo '<fieldset class="wps_wpr_each_section">' . wp_kses_post( $wps_wpr_subscription__renewal_message ) . '</fieldset>';
-						?>
-					</div>
+			if ( '1' == $wps_wpr_enable__renewal_message_settings ) {
+				?>
+				<div class ="wps_wpr_subscription_notice_wrap">
+					<p class="wps_wpr_heading"><?php echo esc_html__( 'Subscription Renewal Points Message :', 'points-and-rewards-for-woocommerce' ); ?></p>
 					<?php
-				}
+					echo '<fieldset class="wps_wpr_each_section">' . wp_kses_post( $wps_wpr_subscription__renewal_message ) . '</fieldset>';
+					?>
+				</div>
+				<?php
 			}
 		}
 	}
