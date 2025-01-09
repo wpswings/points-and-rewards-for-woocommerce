@@ -1294,7 +1294,9 @@ h3.wps_rwpr_setting_title span {
 }
 
 /* ========= css for dummy html ========= */
-.wps_wpr_reset_user_loader, .wps_wpr_export_user_loader {
+.wps_wpr_reset_user_loader,
+.wps_wpr_export_user_loader,
+.wps_wpr_update_user_loader {
     display: none;
 }
 
