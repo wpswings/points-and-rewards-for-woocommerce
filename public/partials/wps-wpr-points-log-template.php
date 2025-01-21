@@ -1176,7 +1176,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		if ( array_key_exists( 'admin_points', $point_log ) ) {
 			?>
 			<div class="wps_wpr_slide_toggle">
-				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Updated By Admin', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Your points has been updated by Admin', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
 				<div class="wps_wpr_points_view">
 					<table class="wps_wpr_common_table">
 						<thead>
@@ -1194,12 +1194,12 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 						</thead>
 						<?php
 						foreach ( $point_log['admin_points'] as $key => $value ) {
-							$value['sign']   = isset( $value['sign'] ) ? $value['sign'] : '+';
+							$sign            = isset( $value['sign'] ) ? $value['sign'] : '+';
 							$value['reason'] = isset( $value['reason'] ) ? $value['reason'] : __( 'Updated By Admin', 'points-and-rewards-for-woocommerce' );
 							?>
 							<tr>
 								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
-								<td><?php echo esc_html( $value['sign'] ) . esc_html( $value['admin_points'] ); ?></td>
+								<td><?php echo esc_html( $sign ) . esc_html( $value['admin_points'] ); ?></td>
 								<td><?php echo esc_html( $value['reason'] ); ?></td>
 							</tr>
 							<?php
@@ -1298,39 +1298,6 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 							<tr valign="top">
 								<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 								<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['reset_users_points_logs'] ); ?></td>
-							</tr>
-							<?php
-						}
-						?>
-					</table>
-				</div>
-			</div>
-			<?php
-		}
-		if ( array_key_exists( 'bulk_update_users_points', $point_log ) ) {
-			?>
-			<div class="wps_wpr_slide_toggle">
-				<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Your points has been updated by Admin', 'points-and-rewards-for-woocommerce' ); ?>
-					<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
-				</p>
-				<div class="wps_wpr_points_view">
-					<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
-						<thead>
-							<tr valign="top">
-							<th scope="row" class="wps_wpr_head_titledesc">
-								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
-							</th>
-							<th scope="row" class="wps_wpr_head_titledesc">
-								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
-							</th>
-							</tr>
-						</thead>
-						<?php
-						foreach ( $point_log['bulk_update_users_points'] as $key => $value ) {
-							?>
-							<tr valign="top">
-								<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-								<td class="forminp forminp-text"><?php echo esc_html( $value['sign'] ) . esc_html( $value['bulk_update_users_points'] ); ?></td>
 							</tr>
 							<?php
 						}

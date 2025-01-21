@@ -289,7 +289,12 @@ a.wps_wpr_premium--cta {
 .wps_wpr_general_setting.mwp_wpr_settings th,
 .wps_wpr_membership_setting td,
 .wps_wpr_membership_setting th {
-    padding: 10px !important
+    padding: 10px !important;
+    display: revert !important;
+}
+
+.mwp_wpr_settings td.forminp.forminp-text {
+    display: revert !important;
 }
 
 #wps_rwpr_other_setting_upload_image,
