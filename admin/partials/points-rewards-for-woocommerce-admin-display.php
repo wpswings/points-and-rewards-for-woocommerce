@@ -105,7 +105,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 						</a>
 					</li>
 					<li class="wps_wpr_get_pro">
-						<a href="https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-backend&utm_campaign=documentation" target="_blank">
+						<a href="https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-org-backend&utm_campaign=doc" target="_blank">
 							<span class="dashicons dashicons-media-document"></span>
 							<span class="wps_wpr_contact_doc_text"><?php esc_html_e( 'Doc', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</a>
