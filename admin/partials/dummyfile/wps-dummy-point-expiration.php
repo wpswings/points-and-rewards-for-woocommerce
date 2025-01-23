@@ -141,16 +141,16 @@ $wps_points_exipration_array = array(
 		'type'  => 'sectionend',
 	),
 	array(
-		'title' => __( 'Upgrade Points Validity', 'ultimate-woocommerce-points-and-rewards' ),
+		'title' => __( 'Upgrade Points Validity', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'    => __( 'Extend Expiration', 'ultimate-woocommerce-points-and-rewards' ),
+		'title'    => __( 'Extend Expiration', 'points-and-rewards-for-woocommerce' ),
 		'type'     => 'checkbox',
-		'desc'     => __( 'Enable this setting to allow users to extend their points expiration date.', 'ultimate-woocommerce-points-and-rewards' ),
+		'desc'     => __( 'Enable this setting to allow users to extend their points expiration date.', 'points-and-rewards-for-woocommerce' ),
 		'class'    => 'wps_wpr_pro_plugin_settings',
 		'id'       => 'wps_wpr_enable_points_upgrade',
-		'desc_tip' => __( 'To allow users to extend their points expiration date, please enable this setting.', 'ultimate-woocommerce-points-and-rewards' ),
+		'desc_tip' => __( 'To allow users to extend their points expiration date, please enable this setting.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => 0,
 	),
 	array(

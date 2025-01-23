@@ -11,10 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( isset( $_GET['wps_reports_userid'] ) ) {
+$nonce = ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '';
+if ( wp_verify_nonce( $nonce, 'par_main_setting' ) ) {
+	if ( isset( $_GET['wps_reports_userid'] ) ) {
 
-	$user_id   = ! empty( $_GET['wps_reports_userid'] ) ? sanitize_text_field( wp_unslash( $_GET['wps_reports_userid'] ) ) : '';
+		$user_id = ! empty( $_GET['wps_reports_userid'] ) ? sanitize_text_field( wp_unslash( $_GET['wps_reports_userid'] ) ) : '';
+	}
 }
+
 ?>
 <div class="wps-wpg-gen-section-form-container">
 	<div class="wpg-secion-wrap">

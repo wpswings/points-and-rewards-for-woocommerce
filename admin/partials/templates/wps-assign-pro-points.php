@@ -59,7 +59,7 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 						wps_wpr_hpos_update_meta_data( $value->ID, 'wps_points_product_value', $wps_wpr_pro_points_to_all );
 					}
 				}
-				wp_reset_query(); ?>
+				wp_reset_postdata(); ?>
 				<div class="notice notice-success is-dismissible">
 					<p><strong>
 					<?php
@@ -111,7 +111,7 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 					wps_wpr_hpos_update_meta_data( $value->ID, 'wps_points_product_value', '' );
 				}
 			}
-			wp_reset_query();
+			wp_reset_postdata();
 			?>
 			<div class="notice notice-success is-dismissible">
 				<p><strong><?php esc_html_e( 'Points are removed Successfully from All Products', 'points-and-rewards-for-woocommerce' ); ?></strong></p>
