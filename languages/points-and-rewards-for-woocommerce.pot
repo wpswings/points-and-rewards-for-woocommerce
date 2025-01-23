@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 2.6.0\n"
-"POT-Creation-Date: 2025-01-02 15:06+0530\n"
+"Project-Id-Version: Points and Rewards for WooCommerce 2.6.1\n"
+"POT-Creation-Date: 2025-01-23 17:05+0530\n"
 "PO-Revision-Date: 2023-12-01 10:33+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -394,6 +394,7 @@ msgid "The entered point will be converted in the front end."
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:1155
+#: admin/partials/dummyfile/wps-dummy-point-expiration.php:167
 #: admin/partials/templates/wps-generral-settings2.php:209
 msgid " Points = "
 msgstr ""
@@ -500,96 +501,116 @@ msgstr ""
 msgid "Reset Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2071
-msgid "Please choose an option : "
+#: admin/class-points-rewards-for-woocommerce-admin.php:2065
+msgid "Add / Remove Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2073
-msgid "Add Points"
+#: admin/class-points-rewards-for-woocommerce-admin.php:2070
+msgid ""
+"To add/remove points to all users at once, simply click on the \"Update "
+"Points\" button."
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2071
+msgid ""
+"Please note that this action will overwrite and update the existing points "
+"for all users."
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:2074
+msgid "Update Points"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2092
+msgid "Please choose an option : "
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2094
+msgid "Add Points"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-admin.php:2095
 msgid "Substract Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2075
+#: admin/class-points-rewards-for-woocommerce-admin.php:2096
 msgid "Override Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2078
+#: admin/class-points-rewards-for-woocommerce-admin.php:2099
 msgid "Proceed"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2103
+#: admin/class-points-rewards-for-woocommerce-admin.php:2124
 msgid "File path missing."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2113
+#: admin/class-points-rewards-for-woocommerce-admin.php:2134
 msgid "Please choose a CSV file."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2272
+#: admin/class-points-rewards-for-woocommerce-admin.php:2293
 msgid "Subscription Points Settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2276
+#: admin/class-points-rewards-for-woocommerce-admin.php:2297
 msgid "Renewal Subscription Point Settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2278
+#: admin/class-points-rewards-for-woocommerce-admin.php:2299
 msgid "Toggle This to Give Points, Only When the Subscription is Renewed."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2280
+#: admin/class-points-rewards-for-woocommerce-admin.php:2301
 msgid "Toggle this box to give points only when subscription is renewal"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2284
+#: admin/class-points-rewards-for-woocommerce-admin.php:2305
 msgid "Enter Subscription Renewal Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2290
+#: admin/class-points-rewards-for-woocommerce-admin.php:2311
 msgid ""
 "Entered Points Will be Awarded to The User When Their Subscription is Renewed"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2293
+#: admin/class-points-rewards-for-woocommerce-admin.php:2314
 msgid "Show message on Account Page"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2295
+#: admin/class-points-rewards-for-woocommerce-admin.php:2316
 msgid ""
 "Enable this setting to show a message on the account page for user "
 "acknowledgment"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2297
+#: admin/class-points-rewards-for-woocommerce-admin.php:2318
 msgid ""
 "Toggle This to Show a Message on the Accounts Page for Users to Know How "
 "Much They Will Earn"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2301
+#: admin/class-points-rewards-for-woocommerce-admin.php:2322
 msgid "Enter Renewal Message"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2305
+#: admin/class-points-rewards-for-woocommerce-admin.php:2326
 msgid ""
 "The entered message will be shown on the user’s Account Page. Please enter a "
 "message including the [Points] shortcode"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2306
+#: admin/class-points-rewards-for-woocommerce-admin.php:2327
 msgid "Message for Users To Know About Referral Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2378
-#: admin/class-points-rewards-for-woocommerce-admin.php:2465
+#: admin/class-points-rewards-for-woocommerce-admin.php:2399
+#: admin/class-points-rewards-for-woocommerce-admin.php:2486
 msgid "Subscription Renewal Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-admin.php:2379
-#: admin/class-points-rewards-for-woocommerce-admin.php:2466
+#: admin/class-points-rewards-for-woocommerce-admin.php:2400
+#: admin/class-points-rewards-for-woocommerce-admin.php:2487
 msgid ""
 "You have received [Points] points and your total points are [Total Points]"
 msgstr ""
@@ -2006,7 +2027,40 @@ msgstr ""
 msgid "This message will be sent when the points are expired."
 msgstr ""
 
-#: admin/partials/dummyfile/wps-dummy-point-expiration.php:205
+#: admin/partials/dummyfile/wps-dummy-point-expiration.php:144
+msgid "Upgrade Points Validity"
+msgstr ""
+
+#: admin/partials/dummyfile/wps-dummy-point-expiration.php:148
+msgid "Extend Expiration"
+msgstr ""
+
+#: admin/partials/dummyfile/wps-dummy-point-expiration.php:150
+msgid ""
+"Enable this setting to allow users to extend their points expiration date."
+msgstr ""
+
+#: admin/partials/dummyfile/wps-dummy-point-expiration.php:153
+msgid ""
+"To allow users to extend their points expiration date, please enable this "
+"setting."
+msgstr ""
+
+#: admin/partials/dummyfile/wps-dummy-point-expiration.php:157
+msgid "Conversion Rate for Expiration Upgrade"
+msgstr ""
+
+#: admin/partials/dummyfile/wps-dummy-point-expiration.php:160
+msgid ""
+"This is the conversion rate that allows users to extend their points "
+"expiration date."
+msgstr ""
+
+#: admin/partials/dummyfile/wps-dummy-point-expiration.php:176
+msgid " Days "
+msgstr ""
+
+#: admin/partials/dummyfile/wps-dummy-point-expiration.php:250
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:178
 #: admin/partials/dummyfile/wps-wpr-points-and-rewards-dummy-addon.php:151
 #: admin/partials/templates/wps-assign-pro-points.php:212
@@ -2938,7 +2992,8 @@ msgid "Reference Sign Up by"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:1952
-msgid "Admin Updates"
+#: public/partials/wps-wpr-points-log-template.php:1179
+msgid "Your points has been updated by Admin"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:1966
@@ -2947,7 +3002,6 @@ msgid "Reason"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:1973
-#: public/partials/wps-wpr-points-log-template.php:1179
 #: public/partials/wps-wpr-points-log-template.php:1198
 msgid "Updated By Admin"
 msgstr ""
@@ -4237,7 +4291,7 @@ msgstr ""
 msgid "Badge -"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-user-report-settings.php:21
+#: admin/partials/templates/wps-wpr-user-report-settings.php:25
 msgid "Points Report"
 msgstr ""
 
