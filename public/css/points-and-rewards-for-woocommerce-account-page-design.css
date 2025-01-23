@@ -723,3 +723,46 @@ p#wps_wpr_shared_points_notification b {
     }
 
 }
+
+/* New Layout expire rate section style */
+
+.wps_wpr_upgarde_validity_wrapper input#wps_wpr_upgrade_points_validity_button {
+    flex: 1;
+    max-width: 220px;
+    height: 46px;
+    border-radius: 5px;
+    line-height: 1.25;
+    color: #fff;
+    background: var(--wps-wpr-primary);
+    font-size: 16px;
+    text-align: center;
+    margin: 0;
+    padding: 8px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.wps_wpr_upgarde_validity_wrapper.wps_wpr_main_section_all_wrap h4 {
+    color: var(--wps-wpr-primary);
+    margin: 0 0 10px;
+    background: transparent;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.wps_wpr_main_section_all_wrap .wps-wpr_enter-points-validity-wrap input#wps_wpr_upgrade_points_value {
+    max-width: 200px;
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 9px;
+}
+
+.wps_wpr_main_section_all_wrap .wps-wpr_enter-points-validity-in select#wps_wpr_validity_type {
+    font-size: 16px;
+    padding: 11px;
+    cursor: pointer;
+}

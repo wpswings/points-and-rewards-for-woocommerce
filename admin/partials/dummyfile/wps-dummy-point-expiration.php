@@ -138,6 +138,46 @@ $wps_points_exipration_array = array(
 		'desc2'             => __( 'This message will be sent when the points are expired.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
+		'type'  => 'sectionend',
+	),
+	array(
+		'title' => __( 'Upgrade Points Validity', 'points-and-rewards-for-woocommerce' ),
+		'type'  => 'title',
+	),
+	array(
+		'title'    => __( 'Extend Expiration', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'desc'     => __( 'Enable this setting to allow users to extend their points expiration date.', 'points-and-rewards-for-woocommerce' ),
+		'class'    => 'wps_wpr_pro_plugin_settings',
+		'id'       => 'wps_wpr_enable_points_upgrade',
+		'desc_tip' => __( 'To allow users to extend their points expiration date, please enable this setting.', 'points-and-rewards-for-woocommerce' ),
+		'default'  => 0,
+	),
+	array(
+		'title'       => __( 'Conversion Rate for Expiration Upgrade', 'points-and-rewards-for-woocommerce' ),
+		'type'        => 'number_text',
+		'class'       => 'wps_wpr_pro_plugin_settings',
+		'desc_tip'    => __( 'This is the conversion rate that allows users to extend their points expiration date.', 'points-and-rewards-for-woocommerce' ),
+		'number_text' => array(
+			array(
+				'type'             => 'number',
+				'id'                => 'wps_wpr_points_upgrade_rates',
+				'class'             => 'input-text wc_input_price wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
+				'custom_attributes' => array( 'min' => '"1"' ),
+				'desc'              => __( ' Points = ', 'points-and-rewards-for-woocommerce' ),
+				'curr'              => '',
+			),
+			array(
+				'type'              => 'text',
+				'id'                => 'wps_wpr_days_upgrade_rates',
+				'class'             => 'input-text wps_wpr_new_woo_ver_style_text wc_input_price wps_wpr_pro_plugin_settings',
+				'custom_attributes' => array( 'min' => '"1"' ),
+				'default'           => '1',
+				'curr'              => __( ' Days ', 'points-and-rewards-for-woocommerce' ),
+			),
+		),
+	),
+	array(
 		'type' => 'sectionend',
 	),
 );
@@ -183,6 +223,11 @@ $general_settings            = ! empty( $general_settings ) && is_array( $genera
 							foreach ( $value['number_text'] as $k => $val ) {
 								if ( 'number' == $val['type'] ) {
 									$settings_obj->wps_rwpr_generate_dummy_number_html( $val, $general_settings );
+								}
+								if ( 'text' == $val['type'] ) {
+
+									echo isset( $val['curr'] ) ? esc_html( $val['curr'] ) : '';
+									$settings_obj->wps_rwpr_generate_dummy_text_html( $val, $general_settings );
 								}
 								if ( 'search&select' == $val['type'] ) {
 									$settings_obj->wps_wpr_generate_dummy_search_select_html( $val, $general_settings );

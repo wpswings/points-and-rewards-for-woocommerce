@@ -1987,7 +1987,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 *
 	 * @return void
 	 */
-	public function wps_wpr_add_additional_import_points() {
+	public function wps_wpr_add_additional_import_org_points() {
 		?>
 		<div class="wps_wpr_import_userspoints">
 			<div class="wps_wpr_points_table_second_wrappers">
@@ -2054,6 +2054,27 @@ class Points_Rewards_For_WooCommerce_Admin {
 									<p class="wps_wpr_reset_user_paragraph"><input type="button" id="wps_wpr_reset_user_points" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Reset Points', 'points-and-rewards-for-woocommerce' ); ?>" />
 									<img class="wps_wpr_reset_user_loader" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/loading.gif' ); ?>"></p>
 									<span class="wps_wpr_reset_user_notice"></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!--     Add / Remove User points in signle click html skeleton    -->
+				<div class="wps_wpr_points_table_second_wrappers wps_wpr_pro_plugin_settings">
+					<h3 class="wps_wpr_heading"><?php esc_html_e( 'Add / Remove Points', 'points-and-rewards-for-woocommerce' ); ?></h3>
+					<table class="form-table wps_wpr_general_setting">
+						<tbody>
+							<tr valign="top">
+								<td class="wps_wpr_instructions_tabledata">
+									<p><?php esc_html_e( 'To add/remove points to all users at once, simply click on the "Update Points" button.', 'points-and-rewards-for-woocommerce' ); ?></p>
+									<p><?php esc_html_e( 'Please note that this action will overwrite and update the existing points for all users.', 'points-and-rewards-for-woocommerce' ); ?></p>
+								</td>
+								<td class="wps_wpr_instructions_tabledata_btn">
+									<p class="wps_wpr_reset_user_paragraph"><input type="button" id="wps_wpr_update_user_points" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Update Points', 'points-and-rewards-for-woocommerce' ); ?>" />
+										<img class="wps_wpr_update_user_loader" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/loading.gif' ); ?>">
+									</p>
+									<span class="wps_wpr_update_user_notice"></span>
 								</td>
 							</tr>
 						</tbody>

@@ -5,8 +5,8 @@ Tags:points and rewards, loyalty, referrals, reward for points, gamification
 Requires at least: 5.5.0
 Tested up to: 6.7.1
 WC requires at least: 5.5.0
-WC tested up to: 9.5.1
-Stable tag: 2.6.0
+WC tested up to: 9.6.0
+Stable tag: 2.6.1
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -282,6 +282,10 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 2.6.1 - Released on 23 January 2025 =
+* New : Compatible with latest WP(6.7.1) & WC(9.6.0)
+* Fix    : Minor validation issues
 
 = 2.6.0 - Released on 2 January 2025 =
 * New : Compatibility with WooCommerce Smart Coupon plugin
@@ -573,8 +577,6 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.6.0 - Released on 2 January 2025 =
-* New : Compatibility with WooCommerce Smart Coupon plugin
-* New : Compatibility with WooCommerce Subscription Plugin
-* New : Compatibility with latest WP( 6.7.1 ) & WC( 9.5.1 )
-* New : Fix Validation issue
+= 2.6.1 - Released on 23 January 2025 =
+* New : Compatible with latest WP(6.7.1) & WC(9.6.0)
+* Fix    : Minor validation issues
