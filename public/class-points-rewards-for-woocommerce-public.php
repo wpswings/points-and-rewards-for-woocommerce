@@ -519,73 +519,86 @@ class Points_Rewards_For_WooCommerce_Public {
 		do_action( 'wps_wpr_insta_refer', $user_reference_key, $enable_wps_social, $page_permalink );
 		if ( $enable_wps_social ) {
 
-			$content  = '';
-			$content2 = '';
-			$content3 = '';
-			$html_div = '<div class="wps_wpr_wrapper_button">';
-			$content  = $content . $html_div;
+			$wps_fb_and_twit_share  = '';
+			$wps_email_share        = '';
+			$wps_whats_and_pint     = '';
+			$html_div               = '<div class="wps_wpr_wrapper_button">';
+			$wps_fb_and_twit_share  = $wps_fb_and_twit_share . $html_div;
+			$twitter_share_button   = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/xtwitter.svg"></a></div>';
+			$facebook_share_button  = '<div id="fb-root"></div><div class="fb-share-button wps_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=' . urlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/Facebook.svg"></a></div>';
+			$mail_share_button      = '<a class="wps_wpr_mail_button wps_wpr_common_class" href="enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/email.svg"></a>';
+			$email_share_button     = apply_filters( 'wps_mail_box', $wps_fb_and_twit_share, $user_id );
+			$whatsapp_share_button  = '<a target="_blank" class="wps_wpr_whatsapp_share" href="https://api.whatsapp.com/send?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . WPS_RWPR_DIR_URL . 'public/images/WhatsApp.svg"></a>';
+			$pinterest_share_button = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="" href="http://pinterest.com/pin/create/link/?url=' .  rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/pinterest.png"></a></div>';
 
-			$twitter_share_button  = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=' . $page_permalink . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/xtwitter.svg"></a></div>';
-			$facebook_share_button = '<div id="fb-root"></div><div class="fb-share-button wps_wpr_common_class" data-href="' . $page_permalink . '?pkey=' . $user_reference_key . '" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=' . urlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src ="' . WPS_RWPR_DIR_URL . '/public/images/Facebook.svg"></a></div>';
-			$mail_share_button     = '<a class="wps_wpr_mail_button wps_wpr_common_class" href="mailto:enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/email.svg"></a>';
-			$email_share_button    = apply_filters( 'wps_mail_box', $content, $user_id );
-			$whatsapp_share_button = '<a target="_blank" class="wps_wpr_whatsapp_share" href="https://api.whatsapp.com/send?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . WPS_RWPR_DIR_URL . 'public/images/WhatsApp.svg"></a>';
-
+			// facebook share button.
 			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_facebook' ) == 1 ) {
 
-				$content = $content . $facebook_share_button;
+				$wps_fb_and_twit_share = $wps_fb_and_twit_share . $facebook_share_button;
 			}
+
+			// twitter share button.
 			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_twitter' ) == 1 ) {
 
-				$content = $content . $twitter_share_button;
+				$wps_fb_and_twit_share = $wps_fb_and_twit_share . $twitter_share_button;
 			}
-			echo wp_kses_post( $content );
+			echo wp_kses_post( $wps_fb_and_twit_share );
 
+			// email share button.
 			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_email' ) == 1 ) {
 
 				if ( $email_share_button != $html_div ) {
-					$content2 = $email_share_button;
+
+					$wps_email_share = $email_share_button;
 				} else {
-					$content2 = $mail_share_button;
+					$wps_email_share = $mail_share_button;
 				}
-			}
-			$allowed_html = array(
-				'div' => array(
-					'id'    => array(),
-					'class' => array(),
-				),
-				'a' => array(
-					'href'  => array(),
-					'class' => array(),
-				),
-				'p' => array(
-					'id' => array(),
-				),
-				'button' => array(
-					'id'    => array(),
-					'class' => array(),
-				),
-				'img' => array(
-					'src' => array(),
-				),
-				'input' => array(
-					'type'        => array(),
-					'style'       => array(),
-					'id'          => array(),
-					'value'       => array(),
-					'placeholder' => array(),
-					'name'        => array(),
-					'data-id'     => array(),
-				),
-			);
-			echo wp_kses( $content2, $allowed_html );
-			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_whatsapp' ) == 1 ) {
-				$content3 = $whatsapp_share_button;
+
+				$allowed_html = array(
+					'div' => array(
+						'id'    => array(),
+						'class' => array(),
+					),
+					'a' => array(
+						'href'  => array(),
+						'class' => array(),
+					),
+					'p' => array(
+						'id' => array(),
+					),
+					'button' => array(
+						'id'    => array(),
+						'class' => array(),
+					),
+					'img' => array(
+						'src' => array(),
+					),
+					'input' => array(
+						'type'        => array(),
+						'style'       => array(),
+						'id'          => array(),
+						'value'       => array(),
+						'placeholder' => array(),
+						'name'        => array(),
+						'data-id'     => array(),
+					),
+				);
+				echo wp_kses( $wps_email_share, $allowed_html );
 			}
 
-			$content3 = $content3 . '</div>';
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo wp_kses_post( $content3 );
+			// whatsapp share button.
+			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_whatsapp' ) == 1 ) {
+
+				$wps_whats_and_pint .= $whatsapp_share_button;
+			}
+
+			// pinterest share button.
+			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_pinterest' ) == 1 ) {
+
+				$wps_whats_and_pint .= $pinterest_share_button;
+			}
+			
+			echo wp_kses_post( $wps_whats_and_pint );
 		}
 	}
 

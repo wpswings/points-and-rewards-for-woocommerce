@@ -128,7 +128,12 @@ $wps_wpr_general_settings = array(
 				'class' => 'input-text',
 				'desc'  => __( 'Whatsapp', 'points-and-rewards-for-woocommerce' ),
 			),
-
+			array(
+				'type'  => 'checkbox',
+				'id'    => 'wps_wpr_pinterest',
+				'class' => 'input-text',
+				'desc'  => __( 'Pinterest', 'points-and-rewards-for-woocommerce' ),
+			),
 		),
 	),
 	array(
