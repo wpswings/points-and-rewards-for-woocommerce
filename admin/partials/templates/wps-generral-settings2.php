@@ -396,6 +396,10 @@ do_action( 'wps_wpr_add_notice' );
 
 									$settings_obj->wps_rwpr_generate_number_html( $val, $general_settings );
 								}
+								if ( 'singleSelectDropDownWithKeyvalue' == $val['type'] ) {
+
+									$settings_obj->wps_wpr_org_generate_single_select_drop_down_with_key_value_pair( $val, $general_settings );
+								}
 							}
 						}
 						if ( 'custom_text_area' == $value['type'] ) {

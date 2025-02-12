@@ -3745,6 +3745,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
 					update_user_meta( $user_id, 'points_details', $wps_order_rewards_details );
 					update_user_meta( $user_id, 'wps_wpr_rewards_points_awarded_check', 'done' );
+					do_action( 'wps_wpr_order_rewards_next_renewal_time', $order_id, $user_id );
 
 					if ( is_array( $wps_wpr_notificatin_array ) && ! empty( $wps_wpr_notificatin_array ) ) {
 
