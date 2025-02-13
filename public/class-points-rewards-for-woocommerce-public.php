@@ -2218,6 +2218,8 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// check if user is already awarded than return from here.
 		$wps_wpr_rewards_points_awarded_check = get_user_meta( $user_id, 'wps_wpr_rewards_points_awarded_check', true );
+		// add a filter to reset variable.
+		$wps_wpr_rewards_points_awarded_check = apply_filters( 'wps_wpr_show_rewards_next_points_message', $wps_wpr_rewards_points_awarded_check );
 		if ( empty( $wps_wpr_rewards_points_awarded_check ) ) {
 
 			// get rewards setting here.
@@ -2234,14 +2236,16 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( 1 === $wps_wpr_enable_to_show_order_reward_message ) {
 
 					// Get all user completed order.
-					$wps_customer_orders = wc_get_orders(
-						array(
-							'post_type'   => array( 'shop_order' ),
-							'post_status' => array( 'wc-completed' ),
-							'numberposts' => -1,
-							'customer_id' => $user_id,
-						)
+					$args = array(
+						'post_type'   => array( 'shop_order' ),
+						'post_status' => array( 'wc-completed' ),
+						'numberposts' => -1,
+						'customer_id' => $user_id,
 					);
+
+					// add filter to modify query.
+					$args                = apply_filters( 'wps_wpr_modify_get_user_order_query', $args, $user_id );
+					$wps_customer_orders = wc_get_orders( $args );
 
 					// Get user order count.
 					if ( ! empty( $wps_customer_orders ) && ! is_null( $wps_customer_orders ) ) {
@@ -2251,7 +2255,8 @@ class Points_Rewards_For_WooCommerce_Public {
 					// Replace order and points shortcode with order count and order rewards points.
 					$wps_wpr_number_order_rewards_messages = str_replace( '[ORDER]', ( $wps_wpr_number_of_reward_order - $order_count ), $wps_wpr_number_order_rewards_messages );
 					$wps_wpr_number_order_rewards_messages = str_replace( '[POINTS]', $wps_wpr_number_of_rewards_points, $wps_wpr_number_order_rewards_messages );
-
+					// add a filter to change notice.
+					$wps_wpr_number_order_rewards_messages = apply_filters( 'wps_wpr_modify_order_rewards_messages', $wps_wpr_number_order_rewards_messages, $order_count );
 					?>
 					<!-- Show awards discount notice -->
 					<div class="woocommerce-message" id="wps_wpr_order_notice" style="background-color: <?php echo esc_attr( $wps_wpr_notification_color ); ?>">
@@ -3667,6 +3672,8 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		$user_id                              = $order->get_user_id();
 		$wps_wpr_rewards_points_awarded_check = get_user_meta( $user_id, 'wps_wpr_rewards_points_awarded_check', true );
+		// add a filter to reset variable.
+		$wps_wpr_rewards_points_awarded_check = apply_filters( 'wps_wpr_show_rewards_next_points_message', $wps_wpr_rewards_points_awarded_check );
 		// check if user is already awarded than return from here.
 		if ( ! empty( $wps_wpr_rewards_points_awarded_check ) || 'done' == $wps_wpr_rewards_points_awarded_check ) {
 			return;
@@ -3684,15 +3691,24 @@ class Points_Rewards_For_WooCommerce_Public {
 		// check order rewards setting enable or not.
 		if ( 1 === $wps_wpr_enable_order_rewards_settings ) {
 
+			// updating current date for getting order within date range.
+			$wps_wpr_next_renewal_order_rewards_date = get_user_meta( $user_id, 'wps_wpr_next_renewal_order_rewards_date', true );
+			if ( empty( $wps_wpr_next_renewal_order_rewards_date ) ) {
+
+				update_user_meta( $user_id, 'wps_wpr_next_renewal_order_rewards_date', gmdate( 'Y-m-d' ) );
+			}
+
 			// get particular user completed order.
-			$customer_orders = wc_get_orders(
-				array(
-					'post_type'   => array( 'shop_order' ),
-					'post_status' => array( 'wc-completed' ),
-					'numberposts' => -1,
-					'customer_id' => $user_id,
-				)
+			$args = array(
+				'post_type'   => array( 'shop_order' ),
+				'post_status' => array( 'wc-completed' ),
+				'numberposts' => -1,
+				'customer_id' => $user_id,
 			);
+
+			// add a filter to modify query.
+			$args                = apply_filters( 'wps_wpr_modify_get_user_order_query', $args, $user_id );
+			$customer_orders = wc_get_orders( $args );
 
 			// check user number of order.
 			if ( ! empty( $customer_orders ) && ! is_null( $customer_orders ) ) {
@@ -3717,7 +3733,6 @@ class Points_Rewards_For_WooCommerce_Public {
 						$wps_wpr_number_of_rewards_points = ceil( ( $order_total * $wps_wpr_number_of_rewards_points ) / 100 );
 						$updated_points                   = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
 					} else {
-
 
 						$updated_points = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
 					}
@@ -3745,7 +3760,15 @@ class Points_Rewards_For_WooCommerce_Public {
 					update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
 					update_user_meta( $user_id, 'points_details', $wps_order_rewards_details );
 					update_user_meta( $user_id, 'wps_wpr_rewards_points_awarded_check', 'done' );
+
+					// add a action for updating next renewal points date within range.
 					do_action( 'wps_wpr_order_rewards_next_renewal_time', $order_id, $user_id );
+
+					// add order count for offset value in order query.
+					$wps_wpr_orders_count = get_user_meta( $user_id, 'wps_wpr_orders_count', true );
+					$wps_wpr_orders_count = ! empty( $wps_wpr_orders_count ) ? $wps_wpr_orders_count : 0;
+					$updated_order_count  = $wps_wpr_orders_count + $order_count;
+					update_user_meta( $user_id, 'wps_wpr_orders_count', $updated_order_count );
 
 					if ( is_array( $wps_wpr_notificatin_array ) && ! empty( $wps_wpr_notificatin_array ) ) {
 
