@@ -529,7 +529,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$mail_share_button      = '<a class="wps_wpr_mail_button wps_wpr_common_class" href="enteryour@addresshere.com?subject=Click on this link &body=Check%20this%20out:%20' . $page_permalink . '?pkey=' . $user_reference_key . '" rel="nofollow"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/email.svg"></a>';
 			$email_share_button     = apply_filters( 'wps_mail_box', $wps_fb_and_twit_share, $user_id );
 			$whatsapp_share_button  = '<a target="_blank" class="wps_wpr_whatsapp_share" href="https://api.whatsapp.com/send?text=' . rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '"><img src="' . WPS_RWPR_DIR_URL . 'public/images/WhatsApp.svg"></a>';
-			$pinterest_share_button = '<div class="wps_wpr_btn wps_wpr_common_class"><a class="" href="http://pinterest.com/pin/create/link/?url=' .  rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/pinterest.png"></a></div>';
+			$pinterest_share_button = '<div class="wps_wpr_btn wps_wpr_common_class wps_wpr_share_pinterest_btn"><a class="" href="http://pinterest.com/pin/create/link/?url=' .  rawurlencode( $page_permalink ) . '?pkey=' . $user_reference_key . '" target="_blank"><img src ="' . WPS_RWPR_DIR_URL . 'public/images/pinterest.png"></a></div>';
 
 			// facebook share button.
 			if ( $this->wps_wpr_get_general_settings_num( 'wps_wpr_facebook' ) == 1 ) {

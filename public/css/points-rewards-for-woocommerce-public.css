@@ -93,6 +93,10 @@ input#wps_cart_points {
     margin: 0 10px 0 0
 }
 
+a.wps_wpr_whatsapp_share {
+    margin: 0 10px 0 0;
+}
+
 .wps_wpr_btn_copy,
 .wps_wpr_btn_copy:active,
 .wps_wpr_btn_copy:focus,
