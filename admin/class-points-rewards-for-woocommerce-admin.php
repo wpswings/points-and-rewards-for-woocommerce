@@ -362,6 +362,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			self::wps_wpr_update_points_details( $user_id, 'admin_points', $points, $data );
 			/* Send Mail to the user*/
 			$this->wps_wpr_send_mail_details( $user_id, 'admin_notification', $points );
+			do_action( 'wps_wpr_update_user_points_manually', $user_id );
 			wp_die();
 		}
 	}
@@ -678,7 +679,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="wps-wpr-titledesc">
-						<label for="wps_wpr_membership_category_list"><?php esc_html_e( 'Select Product Category', 'points-and-rewards-for-woocommerce' ); ?></label>
+						<label for="wps_wpr_membership_category_list"><?php esc_html_e( 'Select Product Category test', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
@@ -686,7 +687,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						$attribute_description = __( 'Select Product Category', 'points-and-rewards-for-woocommerce' );
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
-						<select id="wps_wpr_membership_category_list_<?php echo esc_html( $count ); ?>" required="true" multiple="multiple" class="wps_wpr_common_class_categ" data-id="<?php echo esc_html( $count ); ?>" name="wps_wpr_membership_category_list_<?php echo esc_html( $count ); ?>[]">
+						<select id="wps_wpr_membership_category_list_<?php echo esc_html( $count ); ?>" multiple="multiple" class="wps_wpr_common_class_categ" data-id="<?php echo esc_html( $count ); ?>" name="wps_wpr_membership_category_list_<?php echo esc_html( $count ); ?>[]">
 							<?php
 							$args       = array( 'taxonomy' => 'product_cat' );
 							$categories = get_terms( $args );
@@ -773,7 +774,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
 						?>
 						<label for="wps_wpr_membership_discount">
-						<input type="number" min="1" max="100" value="<?php echo esc_html( $this->check_is_not_empty( isset( $value['Discount'] ) ? $value['Discount'] : '' ) ); ?>" name="wps_wpr_membership_discount_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_discount_<?php echo esc_html( $count ); ?>" class="input-text" required>
+						<input type="number" min="0" max="100" value="<?php echo esc_html( ! empty( $value['Discount'] ) ? $value['Discount'] : 0 ); ?>" name="wps_wpr_membership_discount_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_discount_<?php echo esc_html( $count ); ?>" class="input-text">
 						</label>	
 					</td>
 				</tr>

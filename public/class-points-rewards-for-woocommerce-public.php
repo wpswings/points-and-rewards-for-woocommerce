@@ -724,6 +724,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						$this->wps_wpr_destroy_cookie();
 						$wps_store_referral_user_ids = array();
 						update_user_meta( $refere_id, 'wps_store_referral_user_ids', $wps_store_referral_user_ids );
+						do_action( 'wps_wpr_referral_features_extend', $customer_id, $refere_id );
 					}
 				}
 			}
@@ -2734,9 +2735,10 @@ class Points_Rewards_For_WooCommerce_Public {
 								if ( is_array( $terms ) && ! empty( $terms ) && ! $product_is_variable ) {
 									foreach ( $terms as $term ) {
 
-										$cat_id     = $term->term_id;
-										$parent_cat = $term->parent;
-										if ( in_array( $cat_id, $values['Prod_Categ'] ) || in_array( $parent_cat, $values['Prod_Categ'] ) ) {
+										$cat_id            = $term->term_id;
+										$parent_cat        = $term->parent;
+										$product_saved_cat = ! empty( $values['Prod_Categ'] ) && is_array( $values['Prod_Categ'] ) ? $values['Prod_Categ'] : array();
+										if ( in_array( $cat_id, $product_saved_cat ) || in_array( $parent_cat, $product_saved_cat ) ) {
 											if ( ! empty( $reg_price ) ) {
 
 												$discounts = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
@@ -2864,9 +2866,10 @@ class Points_Rewards_For_WooCommerce_Public {
 								if ( is_array( $terms ) && ! empty( $terms ) ) {
 									foreach ( $terms as $term ) {
 
-										$cat_id     = $term->term_id;
-										$parent_cat = $term->parent;
-										if ( in_array( $cat_id, $values['Prod_Categ'] ) || in_array( $parent_cat, $values['Prod_Categ'] ) ) {
+										$cat_id            = $term->term_id;
+										$parent_cat        = $term->parent;
+										$product_saved_cat = ! empty( $values['Prod_Categ'] ) && is_array( $values['Prod_Categ'] ) ? $values['Prod_Categ'] : array();
+										if ( in_array( $cat_id, $product_saved_cat ) || in_array( $parent_cat, $product_saved_cat ) ) {
 											if ( ! $product_is_variable ) {
 
 												$discounts = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
@@ -3692,11 +3695,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( 1 === $wps_wpr_enable_order_rewards_settings ) {
 
 			// updating current date for getting order within date range.
-			$wps_wpr_next_renewal_order_rewards_date = get_user_meta( $user_id, 'wps_wpr_next_renewal_order_rewards_date', true );
-			if ( empty( $wps_wpr_next_renewal_order_rewards_date ) ) {
-
-				update_user_meta( $user_id, 'wps_wpr_next_renewal_order_rewards_date', gmdate( 'Y-m-d' ) );
-			}
+			do_action( 'wps_wpr_update_last_renewal_date', $user_id );
 
 			// get particular user completed order.
 			$args = array(
