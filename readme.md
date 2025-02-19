@@ -1,4 +1,4 @@
-﻿﻿![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![Active installs](https://img.shields.io/badge/Active-8000%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.7.1-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-9.6.0-brightgreen)![RequiresPHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
+﻿﻿![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![Active installs](https://img.shields.io/badge/Active-8000%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.7.2-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-9.6.2-brightgreen)![RequiresPHP](https://img.shields.io/badge/Requires%20PHP-5.6-blue)
 # Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, Referral Points, User Badges & Gamification
 ![Points and Rewards for WooCommerce](https://ps.w.org/points-and-rewards-for-woocommerce/assets/banner-772x250.jpg?rev=2671934)
 * Contributors: WP Swings
@@ -8,7 +8,7 @@
 
 # Description 
 
-**TOP-RATED POINTS AND REWARDS FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS. REWARD CUSTOMERS FOR SIGNUP POINTS, REFERRAL POINTS, SOCIAL SHARING, ASSIGN POINTS ON PREVIOUS ORDERS PURCHASES AND CREATE WOOCOMMERCE LOYALTY PROGRAMS TO REWARD REFERRAL POINTS, SIGN-UP POINTS ETC. ALLOW REDEEMING WOOCOMMERCE LOYALTY POINTS, POINTS LOG REPORT FOR ADMIN AND USER, AND BUILD MEMBERSHIP WITH PROPER EMAIL NOTIFICATIONS. **
+**TOP-RATED POINTS AND REWARDS FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS. REWARD CUSTOMERS FOR SIGNUP POINTS, REFERRAL POINTS, SOCIAL SHARING, ASSIGN POINTS ON PREVIOUS ORDERS PURCHASES AND CREATE WOOCOMMERCE LOYALTY PROGRAMS TO REWARD REFERRAL POINTS, SIGN-UP POINTS ETC. ALLOW REDEEMING WOOCOMMERCE LOYALTY POINTS, POINTS LOG REPORT FOR ADMIN AND USER, AND BUILD MEMBERSHIP WITH PROPER EMAIL NOTIFICATIONS.**
 
 [**Points And Rewards for WooCommerce**](https://wordpress.org/plugins/points-and-rewards-for-woocommerce/) is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem WooCommerce rewards using the WooCommerce reward points plugin to buy products at your store or participate in your membership program with the WordPress loyalty points plugin With the [**WooCommerce reward plugin**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-github-page&utm_campaign=par-pro) Get Access to features like the ability to award users based on their number of orders, points on upgrade membership level, and points on cart subtotal.
 
@@ -69,6 +69,9 @@ After the enhancement, the guest users can also see the wheel but will have to l
 Additionally, the admin is provided with hooks through which he can extend and customize the points tab and My Account page.
 
 **14) Customer Notification Feature**: With the Points and Rewards for WooCommerce plugin, merchants can notify their customers of each point transaction. Merchants can customize the email subject and message for different notification types. The notification is sent to the registered email of the customer.
+
+**15) Social Sharing Of Referral Link** Customers can also share their referral links with other users through different social media platforms like Pinterest, Facebook, Twitter, email, and WhatsApp. The customer will only earn points rewards if someone uses their shared referral link. 
+
 
 * Visit [**Points and Rewards for WooCommerce Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=par-github-page&utm_campaign=par-doc) and learn more about the features and workings of the reward plugin.
 
