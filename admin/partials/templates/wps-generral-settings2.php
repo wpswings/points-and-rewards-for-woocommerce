@@ -128,7 +128,12 @@ $wps_wpr_general_settings = array(
 				'class' => 'input-text',
 				'desc'  => __( 'Whatsapp', 'points-and-rewards-for-woocommerce' ),
 			),
-
+			array(
+				'type'  => 'checkbox',
+				'id'    => 'wps_wpr_pinterest',
+				'class' => 'input-text',
+				'desc'  => __( 'Pinterest', 'points-and-rewards-for-woocommerce' ),
+			),
 		),
 	),
 	array(
@@ -390,6 +395,10 @@ do_action( 'wps_wpr_add_notice' );
 								if ( 'number' == $val['type'] ) {
 
 									$settings_obj->wps_rwpr_generate_number_html( $val, $general_settings );
+								}
+								if ( 'singleSelectDropDownWithKeyvalue' == $val['type'] ) {
+
+									$settings_obj->wps_wpr_org_generate_single_select_drop_down_with_key_value_pair( $val, $general_settings );
 								}
 							}
 						}

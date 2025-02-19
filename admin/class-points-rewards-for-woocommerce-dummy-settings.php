@@ -85,6 +85,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		add_filter( 'wps_rwpr_add_setting_tab', array( $this, 'wps_add_points_dummy_notification_addon_settings_tab' ), 22, 1 );
 		add_filter( 'wps_rwpr_add_setting_tab', array( $this, 'wps_add_api_dummy_settings_tab' ), 23, 1 );
 		add_filter( 'wps_wpr_others_settings', array( $this, 'wps_wpr_total_earning_dummy_points_settings' ), 12, 1 );
+		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_extend_dummy_order_rewards_settings' ), 10, 1 );
 	}
 
 	/**
@@ -2367,9 +2368,9 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
 				if ( ! empty( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) {
 
-					wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.6.1' );
+					wp_register_style( 'wps_wpr_dummy_css_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummycss/wps-points-and-rewards-dummy.css', array(), '2.6.2' );
 					wp_enqueue_style( 'wps_wpr_dummy_css_file' );
-					wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.6.1', true );
+					wp_register_script( 'wps_wpr_dummy_js_file', WPS_RWPR_DIR_URL . 'admin/partials/dummyfile/dummyjs/wps-points-and-rewards-dummy.js', array(), '2.6.2', true );
 					wp_enqueue_script( 'wps_wpr_dummy_js_file' );
 					wp_localize_script(
 						'wps_wpr_dummy_js_file',
@@ -2450,6 +2451,71 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		);
 		$wps_wpr_other_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_other_settings, $other_settings, 24 );
 		return $wps_wpr_other_settings;
+	}
+
+	/**
+	 * This function is used to create dummy settings for order rewards recurring points.
+	 *
+	 * @param  array $general_settings general_settings.
+	 * @return array
+	 */
+	public function wps_wpr_extend_dummy_order_rewards_settings( $general_settings ) {
+
+		$my_new_inserted_array = array(
+			array(
+				'title'    => __( 'Recurring Reward Points Within Range', 'points-and-rewards-for-woocommerce' ),
+				'type'     => 'checkbox',
+				'desc'     => __( 'Enable this setting to reward the user again within the selected range', 'points-and-rewards-for-woocommerce' ),
+				'id'       => 'wps_wpr_enable_next_rewards_time',
+				'class'    => 'input-text wps_wpr_pro_plugin_settings',
+				'desc_tip' => __( 'By enabling this setting, you can reward the user again within the selected range based on the number of orders they have placed.', 'points-and-rewards-for-woocommerce' ),
+				'default'  => 0,
+			),
+			array(
+				'title'       => __( 'Set Next Rewards Date', 'points-and-rewards-for-woocommerce' ),
+				'type'        => 'number_text',
+				'class'       => 'input-text wps_wpr_pro_plugin_settings',
+				'desc_tip'    => __( 'Set the time period during which the user will be rewarded with points.', 'points-and-rewards-for-woocommerce' ),
+				'number_text' => array(
+					array(
+						'type'              => 'number',
+						'id'                => 'wps_wpr_next_order_reward_time',
+						'class'             => 'input-text wps_wpr_common_width wps_wpr_pro_plugin_settings',
+						'custom_attributes' => array( 'min' => '"1"' ),
+						'desc_tip'          => __(
+							'Set the time period during which the user will be rewarded with points.',
+							'points-and-rewards-for-woocommerce'
+						),
+					),
+					array(
+						'id'               => 'wps_wpr_next_order_rewards_time_type',
+						'class'            => 'wps_wgm_new_woo_ver_style_select wps_wpr_pro_plugin_settings',
+						'type'             => 'singleSelectDropDownWithKeyvalue',
+						'custom_attribute' => array(
+							array(
+								'id'   => 'day',
+								'name' => __( 'Day', 'points-and-rewards-for-woocommerce' ),
+							),
+							array(
+								'id'   => 'week',
+								'name' => __( 'Week', 'points-and-rewards-for-woocommerce' ),
+							),
+							array(
+								'id'   => 'month',
+								'name' => __( 'Month', 'points-and-rewards-for-woocommerce' ),
+							),
+							array(
+								'id'   => 'year',
+								'name' => __( 'Year', 'points-and-rewards-for-woocommerce' ),
+							),
+						),
+					),
+				),
+			),
+		);
+
+		$general_settings  = $this->wps_dummy_insert_keys_value_pair( $general_settings, $my_new_inserted_array, 72 );
+		return $general_settings;
 	}
 
 }

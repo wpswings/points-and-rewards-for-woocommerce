@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags:points and rewards, loyalty, referrals, reward for points, gamification
 Requires at least: 5.5.0
-Tested up to: 6.7.1
+Tested up to: 6.7.2
 WC requires at least: 5.5.0
-WC tested up to: 9.6.0
-Stable tag: 2.6.1
+WC tested up to: 9.6.2
+Stable tag: 2.6.2
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -79,7 +79,7 @@ Additionally, the admin is provided with hooks through which he can extend and c
 With the WooCommerce Points and Rewards plugin, merchants can notify their customers of each point transaction. Merchants can customize the email subject and message for different notification types. The notification is sent to the registered email of the customer.
 
 **15) Social Sharing Of Referral Link**
-Customers can also share their referral links with other users through different social media platforms like Facebook, Twitter, email, and WhatsApp. The customer will only earn points rewards if someone uses their shared referral link. 
+Customers can also share their referral links with other users through different social media platforms like Pinterest, Facebook, Twitter, email, and WhatsApp. The customer will only earn points rewards if someone uses their shared referral link.
 
 **16) Assign Woo Points On Previous Orders**
 With the WooCommerce Rewards points plugin, the merchants get a chance to assign Woo points on previous orders. This setting enables the merchants to assign points to those orders.   
@@ -282,6 +282,13 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 2.6.2 - Released on 19 February 2025 =
+* New: Option to share Referral link on Pinterest
+* Enhancement : Points log naming convention
+* Fix: Design issues
+* New: Compatible with latest WP(6.7.2) & WC(9.6.2)
+* Enhancement: Enhancing the membership discount field by making it optional
 
 = 2.6.1 - Released on 23 January 2025 =
 * New : Compatible with latest WP(6.7.1) & WC(9.6.0)
@@ -577,6 +584,9 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.6.1 - Released on 23 January 2025 =
-* New : Compatible with latest WP(6.7.1) & WC(9.6.0)
-* Fix    : Minor validation issues
+= 2.6.2 - Released on 19 February 2025 =
+* New: Option to share Referral link on Pinterest
+* Enhancement : Points log naming convention
+* Fix: Design issues
+* New: Compatible with latest WP(6.7.2) & WC(9.6.2)
+* Enhancement: Enhancing the membership discount field by making it optional

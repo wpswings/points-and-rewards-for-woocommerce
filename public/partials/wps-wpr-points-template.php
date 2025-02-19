@@ -221,26 +221,43 @@ if ( ! is_array( $coupon_settings ) ) {
 						<tr>
 							<td>
 								<?php
-								$wps_member_name = strtolower( str_replace( ' ', '_', $wps_role ) );
+
+								$enable_mem_reward_points = ! empty( $values['enable_mem_reward_points'] ) ? $values['enable_mem_reward_points'] : 0;
+								$assign_mem_points_type   = ! empty( $values['assign_mem_points_type'] ) ? $values['assign_mem_points_type'] : 'fixed';
+								$mem_rewards_points_val   = ! empty( $values['mem_rewards_points_val'] ) ? $values['mem_rewards_points_val'] : 0;
+								$wps_member_name          = strtolower( str_replace( ' ', '_', $wps_role ) );
+								$discount_value           = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
 								echo esc_html( $wps_role ) . '<br/><a class = "wps_wpr_level_benefits" data-id = "' . esc_html( $wps_member_name ) . '" href="javascript:;">' . esc_html__( 'View Benefits', 'points-and-rewards-for-woocommerce' ) . '</a>'; //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited,WordPress.WP.I18n.NonSingularStringLiteralText
 								?>
 								</td>
 								<div class="wps_wpr_popup_wrapper wps_rwpr_settings_display_none" id="wps_wpr_popup_wrapper_<?php echo esc_html( $wps_member_name ); ?>">
 									<div class="wps_wpr_popup_content_section">
 										<div class="wps_wpr_popup_content">
-											<div class="wps_wpr_popup_notice_section">					
-												<p>
-													<span class="wps_wpr_intro_text">
+											<div class="wps_wpr_popup_notice_section">
+												<?php
+												if ( $discount_value > 0 ) {
+												?>				
+													<p>
+														<span class="wps_wpr_intro_text">
+														<?php
+														esc_html_e( 'You will get ', 'points-and-rewards-for-woocommerce' );
+														echo esc_html( $discount_value );
+														esc_html_e( '% discount on below products or categories', 'points-and-rewards-for-woocommerce' );
+														?>
+														</span>
+													</p>
 													<?php
-													esc_html_e( 'You will get ', 'points-and-rewards-for-woocommerce' );
-													echo esc_html( $values['Discount'] );
-													esc_html_e( '% discount on below products or categories', 'points-and-rewards-for-woocommerce' );
+												} else {
+
 													?>
-													</span>
-													<span class="wps_wpr_close">
-														<a href="javascript:;"><img src="<?php echo esc_url( WPS_RWPR_DIR_URL ); ?>public/images/cancel.png" alt=""></a>
-													</span>
-												</p>
+													<p>
+														<span class="wps_wpr_intro_text"><?php echo esc_html( ucfirst( $wps_member_name ) ); ?></span>
+													</p>
+													<?php
+												} ?>
+												<span class="wps_wpr_close">
+													<a href="javascript:;"><img src="<?php echo esc_url( WPS_RWPR_DIR_URL ); ?>public/images/cancel.png" alt=""></a>
+												</span>
 											</div>
 											<div class="wps_wpr_popup_thumbnail_section">
 												<ul>
@@ -303,7 +320,35 @@ if ( ! is_array( $coupon_settings ) ) {
 														}
 													}
 													?>
-											</div>								
+											</div>
+											<?php
+											if ( 1 == $enable_mem_reward_points ) {
+												if ( 'percent' === $assign_mem_points_type ) {
+
+													?>
+													<p class="wps_wpr_mems_rewards">
+														<span class="wps_wpr_intro_text">
+															<?php
+															/* translators: %s: list of percent wise points rewards */
+															echo sprintf( esc_html__( 'As a %1$s member, you will earn an additional %2$s of your order total as bonus points as a reward!' , 'points-and-rewards-for-woocommerce' ), esc_html( ucfirst( $wps_member_name ) ), esc_html( $mem_rewards_points_val . '%' ) );
+															?>
+														</span>
+													</p>
+													<?php
+												} else {
+													?>
+													<p class="wps_wpr_mems_rewards">
+														<span class="wps_wpr_intro_text">
+															<?php
+															/* translators: %s: list of fixed points rewards */
+															echo sprintf( esc_html__( 'As a %1$s member, you will earn an additional %2$s bonus points as a reward!' , 'points-and-rewards-for-woocommerce' ), esc_html( ucfirst( $wps_member_name ) ), esc_html( $mem_rewards_points_val ) );
+															?>
+														</span>
+													</p>
+													<?php
+												}
+											}
+											?>
 										</div>
 									</div>
 								</div>

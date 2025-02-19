@@ -287,12 +287,6 @@
 				.attr("required", !1),
 			jQuery(document)
 				.find("#wps_wpr_membership_expiration_" + e)
-				.attr("required", !1),
-			jQuery(document)
-				.find("#wps_wpr_membership_category_list_" + e)
-				.attr("required", !1),
-			jQuery(document)
-				.find("#wps_wpr_membership_discount_" + e)
 				.attr("required", !1);
 		  });
 	  },
@@ -311,12 +305,6 @@
 				.attr("required", !0),
 			jQuery(document)
 				.find("#wps_wpr_membership_expiration_" + e)
-				.attr("required", !0),
-			jQuery(document)
-				.find("#wps_wpr_membership_category_list_" + e)
-				.attr("required", !0),
-			jQuery(document)
-				.find("#wps_wpr_membership_discount_" + e)
 				.attr("required", !0);
 		  });
 	  };

@@ -93,6 +93,10 @@ input#wps_cart_points {
     margin: 0 10px 0 0
 }
 
+a.wps_wpr_whatsapp_share {
+    margin: 0 10px 0 0;
+}
+
 .wps_wpr_btn_copy,
 .wps_wpr_btn_copy:active,
 .wps_wpr_btn_copy:focus,
@@ -193,7 +197,7 @@ input#wps_cart_points {
 }
 
 .wps_wpr_message {
-    font-size: 13px
+    font-size: 14px
 }
 
 .wps_wpr_membership_with_img thead {
@@ -310,23 +314,25 @@ input#wps_cart_points {
     border-top-right-radius: 5px;
     color: #fff;
     padding: 10px;
-    text-align: center
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 .wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_popup_notice_section>p {
     margin: 0;
-    font-size: 15px;
-    display: block
+    font-size: 16px;
+    display: block;
+    flex: 1;
 }
 
 .wps_wpr_popup_thumbnail_section {
     padding: 10px;
-    height: 333px;
+    max-height: 333px;
     overflow-y: auto
 }
 
-.wps_wpr_avada_wrap .custom_point_checkout.woocommerce-info,
-.wps_wpr_popup_thumbnail_section ul {
+.wps_wpr_avada_wrap .custom_point_checkout.woocommerce-info,.wps_wpr_popup_thumbnail_section ul {
     margin: 0;
     padding: 0
 }
@@ -358,6 +364,17 @@ input#wps_cart_points {
 
 .wps_wpr_popup_thumbnail_section .wps_wpr_thumbnail_img_wrap img {
     max-width: 100%
+}
+
+.wps_wpr_popup_content .wps_wpr_popup_thumbnail_section+p.wps_wpr_mems_rewards {
+    padding: 10px 10px 30px;
+    text-align: center;
+    margin:0;
+    font-weight: bold;
+}
+
+.wps_wpr_membership_with_img-wrap {
+    overflow: auto;
 }
 
 .wps_wpr_cat_list {

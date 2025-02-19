@@ -186,6 +186,10 @@
     cursor: pointer;
 }
 
+a.wps_wpr_whatsapp_share {
+    margin: 0 5px 0 0!important;
+}
+
 .wps_wpr_main_section_all_wrap .wps_wpr_wrapper_button img {
     height: 24px;
     width: 24px;

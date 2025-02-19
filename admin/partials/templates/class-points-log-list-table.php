@@ -652,7 +652,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'Coupon_details', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Coupon Generation', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Coupon generated through points', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p> 
 						<div class="wps_wpr_points_view"> 
@@ -685,7 +685,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'points_on_order', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points earned on Order Total', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points earned based on a specific order total range.', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<div class="wps_wpr_points_view"> 
@@ -718,7 +718,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'refund_points_on_order', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Deducted Points earned on Order Total on Order Refund', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Return earned points based on a specific order total range when an order is refunded.', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 							<div class="wps_wpr_points_view"> 
@@ -817,7 +817,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'cancel_points_on_order_total', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Deducted Points earned on Order Total on Order Cancellation', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Return earned points based on a specific order total range when an order is cancelled.', 'points-and-rewards-for-woocommerce' ); ?>
 								<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 							</p>
 							<div class="wps_wpr_points_view"> 
@@ -850,7 +850,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'refund_points_applied_on_cart', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Apply Points of cart refunded after the order is canceled', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points from the cart will be refunded after the order is canceled.', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 							<div class="wps_wpr_points_view"> 
@@ -883,7 +883,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'product_details', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Assigned Product Point', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Assigned Product Points', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 							<div class="wps_wpr_points_view"> 
@@ -916,7 +916,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'pro_conversion_points', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Order Total Points - Product Conversion Points', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Per Currency Earn Points', 'points-and-rewards-for-woocommerce' ); ?>
 						<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<div class="wps_wpr_points_view"> 
@@ -949,7 +949,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'comment', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Product Review/Comment Point', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points earned by leaving a review or comment', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<div class="wps_wpr_points_view"> 
@@ -982,7 +982,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'membership', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Membership Points', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points deducted for purchasing a membership plan.', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<div class="wps_wpr_points_view"> 
@@ -1016,7 +1016,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'ref_product_detail', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points earned by the purchase has been made by referrals', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points earned from a purchase made through your referral.', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<div class="wps_wpr_points_view"> 
@@ -1099,7 +1099,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'wps_refer_purchase_point_cancelled', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Cancelled referral purchase point', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Return referral purchase point', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<div class="wps_wpr_points_view"> 
@@ -1132,7 +1132,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'pur_by_points', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Product has been purchased using points', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Deduction of points as you have purchased your product through points', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<div class="wps_wpr_points_view"> 
@@ -1165,7 +1165,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'deduction_of_points', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Deduction of points for return request', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Deduct assigned product-earned points when an order is canceled', 'points-and-rewards-for-woocommerce' ); ?>
 						<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 					</p>
 						<div class="wps_wpr_points_view"> 
@@ -1231,7 +1231,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'return_pur_points', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Return Points', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Return of points used for purchases through the points', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<div class="wps_wpr_points_view"> 
@@ -1264,7 +1264,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'deduction_currency_spent', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Deduct Order Total Points - Per Currency Spent', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Deduct earned points per currency on order return requests', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<div class="wps_wpr_points_view"> 
@@ -1297,7 +1297,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'cart_subtotal_point', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points Applied on Cart', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points Applied on Cart/Checkout', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
@@ -1390,7 +1390,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'user_badges_rewards_points', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Badge Level Earn Points', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Earn Points and Unlock Higher Badge Levels!', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
@@ -1716,7 +1716,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'expired_details', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Expired Points', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Oops!! Points are expired!', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
@@ -1747,7 +1747,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'deduct_currency_pnt_cancel', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Order Points Deducted due to Cancelation of Order', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Per currency points deducted due to cancellation of order', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
@@ -1778,7 +1778,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'deduct_bcz_cancel', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Assigned Points Deducted due to Cancelation of Order', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Assigned Points Deducted due to Cancellation of Order', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
@@ -1809,7 +1809,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'pur_points_cancel', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points Returned due to Cancelation of Order', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points refunded due to order cancellation for purchases through points only', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
@@ -1840,7 +1840,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'pur_pro_pnt_only', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points deducted for purchasing the product', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points deducted for purchases made using the Purchase Through Points Only', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
@@ -1871,7 +1871,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'reference_details', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Referral SignUp', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points earned for successfully referring someone!', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<div class="wps_wpr_points_view"> 
@@ -2018,10 +2018,43 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 					</div>
 					<?php
 				}
+				if ( array_key_exists( 'points_deduct_wallet', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points deducted and added to the wallet', 'points-and-rewards-for-woocommerce' ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<div class="wps_wpr_points_view"> 
+							<table class = "form-table mwp_wpr_settings  wps_wpr_common_table">
+									<thead>
+										<tr valign="top">
+											<th scope="row" class="wps_wpr_head_titledesc">
+												<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+											</th>
+											<th scope="row" class="wps_wpr_head_titledesc">
+												<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+											</th>
+										</tr>
+									</thead>
+									<?php
+									foreach ( $point_log['points_deduct_wallet'] as $key => $value ) {
+										?>
+										<tr valign="top">
+											<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+											<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['points_deduct_wallet'] ); ?></td>
+										</tr>
+										<?php
+									}
+									?>
+							</table>
+						</div>
+					</div>
+					<?php
+				}
 				if ( array_key_exists( 'Sender_point_details', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points Shared with', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points successfully deducted for sharing your points with others', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
@@ -2065,7 +2098,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 				if ( array_key_exists( 'Receiver_point_details', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
-						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Receives Points', 'points-and-rewards-for-woocommerce' ); ?>
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Points successfully received as someone has shared them with you', 'points-and-rewards-for-woocommerce' ); ?>
 							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
 						</p>
 						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">

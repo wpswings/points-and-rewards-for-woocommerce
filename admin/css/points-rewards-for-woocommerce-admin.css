@@ -1497,3 +1497,14 @@ span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wp
 .wps_wpr_user_reports table th {
     background: #f2f2f2;
 }
+
+/** Floating button (Save Settings)  **/
+
+.wps_rwpr_content_template .submit {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    margin-left: -15px;
+    padding-left: 15px;
+}
