@@ -326,12 +326,25 @@ if ( ! is_array( $coupon_settings ) ) {
 												if ( 'percent' === $assign_mem_points_type ) {
 
 													?>
-													<p class="wps_wpr_mems_rewards"><span class="wps_wpr_intro_text"><?php echo sprintf( esc_html__( 'As a %s member, you will earn an additional %s of your order total as bonus points as a reward!' , 'points-and-rewards-for-woocommerce' ), esc_html( ucfirst( $wps_member_name ) ), esc_html( $mem_rewards_points_val . '%' ) ); ?></span></p>
+													<p class="wps_wpr_mems_rewards">
+														<span class="wps_wpr_intro_text">
+															<?php
+															/* translators: %s: list of percent wise points rewards */
+															echo sprintf( esc_html__( 'As a %s member, you will earn an additional %s of your order total as bonus points as a reward!' , 'points-and-rewards-for-woocommerce' ), esc_html( ucfirst( $wps_member_name ) ), esc_html( $mem_rewards_points_val . '%' ) );
+															?>
+														</span>
+													</p>
 													<?php
 												} else {
-
 													?>
-													<p class="wps_wpr_mems_rewards"><span class="wps_wpr_intro_text"><?php echo sprintf( esc_html__( 'As a %s member, you will earn an additional %s bonus points as a reward!' , 'points-and-rewards-for-woocommerce' ), esc_html( ucfirst( $wps_member_name ) ), esc_html( $mem_rewards_points_val ) ); ?></span></p>
+													<p class="wps_wpr_mems_rewards">
+														<span class="wps_wpr_intro_text">
+															<?php
+															/* translators: %s: list of fixed points rewards */
+															echo sprintf( esc_html__( 'As a %s member, you will earn an additional %s bonus points as a reward!' , 'points-and-rewards-for-woocommerce' ), esc_html( ucfirst( $wps_member_name ) ), esc_html( $mem_rewards_points_val ) );
+															?>
+														</span>
+													</p>
 													<?php
 												}
 											}
