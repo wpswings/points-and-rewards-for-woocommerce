@@ -2463,19 +2463,19 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 
 		$my_new_inserted_array = array(
 			array(
-				'title'    => __( 'Recurring Reward Points Within Range', 'ultimate-woocommerce-points-and-rewards' ),
+				'title'    => __( 'Recurring Reward Points Within Range', 'points-and-rewards-for-woocommerce' ),
 				'type'     => 'checkbox',
-				'desc'     => __( 'Enable this setting to reward the user again within the selected range', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc'     => __( 'Enable this setting to reward the user again within the selected range', 'points-and-rewards-for-woocommerce' ),
 				'id'       => 'wps_wpr_enable_next_rewards_time',
 				'class'    => 'input-text wps_wpr_pro_plugin_settings',
-				'desc_tip' => __( 'By enabling this setting, you can reward the user again within the selected range based on the number of orders they have placed.', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip' => __( 'By enabling this setting, you can reward the user again within the selected range based on the number of orders they have placed.', 'points-and-rewards-for-woocommerce' ),
 				'default'  => 0,
 			),
 			array(
-				'title'       => __( 'Set Next Rewards Date', 'ultimate-woocommerce-points-and-rewards' ),
+				'title'       => __( 'Set Next Rewards Date', 'points-and-rewards-for-woocommerce' ),
 				'type'        => 'number_text',
 				'class'       => 'input-text wps_wpr_pro_plugin_settings',
-				'desc_tip'    => __( 'Set the time period during which the user will be rewarded with points.', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip'    => __( 'Set the time period during which the user will be rewarded with points.', 'points-and-rewards-for-woocommerce' ),
 				'number_text' => array(
 					array(
 						'type'              => 'number',
@@ -2484,7 +2484,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 						'custom_attributes' => array( 'min' => '"1"' ),
 						'desc_tip'          => __(
 							'Set the time period during which the user will be rewarded with points.',
-							'ultimate-woocommerce-points-and-rewards'
+							'points-and-rewards-for-woocommerce'
 						),
 					),
 					array(
@@ -2494,19 +2494,19 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 						'custom_attribute' => array(
 							array(
 								'id'   => 'day',
-								'name' => __( 'Day', 'ultimate-woocommerce-points-and-rewards' ),
+								'name' => __( 'Day', 'points-and-rewards-for-woocommerce' ),
 							),
 							array(
 								'id'   => 'week',
-								'name' => __( 'Week', 'ultimate-woocommerce-points-and-rewards' ),
+								'name' => __( 'Week', 'points-and-rewards-for-woocommerce' ),
 							),
 							array(
 								'id'   => 'month',
-								'name' => __( 'Month', 'ultimate-woocommerce-points-and-rewards' ),
+								'name' => __( 'Month', 'points-and-rewards-for-woocommerce' ),
 							),
 							array(
 								'id'   => 'year',
-								'name' => __( 'Year', 'ultimate-woocommerce-points-and-rewards' ),
+								'name' => __( 'Year', 'points-and-rewards-for-woocommerce' ),
 							),
 						),
 					),

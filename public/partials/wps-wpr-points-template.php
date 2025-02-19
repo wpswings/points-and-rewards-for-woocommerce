@@ -330,7 +330,7 @@ if ( ! is_array( $coupon_settings ) ) {
 														<span class="wps_wpr_intro_text">
 															<?php
 															/* translators: %s: list of percent wise points rewards */
-															echo sprintf( esc_html__( 'As a %s member, you will earn an additional %s of your order total as bonus points as a reward!' , 'points-and-rewards-for-woocommerce' ), esc_html( ucfirst( $wps_member_name ) ), esc_html( $mem_rewards_points_val . '%' ) );
+															echo sprintf( esc_html__( 'As a %1$s member, you will earn an additional %2$s of your order total as bonus points as a reward!' , 'points-and-rewards-for-woocommerce' ), esc_html( ucfirst( $wps_member_name ) ), esc_html( $mem_rewards_points_val . '%' ) );
 															?>
 														</span>
 													</p>
@@ -341,7 +341,7 @@ if ( ! is_array( $coupon_settings ) ) {
 														<span class="wps_wpr_intro_text">
 															<?php
 															/* translators: %s: list of fixed points rewards */
-															echo sprintf( esc_html__( 'As a %s member, you will earn an additional %s bonus points as a reward!' , 'points-and-rewards-for-woocommerce' ), esc_html( ucfirst( $wps_member_name ) ), esc_html( $mem_rewards_points_val ) );
+															echo sprintf( esc_html__( 'As a %1$s member, you will earn an additional %2$s bonus points as a reward!' , 'points-and-rewards-for-woocommerce' ), esc_html( ucfirst( $wps_member_name ) ), esc_html( $mem_rewards_points_val ) );
 															?>
 														</span>
 													</p>
