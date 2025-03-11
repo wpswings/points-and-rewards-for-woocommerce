@@ -385,6 +385,23 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'class'    => 'input-text wps_wpr_pro_plugin_settings',
 				'desc'     => __( 'Toggle this setting to restrict users from applying either a coupon or points, but not both at the same time.', 'ultimate-woocommerce-points-and-rewards' ),
 			),
+			array(
+				'title'    => __( 'Enable redemption based on the users membership level.', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'     => 'checkbox',
+				'id'       => 'wps_wpr_enable_redemption_member_level_wise',
+				'desc_tip' => __( 'After enabling this setting, only members will be able to redeem points.', 'ultimate-woocommerce-points-and-rewards' ),
+				'class'    => 'input-text wps_wpr_pro_plugin_settings',
+				'desc'     => __( 'Enable this setting to allow users to redeem points based on their membership level.', 'ultimate-woocommerce-points-and-rewards' ),
+			),
+			array(
+				'title'    => __( 'Choose a membership level to allow redemption.', 'ultimate-woocommerce-points-and-rewards' ),
+				'id'       => 'wps_wpr_restrict_redeem_points_membership_wise',
+				'type'     => 'search&select',
+				'multiple' => 'multiple',
+				'desc_tip' => __( 'Select the categories in which you want to allow customers to redeem points.', 'ultimate-woocommerce-points-and-rewards' ),
+				'options'  => $this->wps_wpr_dummy_all_pages(),
+				'class'    => 'wps_wpr_pro_plugin_settings',
+			),
 		);
 
 		$key = (int) $this->wps_wpr_dummy_get_key( $settings );
@@ -477,7 +494,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 52 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 54 );
 		return $wps_wpr_general_settings;
 	}
 
@@ -516,7 +533,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 52 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 54 );
 		return $wps_wpr_general_settings;
 	}
 
@@ -571,7 +588,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 52 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 54 );
 		return $wps_wpr_general_settings;
 	}
 

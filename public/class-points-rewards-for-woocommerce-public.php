@@ -1975,16 +1975,16 @@ class Points_Rewards_For_WooCommerce_Public {
 
 					WC()->session->set( 'wps_cart_points', $wps_cart_points );
 					$response['result']  = true;
-					$response['message'] = esc_html__( 'Custom Point has been applied Successfully!', 'points-and-rewards-for-woocommerce' );
+					$response['message'] = apply_filters( 'wps_wpr_modify_points_success_msg', esc_html__( 'Custom Point has been applied Successfully!', 'points-and-rewards-for-woocommerce' ) );
 				} else {
 
 					$response['result']  = false;
-					$response['message'] = __( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
+					$response['message'] = esc_html__( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
 				}
 			} else {
 
 				$response['result']  = false;
-				$response['message'] = __( 'Invalid Points!', 'points-and-rewards-for-woocommerce' );
+				$response['message'] = apply_filters( 'wps_wpr_modify_points_error_msg', esc_html__( 'Invalid Points!', 'points-and-rewards-for-woocommerce' ) );
 			}
 		}
 		wp_send_json( $response );

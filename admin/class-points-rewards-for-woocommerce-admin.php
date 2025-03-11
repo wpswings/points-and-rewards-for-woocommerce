@@ -971,6 +971,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 		// calling to create crone for banner image.
 		$this->wps_wpr_set_cron_for_plugin_banner_notification();
+		// calling to list shortcode in Gutenburg.
+		$this->wps_wpr_list_shortcode_in_gutenburg_block();
 	}
 
 	/**
@@ -2498,6 +2500,17 @@ class Points_Rewards_For_WooCommerce_Admin {
 				}
 			}
 		}
+	}
+
+	/**
+	 * This function is used to list shortcodes in Gutenburg.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_list_shortcode_in_gutenburg_block() {
+
+		wp_register_script( 'google-embeds-org-block-par', plugins_url( 'js/points-and-rewards-gutenburg-block-shortcode.js', __FILE__ ), array( 'wp-blocks', 'wp-editor', 'wp-element', 'wp-components' ), time(), false );
+		register_block_type( 'wpswings/googles-embed-org-par', array( 'editor_script' => 'google-embeds-org-block-par',	) );
 	}
 
 }
