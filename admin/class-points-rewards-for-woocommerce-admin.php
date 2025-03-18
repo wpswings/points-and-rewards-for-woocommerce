@@ -186,7 +186,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'csv_import_success_msg' => esc_html__( 'CSV file imported successfully.', 'points-and-rewards-for-woocommerce' ),
 					);
 
-					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->version, false );
+					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), time(), false );
 					wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
 
 					// user report work.
@@ -583,11 +583,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 		?>
 		<div class="parent_of_div">
 			<?php
-			$count = 0;
 			if ( is_array( $wps_wpr_membership_roles ) && ! empty( $wps_wpr_membership_roles ) ) {
-				$key = array_key_first( $wps_wpr_membership_roles );
-				$this->wps_wpr_membership_role( $count, $key, $wps_wpr_membership_roles[ $key ] );
+				for ( $count = 0; $count <= count( $wps_wpr_membership_roles ) - 1; $count++ ) {
+
+					$key = array_keys( $wps_wpr_membership_roles )[$count];
+					$this->wps_wpr_membership_role( $count, $key, $wps_wpr_membership_roles[ $key ] );
+				}
 			} else {
+				$count = 0;
 				$this->wps_wpr_membership_role( $count, '', '' );
 			}
 			?>
@@ -679,7 +682,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				</tr>
 				<tr valign="top">
 					<th scope="row" class="wps-wpr-titledesc">
-						<label for="wps_wpr_membership_category_list"><?php esc_html_e( 'Select Product Category test', 'points-and-rewards-for-woocommerce' ); ?></label>
+						<label for="wps_wpr_membership_category_list"><?php esc_html_e( 'Select Product Category', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
