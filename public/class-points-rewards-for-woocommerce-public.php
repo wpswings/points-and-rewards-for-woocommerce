@@ -2086,7 +2086,7 @@ class Points_Rewards_For_WooCommerce_Public {
 									global $woocommerce;
 									$wps_fee_on_cart = WC()->session->get( 'wps_cart_points' );
 									// apply points on subtotal.
-									$subtotal = $woocommerce->cart->get_subtotal();
+									$subtotal = $woocommerce->cart->subtotal;
 									// WOOCS - WooCommerce Currency Switcher Compatibility.
 									if ( ! class_exists( 'WOOCS' ) ) {
 										if ( $subtotal > $wps_fee_on_cart ) {
