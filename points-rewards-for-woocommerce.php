@@ -41,17 +41,19 @@ use Automattic\WooCommerce\Utilities\OrderUtil;
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 // To Activate plugin only when WooCommerce is active.
-$activated      = true;
-$active_plugins = (array) get_option( 'active_plugins', array() );
+$activated      = false;
+$active_plugins = get_option('active_plugins', array());
 
-// Multisite Compatibility.
+// Merge with sitewide plugins if multisite.
 if ( is_multisite() ) {
-	$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+
+    $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
 }
 
-// check woo activate.
-if ( ! ( array_key_exists( 'woocommerce/woocommerce.php', $active_plugins ) || in_array( 'woocommerce/woocommerce.php', $active_plugins ) ) ) {
-	$activated = false;
+// Check if WooCommerce is installed and active.
+if ( file_exists( WP_PLUGIN_DIR . '/' . 'woocommerce/woocommerce.php' ) && in_array( 'woocommerce/woocommerce.php', $active_plugins, true ) ) {
+
+    $activated = true;
 }
 
 $plug = get_plugins();
