@@ -2018,28 +2018,28 @@ class Points_Rewards_For_WooCommerce_Public {
 
 				if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
 
-					// save tax amount.
-					if ( 'excl' === get_option( 'woocommerce_tax_display_cart' ) || 'excl' === get_option( 'woocommerce_tax_display_shop' ) ) {
-						$taxes = $cart->get_taxes();
-						if ( ( ! empty( $taxes ) && is_array( $taxes ) ) && empty( WC()->session->get( 'wps_wpr_tax_before_coupon' ) ) ) {
-
-							$total_taxes        = array_sum( $taxes );
-							$shipping_taxes     = $cart->get_shipping_taxes();
-							$shipping_tax_total = array_sum( $shipping_taxes );
-							$total_taxes        = $total_taxes - $shipping_tax_total;
-							WC()->session->set( 'wps_wpr_tax_before_coupon', $total_taxes );
-						}
-					}
-
 					$wps_fee_on_cart = WC()->session->get( 'wps_cart_points' );
 					$cart_discount   = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 					// apply points on subtotal.
-					$subtotal = $cart->get_subtotal();
+					$subtotal = $cart->subtotal;
 					if ( $subtotal > $wps_fee_on_cart ) {
+
 						$wps_fee_on_cart = $wps_fee_on_cart;
 					} else {
 
 						$wps_fee_on_cart = $subtotal;
+						// save tax amount.
+						if ( 'excl' === get_option( 'woocommerce_tax_display_cart' ) || 'excl' === get_option( 'woocommerce_tax_display_shop' ) ) {
+							$taxes = $cart->get_taxes();
+							if ( ( ! empty( $taxes ) && is_array( $taxes ) ) && empty( WC()->session->get( 'wps_wpr_tax_before_coupon' ) ) ) {
+
+								$total_taxes        = array_sum( $taxes );
+								$shipping_taxes     = $cart->get_shipping_taxes();
+								$shipping_tax_total = array_sum( $shipping_taxes );
+								$total_taxes        = $total_taxes - $shipping_tax_total;
+								WC()->session->set( 'wps_wpr_tax_before_coupon', $total_taxes );
+							}
+						}
 					}
 					// WOOCS - WooCommerce Currency Switcher Compatibility.
 					$wps_fee_on_cart = apply_filters( 'wps_wpr_show_conversion_price', $wps_fee_on_cart );
