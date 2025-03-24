@@ -51,7 +51,7 @@ if ( is_multisite() ) {
 }
 
 // Check if WooCommerce is installed and active.
-if ( file_exists( WP_PLUGIN_DIR . '/' . 'woocommerce/woocommerce.php' ) && in_array( 'woocommerce/woocommerce.php', $active_plugins, true ) ) {
+if ( file_exists( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' ) && in_array( 'woocommerce/woocommerce.php', $active_plugins, true ) ) {
 
     $activated = true;
 }

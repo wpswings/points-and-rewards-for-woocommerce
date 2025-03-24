@@ -584,7 +584,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 		<div class="parent_of_div">
 			<?php
 			if ( is_array( $wps_wpr_membership_roles ) && ! empty( $wps_wpr_membership_roles ) ) {
-				for ( $count = 0; $count <= count( $wps_wpr_membership_roles ) - 1; $count++ ) {
+
+				$membership_count = count( $wps_wpr_membership_roles );
+				for ( $count = 0; $count <= $membership_count - 1; $count++ ) {
 
 					$key = array_keys( $wps_wpr_membership_roles )[$count];
 					$this->wps_wpr_membership_role( $count, $key, $wps_wpr_membership_roles[ $key ] );
