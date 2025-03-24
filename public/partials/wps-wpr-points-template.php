@@ -128,16 +128,15 @@ if ( ! is_array( $coupon_settings ) ) {
 			?>
 		</div>
 		<?php
-		if ( isset( $wps_user_point_expiry ) && ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {
-			$expiration_settings = get_option( 'wps_wpr_points_expiration_settings', true );
-			if ( ! empty( $expiration_settings['wps_wpr_points_exp_onmyaccount'] ) ) {
-				$wps_wpr_points_exp_onmyaccount = $expiration_settings['wps_wpr_points_exp_onmyaccount'];
-			}
-			if ( isset( $wps_wpr_points_exp_onmyaccount ) && ! empty( $wps_wpr_points_exp_onmyaccount ) ) {
+		if ( ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {
 
-				$date_format           = get_option( 'date_format' );
-				$expiry_date_timestamp = strtotime( $wps_user_point_expiry );
-				$expirydate_format     = date_i18n( $date_format, $expiry_date_timestamp );
+			$expiration_settings            = get_option( 'wps_wpr_points_expiration_settings', true );
+			$expiration_settings            = ! empty( $expiration_settings ) && is_array( $expiration_settings ) ? $expiration_settings : array();
+			$wps_wpr_points_exp_onmyaccount = ! empty( $expiration_settings['wps_wpr_points_exp_onmyaccount'] ) ? $expiration_settings['wps_wpr_points_exp_onmyaccount'] : 0;
+			if ( 1 === $wps_wpr_points_exp_onmyaccount ) {
+
+				$date_format       = get_option( 'date_format' );
+				$expirydate_format = date_i18n( $date_format, strtotime( $wps_user_point_expiry ) );
 				?>
 				<div class="wps_wpr_points_expiry"><?php echo esc_html__( 'Expiring On : ', 'points-and-rewards-for-woocommerce' ) . esc_html( $expirydate_format ); ?></div>
 				<?php

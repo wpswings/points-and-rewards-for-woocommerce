@@ -50,31 +50,33 @@ if ( isset( $_POST['wps_wpr_save_membership'] ) && isset( $_POST['wps-wpr-nonce'
 			$wps_wpr_mem_enable        = isset( $_POST['wps_wpr_membership_setting_enable'] ) ? 1 : 0;
 			$exclude_sale_product      = isset( $_POST['exclude_sale_product'] ) ? 1 : 0;
 			if ( isset( $wps_wpr_no_of_section ) ) {
+				for ( $count = 0; $count <= $wps_wpr_no_of_section; $count++ ) {
 
-				$count                    = $wps_wpr_no_of_section;
-				$wps_wpr_membersip_roles  = isset( $_POST[ 'wps_wpr_membership_level_name_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_membership_level_name_' . $count ] ) ) : '';
-				$wps_wpr_membersip_points = isset( $_POST[ 'wps_wpr_membership_level_value_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_membership_level_value_' . $count ] ) ) : '';
-				$wps_wpr_categ_list       = ( isset( $_POST[ 'wps_wpr_membership_category_list_' . $count ] ) && ! empty( $_POST[ 'wps_wpr_membership_category_list_' . $count ] ) ) ? map_deep( wp_unslash( $_POST[ 'wps_wpr_membership_category_list_' . $count ] ), 'sanitize_text_field' ) : array();
-				$wps_wpr_prod_list        = ( isset( $_POST[ 'wps_wpr_membership_product_list_' . $count ] ) && ! empty( $_POST[ 'wps_wpr_membership_product_list_' . $count ] ) ) ? map_deep( wp_unslash( $_POST[ 'wps_wpr_membership_product_list_' . $count ] ), 'sanitize_text_field' ) : array();
-				$wps_wpr_discount         = ( isset( $_POST[ 'wps_wpr_membership_discount_' . $count ] ) && ! empty( $_POST[ 'wps_wpr_membership_discount_' . $count ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_membership_discount_' . $count ] ) ) : array();
-				$wps_wpr_expnum           = isset( $_POST[ 'wps_wpr_membership_expiration_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_membership_expiration_' . $count ] ) ) : '';
-				$wps_wpr_expdays          = isset( $_POST[ 'wps_wpr_membership_expiration_days_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_membership_expiration_days_' . $count ] ) ) : '';
-				$enable_mem_reward_points = ! empty( $_POST[ 'wps_wpr_enable_to_rewards_with_points_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_enable_to_rewards_with_points_' . $count ] ) ) : '0';
-				$assign_mem_points_type   = ! empty( $_POST[ 'wps_wpr_choose_mem_points_type_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_choose_mem_points_type_' . $count ] ) ) : '';
-				$mem_rewards_points_val   = ! empty( $_POST[ 'wps_wpr_assign_mem_points_val_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_assign_mem_points_val_' . $count ] ) ) : '0';
+					// $count                    = $wps_wpr_no_of_section;
+					$wps_wpr_membersip_roles  = isset( $_POST[ 'wps_wpr_membership_level_name_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_membership_level_name_' . $count ] ) ) : '';
+					$wps_wpr_membersip_points = isset( $_POST[ 'wps_wpr_membership_level_value_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_membership_level_value_' . $count ] ) ) : '';
+					$wps_wpr_categ_list       = ( isset( $_POST[ 'wps_wpr_membership_category_list_' . $count ] ) && ! empty( $_POST[ 'wps_wpr_membership_category_list_' . $count ] ) ) ? map_deep( wp_unslash( $_POST[ 'wps_wpr_membership_category_list_' . $count ] ), 'sanitize_text_field' ) : array();
+					$wps_wpr_prod_list        = ( isset( $_POST[ 'wps_wpr_membership_product_list_' . $count ] ) && ! empty( $_POST[ 'wps_wpr_membership_product_list_' . $count ] ) ) ? map_deep( wp_unslash( $_POST[ 'wps_wpr_membership_product_list_' . $count ] ), 'sanitize_text_field' ) : array();
+					$wps_wpr_discount         = ( isset( $_POST[ 'wps_wpr_membership_discount_' . $count ] ) && ! empty( $_POST[ 'wps_wpr_membership_discount_' . $count ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_membership_discount_' . $count ] ) ) : array();
+					$wps_wpr_expnum           = isset( $_POST[ 'wps_wpr_membership_expiration_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_membership_expiration_' . $count ] ) ) : '';
+					$wps_wpr_expdays          = isset( $_POST[ 'wps_wpr_membership_expiration_days_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_membership_expiration_days_' . $count ] ) ) : '';
+					$enable_mem_reward_points = ! empty( $_POST[ 'wps_wpr_enable_to_rewards_with_points_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_enable_to_rewards_with_points_' . $count ] ) ) : '0';
+					$assign_mem_points_type   = ! empty( $_POST[ 'wps_wpr_choose_mem_points_type_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_choose_mem_points_type_' . $count ] ) ) : '';
+					$mem_rewards_points_val   = ! empty( $_POST[ 'wps_wpr_assign_mem_points_val_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_assign_mem_points_val_' . $count ] ) ) : '0';
 
-				if ( isset( $wps_wpr_membersip_roles ) && ! empty( $wps_wpr_membersip_roles ) ) {
-					$membership_roles_list[ $wps_wpr_membersip_roles ] = array(
-						'Points'                   => $wps_wpr_membersip_points,
-						'Prod_Categ'               => $wps_wpr_categ_list,
-						'Product'                  => $wps_wpr_prod_list,
-						'Discount'                 => $wps_wpr_discount,
-						'Exp_Number'               => $wps_wpr_expnum,
-						'Exp_Days'                 => $wps_wpr_expdays,
-						'enable_mem_reward_points' => $enable_mem_reward_points,
-						'assign_mem_points_type'   => $assign_mem_points_type,
-						'mem_rewards_points_val'   => $mem_rewards_points_val,
-					);
+					if ( isset( $wps_wpr_membersip_roles ) && ! empty( $wps_wpr_membersip_roles ) ) {
+						$membership_roles_list[ $wps_wpr_membersip_roles ] = array(
+							'Points'                   => $wps_wpr_membersip_points,
+							'Prod_Categ'               => $wps_wpr_categ_list,
+							'Product'                  => $wps_wpr_prod_list,
+							'Discount'                 => $wps_wpr_discount,
+							'Exp_Number'               => $wps_wpr_expnum,
+							'Exp_Days'                 => $wps_wpr_expdays,
+							'enable_mem_reward_points' => $enable_mem_reward_points,
+							'assign_mem_points_type'   => $assign_mem_points_type,
+							'mem_rewards_points_val'   => $mem_rewards_points_val,
+						);
+					}
 				}
 			}
 			$membership_settings_array['wps_wpr_membership_setting_enable'] = $wps_wpr_mem_enable;

@@ -1975,16 +1975,16 @@ class Points_Rewards_For_WooCommerce_Public {
 
 					WC()->session->set( 'wps_cart_points', $wps_cart_points );
 					$response['result']  = true;
-					$response['message'] = esc_html__( 'Custom Point has been applied Successfully!', 'points-and-rewards-for-woocommerce' );
+					$response['message'] = apply_filters( 'wps_wpr_modify_points_success_msg', esc_html__( 'Custom Point has been applied Successfully!', 'points-and-rewards-for-woocommerce' ) );
 				} else {
 
 					$response['result']  = false;
-					$response['message'] = __( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
+					$response['message'] = esc_html__( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
 				}
 			} else {
 
 				$response['result']  = false;
-				$response['message'] = __( 'Invalid Points!', 'points-and-rewards-for-woocommerce' );
+				$response['message'] = apply_filters( 'wps_wpr_modify_points_error_msg', esc_html__( 'Invalid Points!', 'points-and-rewards-for-woocommerce' ) );
 			}
 		}
 		wp_send_json( $response );
@@ -2021,12 +2021,25 @@ class Points_Rewards_For_WooCommerce_Public {
 					$wps_fee_on_cart = WC()->session->get( 'wps_cart_points' );
 					$cart_discount   = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 					// apply points on subtotal.
-					$subtotal = $cart->get_subtotal();
+					$subtotal = $cart->subtotal;
 					if ( $subtotal > $wps_fee_on_cart ) {
+
 						$wps_fee_on_cart = $wps_fee_on_cart;
 					} else {
 
 						$wps_fee_on_cart = $subtotal;
+						// save tax amount.
+						if ( 'excl' === get_option( 'woocommerce_tax_display_cart' ) || 'excl' === get_option( 'woocommerce_tax_display_shop' ) ) {
+							$taxes = $cart->get_taxes();
+							if ( ( ! empty( $taxes ) && is_array( $taxes ) ) && empty( WC()->session->get( 'wps_wpr_tax_before_coupon' ) ) ) {
+
+								$total_taxes        = array_sum( $taxes );
+								$shipping_taxes     = $cart->get_shipping_taxes();
+								$shipping_tax_total = array_sum( $shipping_taxes );
+								$total_taxes        = $total_taxes - $shipping_tax_total;
+								WC()->session->set( 'wps_wpr_tax_before_coupon', $total_taxes );
+							}
+						}
 					}
 					// WOOCS - WooCommerce Currency Switcher Compatibility.
 					$wps_fee_on_cart = apply_filters( 'wps_wpr_show_conversion_price', $wps_fee_on_cart );
@@ -2086,7 +2099,7 @@ class Points_Rewards_For_WooCommerce_Public {
 									global $woocommerce;
 									$wps_fee_on_cart = WC()->session->get( 'wps_cart_points' );
 									// apply points on subtotal.
-									$subtotal = $woocommerce->cart->get_subtotal();
+									$subtotal = $woocommerce->cart->subtotal;
 									// WOOCS - WooCommerce Currency Switcher Compatibility.
 									if ( ! class_exists( 'WOOCS' ) ) {
 										if ( $subtotal > $wps_fee_on_cart ) {
@@ -2344,6 +2357,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$coupon_code         = isset( $_POST['coupon_code'] ) && ! empty( $_POST['coupon_code'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon_code'] ) ) : '';
 		if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
 			WC()->session->__unset( 'wps_cart_points' );
+			WC()->session->__unset( 'wps_wpr_tax_before_coupon' );
 			$response['result'] = true;
 			$response['message'] = __( 'Successfully Removed Cart Discount', 'points-and-rewards-for-woocommerce' );
 		}
@@ -2416,8 +2430,14 @@ class Points_Rewards_For_WooCommerce_Public {
 						$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 						if ( strtolower( $cart_discount ) == strtolower( $coupon_name ) ) {
 
+							// get applied coupon(points) value and total tax amount and calculate.
 							$coupon        = new WC_Coupon( $coupon_name );
 							$coupon_amount = $coupon->get_amount();
+							if ( ! empty( WC()->session->get( 'wps_wpr_tax_before_coupon' ) ) ) {
+
+								$coupon_amount = $coupon_amount - WC()->session->get( 'wps_wpr_tax_before_coupon' );
+							}
+
 							// Redemption Conversion rate calculate.
 							$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
 							$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
@@ -2445,6 +2465,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								// hpos.
 								wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#points', $coupon_amount );
 								WC()->session->__unset( 'wps_cart_points' );
+								WC()->session->__unset( 'wps_wpr_tax_before_coupon' );
 							}
 
 							// updating redeemed points.
@@ -4223,6 +4244,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						if ( $exist_points <= 0 ) {
 
 							WC()->session->__unset( 'wps_cart_points' );
+							WC()->session->__unset( 'wps_wpr_tax_before_coupon' );
 						} elseif ( $applied_points > $exist_points ) {
 
 							WC()->session->set( 'wps_cart_points', $exist_points );
