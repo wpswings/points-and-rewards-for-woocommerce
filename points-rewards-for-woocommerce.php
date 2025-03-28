@@ -12,8 +12,8 @@
  * @package           points-and-rewards-for-wooCommerce
  *
  * @wordpress-plugin
- * Plugin Name:       Points and Rewards for WooCommerce
- * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
+ * Plugin Name:       Bring Cashback
+ * Description:       <code><strong>Bring Cashback</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
  * Version:           2.6.2
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
@@ -579,7 +579,7 @@ if ( $activated ) {
 		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to activate Points and Rewards for WooCommerce.', 'points-and-rewards-for-woocommerce' ); ?></p>
+				<p><?php esc_html_e( 'WooCommerce is not activated, Please activate WooCommerce first to activate Bring Cashback.', 'points-and-rewards-for-woocommerce' ); ?></p>
 			</div>
 			<?php
 		}

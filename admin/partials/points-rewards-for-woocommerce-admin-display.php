@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WPS_PAR_ONBOARD_PLUGIN_NAME' ) ) {
-	define( 'WPS_PAR_ONBOARD_PLUGIN_NAME', 'Points and Rewards for WooCommerce' );
+	define( 'WPS_PAR_ONBOARD_PLUGIN_NAME', 'Bring Cashback' );
 }
 
 if ( class_exists( 'WPSwings_Onboarding_Helper' ) ) {
@@ -87,7 +87,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 		<div class="wps_rwpr_header">
 			<div class="wps_rwpr_header_content_left">
 				<div>
-					<h3 class="wps_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ); ?><span><?php echo esc_html( 'v' . REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION ); ?></span></h3>					
+					<h3 class="wps_rwpr_setting_title"><?php esc_html_e( 'Bring Cashback', 'points-and-rewards-for-woocommerce' ); ?><span><?php echo esc_html( 'v' . REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION ); ?></span></h3>					
 				</div>
 			</div>
 			<div class="wps_rwpr_header_content_right">

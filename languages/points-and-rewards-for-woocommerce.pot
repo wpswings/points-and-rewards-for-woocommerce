@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 2.6.2\n"
+"Project-Id-Version: Bring Cashback 2.6.2\n"
 "POT-Creation-Date: 2025-02-19 14:16+0530\n"
 "PO-Revision-Date: 2023-12-01 10:33+0530\n"
 "Last-Translator: \n"
@@ -2486,7 +2486,7 @@ msgid "Badges"
 msgstr ""
 
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:90
-msgid "Points and Rewards for WooCommerce"
+msgid "Bring Cashback"
 msgstr ""
 
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:90
@@ -4073,12 +4073,12 @@ msgid "15"
 msgstr ""
 
 #: admin/partials/templates/wps-wpr-overview-settings.php:24
-msgid "What is Points And Rewards For WooCommerce? "
+msgid "What is Bring Cashback? "
 msgstr ""
 
 #: admin/partials/templates/wps-wpr-overview-settings.php:26
 msgid ""
-"Points And Rewards For WooCommerce is a customer-oriented solution that aims "
+"Bring Cashback is a customer-oriented solution that aims "
 "to engage customers by offering them points for activities they perform on "
 "your WooCommerce store. For instance, signup, purchase, referrals, etc. Each "
 "Points earned can be redeemed by the shoppers on additional purchases. These "
@@ -4611,7 +4611,7 @@ msgstr ""
 #: points-rewards-for-woocommerce.php:581
 msgid ""
 "WooCommerce is not activated, Please activate WooCommerce first to activate "
-"Points and Rewards for WooCommerce."
+"Bring Cashback."
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:82

@@ -1,4 +1,4 @@
-=== Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, Point Rewards, Referral Points, Reward for Points, User Badges, and Gamification ===
+=== Bring Cashback - Create Loyalty Programs, Reward Customer Purchases, Point Rewards, Referral Points, Reward for Points, User Badges, and Gamification ===
 Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags:points and rewards, loyalty, referrals, reward for points, gamification
@@ -12,13 +12,13 @@ License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 
-Points and Rewards for WooCommerce offer a reward for points to your customers for their activities & increase customer loyalty.
+Bring Cashback offer a reward for points to your customers for their activities & increase customer loyalty.
 
 == Description ==
 
-**TOP-RATED POINTS AND REWARDS FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS. REWARD CUSTOMERS FOR SIGNUP POINTS, REFERRAL POINTS, SOCIAL SHARING, ASSIGN POINTS ON PREVIOUS ORDERS PURCHASES AND CREATE WOOCOMMERCE LOYALTY PROGRAMS TO REWARD REFERRAL POINTS, SIGN-UP POINTS ETC. ALLOW REDEEMING WOOCOMMERCE LOYALTY POINTS, POINTS LOG REPORT FOR ADMIN AND USER, AND BUILD MEMBERSHIP WITH PROPER EMAIL NOTIFICATIONS.**
+**TOP-RATED Bring Cashback TO TURN YOUR CUSTOMERS INTO LOYAL FANS. REWARD CUSTOMERS FOR SIGNUP POINTS, REFERRAL POINTS, SOCIAL SHARING, ASSIGN POINTS ON PREVIOUS ORDERS PURCHASES AND CREATE WOOCOMMERCE LOYALTY PROGRAMS TO REWARD REFERRAL POINTS, SIGN-UP POINTS ETC. ALLOW REDEEMING WOOCOMMERCE LOYALTY POINTS, POINTS LOG REPORT FOR ADMIN AND USER, AND BUILD MEMBERSHIP WITH PROPER EMAIL NOTIFICATIONS.**
 
-Points and Rewards for WooCommerce is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem WooCommerce rewards using the WooCommerce reward points plugin to buy products at your store or participate in your membership program with the WordPress loyalty points plugin. Get Access to features like the ability to award users based on their number of orders, points on upgrade membership level, and points on cart subtotal. 
+Bring Cashback is a points management plugin that engages customers by offering them points on store activities like signup, purchase, referrals, etc. Customers can redeem WooCommerce rewards using the WooCommerce reward points plugin to buy products at your store or participate in your membership program with the WordPress loyalty points plugin. Get Access to features like the ability to award users based on their number of orders, points on upgrade membership level, and points on cart subtotal. 
 
 With the WooCommerce points and rewards plugin at your WooCommerce Store, you can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope
 [**Reward Points Demo**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=referral&utm_campaign=frontend-demo) | [**Points and Rewards Documentation**](https://docs.wpswings.com/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-doc&utm_medium=referral&utm_campaign=par-doc) | [**Contact Us**](https://wpswings.com/contact-us/?utm_source=wpswings-par-contactus&utm_medium=referral&utm_campaign=contactus)
@@ -32,7 +32,7 @@ With the WooCommerce points and rewards plugin at your WooCommerce Store, you ca
 Admins can utilize this enhancement in the points table feature, where admins can get an overview of all the points, the customers have earned and redeemed. This enhancement helps the admins to understand how much WooCommerce points are the customers earning and spending. 
 
 **2) Assign Products Points**
-Merchants can assign reward points globally to the products using Points and Rewards for WooCommerce 
+Merchants can assign reward points globally to the products using Bring Cashback 
 
 **3) Per Currency Points**
 Customers can now earn loyalty points against each dollar they spend on your store. Enable this feature from the Per Currency Points setting and set the conversion for points you want to offer on the set order value. The admin can now decide to show the “notice message” for the per-currency points over the cart page.
@@ -102,7 +102,7 @@ With WooCommerce Points and Rewards plugin, customers have the opportunity to ea
 > Assign global WooCommerce points and rewards value to all simple products of their store so the customer gets the same number of points on the purchase of any product.
 > Set the number of rewards and points the customer will get if his order value lies within a set range.
 
-== LIVE DEMO OF POINTS AND REWARDS FOR WOOCOMMERCE PLUGIN ==
+== LIVE DEMO OF Bring Cashback PLUGIN ==
 
 * [**Points and Rewards Frontend Demo**](https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=referral&utm_campaign=frontend-demo)
 
@@ -139,7 +139,7 @@ With WooCommerce Points and Rewards plugin, customers have the opportunity to ea
 
 **1) Allow Purchase Through Points Only** The Purchase through Points feature allows users to purchase items with just rewards and points.
 
-**2) Assign Product Points** Merchants can assign reward points to the products as well as different categories using Points and Rewards for WooCommerce
+**2) Assign Product Points** Merchants can assign reward points to the products as well as different categories using Bring Cashback
 
 **3) Setup Multi-Level Membership** The admin can create multiple membership tiers and add the required number of WooCommerce rewards to join them
 
@@ -152,10 +152,10 @@ With WooCommerce Points and Rewards plugin, customers have the opportunity to ea
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF WOOCOMMERCE LOYALTY POINTS AND REWARD PLUGIN ==
 
 
-Points and Rewards for WooCommerce help merchants create a points-based loyalty program to reward customers. 
+Bring Cashback help merchants create a points-based loyalty program to reward customers. 
 
 
-> Note:  Get [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=referral&utm_campaign=par-pro)
+> Note:  Get [**Bring Cashback Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=referral&utm_campaign=par-pro)
 
 
 **SEE WHAT MITAPETS IS SAYING ABOUT THE POINTS AND REWARDS PLUGIN:**
@@ -179,11 +179,11 @@ If you need support or have questions, kindly use our online chat window [**here
 
 Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of the plugin, log in to your WordPress dashboard, navigate to the Plugins menu, and click Add New.
 
-In the search field type **"Points and Rewards for WooCommerce"** and click Search Plugins. Once you've found our Points and Rewards for WooCommerce plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking **"Install Now"**.
+In the search field type **"Bring Cashback"** and click Search Plugins. Once you've found our Bring Cashback plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking **"Install Now"**.
 
 = Manual installation =
 
-The manual installation method involves downloading our Points And Rewards for WooCommerce and uploading it to your web server via your favorite FTP application. The WordPress codex contains [**instructions on how to do this here**](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
+The manual installation method involves downloading our Bring Cashback and uploading it to your web server via your favorite FTP application. The WordPress codex contains [**instructions on how to do this here**](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
 
 = Updating =
 
@@ -213,7 +213,7 @@ Yes, we have this feature in point rewards plugin where the admin can reward poi
 For this: Go to other settings>Reward points via payment method>select the payment method for which you want to reward points.
 
 =Is it possible to assign Points Badges to users based on the points they have accumulated?=
-Yes, you do have the option to assign point badges to the user based on the points they have accumulated. However, if you would like to add multiple levels, you will need to purchase our [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-page&utm_campaign=par-pro) for this feature.
+Yes, you do have the option to assign point badges to the user based on the points they have accumulated. However, if you would like to add multiple levels, you will need to purchase our [**Bring Cashback Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-page&utm_campaign=par-pro) for this feature.
 
 =Do you have a Gamification feature on your point rewards plugin?=
 Yes, we have a gamification feature in our plugin and you can find the “Gamification settings” in our plugin settings from where you can make various changes to showcase this feature as per your need.
