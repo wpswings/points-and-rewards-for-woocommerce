@@ -2391,72 +2391,94 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_woocommerce_checkout_update_order_meta( $order_data ) {
 
-		// This function is triggered by two hooks, so we need to verify whether the parameter is an ID or an object.
+		// Verifica se o parâmetro é um ID ou um objeto
 		if ( ! is_object( $order_data ) ) {
 			$order = wc_get_order( $order_data );
 		} else {
 			$order = $order_data;
 		}
-
+	
 		$user_id    = get_current_user_id();
 		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-		// cart block change.
+	
 		$order_id = $order->get_id();
 		if ( isset( $order ) && ! empty( $order ) ) {
-
-			// Paypal Issue Change Start.
+	
 			$order_data = $order->get_data();
 			if ( ! empty( $order_data['coupon_lines'] ) ) {
-
+	
 				foreach ( $order_data['coupon_lines'] as $coupon ) {
 					$coupon_data = $coupon->get_data();
 					if ( ! empty( $coupon_data ) ) {
-
+	
 						$coupon_name   = $coupon_data['code'];
 						$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+	
 						if ( strtolower( $cart_discount ) == strtolower( $coupon_name ) ) {
-
+	
 							$coupon        = new WC_Coupon( $coupon_name );
 							$coupon_amount = $coupon->get_amount();
-							// Redemption Conversion rate calculate.
+	
+							// Calcula os pontos a serem descontados
 							$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
 							$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
 							$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
 							$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
 							$coupon_amount            = $coupon_amount / ( $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
-							// WOOCS - WooCommerce Currency Switcher Compatibility.
-							$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
-							// hpos.
-							wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#$fee_id', $coupon_amount );
+	
 							$fee_to_point    = ceil( $coupon_amount );
 							$remaining_point = $get_points - $fee_to_point;
+	
 							if ( $remaining_point < 0 ) {
 								$remaining_point = 0;
 							}
-							/*update the users points in the*/
+	
+							// Atualiza os pontos do usuário
 							update_user_meta( $user_id, 'wps_wpr_points', $remaining_point );
 							$data = array();
-							/*update points of the customer*/
 							$this->wps_wpr_update_points_details( $user_id, 'cart_subtotal_point', $fee_to_point, $data );
-							/*Send mail to the customer*/
-							$this->wps_wpr_send_points_deducted_mail( $user_id, 'wps_cart_discount', $fee_to_point );
-							/*Unset the session*/
+	
+							// Remove a sessão de pontos
 							if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
-								// hpos.
-								wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#points', $coupon_amount );
 								WC()->session->__unset( 'wps_cart_points' );
 							}
-
-							// updating redeemed points.
-							$wps_wpr_redeemed_points  = get_user_meta( $user_id, 'wps_wpr_redeemed_points', true );
-							$wps_wpr_redeemed_points  = ! empty( $wps_wpr_redeemed_points ) ? (int) $wps_wpr_redeemed_points : 0;
-							$wps_wpr_redeemed_points += $fee_to_point;
-							update_user_meta( $user_id, 'wps_wpr_redeemed_points', $wps_wpr_redeemed_points );
+	
+							// Envia os dados para a aplicação externa
+							$api_url = 'http://localhost:5000/api/orders/use-cashback';
+							$api_data = array(
+								'order' => $order_id,
+								'data'  => date( 'Y-m-d H:i:s' ),
+								'store' => array(
+									'url' => get_site_url(),
+								),
+							);
+	
+							$response = wp_remote_post( $api_url, array(
+								'method'    => 'POST',
+								'body'      => json_encode( $api_data ),
+								'headers'   => array(
+									'Content-Type' => 'application/json',
+									'Authorization' => 'Bearer SEU_TOKEN_DE_API', // Substitua pelo token de autenticação
+								),
+							));
+	
+							if ( is_wp_error( $response ) ) {
+								error_log( 'Erro ao conectar ao app de cashback: ' . $response->get_error_message() );
+							} else {
+								$response_body = wp_remote_retrieve_body( $response );
+								$decoded_response = json_decode( $response_body, true );
+	
+								if ( isset( $decoded_response['success'] ) && $decoded_response['success'] ) {
+									// Log de sucesso
+									error_log( 'Dados enviados com sucesso para o app de cashback.' );
+								} else {
+									error_log( 'Erro ao enviar dados para o app de cashback: ' . $response_body );
+								}
+							}
 						}
 					}
 				}
 			}
-			// Paypal Issue Change End.
 		}
 	}
 
