@@ -33,18 +33,18 @@
 
 // Carregar o autoloader do Composer (se necessário).
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-    require_once __DIR__ . '/vendor/autoload.php';
+	require_once __DIR__ . '/vendor/autoload.php';
 }
 
 // Carregar variáveis de ambiente do arquivo .env.
 if (class_exists('Dotenv\Dotenv')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv->safeLoad();
+	$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+	$dotenv->safeLoad();
 }
 
 // Definir a constante global para o link do backend.
 if (!defined('CASHBACK_API_URL')) {
-    define('CASHBACK_API_URL', getenv('CASHBACK_API_URL') ?: '');
+	define('CASHBACK_API_URL', getenv('CASHBACK_API_URL') ?: '');
 }
 
 // If this file is called directly, abort.
@@ -590,45 +590,6 @@ if ($activated) {
 		}
 		return $flag;
 	}
-} else {
-
-	// WooCommerce is not active so deactivate this plugin.
-	add_action('admin_init', 'rewardeem_woocommerce_points_rewards_activation_failure');
-
-	/**
-	 * This function is used to deactivate plugin.
-	 *
-	 * @name rewardeem_woocommerce_points_rewards_activation_failure
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
-	 */
-	function rewardeem_woocommerce_points_rewards_activation_failure()
-	{
-		deactivate_plugins(plugin_basename(__FILE__));
-		unset($_GET['activate']);
-		// Add admin error notice.
-		add_action('admin_notices', 'rewardeem_woocommerce_points_rewards_activation_failure_admin_notice');
-	}
-
-	/**
-	 * This function is used to deactivate plugin.
-	 *
-	 * @name rewardeem_woocommerce_points_rewards_activation_failure
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
-	 */
-	function rewardeem_woocommerce_points_rewards_activation_failure_admin_notice()
-	{
-		// hide Plugin activated notice.
-		if (!is_plugin_active('woocommerce/woocommerce.php')) {
-			?>
-			<div class="notice notice-error is-dismissible">
-				<p><?php esc_html_e('WooCommerce is not activated, Please activate WooCommerce first to activate Bring Cashback.', 'points-and-rewards-for-woocommerce'); ?>
-				</p>
-			</div>
-			<?php
-		}
-	}
 
 	add_action('woocommerce_thankyou', 'wps_wpr_handle_cashback_usage');
 	/**
@@ -652,6 +613,22 @@ if ($activated) {
 		if (empty($used_cashback)) {
 			return;
 		}
+
+		if (is_user_logged_in()) {
+            $current_user = wp_get_current_user();
+            $user_data = array(
+                'id' => $current_user->ID,
+                'name' => $current_user->display_name,
+                'email' => $current_user->user_email,
+            );
+        } else {
+            // Caso o usuário não esteja logado, usar os dados de pagamento do pedido.
+            $user_data = array(
+                'name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+                'email' => $order->get_billing_email(),
+                'phone' => $order->get_billing_phone(),
+            );
+        }
 
 		// Prepara os dados do pedido.
 		$order_data = $order->get_data(); // Obtém os dados completos do pedido.
@@ -691,6 +668,45 @@ if ($activated) {
 
 		// Log de sucesso.
 		error_log('Cashback processado com sucesso no backend.');
+	}
+} else {
+
+	// WooCommerce is not active so deactivate this plugin.
+	add_action('admin_init', 'rewardeem_woocommerce_points_rewards_activation_failure');
+
+	/**
+	 * This function is used to deactivate plugin.
+	 *
+	 * @name rewardeem_woocommerce_points_rewards_activation_failure
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	function rewardeem_woocommerce_points_rewards_activation_failure()
+	{
+		deactivate_plugins(plugin_basename(__FILE__));
+		unset($_GET['activate']);
+		// Add admin error notice.
+		add_action('admin_notices', 'rewardeem_woocommerce_points_rewards_activation_failure_admin_notice');
+	}
+
+	/**
+	 * This function is used to deactivate plugin.
+	 *
+	 * @name rewardeem_woocommerce_points_rewards_activation_failure
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	function rewardeem_woocommerce_points_rewards_activation_failure_admin_notice()
+	{
+		// hide Plugin activated notice.
+		if (!is_plugin_active('woocommerce/woocommerce.php')) {
+			?>
+			<div class="notice notice-error is-dismissible">
+				<p><?php esc_html_e('WooCommerce is not activated, Please activate WooCommerce first to activate Bring Cashback.', 'points-and-rewards-for-woocommerce'); ?>
+				</p>
+			</div>
+			<?php
+		}
 	}
 }
 
