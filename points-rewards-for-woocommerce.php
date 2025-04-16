@@ -669,6 +669,80 @@ if ($activated) {
 		// Log de sucesso.
 		error_log('Cashback processado com sucesso no backend.');
 	}
+
+	add_action( 'wp_login', 'wps_wpr_update_user_balance_on_login', 10, 2 );
+
+	/**
+	 * Atualiza o saldo do usuário quando ele faz login.
+	 *
+	 * @param string $user_login Nome de usuário.
+	 * @param WP_User $user Objeto do usuário.
+	 */
+
+	function wps_wpr_update_user_balance_on_login( $user_login, $user ) {
+		try {
+			$user_email = $user->user_email;
+
+			$store_url = get_site_url();
+
+			$encoded_email = urlencode( $user_email );
+			$encoded_store_url = urlencode( $store_url );
+
+			$api_url = "http://localhost:5000/api/balances/store-balance/{$encoded_email}/{$encoded_store_url}";
+
+			$response = wp_remote_get( $api_url, array(
+				'timeout' => 15,
+				'headers' => array(
+					'Content-Type' => 'application/json',
+				),
+			) );
+
+			if ( is_wp_error( $response ) ) {
+				throw new Exception( 'Erro ao conectar à API de saldo: ' . $response->get_error_message() );
+			}
+
+			$response_body = wp_remote_retrieve_body( $response );
+
+			$decoded_response = json_decode( $response_body, true );
+
+			if ( ! isset( $decoded_response['amount'] ) ) {
+				throw new Exception( 'Resposta inválida da API de saldo: ' . $response_body );
+			}
+
+			$new_balance = (float) $decoded_response['amount'];
+
+			$current_balance = (float) get_user_meta( $user->ID, 'wps_wpr_points', true );
+
+			$sign = $new_balance > $current_balance ? '+' : '-';
+
+			$points_difference = abs( $new_balance - $current_balance );
+
+			update_user_meta( $user->ID, 'wps_wpr_points', $new_balance );
+
+			$points_details = get_user_meta( $user->ID, 'points_details', true );
+			$points_details = ! empty( $points_details ) && is_array( $points_details ) ? $points_details : array();
+
+			$today_date = date_i18n( 'Y-m-d h:i:sa' );
+			$new_entry = array(
+				'admin_points' => (string) $points_difference,
+				'date'         => $today_date,
+				'sign'         => $sign,
+				'reason'       => 'Saldo atualizado ao fazer login',
+			);
+
+			if ( ! isset( $points_details['admin_points'] ) || ! is_array( $points_details['admin_points'] ) ) {
+				$points_details['admin_points'] = array();
+			}
+
+			$points_details['admin_points'][] = $new_entry;
+
+			update_user_meta( $user->ID, 'points_details', $points_details );
+
+			error_log( "Saldo atualizado para o usuário {$user->ID} ({$user_email}): Novo saldo: {$new_balance}, Diferença: {$points_difference}, Sinal: {$sign}" );
+		} catch ( Exception $e ) {
+			error_log( 'Erro na função wps_wpr_update_user_balance_on_login: ' . $e->getMessage() );
+		}
+	}
 } else {
 
 	// WooCommerce is not active so deactivate this plugin.
