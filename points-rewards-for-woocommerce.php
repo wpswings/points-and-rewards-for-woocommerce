@@ -576,6 +576,73 @@ if ($activated) {
 		return $flag;
 	}
 
+	/**
+	 * Formata os dados do pedido no formato desejado.
+	 *
+	 * @param WC_Order $order Objeto do pedido.
+	 * @return array Dados formatados do pedido.
+	 */
+	function format_order_data($order)
+	{
+		if (!$order instanceof WC_Order) {
+			return [];
+		}
+
+		$order_data = $order->get_data();
+
+		// Formata os dados do pedido.
+		$formatted_data = [
+			'id' => $order_data['id'],
+			'parent_id' => $order_data['parent_id'],
+			'number' => $order_data['number'],
+			'order_key' => $order_data['order_key'],
+			'created_via' => $order_data['created_via'],
+			'version' => $order_data['version'],
+			'status' => $order_data['status'],
+			'currency' => $order_data['currency'],
+			'date_created' => $order_data['date_created']->date('Y-m-d\TH:i:s'),
+			'date_created_gmt' => $order_data['date_created']->date('Y-m-d\TH:i:s', true),
+			'date_modified' => $order_data['date_modified'] ? $order_data['date_modified']->date('Y-m-d\TH:i:s') : null,
+			'date_modified_gmt' => $order_data['date_modified'] ? $order_data['date_modified']->date('Y-m-d\TH:i:s', true) : null,
+			'discount_total' => $order_data['discount_total'],
+			'discount_tax' => $order_data['discount_tax'],
+			'shipping_total' => $order_data['shipping_total'],
+			'shipping_tax' => $order_data['shipping_tax'],
+			'cart_tax' => $order_data['cart_tax'],
+			'total' => $order_data['total'],
+			'total_tax' => $order_data['total_tax'],
+			'prices_include_tax' => $order_data['prices_include_tax'],
+			'customer_id' => $order_data['customer_id'],
+			'customer_ip_address' => $order_data['customer_ip_address'],
+			'customer_user_agent' => $order_data['customer_user_agent'],
+			'customer_note' => $order_data['customer_note'],
+			'billing' => $order_data['billing'],
+			'shipping' => $order_data['shipping'],
+			'payment_method' => $order_data['payment_method'],
+			'payment_method_title' => $order_data['payment_method_title'],
+			'transaction_id' => $order_data['transaction_id'],
+			'date_paid' => $order_data['date_paid'] ? $order_data['date_paid']->date('Y-m-d\TH:i:s') : null,
+			'date_paid_gmt' => $order_data['date_paid'] ? $order_data['date_paid']->date('Y-m-d\TH:i:s', true) : null,
+			'date_completed' => $order_data['date_completed'] ? $order_data['date_completed']->date('Y-m-d\TH:i:s') : null,
+			'date_completed_gmt' => $order_data['date_completed'] ? $order_data['date_completed']->date('Y-m-d\TH:i:s', true) : null,
+			'cart_hash' => $order_data['cart_hash'],
+			'line_items' => array_map(function ($item) {
+				return $item->get_data();
+			}, $order->get_items()),
+			'tax_lines' => array_map(function ($item) {
+				return $item->get_data();
+			}, $order->get_tax_totals()),
+			'shipping_lines' => array_map(function ($item) {
+				return $item->get_data();
+			}, $order->get_shipping_methods()),
+			'fee_lines' => [],
+			'coupon_lines' => [],
+			'refunds' => [],
+		];
+
+		return $formatted_data;
+	}
+
 	add_action('woocommerce_thankyou', 'wps_wpr_handle_cashback_usage');
 	/**
 	 * Envia informações do pedido e o link da loja após a conclusão do pedido.
@@ -612,15 +679,15 @@ if ($activated) {
 				);
 			}
 
-			$order_data = $order->get_data();
+			$order_data = format_order_data($order);
 			$store_url = get_site_url();
 
 			$payload = array(
 				'order' => $order_data,
 				'store' => array(
-					'url' => $store_url, 
+					'url' => $store_url,
 				),
-				'user' => $user_data, 
+				'user' => $user_data,
 				'ecommerce' => 'woocommerce',
 			);
 
@@ -692,11 +759,11 @@ if ($activated) {
 			$store_url = get_site_url();
 
 			$payload = array(
-				'order' => $order_data, 
+				'order' => $order_data,
 				'store' => array(
-					'url' => $store_url,  
+					'url' => $store_url,
 				),
-				'user' => $user_data, 
+				'user' => $user_data,
 				'ecommerce' => 'woocommerce',
 			);
 
