@@ -744,7 +744,7 @@ if ($activated) {
 	}
 
 	add_action( 'wp_login', 'wps_wpr_validate_cashback_on_login', 10, 2 );
-	
+
 	/**
 	 * Valida o cashback no login do usuário.
 	 *
@@ -783,8 +783,7 @@ if ($activated) {
 	
 			$is_valid = (bool) $decoded_response['isValid'];
 	
-			$user->update_meta_data( '_cashback_enabled', $is_valid );
-			$user->save(); 
+			update_user_meta( $user->ID, '_cashback_enabled', $is_valid );
 	
 			error_log( "Validação de cashback para o usuário {$user->ID} ({$user_email}): " . ( $is_valid ? 'Válido' : 'Inválido' ) );
 		} catch ( Exception $e ) {
