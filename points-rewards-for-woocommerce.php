@@ -678,7 +678,6 @@ if ($activated) {
 	 * @param string $user_login Nome de usuário.
 	 * @param WP_User $user Objeto do usuário.
 	 */
-
 	function wps_wpr_update_user_balance_on_login( $user_login, $user ) {
 		try {
 			$user_email = $user->user_email;
@@ -741,6 +740,55 @@ if ($activated) {
 			error_log( "Saldo atualizado para o usuário {$user->ID} ({$user_email}): Novo saldo: {$new_balance}, Diferença: {$points_difference}, Sinal: {$sign}" );
 		} catch ( Exception $e ) {
 			error_log( 'Erro na função wps_wpr_update_user_balance_on_login: ' . $e->getMessage() );
+		}
+	}
+
+	add_action( 'wp_login', 'wps_wpr_validate_cashback_on_login', 10, 2 );
+	
+	/**
+	 * Valida o cashback no login do usuário.
+	 *
+	 * @param string  $user_login Nome de usuário.
+	 * @param WP_User $user       Objeto do usuário.
+	 */
+	function wps_wpr_validate_cashback_on_login( $user_login, $user ) {
+		try {
+			$user_email = $user->user_email;
+	
+			$store_url = get_site_url();
+	
+			$encoded_email = urlencode( $user_email );
+			$encoded_store_url = urlencode( $store_url );
+	
+			$api_url = "http://localhost:5000/api/balances/validate-cashback/{$encoded_email}/{$encoded_store_url}";
+	
+			$response = wp_remote_get( $api_url, array(
+				'timeout' => 15,
+				'headers' => array(
+					'Content-Type' => 'application/json',
+				),
+			) );
+	
+			if ( is_wp_error( $response ) ) {
+				throw new Exception( 'Erro ao conectar à API de validação de cashback: ' . $response->get_error_message() );
+			}
+	
+			$response_body = wp_remote_retrieve_body( $response );
+	
+			$decoded_response = json_decode( $response_body, true );
+	
+			if ( ! isset( $decoded_response['isValid'] ) ) {
+				throw new Exception( 'Resposta inválida da API de validação de cashback: ' . $response_body );
+			}
+	
+			$is_valid = (bool) $decoded_response['isValid'];
+	
+			$user->update_meta_data( '_cashback_enabled', $is_valid );
+			$user->save(); 
+	
+			error_log( "Validação de cashback para o usuário {$user->ID} ({$user_email}): " . ( $is_valid ? 'Válido' : 'Inválido' ) );
+		} catch ( Exception $e ) {
+			error_log( 'Erro na função wps_wpr_validate_cashback_on_login: ' . $e->getMessage() );
 		}
 	}
 } else {
