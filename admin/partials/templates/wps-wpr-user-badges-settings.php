@@ -45,11 +45,11 @@ if ( isset( $_POST['wps_wpr_user_badges_setting_nonce'] ) ) {
 
 				update_option( 'wps_wpr_user_badges_setting', $wps_wpr_user_badges_setting );
 			}
-
-			// Show saved msg.
-			$settings_obj->wps_wpr_settings_saved();
 		}
 	}
+
+	// Show saved msg.
+	$settings_obj->wps_wpr_settings_saved();
 }
 
 // get badges values.

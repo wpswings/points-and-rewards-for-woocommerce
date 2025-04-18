@@ -56,6 +56,10 @@ if ( isset( $_POST['wps_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 				update_user_meta( $user_id, 'wps_wpr_points', $remaining_points );
 				update_user_meta( $user_id, 'membership_level', $selected_role );
 				update_user_meta( $user_id, 'membership_expiration', $expiration_date );
+				// send sms.
+				wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "Your membership has been upgraded, and %s points have been deducted from your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $values['Points'], $remaining_points ) );
+				// send messages on whatsapp.
+				wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "Your membership has been upgraded, and %s points have been deducted from your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $values['Points'], $remaining_points ) );
 				/*Send mail*/
 				$user              = get_user_by( 'ID', $user_id );
 				$wps_wpr_shortcode = array(
