@@ -32,20 +32,6 @@
  */
 
 // Carregar o autoloader do Composer (se necessário).
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-	require_once __DIR__ . '/vendor/autoload.php';
-}
-
-// Carregar variáveis de ambiente do arquivo .env.
-if (class_exists('Dotenv\Dotenv')) {
-	$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-	$dotenv->safeLoad();
-}
-
-// Definir a constante global para o link do backend.
-if (!defined('CASHBACK_API_URL')) {
-	define('CASHBACK_API_URL', getenv('CASHBACK_API_URL') ?: '');
-}
 
 // If this file is called directly, abort.
 if (!defined('ABSPATH')) {
@@ -72,7 +58,6 @@ if (!(array_key_exists('woocommerce/woocommerce.php', $active_plugins) || in_arr
 
 $plug = get_plugins();
 if ($activated) {
-
 	// HPOS Compatibility and cart and checkout block.
 	// Declare HPOS compatibility.
 	add_action(
@@ -591,6 +576,73 @@ if ($activated) {
 		return $flag;
 	}
 
+	/**
+	 * Formata os dados do pedido no formato desejado.
+	 *
+	 * @param WC_Order $order Objeto do pedido.
+	 * @return array Dados formatados do pedido.
+	 */
+	function format_order_data($order)
+	{
+		if (!$order instanceof WC_Order) {
+			return [];
+		}
+
+		$order_data = $order->get_data();
+
+		// Formata os dados do pedido.
+		$formatted_data = [
+			'id' => $order_data['id'],
+			'parent_id' => $order_data['parent_id'],
+			'number' => $order_data['number'],
+			'order_key' => $order_data['order_key'],
+			'created_via' => $order_data['created_via'],
+			'version' => $order_data['version'],
+			'status' => $order_data['status'],
+			'currency' => $order_data['currency'],
+			'date_created' => $order_data['date_created']->date('Y-m-d\TH:i:s'),
+			'date_created_gmt' => $order_data['date_created']->date('Y-m-d\TH:i:s', true),
+			'date_modified' => $order_data['date_modified'] ? $order_data['date_modified']->date('Y-m-d\TH:i:s') : null,
+			'date_modified_gmt' => $order_data['date_modified'] ? $order_data['date_modified']->date('Y-m-d\TH:i:s', true) : null,
+			'discount_total' => $order_data['discount_total'],
+			'discount_tax' => $order_data['discount_tax'],
+			'shipping_total' => $order_data['shipping_total'],
+			'shipping_tax' => $order_data['shipping_tax'],
+			'cart_tax' => $order_data['cart_tax'],
+			'total' => $order_data['total'],
+			'total_tax' => $order_data['total_tax'],
+			'prices_include_tax' => $order_data['prices_include_tax'],
+			'customer_id' => $order_data['customer_id'],
+			'customer_ip_address' => $order_data['customer_ip_address'],
+			'customer_user_agent' => $order_data['customer_user_agent'],
+			'customer_note' => $order_data['customer_note'],
+			'billing' => $order_data['billing'],
+			'shipping' => $order_data['shipping'],
+			'payment_method' => $order_data['payment_method'],
+			'payment_method_title' => $order_data['payment_method_title'],
+			'transaction_id' => $order_data['transaction_id'],
+			'date_paid' => $order_data['date_paid'] ? $order_data['date_paid']->date('Y-m-d\TH:i:s') : null,
+			'date_paid_gmt' => $order_data['date_paid'] ? $order_data['date_paid']->date('Y-m-d\TH:i:s', true) : null,
+			'date_completed' => $order_data['date_completed'] ? $order_data['date_completed']->date('Y-m-d\TH:i:s') : null,
+			'date_completed_gmt' => $order_data['date_completed'] ? $order_data['date_completed']->date('Y-m-d\TH:i:s', true) : null,
+			'cart_hash' => $order_data['cart_hash'],
+			'line_items' => array_map(function ($item) {
+				return $item->get_data();
+			}, $order->get_items()),
+			'tax_lines' => array_map(function ($item) {
+				return $item->get_data();
+			}, $order->get_tax_totals()),
+			'shipping_lines' => array_map(function ($item) {
+				return $item->get_data();
+			}, $order->get_shipping_methods()),
+			'fee_lines' => [],
+			'coupon_lines' => [],
+			'refunds' => [],
+		];
+
+		return $formatted_data;
+	}
+
 	add_action('woocommerce_thankyou', 'wps_wpr_handle_cashback_usage');
 	/**
 	 * Envia informações do pedido e o link da loja após a conclusão do pedido.
@@ -599,75 +651,164 @@ if ($activated) {
 	 */
 	function wps_wpr_handle_cashback_usage($order_id)
 	{
-		// VERIFICA SE O USUARIO ESTA APTO A RECEBER CASHBACK
-		// Obtém o pedido.
-		$order = wc_get_order($order_id);
+		try {
+			$order = wc_get_order($order_id);
+			if (!$order) {
+				error_log('Pedido não encontrado: ' . $order_id);
+				return;
+			}
 
-		// Verifica se o pedido é válido.
-		if (!$order) {
-			return;
+			$used_cashback = $order->get_meta('wps_cart_discount#points', true);
+			if (empty($used_cashback)) {
+				error_log('Nenhum cashback utilizado para o pedido: ' . $order_id);
+				return;
+			}
+
+			if (is_user_logged_in()) {
+				$current_user = wp_get_current_user();
+				$user_data = array(
+					'id' => $current_user->ID,
+					'name' => $current_user->display_name,
+					'email' => $current_user->user_email,
+				);
+			} else {
+				$user_data = array(
+					'name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+					'email' => $order->get_billing_email(),
+					'phone' => $order->get_billing_phone(),
+				);
+			}
+
+			$order_data = format_order_data($order);
+			$store_url = get_site_url();
+
+			$payload = array(
+				'order' => $order_data,
+				'store' => array(
+					'url' => $store_url,
+				),
+				'user' => $user_data,
+				'ecommerce' => 'woocommerce',
+			);
+
+			$response = wp_remote_post(USE_CASHBACK_API_URL, array(
+				'method' => 'POST',
+				'body' => wp_json_encode($payload),
+				'headers' => array(
+					'Content-Type' => 'application/json',
+				),
+				'timeout' => 5,
+			));
+
+			if (is_wp_error($response)) {
+				throw new Exception('Erro ao conectar ao backend de cashback: ' . $response->get_error_message());
+			}
+
+			$response_code = wp_remote_retrieve_response_code($response);
+			if ($response_code < 200 || $response_code >= 300) {
+				throw new Exception('Erro no backend de cashback: Código de resposta ' . $response_code);
+			}
+
+			$response_body = wp_remote_retrieve_body($response);
+			$decoded_response = json_decode($response_body, true);
+
+			if (!isset($decoded_response['success']) || !$decoded_response['success']) {
+				throw new Exception('Erro ao processar cashback no backend: ' . $response_body);
+			}
+
+			error_log('Cashback processado com sucesso no backend para o pedido: ' . $order_id);
+		} catch (Exception $e) {
+			error_log('Exceção capturada ao processar cashback: ' . $e->getMessage());
 		}
+	}
 
-		// Verifica se o pedido utilizou cashback.
-		$used_cashback = get_post_meta($order_id, 'wps_cart_discount#points', true);
-		if (empty($used_cashback)) {
-			return;
+	/**
+	 * Envia informações do pedido e o link da loja após a conclusão do pedido.
+	 *
+	 * @param int $order_id ID do pedido.
+	 */
+	add_action('woocommerce_order_status_completed', 'wps_wpr_handle_receive_cashback');
+	function wps_wpr_handle_receive_cashback($order_id)
+	{
+		try {
+			$order = wc_get_order($order_id);
+
+			if (!$order) {
+				return;
+			}
+
+			if (!$order->has_status('completed')) {
+				return;
+			}
+
+			error_log('Pedido encontrado: ' . $order_id);
+
+			$cashback_flag = $order->get_meta('_generate_cashback');
+			error_log('Flag de cashback: ' . $cashback_flag);
+			if (empty($cashback_flag) || $cashback_flag !== 'true') {
+				return;
+			}
+
+			if (is_user_logged_in()) {
+				$current_user = wp_get_current_user();
+				$user_data = array(
+					'id' => $current_user->ID,
+					'name' => $current_user->display_name,
+					'email' => $current_user->user_email,
+				);
+			} else {
+				$user_data = array(
+					'name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+					'email' => $order->get_billing_email(),
+					'phone' => $order->get_billing_phone(),
+				);
+			}
+
+			$order_data = $order->get_data();
+			$store_url = get_site_url();
+
+			$payload = array(
+				'order' => $order_data,
+				'store' => array(
+					'url' => $store_url,
+				),
+				'user' => $user_data,
+				'ecommerce' => 'woocommerce',
+			);
+
+			$response = wp_remote_post(RECEIVE_CASHBACK_API_URL, array(
+				'method' => 'POST',
+				'body' => wp_json_encode($payload),
+				'headers' => array(
+					'Content-Type' => 'application/json',
+				),
+				'timeout' => 5,
+			));
+
+			if (is_wp_error($response)) {
+				throw new Exception('Erro ao conectar ao backend de cashback: ' . $response->get_error_message());
+			}
+
+			$response_code = wp_remote_retrieve_response_code($response);
+			error_log('Código de resposta do backend: ' . $response_code);
+
+			if ($response_code < 200 || $response_code >= 300) {
+				throw new Exception('Erro no backend de cashback: Código de resposta ' . $response_code);
+			}
+
+			$response_body = wp_remote_retrieve_body($response);
+			$decoded_response = json_decode($response_body, true);
+
+			error_log('Resposta do backend: ' . $response_body);
+
+			if (!isset($decoded_response['success']) || !$decoded_response['success']) {
+				throw new Exception('Erro ao processar cashback no backend: ' . $response_body);
+			}
+
+			error_log('Cashback processado com sucesso no backend para o pedido: ' . $order_id);
+		} catch (Exception $e) {
+			error_log('Exceção capturada ao processar cashback: ' . $e->getMessage());
 		}
-
-		if (is_user_logged_in()) {
-            $current_user = wp_get_current_user();
-            $user_data = array(
-                'id' => $current_user->ID,
-                'name' => $current_user->display_name,
-                'email' => $current_user->user_email,
-            );
-        } else {
-            // Caso o usuário não esteja logado, usar os dados de pagamento do pedido.
-            $user_data = array(
-                'name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
-                'email' => $order->get_billing_email(),
-                'phone' => $order->get_billing_phone(),
-            );
-        }
-
-		// Prepara os dados do pedido.
-		$order_data = $order->get_data(); // Obtém os dados completos do pedido.
-		$store_url = get_site_url(); // Obtém a URL da loja.
-
-		// Monta o payload para o backend.
-		$payload = array(
-			'order' => $order_data, // Dados do pedido.
-			'store' => array(
-				'url' => $store_url,  // URL da loja.
-			),
-		);
-
-		// Envia os dados para o backend.
-		$response = wp_remote_post(CASHBACK_API_URL, array(
-			'method' => 'POST',
-			'body' => json_encode($payload),
-			'headers' => array(
-				'Content-Type' => 'application/json',
-			),
-		));
-
-		// Verifica se houve erro na requisição.
-		if (is_wp_error($response)) {
-			error_log('Erro ao conectar ao backend de cashback: ' . $response->get_error_message());
-			return;
-		}
-
-		// Verifica a resposta do backend.
-		$response_body = wp_remote_retrieve_body($response);
-		$decoded_response = json_decode($response_body, true);
-
-		if (!isset($decoded_response['success']) || !$decoded_response['success']) {
-			error_log('Erro ao processar cashback no backend: ' . $response_body);
-			return;
-		}
-
-		// Log de sucesso.
-		error_log('Cashback processado com sucesso no backend.');
 	}
 
 	add_action( 'wp_login', 'wps_wpr_update_user_balance_on_login', 10, 2 );
