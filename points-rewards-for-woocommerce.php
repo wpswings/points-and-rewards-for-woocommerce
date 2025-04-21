@@ -727,14 +727,25 @@ if ($activated) {
 	 *
 	 * @param int $order_id ID do pedido.
 	 */
+	add_action('woocommerce_order_status_completed', 'wps_wpr_handle_receive_cashback');
 	function wps_wpr_handle_receive_cashback($order_id)
 	{
-		error_log('entrou em receiveCashback.');
 		try {
 			$order = wc_get_order($order_id);
 
 			if (!$order) {
-				error_log('Pedido não encontrado: ' . $order_id);
+				return;
+			}
+
+			if (!$order->has_status('completed')) {
+				return;
+			}
+
+			error_log('Pedido encontrado: ' . $order_id);
+
+			$cashback_flag = $order->get_meta('_generate_cashback');
+			error_log('Flag de cashback: ' . $cashback_flag);
+			if (empty($cashback_flag) || $cashback_flag !== 'true') {
 				return;
 			}
 
@@ -752,8 +763,6 @@ if ($activated) {
 					'phone' => $order->get_billing_phone(),
 				);
 			}
-
-			//VERIFICA SE O USUARIO ESTA APTO A RECEBER O CASHBACK
 
 			$order_data = $order->get_data();
 			$store_url = get_site_url();
@@ -781,6 +790,8 @@ if ($activated) {
 			}
 
 			$response_code = wp_remote_retrieve_response_code($response);
+			error_log('Código de resposta do backend: ' . $response_code);
+
 			if ($response_code < 200 || $response_code >= 300) {
 				throw new Exception('Erro no backend de cashback: Código de resposta ' . $response_code);
 			}
@@ -788,9 +799,12 @@ if ($activated) {
 			$response_body = wp_remote_retrieve_body($response);
 			$decoded_response = json_decode($response_body, true);
 
+			error_log('Resposta do backend: ' . $response_body);
+
 			if (!isset($decoded_response['success']) || !$decoded_response['success']) {
 				throw new Exception('Erro ao processar cashback no backend: ' . $response_body);
 			}
+
 			error_log('Cashback processado com sucesso no backend para o pedido: ' . $order_id);
 		} catch (Exception $e) {
 			error_log('Exceção capturada ao processar cashback: ' . $e->getMessage());
