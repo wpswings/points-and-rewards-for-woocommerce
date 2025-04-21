@@ -1535,3 +1535,34 @@ span.wps_wpr_all_referral_view {
 span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wpr_all_referral_view:hover {
     display: inline-block;
 }
+
+#wps_wpr_each_section {
+    display: flex;
+    gap: 6px 15px;
+    padding: 0;
+    margin: 20px 0 0;
+    flex-wrap: wrap;
+}
+
+#wps_wpr_each_section label {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+}
+
+#wps_wpr_each_section .wps_wpr_enable_offer_setting_wrapper input[type=checkbox] {
+    width: 18px;
+    border: 1px solid #ccc;
+    height: 18px;
+    margin: 0 10px 0 0;
+    line-height: 0;
+    cursor: pointer;
+}
+
+#wps_wpr_each_section .wps_wpr_enable_offer_setting_wrapper input[type=checkbox]:focus {
+    outline: none;
+}
+
+#wps_wpr_each_section .wps_wpr_notify_notice_wrap {
+    flex: 1 0 80%;
+}

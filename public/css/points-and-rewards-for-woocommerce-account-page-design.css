@@ -770,3 +770,55 @@ p#wps_wpr_shared_points_notification b {
     padding: 11px;
     cursor: pointer;
 }
+
+#wps_wpr_each_section {
+    display: flex;
+    gap: 6px 15px;
+    padding: 0;
+    margin: 20px 0 0;
+    flex-wrap: wrap;
+}
+
+#wps_wpr_each_section .wps_wpr_enable_offer_setting_wrapper input[type=checkbox] {
+    width: 32px;
+    appearance: none;
+    border: 1px solid #ccc;
+    height: 16px;
+    margin: 0 15px 0 0;
+    line-height: 0;
+    border-radius: 50px;
+    background: #f2f2f2;
+    position: relative;
+    cursor: pointer;
+}
+
+#wps_wpr_each_section .wps_wpr_enable_offer_setting_wrapper input[type=checkbox]:checked {
+    background: #fff;
+}
+
+#wps_wpr_each_section .wps_wpr_enable_offer_setting_wrapper input[type=checkbox]:before {
+    content: '';
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    background: #fff;
+    border-radius: 50px;
+    top: -4px;
+    left: -3px;
+    border: 1px solid #ccc;
+    transition: all 0.3s linear;
+}
+
+#wps_wpr_each_section .wps_wpr_enable_offer_setting_wrapper input[type=checkbox]:checked::before {
+    left: 12px;
+    background: var(--wps-wpr-primary);
+    border-color: #fff;
+}
+
+#wps_wpr_each_section .wps_wpr_enable_offer_setting_wrapper input[type=checkbox]:focus {
+    outline: none;
+}
+
+#wps_wpr_each_section .wps_wpr_notify_notice_wrap {
+    flex: 1 0 80%;
+}

@@ -796,4 +796,18 @@ jQuery(document).ready(function($){
 			}
 		});
 	}
+
+	// open whatsapp sample template.
+    jQuery(document).on('click', '.wps_wpr_preview_whatsapp_sample', function(e){
+
+        jQuery(document).find('.wps_wpr_preview_whatsapp_sample').css('color', '#2271b1');
+        e.preventDefault();
+        jQuery('.wps_wpr_preview_whatsapp_template_img').show();
+    });
+
+    // Hide modal when clicking outside the image.
+    jQuery(document).on('click', '.wps_wpr_preview_whatsapp_template_img', function(){
+
+        jQuery('.wps_wpr_preview_whatsapp_template_img').hide();
+    });
 });

@@ -55,6 +55,9 @@ $wps_wpr_whatsapp_template_name      = ! empty( $wps_wpr_save_sms_settings['wps_
 $wps_wpr_deactivate_whatsapp_api     = ! empty( $wps_wpr_save_sms_settings['wps_wpr_deactivate_whatsapp_api'] ) ? $wps_wpr_save_sms_settings['wps_wpr_deactivate_whatsapp_api'] : '';
 $url                                 = '<a href="https://console.twilio.com/?frameUrl=%2Fconsole%3Fx-target-region%3Dus1" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
 $num                                 = '<a href="https://console.twilio.com/us1/develop/phone-numbers/manage/search?isoCountry=US&types[]=Local&types[]=Mobile&types[]=Tollfree&capabilities[]=Fax&capabilities[]=Mms&capabilities[]=Sms&capabilities[]=Voice&searchTerm=&searchFilter=left&searchType=number" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
+$whtasapp_url                        = '<a href="https://business.facebook.com/business/loginpage/?next=https%3A%2F%2Fdevelopers.facebook.com%2Fapps%2F967217188484687%2Fwhatsapp-business%2Fwa-dev-console%2F%3Fbusiness_id%3D1466242894064567#" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
+$whatsapp_num                        = '<a href="https://developers.facebook.com/apps/1306844587187157/whatsapp-business/wa-dev-console/?business_id=1466242894064567" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
+$preview                             = '<a href="#" target="_blank" class="wps_wpr_preview_whatsapp_sample">Preview Sample Template</a>';
 ?>
 
 <div class="wps_wpr_user_badges_main_wrappers">
@@ -112,21 +115,21 @@ $num                                 = '<a href="https://console.twilio.com/us1/
 					<label for="wps_wpr_whatsapp_access_token" class="wps_wpr_general_label"><?php esc_html_e( 'Enter Access Token', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_whatsapp_access_token" class="wps_wpr_whatsapp_access_token" value="<?php echo esc_html( $wps_wpr_whatsapp_access_token ); ?>">
-						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter your access token. To create a token, %s', 'membership-for-woocommerce' ), wp_kses_post( $url ) ); ?></span>
+						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter your access token. To create a token, %s', 'membership-for-woocommerce' ), wp_kses_post( $whtasapp_url ) ); ?></span>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_whatsapp_phone_number" class="wps_wpr_general_label"><?php esc_html_e( 'Enter Phone Number ID', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="number" name="wps_wpr_whatsapp_phone_number" class="wps_wpr_whatsapp_phone_number" value="<?php echo esc_html( $wps_wpr_whatsapp_phone_number ); ?>">
-						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter you phone number id. To get Phone number ID, %s', 'membership-for-woocommerce' ), wp_kses_post( $url ) ); ?></span>
+						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter you phone number id. To get Phone number ID, %s', 'membership-for-woocommerce' ), wp_kses_post( $whatsapp_num ) ); ?></span>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_whatsapp_template_name" class="wps_wpr_general_label"><?php esc_html_e( 'Enter whatsapp template name', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_whatsapp_template_name" class="wps_wpr_whatsapp_template_name" value="<?php echo esc_html( $wps_wpr_whatsapp_template_name ); ?>">
-						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'The WhatsApp template name must remain fixed and cannot be modified. You can use this name when creating a custom template, %s', 'membership-for-woocommerce' ), wp_kses_post( $url ) ); ?></span>
+						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'The WhatsApp template name must remain fixed and cannot be modified. You can use this name when creating a custom template, %s', 'membership-for-woocommerce' ), wp_kses_post( $preview ) ); ?></span>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
@@ -142,3 +145,7 @@ $num                                 = '<a href="https://console.twilio.com/us1/
 	</form>
 </div>
 
+<!-- Whatsapp Sample template -->
+<div class="wps_wpr_preview_whatsapp_template_img" style="display: none;">
+	<img src='<?php echo esc_url( WPS_RWPR_DIR_URL ) . 'admin/images/par-whatsapp-temp.png'; ?>'>
+</div>

@@ -64,11 +64,11 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
 		$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
 		$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
+		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
 		if ( 1 === $wps_wpr_choose_account_page_temp ) {
 
 			wp_enqueue_style( 'wps-account-page-design', WPS_RWPR_DIR_URL . 'public/css/points-and-rewards-for-woocommerce-account-page-design.css', array(), $this->version, 'all' );
 		}
-		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -4706,12 +4706,12 @@ class Points_Rewards_For_WooCommerce_Public {
 					?>
 					<div class="wps_wpr_share_points_wrap wps_wpr_main_section_all_wrap">
 						<p class="wps_wpr_heading"><?php echo esc_html__( 'Deactivate Notifications', 'points-and-rewards-for-woocommerce' ); ?></p>
-						<fieldset class="wps_wpr_each_section">
-							<div>
-								<input type="checkbox" name="wps_wpr_off_sms_notify" class="wps_wpr_off_sms_notify" value="yes" <?php checked( $wps_wpr_stop_sms_notify, 'yes' ) ?>>
-								<span><?php esc_html_e( 'SMS Notification', 'points-and-rewards-for-woocommerce' ); ?></span>
-								<input type="checkbox" name="wps_wpr_off_whatsapp_notify" class="wps_wpr_off_whatsapp_notify" value="yes" <?php checked( $wps_wpr_stop_whatsapp_notify, 'yes' ) ?>>
-								<span><?php esc_html_e( 'Whatspp Notification', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<fieldset id="wps_wpr_each_section">
+							<div class="wps_wpr_enable_offer_setting_wrapper">
+								<label for="wps_wpr_off_sms_notify"><input type="checkbox" name="wps_wpr_off_sms_notify" class="wps_wpr_off_sms_notify" value="yes" <?php checked( $wps_wpr_stop_sms_notify, 'yes' ) ?>><?php esc_html_e( 'SMS Notification', 'points-and-rewards-for-woocommerce' ); ?></label>
+							</div>
+							<div class="wps_wpr_enable_offer_setting_wrapper">
+								<label for="wps_wpr_off_whatsapp_notify"><input type="checkbox" name="wps_wpr_off_whatsapp_notify" class="wps_wpr_off_whatsapp_notify" value="yes" <?php checked( $wps_wpr_stop_whatsapp_notify, 'yes' ) ?>><?php esc_html_e( 'Whatspp Notification', 'points-and-rewards-for-woocommerce' ); ?></label>
 							</div>
 							<div class="wps_wpr_notify_notice_wrap" style="display: none;"></div>
 						</fieldset>	
