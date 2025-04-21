@@ -600,11 +600,7 @@ if ( $activated ) {
 					$response    = curl_exec( $ch );
 					$response    = json_decode( $response );
 					$status_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-					// check success response.
-					if ( '201' == $status_code ) {
-
-						echo 'testing';
-					}
+					// check success response '201' == $status_code.
 				}
 			}
 		}

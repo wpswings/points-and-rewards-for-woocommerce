@@ -346,52 +346,33 @@
                 }
             });
 
-            // deactivate / activate sms notify.
-            jQuery(document).on('change', '.wps_wpr_off_sms_notify', function(){
+            // Toggle SMS and WhatsApp notifications.
+            jQuery(document).on('change', '.wps_wpr_off_sms_notify, .wps_wpr_off_whatsapp_notify', function () {
 
-                let checked = jQuery(this).is(':checked') ? 'yes' : 'no';
-                let data    = {
-                    'action'   : 'stop_sms_whatsapp_notify',
-                    'nonce'    : wps_wpr.wps_wpr_nonce,
-                    'stop_sms' : checked,
+                const $this     = jQuery(this);
+                const isChecked = $this.is(':checked') ? 'yes' : 'no';
+                const isSMS     = $this.hasClass('wps_wpr_off_sms_notify');
+                const data      = {
+                    action                                 : 'stop_sms_whatsapp_notify',
+                    nonce                                  : wps_wpr.wps_wpr_nonce,
+                    [isSMS ? 'stop_sms' : 'stop_whatsapp'] : isChecked
                 };
 
-                wps_wpr_common_func_to_stop_notify( data );
+                wps_wpr_common_func_to_stop_notify(data);
             });
 
-            // deactivate / activate whatsapp notify.
-            jQuery(document).on('change', '.wps_wpr_off_whatsapp_notify', function(){
-
-                let checked = jQuery(this).is(':checked') ? 'yes' : 'no';
-                let data    = {
-                    'action'        : 'stop_sms_whatsapp_notify',
-                    'nonce'         : wps_wpr.wps_wpr_nonce,
-                    'stop_whatsapp' : checked,
-                };
-
-                wps_wpr_common_func_to_stop_notify( data );
-            });
-
-            // ajax call to save user input.
-            function wps_wpr_common_func_to_stop_notify( value ) {
-
+            // AJAX function to handle notification toggle.
+            function wps_wpr_common_func_to_stop_notify(data) {
                 jQuery.ajax({
-                    'method' : 'POST',
-                    'url'    : wps_wpr.ajaxurl,
-                    'data'   : value,
-                    success  : function( response ) {
-                        jQuery('.wps_wpr_notify_notice_wrap').show();
-                        if ( response.result == true ) {
-
-                            jQuery('.wps_wpr_notify_notice_wrap').css('color', 'red');
-                            jQuery('.wps_wpr_notify_notice_wrap').html(response.msg);
-                        } else {
-
-                            jQuery('.wps_wpr_notify_notice_wrap').css('color', 'green');
-                            jQuery('.wps_wpr_notify_notice_wrap').html(response.msg);
-                        }
+                    method  : 'POST',
+                    url     : wps_wpr.ajaxurl,
+                    data    : data,
+                    success : function (response) {
+                        const $notice = jQuery('.wps_wpr_notify_notice_wrap');
+                        $notice.show().css('color', response.result ? 'red' : 'green').html(response.msg);
                     }
                 });
             }
+
         });
 })(jQuery);

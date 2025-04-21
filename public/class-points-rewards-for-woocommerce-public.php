@@ -4723,45 +4723,46 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * This function is used to activate and deactivate sms and whatsapp notification.
+	 * Handles activation and deactivation of SMS and WhatsApp notifications via AJAX.
 	 *
 	 * @return void
 	 */
 	public function wps_wpr_stop_sms_whatsapp_notify_call() {
-
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
-		$response      = array();
-		$user_id       = get_current_user_id();
-		$stop_sms      = ! empty( $_POST['stop_sms'] ) ? sanitize_text_field( wp_unslash( $_POST['stop_sms'] ) ) : '';
-		$stop_whatsapp = ! empty( $_POST['stop_whatsapp'] ) ? sanitize_text_field( wp_unslash( $_POST['stop_whatsapp'] ) ) : '';
 
-		// sms.
-		if ( 'yes' === $stop_sms ) {
+		$user_id  = get_current_user_id();
+		$response = array(
+			'result' => false,
+			'msg'    => esc_html__( 'No changes made.', 'points-and-rewards-for-woocommerce' ),
+		);
 
-			update_user_meta( $user_id, 'wps_wpr_stop_sms_notify', $stop_sms );
-			$response['result'] = true;
-			$response['msg']    = esc_html__( 'sms notification deactivated successfully!', 'points-and-rewards-for-woocommerce' );
-		} elseif ( 'no' === $stop_sms ) {
+		$notifications = array(
+			'sms'      => 'wps_wpr_stop_sms_notify',
+			'whatsapp' => 'wps_wpr_stop_whatsapp_notify',
+		);
 
-			update_user_meta( $user_id, 'wps_wpr_stop_sms_notify', $stop_sms );
-			$response['result'] = false;
-			$response['msg']    = esc_html__( 'sms notification activated!', 'points-and-rewards-for-woocommerce' );
-		}
+		foreach ( $notifications as $type => $meta_key ) {
 
-		// whatsapp.
-		if ( 'yes' === $stop_whatsapp ) {
+			$stop_key = 'stop_' . $type;
+			if ( isset( $_POST[ $stop_key ] ) ) {
 
-			update_user_meta( $user_id, 'wps_wpr_stop_whatsapp_notify', $stop_whatsapp );
-			$response['result'] = true;
-			$response['msg']    = esc_html__( 'whatsapp notification deactivated successfully!', 'points-and-rewards-for-woocommerce' );
-		} elseif ( 'no' === $stop_whatsapp ) {
+				$stop_value = sanitize_text_field( wp_unslash( $_POST[ $stop_key ] ) );
+				update_user_meta( $user_id, $meta_key, $stop_value );
 
-			update_user_meta( $user_id, 'wps_wpr_stop_whatsapp_notify', $stop_whatsapp );
-			$response['result'] = false;
-			$response['msg']    = esc_html__( 'whatsapp notification activated!', 'points-and-rewards-for-woocommerce' );
+				if ( 'yes' === $stop_value ) {
+
+					$response['result'] = true;
+					$response['msg']    = sprintf( esc_html__( '%s notification deactivated successfully!', 'points-and-rewards-for-woocommerce' ), ucfirst( $type ) );
+				} elseif ( 'no' === $stop_value ) {
+
+					$response['result'] = false;
+					$response['msg']    = sprintf( esc_html__( '%s notification activated!', 'points-and-rewards-for-woocommerce' ), ucfirst( $type ) );
+				}
+			}
 		}
 		wp_send_json( $response );
 		wp_die();
 	}
+
 
 }
