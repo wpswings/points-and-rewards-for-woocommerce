@@ -560,46 +560,51 @@ if ( $activated ) {
 	 */
 	function wps_wpr_send_sms_org( $user_id, $message ) {
 
-		$wps_wpr_save_sms_settings          = get_option( 'wps_wpr_save_sms_settings' );
-		$wps_wpr_save_sms_settings          = ! empty( $wps_wpr_save_sms_settings ) && is_array( $wps_wpr_save_sms_settings ) ? $wps_wpr_save_sms_settings : array();
-		$wps_wpr_enable_sms_api_settings    = ! empty( $wps_wpr_save_sms_settings['wps_wpr_enable_sms_api_settings'] ) ? $wps_wpr_save_sms_settings['wps_wpr_enable_sms_api_settings'] : 'no';
-		if ( 'yes' === $wps_wpr_enable_sms_api_settings && ! empty( $user_id ) ) {
-			
-			// get sms integration settings.
-			$wps_wpr_sms_account_sid   = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_account_sid'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_account_sid'] : '';
-			$wps_wpr_sms_auth_token    = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_account_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_account_token'] : '';
-			$wps_wpr_sms_twilio_num_id = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_twilio_no'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_twilio_no'] : '';
-			if ( ! empty( $wps_wpr_sms_account_sid ) && ! empty( $wps_wpr_sms_auth_token ) && ! empty( $wps_wpr_sms_twilio_num_id ) ) {
+		$wps_wpr_stop_sms_notify = get_user_meta( $user_id, 'wps_wpr_stop_sms_notify', true );
+		$wps_wpr_stop_sms_notify = ! empty( $wps_wpr_stop_sms_notify ) ? $wps_wpr_stop_sms_notify : 'no';
+		if ( 'no' === $wps_wpr_stop_sms_notify ) {
 
-				// get user billing number and country code.
-				$country_code_name = get_user_meta( $user_id, 'billing_country', true );
-				$country_code      = wps_wpr_get_country_code_by_name( $country_code_name );
-				$billing_phone     = get_user_meta( $user_id, 'billing_phone', true );
-				$billing_phone     = ! empty( $billing_phone ) ? $country_code . $billing_phone : '';
-				$wps_send_contact  = '+' . $billing_phone;
+			$wps_wpr_save_sms_settings          = get_option( 'wps_wpr_save_sms_settings' );
+			$wps_wpr_save_sms_settings          = ! empty( $wps_wpr_save_sms_settings ) && is_array( $wps_wpr_save_sms_settings ) ? $wps_wpr_save_sms_settings : array();
+			$wps_wpr_enable_sms_api_settings    = ! empty( $wps_wpr_save_sms_settings['wps_wpr_enable_sms_api_settings'] ) ? $wps_wpr_save_sms_settings['wps_wpr_enable_sms_api_settings'] : 'no';
+			if ( 'yes' === $wps_wpr_enable_sms_api_settings && ! empty( $user_id ) ) {
+				
+				// get sms integration settings.
+				$wps_wpr_sms_account_sid   = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_account_sid'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_account_sid'] : '';
+				$wps_wpr_sms_auth_token    = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_account_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_account_token'] : '';
+				$wps_wpr_sms_twilio_num_id = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_twilio_no'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_twilio_no'] : '';
+				if ( ! empty( $wps_wpr_sms_account_sid ) && ! empty( $wps_wpr_sms_auth_token ) && ! empty( $wps_wpr_sms_twilio_num_id ) ) {
 
-				// prepare data and call sms api.
-				$url       = 'https://api.twilio.com/2010-04-01/Accounts/' . $wps_wpr_sms_account_sid . '/Messages.json';
-				$ch        = curl_init();
-				$curl_data = array(
-					'From' => $wps_wpr_sms_twilio_num_id,
-					'Body' => $message,
-					'To'   => $wps_send_contact,
-				);
+					// get user billing number and country code.
+					$country_code_name = get_user_meta( $user_id, 'billing_country', true );
+					$country_code      = wps_wpr_get_country_code_by_name( $country_code_name );
+					$billing_phone     = get_user_meta( $user_id, 'billing_phone', true );
+					$billing_phone     = ! empty( $billing_phone ) ? $country_code . $billing_phone : '';
+					$wps_send_contact  = '+' . $billing_phone;
 
-				curl_setopt( $ch, CURLOPT_URL, $url );
-				curl_setopt( $ch, CURLOPT_TIMEOUT, 30 ); // timeout after 30 seconds.
-				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-				curl_setopt( $ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY );
-				curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_data );
-				curl_setopt( $ch, CURLOPT_USERPWD, "$wps_wpr_sms_account_sid:$wps_wpr_sms_auth_token" );
-				$response    = curl_exec( $ch );
-				$response    = json_decode( $response );
-				$status_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-				// check success response.
-				if ( '201' == $status_code ) {
+					// prepare data and call sms api.
+					$url       = 'https://api.twilio.com/2010-04-01/Accounts/' . $wps_wpr_sms_account_sid . '/Messages.json';
+					$ch        = curl_init();
+					$curl_data = array(
+						'From' => $wps_wpr_sms_twilio_num_id,
+						'Body' => $message,
+						'To'   => $wps_send_contact,
+					);
 
-					echo 'testing';
+					curl_setopt( $ch, CURLOPT_URL, $url );
+					curl_setopt( $ch, CURLOPT_TIMEOUT, 30 ); // timeout after 30 seconds.
+					curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+					curl_setopt( $ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY );
+					curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_data );
+					curl_setopt( $ch, CURLOPT_USERPWD, "$wps_wpr_sms_account_sid:$wps_wpr_sms_auth_token" );
+					$response    = curl_exec( $ch );
+					$response    = json_decode( $response );
+					$status_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+					// check success response.
+					if ( '201' == $status_code ) {
+
+						echo 'testing';
+					}
 				}
 			}
 		}
@@ -666,78 +671,83 @@ if ( $activated ) {
 	 */
 	function wps_wpr_send_messages_on_whatsapp( $user_id, $message ) {
 
-		$wps_wpr_save_sms_settings           = get_option( 'wps_wpr_save_sms_settings' );
-		$wps_wpr_save_sms_settings           = ! empty( $wps_wpr_save_sms_settings ) && is_array( $wps_wpr_save_sms_settings ) ? $wps_wpr_save_sms_settings : array();
-		$wps_wpr_enable_whatsapp_api_feature = ! empty( $wps_wpr_save_sms_settings['wps_wpr_enable_whatsapp_api_feature'] ) ? $wps_wpr_save_sms_settings['wps_wpr_enable_whatsapp_api_feature'] : '';
-		if ( 'yes' === $wps_wpr_enable_whatsapp_api_feature && ! empty( $user_id ) ) {
+		$wps_wpr_stop_whatsapp_notify = get_user_meta( $user_id, 'wps_wpr_stop_whatsapp_notify', true );
+		$wps_wpr_stop_whatsapp_notify = ! empty( $wps_wpr_stop_whatsapp_notify ) ? $wps_wpr_stop_whatsapp_notify : 'no';
+		if ( 'no' === $wps_wpr_stop_whatsapp_notify ) {
 
-			$country_code_name              = get_user_meta( $user_id, 'billing_country', true );
-			$country_code                   = wps_wpr_get_country_code_by_name( $country_code_name );
-			$whatsapp_number                = get_user_meta( $user_id, 'billing_phone', true );
-			$whatsapp_number                = ! empty( $whatsapp_number ) ? $country_code . $whatsapp_number : '';
-			$user_obj                       = get_user_by( 'id', $user_id );
-			$wps_wpr_whatsapp_access_token  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] : '';
-			$wps_wpr_whatsapp_phone_num_id  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] : '';
-			$wps_wpr_whatsapp_msg_temp_name = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_template_name'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_template_name'] : '';
-			$api_header                     = array(
-				'Content-Type: application/json',
-				'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,
-			);
-			
-			$curl_data = array(
-				"messaging_product" => "whatsapp",
-				"to" => $whatsapp_number,
-				"type" => "template",
-				"template" => array(
-					"name" => $wps_wpr_whatsapp_msg_temp_name,
-					"language" => array(
-						"code" => "en_US"
-					),
-					"components" => array(
-						array(
-							"type" => "body",
-							"parameters" => array(
-								array(
-									"type" => "text",
-									"text" => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
-								),
-								array(
-									"type" => "text",
-									"text" => $message,
-								),
+			$wps_wpr_save_sms_settings           = get_option( 'wps_wpr_save_sms_settings' );
+			$wps_wpr_save_sms_settings           = ! empty( $wps_wpr_save_sms_settings ) && is_array( $wps_wpr_save_sms_settings ) ? $wps_wpr_save_sms_settings : array();
+			$wps_wpr_enable_whatsapp_api_feature = ! empty( $wps_wpr_save_sms_settings['wps_wpr_enable_whatsapp_api_feature'] ) ? $wps_wpr_save_sms_settings['wps_wpr_enable_whatsapp_api_feature'] : '';
+			if ( 'yes' === $wps_wpr_enable_whatsapp_api_feature && ! empty( $user_id ) ) {
+
+				$country_code_name              = get_user_meta( $user_id, 'billing_country', true );
+				$country_code                   = wps_wpr_get_country_code_by_name( $country_code_name );
+				$whatsapp_number                = get_user_meta( $user_id, 'billing_phone', true );
+				$whatsapp_number                = ! empty( $whatsapp_number ) ? $country_code . $whatsapp_number : '';
+				$user_obj                       = get_user_by( 'id', $user_id );
+				$wps_wpr_whatsapp_access_token  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] : '';
+				$wps_wpr_whatsapp_phone_num_id  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] : '';
+				$wps_wpr_whatsapp_msg_temp_name = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_template_name'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_template_name'] : '';
+				$api_header                     = array(
+					'Content-Type: application/json',
+					'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,
+				);
+				
+				$curl_data = array(
+					"messaging_product" => "whatsapp",
+					"to" => $whatsapp_number,
+					"type" => "template",
+					"template" => array(
+						"name" => $wps_wpr_whatsapp_msg_temp_name,
+						"language" => array(
+							"code" => "en_US"
+						),
+						"components" => array(
+							array(
+								"type" => "body",
+								"parameters" => array(
+									array(
+										"type" => "text",
+										"text" => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
+									),
+									array(
+										"type" => "text",
+										"text" => $message,
+									),
+								)
 							)
 						)
 					)
-				)
-			);
+				);
 
-			$data = json_encode( $curl_data );
+				$data = json_encode( $curl_data );
 
-			// LOAD THE WC LOGGER.
-			$logger = wc_get_logger();
+				// LOAD THE WC LOGGER.
+				$logger = wc_get_logger();
 
-			$curl = curl_init();
+				$curl = curl_init();
 
-			curl_setopt_array( $curl, array(
-			CURLOPT_URL => 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages',
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => '',
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 0,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => 'POST',
-			CURLOPT_POSTFIELDS =>$data,
-			CURLOPT_HTTPHEADER => $api_header,
-			));
+				curl_setopt_array( $curl, array(
+				CURLOPT_URL => 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages',
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'POST',
+				CURLOPT_POSTFIELDS =>$data,
+				CURLOPT_HTTPHEADER => $api_header,
+				));
 
-			$response = curl_exec($curl);
+				$response = curl_exec($curl);
 
-			// LOG THE Result.
-			$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );				
-			curl_close($curl);
+				// LOG THE Result.
+				$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );				
+				curl_close($curl);
 
-			$response = json_decode( $response, true );
+				$response = json_decode( $response, true );
+			}
 		}
 	}
 } else {

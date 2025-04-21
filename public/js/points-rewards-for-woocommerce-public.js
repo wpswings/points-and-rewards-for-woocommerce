@@ -345,5 +345,53 @@
                     $("#wps_wpr_wallet_notification").html('<b style="color:red;">' + wps_wpr.empty_notice + '</b>')
                 }
             });
+
+            // deactivate / activate sms notify.
+            jQuery(document).on('change', '.wps_wpr_off_sms_notify', function(){
+
+                let checked = jQuery(this).is(':checked') ? 'yes' : 'no';
+                let data    = {
+                    'action'   : 'stop_sms_whatsapp_notify',
+                    'nonce'    : wps_wpr.wps_wpr_nonce,
+                    'stop_sms' : checked,
+                };
+
+                wps_wpr_common_func_to_stop_notify( data );
+            });
+
+            // deactivate / activate whatsapp notify.
+            jQuery(document).on('change', '.wps_wpr_off_whatsapp_notify', function(){
+
+                let checked = jQuery(this).is(':checked') ? 'yes' : 'no';
+                let data    = {
+                    'action'        : 'stop_sms_whatsapp_notify',
+                    'nonce'         : wps_wpr.wps_wpr_nonce,
+                    'stop_whatsapp' : checked,
+                };
+
+                wps_wpr_common_func_to_stop_notify( data );
+            });
+
+            // ajax call to save user input.
+            function wps_wpr_common_func_to_stop_notify( value ) {
+
+                jQuery.ajax({
+                    'method' : 'POST',
+                    'url'    : wps_wpr.ajaxurl,
+                    'data'   : value,
+                    success  : function( response ) {
+                        jQuery('.wps_wpr_notify_notice_wrap').show();
+                        if ( response.result == true ) {
+
+                            jQuery('.wps_wpr_notify_notice_wrap').css('color', 'red');
+                            jQuery('.wps_wpr_notify_notice_wrap').html(response.msg);
+                        } else {
+
+                            jQuery('.wps_wpr_notify_notice_wrap').css('color', 'green');
+                            jQuery('.wps_wpr_notify_notice_wrap').html(response.msg);
+                        }
+                    }
+                });
+            }
         });
 })(jQuery);
