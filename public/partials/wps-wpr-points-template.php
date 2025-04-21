@@ -74,7 +74,7 @@ if ( isset( $_POST['wps_wpr_save_level'] ) && isset( $_POST['membership-save-lev
 }
 
 /* Get points of the User*/
-$get_points = (float) get_user_meta( $user_id, 'wps_wpr_points', true );
+$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 /* Get points of the Membership Level*/
 $wps_user_level = get_user_meta( $user_id, 'membership_level', true );
 
@@ -113,7 +113,8 @@ if ( ! is_array( $coupon_settings ) ) {
 		<div class="wps_wpr_points_only wps_wpr_show_points_on_account_page">
 			<div class="wps_wpr_heading_para">
 				<span class="wps_wpr_heading"><?php echo esc_html( $wps_text_points_value ) . ':'; ?></span>
-				<span class="wps_wpr_total_earn_points"><?php echo esc_html( number_format( $get_points, 2 ) ); ?></span>			</div>
+				<span class="wps_wpr_total_earn_points"><?php echo esc_html( number_format( $get_points ) ); ?></span>
+			</div>
 			<?php
 			// Show overall earning points.
 			if ( 'yes' === $wps_wpr_show_accumulated_points ) {
