@@ -664,9 +664,9 @@ class Points_Rewards_For_WooCommerce_Public {
 				/*Send Email to user For the signup*/
 				$this->wps_wpr_send_notification_mail( $customer_id, 'signup_notification' );
 				// send sms.
-				wps_wpr_send_sms_org( $customer_id, sprintf( esc_html__( "You've received bonus points for signing up. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_signup_value ) );
+				wps_wpr_send_sms_org( $customer_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received bonus points for signing up. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_signup_value ) );
 				// send messages on whatsapp.
-				wps_wpr_send_messages_on_whatsapp( $customer_id, sprintf( esc_html__( "You've received bonus points for signing up. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_signup_value ) );
+				wps_wpr_send_messages_on_whatsapp( $customer_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received bonus points for signing up. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_signup_value ) );
 			}
 
 			// Assign referral points.
@@ -729,9 +729,9 @@ class Points_Rewards_For_WooCommerce_Public {
 						$wps_store_referral_user_ids = array();
 						update_user_meta( $refere_id, 'wps_store_referral_user_ids', $wps_store_referral_user_ids );
 						// send sms.
-						wps_wpr_send_sms_org( $refere_id, sprintf( esc_html__( "You've earned referral points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
+						wps_wpr_send_sms_org( $refere_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've earned referral points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
 						// send messages on whatsapp.
-						wps_wpr_send_messages_on_whatsapp( $refere_id, sprintf( esc_html__( "You've earned referral points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
+						wps_wpr_send_messages_on_whatsapp( $refere_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've earned referral points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
 						do_action( 'wps_wpr_referral_features_extend', $customer_id, $refere_id );
 					}
 				}
@@ -1086,9 +1086,9 @@ class Points_Rewards_For_WooCommerce_Public {
 				/*Send mail to client regarding product purchase*/
 				$this->wps_wpr_send_notification_mail_product( $user_id, $wps_wpr_point, $wps_wpr_shortcode, $wps_wpr_subject_content );
 				// send sms.
-				wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "You've received points based on your order total. Your current points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
+				wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received points based on your order total. Your current points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
 				// send messages on whatsapp.
-				wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "You've received points based on your order total. Your current points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
+				wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received points based on your order total. Your current points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
 			}
 		}
 	}
@@ -1249,9 +1249,9 @@ class Points_Rewards_For_WooCommerce_Public {
 									/*Send mail to client regarding product purchase*/
 									$this->wps_wpr_send_notification_mail_product( $user_id, $points_calculation, $wps_wpr_shortcode, $wps_wpr_subject_content );
 									// send sms. 
-									wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "You've received points based on the currency value of your purchase. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
+									wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received points based on the currency value of your purchase. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
 									// send messages on whatsapp.
-									wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "You've received points based on the currency value of your purchase. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
+									wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received points based on the currency value of your purchase. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
 								}
 							}
 						}
@@ -1287,9 +1287,9 @@ class Points_Rewards_For_WooCommerce_Public {
 						/*Send mail to client regarding product purchase*/
 						$this->wps_wpr_send_notification_mail_product( $user_id, $item_points, $wps_wpr_shortcode, $wps_wpr_subject_content );
 						// send sms.
-						wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "You have received assigned product points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
+						wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You have received assigned product points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
 						// send messages on whatsapp.
-						wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "You have received assigned product points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
+						wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You have received assigned product points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
 					}
 				}
 			}
@@ -1344,9 +1344,9 @@ class Points_Rewards_For_WooCommerce_Public {
 							// hpos.
 							wps_wpr_hpos_update_meta_data( $order_id, 'refunded_points_by_cart', 'done' );
 							// send sms.
-							wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "Your points have been added back to your account due to the order cancellation. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_points_newly_updated ) );
+							wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Your points have been added back to your account due to the order cancellation. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_points_newly_updated ) );
 							// send messages on whatsapp.
-							wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "Your points have been added back to your account due to the order cancellation. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_points_newly_updated ) );
+							wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Your points have been added back to your account due to the order cancellation. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_points_newly_updated ) );
 						}
 					}
 				}
@@ -1396,9 +1396,9 @@ class Points_Rewards_For_WooCommerce_Public {
 								// hpos.
 								wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_subscription_renewal_refund', 'done' );
 								// send sms.
-								wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "Your subscription renewal order has been cancelled, and %s points have been deducted from your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $value_to_refund, $wps_points_newly_updated ) );
+								wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Your subscription renewal order has been cancelled, and %1\$s points have been deducted from your account. Your total points balance is now %2\$s", 'points-and-rewards-for-woocommerce' ), $value_to_refund, $wps_points_newly_updated ) );
 								// send messages on whatsapp.
-								wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "Your subscription renewal order has been cancelled, and %s points have been deducted from your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $value_to_refund, $wps_points_newly_updated ) );
+								wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Your subscription renewal order has been cancelled, and %1\$s points have been deducted from your account. Your total points balance is now %2\$s", 'points-and-rewards-for-woocommerce' ), $value_to_refund, $wps_points_newly_updated ) );
 							}
 						}
 					}
@@ -1477,9 +1477,9 @@ class Points_Rewards_For_WooCommerce_Public {
 							update_user_meta( $user_id, 'wps_wpr_points', $remaining_points );
 							update_user_meta( $user_id, 'points_details', $points_log );
 							// send sms.
-							wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "Your order has been cancelled, and %s points (based on the currency value) have been deducted from your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $deduct_currency_spent, $remaining_points ) );
+							wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Your order has been cancelled, and %1\$s points (based on the currency value) have been deducted from your account. Your total points balance is now %2\$s", 'points-and-rewards-for-woocommerce' ), $deduct_currency_spent, $remaining_points ) );
 							// send messages on whatsapp.
-							wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "Your order has been cancelled, and %s points (based on the currency value) have been deducted from your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $deduct_currency_spent, $remaining_points ) );
+							wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Your order has been cancelled, and %1\$s points (based on the currency value) have been deducted from your account. Your total points balance is now %2\$s", 'points-and-rewards-for-woocommerce' ), $deduct_currency_spent, $remaining_points ) );
 							// hpos.
 							wps_wpr_hpos_update_meta_data( $order_id, "$order_id#refund_per_currency_spend_points", 'yes' );
 
@@ -1547,9 +1547,9 @@ class Points_Rewards_For_WooCommerce_Public {
 										update_user_meta( $user_id, 'wps_wpr_points', $total_points );
 										update_user_meta( $user_id, 'points_details', $deduction_of_points );
 										// send sms.
-										wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "%s assigned product points have been deducted from your account due to order cancellation. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $deduct_point, $total_points ) );
+										wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "%1\$s assigned product points have been deducted from your account due to order cancellation. Your total points balance is now %2\$s", 'points-and-rewards-for-woocommerce' ), $deduct_point, $total_points ) );
 										// send messages on whatsapp.
-										wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "%s assigned product points have been deducted from your account due to order cancellation. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $deduct_point, $total_points ) );
+										wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "%1\$s assigned product points have been deducted from your account due to order cancellation. Your total points balance is now %2\$s", 'points-and-rewards-for-woocommerce' ), $deduct_point, $total_points ) );
 										// hpos.
 										wps_wpr_hpos_update_meta_data( $order_id, "$order_id#$item_id#refund_points", 'yes' );
 
@@ -1674,9 +1674,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			update_user_meta( $user_id, 'wps_wpr_points', $remaining_points );
 			update_user_meta( $user_id, 'points_details', $deduction_of_points );
 			// send sms.
-			wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "Your order was cancelled, so %s order total points have been deducted. Your new points balance is %s", 'points-and-rewards-for-woocommerce' ), $deduct_currency_spent, $remaining_points ) );
+			wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Your order was cancelled, so %1\$s order total points have been deducted. Your new points balance is %2\$s", 'points-and-rewards-for-woocommerce' ), $deduct_currency_spent, $remaining_points ) );
 			// send messages on whatsapp.
-			wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "Your order was cancelled, so %s order total points have been deducted. Your new points balance is %s", 'points-and-rewards-for-woocommerce' ), $deduct_currency_spent, $remaining_points ) );
+			wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Your order was cancelled, so %1\$s order total points have been deducted. Your new points balance is %2\$s", 'points-and-rewards-for-woocommerce' ), $deduct_currency_spent, $remaining_points ) );
 			// hpos.
 			wps_wpr_hpos_update_meta_data( $order_id, '$order_id#wps_point_on_order_total', 'yes' );
 
@@ -2501,9 +2501,9 @@ class Points_Rewards_For_WooCommerce_Public {
 							/*Send mail to the customer*/
 							$this->wps_wpr_send_points_deducted_mail( $user_id, 'wps_cart_discount', $fee_to_point );
 							// send sms.
-							wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "%s applied points used at Cart/Checkout have been deducted from your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $fee_to_point, $remaining_point ) );
+							wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "%1\$s applied points used at Cart/Checkout have been deducted from your account. Your total points balance is now %2\$s", 'points-and-rewards-for-woocommerce' ), $fee_to_point, $remaining_point ) );
 							// send messages on whatsapp.
-							wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "%s applied points used at Cart/Checkout have been deducted from your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $fee_to_point, $remaining_point ) );
+							wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "%1\$s applied points used at Cart/Checkout have been deducted from your account. Your total points balance is now %2\$s", 'points-and-rewards-for-woocommerce' ), $fee_to_point, $remaining_point ) );
 							/*Unset the session*/
 							if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
 								// hpos.
@@ -3385,9 +3385,9 @@ class Points_Rewards_For_WooCommerce_Public {
 					update_user_meta( $user_id, 'points_details', $points_log );
 					$wps_par_wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
 					// send sms.
-					wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "Your points have been successfully converted and added to your wallet account. Your wallet balance is now %s, and your total remaining points are %s", 'points-and-rewards-for-woocommerce' ), $total_data_wps_par, $new_update_points ) );
+					wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Your points have been successfully converted and added to your wallet account. Your wallet balance is now %1\$s, and your total remaining points are %2\$s", 'points-and-rewards-for-woocommerce' ), $total_data_wps_par, $new_update_points ) );
 					// send messages on whatsapp.
-					wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "Your points have been successfully converted and added to your wallet account. Your wallet balance is now %s, and your total remaining points are %s", 'points-and-rewards-for-woocommerce' ), $total_data_wps_par, $new_update_points ) );
+					wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Your points have been successfully converted and added to your wallet account. Your wallet balance is now %1\$s, and your total remaining points are %2\$s", 'points-and-rewards-for-woocommerce' ), $total_data_wps_par, $new_update_points ) );
 				}
 			}
 		}
@@ -3829,9 +3829,9 @@ class Points_Rewards_For_WooCommerce_Public {
 					update_user_meta( $user_id, 'points_details', $wps_order_rewards_details );
 					update_user_meta( $user_id, 'wps_wpr_rewards_points_awarded_check', 'done' );
 					// send sms.
-					wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "You've reached the specified order limit and have been rewarded with points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $updated_points ) );
+					wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've reached the specified order limit and have been rewarded with points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $updated_points ) );
 					// send messages on whatsapp.
-					wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "You've reached the specified order limit and have been rewarded with points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $updated_points ) );
+					wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've reached the specified order limit and have been rewarded with points. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $updated_points ) );
 					// add a action for updating next renewal points date within range.
 					do_action( 'wps_wpr_order_rewards_next_renewal_time', $order_id, $user_id );
 
@@ -4177,9 +4177,9 @@ class Points_Rewards_For_WooCommerce_Public {
 					$wps_updated_points = (int) $user_get_points + $wps_claim_points;
 					update_user_meta( get_current_user_id(), 'wps_wpr_points', $wps_updated_points );
 					// send sms.
-					wps_wpr_send_sms_org( get_current_user_id(), sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
+					wps_wpr_send_sms_org( get_current_user_id(), /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
 					// send messages on whatsapp.
-					wps_wpr_send_messages_on_whatsapp( get_current_user_id(), sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
+					wps_wpr_send_messages_on_whatsapp( get_current_user_id(), /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
 					// calling function for creating points log.
 					$this->wps_wpr_create_game_points_logs( $wps_claim_points, get_current_user_id(), $wps_updated_points );
 
@@ -4418,9 +4418,9 @@ class Points_Rewards_For_WooCommerce_Public {
 						// calling function to creare points log.
 						$this->wps_wpr_create_user_badges_log( get_current_user_id(), $wps_wpr_badges_rewards_points[ $index ], $updated_points );
 						// send sms.
-						wps_wpr_send_sms_org( get_current_user_id(), sprintf( esc_html__( "You've earned a badge, and as a reward for this achievement, points have been added to your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $updated_points ) );
+						wps_wpr_send_sms_org( get_current_user_id(), /* translators: %s: sms msg */ sprintf( esc_html__( "You've earned a badge, and as a reward for this achievement, points have been added to your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $updated_points ) );
 						// send messages on whatsapp.
-						wps_wpr_send_messages_on_whatsapp( get_current_user_id(), sprintf( esc_html__( "You've earned a badge, and as a reward for this achievement, points have been added to your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $updated_points ) );
+						wps_wpr_send_messages_on_whatsapp( get_current_user_id(), /* translators: %s: sms msg */ sprintf( esc_html__( "You've earned a badge, and as a reward for this achievement, points have been added to your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $updated_points ) );
 					}
 				}
 			}
@@ -4595,9 +4595,9 @@ class Points_Rewards_For_WooCommerce_Public {
 							wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_reward_assign_mem_points', $calculated_points );
 							update_user_meta( $user_id, 'points_details', $mem_logs );
 							// send sms.
-							wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "As a %s-level member, you have been awarded with points. Your updated balance is %s points", 'points-and-rewards-for-woocommerce' ), $membership_level_name, $updated_points ) );
+							wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "As a %1\$s-level member, you have been awarded with points. Your updated balance is %2\$s points", 'points-and-rewards-for-woocommerce' ), $membership_level_name, $updated_points ) );
 							// send messages on whatsapp.
-							wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "As a %s-level member, you have been awarded with points. Your updated balance is %s points", 'points-and-rewards-for-woocommerce' ), $membership_level_name, $updated_points ) );
+							wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "As a %1\$s-level member, you have been awarded with points. Your updated balance is %2\$s points", 'points-and-rewards-for-woocommerce' ), $membership_level_name, $updated_points ) );
 						}
 					}
 				}
@@ -4636,9 +4636,9 @@ class Points_Rewards_For_WooCommerce_Public {
 						update_user_meta( $user_id, 'points_details', $mem__refund_logs );
 						wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_mem_points_refund_check', 'done' );
 						// send sms.
-						wps_wpr_send_sms_org( $user_id, sprintf( esc_html__( "Due to the order cancellation, %s points earned from your membership level have been deducted from your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_wpr_reward_assign_mem_points, $updated_points ) );
+						wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "Due to the order cancellation, %1\$s points earned from your membership level have been deducted from your account. Your total points balance is now %2\$s", 'points-and-rewards-for-woocommerce' ), $wps_wpr_reward_assign_mem_points, $updated_points ) );
 						// send messages on whatsapp.
-						wps_wpr_send_messages_on_whatsapp( $user_id, sprintf( esc_html__( "Due to the order cancellation, %s points earned from your membership level have been deducted from your account. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_wpr_reward_assign_mem_points, $updated_points ) );
+						wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: whatsapp msg */ sprintf( esc_html__( "Due to the order cancellation, %1\$s points earned from your membership level have been deducted from your account. Your total points balance is now %2\$s", 'points-and-rewards-for-woocommerce' ), $wps_wpr_reward_assign_mem_points, $updated_points ) );
 					}
 				}
 			}
@@ -4752,11 +4752,11 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( 'yes' === $stop_value ) {
 
 					$response['result'] = true;
-					$response['msg']    = sprintf( esc_html__( '%s notification deactivated successfully!', 'points-and-rewards-for-woocommerce' ), ucfirst( $type ) );
+					$response['msg']    = /* translators: %s: sms msg */ sprintf( esc_html__( '%s notification deactivated successfully!', 'points-and-rewards-for-woocommerce' ), ucfirst( $type ) );
 				} elseif ( 'no' === $stop_value ) {
 
 					$response['result'] = false;
-					$response['msg']    = sprintf( esc_html__( '%s notification activated!', 'points-and-rewards-for-woocommerce' ), ucfirst( $type ) );
+					$response['msg']    = /* translators: %s: sms msg */ sprintf( esc_html__( '%s notification activated!', 'points-and-rewards-for-woocommerce' ), ucfirst( $type ) );
 				}
 			}
 		}
@@ -4764,5 +4764,41 @@ class Points_Rewards_For_WooCommerce_Public {
 		wp_die();
 	}
 
+	/**
+	 * This function is used to make free shipping based on membership level.
+	 *
+	 * @param  array $rates   rates.
+	 * @param  array $package package.
+	 * @return array
+	 */
+	public function wps_wpr_membership_free_shipping( $rates, $package ) {
+
+		// Exit early if no membership level is assigned.
+		$user_id          = get_current_user_id();
+		$membership_level = get_user_meta( $user_id, 'membership_level', true );
+		if ( empty( $membership_level ) ) {
+
+			return $rates;
+		}
+	
+		// Retrieve membership settings.
+		$membership_settings   = get_option( 'wps_wpr_membership_settings', array() );
+		$membership_roles      = $membership_settings['membership_roles'] ?? array();
+		$free_shipping_enabled = $membership_roles[ $membership_level ]['wps_par_free_shipping'] ?? '0';
+		if ( '1' === $free_shipping_enabled && ! empty( $rates ) ) {
+			foreach ( $rates as $rate ) {
+
+				// Set taxes to zero if applicable.
+				$rate->cost = 0;
+				if ( ! empty( $rate->taxes ) && is_array( $rate->taxes ) ) {
+					foreach ( $rate->taxes as $tax_id => $tax ) {
+
+						$rate->taxes[ $tax_id ] = 0;
+					}
+				}
+			}
+		}
+		return $rates;
+	}	
 
 }

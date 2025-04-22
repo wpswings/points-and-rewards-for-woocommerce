@@ -77,7 +77,7 @@ $preview                             = '<a href="#" target="_blank" class="wps_w
 					<label for="wps_wpr_sms_account_sid" class="wps_wpr_general_label"><?php esc_html_e( 'Enter Account SID', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_sms_account_sid" class="wps_wpr_sms_account_sid" value="<?php echo esc_html( $wps_wpr_sms_account_sid ); ?>">
-						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter your Account SID. To create a SID, %s', 'membership-for-woocommerce' ), wp_kses_post( $url ) ); ?></span>
+						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter your Account SID. To create a SID, %s', 'points-and-rewards-for-woocommerce' ), wp_kses_post( $url ) ); ?></span>
 					</div>
 				</article>
                 <article class="wps_wpr_general_row">
@@ -115,21 +115,21 @@ $preview                             = '<a href="#" target="_blank" class="wps_w
 					<label for="wps_wpr_whatsapp_access_token" class="wps_wpr_general_label"><?php esc_html_e( 'Enter Access Token', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_whatsapp_access_token" class="wps_wpr_whatsapp_access_token" value="<?php echo esc_html( $wps_wpr_whatsapp_access_token ); ?>">
-						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter your access token. To create a token, %s', 'membership-for-woocommerce' ), wp_kses_post( $whtasapp_url ) ); ?></span>
+						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter your access token. To create a token, %s', 'points-and-rewards-for-woocommerce' ), wp_kses_post( $whtasapp_url ) ); ?></span>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_whatsapp_phone_number" class="wps_wpr_general_label"><?php esc_html_e( 'Enter Phone Number ID', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="number" name="wps_wpr_whatsapp_phone_number" class="wps_wpr_whatsapp_phone_number" value="<?php echo esc_html( $wps_wpr_whatsapp_phone_number ); ?>">
-						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter you phone number id. To get Phone number ID, %s', 'membership-for-woocommerce' ), wp_kses_post( $whatsapp_num ) ); ?></span>
+						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter you phone number id. To get Phone number ID, %s', 'points-and-rewards-for-woocommerce' ), wp_kses_post( $whatsapp_num ) ); ?></span>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_whatsapp_template_name" class="wps_wpr_general_label"><?php esc_html_e( 'Enter whatsapp template name', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_whatsapp_template_name" class="wps_wpr_whatsapp_template_name" value="<?php echo esc_html( $wps_wpr_whatsapp_template_name ); ?>">
-						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'The WhatsApp template name must remain fixed and cannot be modified. You can use this name when creating a custom template, %s', 'membership-for-woocommerce' ), wp_kses_post( $preview ) ); ?></span>
+						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'The WhatsApp template name must remain fixed and cannot be modified. You can use this name when creating a custom template, %s', 'points-and-rewards-for-woocommerce' ), wp_kses_post( $preview ) ); ?></span>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">

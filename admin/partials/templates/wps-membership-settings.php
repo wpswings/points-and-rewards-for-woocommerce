@@ -63,6 +63,7 @@ if ( isset( $_POST['wps_wpr_save_membership'] ) && isset( $_POST['wps-wpr-nonce'
 					$enable_mem_reward_points = ! empty( $_POST[ 'wps_wpr_enable_to_rewards_with_points_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_enable_to_rewards_with_points_' . $count ] ) ) : '0';
 					$assign_mem_points_type   = ! empty( $_POST[ 'wps_wpr_choose_mem_points_type_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_choose_mem_points_type_' . $count ] ) ) : '';
 					$mem_rewards_points_val   = ! empty( $_POST[ 'wps_wpr_assign_mem_points_val_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_assign_mem_points_val_' . $count ] ) ) : '0';
+					$wps_par_free_shipping    = ! empty( $_POST[ 'wps_wpr_enable_free_shipping_' . $count ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'wps_wpr_enable_free_shipping_' . $count ] ) ) : '0';
 
 					if ( isset( $wps_wpr_membersip_roles ) && ! empty( $wps_wpr_membersip_roles ) ) {
 						$membership_roles_list[ $wps_wpr_membersip_roles ] = array(
@@ -75,6 +76,7 @@ if ( isset( $_POST['wps_wpr_save_membership'] ) && isset( $_POST['wps-wpr-nonce'
 							'enable_mem_reward_points' => $enable_mem_reward_points,
 							'assign_mem_points_type'   => $assign_mem_points_type,
 							'mem_rewards_points_val'   => $mem_rewards_points_val,
+							'wps_par_free_shipping'    => $wps_par_free_shipping,
 						);
 					}
 				}

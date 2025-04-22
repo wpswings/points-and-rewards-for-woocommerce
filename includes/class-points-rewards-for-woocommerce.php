@@ -347,7 +347,8 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_extend_point_tab_section', $plugin_public, 'wps_wpr_sms_whatsapp_active_deact', 10, 1 );
 			// sms / whatsapp deactivate and activate
 			$this->loader->add_action( 'wp_ajax_stop_sms_whatsapp_notify', $plugin_public, 'wps_wpr_stop_sms_whatsapp_notify_call', 10 );
-			
+			// free shipping.
+			$this->loader->add_filter( 'woocommerce_package_rates', $plugin_public, 'wps_wpr_membership_free_shipping', 10, 2 );
 		}
 	}
 
