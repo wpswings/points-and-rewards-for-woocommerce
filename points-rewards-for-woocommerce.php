@@ -931,6 +931,55 @@ if ($activated) {
 			error_log( 'Erro na função wps_wpr_validate_cashback_on_login: ' . $e->getMessage() );
 		}
 	}
+
+	add_action('rest_api_init', function () {
+		register_rest_route(
+			'bring-cashback', 
+			'/set-cashback-percentage', 
+			array(
+				'methods'  => 'POST',
+				'callback' => 'bring_cashback_set_percentage',
+				'permission_callback' => '__return_true', // posteriormente trocar para permissão de acesso
+			)
+		);
+	});
+
+	/**
+	 * Callback para processar a requisição no endpoint.
+	 *
+	 * @param WP_REST_Request $request Objeto da requisição.
+	 * @return WP_REST_Response Resposta da API.
+	 */
+	function bring_cashback_set_percentage(WP_REST_Request $request) {
+		try {
+			$cashback_percent = $request->get_param('cashbackPercent');
+	
+			if (empty($cashback_percent) || !is_numeric($cashback_percent) || $cashback_percent < 0 || $cashback_percent > 100) {
+				return new WP_REST_Response(array(
+					'success' => false,
+					'message' => 'Porcentagem inválida. Deve ser um número entre 0 e 100.'
+				), 400);
+			}
+	
+			$conversion_price = $cashback_percent / 100;
+	
+			$settings = get_option('wps_wpr_coupons_gallery', array());
+			$settings['wps_wpr_coupon_conversion_points'] = 1; 
+			$settings['wps_wpr_coupon_conversion_price'] = $conversion_price; 
+			update_option('wps_wpr_coupons_gallery', $settings);
+	
+			return new WP_REST_Response(array(
+				'success' => true,
+				'message' => 'Porcentagem de cashback atualizada com sucesso.',
+				'cashbackPercent' => $cashback_percent
+			), 200);
+		} catch (Exception $e) {
+			return new WP_REST_Response(array(
+				'success' => false,
+				'message' => 'Erro ao processar a requisição: ' . $e->getMessage()
+			), 500);
+		}
+	}
 } else {
 
 	// WooCommerce is not active so deactivate this plugin.
