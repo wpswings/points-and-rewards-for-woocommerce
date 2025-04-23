@@ -79,11 +79,14 @@ if ($activated) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants()
 	{
-
 		rewardeem_woocommerce_points_rewards_constants('REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.6.2');
 		rewardeem_woocommerce_points_rewards_constants('WPS_RWPR_DIR_PATH', plugin_dir_path(__FILE__));
 		rewardeem_woocommerce_points_rewards_constants('WPS_RWPR_DIR_URL', plugin_dir_url(__FILE__));
 		rewardeem_woocommerce_points_rewards_constants('WPS_RWPR_HOME_URL', admin_url());
+		rewardeem_woocommerce_points_rewards_constants('STORE_BALANCE_API_URL', 'http://localhost:5000/api/balances/store-balance');
+		rewardeem_woocommerce_points_rewards_constants('USE_CASHBACK_API_URL', 'http://localhost:5000/api/cashback/use-cashback');
+		rewardeem_woocommerce_points_rewards_constants('RECEIVE_CASHBACK_API_URL', 'http://localhost:5000/api/cashback/receive-cashback');
+		rewardeem_woocommerce_points_rewards_constants('USER_VALIDATE_CASHBACK', 'http://localhost:5000/api/balances/validate-cashback');
 	}
 
 	/**
@@ -828,8 +831,8 @@ if ($activated) {
 			$encoded_email = urlencode( $user_email );
 			$encoded_store_url = urlencode( $store_url );
 
-			$api_url = "http://localhost:5000/api/balances/store-balance/{$encoded_email}/{$encoded_store_url}";
-
+			$api_url = STORE_BALANCE_API_URL . "/{$encoded_email}/{$encoded_store_url}";
+			
 			$response = wp_remote_get( $api_url, array(
 				'timeout' => 15,
 				'headers' => array(
@@ -901,7 +904,7 @@ if ($activated) {
 			$encoded_email = urlencode( $user_email );
 			$encoded_store_url = urlencode( $store_url );
 	
-			$api_url = "http://localhost:5000/api/balances/validate-cashback/{$encoded_email}/{$encoded_store_url}";
+			$api_url = USER_VALIDATE_CASHBACK . "1/{$encoded_email}/{$encoded_store_url}";
 	
 			$response = wp_remote_get( $api_url, array(
 				'timeout' => 15,
