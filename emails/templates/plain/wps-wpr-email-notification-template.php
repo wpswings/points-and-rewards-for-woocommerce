@@ -15,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <?php
 echo esc_html( $email_heading ) . "\n\n"; // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+$email_content = apply_filters( 'wps_wpr_preview_email_content', $email_content );
 ?>
 
 <?php

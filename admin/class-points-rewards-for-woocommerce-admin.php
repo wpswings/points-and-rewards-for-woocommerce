@@ -2579,4 +2579,25 @@ class Points_Rewards_For_WooCommerce_Admin {
 		register_block_type( 'wpswings/googles-embed-org-par', array( 'editor_script' => 'google-embeds-org-block-par',	) );
 	}
 
+	/**
+	 * This function is used to show email preview demo content.
+	 *
+	 * @param  string $email_content email_content.
+	 * @return string
+	 */
+	public function wps_wpr_preview_email_content_call( $email_content ) {
+
+		if ( empty( $email_content ) ) {
+
+			$admin_email   = get_option( 'admin_email' );
+			$user          = get_user_by( 'email', $admin_email );
+			$get_points    = ! empty( get_user_meta( $user->ID, 'wps_wpr_points', true ) ) ? get_user_meta( $user->ID, 'wps_wpr_points', true ) : 0;
+			$user_name     = ! empty( $user->display_name ) ? $user->display_name : $user->user_name;
+			$earn_points   = 50;
+			$get_points    = (int) $get_points + $earn_points;
+			$email_content = sprintf( esc_html__( "Hello %1\$s, you've earned %2\$s points for your recent purchase! Your total points balance is now %3\$s. Keep shopping to earn more rewards!", 'points-and-rewards-for-woocommerce' ), $user_name, $earn_points, $get_points );
+		}
+		return $email_content;
+	}
+
 }
