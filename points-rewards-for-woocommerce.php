@@ -87,6 +87,7 @@ if ($activated) {
 		rewardeem_woocommerce_points_rewards_constants('USE_CASHBACK_API_URL', 'http://localhost:5000/api/cashback/use-cashback');
 		rewardeem_woocommerce_points_rewards_constants('RECEIVE_CASHBACK_API_URL', 'http://localhost:5000/api/cashback/receive-cashback');
 		rewardeem_woocommerce_points_rewards_constants('USER_VALIDATE_CASHBACK', 'http://localhost:5000/api/balances/validate-cashback');
+		rewardeem_woocommerce_points_rewards_constants('AUTHENTICATE_STORE_API_URL', 'http://localhost:5000/api/authenticate-store');
 	}
 
 	/**
@@ -835,9 +836,7 @@ if ($activated) {
 			
 			$response = wp_remote_get( $api_url, array(
 				'timeout' => 15,
-				'headers' => array(
-					'Content-Type' => 'application/json',
-				),
+				'headers' => wps_get_auth_headers(),
 			) );
 
 			if ( is_wp_error( $response ) ) {
@@ -982,6 +981,94 @@ if ($activated) {
 				'message' => 'Erro ao processar a requisição: ' . $e->getMessage()
 			), 500);
 		}
+	}
+
+	// Adicione o manipulador AJAX para salvar a chave API
+	add_action('wp_ajax_wps_save_api_secret_ajax', 'wps_save_api_secret_ajax_handler');
+	function wps_save_api_secret_ajax_handler() {
+		try {
+			// Verificar o nonce para segurança
+			check_ajax_referer('wps_api_ajax_nonce', 'security');
+			
+			// Obtém a chave secreta da API
+			$api_secret_key = isset($_POST['api_secret_key']) ? sanitize_text_field(wp_unslash($_POST['api_secret_key'])) : '';
+			
+			if (empty($api_secret_key)) {
+				throw new Exception(__('A chave API não pode estar vazia.', 'points-and-rewards-for-woocommerce'));
+			}
+			
+			// Obtém o URL do site
+			$store_url = get_site_url();
+			
+			// Registra no log para depuração
+			error_log('Enviando requisição AJAX para: ' . AUTHENTICATE_STORE_API_URL);
+			error_log('Dados: apiKey=' . $api_secret_key . ', storeUrl=' . $store_url);
+			
+			// Faz a requisição ao endpoint
+			$response = wp_remote_post(AUTHENTICATE_STORE_API_URL, array(
+				'method' => 'POST',
+				'timeout' => 30,
+				'headers' => array(
+					'Content-Type' => 'application/json',
+				),
+				'body' => wp_json_encode(array(
+					'apiKey' => $api_secret_key,
+					'storeUrl' => $store_url,
+				)),
+			));
+			
+			if (is_wp_error($response)) {
+				throw new Exception(__('Erro ao conectar ao endpoint: ', 'points-and-rewards-for-woocommerce') . $response->get_error_message());
+			}
+			
+			$response_code = wp_remote_retrieve_response_code($response);
+			$response_body = wp_remote_retrieve_body($response);
+			
+			error_log('Resposta do servidor: Código=' . $response_code . ', Corpo=' . $response_body);
+			
+			$decoded_response = json_decode($response_body, true);
+			
+			if (!isset($decoded_response['token'])) {
+				throw new Exception(__('Resposta inválida do endpoint.', 'points-and-rewards-for-woocommerce'));
+			}
+
+			// Salva o token JWT no banco de dados
+			$jwt_token = sanitize_text_field($decoded_response['token']);
+			update_option('wps_api_jwt_token', $jwt_token);
+			
+			// Retorna uma resposta de sucesso
+			wp_send_json_success(array(
+				'message' => __('Chave API salva com sucesso.', 'points-and-rewards-for-woocommerce')
+			));
+			
+		} catch (Exception $e) {
+			error_log('Erro ao salvar token via AJAX: ' . $e->getMessage());
+			
+			// Retorna uma resposta de erro
+			wp_send_json_error(array(
+				'message' => $e->getMessage()
+			));
+		}
+	}
+	/**
+	 * Retorna os headers com autenticação Bearer para as requisições à API.
+	 *
+	 * @return array Headers com autenticação.
+	 */
+	function wps_get_auth_headers() {
+		$jwt_token = get_option('wps_api_jwt_token', '');
+		
+		if (empty($jwt_token)) {
+			error_log('Token JWT não encontrado. Verifique se a autenticação da loja foi realizada.');
+			return array(
+				'Content-Type' => 'application/json',
+			);
+		}
+		
+		return array(
+			'Content-Type' => 'application/json',
+			'Authorization' => 'Bearer ' . $jwt_token,
+		);
 	}
 } else {
 

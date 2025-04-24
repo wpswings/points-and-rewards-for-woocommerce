@@ -72,6 +72,10 @@ $wps_wpr_setting_tab = array(
 		'title'     => '',
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-user-report-settings.php',
 	),
+	'api-secret-settings' => array(
+		'title'     => __( 'API Secret Settings', 'points-and-rewards-for-woocommerce' ),
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/api-secret-settings.php',
+),
 );
 
 $wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );
