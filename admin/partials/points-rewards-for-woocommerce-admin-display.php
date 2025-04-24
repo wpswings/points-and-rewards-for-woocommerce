@@ -115,7 +115,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 						</a>
 					</li>
 					<?php
-					if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+					if ( ! wps_wpr_is_par_pro_plugin_active() ) {
 						?>
 						<li class="wps_wpr_get_pro">
 							<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a>

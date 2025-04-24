@@ -746,6 +746,21 @@ if ( $activated ) {
 			}
 		}
 	}
+
+	/**
+	 * This function is used to check PAR pro plugin is active or not.
+	 *
+	 * @return bool
+	 */
+	function wps_wpr_is_par_pro_plugin_active() {
+
+		$flag = false;
+		if ( is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+
+			$flag = true;
+		}
+		return $flag;
+	}
 } else {
 
 	// WooCommerce is not active so deactivate this plugin.

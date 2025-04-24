@@ -410,7 +410,7 @@ do_action( 'wps_wpr_add_notice' );
 						if ( 'radio_button' == $value['type'] ) {
 							$settings_obj->wps_wps_generate_radio_html( $value, $general_settings );
 						}
-						if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) && 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
+						if ( ! wps_wpr_is_par_pro_plugin_active() && 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
 							$settings_obj->wps_wpr_org_generate_single_select_drop_down_with_key_value_pair( $value, $general_settings );
 						}
 						do_action( 'wps_wpr_additional_general_settings', $value, $general_settings );

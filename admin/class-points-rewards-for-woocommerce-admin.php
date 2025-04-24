@@ -169,7 +169,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'wps_wpr_url'            => $url,
 						'reason'                 => __( 'Please enter Remark', 'points-and-rewards-for-woocommerce' ),
 						'wps_wpr_nonce'          => wp_create_nonce( 'wps-wpr-verify-nonce' ),
-						'check_pro_activate'     => ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ),
+						'check_pro_activate'     => ! wps_wpr_is_par_pro_plugin_active(),
 						'pro_text'               => __( 'Please purchase the pro plugin to add multiple memberships.', 'points-and-rewards-for-woocommerce' ),
 						'pro_link_text'          => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
 						'pro_link'               => 'https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro',
@@ -870,7 +870,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_add_membership_rule() {
 		global $public_obj;
-		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+		if ( ! wps_wpr_is_par_pro_plugin_active() ) {
 
 			add_action( 'wps_wpr_add_membership_rule', array( $this, 'wps_wpr_add_rule_for_membership' ), 10 );
 			add_action( 'wps_wpr_order_total_points', array( $this, 'wps_wpr_add_order_total_points' ), 10, 3 );

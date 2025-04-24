@@ -202,7 +202,7 @@ if ( ! is_array( $coupon_settings ) ) {
 							<span class="wps_wpr_nobr"><?php echo esc_html__( 'Required Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
 						<?php
-						if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+						if ( ! wps_wpr_is_par_pro_plugin_active() ) {
 							?>
 							<th class="wps-wpr-points-expiry">
 								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Membership Expiry', 'points-and-rewards-for-woocommerce' ); ?></span>
@@ -362,7 +362,7 @@ if ( ! is_array( $coupon_settings ) ) {
 							</td>
 							<td>
 									<?php
-									if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
+									if ( ! wps_wpr_is_par_pro_plugin_active() ) {
 										echo esc_html( $values['Exp_Number'] ) . ' ' . esc_html( $values['Exp_Days'] );
 									}
 									do_action( 'wps_wpr_membership_expiry_date_for_user', $user_id, $values, $wps_role );
@@ -395,7 +395,15 @@ if ( ! is_array( $coupon_settings ) ) {
 		<?php
 	}
 
-	if ( isset( $enable_drop ) && $enable_drop ) {
+	// check pro plugin is not and auto value is true, than make it false.
+	$wps_wpr_enable_automate_membership = ! empty( $membership_settings_array['wps_wpr_enable_automate_membership'] ) ? $membership_settings_array['wps_wpr_enable_automate_membership'] : '';
+	if ( ! wps_wpr_is_par_pro_plugin_active() && '1' == $wps_wpr_enable_automate_membership ) {
+
+		$wps_wpr_enable_automate_membership = 0;
+	}
+
+	// check auto membership upgrade is enable than no need to show manual upgrade option.
+	if ( 1 != $wps_wpr_enable_automate_membership && ( isset( $enable_drop ) && $enable_drop ) ) {
 		if ( isset( $wps_user_level ) && ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
 
 			$mem_expire_time = get_user_meta( $user_id, 'membership_expiration', true );
@@ -406,34 +414,34 @@ if ( ! is_array( $coupon_settings ) ) {
 		}
 		if ( ! empty( $wps_wpr_membership_roles ) && is_array( $wps_wpr_membership_roles ) ) {
 			?>
-		<div class="wps_wpr_upgrade_level_main_wrap wps_wpr_main_section_all_wrap">
-			<p class="wps_wpr_heading wps_wpr_membrship_update_heading"><?php echo esc_html_e( 'Upgrade User Level', 'points-and-rewards-for-woocommerce' ); ?></p>
-			<fieldset class="wps_wpr_each_section wps_wpr_membership_listing_class">	
-				<span class="wps_wpr_membership_message"><?php echo esc_html_e( 'Upgrade Your User Level: ', 'points-and-rewards-for-woocommerce' ); ?></span>
-				<form action="" method="post" id="wps_wpr_membership">
-					<?php wp_nonce_field( 'membership-save-level', 'membership-save-level' ); ?>
-					<select id="wps_wpr_membership_roles" class="wps_wpr_membership_roles" name="wps_wpr_membership_roles">
-						<option><?php echo esc_html__( 'Select Level', 'points-and-rewards-for-woocommerce' ); ?></option>
-						<?php
-						foreach ( $wps_wpr_membership_roles as $wps_role => $values ) {
-							if ( $values['Points'] == $get_points
-								|| $values['Points'] < $get_points ) {
-								?>
-								<option value="<?php echo esc_html( $wps_role ); ?>">
-								<?php
-								echo esc_html( $wps_role );
-								?>
-								</option>
-								<?php
+			<div class="wps_wpr_upgrade_level_main_wrap wps_wpr_main_section_all_wrap">
+				<p class="wps_wpr_heading wps_wpr_membrship_update_heading"><?php echo esc_html_e( 'Upgrade User Level', 'points-and-rewards-for-woocommerce' ); ?></p>
+				<fieldset class="wps_wpr_each_section wps_wpr_membership_listing_class">	
+					<span class="wps_wpr_membership_message"><?php echo esc_html_e( 'Upgrade Your User Level: ', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<form action="" method="post" id="wps_wpr_membership">
+						<?php wp_nonce_field( 'membership-save-level', 'membership-save-level' ); ?>
+						<select id="wps_wpr_membership_roles" class="wps_wpr_membership_roles" name="wps_wpr_membership_roles">
+							<option><?php echo esc_html__( 'Select Level', 'points-and-rewards-for-woocommerce' ); ?></option>
+							<?php
+							foreach ( $wps_wpr_membership_roles as $wps_role => $values ) {
+								if ( $values['Points'] == $get_points
+									|| $values['Points'] < $get_points ) {
+									?>
+									<option value="<?php echo esc_html( $wps_role ); ?>">
+									<?php
+									echo esc_html( $wps_role );
+									?>
+									</option>
+									<?php
+								}
 							}
-						}
-						?>
-					</select>
-					<input type="submit" id = "wps_wpr_upgrade_level" value='<?php esc_html_e( 'Upgrade Level', 'points-and-rewards-for-woocommerce' ); ?>' class="wps_rwpr_settings_display_none button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_level">
-					<input type="button" id = "wps_wpr_upgrade_level_click" value='<?php esc_html_e( 'Upgrade Level', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_level_click">
-				</form>
-			</fieldset>
-		</div>
+							?>
+						</select>
+						<input type="submit" id = "wps_wpr_upgrade_level" value='<?php esc_html_e( 'Upgrade Level', 'points-and-rewards-for-woocommerce' ); ?>' class="wps_rwpr_settings_display_none button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_level">
+						<input type="button" id = "wps_wpr_upgrade_level_click" value='<?php esc_html_e( 'Upgrade Level', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_level_click">
+					</form>
+				</fieldset>
+			</div>
 			<?php
 		}
 	}
