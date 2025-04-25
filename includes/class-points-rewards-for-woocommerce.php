@@ -79,7 +79,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '2.6.3';
+			$this->version = '2.7.0';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -237,6 +237,8 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_wpr_add_additional_import_points', $plugin_admin, 'wps_wpr_add_additional_import_org_points', 10 );
 		}
 		$this->loader->add_action( 'wp_ajax_wps_large_scv_import', $plugin_admin, 'wps_large_scv_import' );
+		// email preview.
+		$this->loader->add_filter( 'wps_wpr_preview_email_content', $plugin_admin, 'wps_wpr_preview_email_content_call', 10, 1 );
 	}
 
 	/**
@@ -343,6 +345,12 @@ class Points_Rewards_For_Woocommerce {
 
 				$this->loader->add_filter( 'dokan_ensure_admin_have_create_coupon', $plugin_public, 'wps_wpr_dokan_plugin_compatibility', PHP_INT_MAX, 4 );
 			}
+			// sms / whatsapp deactivate and activate html.
+			$this->loader->add_action( 'wps_extend_point_tab_section', $plugin_public, 'wps_wpr_sms_whatsapp_active_deact', 10, 1 );
+			// sms / whatsapp deactivate and activate
+			$this->loader->add_action( 'wp_ajax_stop_sms_whatsapp_notify', $plugin_public, 'wps_wpr_stop_sms_whatsapp_notify_call', 10 );
+			// free shipping.
+			$this->loader->add_filter( 'woocommerce_package_rates', $plugin_public, 'wps_wpr_membership_free_shipping', 10, 2 );
 		}
 	}
 

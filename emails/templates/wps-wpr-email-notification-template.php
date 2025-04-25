@@ -18,7 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @hooked WC_Emails::email_header() Output the email header
  */
-do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
+do_action( 'woocommerce_email_header', $email_heading, $email ); 
+$email_content = apply_filters( 'wps_wpr_preview_email_content', $email_content );
+?>
 
 <?php
 $template = '<table class="wps_wuc_email_template" style="width: 100%!important; max-width: 600px; text-align: center; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">

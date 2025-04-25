@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           2.6.3
+ * Version:           2.7.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
@@ -23,9 +23,9 @@
  * Requires Plugins: woocommerce
  *
  * Requires at least    : 5.5.0
- * Tested up to         : 6.7.2
+ * Tested up to         : 6.8.0
  * WC requires at least : 5.5.0
- * WC tested up to      : 9.7.1
+ * WC tested up to      : 9.8.2
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -80,7 +80,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.6.3' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.7.0' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -545,6 +545,217 @@ if ( $activated ) {
 
 		$flag = false;
 		if ( is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) || is_plugin_active( 'woocommerce-subscriptions/woocommerce-subscriptions.php' ) ) {
+
+			$flag = true;
+		}
+		return $flag;
+	}
+
+	/**
+	 * This function is used to send sms of earning and redeeming points.
+	 *
+	 * @param  string $user_id user_id.
+	 * @param  string $message message.
+	 * @return void
+	 */
+	function wps_wpr_send_sms_org( $user_id, $message ) {
+
+		$wps_wpr_stop_sms_notify = get_user_meta( $user_id, 'wps_wpr_stop_sms_notify', true );
+		$wps_wpr_stop_sms_notify = ! empty( $wps_wpr_stop_sms_notify ) ? $wps_wpr_stop_sms_notify : 'no';
+		if ( 'no' === $wps_wpr_stop_sms_notify ) {
+
+			$wps_wpr_save_sms_settings          = get_option( 'wps_wpr_save_sms_settings' );
+			$wps_wpr_save_sms_settings          = ! empty( $wps_wpr_save_sms_settings ) && is_array( $wps_wpr_save_sms_settings ) ? $wps_wpr_save_sms_settings : array();
+			$wps_wpr_enable_sms_api_settings    = ! empty( $wps_wpr_save_sms_settings['wps_wpr_enable_sms_api_settings'] ) ? $wps_wpr_save_sms_settings['wps_wpr_enable_sms_api_settings'] : 'no';
+			if ( 'yes' === $wps_wpr_enable_sms_api_settings && ! empty( $user_id ) ) {
+				
+				// get sms integration settings.
+				$wps_wpr_sms_account_sid   = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_account_sid'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_account_sid'] : '';
+				$wps_wpr_sms_auth_token    = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_account_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_account_token'] : '';
+				$wps_wpr_sms_twilio_num_id = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_twilio_no'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_twilio_no'] : '';
+				if ( ! empty( $wps_wpr_sms_account_sid ) && ! empty( $wps_wpr_sms_auth_token ) && ! empty( $wps_wpr_sms_twilio_num_id ) ) {
+
+					// get user billing number and country code.
+					$country_code_name = get_user_meta( $user_id, 'billing_country', true );
+					$country_code      = wps_wpr_get_country_code_by_name( $country_code_name );
+					$billing_phone     = get_user_meta( $user_id, 'billing_phone', true );
+					$billing_phone     = ! empty( $billing_phone ) ? $country_code . $billing_phone : '';
+					$wps_send_contact  = '+' . $billing_phone;
+
+					// prepare data and call sms api.
+					$url       = 'https://api.twilio.com/2010-04-01/Accounts/' . $wps_wpr_sms_account_sid . '/Messages.json';
+					$ch        = curl_init();
+					$curl_data = array(
+						'From' => $wps_wpr_sms_twilio_num_id,
+						'Body' => $message,
+						'To'   => $wps_send_contact,
+					);
+
+					curl_setopt( $ch, CURLOPT_URL, $url );
+					curl_setopt( $ch, CURLOPT_TIMEOUT, 30 ); // timeout after 30 seconds.
+					curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+					curl_setopt( $ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY );
+					curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_data );
+					curl_setopt( $ch, CURLOPT_USERPWD, "$wps_wpr_sms_account_sid:$wps_wpr_sms_auth_token" );
+					$response    = curl_exec( $ch );
+					$response    = json_decode( $response );
+					$status_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+					// check success response '201' == $status_code.
+				}
+			}
+		}
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param  string $country_code_name country_code_name.
+	 * @return string
+	 */
+	function wps_wpr_get_country_code_by_name( $country_code_name ) {
+
+		$countries = array(
+			"AF" => ["name" => "Afghanistan", "dial_code" => "+93"],
+			"AL" => ["name" => "Albania", "dial_code" => "+355"],
+			"DZ" => ["name" => "Algeria", "dial_code" => "+213"],
+			"US" => ["name" => "United States", "dial_code" => "+1"],
+			"GB" => ["name" => "United Kingdom", "dial_code" => "+44"],
+			"IN" => ["name" => "India", "dial_code" => "+91"],
+			"AU" => ["name" => "Australia", "dial_code" => "+61"],
+			"CA" => ["name" => "Canada", "dial_code" => "+1"],
+			"CN" => ["name" => "China", "dial_code" => "+86"],
+			"FR" => ["name" => "France", "dial_code" => "+33"],
+			"DE" => ["name" => "Germany", "dial_code" => "+49"],
+			"IT" => ["name" => "Italy", "dial_code" => "+39"],
+			"JP" => ["name" => "Japan", "dial_code" => "+81"],
+			"MX" => ["name" => "Mexico", "dial_code" => "+52"],
+			"RU" => ["name" => "Russia", "dial_code" => "+7"],
+			"ZA" => ["name" => "South Africa", "dial_code" => "+27"],
+			"KR" => ["name" => "South Korea", "dial_code" => "+82"],
+			"ES" => ["name" => "Spain", "dial_code" => "+34"],
+			"SE" => ["name" => "Sweden", "dial_code" => "+46"],
+			"CH" => ["name" => "Switzerland", "dial_code" => "+41"],
+			"AE" => ["name" => "United Arab Emirates", "dial_code" => "+971"],
+			"BR" => ["name" => "Brazil", "dial_code" => "+55"],
+			"AR" => ["name" => "Argentina", "dial_code" => "+54"],
+			"NG" => ["name" => "Nigeria", "dial_code" => "+234"],
+			"PK" => ["name" => "Pakistan", "dial_code" => "+92"],
+			"BD" => ["name" => "Bangladesh", "dial_code" => "+880"],
+			"EG" => ["name" => "Egypt", "dial_code" => "+20"],
+			"TR" => ["name" => "Turkey", "dial_code" => "+90"],
+			"NL" => ["name" => "Netherlands", "dial_code" => "+31"],
+			"BE" => ["name" => "Belgium", "dial_code" => "+32"],
+			"AT" => ["name" => "Austria", "dial_code" => "+43"],
+			"TH" => ["name" => "Thailand", "dial_code" => "+66"],
+			"MY" => ["name" => "Malaysia", "dial_code" => "+60"],
+			"SG" => ["name" => "Singapore", "dial_code" => "+65"],
+			"NZ" => ["name" => "New Zealand", "dial_code" => "+64"],
+			"PH" => ["name" => "Philippines", "dial_code" => "+63"],
+			"VN" => ["name" => "Vietnam", "dial_code" => "+84"],
+			"IL" => ["name" => "Israel", "dial_code" => "+972"],
+			"SA" => ["name" => "Saudi Arabia", "dial_code" => "+966"],
+		);
+
+		$code = isset( $countries[ $country_code_name ] ) ? $countries[ $country_code_name ]['dial_code'] : '';
+		return ! empty( $code ) ? str_replace( '+', '', $code ) : 0;
+	}
+
+	/**
+	 * This function is used to send offer notification on whatsapp.
+	 *
+	 * @return void
+	 */
+	function wps_wpr_send_messages_on_whatsapp( $user_id, $message ) {
+
+		$wps_wpr_stop_whatsapp_notify = get_user_meta( $user_id, 'wps_wpr_stop_whatsapp_notify', true );
+		$wps_wpr_stop_whatsapp_notify = ! empty( $wps_wpr_stop_whatsapp_notify ) ? $wps_wpr_stop_whatsapp_notify : 'no';
+		if ( 'no' === $wps_wpr_stop_whatsapp_notify ) {
+
+			$wps_wpr_save_sms_settings           = get_option( 'wps_wpr_save_sms_settings' );
+			$wps_wpr_save_sms_settings           = ! empty( $wps_wpr_save_sms_settings ) && is_array( $wps_wpr_save_sms_settings ) ? $wps_wpr_save_sms_settings : array();
+			$wps_wpr_enable_whatsapp_api_feature = ! empty( $wps_wpr_save_sms_settings['wps_wpr_enable_whatsapp_api_feature'] ) ? $wps_wpr_save_sms_settings['wps_wpr_enable_whatsapp_api_feature'] : '';
+			if ( 'yes' === $wps_wpr_enable_whatsapp_api_feature && ! empty( $user_id ) ) {
+
+				$country_code_name              = get_user_meta( $user_id, 'billing_country', true );
+				$country_code                   = wps_wpr_get_country_code_by_name( $country_code_name );
+				$whatsapp_number                = get_user_meta( $user_id, 'billing_phone', true );
+				$whatsapp_number                = ! empty( $whatsapp_number ) ? $country_code . $whatsapp_number : '';
+				$user_obj                       = get_user_by( 'id', $user_id );
+				$wps_wpr_whatsapp_access_token  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] : '';
+				$wps_wpr_whatsapp_phone_num_id  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] : '';
+				$wps_wpr_whatsapp_msg_temp_name = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_template_name'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_template_name'] : '';
+				$api_header                     = array(
+					'Content-Type: application/json',
+					'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,
+				);
+				
+				$curl_data = array(
+					"messaging_product" => "whatsapp",
+					"to" => $whatsapp_number,
+					"type" => "template",
+					"template" => array(
+						"name" => $wps_wpr_whatsapp_msg_temp_name,
+						"language" => array(
+							"code" => "en_US"
+						),
+						"components" => array(
+							array(
+								"type" => "body",
+								"parameters" => array(
+									array(
+										"type" => "text",
+										"text" => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
+									),
+									array(
+										"type" => "text",
+										"text" => $message,
+									),
+								)
+							)
+						)
+					)
+				);
+
+				$data = json_encode( $curl_data );
+
+				// LOAD THE WC LOGGER.
+				$logger = wc_get_logger();
+
+				$curl = curl_init();
+
+				curl_setopt_array( $curl, array(
+				CURLOPT_URL => 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages',
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'POST',
+				CURLOPT_POSTFIELDS =>$data,
+				CURLOPT_HTTPHEADER => $api_header,
+				));
+
+				$response = curl_exec($curl);
+
+				// LOG THE Result.
+				$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );				
+				curl_close($curl);
+
+				$response = json_decode( $response, true );
+			}
+		}
+	}
+
+	/**
+	 * This function is used to check PAR pro plugin is active or not.
+	 *
+	 * @return bool
+	 */
+	function wps_wpr_is_par_pro_plugin_active() {
+
+		$flag = false;
+		if ( is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
 
 			$flag = true;
 		}

@@ -775,7 +775,8 @@ jQuery(document).ready(function($){
 					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_discount">'+wps_wpr_object.Discounttext+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_membership_discount"><input type="number" min="0" max="100" value="0" name="wps_wpr_membership_discount_'+count+'" id="wps_wpr_membership_discount_'+count+'" class="input-text"></label></td></tr>';
 					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_enable_to_rewards_with_points">'+wps_wpr_object.enble_mem_reward_label+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_enable_to_rewards_with_points"><input type="checkbox" value="1" name="wps_wpr_enable_to_rewards_with_points_'+count+'" id="wps_wpr_enable_to_rewards_with_points_'+count+'" class="input-text"></label></td></tr>';
 					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_mem_reward_type">'+wps_wpr_object.mem_points_type+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_choose_mem_points_type"><select name="wps_wpr_choose_mem_points_type_'+count+'" id="wps_wpr_choose_mem_points_type_'+count+'" class="wps_wpr_assign_mem_rewards_points"><option value="fixed">Fixed</option><option value="percent">Percent</option></select></label></td><input type="hidden" value="'+count+'" name="hidden_count"></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_mem_rewards_points">'+wps_wpr_object.Points+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_assign_mem_points_val"><input type="number" min="0" name="wps_wpr_assign_mem_points_val_'+count+'" id="wps_wpr_assign_mem_points_val_'+count+'" value="0"></label></td><input type="hidden" value="'+count+'" name="hidden_count"></tr></table></div>';
+					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_mem_rewards_points">'+wps_wpr_object.Points+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_assign_mem_points_val"><input type="number" min="0" name="wps_wpr_assign_mem_points_val_'+count+'" id="wps_wpr_assign_mem_points_val_'+count+'" value="0"></label></td><input type="hidden" value="'+count+'" name="hidden_count"></tr>';
+					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_enable_free_shipping_">'+wps_wpr_object.wps_wpr_free_shipping+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_enable_free_shipping_"><input type="checkbox" value="1" name="wps_wpr_enable_free_shipping_'+count+'" id="wps_wpr_enable_free_shipping_'+count+'" class="input-text"></label></td></tr></table></div>';
 					$('.parent_of_div').append(html);
 					$('#wps_wpr_parent_repeatable_'+count+'').find('#wps_wpr_membership_category_list_'+count).select2();
 					$('#wps_wpr_parent_repeatable_'+count+'').find('#wps_wpr_membership_product_list_'+count).select2();
@@ -796,4 +797,18 @@ jQuery(document).ready(function($){
 			}
 		});
 	}
+
+	// open whatsapp sample template.
+    jQuery(document).on('click', '.wps_wpr_preview_whatsapp_sample', function(e){
+
+        jQuery(document).find('.wps_wpr_preview_whatsapp_sample').css('color', '#2271b1');
+        e.preventDefault();
+        jQuery('.wps_wpr_preview_whatsapp_template_img').show();
+    });
+
+    // Hide modal when clicking outside the image.
+    jQuery(document).on('click', '.wps_wpr_preview_whatsapp_template_img', function(){
+
+        jQuery('.wps_wpr_preview_whatsapp_template_img').hide();
+    });
 });

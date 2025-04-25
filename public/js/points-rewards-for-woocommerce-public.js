@@ -345,5 +345,34 @@
                     $("#wps_wpr_wallet_notification").html('<b style="color:red;">' + wps_wpr.empty_notice + '</b>')
                 }
             });
+
+            // Toggle SMS and WhatsApp notifications.
+            jQuery(document).on('change', '.wps_wpr_off_sms_notify, .wps_wpr_off_whatsapp_notify', function () {
+
+                const $this     = jQuery(this);
+                const isChecked = $this.is(':checked') ? 'yes' : 'no';
+                const isSMS     = $this.hasClass('wps_wpr_off_sms_notify');
+                const data      = {
+                    action                                 : 'stop_sms_whatsapp_notify',
+                    nonce                                  : wps_wpr.wps_wpr_nonce,
+                    [isSMS ? 'stop_sms' : 'stop_whatsapp'] : isChecked
+                };
+
+                wps_wpr_common_func_to_stop_notify(data);
+            });
+
+            // AJAX function to handle notification toggle.
+            function wps_wpr_common_func_to_stop_notify(data) {
+                jQuery.ajax({
+                    method  : 'POST',
+                    url     : wps_wpr.ajaxurl,
+                    data    : data,
+                    success : function (response) {
+                        const $notice = jQuery('.wps_wpr_notify_notice_wrap');
+                        $notice.show().css('color', response.result ? 'red' : 'green').html(response.msg);
+                    }
+                });
+            }
+
         });
 })(jQuery);
