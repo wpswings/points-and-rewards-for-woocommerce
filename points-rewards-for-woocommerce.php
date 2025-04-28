@@ -79,11 +79,15 @@ if ($activated) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants()
 	{
-
 		rewardeem_woocommerce_points_rewards_constants('REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.6.2');
 		rewardeem_woocommerce_points_rewards_constants('WPS_RWPR_DIR_PATH', plugin_dir_path(__FILE__));
 		rewardeem_woocommerce_points_rewards_constants('WPS_RWPR_DIR_URL', plugin_dir_url(__FILE__));
 		rewardeem_woocommerce_points_rewards_constants('WPS_RWPR_HOME_URL', admin_url());
+		rewardeem_woocommerce_points_rewards_constants('STORE_BALANCE_API_URL', 'http://localhost:5000/api/balances/store-balance');
+		rewardeem_woocommerce_points_rewards_constants('USE_CASHBACK_API_URL', 'http://localhost:5000/api/cashback/use-cashback');
+		rewardeem_woocommerce_points_rewards_constants('RECEIVE_CASHBACK_API_URL', 'http://localhost:5000/api/cashback/receive-cashback');
+		rewardeem_woocommerce_points_rewards_constants('USER_VALIDATE_CASHBACK', 'http://localhost:5000/api/balances/validate-cashback');
+		rewardeem_woocommerce_points_rewards_constants('AUTHENTICATE_STORE_API_URL', 'http://localhost:5000/api/authenticate-store');
 	}
 
 	/**
@@ -989,6 +993,143 @@ if ($activated) {
 		} catch (Exception $e) {
 			error_log('Erro na função wps_wpr_validate_cashback_on_login: ' . $e->getMessage());
 		}
+	}
+
+	add_action('rest_api_init', function () {
+		register_rest_route(
+			'bring-cashback', 
+			'/set-cashback-percentage', 
+			array(
+				'methods'  => 'POST',
+				'callback' => 'bring_cashback_set_percentage',
+				'permission_callback' => '__return_true', // posteriormente trocar para permissão de acesso
+			)
+		);
+	});
+
+	/**
+	 * Callback para processar a requisição no endpoint.
+	 *
+	 * @param WP_REST_Request $request Objeto da requisição.
+	 * @return WP_REST_Response Resposta da API.
+	 */
+	function bring_cashback_set_percentage(WP_REST_Request $request) {
+		try {
+			$cashback_percent = $request->get_param('cashbackPercent');
+	
+			if (empty($cashback_percent) || !is_numeric($cashback_percent) || $cashback_percent < 0 || $cashback_percent > 100) {
+				return new WP_REST_Response(array(
+					'success' => false,
+					'message' => 'Porcentagem inválida. Deve ser um número entre 0 e 100.'
+				), 400);
+			}
+	
+			$conversion_price = $cashback_percent / 100;
+	
+			$settings = get_option('wps_wpr_coupons_gallery', array());
+			$settings['wps_wpr_coupon_conversion_points'] = 1; 
+			$settings['wps_wpr_coupon_conversion_price'] = $conversion_price; 
+			update_option('wps_wpr_coupons_gallery', $settings);
+	
+			return new WP_REST_Response(array(
+				'success' => true,
+				'message' => 'Porcentagem de cashback atualizada com sucesso.',
+				'cashbackPercent' => $cashback_percent
+			), 200);
+		} catch (Exception $e) {
+			return new WP_REST_Response(array(
+				'success' => false,
+				'message' => 'Erro ao processar a requisição: ' . $e->getMessage()
+			), 500);
+		}
+	}
+
+	// Adicione o manipulador AJAX para salvar a chave API
+	add_action('wp_ajax_wps_save_api_secret_ajax', 'wps_save_api_secret_ajax_handler');
+	function wps_save_api_secret_ajax_handler() {
+		try {
+			// Verificar o nonce para segurança
+			check_ajax_referer('wps_api_ajax_nonce', 'security');
+			
+			// Obtém a chave secreta da API
+			$api_secret_key = isset($_POST['api_secret_key']) ? sanitize_text_field(wp_unslash($_POST['api_secret_key'])) : '';
+			
+			if (empty($api_secret_key)) {
+				throw new Exception(__('A chave API não pode estar vazia.', 'points-and-rewards-for-woocommerce'));
+			}
+			
+			// Obtém o URL do site
+			$store_url = get_site_url();
+			
+			// Registra no log para depuração
+			error_log('Enviando requisição AJAX para: ' . AUTHENTICATE_STORE_API_URL);
+			error_log('Dados: apiKey=' . $api_secret_key . ', storeUrl=' . $store_url);
+			
+			// Faz a requisição ao endpoint
+			$response = wp_remote_post(AUTHENTICATE_STORE_API_URL, array(
+				'method' => 'POST',
+				'timeout' => 30,
+				'headers' => array(
+					'Content-Type' => 'application/json',
+				),
+				'body' => wp_json_encode(array(
+					'apiKey' => $api_secret_key,
+					'storeUrl' => $store_url,
+				)),
+			));
+			
+			if (is_wp_error($response)) {
+				throw new Exception(__('Erro ao conectar ao endpoint: ', 'points-and-rewards-for-woocommerce') . $response->get_error_message());
+			}
+			
+			$response_code = wp_remote_retrieve_response_code($response);
+			$response_body = wp_remote_retrieve_body($response);
+			
+			error_log('Resposta do servidor: Código=' . $response_code . ', Corpo=' . $response_body);
+			
+			$decoded_response = json_decode($response_body, true);
+			
+			if (!isset($decoded_response['token'])) {
+				throw new Exception(__('Resposta inválida do endpoint.', 'points-and-rewards-for-woocommerce'));
+			}
+
+			// Salva o token JWT no banco de dados
+			$jwt_token = sanitize_text_field($decoded_response['token']);
+			update_option('wps_api_jwt_token', $jwt_token);
+			
+			// Retorna uma resposta de sucesso
+			wp_send_json_success(array(
+				'message' => __('Chave API salva com sucesso.', 'points-and-rewards-for-woocommerce')
+			));
+			
+		} catch (Exception $e) {
+			error_log('Erro ao salvar token via AJAX: ' . $e->getMessage());
+			
+			// Retorna uma resposta de erro
+			wp_send_json_error(array(
+				'message' => $e->getMessage()
+			));
+		}
+	}
+	/**
+	 * Retorna os headers com autenticação Bearer para as requisições à API.
+	 *
+	 * @return array Headers com autenticação.
+	 */
+	function wps_get_auth_headers() {
+		$jwt_token = get_option('wps_api_jwt_token', '');
+		
+		if (empty($jwt_token)) {
+			error_log('Token JWT não encontrado. Verifique se a autenticação da loja foi realizada.');
+			return array(
+				'Content-Type' => 'application/json',
+			);
+		}
+		
+		return array(
+			'Content-Type' => 'application/json',
+			'Authorization' => 'Bearer ' . $jwt_token,
+		);
 	}
 } else {
 
