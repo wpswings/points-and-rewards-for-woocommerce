@@ -88,6 +88,8 @@ if ($activated) {
 		rewardeem_woocommerce_points_rewards_constants('RECEIVE_CASHBACK_API_URL', 'http://localhost:5000/api/cashback/receive-cashback');
 		rewardeem_woocommerce_points_rewards_constants('USER_VALIDATE_CASHBACK', 'http://localhost:5000/api/balances/validate-cashback');
 		rewardeem_woocommerce_points_rewards_constants('AUTHENTICATE_STORE_API_URL', 'http://localhost:5000/api/authenticate-store');
+		rewardeem_woocommerce_points_rewards_constants('CANCEL_ORDER_API_URL', 'http://localhost:5000/api/orders/cancel-order-cashback');
+		rewardeem_woocommerce_points_rewards_constants('REFUND_ORDER_API_URL', 'http://localhost:5000/api/orders/remove-order-cashback');
 	}
 
 	/**
@@ -581,10 +583,10 @@ if ($activated) {
 	}
 
 	/**
-	 * Formata os dados do pedido no formato desejado para compatibilidade com a API de cashback.
+	 * Formats WooCommerce order data for sending to the cashback backend.
 	 *
-	 * @param WC_Order $order Objeto do pedido.
-	 * @return array Dados formatados do pedido.
+	 * @param WC_Order $order WooCommerce order object.
+	 * @return array Associative array with the formatted order data.
 	 */
 	function format_order_data($order)
 	{
@@ -594,82 +596,73 @@ if ($activated) {
 
 		$order_data = $order->get_data();
 
-		$customer = [
-			[
-				'name' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
-				'nickname' => $order->get_billing_first_name(),
-				'email' => $order->get_billing_email(),
-				'phone' => $order->get_billing_phone() ?: '',
-				'document' => $order->get_meta('_billing_cpf') ?: $order->get_meta('_billing_cnpj') ?: '',
-				]
+		$date_created = $order_data['date_created'] ? $order_data['date_created']->date('Y-m-d\TH:i:s') : '';
+		$date_modified = $order_data['date_modified'] ? $order_data['date_modified']->date('Y-m-d\TH:i:s') : '';
+		$date_completed = $order_data['date_completed'] ? $order_data['date_completed']->date('Y-m-d\TH:i:s') : '';
+
+		$billing = [
+			'first_name' => $order->get_billing_first_name(),
+			'last_name' => $order->get_billing_last_name(),
+			'email' => $order->get_billing_email(),
+			'phone' => $order->get_billing_phone(),
+			'address_1' => $order->get_billing_address_1(),
+			'address_2' => $order->get_billing_address_2(),
+			'city' => $order->get_billing_city(),
+			'state' => $order->get_billing_state(),
+			'postcode' => $order->get_billing_postcode(),
 		];
 
-		$items = [];
+		$line_items = [];
 		foreach ($order->get_items() as $item) {
 			$product = $item->get_product();
-			$items[] = [
+			$line_items[] = [
 				'name' => $item->get_name(),
-				'qty' => (int) $item->get_quantity(),
-				'productPrice' => $product ? (float) $product->get_price() : (float) ($item->get_total() / max(1, $item->get_quantity())),
+				'quantity' => (int) $item->get_quantity(),
+				'price' => (float) ($product ? $product->get_price() : ($item->get_total() / max(1, $item->get_quantity()))),
+				'subtotal' => (float) $item->get_subtotal(),
 			];
 		}
 
-		$addresses = [
-			[
-				'address' => $order->get_billing_address_1(),
-				'number' => $order->get_meta('_billing_number') ?: '',
-				'complement' => $order->get_billing_address_2() ?: '',
-				'neighborhood' => $order->get_meta('_billing_neighborhood') ?: '',
-				'city' => $order->get_billing_city(),
-				'state' => $order->get_billing_state(),
-				'zipCode' => $order->get_billing_postcode(),
-				'phone' => $order->get_billing_phone() ?: '',
-			]
-		];
-
-		$shipments = [];
+		$shipping_lines = [];
 		foreach ($order->get_shipping_methods() as $shipping) {
-			$shipments[] = [
-				'name' => $shipping->get_name(),
-				'price' => (float) $shipping->get_total(),
-				'tracking' => $order->get_meta('_tracking_number') ?: '',
-				'date' => $order_data['date_created'] ? $order_data['date_created']->date('Y-m-d\TH:i:s\Z') : null,
+			$shipping_lines[] = [
+				'method_title' => $shipping->get_name(),
+				'total' => (float) $shipping->get_total(),
 			];
-		}
-
-		$createAt = $order_data['date_created'] ? $order_data['date_created']->date('Y-m-d\TH:i:s\Z') : null;
-		$closedAt = $order_data['date_completed'] ? $order_data['date_completed']->date('Y-m-d\TH:i:s\Z') : null;
-
-		$productsPrice = 0;
-		foreach ($order->get_items() as $item) {
-			$productsPrice += (float) $item->get_subtotal();
 		}
 
 		$formatted_data = [
-			'createAt' => $createAt,
-			'closedAt' => $closedAt,
-			'price' => (float) $order_data['total'],
-			'paidAmount' => (float) $order_data['total'],
-			'productsPrice' => $productsPrice,
-			'tax' => (float) $order_data['total_tax'],
-			'discount' => (float) $order_data['discount_total'],
-			'paymentMethod' => $order_data['payment_method_title'],
-			'customer' => $customer,
-			'items' => $items,
-			'addresses' => $addresses,
-			'shipments' => $shipments,
-			'originalOrder' => $order->get_meta('_original_order_id') ?: null,
+			'id' => (string) $order->get_id(),
+			'date_created' => $date_created,
+			'date_modified' => $date_modified,
+			'date_completed' => $date_completed,
+			'total' => (float) $order_data['total'],
+			'total_tax' => (float) $order_data['total_tax'],
+			'discount_total' => (float) $order_data['discount_total'],
+			'payment_method' => $order_data['payment_method'],
+			'payment_method_title' => $order_data['payment_method_title'],
+			'customer_id' => (int) $order_data['customer_id'],
+			'customer_note' => $order_data['customer_note'],
+			'billing' => $billing,
+			'line_items' => $line_items,
+			'shipping_lines' => $shipping_lines,
+			'status' => $order_data['status'],
+			'currency' => $order_data['currency'],
 		];
 
 		return $formatted_data;
 	}
 
-	add_action('woocommerce_thankyou', 'wps_wpr_handle_cashback_usage');
 	/**
-	 * Envia informações do pedido e o link da loja após a conclusão do pedido.
+	 * Sends order information and store link to the cashback backend after order completion.
 	 *
-	 * @param int $order_id ID do pedido.
+	 * This function is triggered on the WooCommerce "thank you" page.
+	 * Verifies if cashback was used, then sends the formatted order data and store URL to the cashback API.
+	 *
+	 * @param int $order_id WooCommerce order ID.
+	 * @return void
 	 */
+	add_action('woocommerce_thankyou', 'wps_wpr_handle_cashback_usage');
 	function wps_wpr_handle_cashback_usage($order_id)
 	{
 		try {
@@ -725,11 +718,14 @@ if ($activated) {
 		}
 	}
 
-
 	/**
-	 * Envia informações do pedido e o link da loja após a conclusão do pedido.
+	 * Sends order information and store URL to the cashback backend after order is marked as completed.
 	 *
-	 * @param int $order_id ID do pedido.
+	 * This function is triggered when the WooCommerce order status changes to "completed".
+	 * Verifies if the cashback flag is set, then sends the formatted order data and store URL to the cashback API.
+	 *
+	 * @param int $order_id WooCommerce order ID.
+	 * @return void
 	 */
 	add_action('woocommerce_order_status_completed', 'wps_wpr_handle_receive_cashback');
 	function wps_wpr_handle_receive_cashback($order_id)
@@ -750,7 +746,7 @@ if ($activated) {
 				return;
 			}
 
-			$order_data = $order->get_data();
+			$order_data = format_order_data($order);
 			$store_url = get_site_url();
 
 			$payload = array(
@@ -791,15 +787,19 @@ if ($activated) {
 		}
 	}
 
-	add_action('woocommerce_order_status_changed', 'wps_wpr_handle_order_status_change', 10, 4);
 	/**
-	 * Envia informações para um endpoint quando o status do pedido muda de "completed" para "canceled".
+	 * Sends order information and store URL to the cashback backend when the order status changes to "cancelled" or "refunded".
 	 *
-	 * @param int    $order_id ID do pedido.
-	 * @param string $old_status Status anterior do pedido.
-	 * @param string $new_status Novo status do pedido.
-	 * @param WC_Order $order Objeto do pedido.
+	 * This function is triggered when the WooCommerce order status changes. It checks if the new status is "cancelled" or "refunded",
+	 * verifies if the cashback flag is set, and then sends the formatted order data and store URL to the appropriate cashback API endpoint.
+	 *
+	 * @param int      $order_id   WooCommerce order ID.
+	 * @param string   $old_status Previous order status.
+	 * @param string   $new_status New order status.
+	 * @param WC_Order $order      WooCommerce order object.
+	 * @return void
 	 */
+	add_action('woocommerce_order_status_changed', 'wps_wpr_handle_order_status_change', 10, 4);
 	function wps_wpr_handle_order_status_change($order_id, $old_status, $new_status, $order)
 	{
 		try {
@@ -997,10 +997,10 @@ if ($activated) {
 
 	add_action('rest_api_init', function () {
 		register_rest_route(
-			'bring-cashback', 
-			'/set-cashback-percentage', 
+			'bring-cashback',
+			'/set-cashback-percentage',
 			array(
-				'methods'  => 'POST',
+				'methods' => 'POST',
 				'callback' => 'bring_cashback_set_percentage',
 				'permission_callback' => '__return_true', // posteriormente trocar para permissão de acesso
 			)
@@ -1013,24 +1013,25 @@ if ($activated) {
 	 * @param WP_REST_Request $request Objeto da requisição.
 	 * @return WP_REST_Response Resposta da API.
 	 */
-	function bring_cashback_set_percentage(WP_REST_Request $request) {
+	function bring_cashback_set_percentage(WP_REST_Request $request)
+	{
 		try {
 			$cashback_percent = $request->get_param('cashbackPercent');
-	
+
 			if (empty($cashback_percent) || !is_numeric($cashback_percent) || $cashback_percent < 0 || $cashback_percent > 100) {
 				return new WP_REST_Response(array(
 					'success' => false,
 					'message' => 'Porcentagem inválida. Deve ser um número entre 0 e 100.'
 				), 400);
 			}
-	
+
 			$conversion_price = $cashback_percent / 100;
-	
+
 			$settings = get_option('wps_wpr_coupons_gallery', array());
-			$settings['wps_wpr_coupon_conversion_points'] = 1; 
-			$settings['wps_wpr_coupon_conversion_price'] = $conversion_price; 
+			$settings['wps_wpr_coupon_conversion_points'] = 1;
+			$settings['wps_wpr_coupon_conversion_price'] = $conversion_price;
 			update_option('wps_wpr_coupons_gallery', $settings);
-	
+
 			return new WP_REST_Response(array(
 				'success' => true,
 				'message' => 'Porcentagem de cashback atualizada com sucesso.',
@@ -1046,25 +1047,26 @@ if ($activated) {
 
 	// Adicione o manipulador AJAX para salvar a chave API
 	add_action('wp_ajax_wps_save_api_secret_ajax', 'wps_save_api_secret_ajax_handler');
-	function wps_save_api_secret_ajax_handler() {
+	function wps_save_api_secret_ajax_handler()
+	{
 		try {
 			// Verificar o nonce para segurança
 			check_ajax_referer('wps_api_ajax_nonce', 'security');
-			
+
 			// Obtém a chave secreta da API
 			$api_secret_key = isset($_POST['api_secret_key']) ? sanitize_text_field(wp_unslash($_POST['api_secret_key'])) : '';
-			
+
 			if (empty($api_secret_key)) {
 				throw new Exception(__('A chave API não pode estar vazia.', 'points-and-rewards-for-woocommerce'));
 			}
-			
+
 			// Obtém o URL do site
 			$store_url = get_site_url();
-			
+
 			// Registra no log para depuração
 			error_log('Enviando requisição AJAX para: ' . AUTHENTICATE_STORE_API_URL);
 			error_log('Dados: apiKey=' . $api_secret_key . ', storeUrl=' . $store_url);
-			
+
 			// Faz a requisição ao endpoint
 			$response = wp_remote_post(AUTHENTICATE_STORE_API_URL, array(
 				'method' => 'POST',
@@ -1077,18 +1079,18 @@ if ($activated) {
 					'storeUrl' => $store_url,
 				)),
 			));
-			
+
 			if (is_wp_error($response)) {
 				throw new Exception(__('Erro ao conectar ao endpoint: ', 'points-and-rewards-for-woocommerce') . $response->get_error_message());
 			}
-			
+
 			$response_code = wp_remote_retrieve_response_code($response);
 			$response_body = wp_remote_retrieve_body($response);
-			
+
 			error_log('Resposta do servidor: Código=' . $response_code . ', Corpo=' . $response_body);
-			
+
 			$decoded_response = json_decode($response_body, true);
-			
+
 			if (!isset($decoded_response['token'])) {
 				throw new Exception(__('Resposta inválida do endpoint.', 'points-and-rewards-for-woocommerce'));
 			}
@@ -1096,15 +1098,15 @@ if ($activated) {
 			// Salva o token JWT no banco de dados
 			$jwt_token = sanitize_text_field($decoded_response['token']);
 			update_option('wps_api_jwt_token', $jwt_token);
-			
+
 			// Retorna uma resposta de sucesso
 			wp_send_json_success(array(
 				'message' => __('Chave API salva com sucesso.', 'points-and-rewards-for-woocommerce')
 			));
-			
+
 		} catch (Exception $e) {
 			error_log('Erro ao salvar token via AJAX: ' . $e->getMessage());
-			
+
 			// Retorna uma resposta de erro
 			wp_send_json_error(array(
 				'message' => $e->getMessage()
@@ -1116,16 +1118,17 @@ if ($activated) {
 	 *
 	 * @return array Headers com autenticação.
 	 */
-	function wps_get_auth_headers() {
+	function wps_get_auth_headers()
+	{
 		$jwt_token = get_option('wps_api_jwt_token', '');
-		
+
 		if (empty($jwt_token)) {
 			error_log('Token JWT não encontrado. Verifique se a autenticação da loja foi realizada.');
 			return array(
 				'Content-Type' => 'application/json',
 			);
 		}
-		
+
 		return array(
 			'Content-Type' => 'application/json',
 			'Authorization' => 'Bearer ' . $jwt_token,
