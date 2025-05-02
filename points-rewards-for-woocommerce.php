@@ -692,9 +692,7 @@ if ($activated) {
 			$response = wp_remote_post(USE_CASHBACK_API_URL, array(
 				'method' => 'POST',
 				'body' => wp_json_encode($payload),
-				'headers' => array(
-					'Content-Type' => 'application/json',
-				),
+				'headers' => wps_get_auth_headers(),
 				'timeout' => 5,
 			));
 
@@ -760,9 +758,7 @@ if ($activated) {
 			$response = wp_remote_post(RECEIVE_CASHBACK_API_URL, array(
 				'method' => 'POST',
 				'body' => wp_json_encode($payload),
-				'headers' => array(
-					'Content-Type' => 'application/json',
-				),
+				'headers' => wps_get_auth_headers(),
 				'timeout' => 5,
 			));
 
@@ -835,18 +831,14 @@ if ($activated) {
 				$response = wp_remote_post(CANCEL_ORDER_API_URL, array(
 					'method' => 'POST',
 					'body' => wp_json_encode($payload),
-					'headers' => array(
-						'Content-Type' => 'application/json',
-					),
+					'headers' => wps_get_auth_headers(),
 					'timeout' => 5,
 				));
 			} else {
 				$response = wp_remote_post(REFUND_ORDER_API_URL, array(
 					'method' => 'POST',
 					'body' => wp_json_encode($payload),
-					'headers' => array(
-						'Content-Type' => 'application/json',
-					),
+					'headers' => wps_get_auth_headers(),
 					'timeout' => 5,
 				));
 			}
@@ -890,13 +882,11 @@ if ($activated) {
 			$encoded_email = urlencode($user_email);
 			$encoded_store_url = urlencode($store_url);
 
-			$api_url = "http://localhost:5000/api/balances/store-balance/{$encoded_email}/{$encoded_store_url}";
-
+			$api_url = STORE_BALANCE_API_URL . "/{$encoded_email}/{$encoded_store_url}";
+        
 			$response = wp_remote_get($api_url, array(
 				'timeout' => 15,
-				'headers' => array(
-					'Content-Type' => 'application/json',
-				),
+				'headers' => wps_get_auth_headers(),
 			));
 
 			if (is_wp_error($response)) {
@@ -964,13 +954,11 @@ if ($activated) {
 			$encoded_email = urlencode($user_email);
 			$encoded_store_url = urlencode($store_url);
 
-			$api_url = "http://localhost:5000/api/balances/validate-cashback/{$encoded_email}/{$encoded_store_url}";
+			$api_url = USER_VALIDATE_CASHBACK . "/{$encoded_email}/{$encoded_store_url}";
 
 			$response = wp_remote_get($api_url, array(
 				'timeout' => 15,
-				'headers' => array(
-					'Content-Type' => 'application/json',
-				),
+				'headers' => wps_get_auth_headers(),
 			));
 
 			if (is_wp_error($response)) {
