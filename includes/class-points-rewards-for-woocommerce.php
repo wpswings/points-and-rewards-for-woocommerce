@@ -263,7 +263,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_loaded', $plugin_public, 'wps_wpr_referral_link_using_cookie' );
 			/*Assign signup points and referral points in woocommerce*/
 			$this->loader->add_action( 'user_register', $plugin_public, 'wps_wpr_new_customer_registerd', 10, 1 );
-			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_woocommerce_order_status_changed', 10, 3 );
+			// $this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_woocommerce_order_status_changed', 10, 3 );
 
 			$this->loader->add_action( 'woocommerce_before_customer_login_form', $plugin_public, 'wps_wpr_woocommerce_signup_point' );
 			/*Add html in the cart for apply points*/

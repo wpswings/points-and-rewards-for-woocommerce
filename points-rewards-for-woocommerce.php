@@ -84,8 +84,8 @@ if ($activated) {
 		rewardeem_woocommerce_points_rewards_constants('WPS_RWPR_DIR_URL', plugin_dir_url(__FILE__));
 		rewardeem_woocommerce_points_rewards_constants('WPS_RWPR_HOME_URL', admin_url());
 		rewardeem_woocommerce_points_rewards_constants('STORE_BALANCE_API_URL', 'http://localhost:5000/api/balances/store-balance');
-		rewardeem_woocommerce_points_rewards_constants('USE_CASHBACK_API_URL', 'http://localhost:5000/api/cashback/use-cashback');
-		rewardeem_woocommerce_points_rewards_constants('RECEIVE_CASHBACK_API_URL', 'http://localhost:5000/api/cashback/receive-cashback');
+		rewardeem_woocommerce_points_rewards_constants('USE_CASHBACK_API_URL', 'http://localhost:5000/api/orders/use-cashback');
+		rewardeem_woocommerce_points_rewards_constants('RECEIVE_CASHBACK_API_URL', 'http://localhost:5000/api/orders/receive-cashback');
 		rewardeem_woocommerce_points_rewards_constants('USER_VALIDATE_CASHBACK', 'http://localhost:5000/api/balances/validate-cashback');
 		rewardeem_woocommerce_points_rewards_constants('AUTHENTICATE_STORE_API_URL', 'http://localhost:5000/api/authenticate-store');
 		rewardeem_woocommerce_points_rewards_constants('CANCEL_ORDER_API_URL', 'http://localhost:5000/api/orders/cancel-order-cashback');
