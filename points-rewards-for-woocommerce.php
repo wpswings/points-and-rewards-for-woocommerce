@@ -631,6 +631,9 @@ if ($activated) {
 			];
 		}
 
+		$used_cashback = $order->get_meta('wps_cart_discount#points', true);
+    	$cashback_amount = !empty($used_cashback) ? (float) $used_cashback : 0;
+
 		$formatted_data = [
 			'id' => (string) $order->get_id(),
 			'date_created' => $date_created,
@@ -648,6 +651,7 @@ if ($activated) {
 			'shipping_lines' => $shipping_lines,
 			'status' => $order_data['status'],
 			'currency' => $order_data['currency'],
+			'cashback' => $cashback_amount,
 		];
 
 		return $formatted_data;
