@@ -776,11 +776,34 @@ if ($activated) {
 				throw new Exception('Backend error: Error code: ' . $response_code);
 			}
 
-			$response_body = wp_remote_retrieve_body($response);
-			$decoded_response = json_decode($response_body, true);
-
-			if (!isset($decoded_response['success']) || !$decoded_response['success']) {
-				throw new Exception('Error to process cashback: ' . $response_body);
+			// Obter a porcentagem de cashback configurada
+			$settings = get_option('wps_wpr_coupons_gallery', array());
+			$conversion_points = isset($settings['wps_wpr_coupon_conversion_points']) ? (float)$settings['wps_wpr_coupon_conversion_points'] : 1;
+			$conversion_price = isset($settings['wps_wpr_coupon_conversion_price']) ? (float)$settings['wps_wpr_coupon_conversion_price'] : 0;
+			
+			// Calcular o valor do cashback com base no total do pedido
+			$total_amount = (float)$order_data['total'];
+			$cashback_points = $total_amount * $conversion_price;
+			
+			// Adicionar pontos ao usuário
+			$user_id = $order->get_customer_id();
+			if ($user_id > 0) {
+				$reason = sprintf(
+					'Cashback de %d%% do pedido #%s no valor de %s %s', 
+					($conversion_price * 100),
+					$order_id, 
+					$total_amount,
+					$order_data['currency']
+				);
+				
+				$result = wps_wpr_update_user_points_balance($user_id, $cashback_points, $reason);
+				
+				if ($result) {
+					error_log("Cashback adicionado com sucesso para o pedido {$order_id}: {$cashback_points} pontos");
+					$order->save();
+				} else {
+					error_log("Falha ao adicionar cashback para o pedido {$order_id}");
+				}
 			}
 		} catch (Exception $e) {
 			error_log('Error while processing cashback request for order: ' . $order_id . '. Exception: ' . $e->getMessage());
@@ -994,7 +1017,7 @@ if ($activated) {
 			array(
 				'methods' => 'POST',
 				'callback' => 'bring_cashback_set_percentage',
-				'permission_callback' => '__return_true', // posteriormente trocar para permissão de acesso
+				'permission_callback' => '__return_true', 
 			)
 		);
 	});
@@ -1125,6 +1148,69 @@ if ($activated) {
 			'Content-Type' => 'application/json',
 			'Authorization' => 'Bearer ' . $jwt_token,
 		);
+	}
+
+	/**
+	 * Atualiza o saldo de pontos do usuário, adicionando ou subtraindo um valor específico.
+	 *
+	 * @param int    $user_id      ID do usuário cujo saldo será atualizado.
+	 * @param float  $points_value Valor a ser adicionado (positivo) ou subtraído (negativo) do saldo.
+	 * @return bool  True em caso de sucesso, False em caso de falha.
+	 */
+	function wps_wpr_update_user_points_balance($user_id, $points_value, $reason)
+	{
+		try {
+			if (!$user_id || !is_numeric($user_id)) {
+				return false;
+			}
+
+			// Converte o valor para float para garantir cálculos corretos
+			$points_value = (float) $points_value;
+			
+			// Obtém o saldo atual do usuário
+			$current_balance = (float) get_user_meta($user_id, 'wps_wpr_points', true);
+			if (empty($current_balance)) {
+				$current_balance = 0;
+			}
+			
+			// Calcula o novo saldo
+			$new_balance = $current_balance + $points_value;
+					
+			// Determina o sinal (adição ou subtração)
+			$sign = $points_value >= 0 ? '+' : '-';
+			$points_difference = abs($points_value);
+			
+			// Atualiza o saldo do usuário
+			update_user_meta($user_id, 'wps_wpr_points', $new_balance);
+			
+			// Registra a transação no histórico de pontos
+			$points_details = get_user_meta($user_id, 'points_details', true);
+			$points_details = !empty($points_details) && is_array($points_details) ? $points_details : array();
+			
+			$today_date = date_i18n('Y-m-d h:i:sa');
+			$new_entry = array(
+				'admin_points' => (string) $points_difference,
+				'date' => $today_date,
+				'sign' => $sign,
+				'reason' => $reason,
+			);
+			
+			if (!isset($points_details['admin_points']) || !is_array($points_details['admin_points'])) {
+				$points_details['admin_points'] = array();
+			}
+			
+			$points_details['admin_points'][] = $new_entry;
+			
+			update_user_meta($user_id, 'points_details', $points_details);
+			
+			// Log da transação
+			error_log("Saldo atualizado para o usuário {$user_id}: Saldo anterior: {$current_balance}, Alteração: {$sign}{$points_difference}, Novo saldo: {$new_balance}, Motivo: {$reason}");
+			
+			return true;
+		} catch (Exception $e) {
+			error_log('Erro na função wps_wpr_update_user_points_balance: ' . $e->getMessage());
+			return false;
+		}
 	}
 } else {
 
