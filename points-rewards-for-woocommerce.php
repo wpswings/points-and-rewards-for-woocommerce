@@ -708,13 +708,6 @@ if ($activated) {
 			if ($response_code < 200 || $response_code >= 300) {
 				throw new Exception('Backend error: Error code: ' . $response_code);
 			}
-
-			$response_body = wp_remote_retrieve_body($response);
-			$decoded_response = json_decode($response_body, true);
-
-			if (!isset($decoded_response['success']) || !$decoded_response['success']) {
-				throw new Exception('Error to process cashback: ' . $response_body);
-			}
 		} catch (Exception $e) {
 			error_log('Error while processing cashback request for order: ' . $order_id . '. Exception: ' . $e->getMessage());
 		}
@@ -878,13 +871,6 @@ if ($activated) {
 
 			if ($response_code < 200 || $response_code >= 300) {
 				throw new Exception('Error code: ' . $response_code);
-			}
-
-			$response_body = wp_remote_retrieve_body($response);
-			$decoded_response = json_decode($response_body, true);
-
-			if (!isset($decoded_response['success']) || !$decoded_response['success']) {
-				throw new Exception('Error to process cashback: ' . $response_body);
 			}
 		} catch (Exception $e) {
 			error_log('Error to process order status change for order: ' . $order_id . '. Exception: ' . $e->getMessage());

@@ -1306,7 +1306,7 @@ class Points_Rewards_For_WooCommerce_Public
 		// Applied points on cart refunded here.
 		$mwb_wpr_array = array('processing', 'on-hold', 'pending', 'completed', 'failed');
 		if (in_array($old_status, $mwb_wpr_array, true) && ('cancelled' === $new_status || 'refunded' === $new_status)) {
-
+			error_log('Refunde and cancelled points on cart applied here.');
 			$order = wc_get_order($order_id);
 			$user_id = absint($order->get_user_id());
 			$wps_points_log = get_user_meta($user_id, 'points_details', true);
