@@ -706,7 +706,7 @@ if ($activated) {
 
 			$response_code = wp_remote_retrieve_response_code($response);
 			if ($response_code < 200 || $response_code >= 300) {
-				throw new Exception('Backend error: Error code: ' . $response_code);
+				throw new Exception('Backend error: Error code: ' . $response_code . ' Response:' . wp_remote_retrieve_body($response));
 			}
 		} catch (Exception $e) {
 			error_log('Error while processing cashback request for order: ' . $order_id . '. Exception: ' . $e->getMessage());
@@ -766,7 +766,7 @@ if ($activated) {
 			$response_code = wp_remote_retrieve_response_code($response);
 
 			if ($response_code < 200 || $response_code >= 300) {
-				throw new Exception('Backend error: Error code: ' . $response_code);
+				throw new Exception('Backend error: Error code: ' . $response_code . ' Response:' . wp_remote_retrieve_body($response));
 			}
 
 			// Obter a porcentagem de cashback configurada
@@ -831,8 +831,14 @@ if ($activated) {
 
 			$cashback_flag = $order->get_meta('_generate_cashback');
 
-			if (empty($cashback_flag) || $cashback_flag !== 'true') {
-				error_log('Cashback flag is not true for order: ' . $order_id);
+			if (empty($cashback_flag)) {
+				error_log('Cashback flag not found for: ' . $order_id);
+				return;
+			}
+
+			if ($new_status === 'cancelled' && 
+				(!isset($cashback_flag) || $cashback_flag === 'true')) {
+				error_log("Pedido {$order_id} não elegível para processamento de cashback - flag: {$cashback_flag}, status: {$new_status}");
 				return;
 			}
 
@@ -871,6 +877,62 @@ if ($activated) {
 
 			if ($response_code < 200 || $response_code >= 300) {
 				throw new Exception('Error code: ' . $response_code);
+			}
+
+			// Adicionar ou remover pontos ao usuário
+			$user_id = $order->get_customer_id();
+			if ($user_id > 0) {				
+				if($new_status === 'cancelled') {
+					// Verificar se foram usados pontos no pedido
+    				$used_points = $order->get_meta('wps_cart_discount#points', true);
+    
+					if (!empty($used_points)) {
+						// Pontos foram usados como desconto, precisamos devolvê-los
+						$points_to_restore = (float)$used_points;
+						
+						// Criar uma mensagem descritiva para o log
+						$reason = sprintf(
+							'Devolução de %s pontos utilizados como desconto no pedido #%s que foi cancelado',
+							$points_to_restore,
+							$order_id
+						);
+						
+						// Devolver os pontos ao saldo do usuário (note o sinal positivo)
+						$result = wps_wpr_update_user_points_balance($user_id, $points_to_restore, $reason);
+						
+						if ($result) {
+							error_log("Pontos devolvidos com sucesso para o usuário: {$points_to_restore} pontos do pedido {$order_id}");
+							$order->save();
+						} else {
+							error_log("Falha ao devolver pontos para o usuário do pedido {$order_id}");
+						}
+					}
+				} else {
+					// Obter a porcentagem de cashback configurada
+					$settings = get_option('wps_wpr_coupons_gallery', array());
+					$conversion_points = isset($settings['wps_wpr_coupon_conversion_points']) ? (float)$settings['wps_wpr_coupon_conversion_points'] : 1;
+					$conversion_price = isset($settings['wps_wpr_coupon_conversion_price']) ? (float)$settings['wps_wpr_coupon_conversion_price'] : 0;
+					
+					// Calcular o valor do cashback com base no total do pedido
+					$total_amount = (float)$order_data['total'];
+					$cashback_points = $total_amount * $conversion_price;
+
+					$reason = sprintf(
+						'Cashback de %d%% do pedido #%s no valor de %s %s', 
+						($conversion_price * 100),
+						$order_id, 
+						$total_amount,
+						$order_data['currency']
+					);
+
+					$result = wps_wpr_update_user_points_balance($user_id, -$cashback_points, $reason);
+					if ($result) {
+						error_log("Cashback removido com sucesso para o pedido {$order_id}: {$cashback_points} pontos");
+						$order->save();
+					} else {
+						error_log("Falha ao remover cashback para o pedido {$order_id}");
+					}
+				}							
 			}
 		} catch (Exception $e) {
 			error_log('Error to process order status change for order: ' . $order_id . '. Exception: ' . $e->getMessage());
