@@ -632,7 +632,7 @@ if ($activated) {
 		}
 
 		$used_cashback = $order->get_meta('wps_cart_discount#points', true);
-    	$cashback_amount = !empty($used_cashback) ? (float) $used_cashback : 0;
+		$cashback_amount = !empty($used_cashback) ? (float) $used_cashback : 0;
 
 		$formatted_data = [
 			'id' => (string) $order->get_id(),
@@ -714,6 +714,115 @@ if ($activated) {
 	}
 
 	/**
+	 * Handles cashback integration when an order is marked as completed.
+	 *
+	 * Triggered on WooCommerce order completion. If the order is set to generate cashback,
+	 * sends the order data to the receive cashback endpoint and updates user meta.
+	 * If cashback was used (but not generated), sends the order data to the complete cashback usage endpoint.
+	 *
+	 * @param int $order_id WooCommerce order ID.
+	 * @return void
+	 */
+	add_action('woocommerce_order_status_completed', 'wps_wpr_handle_order_status_completed');
+	function wps_wpr_handle_order_status_completed($order_id)
+	{
+		try {
+			$order = wc_get_order($order_id);
+
+			if (!$order) {
+				return;
+			}
+
+			if (!$order->has_status('completed')) {
+				return;
+			}
+
+			$order_data = format_order_data($order);
+			$store_url = get_site_url();
+
+			$payload = array(
+				'order' => $order_data,
+				'store' => array(
+					'url' => $store_url,
+				),
+				'ecommerce' => 'woocommerce'
+			);
+
+			$cashback_flag = $order->get_meta('_generate_cashback');
+			if ($cashback_flag === 'true') {
+				$response = wp_remote_post(RECEIVE_CASHBACK_API_URL, array(
+					'method' => 'POST',
+					'body' => wp_json_encode($payload),
+					'headers' => wps_get_auth_headers(),
+					'timeout' => 5,
+				));
+
+				if (is_wp_error($response)) {
+					throw new Exception('Error to connect to cashback backend: ' . $response->get_error_message());
+				}
+
+				$response_code = wp_remote_retrieve_response_code($response);
+
+				if ($response_code < 200 || $response_code >= 300) {
+					throw new Exception('Backend error: Error code: ' . $response_code . ' Response:' . wp_remote_retrieve_body($response));
+				}
+
+				$settings = get_option('wps_wpr_coupons_gallery', array());
+				$conversion_price = isset($settings['wps_wpr_coupon_conversion_price']) ? (float) $settings['wps_wpr_coupon_conversion_price'] : 0;
+
+				$total_amount = (float) $order_data['total'];
+				$cashback_points = $total_amount * $conversion_price;
+
+				$user_id = $order->get_customer_id();
+				if ($user_id > 0) {
+					$reason = sprintf(
+						'Cashback de %d%% do pedido #%s no valor de %s %s',
+						($conversion_price * 100),
+						$order_id,
+						$total_amount,
+						$order_data['currency']
+					);
+
+					$result = wps_wpr_update_user_points_balance($user_id, $cashback_points, $reason);
+
+					if ($result) {
+						error_log("Cashback adicionado com sucesso para o pedido {$order_id}: {$cashback_points} pontos");
+						$order->save();
+					} else {
+						error_log("Falha ao adicionar cashback para o pedido {$order_id}");
+					}
+				}
+				return;
+			}
+
+			if (!empty($order_data['cashback']) || (float) $order_data['cashback'] > 0) {
+				$response = wp_remote_post(COMPLETE_ORDER_API_URL, array(
+					'method' => 'POST',
+					'body' => wp_json_encode($payload),
+					'headers' => wps_get_auth_headers(),
+					'timeout' => 5,
+				));
+
+				if (is_wp_error($response)) {
+					throw new Exception('Error to connect to cashback backend: ' . $response->get_error_message());
+				}
+
+				$response_code = wp_remote_retrieve_response_code($response);
+
+				if ($response_code < 200 || $response_code >= 300) {
+					throw new Exception('Backend error: Error code: ' . $response_code . ' Response:' . wp_remote_retrieve_body($response));
+				}
+
+				return;
+			}
+
+			error_log('No cashback generation or usage for order: ' . $order_id);
+		} catch (Exception $e) {
+			error_log('Error while processing cashback request for order: ' . $order_id . '. Exception: ' . $e->getMessage());
+		}
+	}
+
+	/**
 	 * Sends order information and store URL to the cashback backend after order is marked as completed.
 	 *
 	 * This function is triggered when the WooCommerce order status changes to "completed".
@@ -771,26 +880,26 @@ if ($activated) {
 
 			// Obter a porcentagem de cashback configurada
 			$settings = get_option('wps_wpr_coupons_gallery', array());
-			$conversion_points = isset($settings['wps_wpr_coupon_conversion_points']) ? (float)$settings['wps_wpr_coupon_conversion_points'] : 1;
-			$conversion_price = isset($settings['wps_wpr_coupon_conversion_price']) ? (float)$settings['wps_wpr_coupon_conversion_price'] : 0;
-			
+			$conversion_points = isset($settings['wps_wpr_coupon_conversion_points']) ? (float) $settings['wps_wpr_coupon_conversion_points'] : 1;
+			$conversion_price = isset($settings['wps_wpr_coupon_conversion_price']) ? (float) $settings['wps_wpr_coupon_conversion_price'] : 0;
+
 			// Calcular o valor do cashback com base no total do pedido
-			$total_amount = (float)$order_data['total'];
+			$total_amount = (float) $order_data['total'];
 			$cashback_points = $total_amount * $conversion_price;
-			
+
 			// Adicionar pontos ao usuário
 			$user_id = $order->get_customer_id();
 			if ($user_id > 0) {
 				$reason = sprintf(
-					'Cashback de %d%% do pedido #%s no valor de %s %s', 
+					'Cashback de %d%% do pedido #%s no valor de %s %s',
 					($conversion_price * 100),
-					$order_id, 
+					$order_id,
 					$total_amount,
 					$order_data['currency']
 				);
-				
+
 				$result = wps_wpr_update_user_points_balance($user_id, $cashback_points, $reason);
-				
+
 				if ($result) {
 					error_log("Cashback adicionado com sucesso para o pedido {$order_id}: {$cashback_points} pontos");
 					$order->save();
@@ -836,8 +945,10 @@ if ($activated) {
 				return;
 			}
 
-			if ($new_status === 'cancelled' && 
-				(!isset($cashback_flag) || $cashback_flag === 'true')) {
+			if (
+				$new_status === 'cancelled' &&
+				(!isset($cashback_flag) || $cashback_flag === 'true')
+			) {
 				error_log("Pedido {$order_id} não elegível para processamento de cashback - flag: {$cashback_flag}, status: {$new_status}");
 				return;
 			}
@@ -881,25 +992,25 @@ if ($activated) {
 
 			// Adicionar ou remover pontos ao usuário
 			$user_id = $order->get_customer_id();
-			if ($user_id > 0) {				
-				if($new_status === 'cancelled') {
+			if ($user_id > 0) {
+				if ($new_status === 'cancelled') {
 					// Verificar se foram usados pontos no pedido
-    				$used_points = $order->get_meta('wps_cart_discount#points', true);
-    
+					$used_points = $order->get_meta('wps_cart_discount#points', true);
+
 					if (!empty($used_points)) {
 						// Pontos foram usados como desconto, precisamos devolvê-los
-						$points_to_restore = (float)$used_points;
-						
+						$points_to_restore = (float) $used_points;
+
 						// Criar uma mensagem descritiva para o log
 						$reason = sprintf(
 							'Devolução de %s pontos utilizados como desconto no pedido #%s que foi cancelado',
 							$points_to_restore,
 							$order_id
 						);
-						
+
 						// Devolver os pontos ao saldo do usuário (note o sinal positivo)
 						$result = wps_wpr_update_user_points_balance($user_id, $points_to_restore, $reason);
-						
+
 						if ($result) {
 							error_log("Pontos devolvidos com sucesso para o usuário: {$points_to_restore} pontos do pedido {$order_id}");
 							$order->save();
@@ -910,17 +1021,17 @@ if ($activated) {
 				} else {
 					// Obter a porcentagem de cashback configurada
 					$settings = get_option('wps_wpr_coupons_gallery', array());
-					$conversion_points = isset($settings['wps_wpr_coupon_conversion_points']) ? (float)$settings['wps_wpr_coupon_conversion_points'] : 1;
-					$conversion_price = isset($settings['wps_wpr_coupon_conversion_price']) ? (float)$settings['wps_wpr_coupon_conversion_price'] : 0;
-					
+					$conversion_points = isset($settings['wps_wpr_coupon_conversion_points']) ? (float) $settings['wps_wpr_coupon_conversion_points'] : 1;
+					$conversion_price = isset($settings['wps_wpr_coupon_conversion_price']) ? (float) $settings['wps_wpr_coupon_conversion_price'] : 0;
+
 					// Calcular o valor do cashback com base no total do pedido
-					$total_amount = (float)$order_data['total'];
+					$total_amount = (float) $order_data['total'];
 					$cashback_points = $total_amount * $conversion_price;
 
 					$reason = sprintf(
-						'Cashback de %d%% do pedido #%s no valor de %s %s', 
+						'Cashback de %d%% do pedido #%s no valor de %s %s',
 						($conversion_price * 100),
-						$order_id, 
+						$order_id,
 						$total_amount,
 						$order_data['currency']
 					);
@@ -932,7 +1043,7 @@ if ($activated) {
 					} else {
 						error_log("Falha ao remover cashback para o pedido {$order_id}");
 					}
-				}							
+				}
 			}
 		} catch (Exception $e) {
 			error_log('Error to process order status change for order: ' . $order_id . '. Exception: ' . $e->getMessage());
@@ -958,7 +1069,7 @@ if ($activated) {
 			$encoded_store_url = urlencode($store_url);
 
 			$api_url = STORE_BALANCE_API_URL . "/{$encoded_email}/{$encoded_store_url}";
-        
+
 			$response = wp_remote_get($api_url, array(
 				'timeout' => 15,
 				'headers' => wps_get_auth_headers(),
@@ -1065,7 +1176,7 @@ if ($activated) {
 			array(
 				'methods' => 'POST',
 				'callback' => 'bring_cashback_set_percentage',
-				'permission_callback' => '__return_true', 
+				'permission_callback' => '__return_true',
 			)
 		);
 	});
@@ -1214,27 +1325,27 @@ if ($activated) {
 
 			// Converte o valor para float para garantir cálculos corretos
 			$points_value = (float) $points_value;
-			
+
 			// Obtém o saldo atual do usuário
 			$current_balance = (float) get_user_meta($user_id, 'wps_wpr_points', true);
 			if (empty($current_balance)) {
 				$current_balance = 0;
 			}
-			
+
 			// Calcula o novo saldo
 			$new_balance = $current_balance + $points_value;
-					
+
 			// Determina o sinal (adição ou subtração)
 			$sign = $points_value >= 0 ? '+' : '-';
 			$points_difference = abs($points_value);
-			
+
 			// Atualiza o saldo do usuário
 			update_user_meta($user_id, 'wps_wpr_points', $new_balance);
-			
+
 			// Registra a transação no histórico de pontos
 			$points_details = get_user_meta($user_id, 'points_details', true);
 			$points_details = !empty($points_details) && is_array($points_details) ? $points_details : array();
-			
+
 			$today_date = date_i18n('Y-m-d h:i:sa');
 			$new_entry = array(
 				'admin_points' => (string) $points_difference,
@@ -1242,18 +1353,18 @@ if ($activated) {
 				'sign' => $sign,
 				'reason' => $reason,
 			);
-			
+
 			if (!isset($points_details['admin_points']) || !is_array($points_details['admin_points'])) {
 				$points_details['admin_points'] = array();
 			}
-			
+
 			$points_details['admin_points'][] = $new_entry;
-			
+
 			update_user_meta($user_id, 'points_details', $points_details);
-			
+
 			// Log da transação
 			error_log("Saldo atualizado para o usuário {$user_id}: Saldo anterior: {$current_balance}, Alteração: {$sign}{$points_difference}, Novo saldo: {$new_balance}, Motivo: {$reason}");
-			
+
 			return true;
 		} catch (Exception $e) {
 			error_log('Erro na função wps_wpr_update_user_points_balance: ' . $e->getMessage());
