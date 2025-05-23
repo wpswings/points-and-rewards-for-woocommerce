@@ -1,6 +1,8 @@
 !(function (e) {
 	"use strict";
 	e(document).ready(function () {
+		window.wps_has_date_validation = false;
+
 	  !0 ==
 	  jQuery(document).find("#wps_wpr_membership_setting_enable").prop("checked")
 		? jQuery(document).find(".parent_of_div").closest("tr").show()
@@ -171,19 +173,6 @@
 			.find("#wps_wpr_membership_product_list_" + s)
 			.select2();
 	  wps_wpr_object.check_pro_activate &&
-		// jQuery(document).on("click", ".wps_wpr_repeat_button", function () {
-		//   var r = "";
-		//   e(document).find(".wps_wpr_object_purchase").remove(),
-		// 	(r =
-		// 	  '<div class="wps_wpr_object_purchase"><p>' +
-		// 	  wps_wpr_object.pro_text +
-		// 	  ' <a target="_blanck" href="' +
-		// 	  wps_wpr_object.pro_link +
-		// 	  '">' +
-		// 	  wps_wpr_object.pro_link_text +
-		// 	  "</a></p></div>"),
-		// 	e(".parent_of_div").append(r);
-		// }),
 		wps_wpr_object.check_pro_activate &&
 		  e(document).on("click", "#wps_wpr_add_more", function () {
 			var r = "";
@@ -221,57 +210,84 @@
 			},
 		  });
 		}),
-		jQuery(document).on(
-		  "click",
-		  "#wps_wpr_points_on_previous_order",
-		  function () {
-			var e = jQuery("#wps_wpr_previous_order_point_value").val().trim();
-			if (
-			  (jQuery(this).prop("disabled", !0),
-			  jQuery(".wps_wpr_previous_order_notice").hide(),
-			  jQuery(".wps_wpr_previous_order_notice").html(""),
-			  parseInt(e) > 0)
-			) {
-			  var r = {
+
+		// JS for assign previous order points.
+		jQuery(document).on("click", "#wps_wpr_points_on_previous_order", function (e) {
+
+			const $btn = jQuery(this);
+			try {
+
+				// Try to run date validation (defined in optional file).
+				if ( typeof validateDateBeforeSubmit === "function" ) {
+
+					const proceed = validateDateBeforeSubmit($btn);
+					if (! proceed ) return false; // Stop if validation failed.
+				}
+			} catch (err) {
+
+				// No validation function defined — just continue.
+			}
+		
+			// Trigger actual points assignment
+			$btn.trigger("submit_points_assignment");
+		});
+
+		// ajax call to assign points on previous order.
+		jQuery(document).on("submit_points_assignment", "#wps_wpr_points_on_previous_order", function () {
+
+			const $btn       = jQuery(this);
+			const points     = jQuery("#wps_wpr_previous_order_point_value").val().trim();
+			const $notice    = jQuery(".wps_wpr_previous_order_notice");
+			const $loader    = jQuery(".wps_wpr_previous_order_loader");
+			const start_date = jQuery('#wps_wpr_previous_order_start_date').val();
+			const end_date   = jQuery('#wps_wpr_previous_order_end_date').val();
+
+			// Reset notice and disable button
+			$btn.prop("disabled", true);
+			$notice.hide().html("");
+
+			if (parseInt(points) > 0) {
+			  const data = {
 				action: "assign_points_on_previous_order",
 				nonce: wps_wpr_object.wps_wpr_nonce,
-				rewards_points: e,
+				rewards_points: points,
+				start_date : start_date,
+				end_date : end_date
 			  };
-			  jQuery(".wps_wpr_previous_order_loader").show(),
-				jQuery.ajax({
-				  method: "POST",
-				  url: wps_wpr_object.ajaxurl,
-				  data: r,
-				  success: function (e) {
-					jQuery(".wps_wpr_previous_order_loader").hide(),
-					  jQuery("#wps_wpr_points_on_previous_order").prop(
-						"disabled",
-						!1
-					  ),
-					  !0 == e.result
-						? (jQuery(".wps_wpr_previous_order_notice").show(),
-						  jQuery(".wps_wpr_previous_order_notice").css(
-							"color",
-							"green"
-						  ),
-						  jQuery(".wps_wpr_previous_order_notice").html(e.msg))
-						: (jQuery(".wps_wpr_previous_order_notice").show(),
-						  jQuery(".wps_wpr_previous_order_notice").css(
-							"color",
-							"red"
-						  ),
-						  jQuery(".wps_wpr_previous_order_notice").html(e.msg));
-				  },
-				});
-			} else
-			  jQuery("#wps_wpr_points_on_previous_order").prop("disabled", !1),
-				jQuery(".wps_wpr_previous_order_notice").show(),
-				jQuery(".wps_wpr_previous_order_notice").css("color", "red"),
-				jQuery(".wps_wpr_previous_order_notice").html(
-				  "Please enter valid points"
-				);
-		  }
-		);
+
+			  $loader.show();
+			  jQuery.ajax({
+				method: "POST",
+				url: wps_wpr_object.ajaxurl,
+				data: data,
+				success: function (response) {
+
+				  $loader.hide();
+				  $btn.prop("disabled", false);
+				  const color = response.result ? "green" : "red";
+				  $notice
+					.css("color", color)
+					.html(response.msg)
+					.show();
+				},
+				error: function () {
+				  $loader.hide();
+				  $btn.prop("disabled", false);
+				  $notice
+					.css("color", "red")
+					.html(wps_wpr_object.wps_ajax_error)
+					.show();
+				},
+			  });
+			} else {
+			  $btn.prop("disabled", false);
+			  $notice
+				.css("color", "red")
+				.html(wps_wpr_object.validpoint)
+				.show();
+			}
+		});
+
 	});
 	var r = function () {
 		jQuery(document)

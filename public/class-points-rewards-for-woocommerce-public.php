@@ -61,11 +61,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function enqueue_styles() {
 
 		// enqueue css for points tab design.
-		$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
-		$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
-		$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
 		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
-		if ( 1 === $wps_wpr_choose_account_page_temp ) {
+		if ( $this->wps_wpr_check_new_template_active() ) {
 
 			wp_enqueue_style( 'wps-account-page-design', WPS_RWPR_DIR_URL . 'public/css/points-and-rewards-for-woocommerce-account-page-design.css', array(), $this->version, 'all' );
 		}
@@ -80,6 +77,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// get cart restriction message.
 		$wps_wpr_other_settings           = get_option( 'wps_wpr_other_settings' );
+		$wps_wpr_other_settings           = ! empty( $wps_wpr_other_settings ) && is_array( $wps_wpr_other_settings ) ? $wps_wpr_other_settings : array();
 		$wps_wpr_restricted_cart_page_msg = ! empty( $wps_wpr_other_settings['wps_wpr_restricted_cart_page_msg'] ) ? $wps_wpr_other_settings['wps_wpr_restricted_cart_page_msg'] : esc_html__( 'You will not get any Reward Points', 'points-and-rewards-for-woocommerce' );
 
 		$coupon_settings          = get_option( 'wps_wpr_coupons_gallery', array() );
@@ -145,11 +143,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 
 		// enqueue css for points tab design.
-		$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
-		$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
-		$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
-		$wps_wpr_points_tab_layout_color  = ! empty( $wps_wpr_other_settings['wps_wpr_points_tab_layout_color'] ) ? $wps_wpr_other_settings['wps_wpr_points_tab_layout_color'] : '#0094ff';
-		if ( 1 === $wps_wpr_choose_account_page_temp ) {
+		if ( $this->wps_wpr_check_new_template_active() ) {
 
 			wp_register_script( 'wp-wps-account-page-design', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-for-woocommerce-account-page-design.js', array(), $this->version, true );
 			wp_enqueue_script( 'wp-wps-account-page-design' );
@@ -157,7 +151,8 @@ class Points_Rewards_For_WooCommerce_Public {
 				$this->plugin_name,
 				'points_tab_layout_obj',
 				array(
-					'points_tab_color' => $wps_wpr_points_tab_layout_color,
+					'points_tab_color' => ! empty( $wps_wpr_other_settings['wps_wpr_points_tab_layout_color'] ) ? $wps_wpr_other_settings['wps_wpr_points_tab_layout_color'] : '#0094ff',
+					'design_temp_type' => ! empty( $wps_wpr_other_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_other_settings['wps_wpr_choose_account_page_temp'] : '',
 				)
 			);
 		}
@@ -369,15 +364,23 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_account_points() {
 
+		$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
+		$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
+		$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : '';
 		if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
 			return;
 		}
 
 		$user_ID = get_current_user_ID();
 		$user    = new WP_User( $user_ID );
-
 		/* Include the template file in the woocommerce template*/
-		require plugin_dir_path( __FILE__ ) . 'partials/wps-wpr-points-template.php';
+		if ( 'temp_three' === $wps_wpr_choose_account_page_temp ) {
+
+			require plugin_dir_path( __FILE__ ) . 'partials/wps-wpr-template-three-points-tab.php';
+		} else {
+
+			require plugin_dir_path( __FILE__ ) . 'partials/wps-wpr-points-template.php';
+		}
 	}
 
 	/**
@@ -690,6 +693,10 @@ class Points_Rewards_For_WooCommerce_Public {
 					$get_points  = get_user_meta( $refere_id, 'wps_wpr_points', true );
 					$get_points  = ! empty( $get_points ) ? (int) $get_points : 0;
 					update_option( 'refereeid', $get_points );
+
+					// updating total referral count.
+					$wps_wpr_total_referral_count = ! empty( get_user_meta( $refere_id, 'wps_wpr_total_referral_count', true ) ) ? get_user_meta( $refere_id, 'wps_wpr_total_referral_count', true ) : 0;
+					update_user_meta( $refere_id, 'wps_wpr_total_referral_count', $wps_wpr_total_referral_count + 1 );
 
 					// filter that will add restriction.
 					$wps_wpr_referral_program = true;
@@ -2473,6 +2480,8 @@ class Points_Rewards_For_WooCommerce_Public {
 							// get applied coupon(points) value and total tax amount and calculate.
 							$coupon        = new WC_Coupon( $coupon_name );
 							$coupon_amount = $coupon->get_amount();
+							// hpos.
+							wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#$fee_id', $coupon_amount );
 							if ( ! empty( WC()->session->get( 'wps_wpr_tax_before_coupon' ) ) ) {
 
 								$coupon_amount = $coupon_amount - WC()->session->get( 'wps_wpr_tax_before_coupon' );
@@ -2486,8 +2495,6 @@ class Points_Rewards_For_WooCommerce_Public {
 							$coupon_amount            = $coupon_amount / ( $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
 							// WOOCS - WooCommerce Currency Switcher Compatibility.
 							$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
-							// hpos.
-							wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#$fee_id', $coupon_amount );
 							$fee_to_point    = ceil( $coupon_amount );
 							$remaining_point = $get_points - $fee_to_point;
 							if ( $remaining_point < 0 ) {
@@ -4800,6 +4807,109 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 		return $rates;
-	}	
+	}
+
+	/**
+	 * Display cart discount amount on thank you page.
+	 *
+	 * @param  array $totals totals.
+	 * @param  object $order order.
+	 * @param  string $tax_display tax_display.
+	 * @return void
+	 */
+	public function wps_wpr_add_cart_discount_to_order_totals( $totals, $order, $tax_display ) {
+
+		// Get custom cart discount from order meta.
+		$custom_cart_discount = wps_wpr_hpos_get_meta_data( $order->get_id(), 'wps_cart_discount#$fee_id', true );
+		$custom_cart_discount = ! empty( $custom_cart_discount ) ? floatval( $custom_cart_discount ) : 0;
+	
+		// Only proceed if there is a cart discount to show.
+		if ( $custom_cart_discount > 0 ) {
+
+			$new_totals = [];
+			foreach ( $totals as $key => $total ) {
+
+				$new_totals[ $key ] = $total;
+				if ( 'discount' === $key ) {
+
+					// Insert Cart Discount right after Discount.
+					$new_totals['cart_discount'] = [
+						'label' => esc_html__( 'Cart Discount:', 'points-and-rewards-for-woocommerce' ),
+						'value' => '-' . wc_price( $custom_cart_discount ),
+					];
+				}
+			}
+		}
+		return $new_totals;
+	}
+
+	/**
+	 * Check new design template active.
+	 *
+	 * @return bool
+	 */
+	public function wps_wpr_check_new_template_active() {
+
+		$flag                             = false;
+		$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
+		$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
+		$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : '';
+		if ( 'temp_two' === $wps_wpr_choose_account_page_temp || 'temp_three' === $wps_wpr_choose_account_page_temp ) {
+
+			$flag = true;
+		}
+		return $flag;
+	}
+
+	/**
+	 * This function is used to add class in body.
+	 *
+	 * @param  array $classes classes.
+	 * @return array
+	 */
+	public function wps_wpr_add_class_in_body_for_temp_three( $classes ) {
+
+		$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
+		$wps_wpr_others_settings          = ! empty( $wps_wpr_others_settings ) && is_array( $wps_wpr_others_settings ) ? $wps_wpr_others_settings : array();
+		$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : 0;
+		if ( 'temp_three' === $wps_wpr_choose_account_page_temp ) {
+
+			// Add a simple custom class.
+			$classes[] = 'wps_wpr_points_tab_temp_three_wrap';
+		}
+		return $classes;
+	}
+
+	/**
+	 * Get user rank by points.
+	 *
+	 * @param  string $target_user_id.
+	 * @return string
+	 */
+	function wps_wpr_get_user_rank_by_points( $target_user_id ) {
+
+		// Get all users ordered by their 'wps_wpr_points' in descending order.
+		$user_ids = ( new WP_User_Query( array(
+			'meta_key'   => 'wps_wpr_points',
+			'orderby'    => 'meta_value_num',
+			'order'      => 'DESC',
+			'fields'     => 'ID',
+			'meta_query' => array(
+				array(
+					'key'     => 'wps_wpr_points',
+					'value'   => 0,
+					'compare' => '>=',
+					'type'    => 'NUMERIC'
+				)
+			),
+		) ) )->get_results();
+
+		if ( empty( $user_ids ) || ! in_array( $target_user_id, $user_ids ) ) {
+			return false;
+		}
+
+		// Return the rank (array index + 1).
+		return array_search( $target_user_id, $user_ids ) + 1;
+	}
 
 }
