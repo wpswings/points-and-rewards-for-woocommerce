@@ -112,56 +112,59 @@ $wps_wpr_points_exp_onmyaccount = ! empty( $expiration_settings['wps_wpr_points_
 $membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
 $wps_wpr_mem_enable        = isset( $membership_settings_array['wps_wpr_membership_setting_enable'] ) ? intval( $membership_settings_array['wps_wpr_membership_setting_enable'] ) : 0;
 ?>
+<div class="wps-par_ma-badge-wrap">
 <!-- tooltip on hover -->
-<div class="wps-par_ma-tool-tip">
-	<svg
-	class="wps-par_matt-icon"
-	xmlns="http://www.w3.org/2000/svg"
-	width="22"
-	height="22"
-	viewBox="0 0 22 22"
-	fill="none"
-	>
-	<path
-		d="M11 21C16.5228 21 21 16.5228 21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21Z"
-		stroke="#E0E0E0"
-		stroke-width="2"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-	/>
-	<path
-		d="M11 7V11"
-		stroke="#E0E0E0"
-		stroke-width="2"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-	/>
-	<path
-		d="M11 15H11.01"
-		stroke="#E0E0E0"
-		stroke-width="2"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-	/>
-	</svg>
-	<div class="wps-par_matt-desc">
-	<h3><?php echo esc_html__( 'Ways to gain more points:', 'points-and-rewards-for-woocommerce' ); ?></h3>
-	<ul>
-	<li>
-		<?php
-			$wps_ways_to_gain_points_value = str_replace( '[Comment Points]', $wps_comment_value, $wps_ways_to_gain_points_value );
-			$wps_ways_to_gain_points_value = str_replace( '[Refer Points]', $wps_refer_value, $wps_ways_to_gain_points_value );
-			$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $wps_per_currency_spent_points, $wps_ways_to_gain_points_value );
-			$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $wps_per_currency_spent_price, $wps_ways_to_gain_points_value );
-			echo wp_kses_post( $wps_ways_to_gain_points_value );
-		?>
-	</li>
-	</ul>
+	<div class="wps-par_ma-tool-tip">
+		<svg
+		class="wps-par_matt-icon"
+		xmlns="http://www.w3.org/2000/svg"
+		width="22"
+		height="22"
+		viewBox="0 0 22 22"
+		fill="none"
+		>
+		<path
+			d="M11 21C16.5228 21 21 16.5228 21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21Z"
+			stroke="#E0E0E0"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+		<path
+			d="M11 7V11"
+			stroke="#E0E0E0"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+		<path
+			d="M11 15H11.01"
+			stroke="#E0E0E0"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+		</svg>
+		<div class="wps-par_matt-desc">
+		<h3><?php echo esc_html__( 'Ways to gain more points:', 'points-and-rewards-for-woocommerce' ); ?></h3>
+		<ul>
+		<li>
+			<fieldset>
+			<?php
+				$wps_ways_to_gain_points_value = str_replace( '[Comment Points]', $wps_comment_value, $wps_ways_to_gain_points_value );
+				$wps_ways_to_gain_points_value = str_replace( '[Refer Points]', $wps_refer_value, $wps_ways_to_gain_points_value );
+				$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $wps_per_currency_spent_points, $wps_ways_to_gain_points_value );
+				$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $wps_per_currency_spent_price, $wps_ways_to_gain_points_value );
+				echo wp_kses_post( $wps_ways_to_gain_points_value );
+			?>
+			</fieldset>
+		</li>
+		</ul>
+		</div>
 	</div>
-</div>
 
 <?php do_action( 'wps_wpr_top_account_page_section_hook', $user_id ); ?>
-<div class="wps_wpr_points_only wps_wpr_show_points_on_account_page">
+	<div class="wps_wpr_points_only wps_wpr_show_points_on_account_page">
 		<div class="wps_wpr_heading_para">
 			<span class="wps_wpr_heading"><?php echo esc_html( $wps_text_points_value ) . ':'; ?></span>
 			<span class="wps_wpr_total_earn_points"><?php echo esc_html( number_format( $get_points ) ); ?></span>
@@ -180,7 +183,6 @@ $wps_wpr_mem_enable        = isset( $membership_settings_array['wps_wpr_membersh
 			<?php
 		}
 		?>
-	</div>
 <?php
 if ( ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {
 	if ( 1 === $wps_wpr_points_exp_onmyaccount ) {
@@ -193,6 +195,8 @@ if ( ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {
 	}
 }
 ?>
+	</div>
+</div>
 
 <!-- Cards for detail -->
 <div class="wps-par_ma-desc-cards">
@@ -302,6 +306,7 @@ if ( ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {
 <!-- tab switch -->
 <div class="wps-par_ma-switch">
 	<div class="wps-par_mas-mob-head">
+		<span class="wps-p_masmh-item-label"><?php esc_html_e( 'Menu', 'points-and-rewards-for-woocommerce' ); ?></span>
 	<span class="wps-p_masmh-item wps-p_mash-i-menu">
 		<svg
 		width="25"

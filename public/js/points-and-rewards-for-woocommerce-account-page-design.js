@@ -35,7 +35,7 @@
         
                 // Activate the corresponding content item
                 if (suffix) {
-                $(".wps-p_masd-i-" + suffix).addClass("wps-p_masd-i--active");
+                    $(".wps-p_masd-i-" + suffix).addClass("wps-p_masd-i--active");
                 }
             });
         
@@ -46,6 +46,21 @@
                 .on("mouseleave", function () {
                 $(".wps-par_mas-head").removeClass("wps-par_mas-head--active");
             });
+
+            setTimeout(function(){
+                console.log('ok')
+                // Bullet filter for three
+                const fieldset = $('.wps_wpr_points_tab_temp_three_wrap .wps-par_ma-tool-tip .wps-par_matt-desc li fieldset');
+                const rawText = fieldset.text();
+                
+                const wrappedHtml = rawText
+                    .split('*')
+                    .filter(item => item.trim() !== '')
+                    .map(item => `<div class="bullet-wrap">• ${item.trim()}</div>`)
+                    .join('');
+
+                fieldset.html(wrappedHtml);
+            },500)
         } else {
 
             // js for points tab template two.
