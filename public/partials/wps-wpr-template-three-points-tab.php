@@ -725,7 +725,7 @@ if ( ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {
 			?>
 			<div class="wps-par_ma-notice par-notice-success">
 				<h4><?php esc_html_e( 'Points Redemption Restriction', 'points-and-rewards-for-woocommerce' ); ?></h4>
-				<p><?php esc_html_e( 'Points cannot be redeemed on sale products', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
+				<p><?php esc_html_e( 'Points cannot be redeemed on sale products', 'points-and-rewards-for-woocommerce' ); ?></p>
 			</div>
 			<?php
 		}
@@ -740,8 +740,8 @@ if ( ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {
 			$gateway = WC_Payment_Gateways::instance()->get_available_payment_gateways()[ $wps_wpr_choose_payment_method ] ?? null;
 			?>
 			<div class="wps-par_ma-notice par-notice-hold">
-				<h4><?php esc_html_e( 'Get Points via Payment Method', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
-				<p><?php /* translators: %s: payment */ printf( esc_html__( 'You will earn %1$s reward points when you choose the %2$s payment method at checkout.', 'ultimate-woocommerce-points-and-rewards' ), esc_html( $wps_wpr_payment_method_rewards_points ), $gateway ? esc_html( $gateway->get_title() ) : '' ); ?></p>
+				<h4><?php esc_html_e( 'Get Points via Payment Method', 'points-and-rewards-for-woocommerce' ); ?></h4>
+				<p><?php /* translators: %s: payment */ printf( esc_html__( 'You will earn %1$s reward points when you choose the %2$s payment method at checkout.', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_wpr_payment_method_rewards_points ), $gateway ? esc_html( $gateway->get_title() ) : '' ); ?></p>
 			</div>
 			<?php
 		}

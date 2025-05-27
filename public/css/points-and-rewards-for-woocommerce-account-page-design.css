@@ -1040,6 +1040,23 @@ p#wps_wpr_shared_points_notification b {
   justify-content: space-between;
 }
 
+.wps_wpr_points_tab_temp_three_wrap .wps_wpr_share_points_wrap.wps_wpr_main_section_all_wrap .wps_wpr_each_section #wps_wpr_shared_coupon_notification {
+    flex: 1 0 80%;
+    margin: 0;
+}
+
+.wps_wpr_points_tab_temp_three_wrap .wps_wpr_share_points_wrap.wps_wpr_main_section_all_wrap {
+  position: relative;
+}
+
+.wps_wpr_points_tab_temp_three_wrap .wps_wpr_share_points_wrap.wps_wpr_main_section_all_wrap #wps_wpr_coupon_loader img {
+    position: absolute;
+    bottom: 32px;
+    filter: invert(1);
+    right: 34px;
+    max-height: 32px;
+}
+
 @media (width<=768px) {
   .wps_wpr_points_tab_temp_three_wrap .wps-par_ma-badge-wrap {
     display: block;
