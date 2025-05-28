@@ -4818,30 +4818,30 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @return void
 	 */
 	public function wps_wpr_add_cart_discount_to_order_totals( $totals, $order, $tax_display ) {
-
-		// Get custom cart discount from order meta.
-		$custom_cart_discount = wps_wpr_hpos_get_meta_data( $order->get_id(), 'wps_cart_discount#$fee_id', true );
-		$custom_cart_discount = ! empty( $custom_cart_discount ) ? floatval( $custom_cart_discount ) : 0;
-	
-		// Only proceed if there is a cart discount to show.
-		if ( $custom_cart_discount > 0 ) {
-
-			$new_totals = [];
-			foreach ( $totals as $key => $total ) {
-
-				$new_totals[ $key ] = $total;
-				if ( 'discount' === $key ) {
-
-					// Insert Cart Discount right after Discount.
-					$new_totals['cart_discount'] = [
-						'label' => esc_html__( 'Cart Discount:', 'points-and-rewards-for-woocommerce' ),
-						'value' => '-' . wc_price( $custom_cart_discount ),
-					];
-				}
-			}
-		}
-		return $new_totals;
-	}
+ 
+    // Get and validate custom cart discount from order meta.
+        $discount = floatval( wps_wpr_hpos_get_meta_data( $order->get_id(), 'wps_cart_discount#$fee_id', true ) );
+ 
+        if ( $discount <= 0 ) {
+ 
+            return $totals;
+        }
+ 
+        $new_totals = [];
+        foreach ( $totals as $key => $total ) {
+ 
+            $new_totals[ $key ] = $total;
+            // Insert Cart Discount right after the Discount row.
+            if ( 'discount' === $key ) {
+                $new_totals['cart_discount'] = [
+                    'label' => esc_html__( 'Cart Discount:', 'points-and-rewards-for-woocommerce' ),
+                    'value' => '-' . wc_price( $discount ),
+                ];
+            }
+        }
+ 
+        return $new_totals;
+    }
 
 	/**
 	 * Check new design template active.

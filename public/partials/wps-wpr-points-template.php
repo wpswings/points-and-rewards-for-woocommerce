@@ -447,7 +447,6 @@ if ( ! is_array( $coupon_settings ) ) {
 	}
 
 	do_action( 'wps_wpr_add_coupon_generation', $user_id );
-	do_action( 'wps_wpr_list_coupons_generation', $user_id );
 
 	/*Start of the Referral Section*/
 	if ( $enable_wps_refer ) {
