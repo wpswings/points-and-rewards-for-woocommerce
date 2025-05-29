@@ -953,7 +953,7 @@ p#wps_wpr_shared_points_notification b {
   display: flex;
   flex-direction: row-reverse;
   gap: 20px;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .wps_wpr_points_tab_temp_three_wrap
@@ -972,10 +972,11 @@ p#wps_wpr_shared_points_notification b {
   align-items: unset;
   justify-content: center;
   flex: 0 0 40%;
-  padding: 15px;
+  padding: 25px 15px 15px;
   border-radius: 5px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   gap: 0;
+  position: relative;
 }
 
 .wps_wpr_points_tab_temp_three_wrap
@@ -1097,7 +1098,8 @@ p#wps_wpr_shared_points_notification b {
 .wps_wpr_points_tab_temp_three_wrap .wps-par_ma-tool-tip {
   display: inline-block;
   position: absolute;
-  right: 0;
+  right: 5px;
+  top: 5px;
 }
 
 .wps_wpr_points_tab_temp_three_wrap .wps-par_ma-tool-tip .wps-par_matt-icon {
@@ -1117,7 +1119,7 @@ p#wps_wpr_shared_points_notification b {
   width: max-content;
   right: 0;
   top: 30px;
-  max-width: 280px;
+  max-width: 320px;
   background: #fff;
   padding: 15px;
   border: 1px solid #ccc;
@@ -1179,6 +1181,7 @@ p#wps_wpr_shared_points_notification b {
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--wps-wpr-primary);
 }
 
 .wps_wpr_points_tab_temp_three_wrap
@@ -1593,11 +1596,11 @@ p#wps_wpr_shared_points_notification b {
   .wps_wpr_progress-bar
   li.current-level::after {
   background-color: #4bb543;
-  left: -50px;
+  left: calc(-50% + 7px);
 }
 
 .wps_wpr_points_tab_temp_three_wrap .wps_wpr_progress-bar li.current-level:last-of-type::after {
-    left: -66px;
+    left: calc(-50% + 7px);
 }
 
 .wps_wpr_error_notice_for_coupon_display {
@@ -1607,3 +1610,15 @@ p#wps_wpr_shared_points_notification b {
 .wps_wpr_points_tab_temp_three_wrap .wps_wpr_error_notice_for_coupon_display {
     display: block;
 }
+
+.wps_wpr_points_tab_temp_three_wrap a.wps_wpr_coupon_error_msg {
+  text-decoration: none !important;
+  color: var(--wps-wpr-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.wps_wpr_points_tab_temp_three_wrap .wps-par_ma-badge-wrap:has(#wps-par__badge-wrap) {
+    justify-content: space-between;
+}
+

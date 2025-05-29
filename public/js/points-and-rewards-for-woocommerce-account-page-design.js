@@ -15,7 +15,33 @@
         // js for points tab template three.
         if ( 'temp_three' == points_tab_layout_obj.design_temp_type ) {
 
-            // PAR jQuery Start
+            // make current tab is active and show the tab content.
+            const $tabs            = $('.wps-p_mash-item');
+            const $contents          = $('.wps-p_masd-item');
+            const activeTabClass     = 'wps-p_mash-i--active';
+            const activeContentClass = 'wps-p_masd-i--active';
+            const storageKey         = 'wps_active_tab_index';
+
+            // Restore active tab & content by index
+            const savedIndex = localStorage.getItem(storageKey);
+            if (savedIndex !== null) {
+                activateTab(parseInt(savedIndex));
+            }
+
+            // On tab click
+            $tabs.on('click', function() {
+                const index = $tabs.index(this);
+                activateTab(index);
+                localStorage.setItem(storageKey, index);
+            });
+
+            // Activate tab and corresponding content.
+            function activateTab(index) {
+                $tabs.removeClass(activeTabClass).eq(index).addClass(activeTabClass);
+                $contents.removeClass(activeContentClass).eq(index).addClass(activeContentClass);
+            }
+
+            // PAR jQuery Start wps-p_mash-i--active
             $(".wps-p_mash-item").on("click", function () {
                 // Remove active class from all nav and content items
                 $(".wps-p_mash-item").removeClass("wps-p_mash-i--active");
@@ -48,7 +74,6 @@
             });
 
             setTimeout(function(){
-                console.log('ok')
                 // Bullet filter for three
                 const fieldset = $('.wps_wpr_points_tab_temp_three_wrap .wps-par_ma-tool-tip .wps-par_matt-desc li fieldset');
                 const rawText = fieldset.text();

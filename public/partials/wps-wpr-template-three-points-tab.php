@@ -119,58 +119,59 @@ $wps_per_currency_spent_price  = isset( $coupon_settings['wps_wpr_coupon_convers
 $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_conversion_points'] ) ? intval( $coupon_settings['wps_wpr_coupon_conversion_points'] ) : 1;
 ?>
 <div class="wps-par_ma-badge-wrap">
-<!-- tooltip on hover -->
-	<div class="wps-par_ma-tool-tip">
-		<svg
-		class="wps-par_matt-icon"
-		xmlns="http://www.w3.org/2000/svg"
-		width="22"
-		height="22"
-		viewBox="0 0 22 22"
-		fill="none"
-		>
-		<path
-			d="M11 21C16.5228 21 21 16.5228 21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21Z"
-			stroke="#E0E0E0"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		/>
-		<path
-			d="M11 7V11"
-			stroke="#E0E0E0"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		/>
-		<path
-			d="M11 15H11.01"
-			stroke="#E0E0E0"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		/>
-		</svg>
-		<div class="wps-par_matt-desc">
-		<h3><?php echo esc_html__( 'Ways to gain more points:', 'points-and-rewards-for-woocommerce' ); ?></h3>
-		<ul>
-		<li>
-			<fieldset>
-			<?php
-				$wps_ways_to_gain_points_value = str_replace( '[Comment Points]', $wps_comment_value, $wps_ways_to_gain_points_value );
-				$wps_ways_to_gain_points_value = str_replace( '[Refer Points]', $wps_refer_value, $wps_ways_to_gain_points_value );
-				$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $wps_per_currency_spent_points, $wps_ways_to_gain_points_value );
-				$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $wps_per_currency_spent_price, $wps_ways_to_gain_points_value );
-				echo wp_kses_post( $wps_ways_to_gain_points_value );
-			?>
-			</fieldset>
-		</li>
-		</ul>
-		</div>
-	</div>
 
 	<?php do_action( 'wps_wpr_top_account_page_section_hook', $user_id ); ?>
 	<div class="wps_wpr_points_only wps_wpr_show_points_on_account_page">
+		<!-- tooltip on hover -->
+		<div class="wps-par_ma-tool-tip">
+			<svg
+			class="wps-par_matt-icon"
+			xmlns="http://www.w3.org/2000/svg"
+			width="22"
+			height="22"
+			viewBox="0 0 22 22"
+			fill="none"
+			>
+			<path
+				d="M11 21C16.5228 21 21 16.5228 21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21Z"
+				stroke="#E0E0E0"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M11 7V11"
+				stroke="#E0E0E0"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M11 15H11.01"
+				stroke="#E0E0E0"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			</svg>
+			<div class="wps-par_matt-desc">
+			<h3><?php echo esc_html__( 'Ways to gain more points:', 'points-and-rewards-for-woocommerce' ); ?></h3>
+			<ul>
+			<li>
+				<fieldset>
+				<?php
+					$wps_ways_to_gain_points_value = str_replace( '[Comment Points]', $wps_comment_value, $wps_ways_to_gain_points_value );
+					$wps_ways_to_gain_points_value = str_replace( '[Refer Points]', $wps_refer_value, $wps_ways_to_gain_points_value );
+					$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $wps_per_currency_spent_points, $wps_ways_to_gain_points_value );
+					$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $wps_per_currency_spent_price, $wps_ways_to_gain_points_value );
+					echo wp_kses_post( $wps_ways_to_gain_points_value );
+				?>
+				</fieldset>
+			</li>
+			</ul>
+			</div>
+		</div>
+
 		<div class="wps_wpr_heading_para">
 			<span class="wps_wpr_heading"><?php echo esc_html( $wps_text_points_value ) . ':'; ?></span>
 			<span class="wps_wpr_total_earn_points"><?php echo esc_html( number_format( $get_points ) ); ?></span>
@@ -660,13 +661,30 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 		<!-- Coupon section tab details -->
 		<div class="wps-p_masd-item wps-p_masd-i-coupon">
 			<?php
-			do_action( 'wps_wpr_add_coupon_generation', $user_id );
+			if ( wps_wpr_is_par_pro_plugin_active() ) {
+				do_action( 'wps_wpr_add_coupon_generation', $user_id );
+			} else {
+				?>
+				<div class="wps-par_ma-notice par-notice-error">
+					<h4><?php esc_html_e( 'This feature is part of our Pro plugin.', 'points-and-rewards-for-woocommerce' ); ?><a class="wps_wpr_coupon_error_msg" href="'https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro'"><?php esc_html_e( ' Click here to upgrade and unlock Pro features!', 'points-and-rewards-for-woocommerce' ); ?></a></h4>
+				</div>
+				<?php
+			}
 			?>
 		</div>
 		<!-- Claim section tab details -->
 		<div class="wps-p_masd-item wps-p_masd-i-claim">
 			<?php
-			do_action( 'wps_wpr_add_share_points', $user_id );
+			if ( wps_wpr_is_par_pro_plugin_active() ) {
+
+				do_action( 'wps_wpr_add_share_points', $user_id );
+			} else {
+				?>
+				<div class="wps-par_ma-notice par-notice-error">
+					<h4><?php esc_html_e( 'No relevant data found at the moment!.', 'points-and-rewards-for-woocommerce' ); ?></h4>
+				</div>
+				<?php
+			}
 			?>
 		</div>
 		<!-- Referral section tab details -->
