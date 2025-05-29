@@ -8,7 +8,7 @@
  * @since      1.0.0
  *
  * @package    points-and-rewards-for-wooCommerce
- * @subpackage points-and-rewards-for-wooCommerce/admin/partials   
+ * @subpackage points-and-rewards-for-wooCommerce/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,25 +20,25 @@ $settings_obj = new Points_Rewards_For_WooCommerce_Settings();
 
 if ( isset( $_POST['wps_wpr_save_sms_settings'] ) ) {
 
-    $wps_wpr_sms_setting_nonce = ! empty( $_POST['wps_wpr_sms_setting_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_sms_setting_nonce'] ) ) : '';
-    if ( wp_verify_nonce( $wps_wpr_sms_setting_nonce, 'sms-setting-nonce' ) ) {
+	$wps_wpr_sms_setting_nonce = ! empty( $_POST['wps_wpr_sms_setting_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_sms_setting_nonce'] ) ) : '';
+	if ( wp_verify_nonce( $wps_wpr_sms_setting_nonce, 'sms-setting-nonce' ) ) {
 
-        $arr                                        = array();
-        $arr['wps_wpr_enable_sms_api_settings']     = ! empty( $_POST['wps_wpr_enable_sms_api_settings'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_sms_api_settings'] ) ) : 'no';
-        $arr['wps_wpr_sms_account_sid']             = ! empty( $_POST['wps_wpr_sms_account_sid'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_sms_account_sid'] ) ) : '';
-        $arr['wps_wpr_sms_account_token']           = ! empty( $_POST['wps_wpr_sms_account_token'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_sms_account_token'] ) ) : '';
-        $arr['wps_wpr_sms_twilio_no']               = ! empty( $_POST['wps_wpr_sms_twilio_no'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_sms_twilio_no'] ) ) : '';
-        $arr['wps_wpr_active_deactive_sms_notify']  = ! empty( $_POST['wps_wpr_active_deactive_sms_notify'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_active_deactive_sms_notify'] ) ) : '';
+		$arr                                        = array();
+		$arr['wps_wpr_enable_sms_api_settings']     = ! empty( $_POST['wps_wpr_enable_sms_api_settings'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_sms_api_settings'] ) ) : 'no';
+		$arr['wps_wpr_sms_account_sid']             = ! empty( $_POST['wps_wpr_sms_account_sid'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_sms_account_sid'] ) ) : '';
+		$arr['wps_wpr_sms_account_token']           = ! empty( $_POST['wps_wpr_sms_account_token'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_sms_account_token'] ) ) : '';
+		$arr['wps_wpr_sms_twilio_no']               = ! empty( $_POST['wps_wpr_sms_twilio_no'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_sms_twilio_no'] ) ) : '';
+		$arr['wps_wpr_active_deactive_sms_notify']  = ! empty( $_POST['wps_wpr_active_deactive_sms_notify'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_active_deactive_sms_notify'] ) ) : '';
 		$arr['wps_wpr_enable_whatsapp_api_feature'] = ! empty( $_POST['wps_wpr_enable_whatsapp_api_feature'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_whatsapp_api_feature'] ) ) : '';
 		$arr['wps_wpr_whatsapp_access_token']       = ! empty( $_POST['wps_wpr_whatsapp_access_token'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_whatsapp_access_token'] ) ) : '';
 		$arr['wps_wpr_whatsapp_phone_number']       = ! empty( $_POST['wps_wpr_whatsapp_phone_number'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_whatsapp_phone_number'] ) ) : '';
 		$arr['wps_wpr_whatsapp_template_name']      = ! empty( $_POST['wps_wpr_whatsapp_template_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_whatsapp_template_name'] ) ) : '';
 		$arr['wps_wpr_deactivate_whatsapp_api']     = ! empty( $_POST['wps_wpr_deactivate_whatsapp_api'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_deactivate_whatsapp_api'] ) ) : '';
-        update_option( 'wps_wpr_save_sms_settings', $arr );
-    }
+		update_option( 'wps_wpr_save_sms_settings', $arr );
+	}
 
-    // Show saved msg.
-    $settings_obj->wps_wpr_settings_saved();
+	// Show saved msg.
+	$settings_obj->wps_wpr_settings_saved();
 }
 
 $wps_wpr_save_sms_settings           = get_option( 'wps_wpr_save_sms_settings' );
@@ -57,7 +57,7 @@ $url                                 = '<a href="https://console.twilio.com/?fra
 $num                                 = '<a href="https://console.twilio.com/us1/develop/phone-numbers/manage/search?isoCountry=US&types[]=Local&types[]=Mobile&types[]=Tollfree&capabilities[]=Fax&capabilities[]=Mms&capabilities[]=Sms&capabilities[]=Voice&searchTerm=&searchFilter=left&searchType=number" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
 $whtasapp_url                        = '<a href="https://business.facebook.com/business/loginpage/?next=https%3A%2F%2Fdevelopers.facebook.com%2Fapps%2F967217188484687%2Fwhatsapp-business%2Fwa-dev-console%2F%3Fbusiness_id%3D1466242894064567#" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
 $whatsapp_num                        = '<a href="https://developers.facebook.com/apps/1306844587187157/whatsapp-business/wa-dev-console/?business_id=1466242894064567" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
-$preview                             = '<a href="#" target="_blank" class="wps_wpr_preview_whatsapp_sample">Preview Sample Template</a>';
+$wps_wpr_preview                     = '<a href="#" target="_blank" class="wps_wpr_preview_whatsapp_sample">Preview Sample Template</a>';
 ?>
 
 <div class="wps_wpr_user_badges_main_wrappers">
@@ -73,28 +73,28 @@ $preview                             = '<a href="#" target="_blank" class="wps_w
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Enable this setting to receive an SMS notification whenever a user earns or spends points.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
-                <article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_sms_account_sid" class="wps_wpr_general_label"><?php esc_html_e( 'Enter Account SID', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_sms_account_sid" class="wps_wpr_sms_account_sid" value="<?php echo esc_html( $wps_wpr_sms_account_sid ); ?>">
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'Please enter your Account SID. To create a SID, %s', 'points-and-rewards-for-woocommerce' ), wp_kses_post( $url ) ); ?></span>
 					</div>
 				</article>
-                <article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_sms_account_token" class="wps_wpr_general_label"><?php esc_html_e( 'Enter Account Auth Token', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_sms_account_token" class="wps_wpr_sms_account_token" value="<?php echo esc_html( $wps_wpr_sms_account_token ); ?>">
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: token */ printf( esc_html__( 'Please enter your auth token. To create a auth token, %s', 'points-and-rewards-for-woocommerce' ), wp_kses_post( $url ) ); ?></span>
 					</div>
 				</article>
-                <article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_sms_twilio_no" class="wps_wpr_general_label"><?php esc_html_e( 'Enter Account Twilio Number', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_sms_twilio_no" class="wps_wpr_sms_twilio_no" value="<?php echo esc_html( $wps_wpr_sms_twilio_no ); ?>">
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: twilio no */ printf( esc_html__( 'Please enter a valid twilio account number. To Buy a Twilio Number, %s', 'points-and-rewards-for-woocommerce' ), wp_kses_post( $num ) ); ?></span>
 					</div>
 				</article>
-                <article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_active_deactive_sms_notify" class="wps_wpr_general_label"><?php esc_html_e( 'Enable this setting to allow users to deactivate SMS notifications.', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_active_deactive_sms_notify" class="wps_wpr_active_deactive_sms_notify" value="yes" <?php checked( $wps_wpr_active_deactive_sms_notify, 'yes' ); ?>>
@@ -129,7 +129,7 @@ $preview                             = '<a href="#" target="_blank" class="wps_w
 					<label for="wps_wpr_whatsapp_template_name" class="wps_wpr_general_label"><?php esc_html_e( 'Enter whatsapp template name', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_whatsapp_template_name" class="wps_wpr_whatsapp_template_name" value="<?php echo esc_html( $wps_wpr_whatsapp_template_name ); ?>">
-						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'The WhatsApp template name must remain fixed and cannot be modified. You can use this name when creating a custom template, %s', 'points-and-rewards-for-woocommerce' ), wp_kses_post( $preview ) ); ?></span>
+						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php /* translators: %s: sid */ printf( esc_html__( 'The WhatsApp template name must remain fixed and cannot be modified. You can use this name when creating a custom template, %s', 'points-and-rewards-for-woocommerce' ), wp_kses_post( $wps_wpr_preview ) ); ?></span>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
