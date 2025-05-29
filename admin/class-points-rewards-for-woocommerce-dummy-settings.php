@@ -86,6 +86,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		add_filter( 'wps_rwpr_add_setting_tab', array( $this, 'wps_add_api_dummy_settings_tab' ), 23, 1 );
 		add_filter( 'wps_wpr_others_settings', array( $this, 'wps_wpr_total_earning_dummy_points_settings' ), 12, 1 );
 		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_extend_dummy_order_rewards_settings' ), 10, 1 );
+		add_action( 'wps_wpr_extend_previous_order_rewards_settings', array( $this, 'wps_wpr_previous_org_order_date_wise_html' ) );
 	}
 
 	/**
@@ -982,6 +983,14 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'desc_tip'          => __( 'How many times this coupon can be used before the Coupon is void. Keep value "0" for no limit.', 'points-and-rewards-for-woocommerce' ),
 				'default'           => 0,
 			),
+			array(
+					'title' => __( 'Enable to let users share coupons with friends.', 'ultimate-woocommerce-points-and-rewards' ),
+					'type'  => 'checkbox',
+					'id'  => 'wps_wpr_share_coupon_to_users',
+					'class' => 'input-text wps_wpr_pro_plugin_settings',
+					'desc'  => __( 'Activate this option to let users distribute their coupons to friends.', 'ultimate-woocommerce-points-and-rewards' ),
+					'desc_tip' => __( 'Enable coupon sharing functionality for user accounts.', 'ultimate-woocommerce-points-and-rewards' ),
+				),
 			array(
 				'type' => 'sectionend',
 			),
@@ -2541,6 +2550,25 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 
 		$general_settings  = $this->wps_dummy_insert_keys_value_pair( $general_settings, $my_new_inserted_array, 72 );
 		return $general_settings;
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_previous_org_order_date_wise_html() {
+
+		?>
+		<label for="wps_wpr_previous_order_start_date" class="wps_wpr_disabled_pro_plugin wps_wpr_pro_plugin_settings">
+			<?php esc_html_e( 'Start Date :', 'ultimate-woocommerce-points-and-rewards' ); ?>
+			<input type="date" id="wps_wpr_previous_order_start_date" class="wps_wpr_disabled_pro_plugin">
+		</label>
+		<label for="wps_wpr_previous_order_end_date" class="wps_wpr_disabled_pro_plugin wps_wpr_pro_plugin_settings">
+			<?php esc_html_e( 'End Date :', 'ultimate-woocommerce-points-and-rewards' ); ?>
+			<input type="date" id="wps_wpr_previous_order_end_date" class="wps_wpr_disabled_pro_plugin">
+		</label>
+		<?php
 	}
 
 }
