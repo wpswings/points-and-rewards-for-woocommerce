@@ -1537,3 +1537,16 @@ article.wps_wpr_general_row input[type=text],article.wps_wpr_general_row input[t
     width: 100%;
     min-height: 40px;
 }
+
+#wps_rwpr_setting_wrapper .wps_wpr_instructions_tabledata>p, #wps_rwpr_setting_wrapper .wps_wpr_previous_button_wrappers>label, #wps_rwpr_setting_wrapper .wps_wpr_previous_button_wrappers>input {
+    margin: 0 0 10px;
+}
+
+@media screen and (max-width: 768px) {
+    #wps_rwpr_setting_wrapper .wps_wpr_instructions_tabledata>p, #wps_rwpr_setting_wrapper .wps_wpr_previous_button_wrappers>label, #wps_rwpr_setting_wrapper .wps_wpr_previous_button_wrappers>input {
+        margin: 0 0 10px;
+        display: inline-block;
+        width: 100%;
+        max-width: 100%;
+    }
+}

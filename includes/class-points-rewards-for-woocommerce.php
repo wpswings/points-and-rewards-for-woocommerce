@@ -239,6 +239,9 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_large_scv_import', $plugin_admin, 'wps_large_scv_import' );
 		// email preview.
 		$this->loader->add_filter( 'wps_wpr_preview_email_content', $plugin_admin, 'wps_wpr_preview_email_content_call', 10, 1 );
+		// manage discount on order edit page.
+		$this->loader->add_filter( 'woocommerce_admin_order_totals_after_discount', $plugin_admin, 'wps_wpr_admin_order_coupon_display', 10, 1 );
+		$this->loader->add_filter( 'woocommerce_order_get_total_discount', $plugin_admin, 'wps_wpr_order_total_discount', 10, 2 );
 	}
 
 	/**
@@ -306,7 +309,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_cart_contents_changed', $plugin_public, 'wps_wpr_woocommerce_content_change' );
 			// custom_code.
 
-			$this->loader->add_action( 'wps_wpr_add_coupon_generation', $plugin_public, 'wps_wpr_add_wallet_generation', 10, 1 );
+			$this->loader->add_action( 'wps_wpr_add_share_points', $plugin_public, 'wps_wpr_add_wallet_generation', 10, 1 );
 			$this->loader->add_action( 'wp_ajax_wps_wpr_generate_custom_wallet', $plugin_public, 'wps_wpr_generate_custom_wallet' );
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_generate_custom_wallet', $plugin_public, 'wps_wpr_generate_custom_wallet' );
 
@@ -351,6 +354,10 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_stop_sms_whatsapp_notify', $plugin_public, 'wps_wpr_stop_sms_whatsapp_notify_call', 10 );
 			// free shipping.
 			$this->loader->add_filter( 'woocommerce_package_rates', $plugin_public, 'wps_wpr_membership_free_shipping', 10, 2 );
+			// display cart discount on thank you page.
+			$this->loader->add_filter( 'woocommerce_get_order_item_totals', $plugin_public, 'wps_wpr_add_cart_discount_to_order_totals', 10, 3 );
+			// class add in body for third temp.
+			$this->loader->add_filter( 'body_class', $plugin_public, 'wps_wpr_add_class_in_body_for_temp_three', 10, 1 );
 		}
 	}
 

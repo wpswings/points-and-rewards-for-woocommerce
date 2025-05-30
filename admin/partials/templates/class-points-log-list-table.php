@@ -2166,18 +2166,17 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		<table class="form-table wps_wpr_general_setting">
 			<tbody>
 				<tr valign="top">
-					<td class="wps_wpr_instructions_tabledata">
+					<td class="wps_wpr_instructions_tabledata" colspan="2">
 						<p><?php esc_html_e( 'This will help you to apply points to all previous order which are completed.', 'points-and-rewards-for-woocommerce' ); ?></p>
-					</td>
-					<td class="wps_wpr_instructions_tabledata_btn">
-						<p class="wps_wpr_button_to_assign_points">
-							<span class="wps_wpr_previous_button_wrappers">
+						<div class="wps_wpr_button_to_assign_points">
+							<div class="wps_wpr_previous_button_wrappers">
+								<?php do_action( 'wps_wpr_extend_previous_order_rewards_settings' ); ?>
 								<input type="number" min="1" id="wps_wpr_previous_order_point_value">
 								<input type="button" id="wps_wpr_points_on_previous_order" class="button-primary woocommerce-save-button" value="<?php esc_html_e( 'Assign Points', 'points-and-rewards-for-woocommerce' ); ?>" />
 								<img class="wps_wpr_previous_order_loader" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/images/loading.gif' ); ?>">
 								<span class="wps_wpr_previous_order_notice"></span>
-							</span>
-						</p>
+							</div>
+						</div>
 					</td>
 				</tr>
 			</tbody>

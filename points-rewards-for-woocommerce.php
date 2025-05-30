@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           2.7.0
+ * Version:           2.8.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
@@ -22,10 +22,11 @@
  * Domain Path:       /languages
  * Requires Plugins: woocommerce
  *
- * Requires at least    : 5.5.0
- * Tested up to         : 6.8.0
+ * WP Requires at least : 5.5.0
+ * WP Tested up to      : 6.8.1
  * WC requires at least : 5.5.0
- * WC tested up to      : 9.8.2
+ * WC tested up to      : 9.8.5
+ * Requires PHP         : 7
  *
  * License:           GNU General Public License v3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -42,18 +43,18 @@ require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 // To Activate plugin only when WooCommerce is active.
 $activated      = false;
-$active_plugins = get_option('active_plugins', array());
+$active_plugins = get_option( 'active_plugins', array() );
 
 // Merge with sitewide plugins if multisite.
 if ( is_multisite() ) {
 
-    $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+	$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
 }
 
 // Check if WooCommerce is installed and active.
 if ( file_exists( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' ) && in_array( 'woocommerce/woocommerce.php', $active_plugins, true ) ) {
 
-    $activated = true;
+	$activated = true;
 }
 
 $plug = get_plugins();
@@ -63,7 +64,7 @@ if ( $activated ) {
 	// Declare HPOS compatibility.
 	add_action(
 		'before_woocommerce_init',
-		function() {
+		function () {
 			if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 			}
@@ -80,7 +81,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.7.0' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.8.0' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -308,7 +309,6 @@ if ( $activated ) {
 		define_rewardeem_woocommerce_points_rewards_constants();
 		$plugin = new Points_Rewards_For_Woocommerce();
 		$plugin->run();
-
 	}
 	run_rewardeem_woocommerce_points_rewards();
 
@@ -568,7 +568,7 @@ if ( $activated ) {
 			$wps_wpr_save_sms_settings          = ! empty( $wps_wpr_save_sms_settings ) && is_array( $wps_wpr_save_sms_settings ) ? $wps_wpr_save_sms_settings : array();
 			$wps_wpr_enable_sms_api_settings    = ! empty( $wps_wpr_save_sms_settings['wps_wpr_enable_sms_api_settings'] ) ? $wps_wpr_save_sms_settings['wps_wpr_enable_sms_api_settings'] : 'no';
 			if ( 'yes' === $wps_wpr_enable_sms_api_settings && ! empty( $user_id ) ) {
-				
+
 				// get sms integration settings.
 				$wps_wpr_sms_account_sid   = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_account_sid'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_account_sid'] : '';
 				$wps_wpr_sms_auth_token    = ! empty( $wps_wpr_save_sms_settings['wps_wpr_sms_account_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_sms_account_token'] : '';
@@ -615,45 +615,162 @@ if ( $activated ) {
 	function wps_wpr_get_country_code_by_name( $country_code_name ) {
 
 		$countries = array(
-			"AF" => ["name" => "Afghanistan", "dial_code" => "+93"],
-			"AL" => ["name" => "Albania", "dial_code" => "+355"],
-			"DZ" => ["name" => "Algeria", "dial_code" => "+213"],
-			"US" => ["name" => "United States", "dial_code" => "+1"],
-			"GB" => ["name" => "United Kingdom", "dial_code" => "+44"],
-			"IN" => ["name" => "India", "dial_code" => "+91"],
-			"AU" => ["name" => "Australia", "dial_code" => "+61"],
-			"CA" => ["name" => "Canada", "dial_code" => "+1"],
-			"CN" => ["name" => "China", "dial_code" => "+86"],
-			"FR" => ["name" => "France", "dial_code" => "+33"],
-			"DE" => ["name" => "Germany", "dial_code" => "+49"],
-			"IT" => ["name" => "Italy", "dial_code" => "+39"],
-			"JP" => ["name" => "Japan", "dial_code" => "+81"],
-			"MX" => ["name" => "Mexico", "dial_code" => "+52"],
-			"RU" => ["name" => "Russia", "dial_code" => "+7"],
-			"ZA" => ["name" => "South Africa", "dial_code" => "+27"],
-			"KR" => ["name" => "South Korea", "dial_code" => "+82"],
-			"ES" => ["name" => "Spain", "dial_code" => "+34"],
-			"SE" => ["name" => "Sweden", "dial_code" => "+46"],
-			"CH" => ["name" => "Switzerland", "dial_code" => "+41"],
-			"AE" => ["name" => "United Arab Emirates", "dial_code" => "+971"],
-			"BR" => ["name" => "Brazil", "dial_code" => "+55"],
-			"AR" => ["name" => "Argentina", "dial_code" => "+54"],
-			"NG" => ["name" => "Nigeria", "dial_code" => "+234"],
-			"PK" => ["name" => "Pakistan", "dial_code" => "+92"],
-			"BD" => ["name" => "Bangladesh", "dial_code" => "+880"],
-			"EG" => ["name" => "Egypt", "dial_code" => "+20"],
-			"TR" => ["name" => "Turkey", "dial_code" => "+90"],
-			"NL" => ["name" => "Netherlands", "dial_code" => "+31"],
-			"BE" => ["name" => "Belgium", "dial_code" => "+32"],
-			"AT" => ["name" => "Austria", "dial_code" => "+43"],
-			"TH" => ["name" => "Thailand", "dial_code" => "+66"],
-			"MY" => ["name" => "Malaysia", "dial_code" => "+60"],
-			"SG" => ["name" => "Singapore", "dial_code" => "+65"],
-			"NZ" => ["name" => "New Zealand", "dial_code" => "+64"],
-			"PH" => ["name" => "Philippines", "dial_code" => "+63"],
-			"VN" => ["name" => "Vietnam", "dial_code" => "+84"],
-			"IL" => ["name" => "Israel", "dial_code" => "+972"],
-			"SA" => ["name" => "Saudi Arabia", "dial_code" => "+966"],
+			'AF' => array(
+				'name' => 'Afghanistan',
+				'dial_code' => '+93',
+			),
+			'AL' => array(
+				'name' => 'Albania',
+				'dial_code' => '+355',
+			),
+			'DZ' => array(
+				'name' => 'Algeria',
+				'dial_code' => '+213',
+			),
+			'US' => array(
+				'name' => 'United States',
+				'dial_code' => '+1',
+			),
+			'GB' => array(
+				'name' => 'United Kingdom',
+				'dial_code' => '+44',
+			),
+			'IN' => array(
+				'name' => 'India',
+				'dial_code' => '+91',
+			),
+			'AU' => array(
+				'name' => 'Australia',
+				'dial_code' => '+61',
+			),
+			'CA' => array(
+				'name' => 'Canada',
+				'dial_code' => '+1',
+			),
+			'CN' => array(
+				'name' => 'China',
+				'dial_code' => '+86',
+			),
+			'FR' => array(
+				'name' => 'France',
+				'dial_code' => '+33',
+			),
+			'DE' => array(
+				'name' => 'Germany',
+				'dial_code' => '+49',
+			),
+			'IT' => array(
+				'name' => 'Italy',
+				'dial_code' => '+39',
+			),
+			'JP' => array(
+				'name' => 'Japan',
+				'dial_code' => '+81',
+			),
+			'MX' => array(
+				'name' => 'Mexico',
+				'dial_code' => '+52',
+			),
+			'RU' => array(
+				'name' => 'Russia',
+				'dial_code' => '+7',
+			),
+			'ZA' => array(
+				'name' => 'South Africa',
+				'dial_code' => '+27',
+			),
+			'KR' => array(
+				'name' => 'South Korea',
+				'dial_code' => '+82',
+			),
+			'ES' => array(
+				'name' => 'Spain',
+				'dial_code' => '+34',
+			),
+			'SE' => array(
+				'name' => 'Sweden',
+				'dial_code' => '+46',
+			),
+			'CH' => array(
+				'name' => 'Switzerland',
+				'dial_code' => '+41',
+			),
+			'AE' => array(
+				'name' => 'United Arab Emirates',
+				'dial_code' => '+971',
+			),
+			'BR' => array(
+				'name' => 'Brazil',
+				'dial_code' => '+55',
+			),
+			'AR' => array(
+				'name' => 'Argentina',
+				'dial_code' => '+54',
+			),
+			'NG' => array(
+				'name' => 'Nigeria',
+				'dial_code' => '+234',
+			),
+			'PK' => array(
+				'name' => 'Pakistan',
+				'dial_code' => '+92',
+			),
+			'BD' => array(
+				'name' => 'Bangladesh',
+				'dial_code' => '+880',
+			),
+			'EG' => array(
+				'name' => 'Egypt',
+				'dial_code' => '+20',
+			),
+			'TR' => array(
+				'name' => 'Turkey',
+				'dial_code' => '+90',
+			),
+			'NL' => array(
+				'name' => 'Netherlands',
+				'dial_code' => '+31',
+			),
+			'BE' => array(
+				'name' => 'Belgium',
+				'dial_code' => '+32',
+			),
+			'AT' => array(
+				'name' => 'Austria',
+				'dial_code' => '+43',
+			),
+			'TH' => array(
+				'name' => 'Thailand',
+				'dial_code' => '+66',
+			),
+			'MY' => array(
+				'name' => 'Malaysia',
+				'dial_code' => '+60',
+			),
+			'SG' => array(
+				'name' => 'Singapore',
+				'dial_code' => '+65',
+			),
+			'NZ' => array(
+				'name' => 'New Zealand',
+				'dial_code' => '+64',
+			),
+			'PH' => array(
+				'name' => 'Philippines',
+				'dial_code' => '+63',
+			),
+			'VN' => array(
+				'name' => 'Vietnam',
+				'dial_code' => '+84',
+			),
+			'IL' => array(
+				'name' => 'Israel',
+				'dial_code' => '+972',
+			),
+			'SA' => array(
+				'name' => 'Saudi Arabia',
+				'dial_code' => '+966',
+			),
 		);
 
 		$code = isset( $countries[ $country_code_name ] ) ? $countries[ $country_code_name ]['dial_code'] : '';
@@ -663,6 +780,8 @@ if ( $activated ) {
 	/**
 	 * This function is used to send offer notification on whatsapp.
 	 *
+	 * @param  string $user_id user_id.
+	 * @param  string $message message.
 	 * @return void
 	 */
 	function wps_wpr_send_messages_on_whatsapp( $user_id, $message ) {
@@ -688,32 +807,32 @@ if ( $activated ) {
 					'Content-Type: application/json',
 					'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,
 				);
-				
+
 				$curl_data = array(
-					"messaging_product" => "whatsapp",
-					"to" => $whatsapp_number,
-					"type" => "template",
-					"template" => array(
-						"name" => $wps_wpr_whatsapp_msg_temp_name,
-						"language" => array(
-							"code" => "en_US"
+					'messaging_product' => 'whatsapp',
+					'to' => $whatsapp_number,
+					'type' => 'template',
+					'template' => array(
+						'name' => $wps_wpr_whatsapp_msg_temp_name,
+						'language' => array(
+							'code' => 'en_US',
 						),
-						"components" => array(
+						'components' => array(
 							array(
-								"type" => "body",
-								"parameters" => array(
+								'type' => 'body',
+								'parameters' => array(
 									array(
-										"type" => "text",
-										"text" => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
+										'type' => 'text',
+										'text' => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
 									),
 									array(
-										"type" => "text",
-										"text" => $message,
+										'type' => 'text',
+										'text' => $message,
 									),
-								)
-							)
-						)
-					)
+								),
+							),
+						),
+					),
 				);
 
 				$data = json_encode( $curl_data );
@@ -723,24 +842,27 @@ if ( $activated ) {
 
 				$curl = curl_init();
 
-				curl_setopt_array( $curl, array(
-				CURLOPT_URL => 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages',
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_ENCODING => '',
-				CURLOPT_MAXREDIRS => 10,
-				CURLOPT_TIMEOUT => 0,
-				CURLOPT_FOLLOWLOCATION => true,
-				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-				CURLOPT_CUSTOMREQUEST => 'POST',
-				CURLOPT_POSTFIELDS =>$data,
-				CURLOPT_HTTPHEADER => $api_header,
-				));
+				curl_setopt_array(
+					$curl,
+					array(
+						CURLOPT_URL => 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages',
+						CURLOPT_RETURNTRANSFER => true,
+						CURLOPT_ENCODING => '',
+						CURLOPT_MAXREDIRS => 10,
+						CURLOPT_TIMEOUT => 0,
+						CURLOPT_FOLLOWLOCATION => true,
+						CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+						CURLOPT_CUSTOMREQUEST => 'POST',
+						CURLOPT_POSTFIELDS => $data,
+						CURLOPT_HTTPHEADER => $api_header,
+					)
+				);
 
-				$response = curl_exec($curl);
+				$response = curl_exec( $curl );
 
 				// LOG THE Result.
-				$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );				
-				curl_close($curl);
+				$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );
+				curl_close( $curl );
 
 				$response = json_decode( $response, true );
 			}

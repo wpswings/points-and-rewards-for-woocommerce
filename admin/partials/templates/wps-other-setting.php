@@ -126,17 +126,29 @@ $wps_wpr_other_settings = array(
 		'type' => 'sectionend',
 	),
 	array(
-		'title' => __( 'Point Tab Layout Setting', 'points-and-rewards-for-woocommerce' ),
+		'title' => __( 'Point Tab Layout Settings', 'points-and-rewards-for-woocommerce' ),
 		'type'  => 'title',
 	),
 	array(
-		'title'    => __( 'Points Tab New layout', 'points-and-rewards-for-woocommerce' ),
-		'type'     => 'checkbox',
+		'title'    => __( 'Select a Points tab template for My Account.', 'points-and-rewards-for-woocommerce' ),
 		'id'       => 'wps_wpr_choose_account_page_temp',
-		'class'    => 'input-text',
-		'desc_tip' => __( 'To utilize the new template for the My Account section within the points tab.', 'points-and-rewards-for-woocommerce' ),
-		'default'  => 0,
-		'desc'     => __( ' Activate this setting to enable the new layout for the points tab. ', 'points-and-rewards-for-woocommerce' ),
+		'class'    => 'wps_wgm_new_woo_ver_style_select',
+		'type'     => 'singleSelectDropDownWithKeyvalue',
+		'desc_tip' => __( 'Choose a layout template for the Points section under the My Account tab.', 'points-and-rewards-for-woocommerce' ),
+		'custom_attribute' => array(
+			array(
+				'id'   => 'temp_one',
+				'name' => __( 'Template One', 'points-and-rewards-for-woocommerce' ),
+			),
+			array(
+				'id'   => 'temp_two',
+				'name' => __( 'Template Two', 'points-and-rewards-for-woocommerce' ),
+			),
+			array(
+				'id'   => 'temp_three',
+				'name' => __( 'Template Three', 'points-and-rewards-for-woocommerce' ),
+			),
+		),
 	),
 	array(
 		'id'       => 'wps_wpr_points_tab_layout_color',
@@ -265,6 +277,10 @@ $other_settings = get_option( 'wps_wpr_other_settings', array() );
 									}
 									if ( 'select' == $value['type'] ) {
 										$settings_obj->wps_wpr_generate_select_dropdown( $value, $other_settings );
+									}
+									if ( 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
+
+										$settings_obj->wps_wpr_org_generate_single_select_drop_down_with_key_value_pair( $value, $other_settings );
 									}
 									do_action( 'wps_wpr_additional_other_settings', $value, $other_settings );
 									?>
