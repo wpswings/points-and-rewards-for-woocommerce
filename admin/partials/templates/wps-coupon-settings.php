@@ -85,13 +85,13 @@ if ( isset( $_POST['wps_wpr_save_coupon'] ) && isset( $_POST['wps-wpr-nonce'] ) 
 			$postdata              = $settings_obj->check_is_settings_is_not_empty( $wps_wpr_coupon_settings, $_POST );
 			if ( is_array( $postdata ) && ! empty( $postdata ) ) {
 				foreach ( $postdata as $key => $value ) {
-					$value                         = stripcslashes( $value );
-					$value                         = sanitize_text_field( $value );
-					$coupon_settings_array[ $key ] = $value;
+
+					$coupon_settings_array[ $key ] = map_deep( wp_unslash( $value ), 'sanitize_text_field' );
 				}
 			}
-			if ( is_array( $coupon_settings_array ) && ! empty( $coupon_settings_array ) ) {
-				/*This is coupon settings filter */
+
+			if ( is_array( $coupon_settings_array ) ) {
+
 				update_option( 'wps_wpr_coupons_gallery', $coupon_settings_array );
 			}
 			do_action( 'wps_wpr_coupon_settings_save_option', $coupon_settings_array );

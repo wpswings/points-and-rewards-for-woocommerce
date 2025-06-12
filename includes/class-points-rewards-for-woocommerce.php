@@ -112,18 +112,18 @@ class Points_Rewards_For_Woocommerce {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-points-rewards-for-woocommerce-loader.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-points-rewards-for-woocommerce-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-points-rewards-for-woocommerce-i18n.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-points-rewards-for-woocommerce-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-points-rewards-for-woocommerce-admin.php';
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-points-rewards-for-woocommerce-admin.php';
 
 		// when pro plugin is not active than show dummy html.
 		$wps_active_plugin = get_plugins();
@@ -133,7 +133,7 @@ class Points_Rewards_For_Woocommerce {
 			/**
 			 * The class responsible for defining all actions that occur in the admin area for dummy html.
 			 */
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-points-rewards-for-woocommerce-dummy-settings.php';
+			require_once plugin_dir_path( __DIR__ ) . 'admin/class-points-rewards-for-woocommerce-dummy-settings.php';
 			new Points_Rewards_For_WooCommerce_Dummy_Settings( '', '' );
 		}
 
@@ -141,7 +141,7 @@ class Points_Rewards_For_Woocommerce {
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-points-rewards-for-woocommerce-public.php';
+		require_once plugin_dir_path( __DIR__ ) . 'public/class-points-rewards-for-woocommerce-public.php';
 
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
@@ -149,9 +149,8 @@ class Points_Rewards_For_Woocommerce {
 		 * The class responsible for defining all actions that occur in the onboarding the site data
 		 * in the admin side of the site.
 		 */
-		! class_exists( 'WPSwings_Onboarding_Helper' ) && require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wpswings-onboarding-helper.php';
+		! class_exists( 'WPSwings_Onboarding_Helper' ) && require_once plugin_dir_path( __DIR__ ) . 'includes/class-wpswings-onboarding-helper.php';
 		$this->onboard = new WPSwings_Onboarding_Helper();
-
 	}
 
 	/**
@@ -350,7 +349,7 @@ class Points_Rewards_For_Woocommerce {
 			}
 			// sms / whatsapp deactivate and activate html.
 			$this->loader->add_action( 'wps_extend_point_tab_section', $plugin_public, 'wps_wpr_sms_whatsapp_active_deact', 10, 1 );
-			// sms / whatsapp deactivate and activate
+			// sms / whatsapp deactivate and activate.
 			$this->loader->add_action( 'wp_ajax_stop_sms_whatsapp_notify', $plugin_public, 'wps_wpr_stop_sms_whatsapp_notify_call', 10 );
 			// free shipping.
 			$this->loader->add_filter( 'woocommerce_package_rates', $plugin_public, 'wps_wpr_membership_free_shipping', 10, 2 );
@@ -431,5 +430,4 @@ class Points_Rewards_For_Woocommerce {
 	public function get_version() {
 		return $this->version;
 	}
-
 }

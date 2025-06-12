@@ -100,7 +100,6 @@ if ( ! class_exists( 'Wps_Wpr_Emails_Notification' ) ) {
 				}
 				$this->restore_locale();
 			}
-
 		}
 		/**
 		 * Trigger_test function
@@ -130,7 +129,6 @@ if ( ! class_exists( 'Wps_Wpr_Emails_Notification' ) ) {
 				}
 				$this->restore_locale();
 			}
-
 		}
 
 		/**
@@ -212,7 +210,6 @@ if ( ! class_exists( 'Wps_Wpr_Emails_Notification' ) ) {
 				),
 			);
 		}
-
 	}
 
 }

@@ -1227,7 +1227,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * This function is used to assign points on previuos orders.
 	 *
-	 * @return array
+	 * @return void
 	 */
 	public function wps_wpr_assign_points_on_previous_order_call() {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );

@@ -1203,64 +1203,63 @@ class Points_Rewards_For_WooCommerce_Public {
 								}
 							}
 						}
-						$order_total = $order->get_total();
-						$order_total = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
-						// WOOCS - WooCommerce Currency Switcher Compatibility.
-						$order_total = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
+					}
+				}
 
-						$order_total = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
-						if ( $wps_wpr_coupon_conversion_enable ) {
-							if ( $conversion_points_is_enable_condition || ! $points_key_priority_high ) {
-								// hpos.
-								$item_conversion_id_set = wps_wpr_hpos_get_meta_data( $order_id, "$order_id#item_conversion_id", true );
-								if ( 'set' != $item_conversion_id_set ) {
+				// Rewards Per Currency points.
+				$order_total = $order->get_total();
+				$order_total = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
+				// WOOCS - WooCommerce Currency Switcher Compatibility.
+				$order_total = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
+				$order_total = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
+				if ( $wps_wpr_coupon_conversion_enable ) {
 
-									$user_id = $order->get_user_id();
-									$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-									/*total calculation of the points*/
-									$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
-									$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
-									$wps_wpr_coupon_conversion_price  = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
-									$wps_wpr_coupon_conversion_price  = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
+					$item_conversion_id_set = wps_wpr_hpos_get_meta_data( $order_id, "$order_id#item_conversion_id", true );
+					if ( empty( $item_conversion_id_set ) ) {
 
-									/*Calculat points of the order*/
-									$points_calculation = round( ( $order_total * $wps_wpr_coupon_conversion_points ) / $wps_wpr_coupon_conversion_price );
-									$points_calculation = apply_filters( 'wps_round_down_cart_total_value', $points_calculation, $order_total, $wps_wpr_coupon_conversion_points, $wps_wpr_coupon_conversion_price );
-									/*Total Point of the order*/
-									$total_points = intval( $points_calculation + $get_points );
+						$user_id = $order->get_user_id();
+						$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+						/*total calculation of the points*/
+						$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
+						$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
+						$wps_wpr_coupon_conversion_price  = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
+						$wps_wpr_coupon_conversion_price  = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
 
-									$data = array(
-										'wps_par_order_id' => $order_id,
-									);
-									/*Update points details in woocommerce*/
-									$this->wps_wpr_update_points_details( $user_id, 'pro_conversion_points', $points_calculation, $data );
-									/*update users totoal points*/
-									update_user_meta( $user_id, 'wps_wpr_points', $total_points );
-									/*update that user has get the rewards points hpos.*/
-									wps_wpr_hpos_update_meta_data( $order_id, "$order_id#item_conversion_id", 'set' );
-									/*Prepare Array to send mail*/
-									$wps_wpr_shortcode = array(
-										'[Points]'                    => $points_calculation,
-										'[Total Points]'              => $total_points,
-										'[Refer Points]'              => $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_refer_value' ),
-										'[Comment Points]'            => $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_comment_enable' ),
-										'[Per Currency Spent Points]' => $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' ),
-										'[USERNAME]'                  => $user->user_login,
-									);
+						/*Calculat points of the order*/
+						$points_calculation = round( ( $order_total * $wps_wpr_coupon_conversion_points ) / $wps_wpr_coupon_conversion_price );
+						$points_calculation = apply_filters( 'wps_round_down_cart_total_value', $points_calculation, $order_total, $wps_wpr_coupon_conversion_points, $wps_wpr_coupon_conversion_price );
+						/*Total Point of the order*/
+						$total_points = intval( $points_calculation + $get_points );
 
-									$wps_wpr_subject_content = array(
-										'wps_wpr_subject' => 'wps_wpr_amount_email_subject',
-										'wps_wpr_content' => 'wps_wpr_amount_email_discription_custom_id',
-									);
-									/*Send mail to client regarding product purchase*/
-									$this->wps_wpr_send_notification_mail_product( $user_id, $points_calculation, $wps_wpr_shortcode, $wps_wpr_subject_content );
-									// send sms.
-									wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received points based on the currency value of your purchase. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
-									// send messages on whatsapp.
-									wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received points based on the currency value of your purchase. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
-								}
-							}
-						}
+						$data = array(
+							'wps_par_order_id' => $order_id,
+						);
+						/*Update points details in woocommerce*/
+						$this->wps_wpr_update_points_details( $user_id, 'pro_conversion_points', $points_calculation, $data );
+						/*update users totoal points*/
+						update_user_meta( $user_id, 'wps_wpr_points', $total_points );
+						/*update that user has get the rewards points hpos.*/
+						wps_wpr_hpos_update_meta_data( $order_id, "$order_id#item_conversion_id", 'set' );
+						/*Prepare Array to send mail*/
+						$wps_wpr_shortcode = array(
+							'[Points]'                    => $points_calculation,
+							'[Total Points]'              => $total_points,
+							'[Refer Points]'              => $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_refer_value' ),
+							'[Comment Points]'            => $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_comment_enable' ),
+							'[Per Currency Spent Points]' => $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' ),
+							'[USERNAME]'                  => $user->user_login,
+						);
+
+						$wps_wpr_subject_content = array(
+							'wps_wpr_subject' => 'wps_wpr_amount_email_subject',
+							'wps_wpr_content' => 'wps_wpr_amount_email_discription_custom_id',
+						);
+						/*Send mail to client regarding product purchase*/
+						$this->wps_wpr_send_notification_mail_product( $user_id, $points_calculation, $wps_wpr_shortcode, $wps_wpr_subject_content );
+						// send sms.
+						wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received points based on the currency value of your purchase. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
+						// send messages on whatsapp.
+						wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received points based on the currency value of your purchase. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $total_points ) );
 					}
 				}
 

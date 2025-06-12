@@ -59,7 +59,6 @@ class Points_Rewards_For_WooCommerce_Settings {
 			'<br>'  => array(),
 		);
 		return $allowed_tags;
-
 	}
 
 	/**
@@ -686,5 +685,4 @@ class Points_Rewards_For_WooCommerce_Settings {
 			<?php
 		}
 	}
-
 }

@@ -87,6 +87,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		add_filter( 'wps_wpr_others_settings', array( $this, 'wps_wpr_total_earning_dummy_points_settings' ), 12, 1 );
 		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_extend_dummy_order_rewards_settings' ), 10, 1 );
 		add_action( 'wps_wpr_extend_previous_order_rewards_settings', array( $this, 'wps_wpr_previous_org_order_date_wise_html' ) );
+		add_action( 'wps_wpr_additional_coupon_settings', array( $this, 'wps_wpr_additionals_dummy_coupon_settings' ), 10, 2 );
 	}
 
 	/**
@@ -830,7 +831,24 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'desc'     => __( 'Allow per currency points conversion on subtotal.', 'points-and-rewards-for-woocommerce' ),
 				'desc_tip' => __( 'Check this box if you want to enable per currency points conversion on subtotal.', 'points-and-rewards-for-woocommerce' ),
 			),
-
+			array(
+				'title'    => __( 'Limit point earning per currency to specific product categories wise', 'ultimate-woocommerce-points-and-rewards' ),
+				'id'       => 'wps_wpr_restrict_per_currency_dummy_points_category_wise',
+				'class'    => 'wps_wpr_pro_plugin_settings',
+				'type'     => 'search&select',
+				'multiple' => 'multiple',
+				'desc_tip' => __( 'Restrict customers from earning points per currency unless they purchase from the selected categories. If no categories are selected, points will be rewards to all categories by default.', 'ultimate-woocommerce-points-and-rewards' ),
+				'options'  => $this->wps_wpr_dummy_all_pages(),
+			),
+			array(
+				'title'             => __( 'Rewards are calculated based on your order total', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'              => 'number',
+				'custom_attributes' => array( 'min' => '"0"' ),
+				'id'                => 'wps_wpr_reach_per_dummy_curr_order_limit',
+				'class'    => 'wps_wpr_pro_plugin_settings',
+				'desc_tip'          => esc_html__( 'To begin earning points, your order total must exceed a certain amount; after that, you will receive points for every currency unit spent.', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc'              => __( 'You will earn points per currency spent when your order total exceeds this amount.', 'ultimate-woocommerce-points-and-rewards' ),
+			),
 		);
 
 		$key  = (int) $this->wps_wpr_get_dummy_key_per_currency_for_subtotal( $settings );
@@ -838,6 +856,20 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		$arr2 = array_slice( $settings, 0, $key + 1 );
 		array_splice( $arr1, 0, 0, $add );
 		return array_merge( $arr2, $arr1 );
+	}
+
+	/**
+	 * This function is used for generating additional settings for coupon.
+	 *
+	 * @param  array $value           value.
+	 * @param  array $coupon_settings coupon_settings.
+	 * @return void
+	 */
+	public function wps_wpr_additionals_dummy_coupon_settings( $value, $coupon_settings ) {
+
+		if ( 'search&select' == $value['type'] ) {
+			$this->wps_wpr_generate_dummy_search_select_html( $value, $coupon_settings );
+		}
 	}
 
 	/**
@@ -984,13 +1016,13 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'default'           => 0,
 			),
 			array(
-					'title' => __( 'Enable to let users share coupons with friends.', 'ultimate-woocommerce-points-and-rewards' ),
-					'type'  => 'checkbox',
-					'id'  => 'wps_wpr_share_coupon_to_users',
-					'class' => 'input-text wps_wpr_pro_plugin_settings',
-					'desc'  => __( 'Activate this option to let users distribute their coupons to friends.', 'ultimate-woocommerce-points-and-rewards' ),
-					'desc_tip' => __( 'Enable coupon sharing functionality for user accounts.', 'ultimate-woocommerce-points-and-rewards' ),
-				),
+				'title' => __( 'Enable to let users share coupons with friends.', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'  => 'checkbox',
+				'id'  => 'wps_wpr_share_coupon_to_users',
+				'class' => 'input-text wps_wpr_pro_plugin_settings',
+				'desc'  => __( 'Activate this option to let users distribute their coupons to friends.', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip' => __( 'Enable coupon sharing functionality for user accounts.', 'ultimate-woocommerce-points-and-rewards' ),
+			),
 			array(
 				'type' => 'sectionend',
 			),
@@ -2570,5 +2602,4 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		</label>
 		<?php
 	}
-
 }
