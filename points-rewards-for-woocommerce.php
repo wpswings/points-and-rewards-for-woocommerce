@@ -990,25 +990,20 @@ if ($activated) {
 				throw new Exception('Error code: ' . $response_code);
 			}
 
-			// Adicionar ou remover pontos ao usuário
 			$user_id = $order->get_customer_id();
 			if ($user_id > 0) {
 				if ($new_status === 'cancelled') {
-					// Verificar se foram usados pontos no pedido
 					$used_points = $order->get_meta('wps_cart_discount#points', true);
 
 					if (!empty($used_points)) {
-						// Pontos foram usados como desconto, precisamos devolvê-los
 						$points_to_restore = (float) $used_points;
 
-						// Criar uma mensagem descritiva para o log
 						$reason = sprintf(
 							'Devolução de %s pontos utilizados como desconto no pedido #%s que foi cancelado',
 							$points_to_restore,
 							$order_id
 						);
 
-						// Devolver os pontos ao saldo do usuário (note o sinal positivo)
 						$result = wps_wpr_update_user_points_balance($user_id, $points_to_restore, $reason);
 
 						if ($result) {
@@ -1019,12 +1014,10 @@ if ($activated) {
 						}
 					}
 				} else {
-					// Obter a porcentagem de cashback configurada
 					$settings = get_option('wps_wpr_coupons_gallery', array());
 					$conversion_points = isset($settings['wps_wpr_coupon_conversion_points']) ? (float) $settings['wps_wpr_coupon_conversion_points'] : 1;
 					$conversion_price = isset($settings['wps_wpr_coupon_conversion_price']) ? (float) $settings['wps_wpr_coupon_conversion_price'] : 0;
 
-					// Calcular o valor do cashback com base no total do pedido
 					$total_amount = (float) $order_data['total'];
 					$cashback_points = $total_amount * $conversion_price;
 
@@ -1050,7 +1043,6 @@ if ($activated) {
 		}
 	}
 
-	add_action('wp_login', 'wps_wpr_update_user_balance_on_login', 10, 2);
 
 	/**
 	 * Atualiza o saldo do usuário quando ele faz login.
@@ -1058,6 +1050,7 @@ if ($activated) {
 	 * @param string $user_login Nome de usuário.
 	 * @param WP_User $user Objeto do usuário.
 	 */
+	add_action('wp_login', 'wps_wpr_update_user_balance_on_login', 10, 2);
 	function wps_wpr_update_user_balance_on_login($user_login, $user)
 	{
 		try {
@@ -1122,14 +1115,13 @@ if ($activated) {
 		}
 	}
 
-	add_action('wp_login', 'wps_wpr_validate_cashback_on_login', 10, 2);
-
 	/**
 	 * Valida o cashback no login do usuário.
 	 *
 	 * @param string  $user_login Nome de usuário.
 	 * @param WP_User $user       Objeto do usuário.
 	 */
+	add_action('wp_login', 'wps_wpr_validate_cashback_on_login', 10, 2);
 	function wps_wpr_validate_cashback_on_login($user_login, $user)
 	{
 		try {
@@ -1219,29 +1211,23 @@ if ($activated) {
 		}
 	}
 
-	// Adicione o manipulador AJAX para salvar a chave API
 	add_action('wp_ajax_wps_save_api_secret_ajax', 'wps_save_api_secret_ajax_handler');
 	function wps_save_api_secret_ajax_handler()
 	{
 		try {
-			// Verificar o nonce para segurança
 			check_ajax_referer('wps_api_ajax_nonce', 'security');
 
-			// Obtém a chave secreta da API
 			$api_secret_key = isset($_POST['api_secret_key']) ? sanitize_text_field(wp_unslash($_POST['api_secret_key'])) : '';
 
 			if (empty($api_secret_key)) {
 				throw new Exception(__('A chave API não pode estar vazia.', 'points-and-rewards-for-woocommerce'));
 			}
 
-			// Obtém o URL do site
 			$store_url = get_site_url();
 
-			// Registra no log para depuração
 			error_log('Enviando requisição AJAX para: ' . AUTHENTICATE_STORE_API_URL);
 			error_log('Dados: apiKey=' . $api_secret_key . ', storeUrl=' . $store_url);
 
-			// Faz a requisição ao endpoint
 			$response = wp_remote_post(AUTHENTICATE_STORE_API_URL, array(
 				'method' => 'POST',
 				'timeout' => 30,
@@ -1269,11 +1255,9 @@ if ($activated) {
 				throw new Exception(__('Resposta inválida do endpoint.', 'points-and-rewards-for-woocommerce'));
 			}
 
-			// Salva o token JWT no banco de dados
 			$jwt_token = sanitize_text_field($decoded_response['token']);
 			update_option('wps_api_jwt_token', $jwt_token);
 
-			// Retorna uma resposta de sucesso
 			wp_send_json_success(array(
 				'message' => __('Chave API salva com sucesso.', 'points-and-rewards-for-woocommerce')
 			));
@@ -1281,12 +1265,12 @@ if ($activated) {
 		} catch (Exception $e) {
 			error_log('Erro ao salvar token via AJAX: ' . $e->getMessage());
 
-			// Retorna uma resposta de erro
 			wp_send_json_error(array(
 				'message' => $e->getMessage()
 			));
 		}
 	}
+
 	/**
 	 * Retorna os headers com autenticação Bearer para as requisições à API.
 	 *
@@ -1323,26 +1307,20 @@ if ($activated) {
 				return false;
 			}
 
-			// Converte o valor para float para garantir cálculos corretos
 			$points_value = (float) $points_value;
 
-			// Obtém o saldo atual do usuário
 			$current_balance = (float) get_user_meta($user_id, 'wps_wpr_points', true);
 			if (empty($current_balance)) {
 				$current_balance = 0;
 			}
 
-			// Calcula o novo saldo
 			$new_balance = $current_balance + $points_value;
 
-			// Determina o sinal (adição ou subtração)
 			$sign = $points_value >= 0 ? '+' : '-';
 			$points_difference = abs($points_value);
 
-			// Atualiza o saldo do usuário
 			update_user_meta($user_id, 'wps_wpr_points', $new_balance);
 
-			// Registra a transação no histórico de pontos
 			$points_details = get_user_meta($user_id, 'points_details', true);
 			$points_details = !empty($points_details) && is_array($points_details) ? $points_details : array();
 
@@ -1362,7 +1340,6 @@ if ($activated) {
 
 			update_user_meta($user_id, 'points_details', $points_details);
 
-			// Log da transação
 			error_log("Saldo atualizado para o usuário {$user_id}: Saldo anterior: {$current_balance}, Alteração: {$sign}{$points_difference}, Novo saldo: {$new_balance}, Motivo: {$reason}");
 
 			return true;
@@ -1373,7 +1350,6 @@ if ($activated) {
 	}
 } else {
 
-	// WooCommerce is not active so deactivate this plugin.
 	add_action('admin_init', 'rewardeem_woocommerce_points_rewards_activation_failure');
 
 	/**
