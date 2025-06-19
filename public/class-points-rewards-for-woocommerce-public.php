@@ -249,7 +249,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		$wps_wpr_value    = 0;
 		$general_settings = get_option( 'wps_wpr_coupons_gallery', true );
 		if ( ! empty( $general_settings[ $id ] ) ) {
-			$wps_wpr_value = (int) $general_settings[ $id ];
+			$wps_wpr_value = $general_settings[ $id ];
 		}
 		return $wps_wpr_value;
 	}
@@ -2209,67 +2209,58 @@ class Points_Rewards_For_WooCommerce_Public {
 
 			return;
 		}
-		/*Check is custom points on cart is enable*/
-		$wps_wpr_custom_points_on_checkout = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' );
-		$wps_wpr_custom_points_on_cart     = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
-		$wps_wpr_show_redeem_notice        = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_redeem_notice' );
-		/*Get the Notification*/
+
+		//Check is custom points on cart is enable.
+		$wps_wpr_custom_points_on_checkout  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' );
+		$wps_wpr_custom_points_on_cart      = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+		$wps_wpr_show_redeem_notice         = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_redeem_notice' );
+		$wps_wpr_points_redemption_messages = $this->wps_wpr_get_general_settings( 'wps_wpr_points_redemption_messages' );
+
+		// Get the Notification.
 		$wps_wpr_notification_color = $this->wps_wpr_get_other_settings( 'wps_wpr_notification_color' );
 		$wps_wpr_notification_color = ( ! empty( $wps_wpr_notification_color ) ) ? $wps_wpr_notification_color : '#55b3a5';
-		/*Get the cart point rate*/
+
+		// Get the cart point rate.
 		$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
 		$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
-		/*Get the cart price rate*/
+
+		// Get the cart price rate.
 		$wps_wpr_cart_price_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
 		$wps_wpr_cart_price_rate = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
-		/*Get current user id*/
-		$user_id = get_current_user_ID();
+		$user_id                 = get_current_user_ID();
 
 		// show message on cart page for redemption settings.
-		if ( ( 1 == $wps_wpr_custom_points_on_cart || 1 === $wps_wpr_custom_points_on_checkout ) && ! empty( $user_id ) ) {
-			if ( $wps_wpr_show_redeem_notice ) {
-				?>
-				<div class="woocommerce-message wps_wpr_cart_redemption__notice" id="wps_wpr_order_notice" style="background-color: <?php echo esc_html( $wps_wpr_notification_color ); ?>;"><?php esc_html_e( 'Here is the Discount Rule for Applying your Points to Cart Total', 'points-and-rewards-for-woocommerce' ); ?>
-					<span class="wps_wpr_show_redemption_conversion_rate">
-						<?php
-						// WOOCS - WooCommerce Currency Switcher Compatibility.
-						$allowed_tags = $this->wps_wpr_allowed_html();
-						echo esc_html( $wps_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $allowed_tags );
-						?>
-					</span>
-				</div>
-				<div class="wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_notice"></div>
-				<div class="wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_success"></div>
+		if ( ( 1 == $wps_wpr_custom_points_on_cart || 1 === $wps_wpr_custom_points_on_checkout ) && ! empty( $user_id ) && $wps_wpr_show_redeem_notice ) {
+
+			?>
+			<div class="woocommerce-message wps_wpr_cart_redemption__notice" id="wps_wpr_order_notice" style="background-color: <?php echo esc_html( $wps_wpr_notification_color ); ?>;">
 				<?php
-			}
+				// WOOCS - WooCommerce Currency Switcher Compatibility.
+				$wps_wpr_points_redemption_messages = str_replace( '[POINTS]', $wps_wpr_cart_points_rate, $wps_wpr_points_redemption_messages );
+				$wps_wpr_points_redemption_messages = str_replace( '[CURRENCY]', wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $wps_wpr_points_redemption_messages );
+				echo wp_kses_post( $wps_wpr_points_redemption_messages );
+				?>
+			</div>
+			<div class="wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_notice"></div>
+			<div class="wps_rwpr_settings_display_none_notice" id="wps_wpr_cart_points_success"></div>
+			<?php
 		}
 
 		// show message on cart page for per currency earn points.
 		$wps_wpr_per_currency_discount_notice = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_per_currency_discount_notice' );
-		if ( $this->is_order_conversion_enabled() ) {
-			if ( $wps_wpr_per_currency_discount_notice ) {
-				$order_conversion_rate = $this->order_conversion_rate();
-				?>
-				<div class="woocommerce-message" id="wps_wpr_order_notice" style="background-color: <?php echo esc_html( $wps_wpr_notification_color ); ?>">
-					<?php
-					esc_html_e( 'Place Order and Earn Reward Points in Return.', 'points-and-rewards-for-woocommerce' );
-					?>
-					<p style="background-color: 
-					<?php
-					echo esc_html( $wps_wpr_notification_color ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					?>
-					">
-					<?php
-					// WOOCS - WooCommerce Currency Switcher Compatibility.
-					esc_html_e( 'Conversion Rate: ', 'points-and-rewards-for-woocommerce' );
-					$allowed_tags = $this->wps_wpr_allowed_html();
-					echo wp_kses_post( $order_conversion_rate['curr'] ) . ' ' . wp_kses_post( apply_filters( 'wps_wpr_show_conversion_price', $order_conversion_rate['Points'] ) ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					?>
-					</p>
-				</div>
+		$wps_wpr_per_curr_earning_messages    = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_per_curr_earning_messages' );
+		if ( $this->is_order_conversion_enabled() && $wps_wpr_per_currency_discount_notice ) {
+
+			?>
+			<div class="woocommerce-message" id="wps_wpr_order_notice" style="background-color: <?php echo esc_html( $wps_wpr_notification_color ); ?>">
 				<?php
-			}
+				// WOOCS - WooCommerce Currency Switcher Compatibility.
+				$wps_wpr_per_curr_earning_messages = str_replace( '[POINTS]', $wps_wpr_cart_points_rate, $wps_wpr_per_curr_earning_messages );
+				$wps_wpr_per_curr_earning_messages = str_replace( '[CURRENCY]', wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $wps_wpr_per_curr_earning_messages );
+				echo wp_kses_post( $wps_wpr_per_curr_earning_messages );
+				?>
+			</div>
+			<?php
 		}
 
 		// ==== Order Rewards Points message show here ====

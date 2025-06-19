@@ -169,6 +169,15 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'desc_tip'          => __( 'Referral purchase points will be rewarded when the order total exceeds the minimum required amount.', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
+					'title'    => __( 'Reward referral purchase points based on product categories.', 'ultimate-woocommerce-points-and-rewards' ),
+					'id'       => 'wps_wpr_referral_purchase_dummy_points_category_wise',
+					'class'    => 'wps_wpr_pro_plugin_settings',
+					'type'     => 'search&select',
+					'multiple' => 'multiple',
+					'desc_tip' => __( 'Referral rewards are calculated based on the category of the purchased product.', 'ultimate-woocommerce-points-and-rewards' ),
+					'options'  => $this->wps_wpr_dummy_all_pages(),
+				),
+			array(
 				'title'    => __( 'Assign Only Referral Purchase Points', 'points-and-rewards-for-woocommerce' ),
 				'type'     => 'checkbox',
 				'id'       => 'wps_wpr_general_refer_value_disable',
@@ -496,7 +505,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 54 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 56 );
 		return $wps_wpr_general_settings;
 	}
 
@@ -535,7 +544,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 54 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 56 );
 		return $wps_wpr_general_settings;
 	}
 
@@ -590,7 +599,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 54 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 56 );
 		return $wps_wpr_general_settings;
 	}
 
@@ -1028,7 +1037,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 			),
 		);
 
-		$coupon_settings = $this->wps_dummy_insert_keys_value_pair( $coupon_settings, $new_inserted_array, 4 );
+		$coupon_settings = $this->wps_dummy_insert_keys_value_pair( $coupon_settings, $new_inserted_array, 5 );
 		return $coupon_settings;
 	}
 
