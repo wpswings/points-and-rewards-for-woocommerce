@@ -4805,29 +4805,40 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_add_cart_discount_to_order_totals( $totals, $order, $tax_display ) {
 
-		// Get and validate custom cart discount from order meta.
+		// Retrieve and sanitize the cart discount from order meta.
 		$discount = floatval( wps_wpr_hpos_get_meta_data( $order->get_id(), 'wps_cart_discount#$fee_id', true ) );
 
+		// If no discount is applied, return the original totals.
 		if ( $discount <= 0 ) {
-
 			return $totals;
 		}
 
 		$new_totals = array();
+		$inserted   = false;
 		foreach ( $totals as $key => $total ) {
-
 			$new_totals[ $key ] = $total;
-			// Insert Cart Discount right after the Discount row.
-			if ( 'discount' === $key ) {
+
+			// Insert the cart discount just after the 'discount' line.
+			if ( ! $inserted && $key === 'discount' ) {
 				$new_totals['cart_discount'] = array(
 					'label' => esc_html__( 'Cart Discount:', 'points-and-rewards-for-woocommerce' ),
 					'value' => '-' . wc_price( $discount ),
 				);
+				$inserted = true;
 			}
+		}
+
+		// If 'discount' key doesn't exist, append at the end.
+		if ( ! $inserted ) {
+			$new_totals['cart_discount'] = array(
+				'label' => esc_html__( 'Cart Discount:', 'points-and-rewards-for-woocommerce' ),
+				'value' => '-' . wc_price( $discount ),
+			);
 		}
 
 		return $new_totals;
 	}
+
 
 	/**
 	 * Check new design template active.

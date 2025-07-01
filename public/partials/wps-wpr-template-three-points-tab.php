@@ -794,7 +794,7 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 			if ( $flag ) {
 				?>
 				<div class="wps-par_ma-notice par-notice-error wps_wpr_error_notice_for_coupon_display">
-					<h4><?php esc_html_e( 'There are no notices to display at the moment!', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+					<h4><?php esc_html_e( 'There are no notices to display at the moment!', 'points-and-rewards-for-woocommerce' ); ?></h4>
 				</div>
 				<?php
 			}
