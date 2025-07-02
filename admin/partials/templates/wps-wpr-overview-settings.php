@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<!-- ++++++++++ Display Banner Image +++++++++++ -->
 	<div class="wps-overview__banner">
-		<img src="<?php echo esc_html( WPS_RWPR_DIR_URL ); ?>admin/images/Points-and-Rewards-for-WooCommerce.jpg" alt="Overview banner image">
+		<img src="<?php echo esc_html( WPS_RWPR_DIR_URL ); ?>admin/images/par-banner-img.jpeg" alt="Overview banner image">
 	</div>
 	<div class="wps-overview__content">
 		<div class="wps-overview__content-description">

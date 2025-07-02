@@ -4819,7 +4819,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$new_totals[ $key ] = $total;
 
 			// Insert the cart discount just after the 'discount' line.
-			if ( ! $inserted && $key === 'discount' ) {
+			if ( ! $inserted && 'discount' === $key ) {
 				$new_totals['cart_discount'] = array(
 					'label' => esc_html__( 'Cart Discount:', 'points-and-rewards-for-woocommerce' ),
 					'value' => '-' . wc_price( $discount ),
