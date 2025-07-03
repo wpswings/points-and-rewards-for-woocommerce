@@ -78,7 +78,9 @@ $wps_wpr_setting_tab = array(
 	),
 );
 
-$wps_wpr_setting_tab = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );
+$wps_wpr_setting_tab    = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );
+$wps_wpr_plugin_version = 'v' . REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
+$wps_wpr_plugin_name    = apply_filters( 'wps_wpr_pro_plugin_name', /* translators: %s: org name */ sprintf( '%s <span>%s</span>', esc_html__( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_wpr_plugin_version ) ) );
 
 // check if user is admin.
 if ( ! current_user_can( 'manage_options' ) ) {
@@ -91,7 +93,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 		<div class="wps_rwpr_header">
 			<div class="wps_rwpr_header_content_left">
 				<div>
-					<h3 class="wps_rwpr_setting_title"><?php esc_html_e( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ); ?><span><?php echo esc_html( 'v' . REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION ); ?></span></h3>					
+					<h3 class="wps_rwpr_setting_title"><?php echo wp_kses_post( $wps_wpr_plugin_name ); ?></h3>					
 				</div>
 			</div>
 			<div class="wps_rwpr_header_content_right">
@@ -144,20 +146,19 @@ if ( ! current_user_can( 'manage_options' ) ) {
 											<a class="wps_gw_nav_tab nav-tab nav-tab-active " href="?page=wps-rwpr-setting&nonce=<?php echo esc_html( wp_create_nonce( 'par_main_setting' ) ); ?>&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
 										</div>
 										<?php
-									} else {
-										if ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
-											?>
+									} elseif ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
+										?>
 											<div class="wps_rwpr_tabs">
 												<a class="wps_gw_nav_tab nav-tab nav-tab-active" href="?page=wps-rwpr-setting&nonce=<?php echo esc_html( wp_create_nonce( 'par_main_setting' ) ); ?>&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
 											</div>
 											<?php
-										} else {
-											?>
+									} else {
+										?>
 											<div class="wps_rwpr_tabs">
 												<a class="wps_gw_nav_tab nav-tab " href="?page=wps-rwpr-setting&nonce=<?php echo esc_html( wp_create_nonce( 'par_main_setting' ) ); ?>&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
 											</div>
 											<?php
-										}
+
 									}
 								}
 							}

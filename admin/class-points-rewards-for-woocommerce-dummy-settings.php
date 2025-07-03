@@ -87,6 +87,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		add_filter( 'wps_wpr_others_settings', array( $this, 'wps_wpr_total_earning_dummy_points_settings' ), 12, 1 );
 		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_extend_dummy_order_rewards_settings' ), 10, 1 );
 		add_action( 'wps_wpr_extend_previous_order_rewards_settings', array( $this, 'wps_wpr_previous_org_order_date_wise_html' ) );
+		add_action( 'wps_wpr_additional_coupon_settings', array( $this, 'wps_wpr_additionals_dummy_coupon_settings' ), 10, 2 );
 	}
 
 	/**
@@ -167,6 +168,15 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'custom_attributes' => array( 'min' => '1' ),
 				'desc_tip'          => __( 'Referral purchase points will be rewarded when the order total exceeds the minimum required amount.', 'points-and-rewards-for-woocommerce' ),
 			),
+			array(
+					'title'    => __( 'Reward referral purchase points based on product categories.', 'points-and-rewards-for-woocommerce' ),
+					'id'       => 'wps_wpr_referral_purchase_dummy_points_category_wise',
+					'class'    => 'wps_wpr_pro_plugin_settings',
+					'type'     => 'search&select',
+					'multiple' => 'multiple',
+					'desc_tip' => __( 'Referral rewards are calculated based on the category of the purchased product.', 'points-and-rewards-for-woocommerce' ),
+					'options'  => $this->wps_wpr_dummy_all_pages(),
+				),
 			array(
 				'title'    => __( 'Assign Only Referral Purchase Points', 'points-and-rewards-for-woocommerce' ),
 				'type'     => 'checkbox',
@@ -495,7 +505,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 54 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 56 );
 		return $wps_wpr_general_settings;
 	}
 
@@ -534,7 +544,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 54 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 56 );
 		return $wps_wpr_general_settings;
 	}
 
@@ -589,7 +599,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'type' => 'sectionend',
 			),
 		);
-		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 54 );
+		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 56 );
 		return $wps_wpr_general_settings;
 	}
 
@@ -830,7 +840,24 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'desc'     => __( 'Allow per currency points conversion on subtotal.', 'points-and-rewards-for-woocommerce' ),
 				'desc_tip' => __( 'Check this box if you want to enable per currency points conversion on subtotal.', 'points-and-rewards-for-woocommerce' ),
 			),
-
+			array(
+				'title'    => __( 'Limit point earning per currency to specific product categories wise', 'points-and-rewards-for-woocommerce' ),
+				'id'       => 'wps_wpr_restrict_per_currency_dummy_points_category_wise',
+				'class'    => 'wps_wpr_pro_plugin_settings',
+				'type'     => 'search&select',
+				'multiple' => 'multiple',
+				'desc_tip' => __( 'Restrict customers from earning points per currency unless they purchase from the selected categories. If no categories are selected, points will be rewards to all categories by default.', 'points-and-rewards-for-woocommerce' ),
+				'options'  => $this->wps_wpr_dummy_all_pages(),
+			),
+			array(
+				'title'             => __( 'Rewards are calculated based on your order total', 'points-and-rewards-for-woocommerce' ),
+				'type'              => 'number',
+				'custom_attributes' => array( 'min' => '"0"' ),
+				'id'                => 'wps_wpr_reach_per_dummy_curr_order_limit',
+				'class'    => 'wps_wpr_pro_plugin_settings',
+				'desc_tip'          => esc_html__( 'To begin earning points, your order total must exceed a certain amount; after that, you will receive points for every currency unit spent.', 'points-and-rewards-for-woocommerce' ),
+				'desc'              => __( 'You will earn points per currency spent when your order total exceeds this amount.', 'points-and-rewards-for-woocommerce' ),
+			),
 		);
 
 		$key  = (int) $this->wps_wpr_get_dummy_key_per_currency_for_subtotal( $settings );
@@ -838,6 +865,20 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		$arr2 = array_slice( $settings, 0, $key + 1 );
 		array_splice( $arr1, 0, 0, $add );
 		return array_merge( $arr2, $arr1 );
+	}
+
+	/**
+	 * This function is used for generating additional settings for coupon.
+	 *
+	 * @param  array $value           value.
+	 * @param  array $coupon_settings coupon_settings.
+	 * @return void
+	 */
+	public function wps_wpr_additionals_dummy_coupon_settings( $value, $coupon_settings ) {
+
+		if ( 'search&select' == $value['type'] ) {
+			$this->wps_wpr_generate_dummy_search_select_html( $value, $coupon_settings );
+		}
 	}
 
 	/**
@@ -984,19 +1025,19 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'default'           => 0,
 			),
 			array(
-					'title' => __( 'Enable to let users share coupons with friends.', 'ultimate-woocommerce-points-and-rewards' ),
-					'type'  => 'checkbox',
-					'id'  => 'wps_wpr_share_coupon_to_users',
-					'class' => 'input-text wps_wpr_pro_plugin_settings',
-					'desc'  => __( 'Activate this option to let users distribute their coupons to friends.', 'ultimate-woocommerce-points-and-rewards' ),
-					'desc_tip' => __( 'Enable coupon sharing functionality for user accounts.', 'ultimate-woocommerce-points-and-rewards' ),
-				),
+				'title' => __( 'Enable to let users share coupons with friends.', 'points-and-rewards-for-woocommerce' ),
+				'type'  => 'checkbox',
+				'id'  => 'wps_wpr_share_coupon_to_users',
+				'class' => 'input-text wps_wpr_pro_plugin_settings',
+				'desc'  => __( 'Activate this option to let users distribute their coupons to friends.', 'points-and-rewards-for-woocommerce' ),
+				'desc_tip' => __( 'Enable coupon sharing functionality for user accounts.', 'points-and-rewards-for-woocommerce' ),
+			),
 			array(
 				'type' => 'sectionend',
 			),
 		);
 
-		$coupon_settings = $this->wps_dummy_insert_keys_value_pair( $coupon_settings, $new_inserted_array, 4 );
+		$coupon_settings = $this->wps_dummy_insert_keys_value_pair( $coupon_settings, $new_inserted_array, 5 );
 		return $coupon_settings;
 	}
 
@@ -2561,14 +2602,13 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 
 		?>
 		<label for="wps_wpr_previous_order_start_date" class="wps_wpr_disabled_pro_plugin wps_wpr_pro_plugin_settings">
-			<?php esc_html_e( 'Start Date :', 'ultimate-woocommerce-points-and-rewards' ); ?>
+			<?php esc_html_e( 'Start Date :', 'points-and-rewards-for-woocommerce' ); ?>
 			<input type="date" id="wps_wpr_previous_order_start_date" class="wps_wpr_disabled_pro_plugin">
 		</label>
 		<label for="wps_wpr_previous_order_end_date" class="wps_wpr_disabled_pro_plugin wps_wpr_pro_plugin_settings">
-			<?php esc_html_e( 'End Date :', 'ultimate-woocommerce-points-and-rewards' ); ?>
+			<?php esc_html_e( 'End Date :', 'points-and-rewards-for-woocommerce' ); ?>
 			<input type="date" id="wps_wpr_previous_order_end_date" class="wps_wpr_disabled_pro_plugin">
 		</label>
 		<?php
 	}
-
 }

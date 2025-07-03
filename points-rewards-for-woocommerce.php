@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           2.8.0
+ * Version:           2.8.1
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
@@ -25,7 +25,7 @@
  * WP Requires at least : 5.5.0
  * WP Tested up to      : 6.8.1
  * WC requires at least : 5.5.0
- * WC tested up to      : 9.8.5
+ * WC tested up to      : 9.9.5
  * Requires PHP         : 7
  *
  * License:           GNU General Public License v3.0
@@ -81,7 +81,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.8.0' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.8.1' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -444,31 +444,34 @@ if ( $activated ) {
 		 * @return void
 		 */
 		function wps_banner_notification_plugin_html() {
+
 			$screen = get_current_screen();
-			if ( isset( $screen->id ) ) {
-				$pagescreen = $screen->id;
+			if ( ! $screen || empty( $screen->id ) ) {
+				return;
 			}
 
-			if ( ( isset( $pagescreen ) && 'plugins' === $pagescreen ) || ( 'wp-swings_page_home' == $pagescreen ) ) {
+			$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home' );
+			$page_param     = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+			// Check whether to show on specific pages or screens.
+			if ( 'wc-settings' === $page_param || in_array( $screen->id, $target_screens, true ) ) {
+
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-				if ( isset( $banner_id ) && '' !== $banner_id ) {
+				if ( ! empty( $banner_id ) ) {
 
 					$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
 					$banner_image     = get_option( 'wps_wgm_notify_new_banner_image', '' );
 					$banner_url       = get_option( 'wps_wgm_notify_new_banner_url', '' );
-					if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
-						if ( '' !== $banner_image && '' !== $banner_url ) {
+					if ( $hidden_banner_id < $banner_id && ! empty( $banner_image ) && ! empty( $banner_url ) ) {
 
-							?>
-								<div class="wps-offer-notice notice notice-warning is-dismissible">
-									<div class="notice-container">
-										<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
-									</div>
-									<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
-								</div>
-							   
-							<?php
-						}
+						?>
+						<div class="wps-offer-notice notice notice-warning is-dismissible">
+							<div class="notice-container">
+								<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
+							</div>
+							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+						</div>
+						<?php
 					}
 				}
 			}
@@ -484,26 +487,24 @@ if ( $activated ) {
 	function wps_wpr_banner_notify_html() {
 
 		if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
-			if ( ( isset( $_GET['page'] ) && 'wps-rwpr-setting' === $_GET['page'] ) ) {
+			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' === $_GET['page'] ) {
 
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-				if ( isset( $banner_id ) && '' !== $banner_id ) {
+				if ( ! empty( $banner_id ) ) {
 
 					$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
 					$banner_image     = get_option( 'wps_wgm_notify_new_banner_image', '' );
 					$banner_url       = get_option( 'wps_wgm_notify_new_banner_url', '' );
-					if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
-						if ( '' !== $banner_image && '' !== $banner_url ) {
+					if ( $hidden_banner_id < $banner_id && ! empty( $banner_image ) && ! empty( $banner_url ) ) {
 
-							?>
-							<div class="wps-offer-notice notice notice-warning is-dismissible">
-								<div class="notice-container">
-									<a href="<?php echo esc_url( $banner_url ); ?>"target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
-								</div>
-								<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+						?>
+						<div class="wps-offer-notice notice notice-warning is-dismissible">
+							<div class="notice-container">
+								<a href="<?php echo esc_url( $banner_url ); ?>"target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
 							</div>
-							<?php
-						}
+							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+						</div>
+						<?php
 					}
 				}
 			}

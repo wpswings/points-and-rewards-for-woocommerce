@@ -706,59 +706,58 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 		<div class="wps-p_masd-item wps-p_masd-i-earn">
 			<!-- Notifications -->
 			<?php
-			$flag                              = true;
-			$wps_wpr_custom_points_on_checkout = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' );
-			$wps_wpr_custom_points_on_cart     = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
-			$wps_wpr_show_redeem_notice        = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_redeem_notice' );
-			/*Get the cart point rate*/
+			$flag                               = true;
+			$wps_wpr_custom_points_on_checkout  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_checkout' );
+			$wps_wpr_custom_points_on_cart      = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+			$wps_wpr_show_redeem_notice         = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_redeem_notice' );
+			$wps_wpr_points_redemption_messages = $this->wps_wpr_get_general_settings( 'wps_wpr_points_redemption_messages' );
+
+			// Get the cart point rate.
 			$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
 			$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
-			/*Get the cart price rate*/
+
+			// Get the cart price rate.
 			$wps_wpr_cart_price_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
 			$wps_wpr_cart_price_rate = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+
 			// show message on cart page for redemption settings.
-			if ( ( 1 == $wps_wpr_custom_points_on_cart || 1 === $wps_wpr_custom_points_on_checkout ) && ! empty( $user_id ) ) {
-				if ( $wps_wpr_show_redeem_notice ) {
-					$flag = false;
-					?>
+			if ( ( 1 == $wps_wpr_custom_points_on_cart || 1 === $wps_wpr_custom_points_on_checkout ) && ! empty( $user_id ) && $wps_wpr_show_redeem_notice ) {
+
+				$flag = false;
+				?>
 				<div class="wps-par_ma-notice par-notice-error">
 					<h4><?php esc_html_e( 'Cart / Checkout Page Points Redeem', 'points-and-rewards-for-woocommerce' ); ?></h4>
 					<p>
 						<?php
 						// WOOCS - WooCommerce Currency Switcher Compatibility.
-						esc_html_e( 'Here is the Discount Rule for Applying your Points to Cart Total ', 'points-and-rewards-for-woocommerce' );
-						$allowed_tags = $this->wps_wpr_allowed_html();
-						echo esc_html( $wps_wpr_cart_points_rate ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $allowed_tags );
+						$wps_wpr_points_redemption_messages = str_replace( '[POINTS]', $wps_wpr_cart_points_rate, $wps_wpr_points_redemption_messages );
+						$wps_wpr_points_redemption_messages = str_replace( '[CURRENCY]', wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $wps_wpr_points_redemption_messages );
+						echo wp_kses_post( $wps_wpr_points_redemption_messages );
 						?>
 					</p>
 				</div>
-					<?php
-				}
+				<?php
 			}
 
 			// show message on cart page for per currency earn points.
 			$wps_wpr_per_currency_discount_notice = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_per_currency_discount_notice' );
-			if ( $this->is_order_conversion_enabled() ) {
-				if ( $wps_wpr_per_currency_discount_notice ) {
-					$flag = false;
-					?>
-					<div class="wps-par_ma-notice par-notice-pending">
-						<h4><?php esc_html_e( 'Per Currency Earning Points', 'points-and-rewards-for-woocommerce' ); ?></h4>
-						<p>
-							<?php
-							// show message on cart page for per currency earn points.
-							$order_conversion_rate = $this->order_conversion_rate();
-							esc_html_e( 'Place Order and Earn Reward Points in Return.', 'points-and-rewards-for-woocommerce' );
-							// WOOCS - WooCommerce Currency Switcher Compatibility.
-							esc_html_e( 'Conversion Rate: ', 'points-and-rewards-for-woocommerce' );
-							$allowed_tags = $this->wps_wpr_allowed_html();
-							echo wp_kses_post( $order_conversion_rate['curr'] ) . ' ' . wp_kses_post( apply_filters( 'wps_wpr_show_conversion_price', $order_conversion_rate['Points'] ) ) . ' = ' . wp_kses( $order_conversion_rate['Value'], $allowed_tags );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							esc_html_e( ' Points', 'points-and-rewards-for-woocommerce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							?>
-						</p>
-					</div>
-					<?php
-				}
+			$wps_wpr_per_curr_earning_messages    = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_per_curr_earning_messages' );
+			if ( $this->is_order_conversion_enabled() && $wps_wpr_per_currency_discount_notice ) {
+
+				$flag = false;
+				?>
+				<div class="wps-par_ma-notice par-notice-pending">
+					<h4><?php esc_html_e( 'Per Currency Earning Points', 'points-and-rewards-for-woocommerce' ); ?></h4>
+					<p>
+						<?php
+						// WOOCS - WooCommerce Currency Switcher Compatibility.
+						$wps_wpr_per_curr_earning_messages = str_replace( '[POINTS]', $wps_wpr_cart_points_rate, $wps_wpr_per_curr_earning_messages );
+						$wps_wpr_per_curr_earning_messages = str_replace( '[CURRENCY]', wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $wps_wpr_per_curr_earning_messages );
+						echo wp_kses_post( $wps_wpr_per_curr_earning_messages );
+						?>
+					</p>
+				</div>
+				<?php
 			}
 
 			// sale product points restriction notice.
@@ -795,7 +794,7 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 			if ( $flag ) {
 				?>
 				<div class="wps-par_ma-notice par-notice-error wps_wpr_error_notice_for_coupon_display">
-					<h4><?php esc_html_e( 'There are no notices to display at the moment!', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+					<h4><?php esc_html_e( 'There are no notices to display at the moment!', 'points-and-rewards-for-woocommerce' ); ?></h4>
 				</div>
 				<?php
 			}

@@ -245,6 +245,15 @@ $wps_wpr_general_settings = array(
 		'desc'     => __( 'Please enable this setting to show redemption message on Cart Page', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
+		'title'    => __( 'Enter points redemption messages', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'text',
+		'id'       => 'wps_wpr_points_redemption_messages',
+		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
+		'desc'     => __( 'Enter a message for your customers about the points redemption rate. Use the [POINTS] shortcode for points and the [CURRENCY] shortcode to display the currency value.', 'points-and-rewards-for-woocommerce' ),
+		'desc_tip' => __( 'Entered message will appears on Cart Page.', 'points-and-rewards-for-woocommerce' ),
+		'default'  => __( 'Here is the Discount Rule for Applying your Points to Cart Total 1 Points = $1.00', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
 		'type' => 'sectionend',
 	),
 	array(

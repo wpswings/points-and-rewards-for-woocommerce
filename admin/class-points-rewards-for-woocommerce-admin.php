@@ -1227,7 +1227,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * This function is used to assign points on previuos orders.
 	 *
-	 * @return array
+	 * @return void
 	 */
 	public function wps_wpr_assign_points_on_previous_order_call() {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
@@ -1433,7 +1433,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
 
 			if ( 'regular' == $banner_type ) {
-				update_option( 'wps_wgm_notify_hide_baneer_notification', '' );
+				update_option( 'wps_wgm_notify_hide_baneer_notification', 0 );
 			}
 		}
 	}
@@ -1477,7 +1477,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'wps-wpr-verify-nonce' ) ) {
 
 			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-			if ( isset( $banner_id ) && '' != $banner_id ) {
+			if ( ! empty( $banner_id ) ) {
 
 				update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
 			}

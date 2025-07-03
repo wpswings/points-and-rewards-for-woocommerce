@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @hooked WC_Emails::email_header() Output the email header
  */
-do_action( 'woocommerce_email_header', $email_heading, $email ); 
+do_action( 'woocommerce_email_header', $email_heading, $email );
 $email_content = apply_filters( 'wps_wpr_preview_email_content', $email_content );
 ?>
 
