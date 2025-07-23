@@ -98,8 +98,8 @@
                 if (!jQuery(e.target).closest('.wps_wpr_mail_button, .wps-wpr__email-input').length) {
 
                     jQuery('.wps-wpr__email-input').hide();
-                    jQuery('#wps_wpr_enter_emaill').hide();
-                    jQuery('#wps_wpr_point').hide();
+                    jQuery('.wps_wpr_enter_emaill').hide();
+                    jQuery('.wps_wpr_point').hide();
                 }
             });
 

@@ -355,6 +355,9 @@
 	  jQuery(".notice-dismiss").click(function () {
 		jQuery(".notice-success").remove();
 	  });
+
+	  // campaign page dropdown.
+	  jQuery(document).find('#wps_wpr_select_page_for_campaign').select2();
   
 	  /** =========== Gamification Features Start Here =========== */
 

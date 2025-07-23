@@ -81,6 +81,38 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 			</div>
 			<?php
 		}
+		if ( array_key_exists( 'guest_user_rewards_points', $point_log ) ) {
+			?>
+			<div class="wps_wpr_slide_toggle">
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Guest User Rewards Points', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+				<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+				<div class="wps_wpr_points_view"> 
+					<table class="wps_wpr_common_table">
+						<thead>
+								<tr>
+									<th class="wps-wpr-view-log-Date">
+										<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+									</th>
+									<th class="wps-wpr-view-log-Status">
+										<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+									</th>
+								</tr>
+							</thead> 
+						<?php
+						foreach ( $point_log['guest_user_rewards_points'] as $key => $value ) {
+							?>
+							<tr>
+								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
+								<td><?php echo '+' . esc_html( $value['guest_user_rewards_points'] ); ?></td>
+							</tr>
+							<?php
+						}
+						?>
+					</table>
+				</div>
+			</div>
+			<?php
+		}
 		if ( array_key_exists( 'Coupon_details', $point_log ) ) {
 			?>
 			<div class="wps_wpr_slide_toggle">
@@ -163,6 +195,35 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 							<tr>
 								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
 								<td><?php echo '+' . esc_html( $value['pro_conversion_points'] ); ?></td>
+							</tr>
+							<?php
+						}
+						?>
+					</table>
+				</div>
+			</div>
+			<?php
+		}
+		if ( array_key_exists( 'quiz_points_log', $point_log ) ) {
+			?>
+			<div class="wps_wpr_slide_toggle">
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Quiz contest Points', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+				<div class="wps_wpr_points_view">
+					<table class="wps_wpr_common_table">
+						<thead>
+							<tr>
+								<th class="wps-wpr-view-log-Date">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date', 'points-and-rewards-for-woocommerce' ); ?></span>
+								</th>
+								<th class="wps-wpr-view-log-Status">
+									<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+								</th>
+							</tr>
+						</thead>
+						<?php foreach ( $point_log['quiz_points_log'] as $key => $value ) { ?>
+							<tr>
+								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
+								<td><?php echo '+' . esc_html( $value['quiz_points_log'] ); ?></td>
 							</tr>
 							<?php
 						}
