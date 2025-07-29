@@ -72,6 +72,9 @@ $wps_wpr_show_total_referral_count    = ! empty( $wps_wpr_campaign_settings['wps
 $wps_wpr_select_page_for_campaign     = ! empty( $wps_wpr_campaign_settings['wps_wpr_select_page_for_campaign'] ) ? $wps_wpr_campaign_settings['wps_wpr_select_page_for_campaign'] : array();
 $wps_wpr_campaign_color_one           = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] : '#a13a93';
 $wps_wpr_campaign_color_two           = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] : '#ffbb21';
+$upgrade_link                         = '<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" target="_blank">Click here</a>';
+$message                              = sprintf( __( 'Unlock this premium feature by upgrading to the Pro plugin. %s to get started!', 'points-and-rewards-for-woocommerce' ), $upgrade_link );
+
 ?>
 
 <div class="wps_wpr_user_badges_main_wrappers">
@@ -123,19 +126,13 @@ $wps_wpr_campaign_color_two           = ! empty( $wps_wpr_campaign_settings['wps
 					</div>
 				</article>
                 <article class="wps_wpr_general_row">
-					<label for="wps_wpr_enable_comments_campaign" class="wps_wpr_general_label"><?php esc_html_e( 'Comments Points', 'points-and-rewards-for-woocommerce' ); ?></label>
-					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
-						<input type="checkbox" name="wps_wpr_enable_comments_campaign" class="wps_wpr_enable_comments_campaign" value="yes" <?php checked( $wps_wpr_enable_comments_campaign, 'yes' ); ?>>
-						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Turn this on to activate the comments points campaign.', 'points-and-rewards-for-woocommerce' ); ?></span>
-					</div>
-				</article>
-                <article class="wps_wpr_general_row">
 					<label for="wps_wpr_enable_birthday_campaign" class="wps_wpr_general_label"><?php esc_html_e( 'Birthday Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_enable_birthday_campaign" class="wps_wpr_enable_birthday_campaign" value="yes" <?php checked( $wps_wpr_enable_birthday_campaign, 'yes' ); ?>>
-						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Activate this setting to initiate the birthday rewards campaign', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php echo wp_kses_post( $message ); ?></span>
 					</div>
 				</article>
+				<?php do_action( 'wps_wpr_add_campaign_general_section' ); ?>
             </section>
 			
 			<section class="wps_wpr_general_row_wrap">

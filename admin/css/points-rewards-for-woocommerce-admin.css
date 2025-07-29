@@ -1524,6 +1524,7 @@ span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wp
 /* campaign css  */
 
 #wps_wpr_select_page_for_campaign + .select2-container {
+    width: 100% !important;
     max-width: 400px;
     margin-right: 5px;
 }

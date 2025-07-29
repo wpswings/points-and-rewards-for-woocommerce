@@ -539,7 +539,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 										$column_name = wps_wpr_hpos_get_meta_data( $wps_split[1], 'wps_coupon_static_amount', true );
 										echo esc_html( get_woocommerce_currency_symbol() ) . esc_html( $column_name );
 									} elseif ( 'expiry' == $column_id ) {
-										if ( WC()->version < '3.0.6' ) {
+										if ( version_compare( WC()->version, '3.0.6', '<' ) ) {
 
 											$column_name = wps_wpr_hpos_get_meta_data( $wps_split[1], 'expiry_date', true );
 											echo esc_html( $column_name );

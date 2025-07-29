@@ -2936,7 +2936,7 @@ class Points_Rewards_For_WooCommerce_Public {
 										$new_price = $reg_price - ( $reg_price * $discounts ) / 100;
 										// WOOCS - WooCommerce Currency Switcher Compatibility.
 										$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
-										if ( $woo_ver < '3.0.0' ) {
+										if ( version_compare( $woo_ver, '3.0.6', '<' ) ) {
 											$value['data']->price = $new_price;
 										} else {
 											$value['data']->set_price( $new_price );
@@ -2947,7 +2947,7 @@ class Points_Rewards_For_WooCommerce_Public {
 										$new_price = $variable_price - ( $variable_price * $discounts ) / 100;
 										// WOOCS - WooCommerce Currency Switcher Compatibility.
 										$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
-										if ( $woo_ver < '3.0.0' ) {
+										if ( version_compare( $woo_ver, '3.0.6', '<' ) ) {
 
 											$value['data']->price = $new_price;
 										} else {
@@ -2971,7 +2971,7 @@ class Points_Rewards_For_WooCommerce_Public {
 												$new_price = $reg_price - ( $reg_price * $discounts ) / 100;
 												// WOOCS - WooCommerce Currency Switcher Compatibility.
 												$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
-												if ( $woo_ver < '3.0.0' ) {
+												if ( version_compare( $woo_ver, '3.0.6', '<' ) ) {
 													$value['data']->price = $new_price;
 												} else {
 													$value['data']->set_price( $new_price );
@@ -2982,7 +2982,7 @@ class Points_Rewards_For_WooCommerce_Public {
 												$new_price = $variable_price - ( $variable_price * $discounts ) / 100;
 												// WOOCS - WooCommerce Currency Switcher Compatibility.
 												$new_price = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $new_price );
-												if ( $woo_ver < '3.0.0' ) {
+												if ( version_compare( $woo_ver, '3.0.6', '<' ) ) {
 
 													$value['data']->price = $new_price;
 												} else {

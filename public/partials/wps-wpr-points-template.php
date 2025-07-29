@@ -298,7 +298,7 @@ if ( ! is_array( $coupon_settings ) ) {
 
 															<?php
 															foreach ( $values['Prod_Categ'] as $key => $wps_cat_id ) {//phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-																if ( WC()->version < '3.6.0' ) {
+																if ( version_compare( WC()->version, '3.0.6', '<' ) ) {
 
 																	$thumbnail_id = get_woocommerce_term_meta( $wps_cat_id, 'thumbnail_id', true );
 																} else {

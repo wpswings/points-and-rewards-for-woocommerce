@@ -184,7 +184,6 @@
         data: data,
         success: function (response) {
           $loader.hide();
-          $submitBtn.prop("disabled", false);
           $notice
             .show()
             .css("color", response.result ? "green" : "red")

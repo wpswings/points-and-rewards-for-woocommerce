@@ -65,8 +65,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* flex-wrap: wrap; */
     flex-direction: column;
+    flex: 1;
+    width: 100%;
 }
 
 #wps-wpr-campaign-modal .wps_wpr_campaign_btn {
@@ -187,6 +188,7 @@
 .wps_wpr_campaign_promo {
     color: #000;
     padding: 15px 15px 25px;
+    width: 100%;
 }
 
 .wps-wpr_campaign-h2 {
