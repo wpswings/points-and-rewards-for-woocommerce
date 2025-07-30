@@ -199,5 +199,13 @@
         },
       });
     });
+
+    // quiz scroll up while clicking.
+    $(document).on('click', '.wps-wpr_campaign-h2', function(e) {
+      $('.wps-wpr-hlw_container').animate({
+
+        scrollTop: $(window).scrollTop() + 100 // scroll down by 300 pixels
+      }, 400); // 400ms animation speed
+    });
   });
 })(jQuery);
