@@ -170,13 +170,17 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_campaign_color_one = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] : '#a13a93';
 			$wps_wpr_campaign_color_two = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] : '#ffbb21';
 			wp_enqueue_script( 'wps-campaign-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-campaign.js', array(), $this->version, true );
-			wp_localize_script( $this->plugin_name, 'wps_wpr_campaign_obj', array(
-				'ajaxurl'             => admin_url( 'admin-ajax.php' ),
-				'wps_wpr_nonce'       => wp_create_nonce( 'wps-wpr-verify-nonce' ),
-				'is_user_login'       => is_user_logged_in(),
-				'wps_modal_color_one' => $wps_wpr_campaign_color_one,
-				'wps_modal_color_two' => $wps_wpr_campaign_color_two,
-			) );
+			wp_localize_script(
+				$this->plugin_name,
+				'wps_wpr_campaign_obj',
+				array(
+					'ajaxurl'             => admin_url( 'admin-ajax.php' ),
+					'wps_wpr_nonce'       => wp_create_nonce( 'wps-wpr-verify-nonce' ),
+					'is_user_login'       => is_user_logged_in(),
+					'wps_modal_color_one' => $wps_wpr_campaign_color_one,
+					'wps_modal_color_two' => $wps_wpr_campaign_color_two,
+				)
+			);
 		}
 	}
 
@@ -5008,7 +5012,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	/**
 	 * Undocumented function.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function wps_wpr_is_campaign_enable() {
 
@@ -5113,10 +5117,12 @@ class Points_Rewards_For_WooCommerce_Public {
 									<div id="wps_wpr_campaign_referral_wrap" class="wps_wpr_campaign_promo">
 										<div class="wps-wpr_campaign-h1"><?php esc_html_e( 'Refer friends. Earn rewards!', 'points-and-rewards-for-woocommerce' ); ?></div>
 										<?php if ( is_user_logged_in() ) { ?>
-											<?php if ( 'yes' === $wps_wpr_enable_referral_campaign ) : 
-												
+											<?php
+											if ( 'yes' === $wps_wpr_enable_referral_campaign ) :
+
 												$this->wps_wpr_campaigns_html_referral( $user_id );
-											endif;	?>
+											endif;
+											?>
 											<div class="wps-wpr_co-items-wrap">
 												<?php if ( 'yes' === $wps_wpr_show_total_referral_count ) : ?>
 													<div class="wps-wpr-hlw_co-items-first wps-wpr_co-item">
@@ -5131,37 +5137,41 @@ class Points_Rewards_For_WooCommerce_Public {
 													</div>
 												<?php endif; ?>
 											</div>
-										<?php } else {
+											<?php
+										} else {
 											?>
 											<div class="wps-wpr_camp-guest-part">
 												<div class="wps-wpr_camp-guest-part-link">
-													<a class="wps_wpr_campaign_login" data-url="<?php echo esc_url( home_url( add_query_arg( null, null ) ) ); ?>" href="<?php echo esc_url(  wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Create Account', 'points-and-rewards-for-woocommerce' ); ?></a>
+													<a class="wps_wpr_campaign_login" data-url="<?php echo esc_url( home_url( add_query_arg( null, null ) ) ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Create Account', 'points-and-rewards-for-woocommerce' ); ?></a>
 													<p><?php esc_html_e( 'Already have an account?', 'points-and-rewards-for-woocommerce' ); ?> <a class="wps_wpr_campaign_login" data-url="<?php echo esc_url( home_url( add_query_arg( null, null ) ) ); ?>" href="<?php echo esc_url( wp_login_url() ); ?>"><?php esc_html_e( 'Login', 'points-and-rewards-for-woocommerce' ); ?></a></p>
 												</div>
-												<div class="wps-wpr_campaign-h1"><?php printf( esc_html__( 'Earn %s welcome points!', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_signup_value ) ); ?></div>
+												<div class="wps-wpr_campaign-h1"><?php printf( /* translators: %s: sms msg */ esc_html__( 'Earn %s welcome points!', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_signup_value ) ); ?></div>
 												<div class="wps-wpr_campaign-p"><?php esc_html_e( 'Invite your friends and get rewards when they make a purchase.', 'points-and-rewards-for-woocommerce' ); ?></div>
 											</div>
 											<?php
-										} ?>
+										}
+										?>
 									</div>
 								</div>
 
 									<!-- // Earn settings  -->
 								<div class="wps-wpr-hlw_co-buttons" style="display: none;">
 									<div id="wps_wpr_campaign_earn_wrap" class="wps_wpr_campaign_promo">
-										<?php if ( ! is_user_logged_in() ) {
+										<?php
+										if ( ! is_user_logged_in() ) {
 											if ( 'yes' === $wps_wpr_enable_sign_up_campaign ) :
 												?>
 												<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Earn welcome points!', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_signup_value ); ?>+</span></div>
 											<?php endif; ?>
 											<div class="wps-wpr_camp-guest-part">
 												<div class="wps-wpr_camp-guest-part-link">
-													<a class="wps_wpr_campaign_login-btn" data-url="<?php echo esc_url( home_url( add_query_arg( null, null ) ) ); ?>" href="<?php echo esc_url(  wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Create Account', 'points-and-rewards-for-woocommerce' ); ?></a>
+													<a class="wps_wpr_campaign_login-btn" data-url="<?php echo esc_url( home_url( add_query_arg( null, null ) ) ); ?>" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Create Account', 'points-and-rewards-for-woocommerce' ); ?></a>
 													<p><?php esc_html_e( 'Already have an account?', 'points-and-rewards-for-woocommerce' ); ?> <a class="wps_wpr_campaign_login" data-url="<?php echo esc_url( home_url( add_query_arg( null, null ) ) ); ?>" href="<?php echo esc_url( wp_login_url() ); ?>"><?php esc_html_e( 'Login', 'points-and-rewards-for-woocommerce' ); ?></a></p>
 												</div>
 											</div>
 											<?php
-										} ?>
+										}
+										?>
 										<?php if ( 'yes' === $wps_wpr_enable_birthday_campaign && empty( $_my_bday ) ) { ?>
 											<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $birthday_points ); ?>+</span></div>
 											<div class="wps-wpr_camp-acc-wrap wps_wpr_guest_user_disable">
@@ -5172,18 +5182,20 @@ class Points_Rewards_For_WooCommerce_Public {
 												</div>
 												<p class="wps_wpr_birthday_success_notice"></p>
 											</div>
-										<?php } else {
+											<?php
+										} else {
 											?>
 											<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon-done"><?php echo esc_html( $birthday_points ); ?><img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'public/images/tick3.svg' ); ?>"></span></div>
 											<?php
-										} ?>
+										}
+										?>
 										<?php if ( 'yes' === $wps_wpr_enable_comments_campaign ) : ?>
 											<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
 												<?php
 													printf(
 														'<img src="%s" alt="user" class="wps-wpr-hlw_co-icon" /><span> %s </span><a href="%s" target="_blank">%s</a>',
 														esc_url( $icons_url ),
-														sprintf( esc_html__( 'Comment or review any post and earn %d reward points.', 'points-and-rewards-for-woocommerce' ), (int) $wps_wpr_comment_value ),
+														sprintf( /* translators: %s: sms msg */ esc_html__( 'Comment or review any post and earn %d reward points.', 'points-and-rewards-for-woocommerce' ), (int) $wps_wpr_comment_value ),
 														esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ),
 														esc_html__( 'Click here', 'points-and-rewards-for-woocommerce' )
 													);
@@ -5216,11 +5228,13 @@ class Points_Rewards_For_WooCommerce_Public {
 												</div>
 												<p class="wps_wpr_quiz_notice"></p>
 											</div>
-										<?php } else {
+											<?php
+										} else {
 											?>
 											<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Play a Quiz', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon-done"><?php echo esc_html( $wps_wpr_quiz_rewards_points ); ?><img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'public/images/tick3.svg' ); ?>"></span></div>
 											<?php
-										} ?>
+										}
+										?>
 									</div>
 								</div>
 							</div>
@@ -5290,7 +5304,6 @@ class Points_Rewards_For_WooCommerce_Public {
 	/**
 	 * This function is used to save current page url when guest user click on create account.
 	 *
-	 * @param int $user_id user_id.
 	 * @return void
 	 */
 	public function wps_wpr_action_campaign_login() {
@@ -5308,8 +5321,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	/**
 	 * This function is used to redirect user to current campaign page.
 	 *
-	 * @param int $customer_id customer_id.
-	 * @return void
+	 * @param  int $redirect redirect.
+	 * @return string
 	 */
 	public function wps_wpr_redirect_user_to_current_campaign_page( $redirect ) {
 
@@ -5337,11 +5350,11 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( $this->wps_wpr_is_campaign_enable() ) {
 
 			if ( isset( $_COOKIE['wps_guest_user_id'] ) ) {
-				return sanitize_text_field( $_COOKIE['wps_guest_user_id'] );
+				return sanitize_text_field( wp_unslash( $_COOKIE['wps_guest_user_id'] ) );
 			}
 
 			$guest_id = 'guest_' . wp_generate_uuid4();
-			setcookie( 'wps_guest_user_id', $guest_id, time() + (7 * DAY_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
+			setcookie( 'wps_guest_user_id', $guest_id, time() + ( 7 * DAY_IN_SECONDS ), COOKIEPATH, COOKIE_DOMAIN );
 		}
 		return $guest_id;
 	}
@@ -5366,7 +5379,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$birthday = isset( $_POST['birth_date'] ) ? sanitize_text_field( wp_unslash( $_POST['birth_date'] ) ) : '';
 			$today    = gmdate( 'Y-m-d' );
 
-			// Check: if birthday is valid and not already saved
+			// Check: if birthday is valid and not already saved.
 			if ( $user_id && $birthday && $birthday < $today && ! get_user_meta( $user_id, '_my_bday', true ) ) {
 
 				$settings       = get_option( 'wps_wpr_settings_gallery', array() );
@@ -5377,6 +5390,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 				$response['result'] = true;
 				$response['msg']    = sprintf(
+					/* translators: %s: sms msg */
 					esc_html__( '🎉 Congratulations! You will receive %s bonus points on your birthday!', 'points-and-rewards-for-woocommerce' ),
 					$birthday_points
 				);
@@ -5420,7 +5434,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 				$updated_points = $current_points + $reward_points;
 
-				// Update points history log
+				// Update points history log.
 				$points_log = get_user_meta( $user_id, 'points_details', true );
 				$points_log = is_array( $points_log ) ? $points_log : array();
 				$points_log['quiz_points_log'][] = array(
@@ -5433,6 +5447,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 				$response['result'] = true;
 				$response['msg']    = sprintf(
+					/* translators: %s: sms msg */
 					esc_html__( 'Great job! You answered correctly and earned %s points!', 'points-and-rewards-for-woocommerce' ),
 					$reward_points
 				);
@@ -5448,7 +5463,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	/**
 	 * This function is used to show campaign features on selected page.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function wps_wpr_check_selected_page() {
 		if ( $this->wps_wpr_is_campaign_enable() ) {
@@ -5521,17 +5536,18 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// Update points log.
 		$guest_user_log = get_user_meta( $user_id, 'points_details', true );
-		$guest_user_log = is_array( $guest_user_log ) ? $guest_user_log : [];
+		$guest_user_log = is_array( $guest_user_log ) ? $guest_user_log : array();
 
-		$guest_user_log['guest_user_rewards_points'][] = [
+		$guest_user_log['guest_user_rewards_points'][] = array(
 			'guest_user_rewards_points' => $guest_points,
 			'date'                      => date_i18n( 'Y-m-d h:i:sa' ),
-		];
+		);
 
 		update_user_meta( $user_id, 'points_details', $guest_user_log );
 
 		// Compose message.
 		$message = sprintf(
+			/* translators: %s: sms msg */
 			esc_html__( 'You have been awarded %1$s points as a guest user. Your total points balance is now %2$s.', 'points-and-rewards-for-woocommerce' ),
 			$guest_points,
 			$new_points
@@ -5544,6 +5560,5 @@ class Points_Rewards_For_WooCommerce_Public {
 		// Mark assignment complete.
 		update_user_meta( $user_id, 'wps_wpr_guest_user_assign_points_done', 'done' );
 	}
-
 }
 

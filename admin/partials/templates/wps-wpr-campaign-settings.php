@@ -22,33 +22,33 @@ if ( isset( $_POST['wps_wpr_user_campaign_setting_nonce'] ) ) {
 	if ( wp_verify_nonce( ! empty( $_POST['wps_wpr_user_campaign_setting_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_user_campaign_setting_nonce'] ) ) : '', 'user-campaign-setting-nonce' ) ) {
 		if ( isset( $_POST['wps_wpr_save_campaign_settings'] ) ) {
 
-            $arr                                         = array();
-            $arr['wps_wpr_enable_campaign_settings']     = isset( $_POST['wps_wpr_enable_campaign_settings'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_campaign_settings'] ) ) : '';
-            $arr['wps_wpr_enable_sign_up_campaign']      = isset( $_POST['wps_wpr_enable_sign_up_campaign'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_sign_up_campaign'] ) ) : '';
-            $arr['wps_wpr_enable_referral_campaign']     = isset( $_POST['wps_wpr_enable_referral_campaign'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_referral_campaign'] ) ) : '';
-            $arr['wps_wpr_enable_comments_campaign']     = isset( $_POST['wps_wpr_enable_comments_campaign'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_comments_campaign'] ) ) : '';
-            $arr['wps_wpr_enable_birthday_campaign']     = isset( $_POST['wps_wpr_enable_birthday_campaign'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_birthday_campaign'] ) ) : '';
-            $arr['wps_wpr_enable_quiz_contest_campaign'] = isset( $_POST['wps_wpr_enable_quiz_contest_campaign'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_quiz_contest_campaign'] ) ) : '';
+			$arr                                         = array();
+			$arr['wps_wpr_enable_campaign_settings']     = isset( $_POST['wps_wpr_enable_campaign_settings'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_campaign_settings'] ) ) : '';
+			$arr['wps_wpr_enable_sign_up_campaign']      = isset( $_POST['wps_wpr_enable_sign_up_campaign'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_sign_up_campaign'] ) ) : '';
+			$arr['wps_wpr_enable_referral_campaign']     = isset( $_POST['wps_wpr_enable_referral_campaign'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_referral_campaign'] ) ) : '';
+			$arr['wps_wpr_enable_comments_campaign']     = isset( $_POST['wps_wpr_enable_comments_campaign'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_comments_campaign'] ) ) : '';
+			$arr['wps_wpr_enable_birthday_campaign']     = isset( $_POST['wps_wpr_enable_birthday_campaign'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_birthday_campaign'] ) ) : '';
+			$arr['wps_wpr_enable_quiz_contest_campaign'] = isset( $_POST['wps_wpr_enable_quiz_contest_campaign'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enable_quiz_contest_campaign'] ) ) : '';
 			$arr['wps_wpr_quiz_question']                = isset( $_POST['wps_wpr_quiz_question'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_question'] ) ) : '';
-            $arr['wps_wpr_quiz_option_one']              = isset( $_POST['wps_wpr_quiz_option_one'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_option_one'] ) ) : '';
-            $arr['wps_wpr_quiz_option_two']              = isset( $_POST['wps_wpr_quiz_option_two'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_option_two'] ) ) : '';
-            $arr['wps_wpr_quiz_option_three']            = isset( $_POST['wps_wpr_quiz_option_three'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_option_three'] ) ) : '';
-            $arr['wps_wpr_quiz_option_four']             = isset( $_POST['wps_wpr_quiz_option_four'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_option_four'] ) ) : '';
-            $arr['wps_wpr_quiz_answer']                  = isset( $_POST['wps_wpr_quiz_answer'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_answer'] ) ) : '';
-            $arr['wps_wpr_quiz_rewards_points']          = isset( $_POST['wps_wpr_quiz_rewards_points'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_rewards_points'] ) ) : '';
-            $arr['wps_wpr_enter_campaign_image_url']     = isset( $_POST['wps_wpr_enter_campaign_image_url'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enter_campaign_image_url'] ) ) : '';
-            $arr['wps_wpr_show_current_points_modal']    = isset( $_POST['wps_wpr_show_current_points_modal'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_show_current_points_modal'] ) ) : '';
-            $arr['wps_wpr_show_total_referral_count']    = isset( $_POST['wps_wpr_show_total_referral_count'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_show_total_referral_count'] ) ) : '';
+			$arr['wps_wpr_quiz_option_one']              = isset( $_POST['wps_wpr_quiz_option_one'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_option_one'] ) ) : '';
+			$arr['wps_wpr_quiz_option_two']              = isset( $_POST['wps_wpr_quiz_option_two'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_option_two'] ) ) : '';
+			$arr['wps_wpr_quiz_option_three']            = isset( $_POST['wps_wpr_quiz_option_three'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_option_three'] ) ) : '';
+			$arr['wps_wpr_quiz_option_four']             = isset( $_POST['wps_wpr_quiz_option_four'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_option_four'] ) ) : '';
+			$arr['wps_wpr_quiz_answer']                  = isset( $_POST['wps_wpr_quiz_answer'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_answer'] ) ) : '';
+			$arr['wps_wpr_quiz_rewards_points']          = isset( $_POST['wps_wpr_quiz_rewards_points'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_quiz_rewards_points'] ) ) : '';
+			$arr['wps_wpr_enter_campaign_image_url']     = isset( $_POST['wps_wpr_enter_campaign_image_url'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_enter_campaign_image_url'] ) ) : '';
+			$arr['wps_wpr_show_current_points_modal']    = isset( $_POST['wps_wpr_show_current_points_modal'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_show_current_points_modal'] ) ) : '';
+			$arr['wps_wpr_show_total_referral_count']    = isset( $_POST['wps_wpr_show_total_referral_count'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_show_total_referral_count'] ) ) : '';
 			$arr['wps_wpr_select_page_for_campaign']     = ! empty( $_POST['wps_wpr_select_page_for_campaign'] ) ? map_deep( wp_unslash( $_POST['wps_wpr_select_page_for_campaign'] ), 'sanitize_text_field' ) : array();
 			$arr['wps_wpr_campaign_color_one']           = ! empty( $_POST['wps_wpr_campaign_color_one'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_campaign_color_one'] ) ) : '#a13a93';
 			$arr['wps_wpr_campaign_color_two']           = ! empty( $_POST['wps_wpr_campaign_color_two'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_campaign_color_two'] ) ) : '#ffbb21';
 
-            update_option( 'wps_wpr_campaign_settings', $arr );
-        }
-    }
+			update_option( 'wps_wpr_campaign_settings', $arr );
+		}
+	}
 
-    // Show saved msg.
-    $settings_obj->wps_wpr_settings_saved();
+	// Show saved msg.
+	$settings_obj->wps_wpr_settings_saved();
 }
 
 $wps_wpr_campaign_settings            = get_option( 'wps_wpr_campaign_settings', array() );
@@ -73,7 +73,7 @@ $wps_wpr_select_page_for_campaign     = ! empty( $wps_wpr_campaign_settings['wps
 $wps_wpr_campaign_color_one           = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] : '#a13a93';
 $wps_wpr_campaign_color_two           = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] : '#ffbb21';
 $upgrade_link                         = '<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" target="_blank">Click here</a>';
-$message                              = sprintf( __( 'Unlock this premium feature by upgrading to the Pro plugin. %s to get started!', 'points-and-rewards-for-woocommerce' ), $upgrade_link );
+$message                              = sprintf( /* translators: %s: sms msg */ esc_html__( 'Unlock this premium feature by upgrading to the Pro plugin. %s to get started!', 'points-and-rewards-for-woocommerce' ), $upgrade_link );
 
 ?>
 
@@ -96,9 +96,9 @@ $message                              = sprintf( __( 'Unlock this premium featur
 						<select id="wps_wpr_select_page_for_campaign" name="wps_wpr_select_page_for_campaign[]" multiple>
 							<option value="home" <?php selected( in_array( 'home', $wps_wpr_select_page_for_campaign ) ); ?>>Home</option>
 							<?php
-							$pages = get_pages();
-							if ( ! empty( $pages ) && is_array( $pages ) ) {
-								foreach ( $pages as $page_data ) {
+							$wps_pages = get_pages();
+							if ( ! empty( $wps_pages ) && is_array( $wps_pages ) ) {
+								foreach ( $wps_pages as $page_data ) {
 									?>
 									<option value="<?php echo esc_attr( $page_data->ID ); ?>" <?php selected( in_array( $page_data->ID, $wps_wpr_select_page_for_campaign ) ); ?>>
 										<?php echo esc_html( $page_data->post_title ); ?>
@@ -111,21 +111,21 @@ $message                              = sprintf( __( 'Unlock this premium featur
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Campaign modal will only show on the selected pages.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
-                <article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_enable_sign_up_campaign" class="wps_wpr_general_label"><?php esc_html_e( 'Sign Up Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_enable_sign_up_campaign" class="wps_wpr_enable_sign_up_campaign" value="yes" <?php checked( $wps_wpr_enable_sign_up_campaign, 'yes' ); ?>>
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Use this toggle to start the signup points campaign', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
-                <article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_enable_referral_campaign" class="wps_wpr_general_label"><?php esc_html_e( 'Referral Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_enable_referral_campaign" class="wps_wpr_enable_referral_campaign" value="yes" <?php checked( $wps_wpr_enable_referral_campaign, 'yes' ); ?>>
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Enable this to launch the referral points campaign.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
-                <article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_enable_birthday_campaign" class="wps_wpr_general_label"><?php esc_html_e( 'Birthday Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_enable_birthday_campaign" class="wps_wpr_enable_birthday_campaign" value="yes" <?php checked( $wps_wpr_enable_birthday_campaign, 'yes' ); ?>>
@@ -133,7 +133,7 @@ $message                              = sprintf( __( 'Unlock this premium featur
 					</div>
 				</article>
 				<?php do_action( 'wps_wpr_add_campaign_general_section' ); ?>
-            </section>
+			</section>
 			
 			<section class="wps_wpr_general_row_wrap">
 				<div class="wps_wpr_user_badges_settings_heading wps_wpr_general_sign_title wps_wpr_doc_video_wrapper"><?php esc_html_e( 'Quiz Contest', 'points-and-rewards-for-woocommerce' ); ?></div>
@@ -209,8 +209,8 @@ $message                              = sprintf( __( 'Unlock this premium featur
 					</div>
 				</article>
 			</section>
-        </main>
-        <input type="submit" name="wps_wpr_save_campaign_settings" class="button-primary woocommerce-save-button wps_wpr_save_changes" id="wps_wpr_save_campaign_settings" value="<?php esc_html_e( 'Save Changes', 'points-and-rewards-for-woocommerce' ); ?>">
-    </form>
+		</main>
+		<input type="submit" name="wps_wpr_save_campaign_settings" class="button-primary woocommerce-save-button wps_wpr_save_changes" id="wps_wpr_save_campaign_settings" value="<?php esc_html_e( 'Save Changes', 'points-and-rewards-for-woocommerce' ); ?>">
+	</form>
 </div>
 
