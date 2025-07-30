@@ -357,8 +357,6 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_get_order_item_totals', $plugin_public, 'wps_wpr_add_cart_discount_to_order_totals', 10, 3 );
 			// class add in body for third temp.
 			$this->loader->add_filter( 'body_class', $plugin_public, 'wps_wpr_add_class_in_body_for_temp_three', 10, 1 );
-			// show campaign modal.
-			$this->loader->add_action( 'wp_footer', $plugin_public, 'wps_wpr_show_campaign_modal', 10 );
 			// action to save current page url.
 			$this->loader->add_action( 'wp_ajax_nopriv_action_campaign_login', $plugin_public, 'wps_wpr_action_campaign_login', 10 );
 			// redirect user after registration to current campaign page.

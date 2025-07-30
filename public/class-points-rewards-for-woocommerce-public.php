@@ -774,9 +774,6 @@ class Points_Rewards_For_WooCommerce_Public {
 
 			// Assign points to guest user.
 			$this->wps_wpr_assign_points_to_guest_user( $customer_id );
-
-			// re-direct to campaign current page.
-			// $this->wps_wpr_redirect_user_to_current_campaign_page( $customer_id );
 		}
 	}
 
@@ -3992,6 +3989,12 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_show_canvas_icons() {
 
+		// calling campaign modal function.
+		$this->wps_wpr_show_campaign_modal();
+
+		// assign guest user points, if he create account before order complete.
+		$this->wps_wpr_assign_guest_user_points_after_create_account();
+
 		// blocked by admin.
 		if ( wps_wpr_restrict_user_fun() ) {
 
@@ -4965,8 +4968,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		}
 
 		$user_email   = $user->user_email;
-		$guest_points = get_option( 'wps_wpr_guest_user_points_' . $user_email, 0 );
-
+		$guest_points = ! empty( get_option( 'wps_wpr_guest_user_points_' . $user_email ) ) ? get_option( 'wps_wpr_guest_user_points_' . $user_email ) : 0;
 		if ( $guest_points > 0 ) {
 
 			// Get and update current points.
@@ -5478,6 +5480,69 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * This function is used to assign points when user create account before order complete.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_assign_guest_user_points_after_create_account() {
+
+		$user_id = get_current_user_id();
+		if ( empty( $user_id ) ) {
+			return;
+		}
+
+		// Exit if points have already been assigned.
+		if ( get_user_meta( $user_id, 'wps_wpr_guest_user_assign_points_done', true ) ) {
+			return;
+		}
+
+		$user = get_user_by( 'ID', $user_id );
+		if ( ! $user || empty( $user->user_email ) ) {
+			return;
+		}
+
+		$user_email = $user->user_email;
+
+		// Retrieve guest points from option.
+		$guest_points = (int) get_option( 'wps_wpr_guest_user_points_' . $user_email, 0 );
+		if ( $guest_points <= 0 ) {
+			return;
+		}
+
+		// Get current user points and calculate new total.
+		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+		$new_points     = $current_points + $guest_points;
+
+		// Update user points.
+		update_user_meta( $user_id, 'wps_wpr_points', $new_points );
+
+		// Update points log.
+		$guest_user_log = get_user_meta( $user_id, 'points_details', true );
+		$guest_user_log = is_array( $guest_user_log ) ? $guest_user_log : [];
+
+		$guest_user_log['guest_user_rewards_points'][] = [
+			'guest_user_rewards_points' => $guest_points,
+			'date'                      => date_i18n( 'Y-m-d h:i:sa' ),
+		];
+
+		update_user_meta( $user_id, 'points_details', $guest_user_log );
+
+		// Compose message.
+		$message = sprintf(
+			esc_html__( 'You have been awarded %1$s points as a guest user. Your total points balance is now %2$s.', 'points-and-rewards-for-woocommerce' ),
+			$guest_points,
+			$new_points
+		);
+
+		// Send notifications.
+		wps_wpr_send_sms_org( $user_id, $message );
+		wps_wpr_send_messages_on_whatsapp( $user_id, $message );
+
+		// Mark assignment complete.
+		update_user_meta( $user_id, 'wps_wpr_guest_user_assign_points_done', 'done' );
 	}
 
 }
