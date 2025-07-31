@@ -72,9 +72,9 @@ $wps_wpr_setting_tab = array(
 		'title'     => __( 'SMS / Whatsapp Integration', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-sms-integration-settings.php',
 	),
-	'wps-wpr-user-report-settings'  => array(
-		'title'     => '',
-		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-user-report-settings.php',
+	'wps-campaign-settings'  => array(
+		'title'     => __( 'Campaigning', 'points-and-rewards-for-woocommerce' ),
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-campaign-settings.php',
 	),
 );
 

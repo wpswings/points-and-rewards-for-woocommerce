@@ -357,6 +357,14 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_get_order_item_totals', $plugin_public, 'wps_wpr_add_cart_discount_to_order_totals', 10, 3 );
 			// class add in body for third temp.
 			$this->loader->add_filter( 'body_class', $plugin_public, 'wps_wpr_add_class_in_body_for_temp_three', 10, 1 );
+			// action to save current page url.
+			$this->loader->add_action( 'wp_ajax_nopriv_action_campaign_login', $plugin_public, 'wps_wpr_action_campaign_login', 10 );
+			// redirect user after registration to current campaign page.
+			$this->loader->add_filter( 'woocommerce_registration_redirect', $plugin_public, 'wps_wpr_redirect_user_to_current_campaign_page', 10, 1 );
+			// save birthday date via campaign.
+			$this->loader->add_action( 'wp_ajax_save_birthday_date', $plugin_public, 'wps_wpr_save_birthday_date', 10 );
+			// rewads quiz points.
+			$this->loader->add_action( 'wp_ajax_update_quiz_data', $plugin_public, 'wps_wpr_rewards_quiz_points', 10 );
 		}
 	}
 

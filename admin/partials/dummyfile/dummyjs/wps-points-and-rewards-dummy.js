@@ -32,14 +32,6 @@
         jQuery('select.wps_wpr_pro_plugin_settings').parents('.wps_wpr_general_content').addClass('wps_wpr_pro_plugin_settings');
         jQuery('textarea.wps_wpr_pro_plugin_settings').parents('.wps_wpr_general_content').addClass('wps_wpr_pro_plugin_settings');
 
-        // add class to show go pro pop-up.
-        // var pro_tag_label = jQuery('.wps_rwpr_content_template .wps_wpr_pro_plugin_settings').parents('.wps_wpr_general_row');
-        // jQuery(pro_tag_label).add('.wps_wpr_points_table_second_wrappers, .wps_wpr_api_details_main_wrapper, table')
-        //     .on('click', function () {
-        //         jQuery('.wps-wpr__popup-dummy-for-pro').addClass('dummy-popup-active');
-        //         jQuery('.wps-wpr__popup-dummy-for-pro').show();
-        //     });
-
         // show pop-up for pro settings.
         var pro_tag_label = jQuery('.wps_wpr_pro_plugin_settings').parents('.wps_wpr_general_row');
         jQuery(pro_tag_label).on('click', function () {

@@ -1,6 +1,3 @@
-:root {
-  --wps-wpr-primary: #0094ff;
-}
 
 .wps_wpr_main_section_all_wrap input:focus,
 .wps_wpr_main_section_all_wrap a:focus,
@@ -328,7 +325,7 @@ a.wps_wpr_whatsapp_share {
   .wps_wpr_wrapper_button
   .wps_wpr_common_class
   + .wps-wpr__email-input
-  input#wps_wpr_enter_emaill {
+  input.wps_wpr_enter_emaill {
   width: 100% !important;
   margin: 0;
   padding: 0;
@@ -341,7 +338,7 @@ a.wps_wpr_whatsapp_share {
   .wps_wpr_wrapper_button
   .wps_wpr_common_class
   + .wps-wpr__email-input
-  input#wps_wpr_point {
+  input.wps_wpr_point {
   font-size: 14px;
   padding: 10px;
   line-height: 1.25;

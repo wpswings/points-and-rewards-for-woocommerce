@@ -88,6 +88,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_extend_dummy_order_rewards_settings' ), 10, 1 );
 		add_action( 'wps_wpr_extend_previous_order_rewards_settings', array( $this, 'wps_wpr_previous_org_order_date_wise_html' ) );
 		add_action( 'wps_wpr_additional_coupon_settings', array( $this, 'wps_wpr_additionals_dummy_coupon_settings' ), 10, 2 );
+		add_action( 'wps_wpr_add_campaign_general_section', array( $this, 'wps_wpr_add_campaigns_general_section_dummy_html' ), 10 );
 	}
 
 	/**
@@ -2609,6 +2610,23 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 			<?php esc_html_e( 'End Date :', 'points-and-rewards-for-woocommerce' ); ?>
 			<input type="date" id="wps_wpr_previous_order_end_date" class="wps_wpr_disabled_pro_plugin">
 		</label>
+		<?php
+	}
+
+	/**
+	 * This function is used to add dummy html for review/commets.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_add_campaigns_general_section_dummy_html() {
+		?>
+		<article class="wps_wpr_general_row">
+			<label for="wps_wpr_enable_comments_campaign" class="wps_wpr_general_label"><?php esc_html_e( 'Comments Points', 'points-and-rewards-for-woocommerce' ); ?></label>
+			<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content wps_wpr_pro_plugin_settings">
+				<input type="checkbox" name="wps_wpr_enable_comments_campaign" class="wps_wpr_enable_comments_campaign wps_wpr_pro_plugin_settings" value="yes">
+				<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Turn this on to activate the comments points campaign.', 'points-and-rewards-for-woocommerce' ); ?></span>
+			</div>
+		</article>
 		<?php
 	}
 }

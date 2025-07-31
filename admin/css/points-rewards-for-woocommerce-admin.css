@@ -1521,6 +1521,19 @@ span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wp
     z-index: 99999;
 }
 
+/* campaign css  */
+
+#wps_wpr_select_page_for_campaign + .select2-container {
+    width: 100% !important;
+    max-width: 400px;
+    margin-right: 5px;
+}
+
+#wps_wpr_enter_campaign_image_url {
+    max-width: 600px;
+    width: 100%;
+}
+
 /* Centered Image */
 .wps_wpr_preview_whatsapp_template_img img {
     position: absolute;

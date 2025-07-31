@@ -196,6 +196,32 @@ $wps_wpr_other_settings = array(
 	array(
 		'type' => 'sectionend',
 	),
+	array(
+		'title' => __( 'Reward points for Guest Users', 'points-and-rewards-for-woocommerce' ),
+		'type'  => 'title',
+	),
+	array(
+		'title'    => __( 'Enable to Earn Points for Guest Users', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'id'       => 'wps_wpr_enable_guest_user_rewards_points',
+		'class'    => 'input-text',
+		'desc_tip' => __( 'When a user logs in using the same email address, they will receive the points that were previously rewarded to them as a guest user.', 'points-and-rewards-for-woocommerce' ),
+		'default'  => 0,
+		'desc'     => __( 'Enable this setting if you want to reward points to guest users. Points will be awarded based on their email address.', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'title'             => __( 'Enter Points', 'points-and-rewards-for-woocommerce' ),
+		'type'              => 'number',
+		'default'           => 1,
+		'id'                => 'wps_wpr_guest_user_rewards_points',
+		'custom_attributes' => array( 'min' => '"1"' ),
+		'class'             => 'input-text wps_wpr_new_woo_ver_style_text',
+		'desc_tip'          => __( 'Points will be rewarded to the user when the order status is marked as completed.', 'points-and-rewards-for-woocommerce' ),
+		'desc'              => __( 'Enter the number of points to be assigned to guest users when they place an order using their email address.', 'points-and-rewards-for-woocommerce' ),
+	),
+	array(
+		'type' => 'sectionend',
+	),
 );
 
 $wps_wpr_other_settings = apply_filters( 'wps_wpr_others_settings', $wps_wpr_other_settings );

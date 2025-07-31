@@ -97,7 +97,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 					wp_enqueue_style( 'woocommerce_admin_menu_styles' );
 					wp_enqueue_style( 'woocommerce_admin_styles' );
 					wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION, true );
-					wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery' ), WC_VERSION, true );
+					wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery', 'dompurify' ), WC_VERSION, true );
 					wp_enqueue_script( 'sticky_js', WPS_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), WC_VERSION, true );
 					wp_enqueue_media();
 
@@ -194,9 +194,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 					wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
 
 					// user report work.
-					if ( isset( $_GET['wps_reports_userid'] ) ) {
+					if ( isset( $_GET['user_id'] ) ) {
 
-						$user_id   = ! empty( $_GET['wps_reports_userid'] ) ? sanitize_text_field( wp_unslash( $_GET['wps_reports_userid'] ) ) : '';
+						$user_id   = ! empty( $_GET['user_id'] ) ? sanitize_text_field( wp_unslash( $_GET['user_id'] ) ) : '';
 						$user_data = $this->wps_wpr_get_user_reports_data( $user_id );
 						// js for the multistep from.
 						$script_path      = WPS_RWPR_DIR_URL . 'build/index.js';
@@ -1834,6 +1834,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 			// Assign points when a WooCommerce Subscription plugin order is renewed.
 			$this->wps_wpr_woo_subs_renewal_rewards_points( $order_id, $old_status, $new_status );
 
+			// save points for guest user.
+			$this->wps_wpr_save_points_for_guest_user( $order_id, $old_status, $new_status );
+
 			if ( 'completed' === $new_status || 'processing' === $new_status ) {
 
 				if ( function_exists( 'mvx_get_order' ) ) {
@@ -2645,5 +2648,45 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$discount = $discount - $applied_discount_on_cart;
 		}
 		return $discount;
+	}
+
+	/**
+	 * This function is used to save points for guest user when order status is changed.
+	 *
+	 * @param  int    $order_id   order_id.
+	 * @param  string $old_status old_status.
+	 * @param  string $new_status new_status.
+	 * @return bool
+	 */
+	public function wps_wpr_save_points_for_guest_user( $order_id, $old_status, $new_status ) {
+
+		if ( 'completed' === $new_status ) {
+
+			// Prevent duplicate rewards.
+			$wps_wpr_guest_user_rewards_done = wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_guest_user_rewards_done', true );
+			if ( ! empty( $wps_wpr_guest_user_rewards_done ) ) {
+				return;
+			}
+
+			// Get settings.
+			$wps_wpr_other_settings                   = get_option( 'wps_wpr_other_settings', array() );
+			$wps_wpr_enable_guest_user_rewards_points = ! empty( $wps_wpr_other_settings['wps_wpr_enable_guest_user_rewards_points'] ) ? (int) $wps_wpr_other_settings['wps_wpr_enable_guest_user_rewards_points'] : 0;
+			$wps_wpr_guest_user_rewards_points        = ! empty( $wps_wpr_other_settings['wps_wpr_guest_user_rewards_points'] ) ? (int) $wps_wpr_other_settings['wps_wpr_guest_user_rewards_points'] : 0;
+
+			// Proceed only if enabled and it's a guest user.
+			$order = wc_get_order( $order_id );
+			if ( 1 === $wps_wpr_enable_guest_user_rewards_points && $order && empty( $order->get_user_id() ) ) {
+
+				// Store points based on email (since user ID is not available).
+				$user_email      = $order->get_billing_email();
+				$existing_points = get_option( 'wps_wpr_guest_user_points_' . $user_email, 0 );
+				$new_points      = intval( $existing_points ) + intval( $wps_wpr_guest_user_rewards_points );
+
+				update_option( 'wps_wpr_guest_user_points_' . $user_email, $new_points );
+
+				// Mark as rewarded.
+				wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_guest_user_rewards_done', 'done' );
+			}
+		}
 	}
 }
