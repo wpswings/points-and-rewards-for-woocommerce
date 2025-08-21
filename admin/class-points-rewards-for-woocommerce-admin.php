@@ -73,7 +73,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		);
 
 		if ( 'woocommerce_page_wps-rwpr-setting' == $hook || 'woocommerce_page_wps-rwpr-setting' === $pagescreen ) {
-			wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'select2' );
 		}
 		wp_enqueue_style( 'wps_admin_overview', WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin-overview.css', array(), $this->version, 'all' );
@@ -188,9 +188,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'mem_points_type'        => esc_html__( 'Rewards Points type', 'points-and-rewards-for-woocommerce' ),
 						'wps_wpr_free_shipping'  => esc_html__( 'Free Shipping', 'points-and-rewards-for-woocommerce' ),
 						'wps_ajax_error'         => esc_html__( 'An error occurred. Please try again.', 'points-and-rewards-for-woocommerce' ),
+						'wps_user_count'         => $this->wps_wpr_org_user_count(),
 					);
 
-					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), time(), false );
+					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), time(), false );
 					wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
 
 					// user report work.
@@ -2689,4 +2690,102 @@ class Points_Rewards_For_WooCommerce_Admin {
 			}
 		}
 	}
+
+	/**
+	 * Count users.
+	 *
+	 * @return string
+	 */
+	public function wps_wpr_org_user_count() {
+
+		return count_users()['total_users'];
+	}
+
+	/**
+	 * Ajax call to get user id for syncing points on Klaviyo.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_sync_points_on_klaviyo_call() {
+
+		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+		if ( isset( $_POST ) ) {
+
+			$per_user               = ! empty( $_POST['per_user'] ) ? sanitize_text_field( wp_unslash( $_POST['per_user'] ) ) : 0;
+			$current_page           = ! empty( $_POST['current_page'] ) ? sanitize_text_field( wp_unslash( $_POST['current_page'] ) ) : 1;
+			$klaviyo_public_api_key = ! empty( $_POST['klaviyo_public_api_key'] ) ? sanitize_text_field( wp_unslash( $_POST['klaviyo_public_api_key'] ) ) : '';
+			update_option( 'wps_wpr_klaviyo_public_api_key', $klaviyo_public_api_key );
+			$args = array(
+				'fields'     => 'ID',
+				'meta_query' => array(
+					array(
+						'key'     => 'wps_wpr_points',
+						'compare' => 'EXISTS',
+					),
+				),
+			);
+
+			$args['number'] = $per_user;
+			$args['offset'] = ( $current_page - 1 ) * $per_user;
+			$user_data      = new WP_User_Query( $args );
+			$user_data      = $user_data->get_results();
+
+			if ( ! empty( $user_data ) && is_array( $user_data ) ) {
+				foreach ( $user_data as $key => $user_id ) {
+
+					$this->wps_wpr_sync_points( $user_id, $klaviyo_public_api_key );
+					// send sms.
+					if ( function_exists( 'wps_wpr_send_sms_org' ) ) {
+
+						wps_wpr_send_sms_org( $user_id, esc_html__( 'Your points have been successfully synced to Klaviyo under your user profile.', 'points-and-rewards-for-woocommerce' ) );
+					}
+					// send messages on whatsapp.
+					if ( function_exists( 'wps_wpr_send_messages_on_whatsapp' ) ) {
+
+						wps_wpr_send_messages_on_whatsapp( $user_id, esc_html__( 'Your points have been successfully synced to Klaviyo under your user profile.', 'points-and-rewards-for-woocommerce' ) );
+					}
+				}
+			}
+
+			$data = array(
+				'per_user'     => $per_user,
+				'current_page' => $current_page + 1,
+				'offset'       => ( $current_page - 1 ) * $per_user,
+			);
+		}
+		wp_send_json( $data );
+		wp_die();
+	}
+
+	/**
+	 * Function to sync points on Klaviyo.
+	 *
+	 * @param  int    $user_id                user_id.
+	 * @param  string $klaviyo_public_api_key klaviyo_public_api_key.
+	 * @return void
+	 */
+	public function wps_wpr_sync_points( $user_id, $klaviyo_public_api_key ) {
+
+		$user       = get_user_by( 'ID', $user_id );
+		$new_points = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
+		$email      = $user->user_email;
+		$url        = 'https://a.klaviyo.com/api/identify';
+		$data       = array(
+			'token' => $klaviyo_public_api_key,
+			'properties' => array(
+				'email' => $email,
+				'wps_wpr_loyalty_points' => intval( $new_points ),
+			)
+		);
+	
+		$response = wp_remote_post( $url, array(
+			'body' => array(
+				'data' => json_encode($data),
+			),
+		) );
+		
+		$status  = ! empty( $response['response'] ) ?  $response['response']['code'] : '';
+		$message = ! empty( $response['response'] ) ?  $response['response']['message'] : '';
+	}
+
 }

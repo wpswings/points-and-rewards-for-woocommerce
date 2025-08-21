@@ -2621,10 +2621,17 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 	public function wps_wpr_add_campaigns_general_section_dummy_html() {
 		?>
 		<article class="wps_wpr_general_row">
-			<label for="wps_wpr_enable_comments_campaign" class="wps_wpr_general_label"><?php esc_html_e( 'Comments Points', 'points-and-rewards-for-woocommerce' ); ?></label>
+			<label for="wps_wpr_enable_comments_campaign" class="wps_wpr_general_label wps_wpr_pro_plugin_settings"><?php esc_html_e( 'Comments Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 			<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content wps_wpr_pro_plugin_settings">
 				<input type="checkbox" name="wps_wpr_enable_comments_campaign" class="wps_wpr_enable_comments_campaign wps_wpr_pro_plugin_settings" value="yes">
 				<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Turn this on to activate the comments points campaign.', 'points-and-rewards-for-woocommerce' ); ?></span>
+			</div>
+		</article>
+		<article class="wps_wpr_general_row">
+			<label for="wps_wpr_enable_first_order_points" class="wps_wpr_general_label wps_wpr_pro_plugin_settings"><?php esc_html_e( 'First Order Points', 'points-and-rewards-for-woocommerce' ); ?></label>
+			<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content wps_wpr_pro_plugin_settings">
+				<input type="checkbox" name="wps_wpr_enable_first_order_points" class="wps_wpr_enable_first_order_points wps_wpr_pro_plugin_settings" value="yes">
+				<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Turn this on to activate the first order points campaign.', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</div>
 		</article>
 		<?php

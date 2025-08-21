@@ -150,54 +150,44 @@
     );
 
     // validate quiz answer.
-    jQuery(document).on("click", "#wps_wpr_submit_quiz_ans", function () {
-      const $notice = jQuery(".wps_wpr_quiz_notice");
-      const $loader = jQuery(".wps_wpr_quiz_loader");
-      const $submitBtn = jQuery("#wps_wpr_submit_quiz_ans");
-      const quiz_answer = jQuery(
-        'input[name="wps_wpr_quiz_option_ans"]:checked'
-      ).val();
+    $(document).on("click", ".wps_wpr_submit_quiz_ans", function () {
+        const $this       = $(this);
+        const index       = $this.data('index');
+        const quiz_answer = $('input[name="wps_wpr_quiz_option_ans_' + index + '"]:checked').val();
+        const $notice     = $(".wps_wpr_quiz_notice");
+        const $loader     = $this.next(".wps_wpr_quiz_loader");
 
-      if (!quiz_answer) {
-        $notice
-          .show()
-          .css("color", "red")
-          .html("Choose an option to claim your reward!");
-        return;
-      }
+        if (!quiz_answer) {
+            $notice.show().css("color", "red").html("Choose an option to claim your reward!");
+            return;
+        }
 
-      // Prepare data for AJAX.
-      const data = {
-        action: "update_quiz_data",
-        nonce: wps_wpr_campaign_obj.wps_wpr_nonce,
-        quiz_answer: quiz_answer,
-      };
+        const data = {
+            action: "update_quiz_data",
+            nonce: wps_wpr_campaign_obj.wps_wpr_nonce,
+            quiz_answer: quiz_answer,
+            index: index
+        };
 
-      // Update UI before AJAX.
-      $notice.hide().html("");
-      $loader.show();
-      $submitBtn.prop("disabled", true);
+        $notice.hide().html("");
+        $loader.show();
+        $this.prop("disabled", true);
 
-      jQuery.ajax({
-        type: "POST",
-        url: wps_wpr_campaign_obj.ajaxurl,
-        data: data,
-        success: function (response) {
-          $loader.hide();
-          $notice
-            .show()
-            .css("color", response.result ? "green" : "red")
-            .html(response.msg || "Something went wrong. Please try again.");
-        },
-        error: function () {
-          $loader.hide();
-          $submitBtn.prop("disabled", false);
-          $notice
-            .show()
-            .css("color", "red")
-            .html("An error occurred. Please try again.");
-        },
-      });
+        $.ajax({
+            type: "POST",
+            url: wps_wpr_campaign_obj.ajaxurl,
+            data: data,
+            success: function(response) {
+                $loader.hide();
+                $notice.show().css("color", response.result ? "green" : "red")
+                  .html(response.msg || "Something went wrong. Please try again.");
+            },
+            error: function() {
+                $loader.hide();
+                $this.prop("disabled", false);
+                $notice.show().css("color", "red").html("An error occurred. Please try again.");
+            }
+        });
     });
 
     // quiz scroll up while clicking.
@@ -206,6 +196,25 @@
 
         scrollTop: $(window).scrollTop() + 100 // scroll down by 300 pixels
       }, 400); // 400ms animation speed
+    });
+
+    // show win wheel spin to play the game using campaign modal.
+    jQuery(document).on('click', '.wps_wpr_show_campaign_win_wheel_modal', function(e){
+      e.preventDefault();
+
+      // Show Win Wheel when click on Play link in Campaign Modal.
+      jQuery('#wps_wpr_spin_canvas_id').hide();
+      $('.wps_wpr_container-close').css('visibility', 'visible');
+      jQuery('.wps_wpr_wheel_icon_main').show();
+      setTimeout(function() {
+          jQuery('.wps_wpr_container').addClass('wps_wpr-container--show');
+      }, 200);
+    });
+
+    // show canvas when click on win wheel close btn.
+    jQuery(document).on('click', '.wps_wpr_container-close', function(){
+
+      jQuery('#wps_wpr_spin_canvas_id').show();
     });
   });
 })(jQuery);

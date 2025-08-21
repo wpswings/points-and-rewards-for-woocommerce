@@ -902,12 +902,14 @@ img.wps_wpr_dash_video_svg_img {
     background-color: #e4f3ff;
 }
 
-.wps_wpr_previous_order_notice {
+.wps_wpr_previous_order_notice,
+.wps_wpr_klaviyo_sync_notice {
     display: none;
     font-weight: 600;
 }
 
-.wps_wpr_previous_order_loader {
+.wps_wpr_previous_order_loader,
+.wps_wpr_klaviyo_sync_loader {
     display: none;
     vertical-align: middle;
     height: 24px;
@@ -1562,4 +1564,146 @@ article.wps_wpr_general_row input[type=text],article.wps_wpr_general_row input[t
         width: 100%;
         max-width: 100%;
     }
+}
+
+/*  ++++++++ Campaign CSS +++++++++  */
+:root {
+    --popup-primary: #1aa564;
+}
+.wps-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.3s linear;
+}
+
+.wps-popup.popup--active {
+    opacity: 1;
+    z-index: 999999;
+    pointer-events: unset;
+}
+
+.wps-popup_shadow {
+    background: rgba(255, 255, 255, 0.8);
+    filter: blur(2px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.wps-popup_main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% + 50px));
+    background: #fff;
+    border: 2px solid #dcdcdc;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 0 25px rgba(0, 0, 0, 0.05);
+    max-width: 800px;
+    width: 100%;
+    max-height: 400px;
+    height: 100%;
+    transition: all 0.3s linear;
+}
+
+.wps-popup.popup--active .wps-popup_main {
+    transform: translate(-50%, -50%);
+}
+
+.wps-popup.popup--active .wps-popup_main:hover {
+    border-color: var(--popup-primary);
+}
+
+.wps-popup_m-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    line-height: 24px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #000;
+    font-weight: 600;
+    opacity: 0.5;
+    transition: 0.2s all linear;
+}
+
+.wps-popup_m-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+.wps-popup_m-header .h2 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0 0 20px;
+}
+
+.wps-popup_mcb-img img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.wps-popup_m-content {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-height: 350px;
+    overflow: auto;
+}
+
+.wps-popup_mcb-img {
+    flex: 1 0 30%;
+    max-width: 33%;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.wps-popup_mcb-img .h3 {
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.25;
+}
+
+.wps-popup_mcb-img .wps-popup_mcbi-button {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    background: #fff;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.25;
+    opacity: 0;
+    transition: all 0.2s linear;
+}
+
+.wps-popup_mcb-img .wps-popup_mcbi-button:hover,
+.wps-popup_mcb-img.button--active .wps-popup_mcbi-button {
+    opacity: 0.9;
+    color: var(--popup-primary);
+    font-weight: 600;
 }

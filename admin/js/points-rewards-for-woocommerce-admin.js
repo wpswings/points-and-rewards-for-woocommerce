@@ -839,4 +839,115 @@ jQuery(document).ready(function($){
 
         jQuery('.wps_wpr_preview_whatsapp_template_img').hide();
     });
+
+	// sync points on Klaviyo.
+	// Reset Points feature start here.
+	jQuery(document).on('click', '#wps_wpr_syncs_points_on_klaviyo_btn', function(){
+
+		var wps_wpr_klaviyo_public_api_key = jQuery('#wps_wpr_klaviyo_public_api_key').val().trim();
+		if ( wps_wpr_klaviyo_public_api_key ) {
+
+			jQuery(this).prop( 'disabled', true );
+			wps_wpr_recursive_to_sync_points_on_klaviyo( wps_wpr_object.wps_user_count );
+		} else {
+
+			jQuery('.wps_wpr_klaviyo_sync_notice').show().css('color', 'red').html('please enter your Klaviyo public API key.');
+		}
+	});
+
+	// Recursive call back.
+	function wps_wpr_recursive_to_sync_points_on_klaviyo( user_count, current_page = '' ) {
+
+		var wps_wpr_klaviyo_public_api_key = jQuery('#wps_wpr_klaviyo_public_api_key').val().trim();
+		var get_count                      = 50; // Default count to sync per request.
+		if ( user_count > get_count ) {
+
+			get_count = get_count;
+		} else {
+			get_count = user_count;
+		}
+
+		var data = {
+			'action'                 : 'wps_sync_points_on_klaviyo',
+			'wps_nonce'              : wps_wpr_object.wps_wpr_nonce,
+			'current_page'           : current_page,
+			'per_user'               : get_count,
+			'klaviyo_public_api_key' : wps_wpr_klaviyo_public_api_key,
+		};
+
+		jQuery('.wps_wpr_klaviyo_sync_loader').show();
+		jQuery('.wps_wpr_klaviyo_sync_notice').show();
+
+		jQuery.ajax({
+			'method' : 'POST',
+			'url'    : wps_wpr_object.ajaxurl,
+			'data'   : data,
+			success  : function( response ) {
+				if ( parseInt( user_count ) >= parseInt( response.offset ) + parseInt( response.per_user ) ) {
+
+					if ( response.offset <= 0 ) {
+
+						var reset_status = get_count;
+					} else {
+
+						reset_status = parseFloat( response.offset ) + parseFloat( get_count );
+					}
+
+					jQuery('.wps_wpr_klaviyo_sync_notice').css('color', 'green').html( reset_status + ' user points has been successfully synced' );
+					wps_wpr_recursive_to_sync_points_on_klaviyo( user_count, response.current_page );
+				} else {
+
+					jQuery('#wps_wpr_syncs_points_on_klaviyo_btn').prop( 'disabled', false );
+					jQuery('.wps_wpr_klaviyo_sync_loader').hide();
+					jQuery('.wps_wpr_klaviyo_sync_notice').hide();
+					window.location.reload();
+				}
+			},
+			error    : function( error ) {
+				console.log( error );
+			}
+		});
+	}
+
+	// show notice for purchase pro plugin when click on Add Quiz Button.
+	if ( wps_wpr_object.check_pro_activate ) {
+		jQuery(document).on('click', '#wps_wpr_add_quiz', function(){
+
+			var pro_plugin_msg = '<div class="wps_wpr_object_purchase"><p>' + wps_wpr_object.badge_pro__text.replace('Badges', 'Quiz') + ' <a target="_blanck" href="' + wps_wpr_object.pro_link + '">' + wps_wpr_object.pro_link_text + "</a></p></div>";
+			jQuery('.wps_wpr_insert_pro_html').show().append( pro_plugin_msg );
+		});
+
+		// hide remove quiz button if pro plugin is not active.
+		jQuery('.wps_wpr_general_actions').hide();
+	}
+
+	// Open Campaign existing modal template.
+	jQuery(document).on('click', '.wps_wpr_view_campaign_existing_template', function(e){
+
+		e.preventDefault();
+		$(".wps-popup").addClass("popup--active");
+	});
+
+	// close Campaign template modal.
+	$(document).on(
+		"click",
+		".wps-popup_shadow,.wps-popup_m-close",
+		function (e) {
+			$(".wps-popup").removeClass("popup--active");
+		}
+	);
+
+	// Set campaign heading and image in Modal at user end.
+	$(document).on("click", ".wps-popup_mcbi-button", function (e) {
+
+		e.preventDefault();
+		$(".wps-popup_mcb-img").removeClass("button--active");
+		$(this).parents(".wps-popup_mcb-img").addClass("button--active");
+		$(".wps-popup_mcbi-button").text("Apply");
+		$(this).text("Applied!");
+		setTimeout(function () {
+			$(".wps-popup").removeClass("popup--active");
+		}, 500);
+	});
+
 });
