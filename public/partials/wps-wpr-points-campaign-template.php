@@ -203,8 +203,8 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 												'Spin the wheel, try your luck, and earn exciting points between %1$s to %2$s',
 												'points-and-rewards-for-woocommerce'
 											),
-											is_array( $wps_wpr_enter_segment_points ) ? esc_html( min( $wps_wpr_enter_segment_points ) ) : 0,
-											is_array( $wps_wpr_enter_segment_points ) ? esc_html( max( $wps_wpr_enter_segment_points ) ) : 0
+											is_array( $wps_wpr_enter_segment_points ) && ! empty( $wps_wpr_enter_segment_points ) ? esc_html( min( $wps_wpr_enter_segment_points ) ) : 0,
+											is_array( $wps_wpr_enter_segment_points ) && ! empty( $wps_wpr_enter_segment_points ) ? esc_html( max( $wps_wpr_enter_segment_points ) ) : 0
 										);
 									if ( empty( $wps_wpr_check_game_points_assign_timing ) ) {
 										?>
@@ -253,6 +253,7 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 													<input type="button" class="wps_wpr_submit_quiz_ans" value="<?php esc_html_e( 'Submit', 'points-and-rewards-for-woocommerce' ); ?>" data-index="<?php echo esc_attr( $index ); ?>">
 													<img class="wps_wpr_quiz_loader wps_wpr_img_loader" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/loading.gif' ); ?>">
 												</div>
+												<p class="wps_wpr_quiz_notice"></p>
 											<?php else : ?>
 												<div class="wps-wpr_campaign-h2">
 													<?php echo esc_html( $quiz_question ); ?>
@@ -265,7 +266,6 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 										}
 									}
 									?>
-									<p class="wps_wpr_quiz_notice"></p>
 								</div>
 								<?php
 							} else {
@@ -278,11 +278,17 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 					</div>
 				</div>
 				<!-- // Footer section data  -->
-				<div class="wps-wpr-hlt_co-footer">
-					<?php if ( 'yes' === $wps_wpr_show_content_in_footer ) : ?>
-						<p><?php echo wp_kses_post( $wps_wpr_modal_footer_content ); ?></p>
-					<?php endif; ?>
-				</div>
+				<?php if ( wps_wpr_is_par_pro_plugin_active() ) { ?>
+					<div class="wps-wpr-hlt_co-footer">
+						<?php if ( 'yes' === $wps_wpr_show_content_in_footer ) : ?>
+							<p><?php echo wp_kses_post( $wps_wpr_modal_footer_content ); ?></p>
+						<?php endif; ?>
+					</div>
+				<?php } else { ?>
+					<div class="wps-wpr-hlt_co-footer">
+						<p><?php esc_html_e( 'Created with ❤ by WP Swings’', 'points-and-rewards-for-woocommerce' ); ?></p>
+					</div>
+				<?php } ?>
 			</div>
 		</div>
 	</div>

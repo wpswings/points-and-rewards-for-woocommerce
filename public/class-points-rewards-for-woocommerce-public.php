@@ -174,11 +174,12 @@ class Points_Rewards_For_WooCommerce_Public {
 				$this->plugin_name,
 				'wps_wpr_campaign_obj',
 				array(
-					'ajaxurl'             => admin_url( 'admin-ajax.php' ),
-					'wps_wpr_nonce'       => wp_create_nonce( 'wps-wpr-verify-nonce' ),
-					'is_user_login'       => is_user_logged_in(),
-					'wps_modal_color_one' => $wps_wpr_campaign_color_one,
-					'wps_modal_color_two' => $wps_wpr_campaign_color_two,
+					'ajaxurl'              => admin_url( 'admin-ajax.php' ),
+					'wps_wpr_nonce'        => wp_create_nonce( 'wps-wpr-verify-nonce' ),
+					'is_user_login'        => is_user_logged_in(),
+					'wps_modal_color_one'  => $wps_wpr_campaign_color_one,
+					'wps_modal_color_two'  => $wps_wpr_campaign_color_two,
+					'is_pro_plugin_active' => wps_wpr_is_par_pro_plugin_active(),
 				)
 			);
 		}

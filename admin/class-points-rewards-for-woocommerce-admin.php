@@ -73,7 +73,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		);
 
 		if ( 'woocommerce_page_wps-rwpr-setting' == $hook || 'woocommerce_page_wps-rwpr-setting' === $pagescreen ) {
-			wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.css', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'select2' );
 		}
 		wp_enqueue_style( 'wps_admin_overview', WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin-overview.css', array(), $this->version, 'all' );
@@ -191,7 +191,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'wps_user_count'         => $this->wps_wpr_org_user_count(),
 					);
 
-					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), time(), false );
+					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), time(), false );
 					wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
 
 					// user report work.
@@ -2786,6 +2786,55 @@ class Points_Rewards_For_WooCommerce_Admin {
 		
 		$status  = ! empty( $response['response'] ) ?  $response['response']['code'] : '';
 		$message = ! empty( $response['response'] ) ?  $response['response']['message'] : '';
+	}
+
+	/**
+	 * This function is used to set campaign image and heading.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_set_camp_heading_and_image() {
+    
+		// Verify the nonce for security.
+		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+		
+		// Sanitize the incoming values.
+		$banner_heading = isset( $_POST['banner_heading'] ) ? sanitize_text_field( wp_unslash( $_POST['banner_heading'] ) ) : '';
+		$banner_image   = isset( $_POST['banner_image'] ) ? esc_url_raw( wp_unslash( $_POST['banner_image'] ) ) : '';
+		$modal_prim_col = isset( $_POST['modal_prim_col'] ) ? sanitize_text_field( wp_unslash( $_POST['modal_prim_col'] ) ) : '';
+		$modal_sec_col  = isset( $_POST['modal_sec_col'] ) ? esc_url_raw( wp_unslash( $_POST['modal_sec_col'] ) ) : '';
+
+		// Initialize the campaign settings option.
+		$wps_wpr_campaign_settings = get_option( 'wps_wpr_campaign_settings', array() );
+
+		// Ensure $wps_wpr_campaign_settings is an array.
+		if ( ! is_array( $wps_wpr_campaign_settings ) ) {
+			$wps_wpr_campaign_settings = array();
+		}
+
+		// Update the campaign modal heading if provided.
+		if ( isset( $banner_heading ) && isset( $wps_wpr_campaign_settings['wps_wpr_enter_campaign_heading'] ) ) {
+			$wps_wpr_campaign_settings['wps_wpr_enter_campaign_heading'] = $banner_heading;
+		}
+
+		// Update the banner image URL if provided.
+		if ( isset( $banner_image ) && isset( $wps_wpr_campaign_settings['wps_wpr_enter_campaign_image_url'] ) ) {
+			$wps_wpr_campaign_settings['wps_wpr_enter_campaign_image_url'] = $banner_image;
+		}
+
+		// set modal primary color.
+		if ( isset( $modal_prim_col ) && isset( $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] ) ) {
+			$wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] = $modal_prim_col;
+		}
+
+		// set modal secondary color.
+		if ( isset( $modal_sec_col ) && isset( $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] ) ) {
+			$wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] = $modal_sec_col;
+		}
+
+		// Save the updated campaign settings.
+		$updated = update_option( 'wps_wpr_campaign_settings', $wps_wpr_campaign_settings );
+		wp_die();
 	}
 
 }

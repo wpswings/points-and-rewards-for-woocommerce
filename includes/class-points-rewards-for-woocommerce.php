@@ -244,6 +244,9 @@ class Points_Rewards_For_Woocommerce {
 
 		// sync points on klaviyo ajax call.
 		$this->loader->add_action( 'wp_ajax_wps_sync_points_on_klaviyo', $plugin_admin, 'wps_wpr_sync_points_on_klaviyo_call', 10 );
+
+		// set campaign image.
+		$this->loader->add_action( 'wp_ajax_wps_set_camp_heading_and_image', $plugin_admin, 'wps_wpr_set_camp_heading_and_image', 10 );
 	}
 
 	/**

@@ -47,7 +47,9 @@ a.wps_wpr_premium--cta {
     box-sizing: border-box
 }
 
-.wps_rwpr_settings_display_none {
+.wps_rwpr_settings_display_none,
+.wps_wpr_cam_prim_color,
+.wps_wpr_cam_sec_color {
     display: none
 }
 
@@ -1684,7 +1686,7 @@ article.wps_wpr_general_row input[type=text],article.wps_wpr_general_row input[t
     line-height: 1.25;
 }
 
-.wps-popup_mcb-img .wps-popup_mcbi-button {
+.wps-popup_mcb-img .wps_wpr_apply_banner_img {
     position: absolute;
     top: 5px;
     bottom: 5px;
@@ -1701,9 +1703,46 @@ article.wps_wpr_general_row input[type=text],article.wps_wpr_general_row input[t
     transition: all 0.2s linear;
 }
 
-.wps-popup_mcb-img .wps-popup_mcbi-button:hover,
-.wps-popup_mcb-img.button--active .wps-popup_mcbi-button {
+.wps-popup_mcb-img .wps_wpr_apply_banner_img:hover,
+.wps-popup_mcb-img.button--active .wps_wpr_apply_banner_img {
     opacity: 0.9;
     color: var(--popup-primary);
     font-weight: 600;
+}
+
+button.button.wps_wpr_remove_quiz {
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #2196f3;
+    background: white;
+    color: #2196f3;
+    line-height: 1;
+    display: inline-block;
+    min-height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button#wps_wpr_add_quiz {
+    border-radius: 5px;
+    border: 1px solid #2196f3;
+    background: white;
+    color: #2196f3;
+    line-height: 1;
+    display: inline-block;
+    min-height: 30px;
+    font-size: 16px;
+    margin: 10px 10px 20px;
+    cursor: pointer;
+}
+
+button#wps_wpr_add_quiz:hover {
+    background-color: #2196f3 !important;
+    color: #fff;
+}
+
+button.button.wps_wpr_remove_quiz:hover {
+    background-color: #2196f3 !important;
+    color: #fff !important;
+    border: none;
 }

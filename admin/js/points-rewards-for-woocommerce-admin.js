@@ -937,17 +937,72 @@ jQuery(document).ready(function($){
 		}
 	);
 
-	// Set campaign heading and image in Modal at user end.
-	$(document).on("click", ".wps-popup_mcbi-button", function (e) {
-
+	// set Campaign modal heading and banner image.
+	$(document).on("click", ".wps_wpr_apply_banner_img", function (e) {
 		e.preventDefault();
+
+		const $button = $(this);  // Reference to the clicked button
+		const $modal  = $button.closest(".wps-popup_mcb-img");  // Reference to the modal (parent element)
+		
+		// Toggle active class to highlight the selected modal
 		$(".wps-popup_mcb-img").removeClass("button--active");
-		$(this).parents(".wps-popup_mcb-img").addClass("button--active");
-		$(".wps-popup_mcbi-button").text("Apply");
-		$(this).text("Applied!");
-		setTimeout(function () {
-			$(".wps-popup").removeClass("popup--active");
-		}, 500);
+		$modal.addClass("button--active");
+
+		// Reset all buttons text to "Apply"
+		$(".wps_wpr_apply_banner_img").text("Apply");
+
+		// Retrieve the banner heading and image URL.
+		const banner_heading = $modal.find(".wps_wpr_camp_banner_heading").text();
+		const banner_image   = $modal.find(".wps_wpr_cam_banner_image").attr("src");
+
+		// Retrieve the banner prim color and sec color.
+		const modal_prim_col = $modal.find(".wps_wpr_cam_prim_color").text();
+		const modal_sec_col  = $modal.find(".wps_wpr_cam_sec_color").text();
+
+		// Store the applied banner's ID (or any other identifier) in localStorage
+		const applied_banner_id = $modal.index();  // You can use other identifiers like banner ID if available
+		localStorage.setItem('applied_banner', applied_banner_id);
+
+		// Prepare the data for the AJAX request
+		const data = {
+			action         : 'wps_set_camp_heading_and_image',
+			wps_nonce      : wps_wpr_object.wps_wpr_nonce,
+			banner_heading : banner_heading,
+			banner_image   : banner_image,
+			modal_prim_col : modal_prim_col,
+			modal_sec_col  : modal_sec_col
+		};
+
+		// Perform the AJAX request
+		$.ajax({
+			url     : wps_wpr_object.ajaxurl,
+			method  : 'POST',
+			data    : data,
+			success : function(response) {
+
+				// Set the text of the clicked button to "Applied"
+				$button.text("Applied");
+				// After success, close the modal and refresh the page
+				setTimeout(function () {
+					$(".wps-popup").removeClass("popup--active");
+					window.location.reload();  // Reload the page after applying
+				}, 1000);
+			},
+			error: function(xhr, status, error) {
+				console.error("Error:", error);
+				alert('An error occurred while updating the campaign. Please try again.');
+			}
+		});
 	});
+
+	// Check if there’s an applied banner on page load.
+	const applied_banner = localStorage.getItem('applied_banner');
+	if (applied_banner !== null) {
+		// Set the button text to "Applied" for the banner saved in localStorage
+		$(".wps-popup_mcb-img").eq(applied_banner).find(".wps_wpr_apply_banner_img").text("Applied");
+
+		// Optionally, set the active class to the applied banner (if needed)
+		$(".wps-popup_mcb-img").eq(applied_banner).addClass("button--active");
+	}
 
 });
