@@ -909,17 +909,43 @@ jQuery(document).ready(function($){
 		});
 	}
 
-	// show notice for purchase pro plugin when click on Add Quiz Button.
-	if ( wps_wpr_object.check_pro_activate ) {
-		jQuery(document).on('click', '#wps_wpr_add_quiz', function(){
+	// when quiz is enbale make the all quiz fields are required.
+	jQuery(document).on('change', '.wps_wpr_enable_quiz_contest_campaign', function () {
+		const checked = jQuery(this).is(':checked');
+		if ( jQuery('.wps_wpr_quiz_row').length == 1 ) {
+			if (checked) {
+				jQuery('.wps_wpr_quiz_field').prop('required', true);
+			} else {
+				jQuery('.wps_wpr_quiz_field').prop('required', false);
+			}
+		}
+	});
 
-			var pro_plugin_msg = '<div class="wps_wpr_object_purchase"><p>' + wps_wpr_object.badge_pro__text.replace('Badges', 'Quiz') + ' <a target="_blanck" href="' + wps_wpr_object.pro_link + '">' + wps_wpr_object.pro_link_text + "</a></p></div>";
-			jQuery('.wps_wpr_insert_pro_html').show().append( pro_plugin_msg );
+	// Show notice for purchase pro plugin when clicking on Add Quiz Button.
+	if (wps_wpr_object.check_pro_activate) {
+
+		jQuery(document).on('click', '#wps_wpr_add_quiz', function () {
+
+			// Only add message if it doesn't already exist
+			if (!jQuery('.wps_wpr_object_purchase').length) {
+				const pro_plugin_msg = `
+					<div class="wps_wpr_object_purchase">
+						<p>
+							${wps_wpr_object.badge_pro__text.replace('Badges', 'Quiz')} 
+							<a target="_blank" href="${wps_wpr_object.pro_link}">
+								${wps_wpr_object.pro_link_text}
+							</a>
+						</p>
+					</div>
+				`;
+				jQuery('.wps_wpr_insert_pro_html').show().append(pro_plugin_msg);
+			}
 		});
 
-		// hide remove quiz button if pro plugin is not active.
+		// Hide remove quiz button if pro plugin is not active
 		jQuery('.wps_wpr_general_actions').hide();
 	}
+
 
 	// Open Campaign existing modal template.
 	jQuery(document).on('click', '.wps_wpr_view_campaign_existing_template', function(e){
@@ -937,72 +963,115 @@ jQuery(document).ready(function($){
 		}
 	);
 
-	// set Campaign modal heading and banner image.
+	// Make Active tab on Banner modal.
+	$(document).on('click', '.wps-popup_m-sidebar span', function() {
+		// Get the ID of the clicked tab
+		const tabId = $(this).attr('id');
+
+		// Remove the 'active_tab' class from all content
+		$('.wps-popup_m-content').removeClass('active_tab');
+		
+		// Add the 'active_tab' class to the relevant content based on the tab clicked
+		$(`.${tabId}`).addClass('active_tab');
+		
+		// Remove the 'active' class from all sidebar spans
+		$(".wps-popup_m-sidebar span").removeClass("active");
+
+		// Add the 'active' class to the clicked tab
+		$(this).addClass("active");
+
+		// Store the active tab ID in localStorage
+		localStorage.setItem('activeTab', tabId);
+	});
+
+	// On page load, check if there's an active tab in localStorage
+	const activeTab = localStorage.getItem('activeTab');
+	if (activeTab) {
+		// Set the active tab and content based on localStorage
+		$(`#${activeTab}`).addClass("active");  // Set active class on the tab
+		$(`.${activeTab}`).addClass("active_tab");  // Set active_tab class on the content
+	}
+
+	// Ajax call for set the banner image, heading and modal color.
 	$(document).on("click", ".wps_wpr_apply_banner_img", function (e) {
 		e.preventDefault();
 
-		const $button = $(this);  // Reference to the clicked button
-		const $modal  = $button.closest(".wps-popup_mcb-img");  // Reference to the modal (parent element)
-		
-		// Toggle active class to highlight the selected modal
-		$(".wps-popup_mcb-img").removeClass("button--active");
-		$modal.addClass("button--active");
+		const $button  = $(this);
+		const $banner  = $button.closest(".wps-popup_mcb-img");
+		const $section = $banner.closest(".wps-popup_m-content");
 
-		// Reset all buttons text to "Apply"
+		// Reset all banners
+		$(".wps-popup_mcb-img").removeClass("button--active");
 		$(".wps_wpr_apply_banner_img").text("Apply");
 
-		// Retrieve the banner heading and image URL.
-		const banner_heading = $modal.find(".wps_wpr_camp_banner_heading").text();
-		const banner_image   = $modal.find(".wps_wpr_cam_banner_image").attr("src");
+		// Mark current banner
+		$banner.addClass("button--active");
 
-		// Retrieve the banner prim color and sec color.
-		const modal_prim_col = $modal.find(".wps_wpr_cam_prim_color").text();
-		const modal_sec_col  = $modal.find(".wps_wpr_cam_sec_color").text();
+		// Gather banner details
+		const banner_heading = $banner.find(".wps_wpr_camp_banner_heading").text();
+		const banner_image   = $banner.find(".wps_wpr_cam_banner_image").attr("src");
+		const modal_prim_col = $banner.find(".wps_wpr_cam_prim_color").text();
+		const modal_sec_col  = $banner.find(".wps_wpr_cam_sec_color").text();
 
-		// Store the applied banner's ID (or any other identifier) in localStorage
-		const applied_banner_id = $modal.index();  // You can use other identifiers like banner ID if available
-		localStorage.setItem('applied_banner', applied_banner_id);
+		// Get the "festival section" class (halloween / black_friday / happy_easter)
+		const classes = $section.attr("class").split(/\s+/);
+		const sectionClass = classes.find(cls => cls.startsWith("wps_wpr_"));
 
-		// Prepare the data for the AJAX request
-		const data = {
-			action         : 'wps_set_camp_heading_and_image',
-			wps_nonce      : wps_wpr_object.wps_wpr_nonce,
-			banner_heading : banner_heading,
-			banner_image   : banner_image,
-			modal_prim_col : modal_prim_col,
-			modal_sec_col  : modal_sec_col
+		// Save section + index in localStorage
+		const applied_banner = {
+			section: sectionClass,   // e.g. "wps_wpr_black_friday"
+			index: $banner.index()
 		};
+		localStorage.setItem("applied_banner", JSON.stringify(applied_banner));
 
-		// Perform the AJAX request
+		// Perform AJAX request
 		$.ajax({
 			url     : wps_wpr_object.ajaxurl,
-			method  : 'POST',
-			data    : data,
-			success : function(response) {
-
-				// Set the text of the clicked button to "Applied"
+			method  : "POST",
+			data    : {
+				action         : "wps_set_camp_heading_and_image",
+				wps_nonce      : wps_wpr_object.wps_wpr_nonce,
+				banner_heading : banner_heading,
+				banner_image   : banner_image,
+				modal_prim_col : modal_prim_col,
+				modal_sec_col  : modal_sec_col
+			},
+			success : function() {
 				$button.text("Applied");
-				// After success, close the modal and refresh the page
 				setTimeout(function () {
 					$(".wps-popup").removeClass("popup--active");
-					window.location.reload();  // Reload the page after applying
-				}, 1000);
+					window.location.reload();
+				}, 800);
 			},
 			error: function(xhr, status, error) {
 				console.error("Error:", error);
-				alert('An error occurred while updating the campaign. Please try again.');
+				alert("An error occurred while updating the campaign. Please try again.");
 			}
 		});
 	});
 
-	// Check if there’s an applied banner on page load.
-	const applied_banner = localStorage.getItem('applied_banner');
-	if (applied_banner !== null) {
-		// Set the button text to "Applied" for the banner saved in localStorage
-		$(".wps-popup_mcb-img").eq(applied_banner).find(".wps_wpr_apply_banner_img").text("Applied");
+	// Restore selection on page load.
+	const saved = localStorage.getItem("applied_banner");
+	if (saved) {
 
-		// Optionally, set the active class to the applied banner (if needed)
-		$(".wps-popup_mcb-img").eq(applied_banner).addClass("button--active");
+		const { section, index } = JSON.parse(saved);
+
+		// Reset everything
+		$(".wps-popup_mcb-img").removeClass("button--active");
+		$(".wps_wpr_apply_banner_img").text("Apply");
+		$(".wps-popup_m-content").removeClass("active_tab");
+		$(".wps-popup_m-sidebar span").removeClass("active");
+
+		// Activate correct section and sidebar
+		$(`.${section}`).addClass("active_tab");
+		$(`#${section}`).addClass("active"); // assumes sidebar spans have ids = section classes
+
+		// Highlight the saved banner
+		const $target = $(`.${section}`).find(".wps-popup_mcb-img").eq(index);
+		if ($target.length) {
+			$target.addClass("button--active")
+				.find(".wps_wpr_apply_banner_img").text("Applied");
+		}
 	}
 
 });

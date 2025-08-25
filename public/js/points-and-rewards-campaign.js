@@ -14,7 +14,7 @@
     } else {
 
       // Apply a solid gray background and black text if the pro plugin is inactive
-      jQuery('#wps-wpr-campaign-modal .wps-wpr-hlt_co-footer').css('background', '#DCDCDC');
+      jQuery('#wps-wpr-campaign-modal .wps-wpr-hlt_co-footer').css('background', '#f4f4f4');
       jQuery('#wps-wpr-campaign-modal .wps-wpr-hlt_co-footer p').css('color', 'black');
     }
 
@@ -171,6 +171,7 @@
         const quiz_answer = $('input[name="wps_wpr_quiz_option_ans_' + index + '"]:checked').val();
         const $notice     = $modal.next(".wps_wpr_quiz_notice");
         const $loader     = $this.next(".wps_wpr_quiz_loader");
+        const $quiz_modal  = $modal.prev('.wps-wpr_campaign-quiz-wrap');
 
         if (!quiz_answer) {
             $notice.show().css("color", "red").html("Choose an option to claim your reward!");
@@ -194,12 +195,19 @@
             data: data,
             success: function(response) {
                 $loader.hide();
-                $notice.show().css("color", response.result ? "green" : "red")
+                const success_error_notice = $notice.show().css("color", response.result ? "green" : "red")
                   .html(response.msg || "Something went wrong. Please try again.");
-                if ( response.result == false ) {
+                  if ( response.result == true ) {
 
-                  $this.prop("disabled", false);
-                }
+                    $this.hide();
+                    $quiz_modal.hide();
+                  } else {
+
+                    $this.prop("disabled", false);
+                  }
+                  setTimeout(() => {
+                      success_error_notice.text('');
+                    }, 2000);
             },
             error: function() {
                 $loader.hide();

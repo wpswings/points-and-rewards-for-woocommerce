@@ -106,7 +106,7 @@
 
 #wps-wpr-campaign-modal img {
     border-radius: 10px;
-    max-height: 200px;
+    height: auto;
     object-fit: cover;
     object-position: center;
     width: 100%;

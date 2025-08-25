@@ -2622,14 +2622,14 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 	public function wps_wpr_add_campaigns_general_section_dummy_html() {
 		?>
 		<article class="wps_wpr_general_row">
-			<label for="wps_wpr_enable_comments_campaign" class="wps_wpr_general_label wps_wpr_pro_plugin_settings"><?php esc_html_e( 'Comments Points', 'points-and-rewards-for-woocommerce' ); ?></label>
+			<label for="wps_wpr_enable_comments_campaign" class="wps_wpr_general_label"><?php esc_html_e( 'Comments Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 			<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content wps_wpr_pro_plugin_settings">
 				<input type="checkbox" name="wps_wpr_enable_comments_campaign" class="wps_wpr_enable_comments_campaign wps_wpr_pro_plugin_settings" value="yes">
 				<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Turn this on to activate the comments points campaign.', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</div>
 		</article>
 		<article class="wps_wpr_general_row">
-			<label for="wps_wpr_enable_first_order_points" class="wps_wpr_general_label wps_wpr_pro_plugin_settings"><?php esc_html_e( 'First Order Points', 'points-and-rewards-for-woocommerce' ); ?></label>
+			<label for="wps_wpr_enable_first_order_points" class="wps_wpr_general_label"><?php esc_html_e( 'First Order Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 			<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content wps_wpr_pro_plugin_settings">
 				<input type="checkbox" name="wps_wpr_enable_first_order_points" class="wps_wpr_enable_first_order_points wps_wpr_pro_plugin_settings" value="yes">
 				<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Turn this on to activate the first order points campaign.', 'points-and-rewards-for-woocommerce' ); ?></span>
@@ -2647,14 +2647,14 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 	public function wps_wpr_show_footer_dummy_content_dynamically( $campaing_settings ) {
 		?>
 		<article class="wps_wpr_general_row">
-			<label for="wps_wpr_show_content_in_footer" class="wps_wpr_general_label wps_wpr_pro_plugin_settings"><?php esc_html_e( 'Enable this setting to display content in the footer', 'points-and-rewards-for-woocommerce' ); ?></label>
+			<label for="wps_wpr_show_content_in_footer" class="wps_wpr_general_label"><?php esc_html_e( 'Enable this setting to display content in the footer', 'points-and-rewards-for-woocommerce' ); ?></label>
 			<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content wps_wpr_pro_plugin_settings">
 				<input type="checkbox" name="wps_wpr_show_content_in_footer" class="wps_wpr_show_content_in_footer wps_wpr_pro_plugin_settings" value="yes" >
 				<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'By enabling this setting, you can display content in the modal footer.', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</div>
 		</article>
 		<article class="wps_wpr_general_row">
-			<label for="wps_wpr_modal_footer_content" class="wps_wpr_general_label wps_wpr_pro_plugin_settings"><?php esc_html_e( 'Set custom content in the modal footer', 'points-and-rewards-for-woocommerce' ); ?></label>
+			<label for="wps_wpr_modal_footer_content" class="wps_wpr_general_label"><?php esc_html_e( 'Set custom content in the modal footer', 'points-and-rewards-for-woocommerce' ); ?></label>
 			<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content wps_wpr_pro_plugin_settings">
 				<input type="text" name="wps_wpr_modal_footer_content" class="wps_wpr_modal_footer_content wps_wpr_pro_plugin_settings" id="wps_wpr_modal_footer_content">
 				<div class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Set the footer content in the campaign modal, e.g., ‘Created with ❤ by WP Swings’.', 'points-and-rewards-for-woocommerce' ); ?></div>

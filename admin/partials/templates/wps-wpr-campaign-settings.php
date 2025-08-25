@@ -77,6 +77,14 @@ $wps_wpr_campaign_color_two           = ! empty( $wps_wpr_campaign_settings['wps
 $upgrade_link                         = '<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" target="_blank">Click here</a>';
 $message                              = sprintf( /* translators: %s: sms msg */ esc_html__( 'Unlock this premium feature by upgrading to the Pro plugin. %s to get started!', 'points-and-rewards-for-woocommerce' ), $upgrade_link );
 
+// display only one quiz when pro is not activated.
+if ( wps_wpr_is_par_pro_plugin_active() ) {
+    // Keep all quiz questions if pro is active.
+    $wps_wpr_quiz_question = $wps_wpr_quiz_question;
+} else {
+    // Keep only the first question if not pro.
+    $wps_wpr_quiz_question = array_slice( $wps_wpr_quiz_question, 0, 1 );
+}
 ?>
 
 <div class="wps_wpr_user_badges_main_wrappers">
@@ -154,7 +162,7 @@ $message                              = sprintf( /* translators: %s: sms msg */ 
 				<article class="wps_wpr_general_row">
 					<label class="wps_wpr_general_label"><?php esc_html_e( 'Enable Quiz', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
-						<input type="checkbox" name="wps_wpr_enable_quiz_contest_campaign" value="yes" <?php checked( $wps_wpr_enable_quiz_contest_campaign, 'yes' ); ?>>
+						<input type="checkbox" name="wps_wpr_enable_quiz_contest_campaign" class="wps_wpr_enable_quiz_contest_campaign" value="yes" <?php checked( $wps_wpr_enable_quiz_contest_campaign, 'yes' ); ?>>
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Start the quiz contest by enabling this setting.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
@@ -167,28 +175,28 @@ $message                              = sprintf( /* translators: %s: sms msg */ 
 
 								<label class="wps_wpr_general_label"><?php esc_html_e( 'Quiz Question', 'points-and-rewards-for-woocommerce' ); ?></label>
 								<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
-									<input type="text" name="wps_wpr_quiz_question[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $quiz ); ?>">
+									<input type="text" name="wps_wpr_quiz_question[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $quiz ); ?>" required>
 									<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice validation_error" style="color:red; display:none;"><?php esc_html_e( 'This field is required', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</div>
 
 								<label class="wps_wpr_general_label"><?php esc_html_e( 'Enter Options', 'points-and-rewards-for-woocommerce' ); ?></label>
 								<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
-									<input type="text" name="wps_wpr_quiz_option_one[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_option_one[$index] ); ?>">
-									<input type="text" name="wps_wpr_quiz_option_two[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_option_two[$index] ); ?>">
-									<input type="text" name="wps_wpr_quiz_option_three[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_option_three[$index] ); ?>">
-									<input type="text" name="wps_wpr_quiz_option_four[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_option_four[$index] ); ?>">
+									<input type="text" name="wps_wpr_quiz_option_one[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_option_one[$index] ); ?>" required>
+									<input type="text" name="wps_wpr_quiz_option_two[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_option_two[$index] ); ?>" required>
+									<input type="text" name="wps_wpr_quiz_option_three[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_option_three[$index] ); ?>" required>
+									<input type="text" name="wps_wpr_quiz_option_four[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_option_four[$index] ); ?>" required>
 									<div class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice validation_error" style="color:red; display:none;"><?php esc_html_e( 'All options are required', 'points-and-rewards-for-woocommerce' ); ?></div>
 								</div>
 
 								<label class="wps_wpr_general_label"><?php esc_html_e( 'Quiz Answer', 'points-and-rewards-for-woocommerce' ); ?></label>
 								<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
-									<input type="text" name="wps_wpr_quiz_answer[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_answer[$index] ); ?>">
+									<input type="text" name="wps_wpr_quiz_answer[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_answer[$index] ); ?>" required>
 									<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice validation_error" style="color:red; display:none;"><?php esc_html_e( 'Answer is required', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</div>
 
 								<label class="wps_wpr_general_label"><?php esc_html_e( 'Quiz Rewards Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 								<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
-									<input type="number" min="0" name="wps_wpr_quiz_rewards_points[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_rewards_points[$index] ); ?>">
+									<input type="number" min="0" name="wps_wpr_quiz_rewards_points[]" class="wps_wpr_quiz_field" value="<?php echo esc_html( $wps_wpr_quiz_rewards_points[$index] ); ?>" required>
 									<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice validation_error" style="color:red; display:none;"><?php esc_html_e( 'Reward points are required', 'points-and-rewards-for-woocommerce' ); ?></span>
 								</div>
 
@@ -301,111 +309,120 @@ $message                              = sprintf( /* translators: %s: sms msg */ 
 			<div class="h2"><?php esc_html_e( 'Select Campaign Banner', 'points-and-rewards-for-woocommerce' ); ?></div>
 			<div class="wps-popup_m-close">&times;</div>
 		</div>
-		<div class="wps-popup_m-content">
-			<div class="wps-popup_mcb-img button--active">
+		<div class="wps-popup_m-sidebar">
+			<span class="wps-wpr_temp-select-haloween" id="wps_wpr_halloween"><?php esc_html_e( 'Halloween', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<span class="wps-wpr_temp-select-black-friday" id="wps_wpr_black_friday"><?php esc_html_e( 'Black Friday', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<span class="wps-wpr_temp-select-easter" id="wps_wpr_happy_easter"><?php esc_html_e( 'Happy Easter', 'points-and-rewards-for-woocommerce' ); ?></span>
+		</div>
+		<div class="wps-popup_m-content wps_wpr_halloween active_tab">
+			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/hal1.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Spooky deals await this Halloween Festival!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#2A7B9B</span>
-				<span class="wps_wpr_cam_sec_color">#EDDD53</span>
+				<span class="wps_wpr_cam_prim_color">#582A47</span>
+				<span class="wps_wpr_cam_sec_color">#B14539</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/hal2.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Halloween Festival treats you can’t miss!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#833AB4</span>
-				<span class="wps_wpr_cam_sec_color">#FD1D1D</span>
+				<span class="wps_wpr_cam_prim_color">#1D092D</span>
+				<span class="wps_wpr_cam_sec_color">#9544D1</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/hal3.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Get your Halloween Festival savings now!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#020024</span>
-				<span class="wps_wpr_cam_sec_color">#090979</span>
+				<span class="wps_wpr_cam_prim_color">#3B1C57</span>
+				<span class="wps_wpr_cam_sec_color">#703177</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/hal4.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Frightful fun during the Halloween Festival!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#69B827</span>
+				<span class="wps_wpr_cam_sec_color">#388589</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/hal5.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Scare up some deals — Halloween Festival style!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#7671B4</span>
+				<span class="wps_wpr_cam_sec_color">#4D43B3</span>
 			</div>
+		</div>
+		<div class="wps-popup_m-content wps_wpr_black_friday">
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/bf1.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Black Friday steals are here!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#F6CB31</span>
+				<span class="wps_wpr_cam_sec_color">#E59E0C</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/bf2.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Don’t miss out this Black Friday!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#01A5C2</span>
+				<span class="wps_wpr_cam_sec_color">#6ABA41</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/bf3.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Shop smart with Black Friday deals!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#20A1C3</span>
+				<span class="wps_wpr_cam_sec_color">#72DBFF</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/bf4.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Massive savings waiting — Black Friday!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#DF368E</span>
+				<span class="wps_wpr_cam_sec_color">#CE2350</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/bf5.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Grab it now, only for Black Friday!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#32BDFE</span>
+				<span class="wps_wpr_cam_sec_color">#6CC9F8</span>
 			</div>
+		</div>
+		<div class="wps-popup_m-content wps_wpr_happy_easter">
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/eas1.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Egg-citing deals this Happy Easter!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#B11618</span>
+				<span class="wps_wpr_cam_sec_color">#910C0E</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/eas2.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Hop into savings — Happy Easter!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#6F5345</span>
+				<span class="wps_wpr_cam_sec_color">#140F0C</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/eas3.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Happy Easter treats just for you!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#E11127</span>
+				<span class="wps_wpr_cam_sec_color">#FC1C36</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/eas4.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Celebrate joy with Happy Easter deals!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#000000</span>
+				<span class="wps_wpr_cam_sec_color">#1E1E1E</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/eas5.webp" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Spring into offers this Happy Easter!', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
-				<span class="wps_wpr_cam_prim_color">#00D4FF</span>
-				<span class="wps_wpr_cam_sec_color">#FCB045</span>
+				<span class="wps_wpr_cam_prim_color">#FF0009</span>
+				<span class="wps_wpr_cam_sec_color">#84020F</span>
 			</div>
 		</div>
 	</div>
