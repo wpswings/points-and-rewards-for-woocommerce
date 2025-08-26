@@ -2262,6 +2262,32 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		</table>
 	</div>
 
+	<?php if ( is_plugin_active( 'klaviyo/klaviyo.php' ) ) : ?>
+		<!-- Sync points on Klaviyo -->
+		<div class="wps_wpr_points_table_second_wrappers">
+			<h3 class="wp-heading-inline" id="wps_wpr_points_table_heading"><?php esc_html_e( 'Sync Points to Klaviyo', 'points-and-rewards-for-woocommerce' ); ?></h3>
+			<table class="form-table wps_wpr_general_setting">
+				<tbody>
+					<tr valign="top">
+						<td class="wps_wpr_instructions_tabledata" colspan="2">
+							<p><?php esc_html_e( 'To sync user points to their Klaviyo profile, click the Klaviyo Sync button.', 'points-and-rewards-for-woocommerce' ); ?></p>
+							<div class="wps_wpr_button_to_assign_points">
+								<div class="wps_wpr_previous_button_wrappers">
+									<label><?php echo sprintf( /* translators: %s: Klaviyo */ esc_html__( 'Enter Public API Key / site ID, To get API key %s', 'points-and-rewards-for-woocommerce' ), '<a href="https://www.klaviyo.com/settings/account/api-keys" target="_blank">Click Here</a>' ); ?>
+										<input type="text" id="wps_wpr_klaviyo_public_api_key" value="<?php echo esc_html( get_option( 'wps_wpr_klaviyo_public_api_key', '' ) ); ?>">
+									</label>
+									<input type="button" id="wps_wpr_syncs_points_on_klaviyo_btn" class="button-primary woocommerce-save-button" value="<?php esc_html_e( 'Sync to Klaviyo', 'points-and-rewards-for-woocommerce' ); ?>" />
+									<img class="wps_wpr_klaviyo_sync_loader" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/images/loading.gif' ); ?>">
+									<span class="wps_wpr_klaviyo_sync_notice"></span>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	<?php endif; ?>
+
 	<!-- === Create HTML for Items per page === -->
 	<div class="wps_wpr_points_table_second_wrappers">
 		<h3 class="wp-heading-inline" id="wps_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-and-rewards-for-woocommerce' ); ?></h3>

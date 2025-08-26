@@ -16,7 +16,7 @@
 }
 
 #wps-wpr-campaign-modal {
-    max-width: 480px;
+    max-width: 600px;
     width: calc(100% - 30px);
     max-height: 90%;
     background: white;
@@ -106,7 +106,7 @@
 
 #wps-wpr-campaign-modal img {
     border-radius: 10px;
-    max-height: 200px;
+    height: auto;
     object-fit: cover;
     object-position: center;
     width: 100%;
@@ -152,7 +152,7 @@
     text-align: center;
     position: absolute;
     bottom: 0;
-    background: #000;
+    /* background: linear-gradient(45deg, var(--wps-modal-prim-col), var(--wps-modal-sec-col)); */
     padding: 5px;
     left: 0;
     right: 0;
@@ -160,7 +160,7 @@
 
 #wps-wpr-campaign-modal .wps-wpr-hlt_co-footer p {
     margin: 0;
-    color: white;
+    /* color: white; */
 }
 
 #wps-wpr-campaign-modal img.wps-wpr-hlw_co-icon {
@@ -177,6 +177,17 @@
     position: absolute;
     bottom: 10px;
     left: calc(100% + 10px);
+}
+
+.wps-wpr_cam-quiz-btn input[type=button] {
+    background: linear-gradient(45deg, var(--wps-modal-prim-col), var(--wps-modal-sec-col));
+    border-radius: 5px;
+    color: white;
+    font-weight: 400;
+}
+
+.wps-wpr_cam-quiz-btn input[type=button]:hover {
+    color: white;
 }
 
 #wps-wpr-campaign-modal img.wps_wpr_img_loader {
@@ -272,7 +283,7 @@
     text-decoration: underline;
 }
 
-#wps_wpr_submit_quiz_ans {
+.wps_wpr_submit_quiz_ans {
     background: linear-gradient(45deg, var(--wps-modal-prim-col), var(--wps-modal-sec-col));
     color: white;
     border-radius: 5px;

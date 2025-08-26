@@ -79,7 +79,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '2.7.0';
+			$this->version = '2.9.1';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -241,6 +241,12 @@ class Points_Rewards_For_Woocommerce {
 		// manage discount on order edit page.
 		$this->loader->add_filter( 'woocommerce_admin_order_totals_after_discount', $plugin_admin, 'wps_wpr_admin_order_coupon_display', 10, 1 );
 		$this->loader->add_filter( 'woocommerce_order_get_total_discount', $plugin_admin, 'wps_wpr_order_total_discount', 10, 2 );
+
+		// sync points on klaviyo ajax call.
+		$this->loader->add_action( 'wp_ajax_wps_sync_points_on_klaviyo', $plugin_admin, 'wps_wpr_sync_points_on_klaviyo_call', 10 );
+
+		// set campaign image.
+		$this->loader->add_action( 'wp_ajax_wps_set_camp_heading_and_image', $plugin_admin, 'wps_wpr_set_camp_heading_and_image', 10 );
 	}
 
 	/**
