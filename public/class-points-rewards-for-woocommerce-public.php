@@ -5212,42 +5212,42 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		$user_id = get_current_user_id();
 		if ( ! $user_id ) {
-			wp_send_json($response);
+			wp_send_json( $response );
 		}
 
-		$submitted_answer = isset($_POST['quiz_answer']) ? sanitize_text_field(wp_unslash($_POST['quiz_answer'])) : '';
-		$wps_index        = isset($_POST['index']) ? absint($_POST['index']) : 0;
+		$submitted_answer = isset( $_POST['quiz_answer'] ) ? sanitize_text_field( wp_unslash( $_POST['quiz_answer'] ) ) : '';
+		$wps_index        = isset( $_POST['index'] ) ? absint( $_POST['index'] ) : 0;
 
 		$campaign_settings   = get_option( 'wps_wpr_campaign_settings', array() );
-		$quiz_correct_answer = $campaign_settings['wps_wpr_quiz_answer'][$wps_index] ?? '';
-		$reward_points       = intval( $campaign_settings['wps_wpr_quiz_rewards_points'][$wps_index] ?? 0 );
+		$quiz_correct_answer = $campaign_settings['wps_wpr_quiz_answer'][ $wps_index ] ?? '';
+		$reward_points       = intval( $campaign_settings['wps_wpr_quiz_rewards_points'][ $wps_index ] ?? 0 );
 
 		if ( $submitted_answer && $submitted_answer === $quiz_correct_answer && $reward_points > 0 ) {
 
-			// Update points
-			$current_points = intval(get_user_meta($user_id, 'wps_wpr_points', true));
-			update_user_meta($user_id, 'wps_wpr_points', $current_points + $reward_points);
+			// Update points.
+			$current_points = intval( get_user_meta( $user_id, 'wps_wpr_points', true ) );
+			update_user_meta( $user_id, 'wps_wpr_points', $current_points + $reward_points );
 
-			// Update points log
-			$points_log = get_user_meta($user_id, 'points_details', true);
-			$points_log = is_array($points_log) ? $points_log : [];
-			$points_log['quiz_points_log'][] = [
+			// Update points log.
+			$points_log = get_user_meta( $user_id, 'points_details', true );
+			$points_log = is_array( $points_log ) ? $points_log : array();
+			$points_log['quiz_points_log'][] = array(
 				'quiz_points_log' => $reward_points,
-				'date' => date_i18n('Y-m-d H:i:s')
-			];
-			update_user_meta($user_id, 'points_details', $points_log);
+				'date' => date_i18n( 'Y-m-d H:i:s' ),
+			);
+			update_user_meta( $user_id, 'points_details', $points_log );
 
-			// Mark quiz as rewarded
-			update_user_meta($user_id, 'wps_wpr_quiz_points_rewarded_' . $submitted_answer, 'done');
+			// Mark quiz as rewarded.
+			update_user_meta( $user_id, 'wps_wpr_quiz_points_rewarded_' . $submitted_answer, 'done' );
 
 			$response['result'] = true;
 			$response['msg'] = sprintf(
-				esc_html__('Great job! You answered correctly and earned %s points!', 'points-and-rewards-for-woocommerce'),
+				/* translators: %s: sms msg */                esc_html__( 'Great job! You answered correctly and earned %s points!', 'points-and-rewards-for-woocommerce' ),
 				$reward_points
 			);
 		}
 
-		wp_send_json($response);
+		wp_send_json( $response );
 		wp_die();
 	}
 

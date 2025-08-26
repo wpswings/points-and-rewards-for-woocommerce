@@ -226,24 +226,27 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Unlock bonus points when you shop for the very first time', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_first_order_points ); ?>+</span></div>
 							<?php endif; ?>
 							<?php if ( 'yes' === $wps_wpr_enable_quiz_contest_campaign ) { ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php printf( esc_html__( 'Play the Quiz, have fun, and earn %1$s–%2$s points!', 'points-and-rewards-for-woocommerce' ), esc_html( min( $wps_wpr_quiz_rewards_points ) ), esc_html( max( $wps_wpr_quiz_rewards_points ) ) ); ?> <span class="wps-wpr_camp-h2-icon">🎁 <?php echo esc_html( max( $wps_wpr_quiz_rewards_points ) ); ?></span></div>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php printf( /* translators: %s: sms msg */ esc_html__( 'Play the Quiz, have fun, and earn %1$s–%2$s points!', 'points-and-rewards-for-woocommerce' ), esc_html( min( $wps_wpr_quiz_rewards_points ) ), esc_html( max( $wps_wpr_quiz_rewards_points ) ) ); ?> <span class="wps-wpr_camp-h2-icon">🎁 <?php echo esc_html( max( $wps_wpr_quiz_rewards_points ) ); ?></span></div>
 								<div class="wps-wpr_camp-acc-wrap wps_wpr_guest_user_disable">
 									<?php
 									if ( ! empty( $wps_wpr_quiz_question ) && ! empty( $wps_wpr_quiz_option_one ) && ! empty( $wps_wpr_quiz_option_four ) ) {
 										foreach ( $wps_wpr_quiz_question as $index => $quiz_question ) {
 
-											$rewarded_key     = isset( $wps_wpr_quiz_answer[$index] ) ? 'wps_wpr_quiz_points_rewarded_' . $wps_wpr_quiz_answer[$index] : '';
+											$rewarded_key     = isset( $wps_wpr_quiz_answer[ $index ] ) ? 'wps_wpr_quiz_points_rewarded_' . $wps_wpr_quiz_answer[ $index ] : '';
 											$already_rewarded = $rewarded_key ? get_user_meta( $user_id, $rewarded_key, true ) : false;
-											if ( ! $already_rewarded ) : ?>
+											if ( ! $already_rewarded ) :
+												?>
 												<div class="wps-wpr_campaign-quiz-wrap">
 													<div class="wps-wpr_campaign-h3"><?php echo esc_html( $quiz_question ); ?></div>
 													<div class="wps-wpr_campaign-quiz-opt">
 														<?php
-														$options = array( $wps_wpr_quiz_option_one[$index] ?? '', $wps_wpr_quiz_option_two[$index] ?? '', $wps_wpr_quiz_option_three[$index] ?? '', $wps_wpr_quiz_option_four[$index] ?? '' );
+														$options = array( $wps_wpr_quiz_option_one[ $index ] ?? '', $wps_wpr_quiz_option_two[ $index ] ?? '', $wps_wpr_quiz_option_three[ $index ] ?? '', $wps_wpr_quiz_option_four[ $index ] ?? '' );
 														foreach ( $options as $option ) :
-															if ( ! empty( $option ) ) : ?>
+															if ( ! empty( $option ) ) :
+																?>
 																<label><input type="radio" class="wps_wpr_quiz_option_ans" name="wps_wpr_quiz_option_ans_<?php echo esc_attr( $index ); ?>"	value="<?php echo esc_attr( $option ); ?>"><?php echo esc_html( $option ); ?></label>
-															<?php endif;
+																<?php
+															endif;
 														endforeach;
 														?>
 													</div>
@@ -258,11 +261,12 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 												<div class="wps-wpr_campaign-h2">
 													<?php echo esc_html( $quiz_question ); ?>
 													<span class="wps-wpr_camp-h2-icon-done">
-														<?php echo esc_html( $wps_wpr_quiz_rewards_points[$index] ?? 0 ); ?>
+														<?php echo esc_html( $wps_wpr_quiz_rewards_points[ $index ] ?? 0 ); ?>
 														<img class="wps-wpr-hlw_co-icon" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>">
 													</span>
 												</div>
-											<?php endif;
+												<?php
+											endif;
 										}
 									}
 									?>
