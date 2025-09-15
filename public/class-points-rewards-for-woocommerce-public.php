@@ -169,7 +169,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_campaign_settings  = is_array( $wps_wpr_campaign_settings ) ? $wps_wpr_campaign_settings : array();
 			$wps_wpr_campaign_color_one = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] : '#a13a93';
 			$wps_wpr_campaign_color_two = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] : '#ffbb21';
-			wp_enqueue_script( 'wps-campaign-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-campaign.js', array(), time(), true );
+			wp_enqueue_script( 'wps-campaign-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-campaign.js', array(), $this->version, true );
 			wp_localize_script(
 				$this->plugin_name,
 				'wps_wpr_campaign_obj',
@@ -5412,10 +5412,10 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_assign_social_share_points() {
 
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
-		
-		$user_id = get_current_user_id();
-		$social_heading     = ! empty( $_POST['social_heading'] ) ? sanitize_text_field( wp_unslash( $_POST['social_heading'] ) ) : '';
-		$points  = ! empty( $_POST['points'] ) ? sanitize_text_field( wp_unslash( absint( $_POST['points'] ) ) ) : 0;
+
+		$user_id        = get_current_user_id();
+		$social_heading = ! empty( $_POST['social_heading'] ) ? sanitize_text_field( wp_unslash( $_POST['social_heading'] ) ) : '';
+		$points         = ! empty( $_POST['points'] ) ? sanitize_text_field( wp_unslash( absint( $_POST['points'] ) ) ) : 0;
 		if ( $points > 0 ) {
 
 			$get_points     = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? absint( get_user_meta( $user_id, 'wps_wpr_points', true ) ) : 0;
@@ -5441,8 +5441,154 @@ class Points_Rewards_For_WooCommerce_Public {
 
 			update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
 			update_user_meta( $user_id, 'points_details', $points_log );
+
+			// send mail.
+			$this->wps_wpr_send_social_campaign_mail( $user_id, $points, $social_heading, $updated_points );
 		}
 		wp_die();
+	}
+
+	/**
+	 * This function is used to send socail campaign earning points mail.
+	 *
+	 * @param  mixed  $user_id        user_id.
+	 * @param  mixed  $points         points.
+	 * @param  string $social_heading social_heading.
+	 * @param  mixed  $total_points   total_points.
+	 * @return void
+	 */
+	public function wps_wpr_send_social_campaign_mail( $user_id, $points, $social_heading, $total_points ) {
+		$user = get_userdata( $user_id );
+		if ( ! $user ) {
+			return;
+		}
+
+		$to      = $user->user_email;
+		$subject = __( '🎉 You’ve Earned New Rewards!', 'points-and-rewards-for-woocommerce' );
+
+		ob_start();
+		?>
+		<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="padding:30px 0; background:#f4f6f9;">
+			<tr>
+				<td align="center">
+					<table role="presentation" width="650" cellspacing="0" cellpadding="0" border="0" style="background:#ffffff; border-radius:16px; overflow:hidden; box-shadow:0 8px 25px rgba(0,0,0,0.08);">
+						
+						<!-- Header Banner -->
+						<tr>
+							<td align="center" style="background:linear-gradient(135deg,#43a047,#2e7d32); padding:60px 30px; position:relative;">
+								<h1 style="margin:0; font-size:34px; color:#ffffff; font-weight:800; letter-spacing:0.5px;">
+									<?php echo esc_html( $social_heading ); ?>
+								</h1>
+								<p style="margin:15px 0 0; font-size:18px; color:#dcedc8;"><?php esc_html_e( 'You just unlocked something special ✨', 'points-and-rewards-for-woocommerce' ); ?></p>
+							</td>
+						</tr>
+						
+						<!-- Hero Section -->
+						<tr>
+							<td align="center" style="padding:50px 30px 20px;">
+								<img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Celebration" width="120" style="display:block; margin:0 auto 25px;">
+								<p style="margin:0; font-size:20px; color:#333; font-weight:600;">
+									Hi <span style="color:#43a047;"><?php echo esc_html( $user->display_name ); ?></span>,
+								</p>
+								<p style="margin:18px 0 25px; font-size:16px; color:#666; line-height:1.7; max-width:500px;">
+									<?php
+									printf(
+										wp_kses(
+											/* translators: %s: campaign name */
+											__( 'Your effort in our <strong>%s</strong> is spreading joy 🌍 We’re thrilled to reward your contribution.', 'points-and-rewards-for-woocommerce' ),
+											array(
+												'strong' => array(),
+											)
+										),
+										esc_html__( 'Social Share Campaign', 'points-and-rewards-for-woocommerce' )
+									);
+									?>
+								</p>
+							</td>
+						</tr>
+
+						<!-- Points Highlight -->
+						<tr>
+							<td align="center" style="padding:0 30px 50px;">
+								<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="width:100%; max-width:520px;">
+									<tr>
+										<td align="center" style="background:url('https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/confetti.svg') center/40px repeat #f1fdf3; border-radius:14px; padding:40px; border:2px dashed #a5d6a7; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+											<p style="margin:0; font-size:22px; color:#2e7d32; font-weight:700;"><?php esc_html_e( '🏆 Rewards Unlocked!', 'points-and-rewards-for-woocommerce' ); ?></p>
+											<p style="margin:18px 0; font-size:40px; font-weight:800; color:#2e7d32;">
+												<?php
+												printf(
+													/* translators: %d: number of points earned */
+													esc_html__( '+%d Points', 'points-and-rewards-for-woocommerce' ),
+													intval( $points )
+												);
+												?>
+											</p>
+											<p style="margin:0; font-size:15px; color:#444;">
+												<?php esc_html_e( 'Your new balance is:', 'points-and-rewards-for-woocommerce' ); ?>
+											</p>
+											<p style="margin:6px 0 0; font-size:26px; font-weight:bold; color:#1b5e20;">
+												<?php
+												printf(
+													/* translators: %d: user total points */
+													esc_html__( '%d Points', 'points-and-rewards-for-woocommerce' ),
+													intval( $total_points )
+												);
+												?>
+											</p>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+
+						<!-- CTA Button -->
+						<tr>
+							<td align="center" style="padding:0 20px 60px;">
+								<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'points' ) ); ?>" 
+								style="background:linear-gradient(135deg,#66bb6a,#2e7d32); color:#fff; text-decoration:none; padding:20px 50px; border-radius:60px; font-weight:700; font-size:18px; display:inline-block; box-shadow:0 6px 14px rgba(67,160,71,0.35);">
+									<?php esc_html_e( '🌟 Claim My Rewards', 'points-and-rewards-for-woocommerce' ); ?>
+								</a>
+							</td>
+						</tr>
+
+						<!-- Divider -->
+						<tr>
+							<td style="padding:0 40px;">
+								<hr style="border:none; border-top:1px solid #eee; margin:0;">
+							</td>
+						</tr>
+
+						<!-- Footer -->
+						<tr>
+							<td align="center" style="background:#fafafa; padding:30px; font-size:13px; color:#777; line-height:1.6;">
+								<p style="margin:0;">
+									<?php esc_html_e( '💌 You’re receiving this because you’re part of our rewards community.', 'points-and-rewards-for-woocommerce' ); ?>
+								</p>
+								<p style="margin:12px 0 0;">
+									<a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" style="color:#43a047; text-decoration:none; font-weight:600;">
+										<?php echo esc_html( get_bloginfo( 'name' ) ); ?>
+									</a>
+								</p>
+								<p style="margin:10px 0 0; font-size:12px; color:#aaa;">
+									<?php esc_html_e( 'Not a fan?', 'points-and-rewards-for-woocommerce' ); ?> <a href="<?php echo esc_url( wc_get_account_endpoint_url( 'edit-account' ) ); ?>" style="color:#999; text-decoration:underline;"><?php esc_html_e( 'Unsubscribe', 'points-and-rewards-for-woocommerce' ); ?></a>.
+								</p>
+							</td>
+						</tr>
+
+					</table>
+				</td>
+			</tr>
+		</table>
+		<?php
+		$message = ob_get_clean();
+		// Headers.
+		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+		// Send email.
+		if ( function_exists( 'wc_mail' ) ) {
+			wc_mail( $to, $subject, $message );
+		} else {
+			wp_mail( $to, $subject, $message, $headers );
+		}
 	}
 }
 
