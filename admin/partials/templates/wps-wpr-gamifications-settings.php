@@ -34,6 +34,7 @@ if ( isset( $_POST['wps_wpr_gamification_setting_nonce'] ) ) {
 			$wps_wpr_user_gamification_settings['wps_wpr_enter_segment_points']    = ! empty( $_POST['wps_wpr_enter_segment_points'] ) ? map_deep( wp_unslash( $_POST['wps_wpr_enter_segment_points'] ), 'sanitize_text_field' ) : array();
 			$wps_wpr_user_gamification_settings['wps_wpr_enter_sgemnet_font_size'] = ! empty( $_POST['wps_wpr_enter_sgemnet_font_size'] ) ? map_deep( wp_unslash( $_POST['wps_wpr_enter_sgemnet_font_size'] ), 'sanitize_text_field' ) : '15';
 			$wps_wpr_user_gamification_settings['wps_wpr_enter_segment_color']     = ! empty( $_POST['wps_wpr_enter_segment_color'] ) ? map_deep( wp_unslash( $_POST['wps_wpr_enter_segment_color'] ), 'sanitize_text_field' ) : '#00b3b3';
+			$wps_wpr_user_gamification_settings['wps_wpr_game_rewards_type']       = ! empty( $_POST['wps_wpr_game_rewards_type'] ) ? map_deep( wp_unslash( $_POST['wps_wpr_game_rewards_type'] ), 'sanitize_text_field' ) : array();
 
 			$wps_wpr_save_gami_setting = array();
 			if ( ! empty( $wps_wpr_user_gamification_settings ) && is_array( $wps_wpr_user_gamification_settings ) ) {
@@ -67,6 +68,7 @@ $wps_wpr_enter_segment_name      = ! empty( $wps_wpr_save_gami_setting['wps_wpr_
 $wps_wpr_enter_segment_points    = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] : array();
 $wps_wpr_enter_sgemnet_font_size = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_sgemnet_font_size'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enter_sgemnet_font_size'] : '15';
 $wps_wpr_enter_segment_color     = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_color'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enter_segment_color'] : '#00b3b3';
+$wps_wpr_game_rewards_type       = ! empty( $wps_wpr_save_gami_setting['wps_wpr_game_rewards_type'] ) ? $wps_wpr_save_gami_setting['wps_wpr_game_rewards_type'] : array();
 
 /**
  * This function is used to get random color.
@@ -172,7 +174,8 @@ function wps_wpr_rand_color() {
 							<thead>
 								<tr>
 									<th><?php esc_html_e( 'Segment Name', 'points-and-rewards-for-woocommerce' ); ?></th>
-									<th><?php esc_html_e( 'Segment Points', 'points-and-rewards-for-woocommerce' ); ?></th>
+									<th><?php esc_html_e( 'Rewards Type', 'points-and-rewards-for-woocommerce' ); ?></th>
+									<th><?php esc_html_e( 'Rewards', 'points-and-rewards-for-woocommerce' ); ?></th>
 									<th><?php esc_html_e( 'Segment Font Size', 'points-and-rewards-for-woocommerce' ); ?></th>
 									<th><?php esc_html_e( 'Segment Color', 'points-and-rewards-for-woocommerce' ); ?></th>
 								</tr>
@@ -195,6 +198,12 @@ function wps_wpr_rand_color() {
 											?>
 											<tr class="wps_wpr_add_game_segment_dynamically">
 												<td><input type="text" name="wps_wpr_enter_segment_name[]" id="wps_wpr_enter_segment_name" class="wps_wpr_enter_segment_name" value="<?php echo ! empty( $wps_wpr_enter_segment_name[ $key ] ) ? esc_html( $wps_wpr_enter_segment_name[ $key ] ) : ''; ?>" required></td>
+												<td>
+													<select name="wps_wpr_game_rewards_type[]" class="wps_wpr_game_rewards_type">
+														<option value="points" <?php selected( $wps_wpr_game_rewards_type[ $key ], 'points' ); ?>><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></option>
+														<option value="wallet" <?php selected( $wps_wpr_game_rewards_type[ $key ], 'wallet' ); ?>><?php esc_html_e( 'Wallet', 'points-and-rewards-for-woocommerce' ); ?></option>
+													</select>
+												</td>
 												<td><input type="number" min="1" name="wps_wpr_enter_segment_points[]" id="wps_wpr_enter_segment_points" class="wps_wpr_enter_segment_points" value="<?php echo ! empty( $wps_wpr_enter_segment_points[ $key ] ) ? esc_html( $wps_wpr_enter_segment_points[ $key ] ) : ''; ?>" required></td>
 												<td><input type="number" max="20" min="1" name="wps_wpr_enter_sgemnet_font_size[]" id="wps_wpr_enter_sgemnet_font_size" class="wps_wpr_enter_sgemnet_font_size" value="<?php echo ! empty( $wps_wpr_enter_sgemnet_font_size[ $key ] ) ? esc_html( $wps_wpr_enter_sgemnet_font_size[ $key ] ) : ''; ?>" required></td>
 												<td><input type="color" name="wps_wpr_enter_segment_color[]" id="wps_wpr_enter_segment_color" class="wps_wpr_enter_segment_color" value="<?php echo ! empty( $wps_wpr_enter_segment_color[ $key ] ) ? esc_html( $wps_wpr_enter_segment_color[ $key ] ) : ''; ?>" required></td>
@@ -217,6 +226,12 @@ function wps_wpr_rand_color() {
 										?>
 										<tr class="wps_wpr_add_game_segment_dynamically">
 											<td><input type="text" name="wps_wpr_enter_segment_name[]" id="wps_wpr_enter_segment_name" class="wps_wpr_enter_segment_name" value="<?php echo esc_html( 'Segment - ' . $seg_count ); ?>" required></td>
+											<td>
+												<select name="wps_wpr_game_rewards_type[]" class="wps_wpr_game_rewards_type">
+													<option value="points"><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></option>
+													<option value="wallet"><?php esc_html_e( 'Wallet', 'points-and-rewards-for-woocommerce' ); ?></option>
+												</select>
+											</td>
 											<td><input type="number" min="1" name="wps_wpr_enter_segment_points[]" id="wps_wpr_enter_segment_points" class="wps_wpr_enter_segment_points" value="<?php echo esc_html( $points ); ?>" required></td>
 											<td><input type="number" max="20" min="1" name="wps_wpr_enter_sgemnet_font_size[]" id="wps_wpr_enter_sgemnet_font_size" class="wps_wpr_enter_sgemnet_font_size" value="<?php echo esc_html( '15' ); ?>" required></td>
 											<td><input type="color" name="wps_wpr_enter_segment_color[]" id="wps_wpr_enter_segment_color" class="wps_wpr_enter_segment_color" value="<?php echo esc_html( wps_wpr_rand_color() ); ?>" required></td>

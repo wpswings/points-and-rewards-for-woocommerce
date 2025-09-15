@@ -1841,6 +1841,33 @@ button.button.wps_wpr_remove_quiz:hover {
   border: none;
 }
 
+.wps-error-field {
+    border: 1px solid red !important;
+    background: #ffecec;
+}
+
+.wps-error-msg {
+    color: red;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.wps-campaign-actions {
+    margin-top: 10px;
+}
+
+.wps_wpr_social_campaign_main_wrap {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+}
+.wps_wpr_social_campaign_main_wrap .wps_wpr_general_label {
+  padding: 0;
+}
+.wps_wpr_social_campaign_main_wrap .wps_wpr_general_label select {
+  min-height: 40px;
+}
+
 @media screen and (max-width: 540px) {
   .wps-popup_m-content {
     left: 170px;

@@ -394,6 +394,7 @@
 
                     var closestElement = null;
                     var closestVerticalPosition = Infinity;
+                    var closestRewardsType = null;
 
                     elements.each(function() {
                         var currentElement = $(this);
@@ -403,6 +404,7 @@
                         if (verticalPositionDifference < closestVerticalPosition) {
                             closestVerticalPosition = verticalPositionDifference;
                             closestElement = parseInt(currentElement.attr('data-attr'));
+                            closestRewardsType = currentElement.attr('data-rewards');
                         }
                     });
 
@@ -411,6 +413,7 @@
                     $('.wps_wpr_container-popup-val .wps_wpr-val').append(closestElement + ' ' + wps_wpr.wps_points_name );
                     // set claim points to rewards user.
                     jQuery('.wps_wpr_user_claim_points').val(closestElement);
+                    jQuery('.wps_wpr_user_claim_points').attr('data-type', closestRewardsType);
                 });
 
                 // Get Value ends
@@ -434,6 +437,7 @@
 
             jQuery(this).prop('disabled', true);
             var claim_points = parseInt( jQuery('.wps_wpr_user_claim_points').val().trim() );
+            var claim_type   = jQuery('.wps_wpr_user_claim_points').attr('data-type');
 
             $('.wps_wpr_container-popup-claim').append('<span>&#10003;</span>');
             $('.wps_wpr_container-popup-claim').css({ 'color': 'var(--success-color)', 'borderColor': 'var(--success-color)' });
@@ -442,6 +446,7 @@
                 'action'       : 'assign_claim_points',
                 'claim_points' : claim_points,
                 'nonce'        : wps_wpr.wps_wpr_nonce,
+                'claim_type'   : claim_type,
             };
 
             jQuery.ajax({
