@@ -371,6 +371,9 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_save_birthday_date', $plugin_public, 'wps_wpr_save_birthday_date', 10 );
 			// rewads quiz points.
 			$this->loader->add_action( 'wp_ajax_update_quiz_data', $plugin_public, 'wps_wpr_rewards_quiz_points', 10 );
+			// assign social share points.
+			$this->loader->add_action( 'wp_ajax_action_social_link_click', $plugin_public, 'wps_wpr_assign_social_share_points', 10 );
+			// klaviyo
 		}
 	}
 

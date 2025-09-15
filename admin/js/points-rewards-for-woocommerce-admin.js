@@ -1101,7 +1101,7 @@ jQuery(document).ready(function($){
 	const tpl      = document.getElementById( 'wps_wpr_campaign_template' );
 
 	// Utility: show/hide error box
-	function showError( msg ) {
+	function wps_showError( msg ) {
 		let $error = $( '#wps_wpr_error_message' );
 		if ( $error.length === 0 ) {
 			$error = $( '<div id="wps_wpr_error_message" class="wps-error-msg" role="alert"></div>' )
@@ -1110,7 +1110,7 @@ jQuery(document).ready(function($){
 		$error.text( msg );
 	}
 
-	function hideError() {
+	function wps_hideError() {
 		$( '#wps_wpr_error_message' ).remove();
 	}
 
@@ -1152,13 +1152,13 @@ jQuery(document).ready(function($){
 	// Add handler
 	$addBtn.on( 'click', function ( e ) {
 		e.preventDefault();
-		hideError();
+		wps_hideError();
 
 		const $lastArticle = $section.find( 'article.wps_wpr_general_row' ).last();
 
 		// If there's an existing last article, validate it first
 		if ( $lastArticle.length && ! validateBlock( $lastArticle ) ) {
-			showError( 'Please fill all fields before adding a new campaign.' );
+			wps_showError( 'Please fill all fields before adding a new campaign.' );
 			// scroll to first error field
 			const $firstErr = $lastArticle.find( '.wps-error-field' ).first();
 			if ( $firstErr.length ) {
@@ -1187,7 +1187,7 @@ jQuery(document).ready(function($){
 			$article.find( 'input' ).val( '' );
 			$article.find( 'select' ).prop( 'selectedIndex', 0 );
 		}
-		hideError();
+		wps_hideError();
 	} );
 
 	// Live input: remove error highlight when user types/selects
@@ -1197,7 +1197,7 @@ jQuery(document).ready(function($){
 			$f.removeClass( 'wps-error-field' );
 			// if no more fields with error, remove global message
 			if ( $section.find( '.wps-error-field' ).length === 0 ) {
-				hideError();
+				wps_hideError();
 			}
 		}
 	} );

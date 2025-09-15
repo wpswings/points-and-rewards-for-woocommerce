@@ -169,7 +169,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_campaign_settings  = is_array( $wps_wpr_campaign_settings ) ? $wps_wpr_campaign_settings : array();
 			$wps_wpr_campaign_color_one = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] : '#a13a93';
 			$wps_wpr_campaign_color_two = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] : '#ffbb21';
-			wp_enqueue_script( 'wps-campaign-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-campaign.js', array(), $this->version, true );
+			wp_enqueue_script( 'wps-campaign-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-campaign.js', array(), time(), true );
 			wp_localize_script(
 				$this->plugin_name,
 				'wps_wpr_campaign_obj',
@@ -5402,6 +5402,47 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// Mark assignment complete.
 		update_user_meta( $user_id, 'wps_wpr_guest_user_assign_points_done', 'done' );
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_assign_social_share_points() {
+
+		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
+		
+		$user_id = get_current_user_id();
+		$social_heading     = ! empty( $_POST['social_heading'] ) ? sanitize_text_field( wp_unslash( $_POST['social_heading'] ) ) : '';
+		$points  = ! empty( $_POST['points'] ) ? sanitize_text_field( wp_unslash( absint( $_POST['points'] ) ) ) : 0;
+		if ( $points > 0 ) {
+
+			$get_points     = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? absint( get_user_meta( $user_id, 'wps_wpr_points', true ) ) : 0;
+			$points_log     = ! empty( get_user_meta( $user_id, 'points_details', true ) ) && is_array( get_user_meta( $user_id, 'points_details', true ) ) ? get_user_meta( $user_id, 'points_details', true ) : array();
+			$updated_points = $get_points + $points;
+			if ( ! empty( $points_log['social_share_points_log'] ) ) {
+
+				$user_social_arr                         = array(
+					'social_share_points_log' => $points,
+					'date'                    => date_i18n( 'Y-m-d h:i:sa' ),
+					'social_heading'          => $social_heading,
+				);
+				$points_log['social_share_points_log'][] = $user_social_arr;
+			} else {
+
+				$user_social_arr                         = array(
+					'social_share_points_log' => $points,
+					'date'                    => date_i18n( 'Y-m-d h:i:sa' ),
+					'social_heading'          => $social_heading,
+				);
+				$points_log['social_share_points_log'][] = $user_social_arr;
+			}
+
+			update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+			update_user_meta( $user_id, 'points_details', $points_log );
+		}
+		wp_die();
 	}
 }
 

@@ -243,5 +243,92 @@
 
       jQuery('#wps_wpr_spin_canvas_id').show();
     });
+
+  // Handle normal button/link clicks.
+  $(document).on('click', '.wps_wpr_visit_insta_btn', function(e) {
+
+      e.preventDefault(); // stop default
+      let url            = $(this).data('url');
+      let social_points  = $(this).data('points') || 0;
+      let social_heading = $(this).data('heading');
+      wps_wpr_ajax_call_for_social_campaign( social_points, social_heading, url );
+  });
+
+  // assign points when user watch youtube video.
+  setTimeout(() => {
+    
+    (function(window, document){
+      var iframe = document.querySelector('iframe.wps_wpr_yt[data-yt-id]');
+      if (!iframe) return;
+
+      // ✅ setup YT player (optional: log when video starts playing)
+      function initPlayer() {
+        try {
+          new YT.Player(iframe.id, {
+            events: {
+              onStateChange: function(e) {
+                if (e.data === YT.PlayerState.PLAYING) {
+
+                  wps_wpr_ajax_call_for_social_campaign( iframe.dataset.points, iframe.dataset.heading, '' );
+                }
+              }
+            }
+          });
+        } catch (err) {
+          console.warn('YT API not ready for', iframe.id);
+        }
+      }
+      
+      if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+      }
+
+      var old = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function(){
+        if (typeof old === 'function') old();
+        initPlayer();
+      };
+    })(window, document);
+  }, 1500);
+
+  // jQuery(document).on('click', '.wps_wpr_mailing_list_subs_btn', function(){
+
+  //   console.log(jQuery(this).data('points'));
+  // });
+
+  /**
+   * AJAX call for social campaign for assigning the points.
+   * @param {*} points 
+   * @param {*} heading 
+   */
+  function wps_wpr_ajax_call_for_social_campaign( points, heading, url ) {
+
+    var data = {
+          action         : "action_social_link_click",
+          nonce          : wps_wpr_campaign_obj.wps_wpr_nonce,
+          social_heading : heading,
+          points         : points
+      };
+
+      $.ajax({
+          type    : "POST",
+          url     : wps_wpr_campaign_obj.ajaxurl,
+          data    : data,
+          success : function (response) {
+              
+            // Redirect after logging.
+            if ( url ) {
+
+              window.open( url, '_blank' );
+            }
+          },
+          error: function () {
+              alert("An error occurred while processing your request.");
+          },
+      });
+  }
+
   });
 })(jQuery);
