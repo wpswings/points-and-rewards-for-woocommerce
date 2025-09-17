@@ -37,6 +37,14 @@ $wps_wpr_social_share_campaign_label    = ! empty( $wps_wpr_campaign_settings['w
 $wps_wpr_social_share_url               = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_url'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_url'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_url'] : array();
 $wps_wpr_social_share_points            = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_points'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_points'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_points'] : array();
 $icons_url                              = plugin_dir_url( __DIR__ ) . 'images/trophy.png';
+$fb_icon                                = plugin_dir_url( __DIR__ ) . 'images/cam-facebook.svg';
+$cam_arrow                              = plugin_dir_url( __DIR__ ) . 'images/cam-arrow.svg';
+$insta_icon                             = plugin_dir_url( __DIR__ ) . 'images/cam-insta.svg';
+$like_icon                              = plugin_dir_url( __DIR__ ) . 'images/cam-like.svg';
+$linkedin_icon                          = plugin_dir_url( __DIR__ ) . 'images/cam-linkedin.svg';
+$pint_icon                              = plugin_dir_url( __DIR__ ) . 'images/cam-pinterest.svg';
+$x_icon                                 = plugin_dir_url( __DIR__ ) . 'images/cam-x.svg';
+$you_icon                               = plugin_dir_url( __DIR__ ) . 'images/cam-youtube.svg';
 
 // get points and referral count.
 $get_points                   = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
@@ -127,76 +135,106 @@ $campaign_templates = array(
 		'heading' => 'Visit Instagram Profile',
 		'btn' => 'Follow',
 		'mode' => 'link',
+		'icon' => $insta_icon,
+		'className' => 'instagram',
 	),
 	'view_insta_photo'      => array(
 		'heading' => 'View Instagram Photo',
 		'btn' => 'Click Here',
 		'mode' => 'link',
+		'icon' => $insta_icon,
+		'className' => 'instagram',
 	),
 	'like_linkedin_post'    => array(
 		'heading' => 'Like Post on LinkedIn',
 		'btn' => 'Like',
 		'mode' => 'link',
+		'icon' => $like_icon,
+		'className' => 'linkedin',
 	),
 	'share_linkedin_post'   => array(
 		'heading' => 'Share Post on LinkedIn',
 		'btn' => 'Share',
 		'mode' => 'link',
+		'icon' => $linkedin_icon,
+		'className' => 'linkedin',
 	),
 	'share_facebook_post'   => array(
 		'heading' => 'Share on Facebook',
 		'btn' => 'Share',
 		'mode' => 'link',
+		'icon' => $fb_icon,
+		'className' => 'facebook',
 	),
 	'like_facebook_page'    => array(
 		'heading' => 'Like Facebook Page',
 		'btn' => 'Facebook',
 		'mode' => 'link',
+		'icon' => $fb_icon,
+		'className' => 'facebook',
 	),
 	'subs_you_chann'        => array(
 		'heading' => 'Subscribe to YouTube Channel',
 		'btn' => 'Youtube',
 		'mode' => 'link',
+		'icon' => $you_icon,
+		'className' => 'youtube',
 	),
 	'watch_you_vid'         => array(
 		'heading' => 'Watch a YouTube Video',
 		'btn' => '',
 		'mode' => 'iframe',
+		'icon' => $you_icon,
+		'className' => 'youtube',
 	),
 	'like_you_vid'          => array(
 		'heading' => 'Like a YouTube Video',
 		'btn' => 'Like',
 		'mode' => 'iframe_link_with_button',
+		'icon' => $like_icon,
+		'className' => 'youtube',
 	),
 	'share_twitter'         => array(
 		'heading' => 'Share on Twitter (X)',
-		'btn' => 'X Tweet',
+		'btn' => 'Tweet',
 		'mode' => 'link',
+		'icon' => $x_icon,
+		'className' => 'twitter',
 	),
 	'follow_twitter'        => array(
 		'heading' => 'Follow on Twitter (X)',
-		'btn' => 'X Follow',
+		'btn' => 'Follow',
 		'mode' => 'link',
+		'icon' => $x_icon,
+		'className' => 'twitter',
 	),
 	'like_post_twitter'     => array(
 		'heading' => 'Like Post on Twitter (X)',
 		'btn' => 'Like',
 		'mode' => 'link',
+		'icon' => $like_icon,
+		'className' => 'twitter',
 	),
 	'visit_pinterest'       => array(
 		'heading' => 'Visit Pinterest',
-		'btn' => 'P pinterest',
+		'btn' => 'Pinterest',
 		'mode' => 'link',
+		'icon' => $pint_icon,
+		'className' => 'pinterest',
 	),
 	'follow_pinterest'      => array(
 		'heading' => 'Follow on Pinterest',
-		'btn' => 'P Follow pinterest',
+		'btn' => 'Follow Pinterest',
 		'mode' => 'link',
+		'icon' => $pint_icon,
+		'className' => 'pinterest',
 	),
 	'follow_board_pinterest' => array(
 		'heading' => 'Follow a Pinterest Board',
-		'btn' => 'P Follow',
+		'btn' => 'Follow',
 		'mode' => 'link',
+		'icon' => $pint_icon,
+		'className' => 'pinterest',
 	),
 );
 $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campaign_templates );
@@ -238,8 +276,8 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 						<!-- Referral settings -->
 						<div id="wps_wpr_campaign_referral_wrap" class="wps_wpr_campaign_promo">
 							<div class="wps-wpr_campaign-h1"><?php esc_html_e( 'Refer friends. Earn rewards!', 'points-and-rewards-for-woocommerce' ); ?></div>
-							<?php if ( is_user_logged_in() ) { ?>
-								<?php
+							<?php
+							if ( is_user_logged_in() ) {
 								if ( 'yes' === $wps_wpr_enable_referral_campaign ) :
 
 									$this->wps_wpr_campaigns_html_referral( $user_id );
@@ -281,9 +319,10 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 						<div id="wps_wpr_campaign_earn_wrap" class="wps_wpr_campaign_promo">
 							<?php
 							if ( ! is_user_logged_in() ) {
+
 								if ( 'yes' === $wps_wpr_enable_sign_up_campaign ) :
 									?>
-									<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Earn welcome points!', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_signup_value ); ?>+</span></div>
+									<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Earn welcome points!', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_signup_value ); ?>+</span></div>
 								<?php endif; ?>
 								<div class="wps-wpr_camp-guest-part">
 									<div class="wps-wpr_camp-guest-part-link">
@@ -295,9 +334,9 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 							}
 							?>
 							<?php if ( 'yes' === $wps_wpr_enable_birthday_campaign && empty( $_my_bday ) ) { ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $birthday_points ); ?>+</span></div>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon active" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $birthday_points ); ?>+</span></div>
 								<div class="wps-wpr_camp-acc-wrap wps_wpr_guest_user_disable">
-									<div class="wps-wpr_camp-birth">
+									<div class="wps-wpr_camp-birth wps-wpr_camp-acc-wrap-in">
 										<input type="date" data-date-format="DD/MM/YYYY" class="" name="account_bday" id="account_bday" value="<?php echo esc_html( ! empty( $_my_bday ) ? $_my_bday : '' ); ?>" <?php echo esc_html( ! empty( $_my_bday ) ? 'disabled' : '' ); ?> placeholder="DD/MM/YYYY" />
 										<input type="button" name="wps_wpr_campaign_save_birthday" id="wps_wpr_campaign_save_birthday" value="<?php esc_html_e( 'Update', 'points-and-rewards-for-woocommerce' ); ?>" <?php echo esc_html( ! empty( $_my_bday ) ? 'disabled' : '' ); ?>>
 										<img class="wps_wpr_birthday_loader wps_wpr_img_loader" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/loading.gif' ); ?>">
@@ -307,12 +346,12 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 								<?php
 							} else {
 								?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon-done"><?php echo esc_html( $birthday_points ); ?><img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>"></span></div>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon-done"><?php echo esc_html( $birthday_points ); ?><img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>"></span></div>
 								<?php
 							}
 							?>
 							<?php if ( 'yes' === $wps_wpr_enable_comments_campaign ) : ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor">
 									<?php
 										printf(
 											'<img src="%s" alt="user" class="wps-wpr-hlw_co-icon" /><span> %s </span><a href="%s" target="_blank">%s</a>',
@@ -325,8 +364,9 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 								</div>
 							<?php endif; ?>
 							<?php if ( 'yes' === $wps_wpr_enable_gami_points ) : ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor">
 									<img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
+									<span>
 									<?php
 										printf(
 										/* translators: 1: Points, 2: Currency + Amount */
@@ -337,27 +377,26 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 											is_array( $wps_wpr_enter_segment_points ) && ! empty( $wps_wpr_enter_segment_points ) ? esc_html( min( $wps_wpr_enter_segment_points ) ) : 0,
 											is_array( $wps_wpr_enter_segment_points ) && ! empty( $wps_wpr_enter_segment_points ) ? esc_html( max( $wps_wpr_enter_segment_points ) ) : 0
 										);
+									?>
+									</span>
+									<?php
 									if ( empty( $wps_wpr_check_game_points_assign_timing ) ) {
 										?>
-										<span class="wps-wpr_camp-h2-icon">
 											<a href="javascript:void(0);" class="wps_wpr_show_campaign_win_wheel_modal"><?php esc_html_e( 'Play', 'points-and-rewards-for-woocommerce' ); ?></a>
-										</span>
 										<?php
 									} else {
 										?>
-										<span class="wps-wpr_camp-h2-icon">
 											<img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>">
-										</span>
 										<?php
 									}
 									?>
 								</div>
 							<?php endif; ?>
 							<?php if ( 'yes' === $wps_wpr_enable_camp_first_order_points ) : ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Unlock bonus points when you shop for the very first time', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_first_order_points ); ?>+</span></div>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Unlock bonus points when you shop for the very first time', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_first_order_points ); ?>+</span></div>
 							<?php endif; ?>
 							<?php if ( 'yes' === $wps_wpr_enable_quiz_contest_campaign ) { ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php printf( /* translators: %s: sms msg */ esc_html__( 'Play the Quiz, have fun, and earn %1$s–%2$s points!', 'points-and-rewards-for-woocommerce' ), esc_html( min( $wps_wpr_quiz_rewards_points ) ), esc_html( max( $wps_wpr_quiz_rewards_points ) ) ); ?> <span class="wps-wpr_camp-h2-icon">🎁 <?php echo esc_html( max( $wps_wpr_quiz_rewards_points ) ); ?></span></div>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php printf( /* translators: %s: sms msg */ esc_html__( 'Play the Quiz, have fun, and earn %1$s–%2$s points!', 'points-and-rewards-for-woocommerce' ), esc_html( min( $wps_wpr_quiz_rewards_points ) ), esc_html( max( $wps_wpr_quiz_rewards_points ) ) ); ?> <span class="wps-wpr_camp-h2-icon">🎁 <?php echo esc_html( max( $wps_wpr_quiz_rewards_points ) ); ?></span></div>
 								<div class="wps-wpr_camp-acc-wrap wps_wpr_guest_user_disable">
 									<?php
 									if ( ! empty( $wps_wpr_quiz_question ) && ! empty( $wps_wpr_quiz_option_one ) && ! empty( $wps_wpr_quiz_option_four ) ) {
@@ -418,82 +457,107 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 							$ml = $wps_wpr_combined['mailing_list'];
 							?>
 							<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
-								<img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
+								<img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
 								<?php esc_html_e( 'Subscribe to our mailing list', 'points-and-rewards-for-woocommerce' ); ?>
 								<span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $ml['value'] ); ?>+</span>
-								<div class="wps_wpr_cam_malling_list">
+							</div>
+							<div class="wps_wpr_cam_malling_list wps-wpr_camp-acc-wrap">
+								<div class="wps-wpr_camp-acc-wrap-in subs-mail">
 									<?php esc_html_e( 'I would like to receive updates and marketing emails. We will treat your information with respect. You can unsubscribe at any time by contacting us.', 'points-and-rewards-for-woocommerce' ); ?>
-									<input type="button" class="wps_wpr_mailing_list_subs_btn wps_wpr_visit_insta_btn" value="<?php echo esc_attr__( 'Subscribe', 'points-and-rewards-for-woocommerce' ); ?>" data-points="<?php echo esc_attr( $ml['value'] ); ?>" data-heading="<?php esc_html_e( 'Subscribe to our mailing list', 'points-and-rewards-for-woocommerce' ); ?>">
+									<input type="button" class="wps_wpr_mailing_list_subs_btn wps_wpr_visit_insta_btn" value="<?php echo esc_attr__( 'Subscribe', 'points-and-rewards-for-woocommerce' ); ?>" data-key="<?php echo esc_attr( 'mailing_list' ); ?>">
 								</div>
 							</div>
 							<?php
 						endif;
 
 						// Loop and render.
+						$performed = (array) get_user_meta( $user_id, 'wps_wpr_social_action_performed', true );
 						foreach ( $campaign_templates as $key => $tpl ) {
+
+							// continue loop if key is not found.
 							if ( ! array_key_exists( $key, $wps_wpr_combined ) ) {
 								continue;
 							}
+
 							$data = $wps_wpr_combined[ $key ];
-							?>
-							<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
-								<img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
-								<?php echo esc_html( $tpl['heading'] ); ?>
-								<span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $data['value'] ); ?>+</span>
+							if ( ! in_array( $key, $performed ) ) {
+								?>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
+									<img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
+									<?php echo esc_html( $tpl['heading'] ); ?>
+									<span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $data['value'] ); ?>+</span>
 
-								<div class="wps_wpr_cam_insta_visit">
-									<?php
-									switch ( $tpl['mode'] ) {
-										case 'link':
-											// use 'url' by default — we stored it earlier; if empty fall back to '#'.
-											$href = $data['link'] ? esc_url( $data['link'] ) : '#';
-											?>
-											<a href="<?php echo esc_url( $href ); ?>" class="wps_wpr_visit_insta_btn" data-url="<?php echo esc_attr( $href ); ?>" data-points="<?php echo esc_attr( $data['value'] ); ?>" target="_blank" data-heading="<?php echo esc_attr( $tpl['heading'] ); ?>"><?php echo esc_attr( $tpl['btn'] ); ?></a>
-											<?php
-											break;
-
-										case 'iframe':
-											if ( ! empty( $data['link'] ) ) {
-
-												$video_id = extract_youtube_video_id( $data['link'] );
-												// add enablejsapi=1 so the YouTube API can control the player.
-												$embed_src = add_query_arg(
-													array(
-														'enablejsapi' => 1,
-														'origin' => esc_url_raw( home_url() ),
-													),
-													"https://www.youtube.com/embed/$video_id"
-												);
-												?>
-												<iframe id="wps_wpr_yt" class="wps_wpr_yt"width="560" height="315" src="<?php echo esc_url( $embed_src ); ?>" data-yt-id="<?php echo esc_attr( $video_id ); ?>" title="YouTube video player" frameborder="0" data-points="<?php echo esc_html( $data['value'] ); ?>" data-heading="<?php echo esc_attr( $tpl['heading'] ); ?>" allowfullscreen></iframe>
-												<?php
-											}
-											break;
-
-										case 'iframe_link_with_button':
-											if ( ! empty( $data['link'] ) ) {
-
-												$video_id  = extract_youtube_video_id( $data['link'] );
-												$embed_src = add_query_arg(
-													array(
-														'enablejsapi' => 1,
-														'origin' => esc_url_raw( home_url() ),
-													),
-													"https://www.youtube.com/embed/$video_id"
-												);
-												?>
-												<a href="<?php echo esc_url( $data['link'] ); ?>" class="wps_wpr_visit_insta_btn" data-url="<?php echo esc_attr( $data['link'] ); ?>" data-points="<?php echo esc_attr( $data['value'] ); ?>" data-heading="<?php echo esc_attr( $tpl['heading'] ); ?>" target="_blank" rel="noopener noreferrer">
-													<iframe width="560" height="315" src="<?php echo esc_url( $embed_src ); ?>" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
-													<?php echo esc_html( $tpl['btn'] ); ?>
-												</a>
-												<?php
-											}
-											break;
-									}
-									?>
 								</div>
-							</div>
-							<?php
+								<div class="wps_wpr_cam_insta_visit wps-wpr_camp-acc-wrap">
+									<div class="wps-wpr_camp-acc-wrap-in social-likes">
+										<?php
+										switch ( $tpl['mode'] ) {
+											case 'link':
+												// use 'url' by default — we stored it earlier; if empty fall back to '#'.
+												$href = $data['link'] ? esc_url( $data['link'] ) : '#';
+												?>
+												<a href="<?php echo esc_url( $href ); ?>" class="wps_wpr_visit_like_btn wps_wpr_visit_insta_btn <?php echo esc_attr( $tpl['className'] ); ?>" target="_blank" data-key="<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( $tpl['btn'] ); ?><img src="<?php echo esc_url( $tpl['icon'] ); ?>"></a>
+												<?php
+												break;
+
+											case 'iframe':
+												if ( ! empty( $data['link'] ) ) {
+
+													$video_id = extract_youtube_video_id( $data['link'] );
+													// add enablejsapi=1 so the YouTube API can control the player.
+													$embed_src = add_query_arg(
+														array(
+															'enablejsapi' => 1,
+															'origin' => esc_url_raw( home_url() ),
+														),
+														"https://www.youtube.com/embed/$video_id"
+													);
+													?>
+													<iframe id="wps_wpr_yt" class="wps_wpr_yt" width="560" height="315" src="<?php echo esc_url( $embed_src ); ?>" data-yt-id="<?php echo esc_attr( $video_id ); ?>" title="YouTube video player" frameborder="0" data-key="<?php echo esc_attr( $key ); ?>" allowfullscreen></iframe>
+													<?php
+												}
+												break;
+
+											case 'iframe_link_with_button':
+												if ( ! empty( $data['link'] ) ) {
+
+													$video_id  = extract_youtube_video_id( $data['link'] );
+													$embed_src = add_query_arg(
+														array(
+															'enablejsapi' => 1,
+															'origin' => esc_url_raw( home_url() ),
+														),
+														"https://www.youtube.com/embed/$video_id"
+													);
+													?>
+													<a href="<?php echo esc_url( $data['link'] ); ?>" class="wps_wpr_visit_insta_btn" data-key="<?php echo esc_attr( $key ); ?>" target="_blank" rel="noopener noreferrer">
+														<iframe width="560" height="315" src="<?php echo esc_url( $embed_src ); ?>" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+														<div>
+															<span class="wps_wpr_visit_like_btn <?php echo esc_attr( $tpl['className'] ); ?>">
+																<?php echo esc_html( $tpl['btn'] ); ?><img src="<?php echo esc_url( $tpl['icon'] ); ?>">
+															</span>
+														</div>
+													</a>
+													<?php
+												}
+												break;
+										}
+										?>
+									</div>
+								</div>
+								<?php
+							} else {
+								?>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
+									<img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
+									<?php echo esc_html( $tpl['heading'] ); ?>
+									<span class="wps-wpr_camp-h2-icon-done">
+										<?php echo esc_html( $data['value'] ); ?>
+										<img class="wps-wpr-hlw_co-icon" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>">
+									</span>
+								</div>
+								<?php
+							}
 						}
 						?>
 						</div>

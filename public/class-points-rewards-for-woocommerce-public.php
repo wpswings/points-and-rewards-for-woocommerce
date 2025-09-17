@@ -5413,9 +5413,51 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
 
+		$wps_wpr_campaign_settings              = get_option( 'wps_wpr_campaign_settings', array() );
+		$wps_wpr_campaign_settings              = is_array( $wps_wpr_campaign_settings ) ? $wps_wpr_campaign_settings : array();
+		$wps_wpr_social_share_campaign_label    = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] : array();
+		$wps_wpr_social_share_url               = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_url'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_url'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_url'] : array();
+		$wps_wpr_social_share_points            = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_points'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_points'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_points'] : array();
+		$wps_wpr_combined = array();
+		if ( ! empty( $wps_wpr_social_share_campaign_label ) && is_array( $wps_wpr_social_share_campaign_label ) ) {
+			foreach ( $wps_wpr_social_share_campaign_label as $index => $key ) {
+
+				$wps_wpr_combined[ $key ] = array(
+					'link' => $wps_wpr_social_share_url[ $index ] ?? null,
+					'value' => $wps_wpr_social_share_points[ $index ] ?? null,
+				);
+			}
+		}
+
+		$social_tag_name = ! empty( $_POST['key'] ) ? sanitize_text_field( wp_unslash( $_POST['key'] ) ) : '';
+
+		if ( ! array_key_exists( $social_tag_name, $wps_wpr_combined ) ) {
+			return;
+		}
+
+		$campaign_templates = array(
+			'mailing_list'           => 'Subscribe to our mailing list',
+			'insta_profile'          => 'Visit Instagram Profile',
+			'view_insta_photo'       => 'View Instagram Photo',
+			'like_linkedin_post'     => 'Like Post on LinkedIn',
+			'share_linkedin_post'    => 'Share Post on LinkedIn',
+			'share_facebook_post'    => 'Share on Facebook',
+			'like_facebook_page'     => 'Like Facebook Page',
+			'subs_you_chann'         => 'Subscribe to YouTube Channel',
+			'watch_you_vid'          => 'Watch a YouTube Video',
+			'like_you_vid'           => 'Like a YouTube Video',
+			'share_twitter'          => 'Share on Twitter (X)',
+			'follow_twitter'         => 'Follow on Twitter (X)',
+			'like_post_twitter'      => 'Like Post on Twitter (X)',
+			'visit_pinterest'        => 'Visit Pinterest',
+			'follow_pinterest'       => 'Follow on Pinterest',
+			'follow_board_pinterest' => 'Follow a Pinterest Board',
+		);
+
 		$user_id        = get_current_user_id();
-		$social_heading = ! empty( $_POST['social_heading'] ) ? sanitize_text_field( wp_unslash( $_POST['social_heading'] ) ) : '';
-		$points         = ! empty( $_POST['points'] ) ? sanitize_text_field( wp_unslash( absint( $_POST['points'] ) ) ) : 0;
+		$url            = $wps_wpr_combined[ $social_tag_name ]['link'];
+		$points         = absint( $wps_wpr_combined[ $social_tag_name ]['value'] );
+		$social_heading = $campaign_templates[ $social_tag_name ];
 		if ( $points > 0 ) {
 
 			$get_points     = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? absint( get_user_meta( $user_id, 'wps_wpr_points', true ) ) : 0;
@@ -5442,8 +5484,15 @@ class Points_Rewards_For_WooCommerce_Public {
 			update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
 			update_user_meta( $user_id, 'points_details', $points_log );
 
+			// Make sure $social_tag_name is added as an array.
+			$performed = (array) get_user_meta( $user_id, 'wps_wpr_social_action_performed', true );
+			$performed = array_unique( array_merge( $performed, (array) $social_tag_name ) );
+			update_user_meta( $user_id, 'wps_wpr_social_action_performed', $performed );
+
 			// send mail.
 			$this->wps_wpr_send_social_campaign_mail( $user_id, $points, $social_heading, $updated_points );
+
+			wp_send_json( $url );
 		}
 		wp_die();
 	}
