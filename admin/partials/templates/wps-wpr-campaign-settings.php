@@ -448,7 +448,7 @@ if ( wps_wpr_is_par_pro_plugin_active() ) {
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_enter_campaign_image_url" class="wps_wpr_enter_campaign_image_url" id="wps_wpr_enter_campaign_image_url" value="<?php echo esc_html( $wps_wpr_enter_campaign_image_url ); ?>">
 						<div class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Set the image URL for the campaign modal.', 'points-and-rewards-for-woocommerce' ); ?></div>
-						<span><a href="javascript:void(0);" class="wps_wpr_view_campaign_existing_template" target="_blank">View Existing Templates</a></span>
+						<span><button type="button" class="wps_wpr_view_campaign_existing_template" class="button"><?php esc_html_e( 'View Templates', 'points-and-rewards-for-woocommerce' ); ?></button></span>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
@@ -476,7 +476,7 @@ if ( wps_wpr_is_par_pro_plugin_active() ) {
 				<?php do_action( 'wps_wpr_add_campaign_additional_html', $wps_wpr_campaign_settings ); ?>
 			</section>
 
-			<section class="wps_wpr_general_row_wrap">
+			<section class="wps_wpr_general_row_wrap social_share_main_wrap" id="wps_social_share_main_wrap">
 				<div class="wps_wpr_user_badges_settings_heading wps_wpr_general_sign_title wps_wpr_doc_video_wrapper">
 					<?php esc_html_e( 'Social Share Campaign', 'points-and-rewards-for-woocommerce' ); ?>
 				</div>
@@ -509,7 +509,7 @@ if ( wps_wpr_is_par_pro_plugin_active() ) {
 				</div>
 
 				<!-- Note -->
-				<div class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice">
+				<div class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice share_notices">
 					<b><?php esc_html_e( 'Note: Choose a campaign type, add the post URL, and decide the points to reward. It helps motivate users to take action and earn rewards!', 'points-and-rewards-for-woocommerce' ); ?></b>
 				</div>
 

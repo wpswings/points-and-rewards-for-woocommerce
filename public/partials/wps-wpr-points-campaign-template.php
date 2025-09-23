@@ -452,26 +452,49 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 						<!-- +++++++++++   Social Share Campaign Start Here   +++++++++++++ -->
 
 						<?php
+						// get keys which action are already perfromed by users.
+						$performed = (array) get_user_meta( $user_id, 'wps_wpr_social_action_performed', true );
+
 						// 1) mailing_list uses a custom inner description in your original markup — render it first if present
-						if ( array_key_exists( 'mailing_list', $wps_wpr_combined ) ) :
-							$ml = $wps_wpr_combined['mailing_list'];
+						if ( array_key_exists( 'mailing_list', $wps_wpr_combined ) ) {
+
+							$ml             = $wps_wpr_combined['mailing_list'];
+							$is_performed   = in_array( 'mailing_list', $performed, true );
+							$subscribe_text = __( 'Subscribe to our mailing list', 'points-and-rewards-for-woocommerce' );
 							?>
+
 							<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
 								<img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
-								<?php esc_html_e( 'Subscribe to our mailing list', 'points-and-rewards-for-woocommerce' ); ?>
-								<span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $ml['value'] ); ?>+</span>
+								<?php echo esc_html( $subscribe_text ); ?>
+
+								<span class="<?php echo $is_performed ? 'wps-wpr_camp-h2-icon-done' : 'wps-wpr_camp-h2-icon'; ?>">
+									<?php echo esc_html( $ml['value'] ); ?>
+									<?php if ( $is_performed ) : ?>
+										<img class="wps-wpr-hlw_co-icon" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>" alt="done" />
+									<?php else : ?>
+										+
+									<?php endif; ?>
+								</span>
 							</div>
-							<div class="wps_wpr_cam_malling_list wps-wpr_camp-acc-wrap">
-								<div class="wps-wpr_camp-acc-wrap-in subs-mail">
-									<?php esc_html_e( 'I would like to receive updates and marketing emails. We will treat your information with respect. You can unsubscribe at any time by contacting us.', 'points-and-rewards-for-woocommerce' ); ?>
-									<input type="button" class="wps_wpr_mailing_list_subs_btn wps_wpr_visit_insta_btn" value="<?php echo esc_attr__( 'Subscribe', 'points-and-rewards-for-woocommerce' ); ?>" data-key="<?php echo esc_attr( 'mailing_list' ); ?>">
+
+							<?php if ( ! $is_performed ) : ?>
+								<div class="wps_wpr_cam_malling_list wps-wpr_camp-acc-wrap">
+									<div class="wps-wpr_camp-acc-wrap-in subs-mail">
+										<?php esc_html_e( 'I would like to receive updates and marketing emails. We will treat your information with respect. You can unsubscribe at any time by contacting us.', 'points-and-rewards-for-woocommerce' ); ?>
+										<input 
+											type="button" 
+											class="wps_wpr_mailing_list_subs_btn wps_wpr_visit_insta_btn" 
+											value="<?php echo esc_attr__( 'Subscribe', 'points-and-rewards-for-woocommerce' ); ?>" 
+											data-key="mailing_list"
+										>
+									</div>
 								</div>
-							</div>
+							<?php endif; ?>
+
 							<?php
-						endif;
+						}
 
 						// Loop and render.
-						$performed = (array) get_user_meta( $user_id, 'wps_wpr_social_action_performed', true );
 						foreach ( $campaign_templates as $key => $tpl ) {
 
 							// continue loop if key is not found.
