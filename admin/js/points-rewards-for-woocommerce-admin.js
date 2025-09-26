@@ -556,24 +556,18 @@
 	// plugin banner ajax.
 	jQuery(document).on( 'click', '#dismiss-banner', function(){
 
-		if ( wps_wpr_object.check_pro_activate ) {
-
-			jQuery(document).find('.wps-offer-notice').hide();
-		} else {
-
-			var data = {
-				action:'wps_wpr_ajax_banner_action',
-				wps_nonce:wps_wpr_object.wps_wpr_nonce
-			};
-			jQuery.ajax({
-				url: wps_wpr_object.ajaxurl,
-				type: "POST",
-				data: data,
-				success: function(response) {
-					window.location.reload();
-				}
-			});
-		}
+		var data = {
+			action:'wps_wpr_ajax_banner_action',
+			wps_nonce:wps_wpr_object.wps_wpr_nonce
+		};
+		jQuery.ajax({
+			url: wps_wpr_object.ajaxurl,
+			type: "POST",
+			data: data,
+			success: function(response) {
+				window.location.reload();
+			}
+		});
 	});
 
 	// restrict rewards fields to enter more than 100.

@@ -176,24 +176,18 @@ jQuery(document).ready( function($) {
 	// plugin banner ajax.
 	$(document).on( 'click', '#dismiss-banner', function(){
 
-		if ( wps.is_pro_plugin_active ) {
-
-			var data = {
-				action    : 'wps_wpr_ajax_banner_action',
-				wps_nonce : wps.banner_nonce
-			};
-			$.ajax({
-				url  : wps.ajaxurl,
-				type : "POST",
-				data : data,
-				success: function(response) {
-					window.location.reload();
-				}
-			});
-		} else {
-
-			jQuery(document).find('.wps-offer-notice').hide();
-		}
+		var data = {
+			action    : 'wps_wpr_ajax_banner_action',
+			wps_nonce : wps.banner_nonce
+		};
+		$.ajax({
+			url  : wps.ajaxurl,
+			type : "POST",
+			data : data,
+			success: function(response) {
+				window.location.reload();
+			}
+		});
 	});
 // End of scripts.
 });
