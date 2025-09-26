@@ -51,12 +51,12 @@ $get_points                   = ! empty( get_user_meta( $user_id, 'wps_wpr_point
 $wps_wpr_total_referral_count = ! empty( get_user_meta( $user_id, 'wps_wpr_total_referral_count', true ) ) ? get_user_meta( $user_id, 'wps_wpr_total_referral_count', true ) : 0;
 
 // Get the cart point rate.
-$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
-$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
+$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
 
 // Get the cart price rate.
-$wps_wpr_cart_price_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
-$wps_wpr_cart_price_rate = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+$wps_wpr_coupon_conversion_price = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
+$wps_wpr_coupon_conversion_price = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
 
 // comment / review points value.
 $wps_wpr_comment_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_comment_value' );
@@ -261,8 +261,8 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 						printf(
 							/* translators: 1: Points, 2: Currency + Amount */
 							esc_html__( 'Get %1$s points for every %2$s you spend!', 'points-and-rewards-for-woocommerce' ),
-							esc_html( $wps_wpr_cart_points_rate ),
-							esc_html( get_woocommerce_currency_symbol() . $wps_wpr_cart_price_rate )
+							esc_html( $wps_wpr_coupon_conversion_price ),
+							esc_html( get_woocommerce_currency_symbol() . $wps_wpr_coupon_conversion_points )
 						);
 						?>
 					</p>

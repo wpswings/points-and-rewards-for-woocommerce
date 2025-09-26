@@ -4210,11 +4210,11 @@ class Points_Rewards_For_WooCommerce_Public {
 						$user_name = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
 
 						$mail_text  = sprintf( 'Hello %s', $user_name ) . ",\r\n";
-						$mail_text .= __( 'Wallet credited by ', 'wallet-system-for-woocommerce' ) . esc_html( $balance ) . __( ' through successfully Win Wheel.', 'wallet-system-for-woocommerce' );
+						$mail_text .= __( 'Wallet credited by ', 'points-and-rewards-for-woocommerce' ) . esc_html( $balance ) . __( ' through successfully Win Wheel.', 'points-and-rewards-for-woocommerce' );
 
 						$to       = $wallet_user->user_email;
 						$from     = get_option( 'admin_email' );
-						$subject  = __( 'Wallet updating notification', 'wallet-system-for-woocommerce' );
+						$subject  = __( 'Wallet updating notification', 'points-and-rewards-for-woocommerce' );
 						$headers  = "MIME-Version: 1.0\r\n";
 						$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 						$headers .= "From: $from\r\nReply-To: $to\r\n";
@@ -4231,7 +4231,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 
 					// Record transaction.
-					$transaction_type = __( 'Wallet credited through Win Wheel ', 'wallet-system-for-woocommerce' );
+					$transaction_type = __( 'Wallet credited through Win Wheel ', 'points-and-rewards-for-woocommerce' );
 					$transaction_data = array(
 						'user_id'            => $user_id,
 						'amount'             => $wps_claim_points,
