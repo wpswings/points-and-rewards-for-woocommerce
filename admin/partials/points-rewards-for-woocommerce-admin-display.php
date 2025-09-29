@@ -99,7 +99,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 			<div class="wps_rwpr_header_content_right">
 				<ul>
 					<li class="wps_wpr_get_pro">
-						<a href="https://wpswings.com/woocommerce-services/" target="_blank">
+						<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-par-services&utm_medium=par-pro-backend&utm_campaign=woocommerce-services" target="_blank">
 							<span class="dashicons dashicons-admin-generic"></span>
 							<span class="wps_wpr_contact_doc_text"><?php esc_html_e( 'Our Services', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</a>

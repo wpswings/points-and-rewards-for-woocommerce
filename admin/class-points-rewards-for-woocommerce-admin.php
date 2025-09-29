@@ -189,6 +189,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'wps_wpr_free_shipping'  => esc_html__( 'Free Shipping', 'points-and-rewards-for-woocommerce' ),
 						'wps_ajax_error'         => esc_html__( 'An error occurred. Please try again.', 'points-and-rewards-for-woocommerce' ),
 						'wps_user_count'         => $this->wps_wpr_org_user_count(),
+						'is_wallet_active'       => is_plugin_active('wallet-system-for-woocommerce/wallet-system-for-woocommerce.php'),
+						'wallet_alert_message'   => esc_html__( "The Wallet reward option requires the 'Wallet System For WooCommerce' plugin.\n\nClick 'OK' to visit the plugin page and install it.", 'points-and-rewards-for-woocommerce' ),
 					);
 
 					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), time(), false );

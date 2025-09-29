@@ -81,10 +81,10 @@
     jQuery('.wps-wpr_camp-birth').parent().slideDown();
     jQuery(document).on(
       "click",
-      ".wps-wpr_campaign-h2 .wps-wpr_camp-h2-icon",
+      ".wps-wpr_campaign-h2",
       function () {
+        jQuery(this).children('.wps-wpr-hlw_co-icon').toggleClass('active');
         jQuery(this)
-          .parent()
           .next(".wps-wpr_camp-acc-wrap")
           .slideToggle();
       }
@@ -218,12 +218,12 @@
     });
 
     // quiz scroll up while clicking.
-    $(document).on('click', '.wps-wpr_campaign-h2', function(e) {
-      $('.wps-wpr-hlw_container').animate({
+    // $(document).on('click', '.wps-wpr_campaign-h2', function(e) {
+    //   $('.wps-wpr-hlw_container').animate({
 
-        scrollTop: $(window).scrollTop() + 100 // scroll down by 300 pixels
-      }, 400); // 400ms animation speed
-    });
+    //     scrollTop: $(window).scrollTop() + 10 // scroll down by 300 pixels
+    //   }, 400); // 400ms animation speed
+    // });
 
     // show win wheel spin to play the game using campaign modal.
     jQuery(document).on('click', '.wps_wpr_show_campaign_win_wheel_modal', function(e){
@@ -243,5 +243,85 @@
 
       jQuery('#wps_wpr_spin_canvas_id').show();
     });
+
+  // Handle normal button/link clicks.
+  $(document).on('click', '.wps_wpr_visit_insta_btn', function(e) {
+
+      e.preventDefault();
+      let key            = $(this).data('key');
+      wps_wpr_ajax_call_for_social_campaign( key, $(this) );
+  });
+
+  // assign points when user watch youtube video.
+  setTimeout(() => {
+    
+    (function(window, document){
+      var iframe = document.querySelector('iframe.wps_wpr_yt[data-yt-id]');
+      if (!iframe) return;
+
+      // ✅ setup YT player (optional: log when video starts playing)
+      function initPlayer() {
+        try {
+          new YT.Player(iframe.id, {
+            events: {
+              onStateChange: function(e) {
+                if (e.data === YT.PlayerState.PLAYING) {
+
+                  wps_wpr_ajax_call_for_social_campaign( iframe.dataset.key, iframe );
+                }
+              }
+            }
+          });
+        } catch (err) {
+          console.warn('YT API not ready for', iframe.id);
+        }
+      }
+      
+      if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+      }
+
+      var old = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function(){
+        if (typeof old === 'function') old();
+        initPlayer();
+      };
+    })(window, document);
+  }, 1500);
+
+  /**
+   * AJAX call for social campaign for assigning the points.
+   * @param {*} points 
+   * @param {*} heading 
+   */
+  function wps_wpr_ajax_call_for_social_campaign( key, $_this ) {
+
+    var data = {
+          action : "action_social_link_click",
+          nonce  : wps_wpr_campaign_obj.wps_wpr_nonce,
+          key    : key
+      };
+
+      $.ajax({
+          type    : "POST",
+          url     : wps_wpr_campaign_obj.ajaxurl,
+          data    : data,
+          success : function (response) {
+
+            $_this.closest('.wps_wpr_cam_insta_visit').prev('.wps-wpr_campaign-h2').addBack().hide();
+            // Redirect after logging.
+            if ( response ) {
+
+              window.open( response, '_blank' );
+            }
+          },
+          error: function () {
+              alert("An error occurred while processing your request.");
+          },
+      });
+  }
+
   });
 })(jQuery);

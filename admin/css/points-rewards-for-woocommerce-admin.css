@@ -1817,7 +1817,10 @@ button.button.wps_wpr_remove_quiz {
   cursor: pointer;
 }
 
-button#wps_wpr_add_quiz {
+button#wps_wpr_add_quiz,
+.wps_wpr_view_campaign_existing_template,
+#wps_wpr_add_social_share_campaign,
+#wps_social_share_main_wrap .wps_wpr_remove_campaign {
   border-radius: 5px;
   border: 1px solid #2196f3;
   background: white;
@@ -1828,17 +1831,72 @@ button#wps_wpr_add_quiz {
   font-size: 16px;
   margin: 10px 10px 20px;
   cursor: pointer;
+  transition: all 0.3s ease; /* smooth hover effect */
 }
 
-button#wps_wpr_add_quiz:hover {
+#wps_social_share_main_wrap .wps_wpr_remove_campaign {
+  margin: 0;
+}
+
+.social_share_main_wrap .wps_wpr_general_row {
+  overflow: auto;
+}
+
+button#wps_wpr_add_quiz:hover,
+.wps_wpr_view_campaign_existing_template:hover,
+#wps_wpr_add_social_share_campaign:hover,
+.wps_wpr_remove_campaign:hover {
   background-color: #2196f3 !important;
-  color: #fff;
+  color: #fff !important;
+}
+
+#wps_wpr_add_social_share_campaign {
+  margin-left: 15px;
+}
+
+.wps_wpr_social_campaign_main_wrap.wps_wpr_general_content {
+  margin-left: 5px;
+}
+
+.wps_wpr_enable_user_badges_notices.wps_wpr_label_notice.share_notices {
+  padding: 0 15px 15px;
+}
+
+.social_share_main_wrap .wps-error-msg {
+  padding-left: 15px;
 }
 
 button.button.wps_wpr_remove_quiz:hover {
   background-color: #2196f3 !important;
   color: #fff !important;
   border: none;
+}
+
+.wps-error-field {
+    border: 1px solid red !important;
+    background: #ffecec;
+}
+
+.wps-error-msg {
+    color: red;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.wps-campaign-actions {
+    margin-top: 10px;
+}
+
+.wps_wpr_social_campaign_main_wrap {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+}
+.wps_wpr_social_campaign_main_wrap .wps_wpr_general_label {
+  padding: 0;
+}
+.wps_wpr_social_campaign_main_wrap .wps_wpr_general_label select {
+  min-height: 40px;
 }
 
 @media screen and (max-width: 540px) {

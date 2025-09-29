@@ -33,19 +33,30 @@ $wps_wpr_show_current_points_modal      = ! empty( $wps_wpr_campaign_settings['w
 $wps_wpr_show_total_referral_count      = ! empty( $wps_wpr_campaign_settings['wps_wpr_show_total_referral_count'] ) ? $wps_wpr_campaign_settings['wps_wpr_show_total_referral_count'] : '';
 $wps_wpr_show_content_in_footer         = ! empty( $wps_wpr_campaign_settings['wps_wpr_show_content_in_footer'] ) ? $wps_wpr_campaign_settings['wps_wpr_show_content_in_footer'] : '';
 $wps_wpr_modal_footer_content           = ! empty( $wps_wpr_campaign_settings['wps_wpr_modal_footer_content'] ) ? $wps_wpr_campaign_settings['wps_wpr_modal_footer_content'] : 'Created with ❤ by WP Swings';
+$wps_wpr_social_share_campaign_label    = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] : array();
+$wps_wpr_social_share_url               = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_url'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_url'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_url'] : array();
+$wps_wpr_social_share_points            = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_points'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_points'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_points'] : array();
 $icons_url                              = plugin_dir_url( __DIR__ ) . 'images/trophy.png';
+$fb_icon                                = plugin_dir_url( __DIR__ ) . 'images/cam-facebook.svg';
+$cam_arrow                              = plugin_dir_url( __DIR__ ) . 'images/cam-arrow.svg';
+$insta_icon                             = plugin_dir_url( __DIR__ ) . 'images/cam-insta.svg';
+$like_icon                              = plugin_dir_url( __DIR__ ) . 'images/cam-like.svg';
+$linkedin_icon                          = plugin_dir_url( __DIR__ ) . 'images/cam-linkedin.svg';
+$pint_icon                              = plugin_dir_url( __DIR__ ) . 'images/cam-pinterest.svg';
+$x_icon                                 = plugin_dir_url( __DIR__ ) . 'images/cam-x.svg';
+$you_icon                               = plugin_dir_url( __DIR__ ) . 'images/cam-youtube.svg';
 
 // get points and referral count.
 $get_points                   = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
 $wps_wpr_total_referral_count = ! empty( get_user_meta( $user_id, 'wps_wpr_total_referral_count', true ) ) ? get_user_meta( $user_id, 'wps_wpr_total_referral_count', true ) : 0;
 
 // Get the cart point rate.
-$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
-$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
+$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
 
 // Get the cart price rate.
-$wps_wpr_cart_price_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
-$wps_wpr_cart_price_rate = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+$wps_wpr_coupon_conversion_price = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
+$wps_wpr_coupon_conversion_price = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
 
 // comment / review points value.
 $wps_wpr_comment_value = $this->wps_wpr_get_general_settings_num( 'wps_wpr_general_comment_value' );
@@ -69,6 +80,164 @@ $wps_wpr_enter_segment_points = ! empty( $wps_wpr_save_gami_setting['wps_wpr_ent
 
 // win wheel points assign check.
 $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', true );
+
+$wps_wpr_combined = array();
+if ( ! empty( $wps_wpr_social_share_campaign_label ) && is_array( $wps_wpr_social_share_campaign_label ) ) {
+	foreach ( $wps_wpr_social_share_campaign_label as $index => $key ) {
+
+		$wps_wpr_combined[ $key ] = array(
+			'link' => $wps_wpr_social_share_url[ $index ] ?? null,
+			'value' => $wps_wpr_social_share_points[ $index ] ?? null,
+		);
+	}
+}
+
+/**
+ * Undocumented function.
+ *
+ * @param  string $url url.
+ * @return bool
+ */
+function extract_youtube_video_id( $url ) {
+	$parsed_url = parse_url( $url );
+
+	if ( ! isset( $parsed_url['host'] ) ) {
+		return false;
+	}
+
+	// Normalize host.
+	$host = str_replace( 'www.', '', $parsed_url['host'] );
+
+	// Case 1: youtube.com/watch?v=...
+	if ( 'youtube.com' === $host || 'm.youtube.com' === $host ) {
+		if ( isset( $parsed_url['query'] ) ) {
+			parse_str( $parsed_url['query'], $query_vars );
+			return $query_vars['v'] ?? false;
+		}
+	}
+
+	// Case 2: youtu.be/VIDEO_ID.
+	if ( 'youtu.be' === $host ) {
+		return trim( $parsed_url['path'], '/' );
+	}
+
+	// Case 3: youtube.com/embed/VIDEO_ID.
+	if ( strpos( $parsed_url['path'], '/embed/' ) === 0 ) {
+		return substr( $parsed_url['path'], strlen( '/embed/' ) );
+	}
+
+	return false;
+}
+
+// 2) generic templates map for the rest of items (keeps exact headings/button names)
+$campaign_templates = array(
+	'insta_profile'         => array(
+		'heading' => 'Visit Instagram Profile',
+		'btn' => 'Follow',
+		'mode' => 'link',
+		'icon' => $insta_icon,
+		'className' => 'instagram',
+	),
+	'view_insta_photo'      => array(
+		'heading' => 'View Instagram Photo',
+		'btn' => 'Click Here',
+		'mode' => 'link',
+		'icon' => $insta_icon,
+		'className' => 'instagram',
+	),
+	'like_linkedin_post'    => array(
+		'heading' => 'Like Post on LinkedIn',
+		'btn' => 'Like',
+		'mode' => 'link',
+		'icon' => $like_icon,
+		'className' => 'linkedin',
+	),
+	'share_linkedin_post'   => array(
+		'heading' => 'Share Post on LinkedIn',
+		'btn' => 'Share',
+		'mode' => 'link',
+		'icon' => $linkedin_icon,
+		'className' => 'linkedin',
+	),
+	'share_facebook_post'   => array(
+		'heading' => 'Share on Facebook',
+		'btn' => 'Share',
+		'mode' => 'link',
+		'icon' => $fb_icon,
+		'className' => 'facebook',
+	),
+	'like_facebook_page'    => array(
+		'heading' => 'Like Facebook Page',
+		'btn' => 'Facebook',
+		'mode' => 'link',
+		'icon' => $fb_icon,
+		'className' => 'facebook',
+	),
+	'subs_you_chann'        => array(
+		'heading' => 'Subscribe to YouTube Channel',
+		'btn' => 'Youtube',
+		'mode' => 'link',
+		'icon' => $you_icon,
+		'className' => 'youtube',
+	),
+	'watch_you_vid'         => array(
+		'heading' => 'Watch a YouTube Video',
+		'btn' => '',
+		'mode' => 'iframe',
+		'icon' => $you_icon,
+		'className' => 'youtube',
+	),
+	'like_you_vid'          => array(
+		'heading' => 'Like a YouTube Video',
+		'btn' => 'Like',
+		'mode' => 'iframe_link_with_button',
+		'icon' => $like_icon,
+		'className' => 'youtube',
+	),
+	'share_twitter'         => array(
+		'heading' => 'Share on Twitter (X)',
+		'btn' => 'Tweet',
+		'mode' => 'link',
+		'icon' => $x_icon,
+		'className' => 'twitter',
+	),
+	'follow_twitter'        => array(
+		'heading' => 'Follow on Twitter (X)',
+		'btn' => 'Follow',
+		'mode' => 'link',
+		'icon' => $x_icon,
+		'className' => 'twitter',
+	),
+	'like_post_twitter'     => array(
+		'heading' => 'Like Post on Twitter (X)',
+		'btn' => 'Like',
+		'mode' => 'link',
+		'icon' => $like_icon,
+		'className' => 'twitter',
+	),
+	'visit_pinterest'       => array(
+		'heading' => 'Visit Pinterest',
+		'btn' => 'Pinterest',
+		'mode' => 'link',
+		'icon' => $pint_icon,
+		'className' => 'pinterest',
+	),
+	'follow_pinterest'      => array(
+		'heading' => 'Follow on Pinterest',
+		'btn' => 'Follow Pinterest',
+		'mode' => 'link',
+		'icon' => $pint_icon,
+		'className' => 'pinterest',
+	),
+	'follow_board_pinterest' => array(
+		'heading' => 'Follow a Pinterest Board',
+		'btn' => 'Follow',
+		'mode' => 'link',
+		'icon' => $pint_icon,
+		'className' => 'pinterest',
+	),
+);
+$campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campaign_templates );
 ?>
 <div class="wps-wpr">
 
@@ -92,8 +261,8 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 						printf(
 							/* translators: 1: Points, 2: Currency + Amount */
 							esc_html__( 'Get %1$s points for every %2$s you spend!', 'points-and-rewards-for-woocommerce' ),
-							esc_html( $wps_wpr_cart_points_rate ),
-							esc_html( get_woocommerce_currency_symbol() . $wps_wpr_cart_price_rate )
+							esc_html( $wps_wpr_coupon_conversion_price ),
+							esc_html( get_woocommerce_currency_symbol() . $wps_wpr_coupon_conversion_points )
 						);
 						?>
 					</p>
@@ -107,8 +276,8 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 						<!-- Referral settings -->
 						<div id="wps_wpr_campaign_referral_wrap" class="wps_wpr_campaign_promo">
 							<div class="wps-wpr_campaign-h1"><?php esc_html_e( 'Refer friends. Earn rewards!', 'points-and-rewards-for-woocommerce' ); ?></div>
-							<?php if ( is_user_logged_in() ) { ?>
-								<?php
+							<?php
+							if ( is_user_logged_in() ) {
 								if ( 'yes' === $wps_wpr_enable_referral_campaign ) :
 
 									$this->wps_wpr_campaigns_html_referral( $user_id );
@@ -150,9 +319,10 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 						<div id="wps_wpr_campaign_earn_wrap" class="wps_wpr_campaign_promo">
 							<?php
 							if ( ! is_user_logged_in() ) {
+
 								if ( 'yes' === $wps_wpr_enable_sign_up_campaign ) :
 									?>
-									<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Earn welcome points!', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_signup_value ); ?>+</span></div>
+									<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Earn welcome points!', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_signup_value ); ?>+</span></div>
 								<?php endif; ?>
 								<div class="wps-wpr_camp-guest-part">
 									<div class="wps-wpr_camp-guest-part-link">
@@ -164,9 +334,9 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 							}
 							?>
 							<?php if ( 'yes' === $wps_wpr_enable_birthday_campaign && empty( $_my_bday ) ) { ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $birthday_points ); ?>+</span></div>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon active" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $birthday_points ); ?>+</span></div>
 								<div class="wps-wpr_camp-acc-wrap wps_wpr_guest_user_disable">
-									<div class="wps-wpr_camp-birth">
+									<div class="wps-wpr_camp-birth wps-wpr_camp-acc-wrap-in">
 										<input type="date" data-date-format="DD/MM/YYYY" class="" name="account_bday" id="account_bday" value="<?php echo esc_html( ! empty( $_my_bday ) ? $_my_bday : '' ); ?>" <?php echo esc_html( ! empty( $_my_bday ) ? 'disabled' : '' ); ?> placeholder="DD/MM/YYYY" />
 										<input type="button" name="wps_wpr_campaign_save_birthday" id="wps_wpr_campaign_save_birthday" value="<?php esc_html_e( 'Update', 'points-and-rewards-for-woocommerce' ); ?>" <?php echo esc_html( ! empty( $_my_bday ) ? 'disabled' : '' ); ?>>
 										<img class="wps_wpr_birthday_loader wps_wpr_img_loader" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/loading.gif' ); ?>">
@@ -176,12 +346,12 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 								<?php
 							} else {
 								?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon-done"><?php echo esc_html( $birthday_points ); ?><img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>"></span></div>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon-done"><?php echo esc_html( $birthday_points ); ?><img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>"></span></div>
 								<?php
 							}
 							?>
 							<?php if ( 'yes' === $wps_wpr_enable_comments_campaign ) : ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor">
 									<?php
 										printf(
 											'<img src="%s" alt="user" class="wps-wpr-hlw_co-icon" /><span> %s </span><a href="%s" target="_blank">%s</a>',
@@ -194,8 +364,9 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 								</div>
 							<?php endif; ?>
 							<?php if ( 'yes' === $wps_wpr_enable_gami_points ) : ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor">
 									<img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
+									<span>
 									<?php
 										printf(
 										/* translators: 1: Points, 2: Currency + Amount */
@@ -206,27 +377,26 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 											is_array( $wps_wpr_enter_segment_points ) && ! empty( $wps_wpr_enter_segment_points ) ? esc_html( min( $wps_wpr_enter_segment_points ) ) : 0,
 											is_array( $wps_wpr_enter_segment_points ) && ! empty( $wps_wpr_enter_segment_points ) ? esc_html( max( $wps_wpr_enter_segment_points ) ) : 0
 										);
+									?>
+									</span>
+									<?php
 									if ( empty( $wps_wpr_check_game_points_assign_timing ) ) {
 										?>
-										<span class="wps-wpr_camp-h2-icon">
 											<a href="javascript:void(0);" class="wps_wpr_show_campaign_win_wheel_modal"><?php esc_html_e( 'Play', 'points-and-rewards-for-woocommerce' ); ?></a>
-										</span>
 										<?php
 									} else {
 										?>
-										<span class="wps-wpr_camp-h2-icon">
 											<img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>">
-										</span>
 										<?php
 									}
 									?>
 								</div>
 							<?php endif; ?>
 							<?php if ( 'yes' === $wps_wpr_enable_camp_first_order_points ) : ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Unlock bonus points when you shop for the very first time', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_first_order_points ); ?>+</span></div>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Unlock bonus points when you shop for the very first time', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_first_order_points ); ?>+</span></div>
 							<?php endif; ?>
 							<?php if ( 'yes' === $wps_wpr_enable_quiz_contest_campaign ) { ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php printf( /* translators: %s: sms msg */ esc_html__( 'Play the Quiz, have fun, and earn %1$s–%2$s points!', 'points-and-rewards-for-woocommerce' ), esc_html( min( $wps_wpr_quiz_rewards_points ) ), esc_html( max( $wps_wpr_quiz_rewards_points ) ) ); ?> <span class="wps-wpr_camp-h2-icon">🎁 <?php echo esc_html( max( $wps_wpr_quiz_rewards_points ) ); ?></span></div>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php printf( /* translators: %s: sms msg */ esc_html__( 'Play the Quiz, have fun, and earn %1$s–%2$s points!', 'points-and-rewards-for-woocommerce' ), esc_html( min( $wps_wpr_quiz_rewards_points ) ), esc_html( max( $wps_wpr_quiz_rewards_points ) ) ); ?> <span class="wps-wpr_camp-h2-icon">🎁 <?php echo esc_html( max( $wps_wpr_quiz_rewards_points ) ); ?></span></div>
 								<div class="wps-wpr_camp-acc-wrap wps_wpr_guest_user_disable">
 									<?php
 									if ( ! empty( $wps_wpr_quiz_question ) && ! empty( $wps_wpr_quiz_option_one ) && ! empty( $wps_wpr_quiz_option_four ) ) {
@@ -278,6 +448,141 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 								<?php
 							}
 							?>
+
+						<!-- +++++++++++   Social Share Campaign Start Here   +++++++++++++ -->
+
+						<?php
+						// get keys which action are already perfromed by users.
+						$performed = (array) get_user_meta( $user_id, 'wps_wpr_social_action_performed', true );
+
+						// 1) mailing_list uses a custom inner description in your original markup — render it first if present
+						if ( array_key_exists( 'mailing_list', $wps_wpr_combined ) ) {
+
+							$ml             = $wps_wpr_combined['mailing_list'];
+							$is_performed   = in_array( 'mailing_list', $performed, true );
+							$subscribe_text = __( 'Subscribe to our mailing list', 'points-and-rewards-for-woocommerce' );
+							?>
+
+							<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
+								<img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
+								<?php echo esc_html( $subscribe_text ); ?>
+
+								<span class="<?php echo $is_performed ? 'wps-wpr_camp-h2-icon-done' : 'wps-wpr_camp-h2-icon'; ?>">
+									<?php echo esc_html( $ml['value'] ); ?>
+									<?php if ( $is_performed ) : ?>
+										<img class="wps-wpr-hlw_co-icon" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>" alt="done" />
+									<?php else : ?>
+										+
+									<?php endif; ?>
+								</span>
+							</div>
+
+							<?php if ( ! $is_performed ) : ?>
+								<div class="wps_wpr_cam_malling_list wps-wpr_camp-acc-wrap">
+									<div class="wps-wpr_camp-acc-wrap-in subs-mail">
+										<?php esc_html_e( 'I would like to receive updates and marketing emails. We will treat your information with respect. You can unsubscribe at any time by contacting us.', 'points-and-rewards-for-woocommerce' ); ?>
+										<input 
+											type="button" 
+											class="wps_wpr_mailing_list_subs_btn wps_wpr_visit_insta_btn" 
+											value="<?php echo esc_attr__( 'Subscribe', 'points-and-rewards-for-woocommerce' ); ?>" 
+											data-key="mailing_list"
+										>
+									</div>
+								</div>
+							<?php endif; ?>
+
+							<?php
+						}
+
+						// Loop and render.
+						foreach ( $campaign_templates as $key => $tpl ) {
+
+							// continue loop if key is not found.
+							if ( ! array_key_exists( $key, $wps_wpr_combined ) ) {
+								continue;
+							}
+
+							$data = $wps_wpr_combined[ $key ];
+							if ( ! in_array( $key, $performed ) ) {
+								?>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
+									<img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
+									<?php echo esc_html( $tpl['heading'] ); ?>
+									<span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $data['value'] ); ?>+</span>
+
+								</div>
+								<div class="wps_wpr_cam_insta_visit wps-wpr_camp-acc-wrap">
+									<div class="wps-wpr_camp-acc-wrap-in social-likes">
+										<?php
+										switch ( $tpl['mode'] ) {
+											case 'link':
+												// use 'url' by default — we stored it earlier; if empty fall back to '#'.
+												$href = $data['link'] ? esc_url( $data['link'] ) : '#';
+												?>
+												<a href="<?php echo esc_url( $href ); ?>" class="wps_wpr_visit_like_btn wps_wpr_visit_insta_btn <?php echo esc_attr( $tpl['className'] ); ?>" target="_blank" data-key="<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( $tpl['btn'] ); ?><img src="<?php echo esc_url( $tpl['icon'] ); ?>"></a>
+												<?php
+												break;
+
+											case 'iframe':
+												if ( ! empty( $data['link'] ) ) {
+
+													$video_id = extract_youtube_video_id( $data['link'] );
+													// add enablejsapi=1 so the YouTube API can control the player.
+													$embed_src = add_query_arg(
+														array(
+															'enablejsapi' => 1,
+															'origin' => esc_url_raw( home_url() ),
+														),
+														"https://www.youtube.com/embed/$video_id"
+													);
+													?>
+													<iframe id="wps_wpr_yt" class="wps_wpr_yt" width="560" height="315" src="<?php echo esc_url( $embed_src ); ?>" data-yt-id="<?php echo esc_attr( $video_id ); ?>" title="YouTube video player" frameborder="0" data-key="<?php echo esc_attr( $key ); ?>" allowfullscreen></iframe>
+													<?php
+												}
+												break;
+
+											case 'iframe_link_with_button':
+												if ( ! empty( $data['link'] ) ) {
+
+													$video_id  = extract_youtube_video_id( $data['link'] );
+													$embed_src = add_query_arg(
+														array(
+															'enablejsapi' => 1,
+															'origin' => esc_url_raw( home_url() ),
+														),
+														"https://www.youtube.com/embed/$video_id"
+													);
+													?>
+													<a href="<?php echo esc_url( $data['link'] ); ?>" class="wps_wpr_visit_insta_btn" data-key="<?php echo esc_attr( $key ); ?>" target="_blank" rel="noopener noreferrer">
+														<iframe width="560" height="315" src="<?php echo esc_url( $embed_src ); ?>" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+														<div>
+															<span class="wps_wpr_visit_like_btn <?php echo esc_attr( $tpl['className'] ); ?>">
+																<?php echo esc_html( $tpl['btn'] ); ?><img src="<?php echo esc_url( $tpl['icon'] ); ?>">
+															</span>
+														</div>
+													</a>
+													<?php
+												}
+												break;
+										}
+										?>
+									</div>
+								</div>
+								<?php
+							} else {
+								?>
+								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable">
+									<img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
+									<?php echo esc_html( $tpl['heading'] ); ?>
+									<span class="wps-wpr_camp-h2-icon-done">
+										<?php echo esc_html( $data['value'] ); ?>
+										<img class="wps-wpr-hlw_co-icon" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>">
+									</span>
+								</div>
+								<?php
+							}
+						}
+						?>
 						</div>
 					</div>
 				</div>
@@ -298,4 +603,3 @@ $wps_wpr_check_game_points_assign_timing = get_user_meta( $user_id, 'wps_wpr_che
 	</div>
 </div>
 <?php
-

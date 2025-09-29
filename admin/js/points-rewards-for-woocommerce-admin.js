@@ -375,7 +375,7 @@
 			// validate segments values
 			if ( wps_wpr_segments_validation() ) {
   
-			  var new_row = '<tr class="wps_wpr_add_game_segment_dynamically"><td><input type="text" name="wps_wpr_enter_segment_name[]" id="wps_wpr_enter_segment_name" value="" required></td><td><input type="number" min="1" name="wps_wpr_enter_segment_points[]" id="wps_wpr_enter_segment_points" value="" required></td><td><input type="number" max="20" min="1" name="wps_wpr_enter_sgemnet_font_size[]" id="wps_wpr_enter_sgemnet_font_size" value="" required></td><td><input type="color" name="wps_wpr_enter_segment_color[]" id="wps_wpr_enter_segment_color[]" class="wps_wpr_enter_segment_color" value=""></td><td><input type="button" name="wps_wpr_remove_game_segment" id="wps_wpr_remove_game_segment" value="+"></td></tr>';
+			  var new_row = '<tr class="wps_wpr_add_game_segment_dynamically"><td><input type="text" name="wps_wpr_enter_segment_name[]" id="wps_wpr_enter_segment_name" value="" required></td><td><select name="wps_wpr_game_rewards_type[]" class="wps_wpr_game_rewards_type"><option value="points">Points</option><option value="wallet">Wallet</option></select></td><td><input type="number" min="1" name="wps_wpr_enter_segment_points[]" id="wps_wpr_enter_segment_points" value="" required></td><td><input type="number" max="20" min="1" name="wps_wpr_enter_sgemnet_font_size[]" id="wps_wpr_enter_sgemnet_font_size" value="" required></td><td><input type="color" name="wps_wpr_enter_segment_color[]" id="wps_wpr_enter_segment_color[]" class="wps_wpr_enter_segment_color" value=""></td><td><input type="button" name="wps_wpr_remove_game_segment" id="wps_wpr_remove_game_segment" value="+"></td></tr>';
 			  jQuery('.wps_wpr_segment_gamification_settings_wrappers').append( new_row );
 			} else {
 			  
@@ -468,6 +468,27 @@
 		return result;
 	 }
 
+	// check wallet plugin is active or not.
+	if ( ! wps_wpr_object.is_wallet_active ) {
+		jQuery(document).on('change', '.wps_wpr_game_rewards_type', function() {
+			var $select = jQuery(this);
+
+			// If current value is "wallet"
+			if ( $select.val() === 'wallet' ) {
+				// Show confirm with option to go to plugin page
+				if ( confirm(wps_wpr_object.wallet_alert_message) ) {
+					window.open("https://wordpress.org/plugins/wallet-system-for-woocommerce/", "_blank");
+				}
+
+				// Remove wallet option
+				$select.find('option[value="wallet"]').remove();
+
+				// Reset selection to "points" (or first option available)
+				$select.val('points').trigger('change');
+			}
+		});
+	}
+
 	 /** ============ User Badges Feature Start here. ============== */
 	 
 	 // Open Custom media window to select images.
@@ -535,24 +556,18 @@
 	// plugin banner ajax.
 	jQuery(document).on( 'click', '#dismiss-banner', function(){
 
-		if ( wps_wpr_object.check_pro_activate ) {
-
-			jQuery(document).find('.wps-offer-notice').hide();
-		} else {
-
-			var data = {
-				action:'wps_wpr_ajax_banner_action',
-				wps_nonce:wps_wpr_object.wps_wpr_nonce
-			};
-			jQuery.ajax({
-				url: wps_wpr_object.ajaxurl,
-				type: "POST",
-				data: data,
-				success: function(response) {
-					window.location.reload();
-				}
-			});
-		}
+		var data = {
+			action:'wps_wpr_ajax_banner_action',
+			wps_nonce:wps_wpr_object.wps_wpr_nonce
+		};
+		jQuery.ajax({
+			url: wps_wpr_object.ajaxurl,
+			type: "POST",
+			data: data,
+			success: function(response) {
+				window.location.reload();
+			}
+		});
 	});
 
 	// restrict rewards fields to enter more than 100.
@@ -1073,5 +1088,112 @@ jQuery(document).ready(function($){
 				.find(".wps_wpr_apply_banner_img").text("Applied");
 		}
 	}
+
+	// Social share campaign: Add/remove blocks, validate before adding new.
+	const $section = $( '.wps_wpr_general_row_wrap' );
+	const $addBtn  = $( '#wps_wpr_add_social_share_campaign' );
+	const tpl      = document.getElementById( 'wps_wpr_campaign_template' );
+
+	// Utility: show/hide error box
+	function wps_showError( msg ) {
+		let $error = $( '#wps_wpr_error_message' );
+		if ( $error.length === 0 ) {
+			$error = $( '<div id="wps_wpr_error_message" class="wps-error-msg" role="alert"></div>' )
+				.insertBefore( $addBtn );
+		}
+		$error.text( msg );
+	}
+
+	function wps_hideError() {
+		$( '#wps_wpr_error_message' ).remove();
+	}
+
+	// Validate a single article block (only visible fields inside block)
+	function validateBlock( $article ) {
+		let isValid = true;
+		$article.find( 'input, select' ).each( function () {
+			const $f = $( this );
+			// treat unchecked checkboxes/radios as not relevant; but here we only have inputs/selects
+			if ( $.trim( String( $f.val() ) ) === '' ) {
+				$f.addClass( 'wps-error-field' );
+				isValid = false;
+			} else {
+				$f.removeClass( 'wps-error-field' );
+			}
+		} );
+		return isValid;
+	}
+
+	// Create a new block from template (returns jQuery object)
+	function createBlockFromTemplate() {
+		if ( ! tpl ) {
+			// fallback: clone last block
+			const $last = $section.find( 'article.wps_wpr_general_row' ).last();
+			const $clone = $last.clone();
+			$clone.find( 'input' ).val( '' );
+			$clone.find( 'select' ).prop( 'selectedIndex', 0 );
+			return $clone;
+		}
+		const frag = tpl.content.cloneNode( true );
+		// jQuery can't wrap DocumentFragment directly in older jQuery; so find the article inside
+		const $frag = $( frag );
+		const $article = $frag.find( 'article.wps_wpr_general_row' ).first();
+		// make sure no duplicate IDs or other state exist (template already blank)
+		$article.find( 'input, select' ).val( '' ).prop( 'selectedIndex', 0 );
+		return $article;
+	}
+
+	// Add handler
+	$addBtn.on( 'click', function ( e ) {
+		e.preventDefault();
+		wps_hideError();
+
+		const $lastArticle = $section.find( 'article.wps_wpr_general_row' ).last();
+
+		// If there's an existing last article, validate it first
+		if ( $lastArticle.length && ! validateBlock( $lastArticle ) ) {
+			wps_showError( 'Please fill all fields before adding a new campaign.' );
+			// scroll to first error field
+			const $firstErr = $lastArticle.find( '.wps-error-field' ).first();
+			if ( $firstErr.length ) {
+				$firstErr.focus();
+			}
+			return;
+		}
+
+		const $newArticle = createBlockFromTemplate();
+		// Insert the new article before the Add button row
+		$addBtn.closest( 'div' ).before( $newArticle );
+		// focus first input of the new block
+		$newArticle.find( 'input, select' ).first().focus();
+	} );
+
+	// Remove handler (delegated)
+	$section.on( 'click', '.wps_wpr_remove_campaign', function ( e ) {
+		e.preventDefault();
+		const $article = $( this ).closest( 'article.wps_wpr_general_row' );
+		const total = $section.find( 'article.wps_wpr_general_row' ).length;
+
+		if ( total > 1 ) {
+			$article.remove();
+		} else {
+			// If it's the only one, clear fields instead of removing markup (keeps names present)
+			$article.find( 'input' ).val( '' );
+			$article.find( 'select' ).prop( 'selectedIndex', 0 );
+		}
+		wps_hideError();
+	} );
+
+	// Live input: remove error highlight when user types/selects
+	$section.on( 'input change', 'input, select', function () {
+		const $f = $( this );
+		if ( $.trim( String( $f.val() ) ) !== '' ) {
+			$f.removeClass( 'wps-error-field' );
+			// if no more fields with error, remove global message
+			if ( $section.find( '.wps-error-field' ).length === 0 ) {
+				wps_hideError();
+			}
+		}
+	} );
 
 });
