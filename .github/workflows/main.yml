@@ -1,0 +1,98 @@
+name: PHPCS & PHPCBF
+
+on:
+  push:
+    branches: [ v2.9.3 ]
+  pull_request:
+    branches: [ Version-v2.9.3 ]
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install PHP
+        run: sudo apt-get update && sudo apt-get install -y php-cli php-zip unzip curl
+
+      - name: Install Composer
+        run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+      - name: Install PHPCS + Standards
+        run: |
+          composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          composer global require \
+            squizlabs/php_codesniffer \
+            wp-coding-standards/wpcs \
+            woocommerce/woocommerce-sniffs \
+            phpcompatibility/php-compatibility \
+            phpcompatibility/phpcompatibility-wp \
+            phpcompatibility/phpcompatibility-paragonie \
+            phpcsstandards/phpcsutils \
+            phpcsstandards/phpcsextra
+
+      - name: Add Composer global bin to PATH
+        run: echo "$HOME/.composer/vendor/bin" >> $GITHUB_PATH
+
+      - name: Verify PHPCS installation
+        run: phpcs -i
+
+      - name: Run PHPCS
+        run: |
+          phpcs --standard=phpcs.xml \
+                --report=full \
+                --report-file=phpcs-report.txt \
+                --report=checkstyle \
+                --report-file=phpcs-report.xml \
+                --warning-severity=0 \
+                --extensions=php,html .
+        continue-on-error: true
+
+      - name: Run PHPCBF (Auto-fix)
+        run: |
+          phpcbf --standard=phpcs.xml \
+                 --report=full \
+                 --report-file=phpcbf-report.txt \
+                 --warning-severity=0 \
+                 --extensions=php,html .
+        continue-on-error: true
+
+      - name: Install WP-CLI
+        run: |
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          chmod +x wp-cli.phar
+          sudo mv wp-cli.phar /usr/local/bin/wp
+
+      - name: Generate POT file
+        run: |
+          wp i18n make-pot . languages/points-rewards-for-woocommerce.pot \
+            --exclude=node_modules,vendor,tests,public/js,admin/js,packages,build,dist
+
+      - name: Install gettext
+        run: sudo apt-get update && sudo apt-get install -y gettext
+
+      - name: Compile .mo files from .po (if any exist)
+        run: |
+          if ls languages/*.po 1> /dev/null 2>&1; then
+            for file in languages/*.po; do
+              msgfmt "$file" -o "${file%.po}.mo"
+            done
+          fi
+
+      - name: Generate default PO file (en_US)
+        run: |
+          if [ ! -f languages/en_US.po ]; then
+            cp languages/points-rewards-for-woocommerce.pot languages/points-rewards-for-woocommerce-en_US.po
+          fi
+
+      - name: Upload PHPCS Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-and-languages
+          path: |
+            phpcs-report.txt
+            phpcs-report.xml
+            phpcbf-report.txt
+            languages/*.pot
+            languages/*.mo

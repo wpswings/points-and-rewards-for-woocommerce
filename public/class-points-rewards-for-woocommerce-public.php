@@ -1189,6 +1189,28 @@ class Points_Rewards_For_WooCommerce_Public {
 				return;
 			}
 			$user_email = $user->user_email;
+
+			// check for referral purchase points.
+			if ( 'completed' == $new_status || 'processing' == $new_status ) {
+
+				if ( isset( $user_id ) && ! empty( $user_id ) ) {
+					$wps_wpr_ref_noof_order = (int) get_user_meta( $user_id, 'wps_wpr_no_of_orders', true );
+					if ( isset( $wps_wpr_ref_noof_order ) && ! empty( $wps_wpr_ref_noof_order ) ) {
+						// hpos.
+						$order_limit = wps_wpr_hpos_get_meta_data( $order_id, "$order_id#$wps_wpr_ref_noof_order", true );
+						if ( isset( $order_limit ) && 'set' == $order_limit ) {
+							return;
+						} else {
+							$wps_wpr_ref_noof_order++;
+							update_user_meta( $user_id, 'wps_wpr_no_of_orders', $wps_wpr_ref_noof_order );
+						}
+					} else {
+						update_user_meta( $user_id, 'wps_wpr_no_of_orders', 1 );
+					}
+				}
+			}
+
+			// per currency points assigned here.
 			if ( 'completed' == $new_status ) {
 
 				if ( isset( $user_id ) && ! empty( $user_id ) ) {
