@@ -79,7 +79,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
+<<<<<<< HEAD
 			$this->version = '2.9.3';
+=======
+			$this->version = '2.9.2';
+>>>>>>> cc92133aa304faefda7171f01d34e744c11b1164
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
