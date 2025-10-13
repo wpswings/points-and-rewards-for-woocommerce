@@ -53,7 +53,7 @@ $wps_wpr_setting_tab = array(
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-assign-pro-points.php',
 	),
 	'other-setting'         => array(
-		'title'     => __( 'Other Settings', 'points-and-rewards-for-woocommerce' ),
+		'title'     => __( 'Advance Settings', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-other-setting.php',
 	),
 	'order-total-points'    => array(
