@@ -98,7 +98,7 @@ if ( ! empty( $wps_wpr_social_share_campaign_label ) && is_array( $wps_wpr_socia
  * @param  string $url url.
  * @return bool
  */
-function extract_youtube_video_id( $url ) {
+function wps_wpr_extract_youtube_video_id( $url ) {
 	$parsed_url = parse_url( $url );
 
 	if ( ! isset( $parsed_url['host'] ) ) {
@@ -270,11 +270,11 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 
 						<!-- Earn and Referral buttons -->
 							<div class="wps-wpr_earn-ref-btn">
-							<button id="wps_wpr_campaign_earn_btn" class="wps_wpr_campaign_earn_btn wps_wpr_campaign_btn"><?php esc_html_e( 'Earn', 'points-and-rewards-for-woocommerce' ); ?></button>
-							<button id="wps_wpr_campaign_referral_btn" class="wps_wpr_campaign_referral_btn wps_wpr_campaign_btn wps_wpr_campaign_btn--active"><?php esc_html_e( 'Referral', 'points-and-rewards-for-woocommerce' ); ?></button>
+							<button id="wps_wpr_campaign_earn_btn" class="wps_wpr_campaign_earn_btn wps_wpr_campaign_btn wps_wpr_campaign_btn--active"><?php esc_html_e( 'Earn', 'points-and-rewards-for-woocommerce' ); ?></button>
+							<button id="wps_wpr_campaign_referral_btn" class="wps_wpr_campaign_referral_btn wps_wpr_campaign_btn"><?php esc_html_e( 'Referral', 'points-and-rewards-for-woocommerce' ); ?></button>
 						</div>
 						<!-- Referral settings -->
-						<div id="wps_wpr_campaign_referral_wrap" class="wps_wpr_campaign_promo">
+						<div id="wps_wpr_campaign_referral_wrap" class="wps_wpr_campaign_promo" style="display: none;">
 							<div class="wps-wpr_campaign-h1"><?php esc_html_e( 'Refer friends. Earn rewards!', 'points-and-rewards-for-woocommerce' ); ?></div>
 							<?php
 							if ( is_user_logged_in() ) {
@@ -315,7 +315,7 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 					</div>
 
 						<!-- // Earn settings  -->
-					<div class="wps-wpr-hlw_co-buttons" style="display: none;">
+					<div class="wps-wpr-hlw_co-buttons">
 						<div id="wps_wpr_campaign_earn_wrap" class="wps_wpr_campaign_promo">
 							<?php
 							if ( ! is_user_logged_in() ) {
@@ -526,7 +526,7 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 											case 'iframe':
 												if ( ! empty( $data['link'] ) ) {
 
-													$video_id = extract_youtube_video_id( $data['link'] );
+													$video_id = wps_wpr_extract_youtube_video_id( $data['link'] );
 													// add enablejsapi=1 so the YouTube API can control the player.
 													$embed_src = add_query_arg(
 														array(
@@ -544,7 +544,7 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 											case 'iframe_link_with_button':
 												if ( ! empty( $data['link'] ) ) {
 
-													$video_id  = extract_youtube_video_id( $data['link'] );
+													$video_id  = wps_wpr_extract_youtube_video_id( $data['link'] );
 													$embed_src = add_query_arg(
 														array(
 															'enablejsapi' => 1,

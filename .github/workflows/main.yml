@@ -4,7 +4,7 @@ on:
   push:
     branches: [ v2.9.3 ]
   pull_request:
-    branches: [ Version-v2.9.3 ]
+    branches: [ v2.9.3 ]
 
 jobs:
   phpcs:
@@ -66,7 +66,7 @@ jobs:
 
       - name: Generate POT file
         run: |
-          wp i18n make-pot . languages/points-rewards-for-woocommerce.pot \
+          wp i18n make-pot . languages/points-and-rewards-for-woocommerce.pot \
             --exclude=node_modules,vendor,tests,public/js,admin/js,packages,build,dist
 
       - name: Install gettext
@@ -83,7 +83,7 @@ jobs:
       - name: Generate default PO file (en_US)
         run: |
           if [ ! -f languages/en_US.po ]; then
-            cp languages/points-rewards-for-woocommerce.pot languages/points-rewards-for-woocommerce-en_US.po
+            cp languages/points-and-rewards-for-woocommerce.pot languages/points-and-rewards-for-woocommerce-en_US.po
           fi
 
       - name: Upload PHPCS Reports
