@@ -163,6 +163,9 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 						if ( 'checkbox' == $value['type'] ) {
 							$settings_obj->wps_rwpr_generate_checkbox_html( $value, $membership_settings_array );
 						}
+						if ( 'text' == $value['type'] ) {
+							$settings_obj->wps_rwpr_generate_text_html( $value, $membership_settings_array );
+						}
 						if ( array_key_exists( 'memebrship_log', $value ) ) {
 							$wps_wpr_nonce = wp_create_nonce( 'par_main_setting' );
 							?>
