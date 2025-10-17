@@ -156,7 +156,7 @@ if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
 						$settings_obj->wps_rwpr_generate_label( $value );
 						?>
 					</th>
-					<td class="forminp forminp-text">
+					<td class="forminp forminp-text wps_wpr_general_row wps_wpr_general_content">
 						<?php
 						$allowed_tags = wps_wpr_allowed_html();
 						echo array_key_exists( 'desc_tip', $value ) ? wp_kses( wc_help_tip( $value['desc_tip'] ), $allowed_tags ) : '';//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

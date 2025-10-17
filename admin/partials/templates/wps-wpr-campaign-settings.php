@@ -206,12 +206,12 @@ function wps_wpr_render_campaign_block( $url = '', $points = '', $selected_label
 
 			<label class="wps_wpr_general_label">
 				<?php esc_html_e( 'Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>
-				<input type="text" name="wps_wpr_social_share_url[]" class="wps_wpr_social_share_url" value="<?php echo esc_attr( $url ); ?>" required>
+				<input type="text" name="wps_wpr_social_share_url[]" class="wps_wpr_social_share_url" value="<?php echo esc_attr( $url ); ?>">
 			</label>
 
 			<label class="wps_wpr_general_label">
 				<?php esc_html_e( 'Reward Points', 'points-and-rewards-for-woocommerce' ); ?>
-				<input type="number" min="0" name="wps_wpr_social_share_points[]" class="wps_wpr_social_share_points" value="<?php echo esc_attr( $points ); ?>" required>
+				<input type="number" min="0" name="wps_wpr_social_share_points[]" class="wps_wpr_social_share_points" value="<?php echo esc_attr( $points ); ?>">
 			</label>
 
 			<?php do_action( 'wps_wpr_after_campaign_fields', $url, $points, $selected_label, $types ); ?>
