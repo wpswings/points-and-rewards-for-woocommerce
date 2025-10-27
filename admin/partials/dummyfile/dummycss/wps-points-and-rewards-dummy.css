@@ -76,11 +76,12 @@
     transform: translateY(-50%);
 }
 
-.wps_wpr_general_content.wps_wpr_pro_plugin_settings:after {
+.wps_wpr_membership_setting.wps_wpr_general_content.wps_wpr_pro_plugin_settings:after {
     content: "\f160";
     right: -10px;
     top: calc(50% + 2px);
     transform: translateY(-50%);
+    margin-right: 5px;
 }
 
 .wps_rwpr_tabs.wps_wpr_pro_plugin_settings .wps_gw_nav_tab {

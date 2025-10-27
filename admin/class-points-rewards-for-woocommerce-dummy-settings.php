@@ -2674,21 +2674,21 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 
 		$add_arr = array(
 			array(
-				'title'    => __( 'Enable to automate memberbship', 'ultimate-woocommerce-points-and-rewards' ),
+				'title'    => __( 'Enable to automate memberbship', 'points-and-rewards-for-woocommerce' ),
 				'id'       => 'wps_wpr_enable_dummy_automate_membership',
 				'type'     => 'checkbox',
 				'class'    => 'input-text wps_wpr_pro_plugin_settings',
-				'desc'     => __( 'Enable this setting to automatically assign membership based on the users points', 'ultimate-woocommerce-points-and-rewards' ),
-				'desc_tip' => __( 'After enabling this setting, membership will be automatically assigned based on the users points', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc'     => __( 'Enable this setting to automatically assign membership based on the users points', 'points-and-rewards-for-woocommerce' ),
+				'desc_tip' => __( 'After enabling this setting, membership will be automatically assigned based on the users points', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
-				'title'    => __( 'Toggle to show the next membership level on Single Product page', 'ultimate-woocommerce-points-and-rewards' ),
+				'title'    => __( 'Toggle to show the next membership level on Single Product page', 'points-and-rewards-for-woocommerce' ),
 				'type'     => 'checkbox',
 				'id'       => 'wps_wpr_show_next_dummy_membership_level',
 				'class'    => 'input-text wps_wpr_pro_plugin_settings',
-				'desc_tip' => __( 'Inform the user about the next membership level they can achieve.', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip' => __( 'Inform the user about the next membership level they can achieve.', 'points-and-rewards-for-woocommerce' ),
 				'default'  => 0,
-				'desc'     => __( 'Toggle this setting if you want to display the next membership level on Single Product page', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc'     => __( 'Toggle this setting if you want to display the next membership level on Single Product page', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
 				'id'       => 'wps_wpr_mem_dummy_level_notice',
