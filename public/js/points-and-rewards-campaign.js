@@ -79,14 +79,13 @@
 
     // accodian and earn points.
     jQuery('.wps-wpr_camp-birth').parent().slideDown();
-    jQuery(document).on(
-      "click",
-      ".wps-wpr_campaign-h2",
-      function () {
-        jQuery(this).children('.wps-wpr-hlw_co-icon').toggleClass('active');
-        jQuery(this)
-          .next(".wps-wpr_camp-acc-wrap")
-          .slideToggle();
+    jQuery(document).on("click", ".wps-wpr_campaign-h2", function () {
+        // Check if the next sibling element has the class ".wps-wpr_camp-acc-wrap".
+        if (jQuery(this).next().hasClass("wps-wpr_camp-acc-wrap")) {
+
+          jQuery(this).children(".wps-wpr-hlw_co-icon").toggleClass("active");
+          jQuery(this).next(".wps-wpr_camp-acc-wrap").slideToggle();
+        }
       }
     );
 

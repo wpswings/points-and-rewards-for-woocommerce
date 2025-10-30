@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points and rewards, loyalty, referral points, reward points, gamification
 Requires at least: 6.7.0
-Tested up to: 6.8.2
+Tested up to: 6.8.3
 WC requires at least: 6.5.0
-WC tested up to: 10.2.1
-Stable tag: 2.9.2
+WC tested up to: 10.3.3
+Stable tag: 2.9.3
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -336,6 +336,10 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 2.9.3 - Released on 29 October 2025 =
+* New : Compatibility with latest WP(6.8.3) & WC(10.3.3)
+* Fix : Minor Validation Issues
 
 = 2.9.2 - Released on 26 September 2025 =
 * New: Added campaign templates for Christmas, Mother's Day, and Thanksgiving
@@ -678,10 +682,6 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.9.2 - Released on 26 September 2025 =
-* New: Added campaign templates for Christmas, Mother's Day, and Thanksgiving
-* New: Added new segments for gamification such as wallet credit
-* New: Introduced Social Share Campaign action
-* New: Added Email Template support for campaigns
-* Update: Compatibility with the latest WordPress (6.8.2) and WooCommerce (10.2.1)
-
+= 2.9.3 - Released on 29 October 2025 =
+* New : Compatibility with latest WP(6.8.3) & WC(10.3.3)
+* Fix : Minor Validation Issues

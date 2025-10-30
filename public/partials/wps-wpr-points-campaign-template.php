@@ -98,7 +98,7 @@ if ( ! empty( $wps_wpr_social_share_campaign_label ) && is_array( $wps_wpr_socia
  * @param  string $url url.
  * @return bool
  */
-function extract_youtube_video_id( $url ) {
+function wps_wpr_extract_youtube_video_id( $url ) {
 	$parsed_url = parse_url( $url );
 
 	if ( ! isset( $parsed_url['host'] ) ) {
@@ -270,11 +270,11 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 
 						<!-- Earn and Referral buttons -->
 							<div class="wps-wpr_earn-ref-btn">
-							<button id="wps_wpr_campaign_earn_btn" class="wps_wpr_campaign_earn_btn wps_wpr_campaign_btn"><?php esc_html_e( 'Earn', 'points-and-rewards-for-woocommerce' ); ?></button>
-							<button id="wps_wpr_campaign_referral_btn" class="wps_wpr_campaign_referral_btn wps_wpr_campaign_btn wps_wpr_campaign_btn--active"><?php esc_html_e( 'Referral', 'points-and-rewards-for-woocommerce' ); ?></button>
+							<button id="wps_wpr_campaign_earn_btn" class="wps_wpr_campaign_earn_btn wps_wpr_campaign_btn wps_wpr_campaign_btn--active"><?php esc_html_e( 'Earn', 'points-and-rewards-for-woocommerce' ); ?></button>
+							<button id="wps_wpr_campaign_referral_btn" class="wps_wpr_campaign_referral_btn wps_wpr_campaign_btn"><?php esc_html_e( 'Referral', 'points-and-rewards-for-woocommerce' ); ?></button>
 						</div>
 						<!-- Referral settings -->
-						<div id="wps_wpr_campaign_referral_wrap" class="wps_wpr_campaign_promo">
+						<div id="wps_wpr_campaign_referral_wrap" class="wps_wpr_campaign_promo" style="display: none;">
 							<div class="wps-wpr_campaign-h1"><?php esc_html_e( 'Refer friends. Earn rewards!', 'points-and-rewards-for-woocommerce' ); ?></div>
 							<?php
 							if ( is_user_logged_in() ) {
@@ -315,7 +315,7 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 					</div>
 
 						<!-- // Earn settings  -->
-					<div class="wps-wpr-hlw_co-buttons" style="display: none;">
+					<div class="wps-wpr-hlw_co-buttons">
 						<div id="wps_wpr_campaign_earn_wrap" class="wps_wpr_campaign_promo">
 							<?php
 							if ( ! is_user_logged_in() ) {
@@ -333,21 +333,25 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 								<?php
 							}
 							?>
-							<?php if ( 'yes' === $wps_wpr_enable_birthday_campaign && empty( $_my_bday ) ) { ?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon active" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $birthday_points ); ?>+</span></div>
-								<div class="wps-wpr_camp-acc-wrap wps_wpr_guest_user_disable">
-									<div class="wps-wpr_camp-birth wps-wpr_camp-acc-wrap-in">
-										<input type="date" data-date-format="DD/MM/YYYY" class="" name="account_bday" id="account_bday" value="<?php echo esc_html( ! empty( $_my_bday ) ? $_my_bday : '' ); ?>" <?php echo esc_html( ! empty( $_my_bday ) ? 'disabled' : '' ); ?> placeholder="DD/MM/YYYY" />
-										<input type="button" name="wps_wpr_campaign_save_birthday" id="wps_wpr_campaign_save_birthday" value="<?php esc_html_e( 'Update', 'points-and-rewards-for-woocommerce' ); ?>" <?php echo esc_html( ! empty( $_my_bday ) ? 'disabled' : '' ); ?>>
-										<img class="wps_wpr_birthday_loader wps_wpr_img_loader" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/loading.gif' ); ?>">
-									</div>
-									<p class="wps_wpr_birthday_success_notice"></p>
-								</div>
-								<?php
-							} else {
-								?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon-done"><?php echo esc_html( $birthday_points ); ?><img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>"></span></div>
-								<?php
+							<?php
+							if ( 'yes' === $wps_wpr_enable_birthday_campaign ) {
+								if ( empty( $_my_bday ) ) {
+									?>
+										<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon active" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $birthday_points ); ?>+</span></div>
+										<div class="wps-wpr_camp-acc-wrap wps_wpr_guest_user_disable">
+											<div class="wps-wpr_camp-birth wps-wpr_camp-acc-wrap-in">
+												<input type="date" data-date-format="DD/MM/YYYY" class="" name="account_bday" id="account_bday" value="<?php echo esc_html( ! empty( $_my_bday ) ? $_my_bday : '' ); ?>" <?php echo esc_html( ! empty( $_my_bday ) ? 'disabled' : '' ); ?> placeholder="DD/MM/YYYY" />
+												<input type="button" name="wps_wpr_campaign_save_birthday" id="wps_wpr_campaign_save_birthday" value="<?php esc_html_e( 'Update', 'points-and-rewards-for-woocommerce' ); ?>" <?php echo esc_html( ! empty( $_my_bday ) ? 'disabled' : '' ); ?>>
+												<img class="wps_wpr_birthday_loader wps_wpr_img_loader" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/loading.gif' ); ?>">
+											</div>
+											<p class="wps_wpr_birthday_success_notice"></p>
+										</div>
+										<?php
+								} else {
+									?>
+										<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Enter your birthday', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon-done"><?php echo esc_html( $birthday_points ); ?><img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>"></span></div>
+										<?php
+								}
 							}
 							?>
 							<?php if ( 'yes' === $wps_wpr_enable_comments_campaign ) : ?>
@@ -442,10 +446,6 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 									?>
 								</div>
 								<?php
-							} else {
-								?>
-								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Play a Quiz', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon-done"><?php echo esc_html( $wps_wpr_quiz_rewards_points ); ?><img class="wps-wpr-hlw_co-icon" src="<?php echo esc_html( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>"></span></div>
-								<?php
 							}
 							?>
 
@@ -526,7 +526,7 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 											case 'iframe':
 												if ( ! empty( $data['link'] ) ) {
 
-													$video_id = extract_youtube_video_id( $data['link'] );
+													$video_id = wps_wpr_extract_youtube_video_id( $data['link'] );
 													// add enablejsapi=1 so the YouTube API can control the player.
 													$embed_src = add_query_arg(
 														array(
@@ -544,7 +544,7 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 											case 'iframe_link_with_button':
 												if ( ! empty( $data['link'] ) ) {
 
-													$video_id  = extract_youtube_video_id( $data['link'] );
+													$video_id  = wps_wpr_extract_youtube_video_id( $data['link'] );
 													$embed_src = add_query_arg(
 														array(
 															'enablejsapi' => 1,

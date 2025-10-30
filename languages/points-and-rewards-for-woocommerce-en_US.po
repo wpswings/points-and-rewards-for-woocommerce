@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2025-09-26 16:41+0530\n"
-"PO-Revision-Date: 2025-09-26 16:42+0530\n"
+"POT-Creation-Date: 2025-10-27 17:28+0530\n"
+"PO-Revision-Date: 2025-10-27 17:28+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -64,7 +64,7 @@ msgstr ""
 #: admin/class-points-rewards-for-woocommerce-admin.php:662
 #: admin/class-points-rewards-for-woocommerce-admin.php:832
 #: admin/class-points-rewards-for-woocommerce-admin.php:1534
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1948
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1949
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:191
 #: admin/partials/templates/class-points-log-list-table.php:60
 #: admin/partials/templates/wps-other-setting.php:187
@@ -82,6 +82,10 @@ msgstr ""
 #: admin/class-points-rewards-for-woocommerce-admin.php:151
 #: admin/class-points-rewards-for-woocommerce-admin.php:656
 #: admin/class-points-rewards-for-woocommerce-admin.php:976
+#: admin/partials/templates/wps-wpr-campaign-settings.php:220
+#: admin/partials/templates/wps-wpr-campaign-settings.php:221
+#: admin/partials/templates/wps-wpr-campaign-settings.php:383
+#: admin/partials/templates/wps-wpr-campaign-settings.php:423
 msgid "Remove"
 msgstr ""
 
@@ -132,26 +136,26 @@ msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:164
 #: admin/class-points-rewards-for-woocommerce-admin.php:689
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:230
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2253
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:231
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2254
 msgid "Days"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:165
 #: admin/class-points-rewards-for-woocommerce-admin.php:690
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2254
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2255
 msgid "Weeks"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:166
 #: admin/class-points-rewards-for-woocommerce-admin.php:691
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2255
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2256
 msgid "Months"
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:167
 #: admin/class-points-rewards-for-woocommerce-admin.php:692
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2256
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2257
 msgid "Years"
 msgstr ""
 
@@ -229,7 +233,7 @@ msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:189
 #: admin/class-points-rewards-for-woocommerce-admin.php:847
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:977
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:978
 msgid "Free Shipping"
 msgstr ""
 
@@ -329,10 +333,10 @@ msgid ""
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:824
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:140
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:260
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:349
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:592
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:141
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:261
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:350
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:593
 #: admin/partials/templates/wps-generral-settings2.php:300
 msgid "Fixed"
 msgstr ""
@@ -366,7 +370,7 @@ msgstr ""
 #: admin/class-points-rewards-for-woocommerce-admin.php:908
 #: admin/class-points-rewards-for-woocommerce-admin.php:931
 #: admin/class-points-rewards-for-woocommerce-admin.php:1802
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:947
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:948
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:90
 #: admin/partials/templates/class-points-log-list-table.php:57
 #: admin/partials/templates/class-points-log-list-table.php:503
@@ -375,18 +379,18 @@ msgstr ""
 #: admin/partials/templates/wps-wpr-gamifications-settings.php:231
 #: public/class-points-rewards-for-woocommerce-public.php:142
 #: public/class-points-rewards-for-woocommerce-public.php:373
-#: public/class-points-rewards-for-woocommerce-public.php:1904
-#: public/class-points-rewards-for-woocommerce-public.php:1915
-#: public/class-points-rewards-for-woocommerce-public.php:2663
-#: public/class-points-rewards-for-woocommerce-public.php:2709
-#: public/class-points-rewards-for-woocommerce-public.php:2750
-#: public/class-points-rewards-for-woocommerce-public.php:3166
-#: public/class-points-rewards-for-woocommerce-public.php:3176
-#: public/class-points-rewards-for-woocommerce-public.php:3555
-#: public/class-points-rewards-for-woocommerce-public.php:3566
-#: public/class-points-rewards-for-woocommerce-public.php:3636
-#: public/class-points-rewards-for-woocommerce-public.php:3645
-#: public/class-points-rewards-for-woocommerce-public.php:4741
+#: public/class-points-rewards-for-woocommerce-public.php:1926
+#: public/class-points-rewards-for-woocommerce-public.php:1937
+#: public/class-points-rewards-for-woocommerce-public.php:2685
+#: public/class-points-rewards-for-woocommerce-public.php:2731
+#: public/class-points-rewards-for-woocommerce-public.php:2772
+#: public/class-points-rewards-for-woocommerce-public.php:3188
+#: public/class-points-rewards-for-woocommerce-public.php:3198
+#: public/class-points-rewards-for-woocommerce-public.php:3577
+#: public/class-points-rewards-for-woocommerce-public.php:3588
+#: public/class-points-rewards-for-woocommerce-public.php:3658
+#: public/class-points-rewards-for-woocommerce-public.php:3667
+#: public/class-points-rewards-for-woocommerce-public.php:4763
 msgid "Points"
 msgstr ""
 
@@ -722,15 +726,15 @@ msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:2627
 #: public/class-points-rewards-for-woocommerce-public.php:141
-#: public/class-points-rewards-for-woocommerce-public.php:2103
-#: public/class-points-rewards-for-woocommerce-public.php:2167
-#: public/class-points-rewards-for-woocommerce-public.php:2408
-#: public/class-points-rewards-for-woocommerce-public.php:2428
-#: public/class-points-rewards-for-woocommerce-public.php:2502
-#: public/class-points-rewards-for-woocommerce-public.php:3058
-#: public/class-points-rewards-for-woocommerce-public.php:3435
-#: public/class-points-rewards-for-woocommerce-public.php:3454
-#: public/class-points-rewards-for-woocommerce-public.php:3956
+#: public/class-points-rewards-for-woocommerce-public.php:2125
+#: public/class-points-rewards-for-woocommerce-public.php:2189
+#: public/class-points-rewards-for-woocommerce-public.php:2430
+#: public/class-points-rewards-for-woocommerce-public.php:2450
+#: public/class-points-rewards-for-woocommerce-public.php:2524
+#: public/class-points-rewards-for-woocommerce-public.php:3080
+#: public/class-points-rewards-for-woocommerce-public.php:3457
+#: public/class-points-rewards-for-woocommerce-public.php:3476
+#: public/class-points-rewards-for-woocommerce-public.php:3978
 msgid "Cart Discount"
 msgstr ""
 
@@ -740,678 +744,678 @@ msgid ""
 "Your points have been successfully synced to Klaviyo under your user profile."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:105
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:106
 msgid "Minimum Referrals Required"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:110
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:111
 msgid ""
 "Minimum number of referrals required to get referral points when the new "
 "customer sign-ups."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:113
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:114
 msgid "Select page where you want to Redirect"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:117
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:118
 msgid "Choose page where you want to redirect user through referral link"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:121
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:122
 msgid "Referral Purchase Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:127
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:128
 msgid "Check this box to enable the referral purchase points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:130
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:131
 msgid "Enable Referral Purchase Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:133
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:134
 msgid "Referral Purchase Points Type"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:144
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:264
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:353
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:596
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:145
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:265
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:354
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:597
 #: admin/partials/templates/wps-generral-settings2.php:304
 msgid "Percentage"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:148
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:149
 msgid ""
 "Select the points type on referral purchase depending upon the order total."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:153
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:154
 msgid "Enter Referral Purchase Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:160
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:161
 msgid ""
 "Entered Points Will be Assigned to That User by Which Another User Referred "
 "From."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:165
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:166
 msgid "Minimum order total for referral purchase reward"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:171
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:172
 msgid ""
 "Referral purchase points will be rewarded when the order total exceeds the "
 "minimum required amount."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:174
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:175
 msgid "Reward referral purchase points based on product categories."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:179
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:180
 msgid ""
 "Referral rewards are calculated based on the category of the purchased "
 "product."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:183
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:184
 msgid "Assign Only Referral Purchase Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:188
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:189
 msgid ""
 "Check this if you want to assign only purchase points to referred user not "
 "referral points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:191
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:192
 msgid "Make sure Referral Points & Referral Purchase Points should be enabled."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:194
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:195
 msgid "Referral Purchase Limit"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:198
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:199
 msgid "Toggle This To Enable The Referral Purchase Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:200
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:201
 msgid "Toggle this to Set the Limit on the Orders for the Referee"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:205
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:206
 msgid "Number of Orders for the Referral Purchase Limit"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:211
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:212
 msgid ""
 "The Number of orders, the Referee would get assigned only until the limit of "
 "orders is reached"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:216
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:217
 msgid "Static Referral Link"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:220
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:221
 msgid "Check this box to make the referral key permanent."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:221
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:222
 msgid "Make Referral Link Permanent"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:224
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:225
 msgid "Referral Link Expiry"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:229
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:230
 msgid "Number of Days After the Referral Link Will be Expired"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:233
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:234
 msgid "Refer Via Referral Coupon Code"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:237
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:238
 msgid "Enable to Refer via referral Coupon code"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:238
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:239
 msgid "Toggle This to Assign Only Purchase Points to Referred User."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:242
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:243
 msgid "Amount for the Referral Coupon Discount"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:248
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:249
 msgid "Enter the amount for the referral coupon discount"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:253
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:254
 msgid "Referral Purchase Coupon Type"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:268
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:269
 msgid "Select Coupon type on referral purchase depending upon the order total."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:276
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:280
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2625
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:277
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:281
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2626
 msgid "Comments Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:284
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:285
 msgid "Enable Comments Points for Rewards"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:285
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:286
 msgid "Check this box to enable the Comment Points when a comment is approved."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:289
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:290
 msgid "Enter Comments Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:294
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:295
 msgid ""
 "The points which new customers will get after their comments are approved."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:297
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:298
 msgid "User per post comment"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:302
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:303
 msgid "Number of Comments a User Can Have Per Post."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:333
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:334
 msgid "Point Usage Limitation"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:337
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:338
 msgid "Allow customers to pay a particular part of the order using points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:338
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:339
 msgid "Check this box to enable the Maximum Points to apply to the cart"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:341
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:342
 msgid "Select Points Limitation Type"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:345
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:588
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:626
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:346
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:589
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:627
 msgid "Select the discount Type to apply points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:358
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:359
 msgid "Enter Amount"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:363
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:364
 msgid "Enter the amount that customers can pay using their points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:364
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:365
 msgid " Enter the amount that customer can pay using their points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:368
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:369
 msgid "Point Restriction on sale Product"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:372
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:373
 msgid "Toggle This To Restrict The Points Discount on Sale Items."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:373
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:374
 msgid "Check this box to restrict the points discount on sales item"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:376
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:377
 msgid "Minimum points you want to start the redemption"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:381
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:382
 msgid "Enter the min points you want the user to redeem points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:382
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:383
 msgid "Enter the minimum points you want the user to redeem."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:385
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:386
 msgid "Restrict points redemption by category"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:390
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:414
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:391
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:415
 msgid ""
 "Select the categories in which you want to allow customers to redeem points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:394
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:395
 msgid "Enable this setting to apply coupons or points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:397
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:398
 msgid ""
 "Enable this setting to restrict users from applying both a coupon and points "
 "simultaneously; they can use only one at a time."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:399
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:400
 msgid ""
 "Toggle this setting to restrict users from applying either a coupon or "
 "points, but not both at the same time."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:402
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:403
 msgid "Enable redemption based on the users membership level."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:405
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:406
 msgid ""
 "After enabling this setting, only members will be able to redeem points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:407
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:408
 msgid ""
 "Enable this setting to allow users to redeem points based on their "
 "membership level."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:410
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:411
 msgid "Choose a membership level to allow redemption."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:485
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:486
 msgid "Enable Customer Rank Settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:489
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:528
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:566
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:660
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1055
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1100
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1145
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1188
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1235
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1267
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1300
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1332
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1364
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1396
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1435
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1478
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1521
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1568
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1615
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1657
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1705
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1747
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1790
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1834
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1878
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:490
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:529
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:567
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:661
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1056
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1101
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1146
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1189
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1236
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1268
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1301
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1333
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1365
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1397
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1436
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1479
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1522
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1569
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1616
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1658
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1706
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1748
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1791
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1835
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1879
 #: admin/partials/templates/wps-generral-settings2.php:22
 #: admin/partials/templates/wps-generral-settings2.php:26
 #: admin/partials/templates/wps-points-notification-settings.php:27
 msgid "Enable"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:491
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:492
 msgid "Enable To Rank the Customer on Basis of Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:494
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:495
 msgid "Check this box to enable customer rank points setting."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:498
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:499
 msgid "Number of Customers to be Listed With ShortCode [CUSTOMERRANK]"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:504
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:505
 msgid "The Number of Customers To Be Listed During Ranking"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:524
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:525
 msgid "Enable First Daily login Points settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:530
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:531
 msgid "Enable to give points on first daily login"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:533
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:534
 msgid "Check this box to enable the setting of the daily points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:537
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:538
 msgid "Enter First Daily login Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:543
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:544
 msgid "The Points New Customers Will Get When They Login Daily"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:562
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:563
 msgid "Enable First order Points settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:568
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:569
 msgid "Enable to give points on first order purchase"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:571
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:572
 msgid "Check this box to enable the first order points setting."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:575
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:576
 msgid "Enter First order purchase Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:581
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:582
 msgid "The Points New Customers Will Get After Their First Order"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:584
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:585
 #: admin/partials/templates/wps-generral-settings2.php:292
 msgid "Select Points Type"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:618
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:619
 msgid "Points Round Off"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:622
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:623
 msgid "Select Points Roundoff"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:656
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:657
 msgid "Enable Birthday Points settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:662
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:663
 msgid "Enable to give points on birthday"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:665
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:666
 msgid "Check this box to enable points on the birthday setting."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:669
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:670
 msgid "Enter Birthday Points to give on bday"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:675
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:676
 msgid "The Points That The Customers Will Get, Only on Their Birthday"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:698
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:699
 msgid "Allow selected user role to use points feature"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:702
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:703
 msgid "Allow user roles"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:707
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:708
 msgid ""
 "Allow Selected User Roles to Use Points Features. Leave Empty for All Users"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:838
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:839
 msgid "Per currency points in subtotal"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:842
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:843
 msgid "Allow per currency points conversion on subtotal."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:843
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:844
 msgid ""
 "Check this box if you want to enable per currency points conversion on "
 "subtotal."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:846
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:847
 msgid "Limit point earning per currency to specific product categories wise"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:851
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:852
 msgid ""
 "Restrict customers from earning points per currency unless they purchase "
 "from the selected categories. If no categories are selected, points will be "
 "rewards to all categories by default."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:855
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:856
 msgid "Rewards are calculated based on your order total"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:860
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:861
 msgid ""
 "To begin earning points, your order total must exceed a certain amount; "
 "after that, you will receive points for every currency unit spent."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:861
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:862
 msgid ""
 "You will earn points per currency spent when your order total exceeds this "
 "amount."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:916
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:917
 msgid "Coupon Settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:920
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:921
 #: admin/partials/templates/wps-coupon-settings.php:33
 msgid "Points Conversion"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:924
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:925
 msgid "Enable Points Conversion Fields"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:925
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:926
 msgid ""
 "Toggle This to Enable The Coupon Generation Functionality for Customers."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:929
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:930
 msgid "Redeem Points Conversion"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:930
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:931
 msgid ""
 "Enter the redeem points for the coupon. (i.e. how many points will be "
 "equivalent to the amount)"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:939
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:940
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:77
 msgid "="
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:952
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:953
 msgid "Enter Minimum Points Required For Generating Coupon"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:957
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:958
 msgid ""
 "The minimum points customer requires for converting their points to coupon"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:961
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:962
 msgid "Custom Convert Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:965
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:966
 msgid ""
 "Enable to allow customers to convert some of the points to coupon out of "
 "their given total points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:966
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:967
 msgid ""
 "Toggle This to Allow Customers to Convert Their Custom Points to Coupons Out "
 "of Their Total Points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:969
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:970
 msgid "Individual Use"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:973
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:974
 msgid "Allow Coupons to use Individually."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:974
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:975
 msgid ""
 "Toggle This if the Coupon Can Not Be Used in Conjunction WIth Another coupon."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:981
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:982
 msgid "Allow Coupons on Free Shipping."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:982
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:983
 msgid ""
 "Check this box if the coupon grants free shipping. A free shipping method "
 "must be enabled in your shipping zone and be set to require \" a valid free "
 "shipping coupon\" (see the \"Free Shipping Requires\" setting)."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:985
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:986
 msgid "Coupon Length"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:990
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:991
 msgid "Enter Coupon length excluding the prefix.(Minimum length is set to 5"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:994
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:995
 msgid "Coupon Expiry After Days"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:999
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1000
 msgid ""
 "Enter The Number of Days After the Coupon Will Expire When the Order is "
 "Completed. Keep Value Zero for No Expiration."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1003
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1004
 msgid "Minimum Spend"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1008
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1009
 msgid ""
 "This field allows you to set the minimum spend (subtotal, including taxes) "
 "allowed to use the coupon. Keep value \"0\" for no limit."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1012
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1013
 msgid "Maximum Spend"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1017
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1018
 msgid ""
 "This field allows you to set the maximum spend (subtotal, including taxes) "
 "allowed when using the Coupon. Keep value \"0\" for no limit."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1021
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1022
 msgid "Coupon No of time uses"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1026
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1027
 msgid ""
 "How many times this coupon can be used before the Coupon is void. Keep value "
 "\"0\" for no limit."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1030
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1031
 msgid "Enable to let users share coupons with friends."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1034
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1035
 msgid "Activate this option to let users distribute their coupons to friends."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1035
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1036
 msgid "Enable coupon sharing functionality for user accounts."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1059
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1060
 msgid "Check this box to enable the custom points notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1060
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1061
 #: admin/partials/templates/wps-points-notification-settings.php:47
 msgid "Custom Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1104
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1105
 msgid "Check this box to enable the signup points notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1105
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1106
 #: admin/partials/templates/wps-points-notification-settings.php:71
 msgid "Signup Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1149
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1150
 msgid "Check this box to enable the product purchase points notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1150
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1151
 #: admin/partials/templates/wps-points-notification-settings.php:96
 msgid "Product Purchase Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1192
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1193
 msgid "Check this box to enable the order amount points notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1193
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1194
 #: admin/partials/templates/wps-points-notification-settings.php:121
 msgid "Order Amount Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1231
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1232
 msgid "Comment Points Notification Settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1239
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1240
 msgid "Check this box to enable the comment points notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1240
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1241
 msgid "Enable Comment Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1243
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1275
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1308
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1340
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1372
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1404
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1576
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1623
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1713
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1244
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1276
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1309
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1341
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1373
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1405
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1577
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1624
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1714
 #: admin/partials/templates/wps-points-notification-settings.php:42
 #: admin/partials/templates/wps-points-notification-settings.php:66
 #: admin/partials/templates/wps-points-notification-settings.php:91
@@ -1427,15 +1431,15 @@ msgstr ""
 msgid "Email Subject"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1247
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1279
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1312
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1344
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1376
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1408
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1580
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1627
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1717
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1248
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1280
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1313
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1345
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1377
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1409
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1581
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1628
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1718
 #: admin/partials/templates/wps-points-notification-settings.php:46
 #: admin/partials/templates/wps-points-notification-settings.php:70
 #: admin/partials/templates/wps-points-notification-settings.php:95
@@ -1451,19 +1455,19 @@ msgstr ""
 msgid "Input subject for the email."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1248
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1249
 msgid "Comment Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1251
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1283
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1316
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1348
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1380
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1412
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1584
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1631
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1721
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1252
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1284
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1317
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1349
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1381
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1413
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1585
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1632
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1722
 #: admin/partials/templates/wps-points-notification-settings.php:50
 #: admin/partials/templates/wps-points-notification-settings.php:74
 #: admin/partials/templates/wps-points-notification-settings.php:99
@@ -1479,15 +1483,15 @@ msgstr ""
 msgid "Email Description"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1255
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1287
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1320
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1352
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1384
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1416
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1588
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1635
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1725
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1256
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1288
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1321
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1353
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1385
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1417
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1589
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1636
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1726
 #: admin/partials/templates/wps-points-notification-settings.php:54
 #: admin/partials/templates/wps-points-notification-settings.php:78
 #: admin/partials/templates/wps-points-notification-settings.php:103
@@ -1503,28 +1507,28 @@ msgstr ""
 msgid "Enter the Email Description for the user."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1256
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1353
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1257
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1354
 msgid "You have received"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1256
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1257
 msgid " points and your total points are"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1256
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1353
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1385
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1257
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1354
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1386
 msgid "."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1257
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1289
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1322
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1354
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1386
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1418
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1727
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1258
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1290
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1323
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1355
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1387
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1419
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1728
 #: admin/partials/templates/wps-points-notification-settings.php:55
 #: admin/partials/templates/wps-points-notification-settings.php:79
 #: admin/partials/templates/wps-points-notification-settings.php:105
@@ -1540,28 +1544,28 @@ msgstr ""
 msgid "Use "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1257
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1258
 msgid " shortcode in place of comment points "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1257
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1258
 msgid " shortcode in place of username "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1257
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1258
 msgid " shortcode in place of Referral points. Use "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1257
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1258
 msgid " shortcode in place of per currency spent points and "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1257
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1289
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1354
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1386
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1637
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1727
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1258
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1290
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1355
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1387
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1638
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1728
 #: admin/partials/templates/wps-points-notification-settings.php:105
 #: admin/partials/templates/wps-points-notification-settings.php:130
 #: admin/partials/templates/wps-points-notification-settings.php:154
@@ -1573,258 +1577,258 @@ msgstr ""
 msgid " shortcode in place of Total Points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1263
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1264
 msgid "Referral Purchase Points Notification Settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1271
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1272
 msgid "Check this box to enable the referral purchase points notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1272
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1273
 msgid "Enable Referral Purchase Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1280
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1281
 msgid "Referral Purchase Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1288
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1289
 #: admin/partials/templates/wps-points-notification-settings.php:153
 msgid "You have received "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1288
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1289
 #: admin/partials/templates/wps-points-notification-settings.php:153
 msgid " points and your total points are "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1289
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1290
 msgid " shortcode in place of Referral Purchase Points "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1289
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1290
 msgid " in place of Referral points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1289
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1290
 #: admin/partials/templates/wps-points-notification-settings.php:105
 msgid " in place of Per Currency spent points and "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1296
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1297
 msgid "Deduct 'Per Currency Spent' Point Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1304
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1305
 msgid ""
 "Check this box to enable the Deduct Per Currency Spent points notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1305
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1306
 msgid "Enable Deduct Per Currency Spent Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1313
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1409
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1314
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1410
 #: admin/partials/templates/wps-points-notification-settings.php:193
 msgid "Your Points have been Deducted"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1321
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1322
 #: admin/partials/templates/wps-points-notification-settings.php:201
 msgid ""
 "Your [DEDUCTEDPOINT] has been deducted from your total points as you have "
 "request for your refund, and your Total Point are [TOTALPOINTS]."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1322
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1323
 msgid " shortcode in place of points which have been deducted. Use  "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1322
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1323
 msgid " shortcode in place of username and use "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1322
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1418
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1323
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1419
 msgid " shortcode in place of Total Remaining Points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1328
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1329
 msgid "Point Sharing Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1336
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1337
 msgid "Check this box to enable the points sharing notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1337
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1338
 msgid "Enable Points Sharing Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1345
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1346
 msgid "Received Points Successfully!!"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1353
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1354
 msgid "by your one of the friends having an Email Id is"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1353
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1354
 msgid "and your total points are"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1354
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1355
 msgid " shortcode in place of points which have been received. Use "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1354
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1355
 #: admin/partials/templates/wps-points-notification-settings.php:154
 msgid " shortcode in place of a username, "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1354
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1355
 msgid " shortcode in place of the email id of the Sender, and "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1360
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1369
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1361
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1370
 msgid "Purchase Products through Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1368
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1369
 msgid ""
 "Check this box to enable the purchase of products through points "
 "notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1377
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1378
 msgid "Product Purchased Through Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1385
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1386
 msgid "Product Purchased Point"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1385
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1386
 msgid ""
 " has been deducted from your points on purchasing, and your Total Points are "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1386
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1387
 msgid " shortcode in place of purchasing points, "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1386
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1637
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1727
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1387
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1638
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1728
 msgid " shortcode in place of a username, and "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1392
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1393
 msgid "Return 'Product Purchase through Point' Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1400
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1401
 msgid ""
 "Toggle This to Enable the Notification for Return Product Purchase Through "
 "Points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1401
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1402
 msgid "Return Product Purchase through Point"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1417
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1418
 msgid ""
 "Your [RETURNPOINT] has been returned to your point account as you have "
 "request for your refund and your Total Point is [TOTALPOINTS]."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1418
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1419
 msgid " shortcode in place of points which have been returned, "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1418
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1419
 #: admin/partials/templates/wps-points-notification-settings.php:202
 #: admin/partials/templates/wps-points-notification-settings.php:226
 #: admin/partials/templates/wps-points-notification-settings.php:274
 msgid " shortcode in place of username, and "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1439
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1482
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1440
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1483
 msgid "Check this box to enable the referral points notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1440
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1441
 #: admin/partials/templates/wps-points-notification-settings.php:145
 msgid "Referral Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1483
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1484
 msgid "Upgrade Membership Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1525
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1526
 msgid "Check this box to enable the deduct assign points notification."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1526
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1527
 msgid "Deduct Assign Points Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1564
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1565
 msgid "Mail Notification for Coupon referral"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1572
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1573
 msgid ""
 "Toggle This to Enable Notification for First Order Coupon Referral "
 "Completion."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1573
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1574
 msgid "Points when referee gets points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1581
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1582
 msgid "Points added"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1589
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1590
 msgid ""
 "Your Coupon Code [COUPONCODE] is applied and you will get [POINTS] points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1590
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1637
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1591
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1638
 msgid "Use"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1590
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1591
 msgid " shortcode in place of coupon code and "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1590
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1591
 msgid " shortcode in place of points "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1611
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1612
 msgid "Points Only on Bday Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1619
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1620
 msgid "Toggle This to Enable Notification on Birthday Points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1620
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1621
 msgid "Points Only on Birthday"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1628
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1718
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1629
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1719
 #: admin/partials/templates/wps-points-notification-settings.php:241
 #: admin/partials/templates/wps-points-notification-settings.php:265
 #: admin/partials/templates/wps-points-notification-settings.php:289
@@ -1832,87 +1836,87 @@ msgstr ""
 msgid "Points Added"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1636
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1637
 msgid ""
 "Your [BIRTHDAYPOINT] Points have been added. Now your Total Points are "
 "[TOTALPOINTS]."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1637
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1727
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1638
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1728
 #: admin/partials/templates/wps-points-notification-settings.php:274
 msgid " shortcode in place of points which have been added, "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1661
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1662
 msgid "Toggle This to Enable the Notification on Cart Subtotal Points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1662
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1663
 msgid "Points On Cart Sub-Total Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1701
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1710
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1702
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1711
 msgid "Points Only on First order"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1709
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1710
 msgid "Toggle This to Enable Notification On First Order Points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1726
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1727
 msgid ""
 "Your [FIRSTORDERPOINT] Points have been added. Now your Total Points are "
 "[Total Points]."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1751
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1752
 msgid "Toggle This to Enable the Notification on Order Total Range Points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1752
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1753
 msgid "Points On Order Total Range Notification"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1794
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1795
 msgid "Toggle This to Enable The Notification on Order Rewards Points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1795
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1796
 #: admin/partials/templates/class-points-log-list-table.php:1397
 #: admin/partials/templates/wps-points-notification-settings.php:256
 #: public/partials/wps-wpr-points-log-template.php:661
 msgid "Order Rewards Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1838
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1882
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1839
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1883
 msgid "Toggle This to Enable The Notification on Game Points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1839
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1840
 #: admin/partials/templates/wps-wpr-campaign-settings.php:324
 msgid "Gamification Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1883
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1884
 msgid "Badge Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1922
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1923
 msgid "Display Assign Points On Shop Page"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1924
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1925
 msgid "Enable this setting to show assign points on Shop Page"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1927
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1928
 msgid "Enable this setting to show assigned points on the Shop Page"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1943
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1944
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:185
 msgid ""
 "This is a category-wise setting to assign points to a product of categories. "
@@ -1920,233 +1924,279 @@ msgid ""
 "assigned points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1947
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1948
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:190
 msgid "Categories"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1949
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1950
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:192
 msgid "Assign/Remove"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1964
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1965
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:206
 #: public/partials/wps-wpr-points-campaign-template.php:426
 msgid "Submit"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1984
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2457
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1985
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2458
 msgid "Product Purchase Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1988
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2458
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1989
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2459
 #: admin/partials/dummyfile/wps-dummy-point-expiration.php:21
 #: admin/partials/dummyfile/wps-dummy-point-expiration.php:25
 msgid "Points Expiration"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2275
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2276
 msgid ""
 "In addition, our pro plugin will offer a customizable referral link "
 "shortcode for enhanced user engagement."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2289
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2290
 msgid "Thankyou Page Settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2295
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2296
 msgid "Thank You Order Message When Your Customers Gain Some Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2296
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2297
 msgid ""
 "Entered Message will appears at thankyou page when any ordered item is "
 "having some of the points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2298
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2310
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2299
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2311
 msgid ""
 "Use these shortcodes to provide an appropriate message for your customers. "
 "Use "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2298
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2310
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2299
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2311
 msgid " shortcode for product points and "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2298
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2310
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2299
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2311
 msgid " for their Total Points "
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2307
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2308
 msgid "Thank You Order Message When Your Customers Spent Some of Their Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2308
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2309
 msgid ""
 "Entered Message will appears at thankyou page when any item has been "
 "purchased through points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2321
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2322
 msgid "Points Sharing"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2327
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2328
 msgid "Point Sharing"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2328
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2329
 msgid ""
 "Toggle This to Enable Your Customers to Share Some of Their Points to Other "
 "Users"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2330
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2331
 #: admin/partials/dummyfile/wps-wpr-points-and-rewards-dummy-addon.php:80
 #: admin/partials/templates/wps-other-setting.php:62
 #: admin/partials/templates/wps-other-setting.php:159
 msgid "Enable Point Sharing"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2350
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2459
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2351
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2460
 msgid "Notification Addon"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2427
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2456
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2428
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2457
 #: admin/partials/dummyfile/wps-wpr-api-dummy-features.php:23
 msgid "API Settings"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2484
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2485
 msgid "To access more functionalities, try out our PRO plugin."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2485
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2486
 msgid ""
 "Enjoy Referral Purchase Points, easy coupon generation, Multi-level "
 "Membership, and special birthday rewards. Elevate your experience!."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2486
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2487
 msgid "Go PRO Now!"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2504
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2505
 msgid "Display Total Earning Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2508
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2509
 msgid "Toggle to show the total earning points on the Cart page"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2512
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2521
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2513
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2522
 msgid ""
 "Inform the user about the number of points they will earn by placing this "
 "order."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2514
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2515
 msgid ""
 "Toggle this setting if you want to display the total earning points of an "
 "order on the cart page"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2517
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2518
 msgid "Toggle to show the total earning points on the Checkout page"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2523
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2524
 msgid ""
 "Toggle this setting if you want to display the total earning points of an "
 "order on the checkout page"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2543
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2544
 msgid "Recurring Reward Points Within Range"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2545
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2546
 msgid "Enable this setting to reward the user again within the selected range"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2548
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2549
 msgid ""
 "By enabling this setting, you can reward the user again within the selected "
 "range based on the number of orders they have placed."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2552
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2553
 msgid "Set Next Rewards Date"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2555
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2563
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2556
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2564
 msgid "Set the time period during which the user will be rewarded with points."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2574
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2575
 msgid "Day"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2578
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2579
 msgid "Week"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2582
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2583
 msgid "Month"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2586
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2587
 msgid "Year"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2607
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2608
 msgid "Start Date :"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2611
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2612
 msgid "End Date :"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2628
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2629
 msgid "Turn this on to activate the comments points campaign."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2632
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2633
 msgid "First Order Points"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2635
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2636
 msgid "Turn this on to activate the first order points campaign."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2650
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2651
 msgid "Enable this setting to display content in the footer"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2653
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2654
 msgid "By enabling this setting, you can display content in the modal footer."
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2657
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2658
 msgid "Set custom content in the modal footer"
 msgstr ""
 
-#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2660
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2661
 msgid ""
 "Set the footer content in the campaign modal, e.g., ‘Created with ❤ by WP "
 "Swings’."
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2677
+msgid "Enable to automate memberbship"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2681
+msgid ""
+"Enable this setting to automatically assign membership based on the users "
+"points"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2682
+msgid ""
+"After enabling this setting, membership will be automatically assigned based "
+"on the users points"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2685
+msgid "Toggle to show the next membership level on Single Product page"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2689
+msgid "Inform the user about the next membership level they can achieve."
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2691
+msgid ""
+"Toggle this setting if you want to display the next membership level on "
+"Single Product page"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2695
+#: admin/partials/templates/wps-other-setting.php:119
+msgid "Enter Message"
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2697
+msgid "The message you enter will be displayed on the product and cart pages."
+msgstr ""
+
+#: admin/class-points-rewards-for-woocommerce-dummy-settings.php:2699
+msgid ""
+" Enter your message using the shortcodes [POINTS] for points and [LEVEL] for "
+"membership level. For example: ‘You have [POINTS] points left to reach "
+"[LEVEL] level."
 msgstr ""
 
 #: admin/index.php:10 admin/partials/index.php:10 includes/index.php:10
@@ -2352,7 +2402,7 @@ msgstr ""
 #: admin/partials/templates/wps-assign-pro-points.php:212
 #: admin/partials/templates/wps-coupon-settings.php:177
 #: admin/partials/templates/wps-generral-settings2.php:439
-#: admin/partials/templates/wps-membership-settings.php:190
+#: admin/partials/templates/wps-membership-settings.php:193
 #: admin/partials/templates/wps-order-total.php:126
 #: admin/partials/templates/wps-other-setting.php:326
 #: admin/partials/templates/wps-points-notification-settings.php:413
@@ -2713,8 +2763,7 @@ msgid "Assign Product Points"
 msgstr ""
 
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:56
-#: admin/partials/templates/wps-other-setting.php:53
-msgid "Other Settings"
+msgid "Advance Settings"
 msgstr ""
 
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:60
@@ -2860,7 +2909,7 @@ msgid "Delete"
 msgstr ""
 
 #: admin/partials/templates/class-membership-log-list-table.php:278
-#: admin/partials/templates/wps-membership-settings.php:169
+#: admin/partials/templates/wps-membership-settings.php:172
 msgid "Membership Log"
 msgstr ""
 
@@ -3428,36 +3477,46 @@ msgid "Number of items per page"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:2334
-#: admin/partials/templates/wps-wpr-campaign-settings.php:554
-#: admin/partials/templates/wps-wpr-campaign-settings.php:561
-#: admin/partials/templates/wps-wpr-campaign-settings.php:568
-#: admin/partials/templates/wps-wpr-campaign-settings.php:575
-#: admin/partials/templates/wps-wpr-campaign-settings.php:582
-#: admin/partials/templates/wps-wpr-campaign-settings.php:593
-#: admin/partials/templates/wps-wpr-campaign-settings.php:600
-#: admin/partials/templates/wps-wpr-campaign-settings.php:607
-#: admin/partials/templates/wps-wpr-campaign-settings.php:614
-#: admin/partials/templates/wps-wpr-campaign-settings.php:621
-#: admin/partials/templates/wps-wpr-campaign-settings.php:632
-#: admin/partials/templates/wps-wpr-campaign-settings.php:639
-#: admin/partials/templates/wps-wpr-campaign-settings.php:646
-#: admin/partials/templates/wps-wpr-campaign-settings.php:653
-#: admin/partials/templates/wps-wpr-campaign-settings.php:660
-#: admin/partials/templates/wps-wpr-campaign-settings.php:671
-#: admin/partials/templates/wps-wpr-campaign-settings.php:678
-#: admin/partials/templates/wps-wpr-campaign-settings.php:685
-#: admin/partials/templates/wps-wpr-campaign-settings.php:692
-#: admin/partials/templates/wps-wpr-campaign-settings.php:699
-#: admin/partials/templates/wps-wpr-campaign-settings.php:710
-#: admin/partials/templates/wps-wpr-campaign-settings.php:717
-#: admin/partials/templates/wps-wpr-campaign-settings.php:724
-#: admin/partials/templates/wps-wpr-campaign-settings.php:731
-#: admin/partials/templates/wps-wpr-campaign-settings.php:738
-#: admin/partials/templates/wps-wpr-campaign-settings.php:749
-#: admin/partials/templates/wps-wpr-campaign-settings.php:756
-#: admin/partials/templates/wps-wpr-campaign-settings.php:763
-#: admin/partials/templates/wps-wpr-campaign-settings.php:770
-#: admin/partials/templates/wps-wpr-campaign-settings.php:777
+#: admin/partials/templates/wps-wpr-campaign-settings.php:556
+#: admin/partials/templates/wps-wpr-campaign-settings.php:563
+#: admin/partials/templates/wps-wpr-campaign-settings.php:570
+#: admin/partials/templates/wps-wpr-campaign-settings.php:577
+#: admin/partials/templates/wps-wpr-campaign-settings.php:584
+#: admin/partials/templates/wps-wpr-campaign-settings.php:595
+#: admin/partials/templates/wps-wpr-campaign-settings.php:602
+#: admin/partials/templates/wps-wpr-campaign-settings.php:609
+#: admin/partials/templates/wps-wpr-campaign-settings.php:616
+#: admin/partials/templates/wps-wpr-campaign-settings.php:623
+#: admin/partials/templates/wps-wpr-campaign-settings.php:634
+#: admin/partials/templates/wps-wpr-campaign-settings.php:641
+#: admin/partials/templates/wps-wpr-campaign-settings.php:648
+#: admin/partials/templates/wps-wpr-campaign-settings.php:655
+#: admin/partials/templates/wps-wpr-campaign-settings.php:662
+#: admin/partials/templates/wps-wpr-campaign-settings.php:673
+#: admin/partials/templates/wps-wpr-campaign-settings.php:680
+#: admin/partials/templates/wps-wpr-campaign-settings.php:687
+#: admin/partials/templates/wps-wpr-campaign-settings.php:694
+#: admin/partials/templates/wps-wpr-campaign-settings.php:701
+#: admin/partials/templates/wps-wpr-campaign-settings.php:712
+#: admin/partials/templates/wps-wpr-campaign-settings.php:719
+#: admin/partials/templates/wps-wpr-campaign-settings.php:726
+#: admin/partials/templates/wps-wpr-campaign-settings.php:733
+#: admin/partials/templates/wps-wpr-campaign-settings.php:740
+#: admin/partials/templates/wps-wpr-campaign-settings.php:751
+#: admin/partials/templates/wps-wpr-campaign-settings.php:758
+#: admin/partials/templates/wps-wpr-campaign-settings.php:765
+#: admin/partials/templates/wps-wpr-campaign-settings.php:772
+#: admin/partials/templates/wps-wpr-campaign-settings.php:779
+#: admin/partials/templates/wps-wpr-campaign-settings.php:790
+#: admin/partials/templates/wps-wpr-campaign-settings.php:797
+#: admin/partials/templates/wps-wpr-campaign-settings.php:804
+#: admin/partials/templates/wps-wpr-campaign-settings.php:811
+#: admin/partials/templates/wps-wpr-campaign-settings.php:818
+#: admin/partials/templates/wps-wpr-campaign-settings.php:829
+#: admin/partials/templates/wps-wpr-campaign-settings.php:836
+#: admin/partials/templates/wps-wpr-campaign-settings.php:843
+#: admin/partials/templates/wps-wpr-campaign-settings.php:850
+#: admin/partials/templates/wps-wpr-campaign-settings.php:857
 msgid "Apply"
 msgstr ""
 
@@ -3933,13 +3992,13 @@ msgstr ""
 msgid "Create Member"
 msgstr ""
 
-#: admin/partials/templates/wps-membership-settings.php:175
+#: admin/partials/templates/wps-membership-settings.php:178
 msgid ""
 "Please do not change the \"Level Name\" once it will be saved, as it became "
 "the key for the Membership User"
 msgstr ""
 
-#: admin/partials/templates/wps-membership-settings.php:176
+#: admin/partials/templates/wps-membership-settings.php:179
 msgid "Add Another Level"
 msgstr ""
 
@@ -3986,6 +4045,10 @@ msgstr ""
 #: admin/partials/templates/wps-other-setting.php:46
 msgid ""
 "Entered text will get displayed along with [MYCURRENTUSERLEVEL] shortcode"
+msgstr ""
+
+#: admin/partials/templates/wps-other-setting.php:53
+msgid "Other Settings"
 msgstr ""
 
 #: admin/partials/templates/wps-other-setting.php:69
@@ -4058,10 +4121,6 @@ msgstr ""
 #: admin/partials/templates/wps-other-setting.php:115
 msgid ""
 "Toggle this setting to show message on cart page after apply points section."
-msgstr ""
-
-#: admin/partials/templates/wps-other-setting.php:119
-msgid "Enter Message"
 msgstr ""
 
 #: admin/partials/templates/wps-other-setting.php:121
@@ -4461,14 +4520,6 @@ msgstr ""
 msgid "Reward Points"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:220
-msgid "Remove campaign"
-msgstr ""
-
-#: admin/partials/templates/wps-wpr-campaign-settings.php:221
-msgid "Remove Campaign"
-msgstr ""
-
 #: admin/partials/templates/wps-wpr-campaign-settings.php:255
 #, php-format
 msgid ""
@@ -4573,11 +4624,6 @@ msgstr ""
 msgid "Reward points are required"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:383
-#: admin/partials/templates/wps-wpr-campaign-settings.php:423
-msgid "Remove Quiz"
-msgstr ""
-
 #: admin/partials/templates/wps-wpr-campaign-settings.php:434
 msgid "Add Quiz"
 msgstr ""
@@ -4631,7 +4677,7 @@ msgid "Please choose both primary and secondary colors for the modal design."
 msgstr ""
 
 #: admin/partials/templates/wps-wpr-campaign-settings.php:481
-#: public/class-points-rewards-for-woocommerce-public.php:5552
+#: public/class-points-rewards-for-woocommerce-public.php:5574
 msgid "Social Share Campaign"
 msgstr ""
 
@@ -4673,124 +4719,172 @@ msgstr ""
 msgid "Thanksgiving"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:553
+#: admin/partials/templates/wps-wpr-campaign-settings.php:547
+msgid "Women's Day"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:548
+msgid "Valentine's Day"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:555
 msgid "Spooky deals await this Halloween Festival!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:560
+#: admin/partials/templates/wps-wpr-campaign-settings.php:562
 msgid "Halloween Festival treats you can’t miss!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:567
+#: admin/partials/templates/wps-wpr-campaign-settings.php:569
 msgid "Get your Halloween Festival savings now!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:574
+#: admin/partials/templates/wps-wpr-campaign-settings.php:576
 msgid "Frightful fun during the Halloween Festival!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:581
+#: admin/partials/templates/wps-wpr-campaign-settings.php:583
 msgid "Scare up some deals — Halloween Festival style!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:592
+#: admin/partials/templates/wps-wpr-campaign-settings.php:594
 msgid "Black Friday steals are here!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:599
+#: admin/partials/templates/wps-wpr-campaign-settings.php:601
 msgid "Don’t miss out this Black Friday!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:606
+#: admin/partials/templates/wps-wpr-campaign-settings.php:608
 msgid "Shop smart with Black Friday deals!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:613
+#: admin/partials/templates/wps-wpr-campaign-settings.php:615
 msgid "Massive savings waiting — Black Friday!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:620
+#: admin/partials/templates/wps-wpr-campaign-settings.php:622
 msgid "Grab it now, only for Black Friday!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:631
+#: admin/partials/templates/wps-wpr-campaign-settings.php:633
 msgid "Egg-citing deals this Happy Easter!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:638
+#: admin/partials/templates/wps-wpr-campaign-settings.php:640
 msgid "Hop into savings — Happy Easter!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:645
+#: admin/partials/templates/wps-wpr-campaign-settings.php:647
 msgid "Happy Easter treats just for you!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:652
+#: admin/partials/templates/wps-wpr-campaign-settings.php:654
 msgid "Celebrate joy with Happy Easter deals!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:659
+#: admin/partials/templates/wps-wpr-campaign-settings.php:661
 msgid "Spring into offers this Happy Easter!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:670
+#: admin/partials/templates/wps-wpr-campaign-settings.php:672
 msgid "Snow-body beats our Christmas offers!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:677
+#: admin/partials/templates/wps-wpr-campaign-settings.php:679
 msgid "Merry Christmas treats just for you!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:684
+#: admin/partials/templates/wps-wpr-campaign-settings.php:686
 msgid "Ring in Christmas with special deals!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:691
+#: admin/partials/templates/wps-wpr-campaign-settings.php:693
 msgid "Warm Christmas greetings & offers!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:698
+#: admin/partials/templates/wps-wpr-campaign-settings.php:700
 msgid "Make spirits bright with Christmas offers!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:709
+#: admin/partials/templates/wps-wpr-campaign-settings.php:711
 msgid "Mom-entous deals this Mother's Day!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:716
+#: admin/partials/templates/wps-wpr-campaign-settings.php:718
 msgid "Mom deserves the best — Happy Mother's Day!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:723
+#: admin/partials/templates/wps-wpr-campaign-settings.php:725
 msgid "Sweet surprises for sweet Moms!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:730
+#: admin/partials/templates/wps-wpr-campaign-settings.php:732
 msgid "Treat Mom like the queen she is!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:737
+#: admin/partials/templates/wps-wpr-campaign-settings.php:739
 msgid "Love, gratitude & Mother's Day offers!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:748
+#: admin/partials/templates/wps-wpr-campaign-settings.php:750
 msgid "Gobble up these Thanksgiving offers!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:755
+#: admin/partials/templates/wps-wpr-campaign-settings.php:757
 msgid "Grateful hearts, great deals — Happy Thanksgiving!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:762
+#: admin/partials/templates/wps-wpr-campaign-settings.php:764
 msgid "Share the love with Thanksgiving savings!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:769
+#: admin/partials/templates/wps-wpr-campaign-settings.php:771
 msgid "Thanksgiving traditions and treats!"
 msgstr ""
 
-#: admin/partials/templates/wps-wpr-campaign-settings.php:776
+#: admin/partials/templates/wps-wpr-campaign-settings.php:778
 msgid "Give thanks for these special offers!"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:789
+msgid "Women’s Day Special Sale — Because You Deserve the Best!"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:796
+msgid "This Women’s Day, Celebrate Your Journey!"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:803
+msgid "Empowering Every Woman — Happy Women’s Day!"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:810
+msgid "Exclusive Women’s Day Offers — Celebrate Yourself!"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:817
+msgid "Strong. Bold. Fearless. It’s Your Women’s Day!"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:828
+msgid "Make Every Moment Special This Valentine’s Day"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:835
+msgid "Feel the Romance in the Air This Valentine’s Day"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:842
+msgid "Fall in Love with Our Valentine’s Day Offers"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:849
+msgid "Spread Love and Kindness This Valentine’s Day"
+msgstr ""
+
+#: admin/partials/templates/wps-wpr-campaign-settings.php:856
+msgid "Sweet Deals for Your Valentine’s Day"
 msgstr ""
 
 #: admin/partials/templates/wps-wpr-gamifications-settings.php:85
@@ -5565,7 +5659,7 @@ msgid ""
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:126
-#: public/class-points-rewards-for-woocommerce-public.php:2063
+#: public/class-points-rewards-for-woocommerce-public.php:2085
 msgid "Please enter some valid points!"
 msgstr ""
 
@@ -5594,14 +5688,14 @@ msgid "Add a points"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:146
-#: public/class-points-rewards-for-woocommerce-public.php:1905
-#: public/class-points-rewards-for-woocommerce-public.php:1916
-#: public/class-points-rewards-for-woocommerce-public.php:3168
-#: public/class-points-rewards-for-woocommerce-public.php:3177
-#: public/class-points-rewards-for-woocommerce-public.php:3556
-#: public/class-points-rewards-for-woocommerce-public.php:3567
-#: public/class-points-rewards-for-woocommerce-public.php:3637
-#: public/class-points-rewards-for-woocommerce-public.php:3646
+#: public/class-points-rewards-for-woocommerce-public.php:1927
+#: public/class-points-rewards-for-woocommerce-public.php:1938
+#: public/class-points-rewards-for-woocommerce-public.php:3190
+#: public/class-points-rewards-for-woocommerce-public.php:3199
+#: public/class-points-rewards-for-woocommerce-public.php:3578
+#: public/class-points-rewards-for-woocommerce-public.php:3589
+#: public/class-points-rewards-for-woocommerce-public.php:3659
+#: public/class-points-rewards-for-woocommerce-public.php:3668
 msgid "Apply Points"
 msgstr ""
 
@@ -5614,7 +5708,7 @@ msgid "Referral Link"
 msgstr ""
 
 #: public/class-points-rewards-for-woocommerce-public.php:468
-#: public/class-points-rewards-for-woocommerce-public.php:5134
+#: public/class-points-rewards-for-woocommerce-public.php:5156
 msgid "Copy"
 msgstr ""
 
@@ -5640,168 +5734,168 @@ msgid ""
 "balance is now %s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1297
-#: public/class-points-rewards-for-woocommerce-public.php:1299
+#: public/class-points-rewards-for-woocommerce-public.php:1319
+#: public/class-points-rewards-for-woocommerce-public.php:1321
 #, php-format
 msgid ""
 "You've received points based on the currency value of your purchase. Your "
 "total points balance is now %s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1332
-#: public/class-points-rewards-for-woocommerce-public.php:1334
+#: public/class-points-rewards-for-woocommerce-public.php:1354
+#: public/class-points-rewards-for-woocommerce-public.php:1356
 #, php-format
 msgid ""
 "You have received assigned product points. Your total points balance is now "
 "%s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1389
-#: public/class-points-rewards-for-woocommerce-public.php:1391
+#: public/class-points-rewards-for-woocommerce-public.php:1411
+#: public/class-points-rewards-for-woocommerce-public.php:1413
 #, php-format
 msgid ""
 "Your points have been added back to your account due to the order "
 "cancellation. Your total points balance is now %s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1441
-#: public/class-points-rewards-for-woocommerce-public.php:1443
+#: public/class-points-rewards-for-woocommerce-public.php:1463
+#: public/class-points-rewards-for-woocommerce-public.php:1465
 #, php-format
 msgid ""
 "Your subscription renewal order has been cancelled, and %1$s points have "
 "been deducted from your account. Your total points balance is now %2$s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1522
-#: public/class-points-rewards-for-woocommerce-public.php:1524
+#: public/class-points-rewards-for-woocommerce-public.php:1544
+#: public/class-points-rewards-for-woocommerce-public.php:1546
 #, php-format
 msgid ""
 "Your order has been cancelled, and %1$s points (based on the currency value) "
 "have been deducted from your account. Your total points balance is now %2$s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1592
-#: public/class-points-rewards-for-woocommerce-public.php:1594
+#: public/class-points-rewards-for-woocommerce-public.php:1614
+#: public/class-points-rewards-for-woocommerce-public.php:1616
 #, php-format
 msgid ""
 "%1$s assigned product points have been deducted from your account due to "
 "order cancellation. Your total points balance is now %2$s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1719
-#: public/class-points-rewards-for-woocommerce-public.php:1721
+#: public/class-points-rewards-for-woocommerce-public.php:1741
+#: public/class-points-rewards-for-woocommerce-public.php:1743
 #, php-format
 msgid ""
 "Your order was cancelled, so %1$s order total points have been deducted. "
 "Your new points balance is %2$s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1816
+#: public/class-points-rewards-for-woocommerce-public.php:1838
 #, php-format
 msgid "You will get %s points for a successful signup using a referral link."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1826
+#: public/class-points-rewards-for-woocommerce-public.php:1848
 #, php-format
 msgid "You will get %s points for a successful signup."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1906
-#: public/class-points-rewards-for-woocommerce-public.php:3557
+#: public/class-points-rewards-for-woocommerce-public.php:1928
+#: public/class-points-rewards-for-woocommerce-public.php:3579
 msgid "Your available points:"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1917
-#: public/class-points-rewards-for-woocommerce-public.php:3178
-#: public/class-points-rewards-for-woocommerce-public.php:3568
-#: public/class-points-rewards-for-woocommerce-public.php:3647
+#: public/class-points-rewards-for-woocommerce-public.php:1939
+#: public/class-points-rewards-for-woocommerce-public.php:3200
+#: public/class-points-rewards-for-woocommerce-public.php:3590
+#: public/class-points-rewards-for-woocommerce-public.php:3669
 msgid "You require :"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1919
-#: public/class-points-rewards-for-woocommerce-public.php:3570
+#: public/class-points-rewards-for-woocommerce-public.php:1941
+#: public/class-points-rewards-for-woocommerce-public.php:3592
 msgid "more to get redeem"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:1940
+#: public/class-points-rewards-for-woocommerce-public.php:1962
 msgid "Can not redeem!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2059
+#: public/class-points-rewards-for-woocommerce-public.php:2081
 msgid "Custom Point has been applied Successfully!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2068
+#: public/class-points-rewards-for-woocommerce-public.php:2090
 msgid "Invalid Points!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2410
-#: public/class-points-rewards-for-woocommerce-public.php:3458
+#: public/class-points-rewards-for-woocommerce-public.php:2432
+#: public/class-points-rewards-for-woocommerce-public.php:3480
 msgid "[Remove]"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2427
+#: public/class-points-rewards-for-woocommerce-public.php:2449
 msgid "Failed to Remove Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2434
+#: public/class-points-rewards-for-woocommerce-public.php:2456
 msgid "Successfully Removed Cart Discount"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2536
-#: public/class-points-rewards-for-woocommerce-public.php:2538
+#: public/class-points-rewards-for-woocommerce-public.php:2558
+#: public/class-points-rewards-for-woocommerce-public.php:2560
 #, php-format
 msgid ""
 "%1$s applied points used at Cart/Checkout have been deducted from your "
 "account. Your total points balance is now %2$s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:2714
-#: public/class-points-rewards-for-woocommerce-public.php:3169
-#: public/class-points-rewards-for-woocommerce-public.php:3638
+#: public/class-points-rewards-for-woocommerce-public.php:2736
+#: public/class-points-rewards-for-woocommerce-public.php:3191
+#: public/class-points-rewards-for-woocommerce-public.php:3660
 msgid " Points"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3089
+#: public/class-points-rewards-for-woocommerce-public.php:3111
 msgid "Have A Points?"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3178
-#: public/class-points-rewards-for-woocommerce-public.php:3647
+#: public/class-points-rewards-for-woocommerce-public.php:3200
+#: public/class-points-rewards-for-woocommerce-public.php:3669
 msgid "more points to get redeem"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3321
+#: public/class-points-rewards-for-woocommerce-public.php:3343
 msgid "Convert Points to Currency Wallet Conversion"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3324
+#: public/class-points-rewards-for-woocommerce-public.php:3346
 msgid "Points Conversion: "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3325
+#: public/class-points-rewards-for-woocommerce-public.php:3347
 msgid "points = "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3330
-#: public/class-points-rewards-for-woocommerce-public.php:3335
+#: public/class-points-rewards-for-woocommerce-public.php:3352
+#: public/class-points-rewards-for-woocommerce-public.php:3357
 msgid "Enter your points:"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3337
+#: public/class-points-rewards-for-woocommerce-public.php:3359
 msgid "Redeem to Wallet"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3365
+#: public/class-points-rewards-for-woocommerce-public.php:3387
 msgid "Sorry ! Not Transfered"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3377
+#: public/class-points-rewards-for-woocommerce-public.php:3399
 msgid "successfully transfered"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3417
-#: public/class-points-rewards-for-woocommerce-public.php:3419
+#: public/class-points-rewards-for-woocommerce-public.php:3439
+#: public/class-points-rewards-for-woocommerce-public.php:3441
 #, php-format
 msgid ""
 "Your points have been successfully converted and added to your wallet "
@@ -5809,231 +5903,231 @@ msgid ""
 "are %2$s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3738
+#: public/class-points-rewards-for-woocommerce-public.php:3760
 msgid "You will earn [Points] points when your subscription should be renewal."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3744
+#: public/class-points-rewards-for-woocommerce-public.php:3766
 msgid "Subscription Renewal Points Message :"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:3860
-#: public/class-points-rewards-for-woocommerce-public.php:3862
+#: public/class-points-rewards-for-woocommerce-public.php:3882
+#: public/class-points-rewards-for-woocommerce-public.php:3884
 #, php-format
 msgid ""
 "You've reached the specified order limit and have been rewarded with points. "
 "Your total points balance is now %s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4029
+#: public/class-points-rewards-for-woocommerce-public.php:4051
 msgid "Click here to play the game"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4043
+#: public/class-points-rewards-for-woocommerce-public.php:4065
 msgid "Spin"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4066
+#: public/class-points-rewards-for-woocommerce-public.php:4088
 msgid "Hurray! You have got"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4069
+#: public/class-points-rewards-for-woocommerce-public.php:4091
 msgid "Claim Now"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4080
+#: public/class-points-rewards-for-woocommerce-public.php:4102
 msgid "Oops! You are not logged in."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4081
+#: public/class-points-rewards-for-woocommerce-public.php:4103
 msgid "To play the game, please "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4081
+#: public/class-points-rewards-for-woocommerce-public.php:4103
 msgid "click here"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4081
+#: public/class-points-rewards-for-woocommerce-public.php:4103
 msgid " to login."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4185
+#: public/class-points-rewards-for-woocommerce-public.php:4207
 msgid "Failed"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4213
+#: public/class-points-rewards-for-woocommerce-public.php:4235
 msgid "Wallet credited by "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4213
+#: public/class-points-rewards-for-woocommerce-public.php:4235
 msgid " through successfully Win Wheel."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4217
+#: public/class-points-rewards-for-woocommerce-public.php:4239
 msgid "Wallet updating notification"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4234
+#: public/class-points-rewards-for-woocommerce-public.php:4256
 msgid "Wallet credited through Win Wheel "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4248
-#: public/class-points-rewards-for-woocommerce-public.php:4273
+#: public/class-points-rewards-for-woocommerce-public.php:4270
+#: public/class-points-rewards-for-woocommerce-public.php:4295
 msgid "Success"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4266
-#: public/class-points-rewards-for-woocommerce-public.php:4268
+#: public/class-points-rewards-for-woocommerce-public.php:4288
+#: public/class-points-rewards-for-woocommerce-public.php:4290
 #, php-format
 msgid ""
 "You've received claim points from the Win Wheel. Your total points balance "
 "is now %s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4278
+#: public/class-points-rewards-for-woocommerce-public.php:4300
 msgid "Already played by you"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4507
-#: public/class-points-rewards-for-woocommerce-public.php:4509
+#: public/class-points-rewards-for-woocommerce-public.php:4529
+#: public/class-points-rewards-for-woocommerce-public.php:4531
 #, php-format
 msgid ""
 "You've earned a badge, and as a reward for this achievement, points have "
 "been added to your account. Your total points balance is now %s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4596
+#: public/class-points-rewards-for-woocommerce-public.php:4618
 msgid "Congratulations! You have earned this badge for earning "
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4596
+#: public/class-points-rewards-for-woocommerce-public.php:4618
 msgid " points."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4684
-#: public/class-points-rewards-for-woocommerce-public.php:4686
+#: public/class-points-rewards-for-woocommerce-public.php:4706
+#: public/class-points-rewards-for-woocommerce-public.php:4708
 #, php-format
 msgid ""
 "As a %1$s-level member, you have been awarded with points. Your updated "
 "balance is %2$s points"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4725
-#: public/class-points-rewards-for-woocommerce-public.php:4727
+#: public/class-points-rewards-for-woocommerce-public.php:4747
+#: public/class-points-rewards-for-woocommerce-public.php:4749
 #, php-format
 msgid ""
 "Due to the order cancellation, %1$s points earned from your membership level "
 "have been deducted from your account. Your total points balance is now %2$s"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4792
+#: public/class-points-rewards-for-woocommerce-public.php:4814
 msgid "Deactivate Notifications"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4796
+#: public/class-points-rewards-for-woocommerce-public.php:4818
 msgid "SMS Notification"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4803
+#: public/class-points-rewards-for-woocommerce-public.php:4825
 msgid "Whatspp Notification"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4825
+#: public/class-points-rewards-for-woocommerce-public.php:4847
 msgid "No changes made."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4844
+#: public/class-points-rewards-for-woocommerce-public.php:4866
 #, php-format
 msgid "%s notification deactivated successfully!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4848
+#: public/class-points-rewards-for-woocommerce-public.php:4870
 #, php-format
 msgid "%s notification activated!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:4919
-#: public/class-points-rewards-for-woocommerce-public.php:4929
+#: public/class-points-rewards-for-woocommerce-public.php:4941
+#: public/class-points-rewards-for-woocommerce-public.php:4951
 msgid "Cart Discount:"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5052
-#: public/class-points-rewards-for-woocommerce-public.php:5394
+#: public/class-points-rewards-for-woocommerce-public.php:5074
+#: public/class-points-rewards-for-woocommerce-public.php:5416
 #, php-format
 msgid ""
 "You have been awarded %1$s points as a guest user. Your total points balance "
 "is now %2$s."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5217
+#: public/class-points-rewards-for-woocommerce-public.php:5239
 msgid "Birthday is not saved."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5236
+#: public/class-points-rewards-for-woocommerce-public.php:5258
 #, php-format
 msgid "🎉 Congratulations! You will receive %s bonus points on your birthday!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5240
+#: public/class-points-rewards-for-woocommerce-public.php:5262
 msgid ""
 "Sorry, you cannot save a future birthday or update an already saved date."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5262
+#: public/class-points-rewards-for-woocommerce-public.php:5284
 msgid "Incorrect answer!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5297
+#: public/class-points-rewards-for-woocommerce-public.php:5319
 #, php-format
 msgid "Great job! You answered correctly and earned %s points!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5516
+#: public/class-points-rewards-for-woocommerce-public.php:5538
 msgid "🎉 You’ve Earned New Rewards!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5531
+#: public/class-points-rewards-for-woocommerce-public.php:5553
 msgid "You just unlocked something special ✨"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5547
+#: public/class-points-rewards-for-woocommerce-public.php:5569
 #, php-format
 msgid ""
 "Your effort in our <strong>%s</strong> is spreading joy 🌍 We’re thrilled to "
 "reward your contribution."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5565
+#: public/class-points-rewards-for-woocommerce-public.php:5587
 msgid "🏆 Rewards Unlocked!"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5570
+#: public/class-points-rewards-for-woocommerce-public.php:5592
 #, php-format
 msgid "+%d Points"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5576
+#: public/class-points-rewards-for-woocommerce-public.php:5598
 msgid "Your new balance is:"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5582
+#: public/class-points-rewards-for-woocommerce-public.php:5604
 #, php-format
 msgid "%d Points"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5598
+#: public/class-points-rewards-for-woocommerce-public.php:5620
 msgid "🌟 Claim My Rewards"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5614
+#: public/class-points-rewards-for-woocommerce-public.php:5636
 msgid "💌 You’re receiving this because you’re part of our rewards community."
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5622
+#: public/class-points-rewards-for-woocommerce-public.php:5644
 msgid "Not a fan?"
 msgstr ""
 
-#: public/class-points-rewards-for-woocommerce-public.php:5622
+#: public/class-points-rewards-for-woocommerce-public.php:5644
 msgid "Unsubscribe"
 msgstr ""
 

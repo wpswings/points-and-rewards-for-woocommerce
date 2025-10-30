@@ -206,19 +206,19 @@ function wps_wpr_render_campaign_block( $url = '', $points = '', $selected_label
 
 			<label class="wps_wpr_general_label">
 				<?php esc_html_e( 'Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>
-				<input type="text" name="wps_wpr_social_share_url[]" class="wps_wpr_social_share_url" value="<?php echo esc_attr( $url ); ?>" required>
+				<input type="text" name="wps_wpr_social_share_url[]" class="wps_wpr_social_share_url" value="<?php echo esc_attr( $url ); ?>">
 			</label>
 
 			<label class="wps_wpr_general_label">
 				<?php esc_html_e( 'Reward Points', 'points-and-rewards-for-woocommerce' ); ?>
-				<input type="number" min="0" name="wps_wpr_social_share_points[]" class="wps_wpr_social_share_points" value="<?php echo esc_attr( $points ); ?>" required>
+				<input type="number" min="0" name="wps_wpr_social_share_points[]" class="wps_wpr_social_share_points" value="<?php echo esc_attr( $points ); ?>">
 			</label>
 
 			<?php do_action( 'wps_wpr_after_campaign_fields', $url, $points, $selected_label, $types ); ?>
 
 			<div class="wps-campaign-actions">
-				<button type="button" class="button wps_wpr_remove_campaign" aria-label="<?php esc_attr_e( 'Remove campaign', 'points-and-rewards-for-woocommerce' ); ?>">
-					<?php esc_html_e( 'Remove Campaign', 'points-and-rewards-for-woocommerce' ); ?>
+				<button type="button" class="button wps_wpr_remove_campaign" aria-label="<?php esc_attr_e( 'Remove', 'points-and-rewards-for-woocommerce' ); ?>">
+					<?php esc_html_e( 'Remove', 'points-and-rewards-for-woocommerce' ); ?>
 				</button>
 			</div>
 		</div>
@@ -380,7 +380,7 @@ if ( wps_wpr_is_par_pro_plugin_active() ) {
 
 								<div class="wps_wpr_general_actions" style="margin-top:10px;">
 									<button type="button" class="button wps_wpr_remove_quiz">
-										<?php esc_html_e( 'Remove Quiz', 'points-and-rewards-for-woocommerce' ); ?>
+										<?php esc_html_e( 'Remove', 'points-and-rewards-for-woocommerce' ); ?>
 									</button>
 								</div>
 
@@ -420,7 +420,7 @@ if ( wps_wpr_is_par_pro_plugin_active() ) {
 
 							<div class="wps_wpr_general_actions" style="margin-top:10px;">
 								<button type="button" class="button wps_wpr_remove_quiz">
-									<?php esc_html_e( 'Remove Quiz', 'points-and-rewards-for-woocommerce' ); ?>
+									<?php esc_html_e( 'Remove', 'points-and-rewards-for-woocommerce' ); ?>
 								</button>
 							</div>
 
@@ -544,6 +544,8 @@ if ( wps_wpr_is_par_pro_plugin_active() ) {
 			<span class="wps-wpr_temp-select-easter" id="wps_wpr_merry_christmas"><?php esc_html_e( 'Merry Christmas', 'points-and-rewards-for-woocommerce' ); ?></span>
 			<span class="wps-wpr_temp-select-easter" id="wps_wpr_mothers_day"><?php esc_html_e( 'Mother\'s Day', 'points-and-rewards-for-woocommerce' ); ?></span>
 			<span class="wps-wpr_temp-select-easter" id="wps_wpr_thanksgiving"><?php esc_html_e( 'Thanksgiving', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<span class="wps-wpr_temp-select-easter" id="wps_wpr_womens_day"><?php esc_html_e( 'Women\'s Day', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<span class="wps-wpr_temp-select-easter" id="wps_wpr_valentines_day"><?php esc_html_e( 'Valentine\'s Day', 'points-and-rewards-for-woocommerce' ); ?></span>
 		</div>
 
 		<!-- Halloween Banners templates -->
@@ -777,6 +779,84 @@ if ( wps_wpr_is_par_pro_plugin_active() ) {
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FFA437</span>
 				<span class="wps_wpr_cam_sec_color">#CB2525</span>
+			</div>
+		</div>
+
+		<!-- Women's Day Banners templates -->
+		<div class="wps-popup_m-content wps_wpr_womens_day">
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Wo1.webp' ); ?>" alt="festive image" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Women’s Day Special Sale — Because You Deserve the Best!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#9F0308</span>
+				<span class="wps_wpr_cam_sec_color">#E1151C</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Wo2.webp' ); ?>" alt="festive image" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'This Women’s Day, Celebrate Your Journey!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#FA9DCA</span>
+				<span class="wps_wpr_cam_sec_color">#FE2B57</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Wo3.webp' ); ?>" alt="festive image" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Empowering Every Woman — Happy Women’s Day!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#E65485</span>
+				<span class="wps_wpr_cam_sec_color">#FF0956</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Wo4.webp' ); ?>" alt="festive image" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Exclusive Women’s Day Offers — Celebrate Yourself!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#FF6D79</span>
+				<span class="wps_wpr_cam_sec_color">#AF0815</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Wo5.webp' ); ?>" alt="festive image" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Strong. Bold. Fearless. It’s Your Women’s Day!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#FF7885</span>
+				<span class="wps_wpr_cam_sec_color">#BD0515</span>
+			</div>
+		</div>
+
+		<!-- Valentine's Day Banners templates -->
+		<div class="wps-popup_m-content wps_wpr_valentines_day">
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va1.webp' ); ?>" alt="festive image" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Make Every Moment Special This Valentine’s Day', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#FF6B74</span>
+				<span class="wps_wpr_cam_sec_color">#CB374F</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va2.webp' ); ?>" alt="festive image" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Feel the Romance in the Air This Valentine’s Day', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#F48C92</span>
+				<span class="wps_wpr_cam_sec_color">#A60620</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va3.webp' ); ?>" alt="festive image" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Fall in Love with Our Valentine’s Day Offers', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#91090B</span>
+				<span class="wps_wpr_cam_sec_color">#EB3C40</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va4.webp' ); ?>" alt="festive image" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Spread Love and Kindness This Valentine’s Day', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#DF3C84</span>
+				<span class="wps_wpr_cam_sec_color">#C40A0E</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va5.webp' ); ?>" alt="festive image" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Sweet Deals for Your Valentine’s Day', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#600101</span>
+				<span class="wps_wpr_cam_sec_color">#E30000</span>
 			</div>
 		</div>
 	</div>

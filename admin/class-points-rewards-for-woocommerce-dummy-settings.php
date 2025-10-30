@@ -90,6 +90,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		add_action( 'wps_wpr_additional_coupon_settings', array( $this, 'wps_wpr_additionals_dummy_coupon_settings' ), 10, 2 );
 		add_action( 'wps_wpr_add_campaign_general_section', array( $this, 'wps_wpr_add_campaigns_general_section_dummy_html' ), 10 );
 		add_action( 'wps_wpr_add_campaign_additional_html', array( $this, 'wps_wpr_show_footer_dummy_content_dynamically' ), 10, 1 );
+		add_filter( 'wps_wpr_add_membership_settings', array( $this, 'wps_wpr_setting_pro_to_automate_membership' ), 10, 1 );
 	}
 
 	/**
@@ -2661,5 +2662,45 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 			</div>
 		</article>
 		<?php
+	}
+
+	/**
+	 * Creating skeleton for membership automate and next level .
+	 *
+	 * @param  array $membership_html membership_html.
+	 * @return array
+	 */
+	public function wps_wpr_setting_pro_to_automate_membership( $membership_html ) {
+
+		$add_arr = array(
+			array(
+				'title'    => __( 'Enable to automate memberbship', 'points-and-rewards-for-woocommerce' ),
+				'id'       => 'wps_wpr_enable_dummy_automate_membership',
+				'type'     => 'checkbox',
+				'class'    => 'input-text wps_wpr_pro_plugin_settings',
+				'desc'     => __( 'Enable this setting to automatically assign membership based on the users points', 'points-and-rewards-for-woocommerce' ),
+				'desc_tip' => __( 'After enabling this setting, membership will be automatically assigned based on the users points', 'points-and-rewards-for-woocommerce' ),
+			),
+			array(
+				'title'    => __( 'Toggle to show the next membership level on Single Product page', 'points-and-rewards-for-woocommerce' ),
+				'type'     => 'checkbox',
+				'id'       => 'wps_wpr_show_next_dummy_membership_level',
+				'class'    => 'input-text wps_wpr_pro_plugin_settings',
+				'desc_tip' => __( 'Inform the user about the next membership level they can achieve.', 'points-and-rewards-for-woocommerce' ),
+				'default'  => 0,
+				'desc'     => __( 'Toggle this setting if you want to display the next membership level on Single Product page', 'points-and-rewards-for-woocommerce' ),
+			),
+			array(
+				'id'       => 'wps_wpr_mem_dummy_level_notice',
+				'title'    => __( 'Enter Message', 'points-and-rewards-for-woocommerce' ),
+				'type'     => 'text',
+				'desc_tip' => __( 'The message you enter will be displayed on the product and cart pages.', 'points-and-rewards-for-woocommerce' ),
+				'class'    => 'input-text wps_wpr_pro_plugin_settings',
+				'desc'     => __( ' Enter your message using the shortcodes [POINTS] for points and [LEVEL] for membership level. For example: ‘You have [POINTS] points left to reach [LEVEL] level.', 'points-and-rewards-for-woocommerce' ),
+			),
+		);
+
+		array_splice( $membership_html, 2, 0, $add_arr );
+		return $membership_html;
 	}
 }
