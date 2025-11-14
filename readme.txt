@@ -5,8 +5,8 @@ Tags: points and rewards, loyalty, referral points, reward points, gamification
 Requires at least: 6.7.0
 Tested up to: 6.8.3
 WC requires at least: 6.5.0
-WC tested up to: 10.3.3
-Stable tag: 2.9.3
+WC tested up to: 10.3.5
+Stable tag: 2.9.4
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -18,7 +18,7 @@ Points and Rewards for WooCommerce offer a reward for points to your customers f
 
 **FEATURE-RICH POINTS AND REWARDS FOR WOOCOMMERCE TO TURN YOUR CUSTOMERS INTO LOYAL FANS. REWARD CUSTOMERS FOR SIGNUP POINTS, REFERRAL POINTS, SOCIAL SHARING, ASSIGN POINTS ON PREVIOUS ORDERS PURCHASES, REWARD FOR POINTS AND CREATE WOOCOMMERCE LOYALTY PROGRAMS TO REWARD REFERRAL POINTS, SIGN-UP POINTS ETC. ALLOW REDEEMING WOOCOMMERCE LOYALTY POINTS, POINTS LOG REPORT FOR ADMIN AND USER, AND BUILD MEMBERSHIP WITH PROPER EMAIL NOTIFICATIONS**
 
-Points and Rewards for WooCommerce is a points management plugin that engages customers by offering them points for activities like sign-up, purchase, referrals, social sharing, etc. Customers can redeem WooCommerce rewards using the WooCommerce reward points plugin to buy products at your store or participate in your membership program with the WordPress loyalty points plugin. Access to features like the ability to award users based on their number of orders, points on upgrade membership level, and points on cart subtotal. 
+[**Points and Rewards for WooCommerce**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/) is a points management plugin that engages customers by offering them points for activities like sign-up, purchase, referrals, social sharing, etc. Customers can redeem WooCommerce rewards using the WooCommerce reward points plugin to buy products at your store or participate in your membership program with the WordPress loyalty points plugin. Access to features like the ability to award users based on their number of orders, points on upgrade membership level, and points on cart subtotal. 
 
 With the referral points plugin at your WooCommerce Store, you can improve sales, Return On Investment(ROI), conversion rate, Customer Lifetime Value(CLV), and referral marketing scope
 
@@ -336,6 +336,10 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 2.9.4 - Released on 14 November 2025 =
+* New: Compatibility with latest WP(6.8.3) & WC(10.3.5)
+* Fix: Minor Issues
 
 = 2.9.3 - Released on 29 October 2025 =
 * New : Compatibility with latest WP(6.8.3) & WC(10.3.3)
@@ -682,6 +686,8 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.9.3 - Released on 29 October 2025 =
-* New : Compatibility with latest WP(6.8.3) & WC(10.3.3)
-* Fix : Minor Validation Issues
+= 2.9.4 - Released on 14 November 2025 =
+* New: Compatibility with latest WP(6.8.3) & WC(10.3.5)
+* Fix: Minor Issues
+
+

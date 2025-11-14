@@ -1,8 +1,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 2.9.3\n"
-"POT-Creation-Date: 2025-10-27 17:28+0530\n"
+"Project-Id-Version: Points and Rewards for WooCommerce 2.9.4\n"
+"POT-Creation-Date: 2025-11-13 18:10+0530\n"
 "PO-Revision-Date: 2023-12-01 10:33+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
@@ -179,7 +179,7 @@ msgid "Please purchase the pro plugin to add multiple memberships."
 msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-admin.php:174
-#: public/partials/wps-wpr-points-campaign-template.php:361
+#: public/partials/wps-wpr-points-campaign-template.php:365
 msgid "Click here"
 msgstr ""
 
@@ -1942,7 +1942,7 @@ msgstr ""
 
 #: admin/class-points-rewards-for-woocommerce-dummy-settings.php:1965
 #: admin/partials/dummyfile/wps-pro-dummy-purchase-points.php:206
-#: public/partials/wps-wpr-points-campaign-template.php:426
+#: public/partials/wps-wpr-points-campaign-template.php:430
 msgid "Submit"
 msgstr ""
 
@@ -2960,7 +2960,7 @@ msgid "View Point Log"
 msgstr ""
 
 #: admin/partials/templates/class-points-log-list-table.php:128
-#: public/partials/wps-wpr-points-campaign-template.php:341
+#: public/partials/wps-wpr-points-campaign-template.php:344
 msgid "Update"
 msgstr ""
 
@@ -6186,48 +6186,43 @@ msgstr ""
 msgid "Earn welcome points!"
 msgstr ""
 
-#: public/partials/wps-wpr-points-campaign-template.php:337
-#: public/partials/wps-wpr-points-campaign-template.php:349
+#: public/partials/wps-wpr-points-campaign-template.php:340
+#: public/partials/wps-wpr-points-campaign-template.php:352
 msgid "Enter your birthday"
 msgstr ""
 
-#: public/partials/wps-wpr-points-campaign-template.php:340
-#: public/partials/wps-wpr-points-campaign-template.php:341
+#: public/partials/wps-wpr-points-campaign-template.php:343
+#: public/partials/wps-wpr-points-campaign-template.php:344
 msgid "disabled"
 msgstr ""
 
-#: public/partials/wps-wpr-points-campaign-template.php:349
-#: public/partials/wps-wpr-points-campaign-template.php:389
-#: public/partials/wps-wpr-points-campaign-template.php:447
+#: public/partials/wps-wpr-points-campaign-template.php:352
+#: public/partials/wps-wpr-points-campaign-template.php:393
 msgid "images/tick3.svg"
 msgstr ""
 
-#: public/partials/wps-wpr-points-campaign-template.php:359
+#: public/partials/wps-wpr-points-campaign-template.php:363
 #, php-format
 msgid "Comment or review any post and earn %d reward points."
 msgstr ""
 
-#: public/partials/wps-wpr-points-campaign-template.php:374
+#: public/partials/wps-wpr-points-campaign-template.php:378
 #, php-format
 msgid ""
 "Spin the wheel, try your luck, and earn exciting points between %1$s to %2$s"
 msgstr ""
 
-#: public/partials/wps-wpr-points-campaign-template.php:385
+#: public/partials/wps-wpr-points-campaign-template.php:389
 msgid "Play"
 msgstr ""
 
-#: public/partials/wps-wpr-points-campaign-template.php:396
+#: public/partials/wps-wpr-points-campaign-template.php:400
 msgid "Unlock bonus points when you shop for the very first time"
 msgstr ""
 
-#: public/partials/wps-wpr-points-campaign-template.php:399
+#: public/partials/wps-wpr-points-campaign-template.php:403
 #, php-format
 msgid "Play the Quiz, have fun, and earn %1$s–%2$s points!"
-msgstr ""
-
-#: public/partials/wps-wpr-points-campaign-template.php:447
-msgid "Play a Quiz"
 msgstr ""
 
 #: public/partials/wps-wpr-points-campaign-template.php:463
