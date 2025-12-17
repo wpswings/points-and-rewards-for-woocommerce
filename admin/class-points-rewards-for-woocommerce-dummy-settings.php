@@ -710,7 +710,15 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'class'             => 'input-text wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
 				'desc_tip'          => __( 'The Points That The Customers Will Get, Only on Their Birthday', 'points-and-rewards-for-woocommerce' ),
 			),
-
+			array(
+				'title'             => __( 'Birthday Month Points Multiplier', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'              => 'number',
+				'default'           => 1,
+				'id'                => 'wps_wpr_dummy_birth_day_multiplier',
+				'custom_attributes' => array( 'min' => '"1"' ),
+				'class'             => 'input-text wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
+				'desc_tip'          => __( 'Apply a points multiplier to all orders placed during the user’s birthday month. The points earned will be multiplied based on the selected value (2X / 3X).', 'ultimate-woocommerce-points-and-rewards' ),
+			),
 			array(
 				'type' => 'sectionend',
 			),

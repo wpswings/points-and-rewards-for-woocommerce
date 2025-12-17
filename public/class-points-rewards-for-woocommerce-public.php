@@ -5674,31 +5674,5 @@ class Points_Rewards_For_WooCommerce_Public {
 		}
 	}
 
-	/**
-	 * Assign birthday multiplier points on the birthday date.
-	 *
-	 * @param  int $user_id user_id.
-	 * @param  int $points  points.
-	 * @return int
-	 */
-	public function wps_wpr_birthday_multiplier_points( $user_id, $points ) {
-
-		$date                                     = get_user_meta( $user_id, '_my_bday', true );
-		$wps_wpr_settings_gallery                 = ! empty( get_option( 'wps_wpr_settings_gallery' ) ) && is_array( get_option( 'wps_wpr_settings_gallery' ) ) ? get_option( 'wps_wpr_settings_gallery' ) : array();
-		$wps_wpr_general_setting_birthday_enablee = ! empty( $wps_wpr_settings_gallery['wps_wpr_general_setting_birthday_enablee'] ) ? $wps_wpr_settings_gallery['wps_wpr_general_setting_birthday_enablee'] : 0;
-		if ( 1 === $wps_wpr_general_setting_birthday_enablee && ! empty( $date ) ) {
-
-			$date2            = substr( $date, 5 );
-			$current_year     = gmdate( 'Y' );
-			$user_already_get = get_user_meta( $user_id, 'wps_wpr_multilpier_points_assigned_check', true );
-			if ( $user_already_get != $current_year && gmdate( 'm-d' ) == $date2 ) {
-
-				$wps_wpr_birth_day_multiplier = ! empty( $wps_wpr_settings_gallery['wps_wpr_birth_day_multiplier'] ) ? $wps_wpr_settings_gallery['wps_wpr_birth_day_multiplier'] : 1;
-				$points                       = $points * $wps_wpr_birth_day_multiplier;
-				update_user_meta( $user_id, 'wps_wpr_multilpier_points_assigned_check', $current_year );
-			}
-		}
-		return $points;
-	}
 }
 

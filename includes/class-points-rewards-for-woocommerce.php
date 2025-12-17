@@ -373,8 +373,6 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_update_quiz_data', $plugin_public, 'wps_wpr_rewards_quiz_points', 10 );
 			// assign social share points.
 			$this->loader->add_action( 'wp_ajax_action_social_link_click', $plugin_public, 'wps_wpr_assign_social_share_points', 10 );
-			// Birthday multiplier points ( 2X, 3X ).
-			$this->loader->add_filter( 'wps_birthday_multiplier_points', $plugin_public, 'wps_wpr_birthday_multiplier_points', 10, 2 );
 		}
 	}
 
