@@ -1091,6 +1091,8 @@ class Points_Rewards_For_WooCommerce_Public {
 							$order_total <= $thankyouorder_max[ $key ]
 						) {
 							$wps_wpr_point = (int) $thankyouorder_value[ $key ];
+							// birthday multplier points.
+							$wps_wpr_point = apply_filters( 'wps_birthday_multiplier_points', $wps_wpr_point, $user_id );
 							$total_points = $total_points + $wps_wpr_point;
 						}
 					} else if (
@@ -1100,6 +1102,8 @@ class Points_Rewards_For_WooCommerce_Public {
 					) {
 						if ( $thankyouorder_min[ $key ] <= $order_total ) {
 							$wps_wpr_point = (int) $thankyouorder_value[ $key ];
+							// birthday multplier points.
+							$wps_wpr_point = apply_filters( 'wps_birthday_multiplier_points', $wps_wpr_point, $user_id );
 							$total_points = $total_points + $wps_wpr_point;
 						}
 					}
@@ -1287,6 +1291,8 @@ class Points_Rewards_For_WooCommerce_Public {
 						/*Calculat points of the order*/
 						$points_calculation = round( ( $order_total * $wps_wpr_coupon_conversion_points ) / $wps_wpr_coupon_conversion_price );
 						$points_calculation = apply_filters( 'wps_round_down_cart_total_value', $points_calculation, $order_total, $wps_wpr_coupon_conversion_points, $wps_wpr_coupon_conversion_price );
+						// birthday multplier points.
+						$points_calculation = apply_filters( 'wps_birthday_multiplier_points', $points_calculation, $user_id );
 						/*Total Point of the order*/
 						$total_points = intval( $points_calculation + $get_points );
 
@@ -1329,6 +1335,8 @@ class Points_Rewards_For_WooCommerce_Public {
 						$user_email = $user->user_email;
 						$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 						$data       = array();
+						// birthday multplier points.
+						$item_points = apply_filters( 'wps_birthday_multiplier_points', $item_points, $user_id );
 						/*Update points details in woocommerce*/
 						$this->wps_wpr_update_points_details( $user_id, 'product_details', $item_points, $data );
 						/*Total Points of the products*/
@@ -3849,10 +3857,14 @@ class Points_Rewards_For_WooCommerce_Public {
 					if ( 'percent' === $wps_wpr_order_rewards_points_type ) {
 
 						$wps_wpr_number_of_rewards_points = ceil( ( $order_total * $wps_wpr_number_of_rewards_points ) / 100 );
+						// birthday multplier points.
+						$wps_wpr_number_of_rewards_points = apply_filters( 'wps_birthday_multiplier_points', $wps_wpr_number_of_rewards_points, $user_id );
 						$updated_points                   = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
 					} else {
 
-						$updated_points = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
+						// birthday multplier points.
+						$wps_wpr_number_of_rewards_points = apply_filters( 'wps_birthday_multiplier_points', $wps_wpr_number_of_rewards_points, $user_id );
+						$updated_points                   = (int) $user_total_points + $wps_wpr_number_of_rewards_points;
 					}
 
 					// create log for order rewards points.
@@ -5661,5 +5673,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			wp_mail( $to, $subject, $message, $headers );
 		}
 	}
+
 }
 
