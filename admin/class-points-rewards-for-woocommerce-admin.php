@@ -2182,6 +2182,18 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @return void
 	 */
 	public function wps_large_scv_import() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			wp_send_json(
+				array(
+					'result' => false,
+					'msg'    => esc_html__( 'Access denied', 'points-and-rewards-for-woocommerce' ),
+				)
+			);
+			wp_die();
+		}
+
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
 
 		$start          = isset( $_POST['start'] ) ? sanitize_text_field( wp_unslash( intval( $_POST['start'] ) ) ) : 0;
