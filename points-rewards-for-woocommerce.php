@@ -921,4 +921,3 @@ if ( $activated ) {
 		}
 	}
 }
-
