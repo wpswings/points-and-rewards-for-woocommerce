@@ -12,6 +12,10 @@
  * @subpackage points-and-rewards-for-wooCommerce/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The core plugin class.
  *

@@ -9,6 +9,10 @@
  * @subpackage points-and-rewards-for-wooCommerce/public/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $user_id = $user_ID;
 if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 	$point_log    = get_user_meta( $user_id, 'points_details', true );

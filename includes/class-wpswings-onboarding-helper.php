@@ -9,6 +9,10 @@
  * @subpackage points-and-rewards-for-wooCommerce/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The Onboarding-specific functionality of the plugin admin side.
  *

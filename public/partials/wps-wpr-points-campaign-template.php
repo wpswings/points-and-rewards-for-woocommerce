@@ -9,6 +9,10 @@
  * @subpackage points-and-rewards-for-wooCommerce/public/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // feature settings.
 $user_id                                = get_current_user_id();
 $wps_wpr_campaign_settings              = get_option( 'wps_wpr_campaign_settings', array() );

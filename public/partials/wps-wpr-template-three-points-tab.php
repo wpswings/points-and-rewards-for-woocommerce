@@ -9,6 +9,10 @@
  * @subpackage points-and-rewards-for-wooCommerce/public/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $user_id    = get_current_user_id();
 $get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 $my_role    = ! empty( get_user_meta( $user_id, 'membership_level', true ) ) ? get_user_meta( $user_id, 'membership_level', true ) : '';

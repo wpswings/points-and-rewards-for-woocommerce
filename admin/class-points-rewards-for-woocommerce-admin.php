@@ -9,6 +9,10 @@
  * @subpackage points-and-rewards-for-wooCommerce/admin
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The admin-specific functionality of the plugin.
  *
