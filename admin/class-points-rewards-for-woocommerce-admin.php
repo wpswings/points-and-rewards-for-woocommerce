@@ -2187,6 +2187,21 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_large_scv_import() {
 
+		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+
+		// Authentication check.
+		if ( ! is_user_logged_in() ) {
+
+			wp_send_json(
+				array(
+					'result' => false,
+					'msg'    => esc_html__( 'Authentication required', 'points-and-rewards-for-woocommerce' ),
+				)
+			);
+			wp_die();
+		}
+
+		// Authorization check.
 		if ( ! current_user_can( 'manage_options' ) ) {
 
 			wp_send_json(
@@ -2197,8 +2212,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 			);
 			wp_die();
 		}
-
-		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
 
 		$start          = isset( $_POST['start'] ) ? sanitize_text_field( wp_unslash( intval( $_POST['start'] ) ) ) : 0;
 		$chunk_size     = 1000; // Adjust chunk size as needed.
