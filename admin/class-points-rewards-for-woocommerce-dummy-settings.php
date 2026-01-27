@@ -9,6 +9,10 @@
  * @subpackage points-and-rewards-for-wooCommerce/admin
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -505,39 +509,39 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'desc_tip'          => __( 'The Number of Customers To Be Listed During Ranking', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
-				'title'    => __( 'First Rank Bonus Rewards', 'ultimate-woocommerce-points-and-rewards' ),
+				'title'    => __( 'First Rank Bonus Rewards', 'points-and-rewards-for-woocommerce' ),
 				'type'     => 'checkbox',
-				'desc'     => __( 'Turn on this option to grant bonus points to users who achieve the first rank.', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc'     => __( 'Turn on this option to grant bonus points to users who achieve the first rank.', 'points-and-rewards-for-woocommerce' ),
 				'id'       => 'wps_wpr_dummy_enable_to_rewards_extra_points_first_rank',
-				'desc_tip' => __( 'Enable this option to apply additional reward points to users occupying the first-rank position.', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip' => __( 'Enable this option to apply additional reward points to users occupying the first-rank position.', 'points-and-rewards-for-woocommerce' ),
 				'default'  => 0,
 				'class'    => 'wps_wpr_pro_plugin_settings',
 			),
 			array(
-				'title' => __( 'Points Assignment Type', 'ultimate-woocommerce-points-and-rewards' ),
+				'title' => __( 'Points Assignment Type', 'points-and-rewards-for-woocommerce' ),
 				'id' => 'wps_wpr_dummy_rank_points_assignment_type',
 				'class' => 'wps_wgm_new_woo_ver_style_select wps_wpr_pro_plugin_settings',
 				'type' => 'singleSelectDropDownWithKeyvalue',
-				'desc_tip' => __( 'Choose the interval at which points will be awarded, either weekly or monthly', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip' => __( 'Choose the interval at which points will be awarded, either weekly or monthly', 'points-and-rewards-for-woocommerce' ),
 				'custom_attribute' => array(
 					array(
 						'id' => 'week',
-						'name' => __( 'Weekly', 'ultimate-woocommerce-points-and-rewards' ),
+						'name' => __( 'Weekly', 'points-and-rewards-for-woocommerce' ),
 					),
 					array(
 						'id' => 'month',
-						'name' => __( 'Monthly', 'ultimate-woocommerce-points-and-rewards' ),
+						'name' => __( 'Monthly', 'points-and-rewards-for-woocommerce' ),
 					),
 				),
 			),
 			array(
-				'title'             => __( 'Enter Points', 'ultimate-woocommerce-points-and-rewards' ),
+				'title'             => __( 'Enter Points', 'points-and-rewards-for-woocommerce' ),
 				'type'              => 'number',
 				'default'           => 1,
 				'id'                => 'wps_wpr_dummy_rank_holder_points',
 				'custom_attributes' => array( 'min' => '"1"' ),
 				'class'             => 'input-text wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
-				'desc_tip'          => __( 'Entered points will be assigned to user based on the selected interval', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip'          => __( 'Entered points will be assigned to user based on the selected interval', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
 				'type' => 'sectionend',
@@ -711,13 +715,13 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 				'desc_tip'          => __( 'The Points That The Customers Will Get, Only on Their Birthday', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
-				'title'             => __( 'Birthday Month Points Multiplier', 'ultimate-woocommerce-points-and-rewards' ),
+				'title'             => __( 'Birthday Month Points Multiplier', 'points-and-rewards-for-woocommerce' ),
 				'type'              => 'number',
 				'default'           => 1,
 				'id'                => 'wps_wpr_dummy_birth_day_multiplier',
 				'custom_attributes' => array( 'min' => '"1"' ),
 				'class'             => 'input-text wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
-				'desc_tip'          => __( 'Apply a points multiplier to all orders placed during the user’s birthday month. The points earned will be multiplied based on the selected value (2X / 3X).', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip'          => __( 'Apply a points multiplier to all orders placed during the user’s birthday month. The points earned will be multiplied based on the selected value (2X / 3X).', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
 				'type' => 'sectionend',

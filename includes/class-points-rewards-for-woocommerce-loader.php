@@ -9,6 +9,10 @@
  * @subpackage points-and-rewards-for-wooCommerce/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Register all actions and filters for the plugin.
  *

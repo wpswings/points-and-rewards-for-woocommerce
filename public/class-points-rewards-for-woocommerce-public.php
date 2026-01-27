@@ -4028,6 +4028,11 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_show_canvas_icons() {
 
+		// return if admin page or iframe request.
+		if ( is_admin() || ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) ) {
+			return;
+		}
+
 		// calling campaign modal function.
 		$this->wps_wpr_show_campaign_modal();
 
