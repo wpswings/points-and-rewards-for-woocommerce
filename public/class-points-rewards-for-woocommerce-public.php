@@ -1270,8 +1270,9 @@ class Points_Rewards_For_WooCommerce_Public {
 				}
 
 				// Rewards Per Currency points.
-				$order_total = $order->get_total();
-				$order_total = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
+				$points_calculation = 0;
+				$order_total        = $order->get_total();
+				$order_total        = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
 				// WOOCS - WooCommerce Currency Switcher Compatibility.
 				$order_total = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
 				$order_total = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
@@ -1288,8 +1289,43 @@ class Points_Rewards_For_WooCommerce_Public {
 						$wps_wpr_coupon_conversion_price  = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
 						$wps_wpr_coupon_conversion_price  = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
 
+						/** Rewards Points based on user membership per currency settings */
+						$check_per_curr_enable     = false;
+						$membership_level          = get_user_meta( $user_id, 'membership_level', true );
+						$membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
+						$wps_wpr_membership_roles  = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
+						if ( ! empty( $membership_level ) && array_key_exists( $membership_level, $wps_wpr_membership_roles ) ) {
+							if ( is_array( $wps_wpr_membership_roles ) && ! empty( $wps_wpr_membership_roles ) ) {
+								// get membership discount amount.
+								foreach ( $wps_wpr_membership_roles as $wps_role => $values ) {
+									if ( ! is_array( $values ) ) {
+										break;
+									}
+									if ( $wps_role == $membership_level ) {
+
+										$wps_wpr_enable_mem_wise_per_curr = isset( $values['wps_wpr_enable_mem_wise_per_curr'] ) ? $values['wps_wpr_enable_mem_wise_per_curr'] : 0;
+										$wps_wpr_membership_wise_price    = isset( $values['wps_wpr_membership_wise_price'] ) ? $values['wps_wpr_membership_wise_price'] : 0;
+										$wps_wpr_membership_wise_points   = isset( $values['wps_wpr_membership_wise_points'] ) ? $values['wps_wpr_membership_wise_points'] : 0;
+										if ( '1' === $wps_wpr_enable_mem_wise_per_curr ) {
+
+											$check_per_curr_enable    = true;
+											$per_curr_mem_wise_points = round( ( $order_total * $wps_wpr_membership_wise_points ) / $wps_wpr_membership_wise_price );
+										}
+										break;
+									}
+								}
+							}
+						}
+
 						/*Calculat points of the order*/
-						$points_calculation = round( ( $order_total * $wps_wpr_coupon_conversion_points ) / $wps_wpr_coupon_conversion_price );
+						if ( $check_per_curr_enable ) {
+							
+							$points_calculation = $per_curr_mem_wise_points;
+						} else {
+
+							$points_calculation = round( ( $order_total * $wps_wpr_coupon_conversion_points ) / $wps_wpr_coupon_conversion_price );
+						}
+
 						$points_calculation = apply_filters( 'wps_round_down_cart_total_value', $points_calculation, $order_total, $wps_wpr_coupon_conversion_points, $wps_wpr_coupon_conversion_price );
 						// birthday multplier points.
 						$points_calculation = apply_filters( 'wps_birthday_multiplier_points', $points_calculation, $user_id );
