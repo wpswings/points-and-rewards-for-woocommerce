@@ -191,7 +191,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'enble_mem_reward_label' => esc_html__( 'Rewards Members with points', 'points-and-rewards-for-woocommerce' ),
 						'mem_points_type'        => esc_html__( 'Rewards Points type', 'points-and-rewards-for-woocommerce' ),
 						'wps_wpr_free_shipping'  => esc_html__( 'Free Shipping', 'points-and-rewards-for-woocommerce' ),
-						'wps_enable_mem_per_curr' => esc_html__( 'Enable Per curreny settings', 'points-and-rewards-for-woocommerce' ),
+						'wps_enable_mem_per_curr' => esc_html__( 'Enable Per currency settings', 'points-and-rewards-for-woocommerce' ),
 						'wps_set_mem_curr_values' => esc_html__( 'Set per-currency values', 'points-and-rewards-for-woocommerce' ),
 						'wps_ajax_error'         => esc_html__( 'An error occurred. Please try again.', 'points-and-rewards-for-woocommerce' ),
 						'wps_user_count'         => $this->wps_wpr_org_user_count(),
@@ -865,7 +865,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				</tr>
 				<tr>
 					<th>
-						<label for="wps_wpr_mem_rewards_points"><?php esc_html_e( 'Enable Per curreny settings', 'points-and-rewards-for-woocommerce' ); ?></label>
+						<label for="wps_wpr_mem_rewards_points"><?php esc_html_e( 'Enable Per currency settings', 'points-and-rewards-for-woocommerce' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
