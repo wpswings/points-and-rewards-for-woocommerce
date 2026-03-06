@@ -7,4 +7,8 @@
  * @package    Points and Rewards for WooCommerce
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 esc_html_e( 'oops looks like nothing is here', 'points-and-rewards-for-woocommerce' );

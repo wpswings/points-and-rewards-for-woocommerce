@@ -1311,9 +1311,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						}
 					}
 
-					/* ---------------------------------------
-					* Final Points Calculation Logic
-					* --------------------------------------- */
+					// Final Points Calculation Logic.
 					$wps_assigned_yes = false;
 					if ( $check_per_curr_enable ) {
 
@@ -2366,7 +2364,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		if ( $this->is_order_conversion_enabled() && $wps_wpr_per_currency_discount_notice ) {
 
-			/** membership per currency settings conversion rate msg */
+			/** Membership per currency settings conversion rate msg */
 			$membership_level               = get_user_meta( $user_id, 'membership_level', true );
 			$membership_settings_array      = get_option( 'wps_wpr_membership_settings', true );
 			$wps_wpr_membership_roles       = isset( $membership_settings_array['membership_roles'] ) && is_array( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();

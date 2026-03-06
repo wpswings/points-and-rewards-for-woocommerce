@@ -886,10 +886,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 						<?php
 						$allowed_tags          = $this->wps_wpr_allowed_html();
 						$attribute_description = __( "Set the price value for each currency.", 'points-and-rewards-for-woocommerce' );
-						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags ) . ' ' . get_woocommerce_currency_symbol();
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags ) . ' ' . esc_html( get_woocommerce_currency_symbol() );
 						?>
 						<label for="wps_wpr_enable_user_wise_currency_settings">
-							<input type="number" min="0" name="wps_wpr_membership_wise_price_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_wise_price_<?php echo esc_html( $count ); ?>" value="<?php echo ! empty( $value['wps_wpr_membership_wise_price'] ) ? $value['wps_wpr_membership_wise_price'] : 0; ?>">
+							<input type="number" min="0" name="wps_wpr_membership_wise_price_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_wise_price_<?php echo esc_html( $count ); ?>" value="<?php echo ! empty( $value['wps_wpr_membership_wise_price'] ) ? esc_html( $value['wps_wpr_membership_wise_price'] ) : 0; ?>">
 						</label>
 						<?php
 						$allowed_tags          = $this->wps_wpr_allowed_html();
@@ -897,7 +897,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags ) . ' = ';
 						?>
 						<label for="wps_wpr_enable_user_wise_currency_settings">
-							<input type="number" min="0" name="wps_wpr_membership_wise_points_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_wise_points_<?php echo esc_html( $count ); ?>" value="<?php echo ! empty( $value['wps_wpr_membership_wise_points'] ) ? $value['wps_wpr_membership_wise_points'] : 0; ?>">
+							<input type="number" min="0" name="wps_wpr_membership_wise_points_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_wise_points_<?php echo esc_html( $count ); ?>" value="<?php echo ! empty( $value['wps_wpr_membership_wise_points'] ) ? esc_html( $value['wps_wpr_membership_wise_points'] ) : 0; ?>">
 						</label>
 						<span>Points</span>
 					</td>
