@@ -191,6 +191,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'enble_mem_reward_label' => esc_html__( 'Rewards Members with points', 'points-and-rewards-for-woocommerce' ),
 						'mem_points_type'        => esc_html__( 'Rewards Points type', 'points-and-rewards-for-woocommerce' ),
 						'wps_wpr_free_shipping'  => esc_html__( 'Free Shipping', 'points-and-rewards-for-woocommerce' ),
+						'wps_enable_mem_per_curr' => esc_html__( 'Enable Per currency settings', 'points-and-rewards-for-woocommerce' ),
+						'wps_set_mem_curr_values' => esc_html__( 'Set per-currency values', 'points-and-rewards-for-woocommerce' ),
 						'wps_ajax_error'         => esc_html__( 'An error occurred. Please try again.', 'points-and-rewards-for-woocommerce' ),
 						'wps_user_count'         => $this->wps_wpr_org_user_count(),
 						'is_wallet_active'       => is_plugin_active('wallet-system-for-woocommerce/wallet-system-for-woocommerce.php'),
@@ -859,6 +861,45 @@ class Points_Rewards_For_WooCommerce_Admin {
 						<label for="wps_wpr_enable_free_shipping">
 							<input type="checkbox" name="wps_wpr_enable_free_shipping_<?php echo esc_html( $count ); ?>" id="wps_wpr_enable_free_shipping_<?php echo esc_html( $count ); ?>" value="1" <?php checked( ! empty( $value['wps_par_free_shipping'] ) ? $value['wps_par_free_shipping'] : '0', 1 ); ?>>
 						</label>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="wps_wpr_mem_rewards_points"><?php esc_html_e( 'Enable Per currency settings', 'points-and-rewards-for-woocommerce' ); ?></label>
+					</th>
+					<td class="forminp forminp-text">
+						<?php
+						$allowed_tags          = $this->wps_wpr_allowed_html();
+						$attribute_description = __( "Enable this setting to offer membership wise per currency settings.", 'points-and-rewards-for-woocommerce' );
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags );
+						?>
+						<label for="wps_wpr_enable_user_wise_currency_settings">
+							<input type="checkbox" name="wps_wpr_enable_mem_wise_per_curr_<?php echo esc_html( $count ); ?>" id="wps_wpr_enable_mem_wise_per_curr_<?php echo esc_html( $count ); ?>" value="1" <?php checked( ! empty( $value['wps_wpr_enable_mem_wise_per_curr'] ) ? $value['wps_wpr_enable_mem_wise_per_curr'] : '0', 1 ); ?>>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="wps_wpr_mem_rewards_points"><?php esc_html_e( 'Set per-currency values', 'points-and-rewards-for-woocommerce' ); ?></label>
+					</th>
+					<td class="forminp forminp-text">
+						<?php
+						$allowed_tags          = $this->wps_wpr_allowed_html();
+						$attribute_description = __( "Set the price value for each currency.", 'points-and-rewards-for-woocommerce' );
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags ) . ' ' . esc_html( get_woocommerce_currency_symbol() );
+						?>
+						<label for="wps_wpr_enable_user_wise_currency_settings">
+							<input type="number" min="0" name="wps_wpr_membership_wise_price_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_wise_price_<?php echo esc_html( $count ); ?>" value="<?php echo ! empty( $value['wps_wpr_membership_wise_price'] ) ? esc_html( $value['wps_wpr_membership_wise_price'] ) : 0; ?>">
+						</label>
+						<?php
+						$allowed_tags          = $this->wps_wpr_allowed_html();
+						$attribute_description = __( "Set the points value for each currency.", 'points-and-rewards-for-woocommerce' );
+						echo wp_kses( wc_help_tip( $attribute_description ), $allowed_tags ) . ' = ';
+						?>
+						<label for="wps_wpr_enable_user_wise_currency_settings">
+							<input type="number" min="0" name="wps_wpr_membership_wise_points_<?php echo esc_html( $count ); ?>" id="wps_wpr_membership_wise_points_<?php echo esc_html( $count ); ?>" value="<?php echo ! empty( $value['wps_wpr_membership_wise_points'] ) ? esc_html( $value['wps_wpr_membership_wise_points'] ) : 0; ?>">
+						</label>
+						<span>Points</span>
 					</td>
 					<input type="hidden" value="<?php echo esc_html( $count ); ?>" name="hidden_count">
 				</tr>

@@ -460,32 +460,49 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 											<div class="wps_wpr_popup_wrapper wps_rwpr_settings_display_none" id="wps_wpr_popup_wrapper_<?php echo esc_html( $wps_member_name ); ?>">
 												<div class="wps_wpr_popup_content_section">
 													<div class="wps_wpr_popup_content">
-														<div class="wps_wpr_popup_notice_section">
-															<?php
-															if ( $discount_value > 0 ) {
-																?>
-																															<p>
-																	<span class="wps_wpr_intro_text">
-																	<?php
-																	esc_html_e( 'You will get ', 'points-and-rewards-for-woocommerce' );
-																	echo esc_html( $discount_value );
-																	esc_html_e( '% discount on below products or categories', 'points-and-rewards-for-woocommerce' );
+														<div class="wps_wpr_tab_three_mem_benefits wps_wpr_popup_notice_section">
+															<div class="wps_wpr_popup_notice_section_in">
+																<?php
+																if ( $discount_value > 0 ) {
 																	?>
-																	</span>
-																</p>
-																<?php
-															} else {
+																	<p>
+																		<span class="wps_wpr_intro_text">
+																		<?php
+																		esc_html_e( 'You will get ', 'points-and-rewards-for-woocommerce' );
+																		echo esc_html( $discount_value );
+																		esc_html_e( '% discount on below products or categories', 'points-and-rewards-for-woocommerce' );
+																		?>
+																		</span>
+																	</p>
+																	<?php
+																} else {
 
+																	?>
+																	<p>
+																		<span class="wps_wpr_intro_text"><?php echo esc_html( ucfirst( $wps_member_name ) ); ?></span>
+																	</p>
+																	<?php
+																}
 																?>
-																<p>
-																	<span class="wps_wpr_intro_text"><?php echo esc_html( ucfirst( $wps_member_name ) ); ?></span>
-																</p>
+																<span class="wps_wpr_close">
+																	<a href="javascript:;"><img src="<?php echo esc_url( WPS_RWPR_DIR_URL ); ?>public/images/cancel.png" alt=""></a>
+																</span>
+															</div>
+															<div class="wps_wpr_popup_notice_section_in">
 																<?php
-															}
-															?>
-															<span class="wps_wpr_close">
-																<a href="javascript:;"><img src="<?php echo esc_url( WPS_RWPR_DIR_URL ); ?>public/images/cancel.png" alt=""></a>
-															</span>
+																$wps_wpr_enable_mem_wise_per_curr = isset( $values['wps_wpr_enable_mem_wise_per_curr'] ) ? $values['wps_wpr_enable_mem_wise_per_curr'] : 0;
+																if ( '1' === $wps_wpr_enable_mem_wise_per_curr ) {
+
+																	$wps_wpr_per_curr_earning_messages = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_per_curr_earning_messages' );
+																	$wps_wpr_membership_wise_price     = isset( $values['wps_wpr_membership_wise_price'] ) ? (float) $values['wps_wpr_membership_wise_price'] : 0;
+																	$wps_wpr_membership_wise_points    = isset( $values['wps_wpr_membership_wise_points'] ) ? (float) $values['wps_wpr_membership_wise_points'] : 0;
+																	// WOOCS - WooCommerce Currency Switcher Compatibility.
+																	$wps_wpr_per_curr_earning_messages = str_replace( '[POINTS]', $wps_wpr_membership_wise_points, $wps_wpr_per_curr_earning_messages );
+																	$wps_wpr_per_curr_earning_messages = str_replace( '[CURRENCY]', wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_membership_wise_price ) ), $wps_wpr_per_curr_earning_messages );
+																	echo '<span class="wps_wpr_messages">' . wp_kses_post( $wps_wpr_per_curr_earning_messages ) . '</span>';
+																}
+																?>
+															</div>
 														</div>
 														<div class="wps_wpr_popup_thumbnail_section">
 															<ul>

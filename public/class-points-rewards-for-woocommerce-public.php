@@ -1270,26 +1270,64 @@ class Points_Rewards_For_WooCommerce_Public {
 				}
 
 				// Rewards Per Currency points.
-				$order_total = $order->get_total();
-				$order_total = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
+				$points_calculation = 0;
+				$order_total        = $order->get_total();
+				$order_total        = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
 				// WOOCS - WooCommerce Currency Switcher Compatibility.
-				$order_total = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
-				$order_total = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
-				if ( $wps_wpr_coupon_conversion_enable ) {
+				$order_total            = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
+				$order_total            = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
+				$item_conversion_id_set = wps_wpr_hpos_get_meta_data( $order_id, "$order_id#item_conversion_id", true );
+				if ( empty( $item_conversion_id_set ) && $order_total > 0 ) {
 
-					$item_conversion_id_set = wps_wpr_hpos_get_meta_data( $order_id, "$order_id#item_conversion_id", true );
-					if ( empty( $item_conversion_id_set ) ) {
+					$user_id = $order->get_user_id();
+					$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+					/*total calculation of the points*/
+					$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
+					$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
+					$wps_wpr_coupon_conversion_price  = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
+					$wps_wpr_coupon_conversion_price  = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
 
-						$user_id = $order->get_user_id();
-						$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-						/*total calculation of the points*/
-						$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
-						$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
-						$wps_wpr_coupon_conversion_price  = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
-						$wps_wpr_coupon_conversion_price  = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
+					/** Rewards Points based on user membership per currency settings */
+					$check_per_curr_enable     = false;
+					$membership_level          = get_user_meta( $user_id, 'membership_level', true );
+					$membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
+					$wps_wpr_membership_roles  = isset( $membership_settings_array['membership_roles'] ) && is_array( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
+					$per_curr_mem_wise_points  = 0;
 
-						/*Calculat points of the order*/
+					// check membership level and get price and points for conversion rate message if membership per currency settings is enable.
+					if ( ! empty( $membership_level ) && isset( $wps_wpr_membership_roles[ $membership_level ] ) ) {
+
+						$values = $wps_wpr_membership_roles[ $membership_level ];
+						if ( is_array( $values ) ) {
+
+							$wps_wpr_enable_mem_wise_per_curr = isset( $values['wps_wpr_enable_mem_wise_per_curr'] ) ? $values['wps_wpr_enable_mem_wise_per_curr'] : 0;
+							if ( '1' === $wps_wpr_enable_mem_wise_per_curr ) {
+
+								$wps_wpr_membership_wise_price  = isset( $values['wps_wpr_membership_wise_price'] ) ? (float) $values['wps_wpr_membership_wise_price'] : 0;
+								$wps_wpr_membership_wise_points = isset( $values['wps_wpr_membership_wise_points'] ) ? (float) $values['wps_wpr_membership_wise_points'] : 0;
+								$per_curr_mem_wise_points       = round( ( $order_total * $wps_wpr_membership_wise_points ) / $wps_wpr_membership_wise_price );
+								$check_per_curr_enable          = true;
+							}
+						}
+					}
+
+					// Final Points Calculation Logic.
+					$wps_assigned_yes = false;
+					if ( $check_per_curr_enable ) {
+
+						// Membership based points.
+						$points_calculation = $per_curr_mem_wise_points;
+						$wps_assigned_yes   = true;
+					} elseif ( $wps_wpr_coupon_conversion_enable ) {
+
+						// Normal coupon conversion points.
 						$points_calculation = round( ( $order_total * $wps_wpr_coupon_conversion_points ) / $wps_wpr_coupon_conversion_price );
+						$wps_assigned_yes   = true;
+					}
+
+					// if points assigned through conversion then only update points and send mail.
+					if ( $wps_assigned_yes ) {
+
 						$points_calculation = apply_filters( 'wps_round_down_cart_total_value', $points_calculation, $order_total, $wps_wpr_coupon_conversion_points, $wps_wpr_coupon_conversion_price );
 						// birthday multplier points.
 						$points_calculation = apply_filters( 'wps_birthday_multiplier_points', $points_calculation, $user_id );
@@ -2316,14 +2354,51 @@ class Points_Rewards_For_WooCommerce_Public {
 		// show message on cart page for per currency earn points.
 		$wps_wpr_per_currency_discount_notice = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_per_currency_discount_notice' );
 		$wps_wpr_per_curr_earning_messages    = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_per_curr_earning_messages' );
+
+		/* per currency conversion rate */
+		$wps_wpr_coupon_conversion_points = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_price' );
+		$wps_wpr_coupon_conversion_points = ( 0 == $wps_wpr_coupon_conversion_points ) ? 1 : $wps_wpr_coupon_conversion_points;
+
+		$wps_wpr_coupon_conversion_price  = $this->wps_wpr_get_coupon_settings_num( 'wps_wpr_coupon_conversion_points' );
+		$wps_wpr_coupon_conversion_price  = ( 0 == $wps_wpr_coupon_conversion_price ) ? 1 : $wps_wpr_coupon_conversion_price;
+
 		if ( $this->is_order_conversion_enabled() && $wps_wpr_per_currency_discount_notice ) {
 
+			/** Membership per currency settings conversion rate msg */
+			$membership_level               = get_user_meta( $user_id, 'membership_level', true );
+			$membership_settings_array      = get_option( 'wps_wpr_membership_settings', true );
+			$wps_wpr_membership_roles       = isset( $membership_settings_array['membership_roles'] ) && is_array( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
+			$wps_wpr_membership_wise_price  = 0;
+			$wps_wpr_membership_wise_points = 0;
+
+			// check membership level and get price and points for conversion rate message if membership per currency settings is enable.
+			if ( ! empty( $membership_level ) && isset( $wps_wpr_membership_roles[ $membership_level ] ) ) {
+
+				$values = $wps_wpr_membership_roles[ $membership_level ];
+				if ( is_array( $values ) ) {
+
+					$wps_wpr_enable_mem_wise_per_curr = isset( $values['wps_wpr_enable_mem_wise_per_curr'] ) ? $values['wps_wpr_enable_mem_wise_per_curr'] : 0;
+					if ( '1' === $wps_wpr_enable_mem_wise_per_curr ) {
+
+						$wps_wpr_membership_wise_price  = isset( $values['wps_wpr_membership_wise_price'] ) ? (float) $values['wps_wpr_membership_wise_price'] : 0;
+						$wps_wpr_membership_wise_points = isset( $values['wps_wpr_membership_wise_points'] ) ? (float) $values['wps_wpr_membership_wise_points'] : 0;
+					}
+				}
+			}
+
+			// update conversion rate if membership per currency settings is enable and have price and points value.
+			if ( $wps_wpr_membership_wise_points > 0 && $wps_wpr_membership_wise_price > 0 ) {
+
+				$wps_wpr_coupon_conversion_points = $wps_wpr_membership_wise_points;
+				$wps_wpr_coupon_conversion_price  = $wps_wpr_membership_wise_price;
+			}
+
 			?>
-			<div class="woocommerce-message" id="wps_wpr_order_notice" style="background-color: <?php echo esc_html( $wps_wpr_notification_color ); ?>">
+			<div class="woocommerce-message" id="wps_wpr_order_notice" style="background-color: <?php echo esc_attr( $wps_wpr_notification_color ); ?>">
 				<?php
 				// WOOCS - WooCommerce Currency Switcher Compatibility.
-				$wps_wpr_per_curr_earning_messages = str_replace( '[POINTS]', $wps_wpr_cart_points_rate, $wps_wpr_per_curr_earning_messages );
-				$wps_wpr_per_curr_earning_messages = str_replace( '[CURRENCY]', wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_cart_price_rate ) ), $wps_wpr_per_curr_earning_messages );
+				$wps_wpr_per_curr_earning_messages = str_replace( '[POINTS]', $wps_wpr_coupon_conversion_points, $wps_wpr_per_curr_earning_messages );
+				$wps_wpr_per_curr_earning_messages = str_replace( '[CURRENCY]', wc_price( apply_filters( 'wps_wpr_show_conversion_price', $wps_wpr_coupon_conversion_price ) ), $wps_wpr_per_curr_earning_messages );
 				echo wp_kses_post( $wps_wpr_per_curr_earning_messages );
 				?>
 			</div>

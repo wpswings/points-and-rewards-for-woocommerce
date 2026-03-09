@@ -263,10 +263,10 @@ a.wps_wpr_whatsapp_share {
     border-bottom: 5px solid #7f527d;
     border-radius: 5px;
     bottom: 0;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .2);
     left: 0;
     margin: 0 auto;
-    max-width: 600px;
+    max-width: 640px;
     overflow-wrap: break-word;
     overflow-y: auto;
     position: relative;
@@ -300,7 +300,8 @@ a.wps_wpr_whatsapp_share {
 
 .wps_wpr_popup_notice_section span {
     display: inline-block;
-    vertical-align: top
+    vertical-align: top;
+    width: auto;
 }
 
 .wps_wpr_close img {
@@ -315,15 +316,28 @@ a.wps_wpr_whatsapp_share {
     color: #fff;
     padding: 10px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 10px;
 }
 
-.wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_popup_notice_section>p {
+.wps_wpr_popup_notice_section_in {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.wps_wpr_popup_notice_section_in:nth-of-type(1) {
+  border-bottom: 1.5px solid #fff;
+  padding: 0 0 10px;
+}
+
+.wps_wpr_popup_content_section .wps_wpr_popup_content .wps_wpr_popup_notice_section_in>p {
     margin: 0;
     font-size: 16px;
     display: block;
     flex: 1;
+    line-height: 1.25;
 }
 
 .wps_wpr_popup_thumbnail_section {
