@@ -2568,7 +2568,7 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( 1 == $wps_wpr_custom_points_on_checkout ) {
 			if ( 'checkout/form-coupon.php' == $template_name ) {
 
-				return WPS_RWPR_DIR_PATH . 'public/woocommerce/checkout/form-coupon.php';
+				return WPS_RWPR_DIR_PATH . 'public/woocommerce/templates/checkout/form-coupon.php';
 			}
 		}
 		return $path;
@@ -5342,7 +5342,6 @@ class Points_Rewards_For_WooCommerce_Public {
 				$birthday_points = isset( $settings['wps_wpr_general_birthday_value'] ) ? $settings['wps_wpr_general_birthday_value'] : '';
 
 				update_user_meta( $user_id, '_my_bday', $birthday );
-				update_user_meta( $user_id, 'points_on_birthday_order', $birthday_points );
 
 				$response['result'] = true;
 				$response['msg']    = sprintf(
