@@ -61,6 +61,7 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_dummy_first_order_points' ) );
 		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_dummy_round_points_settings' ) );
 		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_dummy_birthday_order_points' ) );
+		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_dummy_anniversary_points' ) );
 		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_dummy_user_roles' ) );
 		add_action( 'wps_wpr_additional_general_settings', array( $this, 'wps_wpr_additional_dummy_cart_points_settings' ), 10, 2 );
 		add_filter( 'wps_wpr_coupon_settings', array( $this, 'wps_wpr_add_dummy_per_currrency_on_subtotal_option' ), 20 );
@@ -728,6 +729,46 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 			),
 		);
 		$wps_wpr_general_settings = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 150 );
+		return $wps_wpr_general_settings;
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $wps_wpr_general_settings
+	 * @return void
+	 */
+	public function wps_wpr_dummy_anniversary_points( $wps_wpr_general_settings ) {
+		
+		$my_new_inserted_array = array(
+			array(
+				'title' => __( 'Enable Anniversary Points settings', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'  => 'title',
+			),
+			array(
+				'title'    => __( 'Enable', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'     => 'checkbox',
+				'class'    => 'wps_wpr_pro_plugin_settings',
+				'desc'     => __( 'Enable giving points on the anniversary.', 'ultimate-woocommerce-points-and-rewards' ),
+				'id'       => 'wps_wpr_general_dummy_setting_anninversary_enable',
+				'desc_tip' => __( 'Check this box to enable points for the anniversary.', 'ultimate-woocommerce-points-and-rewards' ),
+				'default'  => 0,
+			),
+			array(
+				'title'             => __( 'Enter the number of anniversary points to be given', 'ultimate-woocommerce-points-and-rewards' ),
+				'type'              => 'number',
+				'default'           => 1,
+				'id'                => 'wps_wpr_general_dummy_anninversary_value',
+				'custom_attributes' => array( 'min' => '"1"' ),
+				'class'             => 'input-text wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
+				'desc_tip'          => __( 'The points that customers will receive only on their anniversary.', 'ultimate-woocommerce-points-and-rewards' ),
+			),
+			array(
+				'type' => 'sectionend',
+			),
+
+		);
+		$wps_wpr_general_settings  = $this->wps_dummy_insert_keys_value_pair( $wps_wpr_general_settings, $my_new_inserted_array, 152 );
 		return $wps_wpr_general_settings;
 	}
 

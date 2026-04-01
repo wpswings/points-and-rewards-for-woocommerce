@@ -1277,7 +1277,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$order_total            = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
 				$order_total            = str_replace( wc_get_price_decimal_separator(), '.', strval( $order_total ) );
 				$item_conversion_id_set = wps_wpr_hpos_get_meta_data( $order_id, "$order_id#item_conversion_id", true );
-				if ( empty( $item_conversion_id_set ) && $order_total > 0 ) {
+				if ( 'set' != $item_conversion_id_set && $order_total > 0 ) {
 
 					$user_id = $order->get_user_id();
 					$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
@@ -3620,7 +3620,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			return;
 		}
 		// It only shows on cart page.
-		if ( is_cart() ) {
+		if ( is_cart() || has_block( 'woocommerce/cart' ) ) {
 			/*Get the value of the custom points*/
 			$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
 			if ( 1 === $wps_wpr_custom_points_on_cart ) {
