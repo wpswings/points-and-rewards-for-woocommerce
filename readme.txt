@@ -1,12 +1,12 @@
-=== Points and Rewards for WooCommerce - Create Loyalty Programs, Reward Customer Purchases, User Badges, Gamification ===
+=== Points and Rewards for WooCommerce ===
 Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points and rewards, loyalty, referral points, reward points, gamification
 Requires at least: 6.7.0
-Tested up to: 6.9.1
+Tested up to: 6.9.4
 WC requires at least: 6.5.0
-WC tested up to: 10.5.3
-Stable tag: 2.9.7
+WC tested up to: 10.6.2
+Stable tag: 2.9.8
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -340,9 +340,13 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 2.9.8 - Released on 04 April 2026 =
+* New : Compatible with latest WP(6.9.4) & WC(10.6.2)
+* Fix : Shortcode issues on Cart Block
+
 = 2.9.7 - Released on 06 March 2026 =
-New : Membership wise per currency feature
-New : Compatible with latest WP(6.9.1) & WC(10.5.3)
+* New : Membership wise per currency feature
+* New : Compatible with latest WP(6.9.1) & WC(10.5.3)
 
 = 2.9.6 - Released on 27 January 2026 =
 * Fix: Vulnerability Issues
@@ -700,6 +704,6 @@ New : Compatible with latest WP(6.9.1) & WC(10.5.3)
 
 == Upgrade Notice ==
 
-= 2.9.7 - Released on 06 March 2026 =
-New : Membership wise per currency feature
-New : Compatible with latest WP(6.9.1) & WC(10.5.3)
+= 2.9.8 - Released on 04 April 2026 =
+* New : Compatible with latest WP(6.9.4) & WC(10.6.2)
+* Fix : Shortcode issues on Cart Block
