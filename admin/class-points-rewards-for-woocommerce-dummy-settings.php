@@ -733,35 +733,35 @@ class Points_Rewards_For_WooCommerce_Dummy_Settings {
 	}
 
 	/**
-	 * Undocumented function
+	 * Create dummy settings of anniversary points in general settings.
 	 *
-	 * @param [type] $wps_wpr_general_settings
-	 * @return void
+	 * @param  array $wps_wpr_general_settings wps_wpr_general_settings.
+	 * @return array
 	 */
 	public function wps_wpr_dummy_anniversary_points( $wps_wpr_general_settings ) {
 		
 		$my_new_inserted_array = array(
 			array(
-				'title' => __( 'Enable Anniversary Points settings', 'ultimate-woocommerce-points-and-rewards' ),
+				'title' => __( 'Enable Anniversary Points settings', 'points-and-rewards-for-woocommerce' ),
 				'type'  => 'title',
 			),
 			array(
-				'title'    => __( 'Enable', 'ultimate-woocommerce-points-and-rewards' ),
+				'title'    => __( 'Enable', 'points-and-rewards-for-woocommerce' ),
 				'type'     => 'checkbox',
 				'class'    => 'wps_wpr_pro_plugin_settings',
-				'desc'     => __( 'Enable giving points on the anniversary.', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc'     => __( 'Enable giving points on the anniversary.', 'points-and-rewards-for-woocommerce' ),
 				'id'       => 'wps_wpr_general_dummy_setting_anninversary_enable',
-				'desc_tip' => __( 'Check this box to enable points for the anniversary.', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip' => __( 'Check this box to enable points for the anniversary.', 'points-and-rewards-for-woocommerce' ),
 				'default'  => 0,
 			),
 			array(
-				'title'             => __( 'Enter the number of anniversary points to be given', 'ultimate-woocommerce-points-and-rewards' ),
+				'title'             => __( 'Enter the number of anniversary points to be given', 'points-and-rewards-for-woocommerce' ),
 				'type'              => 'number',
 				'default'           => 1,
 				'id'                => 'wps_wpr_general_dummy_anninversary_value',
 				'custom_attributes' => array( 'min' => '"1"' ),
 				'class'             => 'input-text wps_wpr_new_woo_ver_style_text wps_wpr_pro_plugin_settings',
-				'desc_tip'          => __( 'The points that customers will receive only on their anniversary.', 'ultimate-woocommerce-points-and-rewards' ),
+				'desc_tip'          => __( 'The points that customers will receive only on their anniversary.', 'points-and-rewards-for-woocommerce' ),
 			),
 			array(
 				'type' => 'sectionend',
