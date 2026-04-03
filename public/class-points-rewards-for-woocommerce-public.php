@@ -57,7 +57,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function wps_wpr_public_enqueue_styles() {
 
 		// enqueue css for points tab design.
 		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
@@ -78,7 +78,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function wps_wpr_public_enqueue_scripts() {
 
 		// get cart restriction message.
 		$wps_wpr_other_settings           = get_option( 'wps_wpr_other_settings' );
@@ -5648,7 +5648,7 @@ class Points_Rewards_For_WooCommerce_Public {
 						<!-- Hero Section -->
 						<tr>
 							<td align="center" style="padding:50px 30px 20px;">
-								<img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Celebration" width="120" style="display:block; margin:0 auto 25px;">
+								<img src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/images/wps-wpr-reward-icon.png' ); ?>" alt="Celebration" width="120" style="display:block; margin:0 auto 25px;">
 								<p style="margin:0; font-size:20px; color:#333; font-weight:600;">
 									Hi <span style="color:#43a047;"><?php echo esc_html( $user->display_name ); ?></span>,
 								</p>
@@ -5674,7 +5674,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							<td align="center" style="padding:0 30px 50px;">
 								<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="width:100%; max-width:520px;">
 									<tr>
-										<td align="center" style="background:url('https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/confetti.svg') center/40px repeat #f1fdf3; border-radius:14px; padding:40px; border:2px dashed #a5d6a7; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+										<td align="center" style="background:#f1fdf3; border-radius:14px; padding:40px; border:2px dashed #a5d6a7; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
 											<p style="margin:0; font-size:22px; color:#2e7d32; font-weight:700;"><?php esc_html_e( '🏆 Rewards Unlocked!', 'points-and-rewards-for-woocommerce' ); ?></p>
 											<p style="margin:18px 0; font-size:40px; font-weight:800; color:#2e7d32;">
 												<?php
@@ -5754,4 +5754,3 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 }
-

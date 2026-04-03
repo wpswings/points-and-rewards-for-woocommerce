@@ -87,7 +87,7 @@ function wps_wpr_process_campaign_settings( $post_data ) {
 	// Default values.
 	$defaults = array(
 		'wps_wpr_enter_campaign_heading' => 'Points and Rewards Program',
-		'wps_wpr_enter_campaign_image_url' => 'https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/reward.webp',
+		'wps_wpr_enter_campaign_image_url' => WPS_RWPR_DIR_URL . 'admin/images/wps-wpr-reward.webp',
 		'wps_wpr_campaign_color_one' => '#a13a93',
 		'wps_wpr_campaign_color_two' => '#ffbb21',
 	);
@@ -242,7 +242,7 @@ $wps_wpr_quiz_option_four             = wps_wpr_get_campaign_settings( 'wps_wpr_
 $wps_wpr_quiz_answer                  = wps_wpr_get_campaign_settings( 'wps_wpr_quiz_answer', 'array' );
 $wps_wpr_quiz_rewards_points          = wps_wpr_get_campaign_settings( 'wps_wpr_quiz_rewards_points', 'array' );
 $wps_wpr_enter_campaign_heading       = wps_wpr_get_campaign_settings( 'wps_wpr_enter_campaign_heading', 'string', 'Points and Rewards Program' );
-$wps_wpr_enter_campaign_image_url     = wps_wpr_get_campaign_settings( 'wps_wpr_enter_campaign_image_url', 'string', 'https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/reward.webp' );
+$wps_wpr_enter_campaign_image_url     = wps_wpr_get_campaign_settings( 'wps_wpr_enter_campaign_image_url', 'string', WPS_RWPR_DIR_URL . 'admin/images/wps-wpr-reward.webp' );
 $wps_wpr_show_current_points_modal    = wps_wpr_get_campaign_settings( 'wps_wpr_show_current_points_modal', 'string' );
 $wps_wpr_show_total_referral_count    = wps_wpr_get_campaign_settings( 'wps_wpr_show_total_referral_count', 'string' );
 $wps_wpr_select_page_for_campaign     = wps_wpr_get_campaign_settings( 'wps_wpr_select_page_for_campaign', 'array' );

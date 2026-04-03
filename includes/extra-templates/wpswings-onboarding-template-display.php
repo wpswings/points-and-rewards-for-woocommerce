@@ -44,7 +44,7 @@ if ( ! $is_valid ) {
 			<p class="wps-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'points-and-rewards-for-woocommerce' ); ?></p>
 			<form action="#" method="post" class="wps-on-boarding-form">
 				<?php foreach ( $form_fields as $key => $field_attr ) : ?>
-					<?php $this->render_field_html( $field_attr ); ?>
+					<?php $this->wps_wpr_render_field_html( $field_attr ); ?>
 				<?php endforeach; ?>
 				<div class="wps-on-boarding-form-btn__wrapper">
 					<div class="wps-on-boarding-form-submit wps-on-boarding-form-verify ">

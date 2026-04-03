@@ -61,7 +61,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param  string $hook       The name of page.
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles( $hook ) {
+	public function wps_wpr_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
 			$pagescreen = $screen->id;
@@ -89,7 +89,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @param  string $hook       The name of page.
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts( $hook ) {
+	public function wps_wpr_admin_enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) ) {
@@ -235,7 +235,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						wp_enqueue_script( 'react-app-block' );
 						wp_localize_script(
 							'react-app-block',
-							'frontend_ajax_object',
+							'wps_wpr_frontends_ajax_object',
 							array(
 								'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 								'wps_standard_nonce' => wp_create_nonce( 'ajax-nonce' ),
@@ -1033,7 +1033,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_check_for_notification_daily() {
-		$is_already_sent = get_option( 'onboarding-data-sent', false );
+		$is_already_sent = get_option( 'wps_wpr_onboarding-data-sent', false );
 		// Already submitted the data.
 		if ( ! empty( $is_already_sent ) && 'sent' == $is_already_sent ) {
 
