@@ -106,7 +106,7 @@ if ( $activated ) {
 	 * Callable function for adding plugin row meta.
 	 *
 	 * @name wps_wpr_doc_and_premium_link.
-	 * @param string $links link of the constant.
+	 * @param array $links link of the constant.
 	 * @param string $file name of the plugin.
 	 */
 	function wps_wpr_doc_and_premium_link( $links, $file ) {
