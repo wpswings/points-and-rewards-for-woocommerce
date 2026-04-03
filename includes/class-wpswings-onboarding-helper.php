@@ -105,20 +105,20 @@ class WPSwings_Onboarding_Helper {
 		if ( defined( 'WPS_PAR_ONBOARD_PLUGIN_NAME' ) ) {
 			self::$plugin_name = WPS_PAR_ONBOARD_PLUGIN_NAME;
 		}
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'admin_footer', array( $this, 'add_onboarding_popup_screen' ) );
-		add_action( 'admin_footer', array( $this, 'add_deactivation_popup_screen' ) );
-		add_filter( 'wps_on_boarding_form_fields', array( $this, 'add_on_boarding_form_fields' ) );
-		add_filter( 'wps_deactivation_form_fields', array( $this, 'add_deactivation_form_fields' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'wps_wpr_enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'wps_wpr_enqueue_scripts' ) );
+		add_action( 'admin_footer', array( $this, 'wps_wpr_add_onboarding_popup_screen' ) );
+		add_action( 'admin_footer', array( $this, 'wps_wpr_add_deactivation_popup_screen' ) );
+		add_filter( 'wps_on_boarding_form_fields', array( $this, 'wps_wpr_add_on_boarding_form_fields' ) );
+		add_filter( 'wps_deactivation_form_fields', array( $this, 'wps_wpr_add_deactivation_form_fields' ) );
 
 		// Ajax to send data.
-		add_action( 'wp_ajax_send_onboarding_data', array( $this, 'send_onboarding_data' ) );
-		add_action( 'wp_ajax_nopriv_send_onboarding_data', array( $this, 'send_onboarding_data' ) );
+		add_action( 'wp_ajax_send_onboarding_data', array( $this, 'wps_wpr_send_onboarding_data' ) );
+		add_action( 'wp_ajax_nopriv_send_onboarding_data', array( $this, 'wps_wpr_send_onboarding_data' ) );
 
 		// Ajax to Skip popup.
-		add_action( 'wp_ajax_skip_onboarding_popup', array( $this, 'skip_onboarding_popup' ) );
-		add_action( 'wp_ajax_nopriv_skip_onboarding_popup', array( $this, 'skip_onboarding_popup' ) );
+		add_action( 'wp_ajax_skip_onboarding_popup', array( $this, 'wps_wpr_skip_onboarding_popup' ) );
+		add_action( 'wp_ajax_nopriv_skip_onboarding_popup', array( $this, 'wps_wpr_skip_onboarding_popup' ) );
 	}
 
 	/**
@@ -130,7 +130,7 @@ class WPSwings_Onboarding_Helper {
 	 * @static
 	 * @return HubWooConnectionMananager - Main instance.
 	 */
-	public static function get_instance() {
+	public static function wps_wpr_get_instance() {
 
 		if ( is_null( self::$wps_wpr_instance ) ) {
 
@@ -145,7 +145,7 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function wps_wpr_enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -158,7 +158,7 @@ class WPSwings_Onboarding_Helper {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( $this->is_valid_page_screen() ) {
+		if ( $this->wps_wpr_is_valid_page_screen() ) {
 
 			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_RWPR_DIR_URL . 'admin/css/wpswings-onboarding-admin.css', array(), REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION, 'all' );
 			wp_enqueue_style( 'select2' );
@@ -170,7 +170,7 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function wps_wpr_enqueue_scripts() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -184,7 +184,7 @@ class WPSwings_Onboarding_Helper {
 		 * class.
 		 */
 
-		if ( $this->is_valid_page_screen() ) {
+		if ( $this->wps_wpr_is_valid_page_screen() ) {
 
 			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_RWPR_DIR_URL . 'admin/js/wpswings-onboarding-admin.js', array( 'jquery', 'select2' ), REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION, true );
 
@@ -210,9 +210,9 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function add_onboarding_popup_screen() {
+	public function wps_wpr_add_onboarding_popup_screen() {
 
-		if ( $this->is_valid_page_screen() && $this->can_show_onboarding_popup() ) {
+		if ( $this->wps_wpr_is_valid_page_screen() && $this->wps_wpr_can_show_onboarding_popup() ) {
 			require_once WPS_RWPR_DIR_PATH . 'includes/extra-templates/wpswings-onboarding-template-display.php';
 		}
 	}
@@ -223,7 +223,7 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function add_deactivation_popup_screen() {
+	public function wps_wpr_add_deactivation_popup_screen() {
 
 		global $pagenow;
 		if ( ! empty( $pagenow ) && 'plugins.php' == $pagenow ) {
@@ -237,7 +237,7 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function is_valid_page_screen() {
+	public function wps_wpr_is_valid_page_screen() {
 
 		global $pagenow;
 		$screen = get_current_screen();
@@ -246,7 +246,7 @@ class WPSwings_Onboarding_Helper {
 
 		if ( ! empty( $screen->id ) ) {
 
-			$is_valid = in_array( $screen->id, apply_filters( 'wps_helper_valid_frontend_screens', array() ) ) && $this->add_wps_additional_validation();
+			$is_valid = in_array( $screen->id, apply_filters( 'wps_helper_valid_frontend_screens', array() ) ) && $this->wps_wpr_add_wps_additional_validation();
 		}
 
 		if ( empty( $is_valid ) && 'plugins.php' == $pagenow || 'dashboard' == $screen->id ) {
@@ -261,16 +261,16 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function can_show_onboarding_popup() {
+	public function wps_wpr_can_show_onboarding_popup() {
 
-		$is_already_sent = get_option( 'onboarding-data-sent', false );
+		$is_already_sent = get_option( 'wps_wpr_onboarding-data-sent', false );
 
 		// Already submitted the data.
 		if ( ! empty( $is_already_sent ) && 'sent' == $is_already_sent ) {
 			return false;
 		}
 
-		$get_skipped_timstamp = get_option( 'onboarding-data-skipped', false );
+		$get_skipped_timstamp = get_option( 'wps_wpr_onboarding-data-skipped', false );
 
 		if ( ! empty( $get_skipped_timstamp ) ) {
 
@@ -295,7 +295,7 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function add_on_boarding_form_fields() {
+	public function wps_wpr_add_on_boarding_form_fields() {
 
 		$current_user = wp_get_current_user();
 		if ( ! empty( $current_user ) ) {
@@ -421,7 +421,7 @@ class WPSwings_Onboarding_Helper {
 				'label'       => '',
 				'type'        => 'hidden',
 				'name'        => 'show-counter',
-				'value'       => get_option( 'onboarding-data-sent', 'not-sent' ),
+				'value'       => get_option( 'wps_wpr_onboarding-data-sent', 'not-sent' ),
 				'required'    => '',
 				'extra-class' => '',
 			),
@@ -445,7 +445,7 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function add_deactivation_form_fields() {
+	public function wps_wpr_add_deactivation_form_fields() {
 
 		$current_user = wp_get_current_user();
 		if ( ! empty( $current_user ) ) {
@@ -553,7 +553,7 @@ class WPSwings_Onboarding_Helper {
 	 * @param       array  $attr               The attributes of this field.
 	 * @param       string $base_class         The basic class for the label.
 	 */
-	public function render_field_html( $attr = array(), $base_class = 'on-boarding' ) {
+	public function wps_wpr_render_field_html( $attr = array(), $base_class = 'on-boarding' ) {
 		$id       = ! empty( $attr['id'] ) ? $attr['id'] : '';
 		$name     = ! empty( $attr['name'] ) ? $attr['name'] : '';
 		$label    = ! empty( $attr['label'] ) ? $attr['label'] : '';
@@ -685,7 +685,7 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function send_onboarding_data() {
+	public function wps_wpr_send_onboarding_data() {
 
 		check_ajax_referer( 'wps_onboarding_nonce', 'nonce' );
 
@@ -749,7 +749,7 @@ class WPSwings_Onboarding_Helper {
 
 				unset( $formatted_data['show-counter'] );
 
-				$this->handle_form_submission_for_hubspot( $formatted_data, $action_type );
+				$this->wps_wpr_handle_form_submission_for_hubspot( $formatted_data, $action_type );
 			}
 		} catch ( Exception $e ) {
 
@@ -758,7 +758,7 @@ class WPSwings_Onboarding_Helper {
 		}
 
 		if ( ! empty( $action_type ) && 'onboarding' == $action_type ) {
-			$get_skipped_timstamp = update_option( 'onboarding-data-sent', 'sent' );
+			$get_skipped_timstamp = update_option( 'wps_wpr_onboarding-data-sent', 'sent' );
 		}
 
 		echo wp_json_encode( $formatted_data );
@@ -772,7 +772,7 @@ class WPSwings_Onboarding_Helper {
 	 * @param      array $formatted_data       The parsed data submitted vai form.
 	 * @since      1.0.0
 	 */
-	public function render_form_data_into_table( $formatted_data = array() ) {
+	public function wps_wpr_render_form_data_into_table( $formatted_data = array() ) {
 
 		$email_body = '<table border="1" style="text-align:center;"><tr><th>Data</th><th>Value</th></tr>';
 		foreach ( $formatted_data as $key => $value ) {
@@ -805,9 +805,9 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function skip_onboarding_popup() {
+	public function wps_wpr_skip_onboarding_popup() {
 
-		$get_skipped_timstamp = update_option( 'onboarding-data-skipped', time() );
+		$get_skipped_timstamp = update_option( 'wps_wpr_onboarding-data-skipped', time() );
 		echo wp_json_encode( 'true' );
 		wp_die();
 	}
@@ -818,7 +818,7 @@ class WPSwings_Onboarding_Helper {
 	 * @param      string $result       The result of this validation.
 	 * @since    1.0.0
 	 */
-	public function add_wps_additional_validation( $result = true ) {
+	public function wps_wpr_add_wps_additional_validation( $result = true ) {
 
 		if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting', ) ) {
 			if ( ! empty( $_GET['tab'] ) && 'general-setting' !== $_GET['tab'] ) {
@@ -836,7 +836,7 @@ class WPSwings_Onboarding_Helper {
 	 * @param string $action_type used for string.
 	 * @return boolean
 	 */
-	protected function handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
+	protected function wps_wpr_handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
 
 		if ( 'onboarding' == $action_type ) {
 			array_push(
@@ -848,7 +848,7 @@ class WPSwings_Onboarding_Helper {
 			);
 		}
 
-		$result = $this->hubwoo_submit_form( $submission, $action_type );
+		$result = $this->wps_wpr_hubwoo_submit_form( $submission, $action_type );
 
 		if ( true == $result['success'] ) {
 			return true;
@@ -863,7 +863,7 @@ class WPSwings_Onboarding_Helper {
 	 * @param [mixed] $post_params for post params.
 	 * @param [mixed] $headers for headers.
 	 */
-	private function hic_post( $endpoint, $post_params, $headers ) {
+	private function wps_wpr_hic_post( $endpoint, $post_params, $headers ) {
 
 		$url = $this->base_url . $endpoint;
 		$request = array(
@@ -903,7 +903,7 @@ class WPSwings_Onboarding_Helper {
 	 * @param array  $form_data for form data.
 	 * @param string $action_type for action type.
 	 */
-	protected function hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
+	protected function wps_wpr_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
 
 		if ( 'onboarding' == $action_type ) {
 			$form_id = self::$onboarding_form_id;
@@ -921,12 +921,12 @@ class WPSwings_Onboarding_Helper {
 				'context'  => array(
 					'pageUri' => self::$store_url,
 					'pageName' => self::$store_name,
-					'ipAddress' => $this->get_client_ip(),
+					'ipAddress' => $this->wps_wpr_get_client_ip(),
 				),
 			)
 		);
 
-		$response = $this->hic_post( $url, $form_data, $headers );
+		$response = $this->wps_wpr_hic_post( $url, $form_data, $headers );
 		if ( 200 == $response['status_code'] ) {
 			$result = json_decode( $response['response'], true );
 			$result['success'] = true;
@@ -944,7 +944,7 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @return ipaddress
 	 */
-	private function get_client_ip() {
+	private function wps_wpr_get_client_ip() {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );

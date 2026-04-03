@@ -2090,17 +2090,17 @@ __webpack_require__.r(__webpack_exports__);
 const ReportingSystem = () => {
   const [chartdata, setChartData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
     name: 'Redeem Points',
-    points: parseInt(frontend_ajax_object.redeem_points)
+    points: parseInt(wps_wpr_frontends_ajax_object.redeem_points)
   }, {
     name: 'Current Points',
-    points: parseInt(frontend_ajax_object.current_points)
+    points: parseInt(wps_wpr_frontends_ajax_object.current_points)
   }, {
     name: 'Overall Points',
-    points: parseInt(frontend_ajax_object.overall_points)
+    points: parseInt(wps_wpr_frontends_ajax_object.overall_points)
   }]);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wps_wpr_user_reports"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "Name"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "Email"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "Membership Level"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "Referred User Count"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "Overall Points")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, frontend_ajax_object.name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, frontend_ajax_object.email), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, frontend_ajax_object.membership_name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, frontend_ajax_object.referral_count), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, frontend_ajax_object.overall_points)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(recharts__WEBPACK_IMPORTED_MODULE_4__.ResponsiveContainer, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("table", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "Name"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "Email"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "Membership Level"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "Referred User Count"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("th", null, "Overall Points")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, wps_wpr_frontends_ajax_object.name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, wps_wpr_frontends_ajax_object.email), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, wps_wpr_frontends_ajax_object.membership_name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, wps_wpr_frontends_ajax_object.referral_count), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, wps_wpr_frontends_ajax_object.overall_points)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(recharts__WEBPACK_IMPORTED_MODULE_4__.ResponsiveContainer, {
     width: "100%",
     height: 400
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(recharts__WEBPACK_IMPORTED_MODULE_5__.BarChart, {

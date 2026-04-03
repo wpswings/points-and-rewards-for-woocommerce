@@ -40,7 +40,7 @@ if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {
 			<p class="wps-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'points-and-rewards-for-woocommerce' ); ?></p>
 			<form action="#" method="post" class="wps-on-boarding-form">
 				<?php foreach ( $form_fields as $key => $field_attr ) : ?>
-					<?php $this->render_field_html( $field_attr, 'deactivating' ); ?>
+					<?php $this->wps_wpr_render_field_html( $field_attr, 'deactivating' ); ?>
 				<?php endforeach; ?>
 				<div class="wps-on-boarding-form-btn__wrapper">
 					<div class="wps-on-boarding-form-submit wps-on-boarding-form-verify ">

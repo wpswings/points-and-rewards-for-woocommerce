@@ -191,8 +191,8 @@ class Points_Rewards_For_Woocommerce {
 	private function define_admin_hooks() {
 		$plugin_admin = new Points_Rewards_For_WooCommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_rwpr_admin_menu', 10, 2 );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
@@ -264,8 +264,8 @@ class Points_Rewards_For_Woocommerce {
 
 		$plugin_public = new Points_Rewards_For_WooCommerce_Public( $this->get_plugin_name(), $this->get_version() );
 		if ( $this->wps_rwpr_is_plugin_enable() ) {
-			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_styles' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_scripts' );
 			/* Include the points tab woocommrerce dashboard and template file*/
 			$this->loader->add_action( 'init', $plugin_public, 'wps_wpr_add_my_account_endpoint' );
 			$this->loader->add_filter( 'woocommerce_account_menu_items', $plugin_public, 'wps_wpr_points_dashboard' );

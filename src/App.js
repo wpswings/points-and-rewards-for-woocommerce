@@ -9,9 +9,9 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 const ReportingSystem = () => {
   const [chartdata, setChartData] = useState( 
     [
-      { name: 'Redeem Points', points: parseInt(frontend_ajax_object.redeem_points) },
-      { name: 'Current Points',  points: parseInt(frontend_ajax_object.current_points) },
-      { name: 'Overall Points', points: parseInt(frontend_ajax_object.overall_points) },
+      { name: 'Redeem Points', points: parseInt(wps_wpr_frontends_ajax_object.redeem_points) },
+      { name: 'Current Points',  points: parseInt(wps_wpr_frontends_ajax_object.current_points) },
+      { name: 'Overall Points', points: parseInt(wps_wpr_frontends_ajax_object.overall_points) },
     ]
   );
 
@@ -27,11 +27,11 @@ const ReportingSystem = () => {
             <th>Overall Points</th>
           </tr>
           <tr>
-            <td>{frontend_ajax_object.name}</td>
-            <td>{frontend_ajax_object.email}</td>
-            <td>{frontend_ajax_object.membership_name}</td>
-            <td>{frontend_ajax_object.referral_count}</td>
-            <td>{frontend_ajax_object.overall_points}</td>
+            <td>{wps_wpr_frontends_ajax_object.name}</td>
+            <td>{wps_wpr_frontends_ajax_object.email}</td>
+            <td>{wps_wpr_frontends_ajax_object.membership_name}</td>
+            <td>{wps_wpr_frontends_ajax_object.referral_count}</td>
+            <td>{wps_wpr_frontends_ajax_object.overall_points}</td>
           </tr>
         </table>
       </div>
