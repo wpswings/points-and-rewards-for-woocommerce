@@ -122,15 +122,6 @@ if ( ! current_user_can( 'manage_options' ) ) {
 							<span class="wps_wpr_contact_doc_text"><?php esc_html_e( 'Doc', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</a>
 					</li>
-					<?php
-					if ( ! wps_wpr_is_par_pro_plugin_active() ) {
-						?>
-						<li class="wps_wpr_get_pro">
-							<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro"  target="_blank"><?php esc_html_e( 'GO PRO NOW', 'points-and-rewards-for-woocommerce' ); ?></a>
-						</li>
-						<?php
-					}
-					?>
 				</ul>
 			</div>
 		</div>

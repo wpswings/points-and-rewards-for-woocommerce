@@ -129,18 +129,6 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'admin/class-points-rewards-for-woocommerce-admin.php';
 
-		// when pro plugin is not active than show dummy html.
-		$wps_active_plugin = get_plugins();
-		$wps_active_plugin = ! empty( $wps_active_plugin ) && is_array( $wps_active_plugin ) ? $wps_active_plugin : array();
-		if ( ! array_key_exists( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php', $wps_active_plugin ) ) {
-
-			/**
-			 * The class responsible for defining all actions that occur in the admin area for dummy html.
-			 */
-			require_once plugin_dir_path( __DIR__ ) . 'admin/class-points-rewards-for-woocommerce-dummy-settings.php';
-			new Points_Rewards_For_WooCommerce_Dummy_Settings( '', '' );
-		}
-
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.

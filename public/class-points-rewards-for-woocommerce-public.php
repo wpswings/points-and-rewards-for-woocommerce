@@ -2030,6 +2030,19 @@ class Points_Rewards_For_WooCommerce_Public {
 				$get_points = $get_points;
 			}
 
+			// if cart subtotal is less than points value then apply fee on cart subtotal only.
+			if ( isset( WC()->cart ) ) {
+
+				$cart_subtotals = ! empty( WC()->cart->get_subtotal() ) && WC()->cart->get_subtotal() > 0 ? WC()->cart->get_subtotal() : 0;
+				if ( $wps_cart_points > $cart_subtotals ) {
+
+					$wps_cart_points = $cart_subtotals;
+				} else {
+
+					$wps_cart_points = $wps_cart_points;
+				}
+			}
+
 			// deduct points if Points Discount is applied.
 			$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
 			$get_points                                   = (int) $get_points - $wps_wpr_check_points_discount_applied_amount;

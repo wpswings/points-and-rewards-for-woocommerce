@@ -182,12 +182,7 @@
 			  e(
 				(r =
 				  '<div class="wps_wpr_object_purchase"><p>' +
-				  wps_wpr_object.pro_text +
-				  ' <a target="_blanck" href="' +
-				  wps_wpr_object.pro_link +
-				  '">' +
-				  wps_wpr_object.pro_link_text +
-				  "</a></p></div>")
+				  wps_wpr_object.pro_text + '</p></div>')
 			  ).insertAfter(".wp-list-table");
 		  }),
 		jQuery(document).on("click", ".wps_wpr_remove_button", function () {
@@ -522,7 +517,7 @@
 		jQuery(document).on('click', '#wps_wpr_user_badges_fields_add', function(){
 
 			jQuery(document).find('.wps_wpr_object_purchase').remove();
-			var pro_plugin_msg = '<div class="wps_wpr_object_purchase"><p>' + wps_wpr_object.badge_pro__text + ' <a target="_blanck" href="' + wps_wpr_object.pro_link + '">' + wps_wpr_object.pro_link_text + "</a></p></div>";
+			var pro_plugin_msg = '<div class="wps_wpr_object_purchase"><p>' + wps_wpr_object.badge_pro__text + '</p></div>';
 			jQuery('.wps_wpr_pro_plugin_notices').show();
 			jQuery('.wps_wpr_pro_plugin_notices').append( pro_plugin_msg );
 		});
@@ -832,12 +827,7 @@ jQuery(document).ready(function($){
 				$(document).find(".wps_wpr_object_purchase").remove(),
 				(r =
 					'<div class="wps_wpr_object_purchase"><p>' +
-					wps_wpr_object.pro_text +
-					' <a target="_blanck" href="' +
-					wps_wpr_object.pro_link +
-					'">' +
-					wps_wpr_object.pro_link_text +
-					"</a></p></div>"),
+					wps_wpr_object.pro_text + "</p></div>"),
 				$(".parent_of_div").append(r);
 			}
 		});
@@ -948,10 +938,7 @@ jQuery(document).ready(function($){
 				const pro_plugin_msg = `
 					<div class="wps_wpr_object_purchase">
 						<p>
-							${wps_wpr_object.badge_pro__text.replace('Badges', 'Quiz')} 
-							<a target="_blank" href="${wps_wpr_object.pro_link}">
-								${wps_wpr_object.pro_link_text}
-							</a>
+							${wps_wpr_object.badge_pro__text.replace('Badges', 'Quiz')}
 						</p>
 					</div>
 				`;
