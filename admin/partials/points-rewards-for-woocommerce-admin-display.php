@@ -137,13 +137,14 @@ if ( ! current_user_can( 'manage_options' ) ) {
 						if ( ! empty( $wps_wpr_setting_tab ) && is_array( $wps_wpr_setting_tab ) ) {
 							foreach ( $wps_wpr_setting_tab as $key => $wps_tab ) {
 								if ( wp_verify_nonce( $secure_nonce, 'wps-par-admin-nonce' ) ) {
-									if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
+									$wps_wpr_tabs = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+									if ( $wps_wpr_tabs == $key ) {
 										?>
 										<div class="wps_rwpr_tabs">
 											<a class="wps_gw_nav_tab nav-tab nav-tab-active " href="?page=wps-rwpr-setting&nonce=<?php echo esc_html( wp_create_nonce( 'par_main_setting' ) ); ?>&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
 										</div>
 										<?php
-									} elseif ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
+									} elseif ( empty( $wps_wpr_tabs ) && 'overview-setting' == $key ) {
 										?>
 											<div class="wps_rwpr_tabs">
 												<a class="wps_gw_nav_tab nav-tab nav-tab-active" href="?page=wps-rwpr-setting&nonce=<?php echo esc_html( wp_create_nonce( 'par_main_setting' ) ); ?>&tab=<?php echo esc_html( $key ); ?>"><?php echo esc_html( $wps_tab['title'] ); ?></a>
@@ -172,14 +173,15 @@ if ( ! current_user_can( 'manage_options' ) ) {
 
 					foreach ( $wps_wpr_setting_tab as $key => $wps_file ) {
 						if ( wp_verify_nonce( $secure_nonce, 'wps-par-admin-nonce' ) ) {
-							if ( isset( $_GET['tab'] ) && $_GET['tab'] == $key ) {
+							$wps_wpr_tabs = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+							if ( $wps_wpr_tabs == $key ) {
 								$include_tab = $wps_file['file_path'];
 								?>
 								<div class="wps_rwpr_content_template">
 									<?php include_once $include_tab; ?>
 								</div>
 								<?php
-							} elseif ( empty( $_GET['tab'] ) && 'overview-setting' == $key ) {
+							} elseif ( empty( $wps_wpr_tabs ) && 'overview-setting' == $key ) {
 								?>
 								<div class="wps_rwpr_content_template">
 									<?php include_once $wps_file['file_path']; ?>

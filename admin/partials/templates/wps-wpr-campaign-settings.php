@@ -254,14 +254,7 @@ $wps_wpr_social_share_campaign_label  = wps_wpr_get_campaign_settings( 'wps_wpr_
 $upgrade_link                            = '<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" target="_blank">Click here</a>';
 $message                                 = sprintf( /* translators: %s: sms msg */ esc_html__( 'Unlock this premium feature by upgrading to the Pro plugin. %s to get started!', 'points-and-rewards-for-woocommerce' ), $upgrade_link );
 
-// display only one quiz when pro is not activated.
-if ( wps_wpr_is_par_pro_plugin_active() ) {
-	// Keep all quiz questions if pro is active.
-	$wps_wpr_quiz_question = $wps_wpr_quiz_question;
-} else {
-	// Keep only the first question if not pro.
-	$wps_wpr_quiz_question = array_slice( $wps_wpr_quiz_question, 0, 1 );
-}
+
 ?>
 
 <div class="wps_wpr_user_badges_main_wrappers">

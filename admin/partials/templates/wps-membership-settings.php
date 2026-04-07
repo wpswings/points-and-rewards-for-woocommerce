@@ -105,7 +105,9 @@ if ( isset( $_POST['wps_wpr_save_membership'] ) && isset( $_POST['wps-wpr-nonce'
 		<?php
 	}
 }
-if ( isset( $_GET['action'] ) && 'view_membership_log' == $_GET['action'] ) {
+
+$wps_wpr_actions = isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '';
+if ( 'view_membership_log' == $wps_wpr_actions ) {
 
 	include_once WPS_RWPR_DIR_PATH . '/admin/partials/templates/class-membership-log-list-table.php';
 } else {

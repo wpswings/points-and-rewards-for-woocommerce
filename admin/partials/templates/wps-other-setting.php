@@ -232,19 +232,26 @@ if ( isset( $_POST['wps_wpr_save_othersetting'] ) && isset( $_POST['wps-wpr-nonc
 	if ( wp_verify_nonce( $wps_par_nonce, 'wps-wpr-nonce' ) ) {
 
 		unset( $_POST['wps_wpr_save_othersetting'] );
-		$other_settings = array();
-		$postdata       = $settings_obj->check_is_settings_is_not_empty( $wps_wpr_other_settings, $_POST );
-		foreach ( $postdata as $key => $value ) {
-
-			$other_settings[ $key ] = $value;
-		}
+		$other_settings = array(
+			'wps_wpr_other_shortcode_text'              => ! empty( $_POST['wps_wpr_other_shortcode_text'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_other_shortcode_text'] ) ) : '',
+			'wps_wpr_shortcode_text_membership'         => ! empty( $_POST['wps_wpr_shortcode_text_membership'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_shortcode_text_membership'] ) ) : '',
+			'wps_wpr_notification_color'                => ! empty( $_POST['wps_wpr_notification_color'] ) ? sanitize_hex_color( wp_unslash( $_POST['wps_wpr_notification_color'] ) ) : '',
+			'wps_wpr_cart_page_apply_point_section'     => ! empty( $_POST['wps_wpr_cart_page_apply_point_section'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_cart_page_apply_point_section'] ) ) : '',
+			'wps_wpr_checkout_page_apply_point_section' => ! empty( $_POST['wps_wpr_checkout_page_apply_point_section'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_checkout_page_apply_point_section'] ) ) : '',
+			'wps_wpr_restricted_cart_page_msg'          => ! empty( $_POST['wps_wpr_restricted_cart_page_msg'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wps_wpr_restricted_cart_page_msg'] ) ) : '',
+			'wps_wpr_choose_account_page_temp'          => ! empty( $_POST['wps_wpr_choose_account_page_temp'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_choose_account_page_temp'] ) ) : '',
+			'wps_wpr_points_tab_layout_color'           => ! empty( $_POST['wps_wpr_points_tab_layout_color'] ) ? sanitize_hex_color( wp_unslash( $_POST['wps_wpr_points_tab_layout_color'] ) ) : '',
+			'wps_wpr_choose_payment_method'             => ! empty( $_POST['wps_wpr_choose_payment_method'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_choose_payment_method'] ) ) : '',
+			'wps_wpr_payment_method_rewards_points'     => ! empty( $_POST['wps_wpr_payment_method_rewards_points'] ) ? absint( $_POST['wps_wpr_payment_method_rewards_points'] ) : 0,
+			'wps_wpr_guest_user_rewards_points'         => ! empty( $_POST['wps_wpr_guest_user_rewards_points'] ) ? absint( $_POST['wps_wpr_guest_user_rewards_points'] ) : 0,
+		);
 		/* Save settings data into the database*/
 		if ( ! empty( $other_settings ) && is_array( $other_settings ) ) {
 			update_option( 'wps_wpr_other_settings', $other_settings );
 		}
 		/* Save settings Notification*/
 		$settings_obj->wps_wpr_settings_saved();
-		do_action( 'wps_wpr_save_other_settings', $postdata );
+		do_action( 'wps_wpr_save_other_settings', $_POST );
 	}
 }
 

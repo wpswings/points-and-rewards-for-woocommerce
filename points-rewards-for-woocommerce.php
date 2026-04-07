@@ -106,7 +106,7 @@ if ( $activated ) {
 	 * Callable function for adding plugin row meta.
 	 *
 	 * @name wps_wpr_doc_and_premium_link.
-	 * @param string $links link of the constant.
+	 * @param array $links link of the constant.
 	 * @param string $file name of the plugin.
 	 */
 	function wps_wpr_doc_and_premium_link( $links, $file ) {
@@ -250,7 +250,7 @@ if ( $activated ) {
 		}
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
 			$get_points = (int) get_user_meta( $user_ID, 'wps_wpr_points', true );
-			return '<div class="wps_wpr_shortcode_wrapper">' . $wps_wpr_shortcode_text_point . ' ' . $get_points . '</div>';
+			return '<div class="wps_wpr_shortcode_wrapper">' . esc_html( $wps_wpr_shortcode_text_point ) . ' ' . esc_html( $get_points ) . '</div>';
 		}
 	}
 
@@ -273,7 +273,7 @@ if ( $activated ) {
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
 			$user_level = get_user_meta( $user_ID, 'membership_level', true );
 			if ( isset( $user_level ) && ! empty( $user_level ) ) {
-				return $wps_wpr_shortcode_text_membership . ' ' . $user_level;
+				return esc_html( $wps_wpr_shortcode_text_membership ) . ' ' . esc_html( $user_level );
 			}
 		}
 	}
@@ -464,7 +464,7 @@ if ( $activated ) {
 							<div class="notice-container">
 								<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
 							</div>
-							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'points-and-rewards-for-woocommerce' ); ?></span></button>
 						</div>
 						<?php
 					}
@@ -483,7 +483,8 @@ if ( $activated ) {
 
 		$nonce = wp_create_nonce( 'par_main_setting' );
 		if ( wp_verify_nonce( $nonce, 'par_main_setting' ) ) {
-			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' === $_GET['page'] ) {
+			$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			if ( 'wps-rwpr-setting' === $page ) {
 
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
 				if ( ! empty( $banner_id ) ) {
@@ -498,7 +499,7 @@ if ( $activated ) {
 							<div class="notice-container">
 								<a href="<?php echo esc_url( $banner_url ); ?>"target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
 							</div>
-							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'points-and-rewards-for-woocommerce' ); ?></span></button>
 						</div>
 						<?php
 					}
@@ -597,7 +598,6 @@ if ( $activated ) {
 					$response    = curl_exec( $ch );
 					$response    = json_decode( $response );
 					$status_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-					// check success response '201' == $status_code.
 				}
 			}
 		}
@@ -832,7 +832,7 @@ if ( $activated ) {
 					),
 				);
 
-				$data = json_encode( $curl_data );
+				$data = wp_json_encode( $curl_data );
 
 				// LOAD THE WC LOGGER.
 				$logger = wc_get_logger();
@@ -894,7 +894,8 @@ if ( $activated ) {
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure() {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-		unset( $_GET['activate'] );
+		$wps_wpr_activated = isset( $_GET['activate'] ) ? sanitize_text_field( wp_unslash( $_GET['activate'] ) ) : '';
+		unset( $wps_wpr_activated );
 		// Add admin error notice.
 		add_action( 'admin_notices', 'rewardeem_woocommerce_points_rewards_activation_failure_admin_notice' );
 	}

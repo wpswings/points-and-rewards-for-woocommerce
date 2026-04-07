@@ -54,20 +54,15 @@ $wps_wpr_order_total_points_settings = array(
 if ( isset( $_POST['wps_wpr_save_order_totalsettings'] ) && isset( $_POST['wps-wpr-nonce'] ) ) {
 	unset( $_POST['wps_wpr_save_order_totalsettings'] );
 
-	$wps_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) );
+	$wps_wpr_nonce = isset( $_POST['wps_wpr_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) ) : '';
 	if ( wp_verify_nonce( $wps_wpr_nonce, 'wps-wpr-nonce' ) ) {
 
-		$wps_wpr_order_total_points                  = array();
-		$_POST['wps_wpr_thankyouorder_enable']       = isset( $_POST['wps_wpr_thankyouorder_enable'] ) ? 1 : 0;
-		$_POST['wps_wpr_thankyouorder_minimum']      = ( isset( $_POST['wps_wpr_thankyouorder_minimum'] ) && ! empty( $_POST['wps_wpr_thankyouorder_minimum'] ) ) ? map_deep( wp_unslash( $_POST['wps_wpr_thankyouorder_minimum'] ), 'sanitize_text_field' ) : array();
-		$_POST['wps_wpr_thankyouorder_maximum']      = ( isset( $_POST['wps_wpr_thankyouorder_maximum'] ) && ! empty( $_POST['wps_wpr_thankyouorder_maximum'] ) ) ? map_deep( wp_unslash( $_POST['wps_wpr_thankyouorder_maximum'] ), 'sanitize_text_field' ) : array();
-		$_POST['wps_wpr_thankyouorder_current_type'] = ( isset( $_POST['wps_wpr_thankyouorder_current_type'] ) && ! empty( $_POST['wps_wpr_thankyouorder_current_type'] ) ) ? map_deep( wp_unslash( $_POST['wps_wpr_thankyouorder_current_type'] ), 'sanitize_text_field' ) : array();
+		$wps_wpr_order_total_points                                       = array();
+		$wps_wpr_order_total_points['wps_wpr_thankyouorder_enable']       = isset( $_POST['wps_wpr_thankyouorder_enable'] ) ? 1 : 0;
+		$wps_wpr_order_total_points['wps_wpr_thankyouorder_minimum']      = ( isset( $_POST['wps_wpr_thankyouorder_minimum'] ) && ! empty( $_POST['wps_wpr_thankyouorder_minimum'] ) ) ? map_deep( wp_unslash( $_POST['wps_wpr_thankyouorder_minimum'] ), 'sanitize_text_field' ) : array();
+		$wps_wpr_order_total_points['wps_wpr_thankyouorder_maximum']      = ( isset( $_POST['wps_wpr_thankyouorder_maximum'] ) && ! empty( $_POST['wps_wpr_thankyouorder_maximum'] ) ) ? map_deep( wp_unslash( $_POST['wps_wpr_thankyouorder_maximum'] ), 'sanitize_text_field' ) : array();
+		$wps_wpr_order_total_points['wps_wpr_thankyouorder_current_type'] = ( isset( $_POST['wps_wpr_thankyouorder_current_type'] ) && ! empty( $_POST['wps_wpr_thankyouorder_current_type'] ) ) ? map_deep( wp_unslash( $_POST['wps_wpr_thankyouorder_current_type'] ), 'sanitize_text_field' ) : array();
 
-		/* Save Order Total Points*/
-		$_postdata = $_POST;
-		foreach ( $_postdata as $key => $value ) {
-			$wps_wpr_order_total_points[ $key ] = $value;
-		}
 		if ( is_array( $wps_wpr_order_total_points ) && ! empty( $wps_wpr_order_total_points ) ) {
 			update_option( 'wps_wpr_order_total_settings', $wps_wpr_order_total_points );
 		}

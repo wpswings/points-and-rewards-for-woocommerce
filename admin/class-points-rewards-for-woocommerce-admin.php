@@ -95,7 +95,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 
 			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
-				if ( ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) || 'product' == $screen->id ) {
+				$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+				if ( ( 'wps-rwpr-setting' == $page ) || 'product' == $screen->id ) {
 
 					wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 					wp_enqueue_style( 'woocommerce_admin_menu_styles' );
@@ -183,7 +184,6 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'segment_reached_msg'    => esc_html__( 'You Can Add Only 12 Segments in Win Wheel', 'points-and-rewards-for-woocommerce' ),
 						'segment_limit_msg'      => esc_html__( 'Win Wheel cannot have less then 6 Segments', 'points-and-rewards-for-woocommerce' ),
 						'wps_badge_image'        => esc_html( WPS_RWPR_DIR_URL . 'admin/images/vip.png', ),
-						'badge_pro__text'        => esc_html__( 'Please purchase the pro plugin to add multiple Badges.', 'points-and-rewards-for-woocommerce' ),
 						'threshold_warning_msg'  => esc_html__( 'Threshold points should be greater than previous threshold points !', 'points-and-rewards-for-woocommerce' ),
 						'invalid_files'          => esc_html__( 'Please choose valid files', 'points-and-rewards-for-woocommerce' ),
 						'radio_validate_msg'     => esc_html__( 'Please choose any option !!', 'points-and-rewards-for-woocommerce' ),
@@ -197,6 +197,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'wps_user_count'         => $this->wps_wpr_org_user_count(),
 						'is_wallet_active'       => is_plugin_active('wallet-system-for-woocommerce/wallet-system-for-woocommerce.php'),
 						'wallet_alert_message'   => esc_html__( "The Wallet reward option requires the 'Wallet System For WooCommerce' plugin.\n\nClick 'OK' to visit the plugin page and install it.", 'points-and-rewards-for-woocommerce' ),
+						'notice_error'           => __( 'Please! fill the correct credentials to add more', 'ultimate-woocommerce-points-and-rewards' ),
 					);
 
 					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), time(), false );
@@ -251,6 +252,71 @@ class Points_Rewards_For_WooCommerce_Admin {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * Show order total points settings.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_org_remove_action() {
+		add_action( 'wps_wpr_order_total_points', array( $this, 'wps_wpr_add_order_total_points' ), 10, 3 );
+	}
+
+	/**
+	 * This function is show dynamic order total settings.
+	 *
+	 * @param  array $thankyouorder_min thankyouorder_min.
+	 * @param  array $thankyouorder_max thankyouorder_max.
+	 * @param  array $thankyouorder_value thankyouorder_value.
+	 * @return void
+	 */
+	public function wps_wpr_add_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value ) {
+		global $public_obj;
+		if ( isset( $thankyouorder_min ) && null != $thankyouorder_min && isset( $thankyouorder_max ) && null != $thankyouorder_max && isset( $thankyouorder_value ) && null != $thankyouorder_value ) {
+			$wps_wpr_no = 1;
+			if ( count( $thankyouorder_min ) == count( $thankyouorder_max ) && count( $thankyouorder_max ) == count( $thankyouorder_value ) ) {
+				?>
+				<table class="form-table wp-list-table widefat fixed striped">
+					<thead> 
+						<tr valign="top">
+							<th><?php esc_html_e( 'Minimum', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
+							<th><?php esc_html_e( 'Maximum', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
+
+							<th><?php esc_html_e( 'Points', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
+							<?php if ( count( $thankyouorder_min ) > 1 ) { ?>
+							<th class="wps_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
+							<?php } ?>
+						</tr>
+					</thead>
+					<tbody class="wps_wpr_thankyouorder_tbody">
+						<?php
+						foreach ( $thankyouorder_min as $key => $value ) {
+							$public_obj->wps_wpr_add_rule_for_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value, $key );
+						}
+						?>
+					</tbody>
+				</table>
+				<?php
+			}
+		} else {
+			?>
+			<table class="form-table wp-list-table widefat fixed striped">
+				<thead> 
+					<tr valign="top">
+						<th><?php esc_html_e( 'Minimum', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
+						<th><?php esc_html_e( 'Maximum', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
+						<th><?php esc_html_e( 'Points', 'ultimate-woocommerce-points-and-rewards' ); ?></th>
+					</tr>
+				</thead>
+				<tbody  class="wps_wpr_thankyouorder_tbody">
+					<?php
+					$public_obj->wps_wpr_add_rule_for_order_total_points( array(), array(), array(), '' );
+					?>
+				</tbody>
+			</table>
+			<?php
 		}
 	}
 
@@ -922,68 +988,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( ! wps_wpr_is_par_pro_plugin_active() ) {
 
 			add_action( 'wps_wpr_add_membership_rule', array( $this, 'wps_wpr_add_rule_for_membership' ), 10 );
-			add_action( 'wps_wpr_order_total_points', array( $this, 'wps_wpr_add_order_total_points' ), 10, 3 );
 		}
 		$public_obj = $this;
-	}
-
-	/**
-	 * This function is used to add order total points.
-	 *
-	 * @name wps_wpr_add_order_total_points.
-	 * @since      1.0.0
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
-	 * @param array $thankyouorder_min  array of the min satements.
-	 * @param array $thankyouorder_max array of the max rules.
-	 * @param array $thankyouorder_value array of the points value.
-	 */
-	public function wps_wpr_add_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value ) {
-
-		if ( isset( $thankyouorder_min ) && null != $thankyouorder_min && isset( $thankyouorder_max ) && null != $thankyouorder_max && isset( $thankyouorder_value ) && null != $thankyouorder_value ) {
-			if ( count( $thankyouorder_min ) == count( $thankyouorder_max ) && count( $thankyouorder_max ) == count( $thankyouorder_value ) ) {
-
-				?>
-				<table class="form-table wp-list-table widefat fixed striped">
-					<thead> 
-						<tr valign="top">
-							<th><?php esc_html_e( 'Minimum', 'points-and-rewards-for-woocommerce' ); ?></th>
-							<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
-
-							<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
-
-							<?php if ( count( $thankyouorder_min ) > 1 ) { ?>
-							<th class="wps_wpr_remove_thankyouorder_content"><?php esc_html_e( 'Action', 'points-and-rewards-for-woocommerce' ); ?></th>
-							<?php } ?>
-
-						</tr>
-					</thead>
-					<tbody  class="wps_wpr_thankyouorder_tbody">
-				<?php
-				$this->wps_wpr_add_rule_for_order_total_points( $thankyouorder_min, $thankyouorder_max, $thankyouorder_value, '0' );
-				?>
-					</tbody>
-				</table>
-				<?php
-			}
-		} else {
-			?>
-			<table class="form-table wp-list-table widefat fixed striped">
-				<thead> 
-					<tr valign="top">
-						<th><?php esc_html_e( 'Minimum', 'points-and-rewards-for-woocommerce' ); ?></th>
-						<th><?php esc_html_e( 'Maximum', 'points-and-rewards-for-woocommerce' ); ?></th>
-						<th><?php esc_html_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?></th>
-					</tr>
-				</thead>
-			<tbody  class="wps_wpr_thankyouorder_tbody">
-			<?php
-			$this->wps_wpr_add_rule_for_order_total_points( array(), array(), array(), '' );
-			?>
-			</tbody>
-			</table>
-			<?php
-		}
 	}
 
 	/**
@@ -1111,7 +1117,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( isset( $screen->id ) ) {
 
 			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
-				if ( ( isset( $_GET['page'] ) && 'wps-rwpr-setting' == $_GET['page'] ) || 'product' == $screen->id ) {
+				$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+				if ( ( 'wps-rwpr-setting' == $page ) || 'product' == $screen->id ) {
 
 					$notification_id = get_option( 'wps_wpr_notify_new_msg_id', false );
 					if ( isset( $notification_id ) && '' !== $notification_id ) {
@@ -1611,7 +1618,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 		}
 
 		// Return on post trash, quick-edit, new post.
-		if ( empty( $_POST['action'] ) || 'editpost' != $_POST['action'] ) {
+		$wps_wpr_actions = isset( $_POST['action'] ) ? sanitize_text_field( wp_unslash( $_POST['action'] ) ) : '';
+		if ( empty( $wps_wpr_actions ) || 'editpost' != $wps_wpr_actions ) {
 			return;
 		}
 
@@ -1702,7 +1710,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 		}
 
 		// Return on post trash, quick-edit, new post.
-		if ( empty( $_POST['save'] ) ) {
+		$wps_wpr_saves = isset( $_POST['save'] ) ? sanitize_text_field( wp_unslash( $_POST['save'] ) ) : '';
+		if ( empty( $wps_wpr_saves ) ) {
 			return;
 		}
 
@@ -2137,69 +2146,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 							<td>
 								<p id="wps_import_content"><input type="submit" name="wps_wpr_csv_custom_userpoints_import" id="wps_wpr_csv_custom_userpoints_import" class="button-primary woocommerce-save-button wps_import" value="<?php esc_html_e( 'Import', 'points-and-rewards-for-woocommerce' ); ?>" /></p>
 							</td>
-							<?php
-							$wps_active_plugin = get_plugins();
-							$wps_active_plugin = ! empty( $wps_active_plugin ) && is_array( $wps_active_plugin ) ? $wps_active_plugin : array();
-							if ( ! array_key_exists( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php', $wps_active_plugin ) ) {
-								?>
-								<td class="wps_wpr_pro_plugin_settings">
-									<p class="wps_wpr_export_paragraph"><input type="button" id="wps_wpr_export_points_table_data" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Export', 'points-and-rewards-for-woocommerce' ); ?>" />
-									<img class="wps_wpr_export_user_loader" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/loading.gif' ); ?>"></p>
-								</td>
-								<?php
-							}
-							?>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<?php
-			$wps_active_plugin = get_plugins();
-			$wps_active_plugin = ! empty( $wps_active_plugin ) && is_array( $wps_active_plugin ) ? $wps_active_plugin : array();
-			if ( ! array_key_exists( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php', $wps_active_plugin ) ) {
-				?>
-				<div class="wps_wpr_points_table_second_wrappers wps_wpr_pro_plugin_settings">
-					<h3 class="wps_wpr_heading"><?php esc_html_e( 'Reset Users Points', 'points-and-rewards-for-woocommerce' ); ?></h3>
-					<table class="form-table wps_wpr_general_setting">
-						<tbody>
-							<tr valign="top">
-								<td class="wps_wpr_instructions_tabledata">
-									<p><?php esc_html_e( 'To Reset Points of all users in a single go, click on Reset Points Button.', 'points-and-rewards-for-woocommerce' ); ?></p>
-									<p><?php esc_html_e( 'Please note that resetting the points will remove all existing points of user and assigned zero(0)', 'points-and-rewards-for-woocommerce' ); ?></p>
-								</td>
-								<td class="wps_wpr_instructions_tabledata_btn">
-									<p class="wps_wpr_reset_user_paragraph"><input type="button" id="wps_wpr_reset_user_points" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Reset Points', 'points-and-rewards-for-woocommerce' ); ?>" />
-									<img class="wps_wpr_reset_user_loader" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/loading.gif' ); ?>"></p>
-									<span class="wps_wpr_reset_user_notice"></span>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
-				<!--     Add / Remove User points in signle click html skeleton    -->
-				<div class="wps_wpr_points_table_second_wrappers wps_wpr_pro_plugin_settings">
-					<h3 class="wps_wpr_heading"><?php esc_html_e( 'Add / Remove Points', 'points-and-rewards-for-woocommerce' ); ?></h3>
-					<table class="form-table wps_wpr_general_setting">
-						<tbody>
-							<tr valign="top">
-								<td class="wps_wpr_instructions_tabledata">
-									<p><?php esc_html_e( 'To add/remove points to all users at once, simply click on the "Update Points" button.', 'points-and-rewards-for-woocommerce' ); ?></p>
-									<p><?php esc_html_e( 'Please note that this action will overwrite and update the existing points for all users.', 'points-and-rewards-for-woocommerce' ); ?></p>
-								</td>
-								<td class="wps_wpr_instructions_tabledata_btn">
-									<p class="wps_wpr_reset_user_paragraph"><input type="button" id="wps_wpr_update_user_points" class="button-primary woocommerce-save-button wps_wpr_disabled_pro_plugin" value="<?php esc_html_e( 'Update Points', 'points-and-rewards-for-woocommerce' ); ?>" />
-										<img class="wps_wpr_update_user_loader" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/loading.gif' ); ?>">
-									</p>
-									<span class="wps_wpr_update_user_notice"></span>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<?php
-			}
-			?>
 			<?php wp_nonce_field( 'wps_upload_csv', 'wps_wpr_nonce' ); ?>
 		</div>
 		<div class="wps_wpr_export_points_table_main_wrap">
@@ -2853,7 +2803,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	
 		$response = wp_remote_post( $url, array(
 			'body' => array(
-				'data' => json_encode($data),
+				'data' => wp_json_encode($data),
 			),
 		) );
 		

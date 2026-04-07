@@ -652,11 +652,11 @@ class Points_Rewards_For_WooCommerce_Public {
 			if ( empty( $wps_wpr_ref_link_expiry ) ) {
 				$wps_wpr_ref_link_expiry = 365;
 			}
-			if ( isset( $_GET['pkey'] ) && ! empty( $_GET['pkey'] ) ) {// phpcs:ignore WordPress.Security.NonceVerification
-				$wps_referral_key = sanitize_text_field( wp_unslash( $_GET['pkey'] ) );// phpcs:ignore WordPress.Security.NonceVerification
+
+			$wps_referral_key = isset( $_GET['pkey'] ) ? sanitize_text_field( wp_unslash( $_GET['pkey'] ) ) : '';// phpcs:ignore WordPress.Security.NonceVerification
+			if ( ! empty( $wps_referral_key ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 
 				$referral_link = trim( $wps_referral_key );// phpcs:ignore WordPress.Security.NonceVerification
-
 				if ( isset( $wps_wpr_ref_link_expiry ) && ! empty( $wps_wpr_ref_link_expiry ) && ! empty( $referral_link ) ) {
 					setcookie( 'wps_wpr_cookie_set', $referral_link, time() + ( 86400 * $wps_wpr_ref_link_expiry ), '/' );
 				}
@@ -1025,7 +1025,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_destroy_cookie() {
-		if ( isset( $_COOKIE['wps_wpr_cookie_set'] ) && ! empty( $_COOKIE['wps_wpr_cookie_set'] ) ) {
+		$wps_wpr_cookie_set = isset( $_COOKIE['wps_wpr_cookie_set'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wps_wpr_cookie_set'] ) ) : '';
+		if ( ! empty( $wps_wpr_cookie_set ) ) {
 			setcookie( 'wps_wpr_cookie_set', '', time() - 3600, '/' );
 		}
 	}

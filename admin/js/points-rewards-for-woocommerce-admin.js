@@ -174,17 +174,198 @@
 		  e(document)
 			.find("#wps_wpr_membership_product_list_" + s)
 			.select2();
-	  wps_wpr_object.check_pro_activate &&
-		wps_wpr_object.check_pro_activate &&
-		  e(document).on("click", "#wps_wpr_add_more", function () {
-			var r = "";
-			e(document).find(".wps_wpr_object_purchase").remove(),
-			  e(
-				(r =
-				  '<div class="wps_wpr_object_purchase"><p>' +
-				  wps_wpr_object.pro_text + '</p></div>')
-			  ).insertAfter(".wp-list-table");
-		  }),
+		  
+		/*Check add more column in the order total settings*/
+		jQuery(document).on('click','#wps_wpr_add_more',function($) {
+			if(jQuery('#wps_wpr_thankyouorder_enable').prop("checked") == true) {
+
+				var response = check_validation_setting();
+				if( response == true) {
+					jQuery('.wps_error').hide();
+					var tbody_length = jQuery('.wps_wpr_thankyouorder_tbody > tr').length;
+					var new_row = '<tr valign="top"><td class="forminp forminp-text"><label for="wps_wpr_thankyouorder_minimum"><input type="text" name="wps_wpr_thankyouorder_minimum[]" class="wps_wpr_thankyouorder_minimum input-text wc_input_price" required=""></label></td><td class="forminp forminp-text"><label for="wps_wpr_thankyouorder_maximum"><input type="text" name="wps_wpr_thankyouorder_maximum[]" class="wps_wpr_thankyouorder_maximum"></label></td><td class="forminp forminp-text"><label for="wps_wpr_thankyouorder_current_type"><input type="text" name="wps_wpr_thankyouorder_current_type[]" class="wps_wpr_thankyouorder_current_type input-text wc_input_price" required=""></label></td><td class="wps_wpr_remove_thankyouorder_content forminp forminp-text"><input type="button" value="Remove" class="wps_wpr_remove_thankyouorder button" ></td></tr>';
+
+					if( tbody_length == 2 ) {
+						jQuery( '.wps_wpr_remove_thankyouorder_content' ).each( function() {
+							jQuery(this).show();
+						});
+					}
+					jQuery('.wps_wpr_thankyouorder_tbody').append(new_row);
+				} else {
+					jQuery('html, body').animate({
+						scrollTop: $(".wps_rwpr_header").offset().top
+					}, 800);
+				
+					var remove_message = '<div class="notice notice-error is-dismissible wps_error"><p><strong>'+wps_wpr_object.notice_error+'</strong></p></div>';
+					
+					jQuery(remove_message).insertAfter('.wps_rwpr_header');
+				}			
+			}
+		});
+
+		/*Check validation of the order total settings*/
+		var check_validation_setting = function(){
+		
+			if(jQuery('#wps_wpr_thankyouorder_enable').prop("checked") == true) {
+				var tbody_length  = jQuery('.wps_wpr_thankyouorder_tbody > tr').length;
+				var i             = 1;
+				var min_arr       = []; var max_arr = [];
+				var empty_warning = false;
+				var is_lesser     = false;
+				var num_valid     = false;
+				jQuery('.wps_wpr_thankyouorder_minimum').each(function(){
+
+					min_arr.push(jQuery(this).val());
+				});
+				var i = 1;
+
+				jQuery('.wps_wpr_thankyouorder_maximum').each(function(){
+
+					max_arr.push(jQuery(this).val());
+					i++;
+				});
+
+				var i                 = 1;
+				var thankyouorder_arr = [];
+				jQuery('.wps_wpr_thankyouorder_current_type').each(function(){
+					thankyouorder_arr.push(jQuery(this).val());
+					if(!jQuery(this).val()){				
+						jQuery('.wps_wpr_thankyouorder_tbody > tr:nth-child('+(i+1)+') .wps_wpr_thankyouorder_current_type').css("border-color", "red");
+						empty_warning = true;
+					}
+					else {
+						jQuery('.wps_wpr_thankyouorder_tbody > tr:nth-child('+(i+1)+') .wps_wpr_thankyouorder_current_type').css("border-color", "");				
+					}
+					i++;			
+				});
+
+				if(empty_warning) {
+					jQuery('.notice.notice-error.is-dismissible').each(function(){
+						jQuery(this).remove();
+					});
+					jQuery('.notice.notice-success.is-dismissible').each(function(){
+						jQuery(this).remove();
+					});
+
+					jQuery('html, body').animate({
+						scrollTop: jQuery(".wps_rwpr_header").offset().top
+					}, 800);
+					var empty_message = '<div class="notice notice-error is-dismissible"><p><strong>Some Fields are empty!</strong></p></div>';
+					jQuery(empty_message).insertBefore(jQuery('.wps_wpr_general_wrapper'));
+					return;
+				}
+
+				var minmaxcheck = false;
+				if(max_arr.length >0 && min_arr.length > 0) {
+	
+					if( min_arr.length == max_arr.length && max_arr.length == thankyouorder_arr.length) {
+
+						for ( var j = 0; j < min_arr.length; j++) {
+
+							if(parseInt(min_arr[j]) > parseInt(max_arr[j])) {
+								minmaxcheck = true;
+								jQuery('.wps_wpr_thankyouorder_tbody > tr:nth-child('+(j+2)+') .wps_wpr_thankyouorder_minimum').css("border-color", "red");
+								jQuery('.wps_wpr_thankyouorder_tbody > tr:nth-child('+(j+2)+') .wps_wpr_thankyouorder_minimum').css("border-color", "red");
+							}
+							else{
+								jQuery('.wps_wpr_thankyouorder_tbody > tr:nth-child('+(j+2)+') .wps_wpr_thankyouorder_minimum').css("border-color", "");
+								jQuery('.wps_wpr_thankyouorder_tbody > tr:nth-child('+(j+2)+') .wps_wpr_thankyouorder_minimum').css("border-color", "");
+							}
+						}
+					}
+					else {
+						jQuery('.notice.notice-error.is-dismissible').each(function(){
+							jQuery(this).remove();
+						});
+						jQuery('.notice.notice-success.is-dismissible').each(function(){
+							jQuery(this).remove();
+						});
+
+						jQuery('html, body').animate({
+							scrollTop: jQuery(".wps_rwpr_header").offset().top
+						}, 800);
+						var empty_message = '<div class="notice notice-error is-dismissible"><p><strong>Some Fields are empty!</strong></p></div>';
+						jQuery(empty_message).insertBefore(jQuery('.wps_wpr_general_wrapper'));
+						return;
+					}
+				}
+
+				if(minmaxcheck) {
+					jQuery('.notice.notice-error.is-dismissible').each(function(){
+						jQuery(this).remove();
+					});
+					jQuery('.notice.notice-success.is-dismissible').each(function(){
+						jQuery(this).remove();
+					});
+
+					jQuery('html, body').animate({
+						scrollTop: jQuery(".wps_rwpr_header").offset().top
+					}, 800);
+					var empty_message = '<div class="notice notice-error is-dismissible"><p><strong>Minimum value cannot have value grater than Maximim value.</strong></p></div>';
+					jQuery(empty_message).insertAfter(jQuery('.wps_wpr_general_wrapper'));
+					return;
+				}
+				return true;
+			} else {
+				return true;
+			}
+		};
+
+		jQuery( document ).on(
+			"change",'input',
+			'.wps_wpr_thankyouorder_minimum input-text',
+			function(){
+				var count = jQuery( this ).attr('class');
+				var value1 = jQuery(this).val();
+			
+				if(value1<0 && count =='wps_wpr_thankyouorder_minimum input-text wc_input_price'){
+					alert('Negative values not allowed');
+					jQuery(this).val("1");
+				}
+			}
+		);
+
+		jQuery( document ).on(
+			"change",'input',
+			'.wps_wpr_thankyouorder_maximum',
+			function(){
+				var count = jQuery( this ).attr('class');
+				var value1 = jQuery(this).val();
+				if(value1<0 && count =='wps_wpr_thankyouorder_maximum'){
+					alert('Negative values not allowed');
+					jQuery(this).val("1");
+				}
+			}
+		);
+
+		jQuery( document ).on(
+			"change",'input',
+			'.wps_wpr_thankyouorder_current_type input-text wc_input_price',
+			function(){
+				var count = jQuery( this ).attr('class');
+				var value1 = jQuery(this).val();
+			
+				if(value1<0 && count =='wps_wpr_thankyouorder_current_type input-text wc_input_price'){
+					alert('Negative values not allowed');
+					jQuery(this).val("1");	
+				}
+			}
+		);
+
+		jQuery(document).on('click','.wps_wpr_remove_thankyouorder',function() {
+
+			if(jQuery('#wps_wpr_thankyouorder_enable').prop("checked") == true) {
+				
+				jQuery(this).closest('tr').remove();
+				var tbody_length = jQuery('.wps_wpr_thankyouorder_tbody > tr').length;
+				if( tbody_length == 1 ){
+					jQuery( '.wps_wpr_remove_thankyouorder_content' ).each( function() {
+						jQuery(this).hide();
+					});
+				}
+			}
+		});
+
 		jQuery(document).on("click", ".wps_wpr_remove_button", function () {
 		  var r = e(this).attr("id");
 		  0 == r &&
@@ -511,17 +692,86 @@
 		return false;
 	}
 
-	// if pro is not activated than show notice for user.
-	jQuery('.wps_wpr_pro_plugin_notices').hide();
-	if ( wps_wpr_object.check_pro_activate ) {
-		jQuery(document).on('click', '#wps_wpr_user_badges_fields_add', function(){
+	// Add badges fields dynamic.
+	jQuery(document).on('click', '#wps_wpr_user_badges_fields_add', function() {
+		if (true === jQuery('.wps_wpr_enable_user_badges_settings').prop('checked')) {
 
-			jQuery(document).find('.wps_wpr_object_purchase').remove();
-			var pro_plugin_msg = '<div class="wps_wpr_object_purchase"><p>' + wps_wpr_object.badge_pro__text + '</p></div>';
-			jQuery('.wps_wpr_pro_plugin_notices').show();
-			jQuery('.wps_wpr_pro_plugin_notices').append( pro_plugin_msg );
+			if (wps_wpr_badges_validation()) {
+
+				var new_row = '<tr class="wps_wpr_add_user_badges_dynamic"><td><input type="text" name="wps_wpr_enter_badges_name[]" id="wps_wpr_enter_badges_name" class="wps_wpr_enter_badges_name" value="" required></td><td><input type="number" min="1" name="wps_wpr_badges_threshold_points[]" id="wps_wpr_badges_threshold_points" class="wps_wpr_badges_threshold_points" value="" required></td><td><input type="number" min="1" name="wps_wpr_badges_rewards_points[]" id="wps_wpr_badges_rewards_points" class="wps_wpr_badges_rewards_points" value="" required></td><td><div class="wps_wpr_icon_user_badges_wrap"><img src="' + wps_wpr_object.wps_badge_image + '" class="wps_wpr_icon_user_badges"><input type="button" class="wps_wpr_add_user_badges_img" value="Replace"><input type="hidden" name="wps_wpr_image_attachment_id[]" class="wps_wpr_image_attachment_id" value="' + wps_wpr_object.wps_badge_image + '"/></div></td><td style="width: 60px;"><input type="button" name="wps_wpr_remove_user_badges" id="wps_wpr_remove_user_badges" class="wps_wpr_remove_user_badges" value="+"></td></tr>';
+				jQuery('.wps_wpr_user_badges_table_settings_wrappers').append(new_row);
+			} else {
+
+				jQuery('.notice.notice-error.is-dismissible').each(function() {
+					jQuery(this).remove();
+				});
+				jQuery('.notice.notice-success.is-dismissible').each(function() {
+					jQuery(this).remove();
+				});
+
+				jQuery('html, body').animate({
+					scrollTop: jQuery(".wps_rwpr_header").offset().top
+				}, 800);
+				var empty_message = '<div class="notice notice-error is-dismissible"><p><strong>Some Fields are empty!</strong></p></div>';
+				jQuery(empty_message).insertBefore(jQuery('.wps_wpr_user_badges_main_wrappers'));
+			}
+		}
+	});
+
+	// Validating badges.
+	function wps_wpr_badges_validation() {
+
+		var result      = true;
+		var badges_name = [];
+		var i           = 0
+		jQuery(document).find('.wps_wpr_enter_badges_name').each(function(){
+		badges_name.push( jQuery(this).val() );
+		if ( ! jQuery(this).val() ) {
+
+			++i;
+		}
 		});
+		
+		var threshold_points = [];
+		var x                = 0;
+		jQuery(document).find('.wps_wpr_badges_threshold_points').each(function(){
+		threshold_points.push( jQuery(this).val() );
+		if ( ! jQuery(this).val() ) {
+
+			++x;
+		}
+		});
+
+		var badges_rewards_points = [];
+		var y                     = 0;
+		jQuery(document).find('.wps_wpr_badges_rewards_points').each(function(){
+		badges_rewards_points.push( jQuery(this).val() );
+		if ( ! jQuery(this).val() ) {
+
+			++y;
+		}
+		});
+
+		if ( i > 0 || x > 0 || y > 0 ) {
+
+		result = false;
+		}
+		return result;
 	}
+
+	// Remove user badges.
+	jQuery(document).on('click', '#wps_wpr_remove_user_badges', function(){
+		// check setting is enable.
+		if ( true == jQuery('.wps_wpr_enable_user_badges_settings').prop('checked') ) {
+			if ( jQuery('.wps_wpr_add_user_badges_dynamic').length > 2 ) {
+
+				jQuery(this).parents('.wps_wpr_add_user_badges_dynamic').remove();
+			} else {
+
+				alert( 'This is the default setting, you cannot remove it!!' );
+			}
+		}
+	});
 
 	// threshold amount in incremented order.
 	jQuery(document).on('keyup', '.wps_wpr_badges_threshold_points', function(){
@@ -733,102 +983,92 @@ jQuery(document).ready(function($){
 			var error                    = false;
 			var empty_message            = '';
 			var count                    = $('.wps_wpr_repeat:last').data('id');
-			if ( count < 1 ) {
 
-				var LevelName                = $('#wps_wpr_membership_level_name_'+count).val();
-				var LevelPoints              = $('#wps_wpr_membership_level_value_'+count).val();
-				var CategValue               = $('#wps_wpr_membership_category_list_'+count).val();
-				var ProdValue                = $('#wps_wpr_membership_product_list_'+count).val();
-				var Discount                 = $('#wps_wpr_membership_discount_'+count).val();
-				if(!(LevelName) || !(LevelPoints) ||  !(CategValue)  || !(Discount)) {
-					if(!(LevelName)) {
-						error = true;
-						empty_message+= '<div class="notice notice-error is-dismissible"><p><strong>'+wps_wpr_object.LevelName_notice+'</strong></p></div>'; 
-						$('#wps_wpr_membership_level_name_'+count).addClass('wps_wpr_error_notice');
+			var LevelName                = $('#wps_wpr_membership_level_name_'+count).val();
+			var LevelPoints              = $('#wps_wpr_membership_level_value_'+count).val();
+			var CategValue               = $('#wps_wpr_membership_category_list_'+count).val();
+			var ProdValue                = $('#wps_wpr_membership_product_list_'+count).val();
+			var Discount                 = $('#wps_wpr_membership_discount_'+count).val();
+			if(!(LevelName) || !(LevelPoints) ||  !(CategValue)  || !(Discount)) {
+				if(!(LevelName)) {
+					error = true;
+					empty_message+= '<div class="notice notice-error is-dismissible"><p><strong>'+wps_wpr_object.LevelName_notice+'</strong></p></div>'; 
+					$('#wps_wpr_membership_level_name_'+count).addClass('wps_wpr_error_notice');
 
-					} else {
-						$('#wps_wpr_membership_level_name_'+count).removeClass('wps_wpr_error_notice');	
-					}
-
-					if(!(LevelPoints)) {
-						error = true;
-						empty_message+= '<div class="notice notice-error is-dismissible"><p><strong>'+wps_wpr_object.LevelValue_notice+'</strong></p></div>'; 
-						$('#wps_wpr_membership_level_value_'+count).addClass('wps_wpr_error_notice');
-
-					} else {
-						$('#wps_wpr_membership_level_value_'+count).removeClass('wps_wpr_error_notice');
-					}
-
-					if(!(CategValue)) {
-						error = true;
-						empty_message+= '<div class="notice notice-error is-dismissible"><p><strong>'+wps_wpr_object.CategValue_notice+'</strong></p></div>';
-						$('#wps_wpr_membership_category_list_'+count).addClass('wps_wpr_error_notice');
-					} else {
-						$('#wps_wpr_membership_category_list_'+count).removeClass('wps_wpr_error_notice');
-					}
-
-					if(!(Discount)) {
-						error = true;
-						empty_message+= '<div class="notice notice-error is-dismissible"><p><strong>'+wps_wpr_object.Discount_notice+'</strong></p></div>';
-						$('#wps_wpr_membership_discount_'+count).addClass('wps_wpr_error_notice');
-					} else {
-						$('#wps_wpr_membership_discount_'+count).removeClass('wps_wpr_error_notice');
-					}
-				}
-
-				if(error) {
-					$('.notice.notice-error.is-dismissible').each(function(){
-						$(this).remove();
-					});
-					$('.notice.notice-success.is-dismissible').each(function(){
-						$(this).remove();
-					});
-					$('html, body').animate({
-						scrollTop: $(".wps_rwpr_header").offset().top
-					}, 800);
-					$(empty_message).insertAfter($('.wps_rwpr_header'));
 				} else {
-					count = parseInt(count)+1; 
-					var cat_id;
-					var cat_name;
-					var html         = "";
-					var cat_options  = "";
-					var Categ_option = wps_wpr_object.Categ_option;
-					var cat_name     = [];
-					
-					for(var key in Categ_option) {
-						cat_name = Categ_option[key].cat_name;
-						cat_id = Categ_option[key].id;
-						cat_options+='<option value="'+cat_id+'">'+cat_name+'</option>';
-					}
-				
-					html+='<div id ="wps_wpr_parent_repeatable_'+count+'" data-id="'+count+'" class="wps_wpr_repeat">';
-					html+='<table class="wps_wpr_repeatable_section">';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_level_name">'+wps_wpr_object.Labeltext+'</label></th>';
-					html+='<td class="forminp forminp-text"><label for="wps_wpr_membership_level_name"><input type="text" name="wps_wpr_membership_level_name_'+count+'" value="" id="wps_wpr_membership_level_name_'+count+'" class="text_points" required>'+wps_wpr_object.Labelname+'</label><input type="button" value='+wps_wpr_object.Remove_text+' class="button-primary woocommerce-save-button wps_wpr_remove_button" id="'+count+'"></td></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_level_value">'+wps_wpr_object.Points+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_membership_level_value"><input type="number" min="1" value="" name="wps_wpr_membership_level_value_'+count+'" id="wps_wpr_membership_level_value_'+count+'" class="input-text" required></label></td></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_expiration">'+wps_wpr_object.Exp_period+'</label></th><td class="forminp forminp-text"><input type="number" min="1" value="" name="wps_wpr_membership_expiration_'+count+'"id="wps_wpr_membership_expiration_'+count+'" class="input-text"><select id="wps_wpr_membership_expiration_days_'+count+'" name="wps_wpr_membership_expiration_days_'+count+'"><option value="days">'+wps_wpr_object.Days+'</option><option value="weeks">'+wps_wpr_object.Weeks+'</option><option value="months">'+wps_wpr_object.Months+'</option><option value="years">'+wps_wpr_object.Years+'</option>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_category_list">'+wps_wpr_object.Categ_text+'</label></th><td class="forminp forminp-text"><select id="wps_wpr_membership_category_list_'+count+'" class="wps_wpr_common_class_categ" data-id="'+count+'" multiple="multiple" name="wps_wpr_membership_category_list_'+count+'[]">'+cat_options+'</select></td></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_product_list">'+wps_wpr_object.Prod_text+'</label></th><td class="forminp forminp-text"><select id="wps_wpr_membership_product_list_'+count+'" multiple="multiple" name="wps_wpr_membership_product_list_'+count+'[]"></select></td></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_discount">'+wps_wpr_object.Discounttext+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_membership_discount"><input type="number" min="0" max="100" value="0" name="wps_wpr_membership_discount_'+count+'" id="wps_wpr_membership_discount_'+count+'" class="input-text"></label></td></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_enable_to_rewards_with_points">'+wps_wpr_object.enble_mem_reward_label+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_enable_to_rewards_with_points"><input type="checkbox" value="1" name="wps_wpr_enable_to_rewards_with_points_'+count+'" id="wps_wpr_enable_to_rewards_with_points_'+count+'" class="input-text"></label></td></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_mem_reward_type">'+wps_wpr_object.mem_points_type+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_choose_mem_points_type"><select name="wps_wpr_choose_mem_points_type_'+count+'" id="wps_wpr_choose_mem_points_type_'+count+'" class="wps_wpr_assign_mem_rewards_points"><option value="fixed">Fixed</option><option value="percent">Percent</option></select></label></td><input type="hidden" value="'+count+'" name="hidden_count"></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_mem_rewards_points">'+wps_wpr_object.Points+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_assign_mem_points_val"><input type="number" min="0" name="wps_wpr_assign_mem_points_val_'+count+'" id="wps_wpr_assign_mem_points_val_'+count+'" value="0"></label></td><input type="hidden" value="'+count+'" name="hidden_count"></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_enable_free_shipping_">'+wps_wpr_object.wps_wpr_free_shipping+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_enable_free_shipping_"><input type="checkbox" value="1" name="wps_wpr_enable_free_shipping_'+count+'" id="wps_wpr_enable_free_shipping_'+count+'" class="input-text"></label></td></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_enable_mem_wise_per_curr_">'+wps_wpr_object.wps_enable_mem_per_curr+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_enable_mem_wise_per_curr_"><input type="checkbox" value="1" name="wps_wpr_enable_mem_wise_per_curr_'+count+'" id="wps_wpr_enable_mem_wise_per_curr_'+count+'" class="input-text"></label></td></tr>';
-					html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_wise_price_">'+wps_wpr_object.wps_set_mem_curr_values+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_membership_wise_price_"><input type="number" value="0" name="wps_wpr_membership_wise_price_'+count+'" id="wps_wpr_membership_wise_price_'+count+'" class="input-text"></label><label for="wps_wpr_membership_wise_points_"><input type="number" value="0" name="wps_wpr_membership_wise_points_'+count+'" id="wps_wpr_membership_wise_points_'+count+'" class="input-text"></label></td></tr></table></div>';
-					$('.parent_of_div').append(html);
-					$('#wps_wpr_parent_repeatable_'+count+'').find('#wps_wpr_membership_category_list_'+count).select2();
-					$('#wps_wpr_parent_repeatable_'+count+'').find('#wps_wpr_membership_product_list_'+count).select2();
+					$('#wps_wpr_membership_level_name_'+count).removeClass('wps_wpr_error_notice');	
 				}
-			} else {
 
-				var r = "";
-				$(document).find(".wps_wpr_object_purchase").remove(),
-				(r =
-					'<div class="wps_wpr_object_purchase"><p>' +
-					wps_wpr_object.pro_text + "</p></div>"),
-				$(".parent_of_div").append(r);
+				if(!(LevelPoints)) {
+					error = true;
+					empty_message+= '<div class="notice notice-error is-dismissible"><p><strong>'+wps_wpr_object.LevelValue_notice+'</strong></p></div>'; 
+					$('#wps_wpr_membership_level_value_'+count).addClass('wps_wpr_error_notice');
+
+				} else {
+					$('#wps_wpr_membership_level_value_'+count).removeClass('wps_wpr_error_notice');
+				}
+
+				if(!(CategValue)) {
+					error = true;
+					empty_message+= '<div class="notice notice-error is-dismissible"><p><strong>'+wps_wpr_object.CategValue_notice+'</strong></p></div>';
+					$('#wps_wpr_membership_category_list_'+count).addClass('wps_wpr_error_notice');
+				} else {
+					$('#wps_wpr_membership_category_list_'+count).removeClass('wps_wpr_error_notice');
+				}
+
+				if(!(Discount)) {
+					error = true;
+					empty_message+= '<div class="notice notice-error is-dismissible"><p><strong>'+wps_wpr_object.Discount_notice+'</strong></p></div>';
+					$('#wps_wpr_membership_discount_'+count).addClass('wps_wpr_error_notice');
+				} else {
+					$('#wps_wpr_membership_discount_'+count).removeClass('wps_wpr_error_notice');
+				}
+			}
+
+			if(error) {
+				$('.notice.notice-error.is-dismissible').each(function(){
+					$(this).remove();
+				});
+				$('.notice.notice-success.is-dismissible').each(function(){
+					$(this).remove();
+				});
+				$('html, body').animate({
+					scrollTop: $(".wps_rwpr_header").offset().top
+				}, 800);
+				$(empty_message).insertAfter($('.wps_rwpr_header'));
+			} else {
+				count = parseInt(count)+1; 
+				var cat_id;
+				var cat_name;
+				var html         = "";
+				var cat_options  = "";
+				var Categ_option = wps_wpr_object.Categ_option;
+				var cat_name     = [];
+				
+				for(var key in Categ_option) {
+					cat_name = Categ_option[key].cat_name;
+					cat_id = Categ_option[key].id;
+					cat_options+='<option value="'+cat_id+'">'+cat_name+'</option>';
+				}
+			
+				html+='<div id ="wps_wpr_parent_repeatable_'+count+'" data-id="'+count+'" class="wps_wpr_repeat">';
+				html+='<table class="wps_wpr_repeatable_section">';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_level_name">'+wps_wpr_object.Labeltext+'</label></th>';
+				html+='<td class="forminp forminp-text"><label for="wps_wpr_membership_level_name"><input type="text" name="wps_wpr_membership_level_name_'+count+'" value="" id="wps_wpr_membership_level_name_'+count+'" class="text_points" required>'+wps_wpr_object.Labelname+'</label><input type="button" value='+wps_wpr_object.Remove_text+' class="button-primary woocommerce-save-button wps_wpr_remove_button" id="'+count+'"></td></tr>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_level_value">'+wps_wpr_object.Points+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_membership_level_value"><input type="number" min="1" value="" name="wps_wpr_membership_level_value_'+count+'" id="wps_wpr_membership_level_value_'+count+'" class="input-text" required></label></td></tr>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_expiration">'+wps_wpr_object.Exp_period+'</label></th><td class="forminp forminp-text"><input type="number" min="1" value="" name="wps_wpr_membership_expiration_'+count+'"id="wps_wpr_membership_expiration_'+count+'" class="input-text"><select id="wps_wpr_membership_expiration_days_'+count+'" name="wps_wpr_membership_expiration_days_'+count+'"><option value="days">'+wps_wpr_object.Days+'</option><option value="weeks">'+wps_wpr_object.Weeks+'</option><option value="months">'+wps_wpr_object.Months+'</option><option value="years">'+wps_wpr_object.Years+'</option>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_category_list">'+wps_wpr_object.Categ_text+'</label></th><td class="forminp forminp-text"><select id="wps_wpr_membership_category_list_'+count+'" class="wps_wpr_common_class_categ" data-id="'+count+'" multiple="multiple" name="wps_wpr_membership_category_list_'+count+'[]">'+cat_options+'</select></td></tr>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_product_list">'+wps_wpr_object.Prod_text+'</label></th><td class="forminp forminp-text"><select id="wps_wpr_membership_product_list_'+count+'" multiple="multiple" name="wps_wpr_membership_product_list_'+count+'[]"></select></td></tr>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_discount">'+wps_wpr_object.Discounttext+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_membership_discount"><input type="number" min="0" max="100" value="0" name="wps_wpr_membership_discount_'+count+'" id="wps_wpr_membership_discount_'+count+'" class="input-text"></label></td></tr>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_enable_to_rewards_with_points">'+wps_wpr_object.enble_mem_reward_label+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_enable_to_rewards_with_points"><input type="checkbox" value="1" name="wps_wpr_enable_to_rewards_with_points_'+count+'" id="wps_wpr_enable_to_rewards_with_points_'+count+'" class="input-text"></label></td></tr>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_mem_reward_type">'+wps_wpr_object.mem_points_type+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_choose_mem_points_type"><select name="wps_wpr_choose_mem_points_type_'+count+'" id="wps_wpr_choose_mem_points_type_'+count+'" class="wps_wpr_assign_mem_rewards_points"><option value="fixed">Fixed</option><option value="percent">Percent</option></select></label></td><input type="hidden" value="'+count+'" name="hidden_count"></tr>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_mem_rewards_points">'+wps_wpr_object.Points+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_assign_mem_points_val"><input type="number" min="0" name="wps_wpr_assign_mem_points_val_'+count+'" id="wps_wpr_assign_mem_points_val_'+count+'" value="0"></label></td><input type="hidden" value="'+count+'" name="hidden_count"></tr>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_enable_free_shipping_">'+wps_wpr_object.wps_wpr_free_shipping+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_enable_free_shipping_"><input type="checkbox" value="1" name="wps_wpr_enable_free_shipping_'+count+'" id="wps_wpr_enable_free_shipping_'+count+'" class="input-text"></label></td></tr>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_enable_mem_wise_per_curr_">'+wps_wpr_object.wps_enable_mem_per_curr+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_enable_mem_wise_per_curr_"><input type="checkbox" value="1" name="wps_wpr_enable_mem_wise_per_curr_'+count+'" id="wps_wpr_enable_mem_wise_per_curr_'+count+'" class="input-text"></label></td></tr>';
+				html+='<tr valign="top"><th scope="row" class="titledesc"><label for="wps_wpr_membership_wise_price_">'+wps_wpr_object.wps_set_mem_curr_values+'</label></th><td class="forminp forminp-text"><label for="wps_wpr_membership_wise_price_"><input type="number" value="0" name="wps_wpr_membership_wise_price_'+count+'" id="wps_wpr_membership_wise_price_'+count+'" class="input-text"></label><label for="wps_wpr_membership_wise_points_"><input type="number" value="0" name="wps_wpr_membership_wise_points_'+count+'" id="wps_wpr_membership_wise_points_'+count+'" class="input-text"></label></td></tr></table></div>';
+				$('.parent_of_div').append(html);
+				$('#wps_wpr_parent_repeatable_'+count+'').find('#wps_wpr_membership_category_list_'+count).select2();
+				$('#wps_wpr_parent_repeatable_'+count+'').find('#wps_wpr_membership_product_list_'+count).select2();
 			}
 		});
 	}
@@ -929,26 +1169,74 @@ jQuery(document).ready(function($){
 	});
 
 	// Show notice for purchase pro plugin when clicking on Add Quiz Button.
-	if (wps_wpr_object.check_pro_activate) {
+	// if (wps_wpr_object.check_pro_activate) {
 
-		jQuery(document).on('click', '#wps_wpr_add_quiz', function () {
+	// 	// Hide remove quiz button if pro plugin is not active
+	// 	jQuery('.wps_wpr_general_actions').hide();
+	// }
 
-			// Only add message if it doesn't already exist
-			if (!jQuery('.wps_wpr_object_purchase').length) {
-				const pro_plugin_msg = `
-					<div class="wps_wpr_object_purchase">
-						<p>
-							${wps_wpr_object.badge_pro__text.replace('Badges', 'Quiz')}
-						</p>
-					</div>
-				`;
-				jQuery('.wps_wpr_insert_pro_html').show().append(pro_plugin_msg);
+	// CAMPAIGN JS part.
+		var maxQuizzes = 4;
+		// Add quiz.
+		$('#wps_wpr_add_quiz').click(function(e){
+			e.preventDefault();
+
+			if(!validateLastQuiz()) {
+				alert('Please fill all fields in the current quiz before adding a new one.');
+				return;
 			}
+
+			var totalQuizzes = $('#wps_wpr_quiz_container .wps_wpr_quiz_row').length;
+			if(totalQuizzes >= maxQuizzes) {
+				alert('Maximum quizzes reached');
+				return;
+			}
+
+			var $firstQuiz = $('#wps_wpr_quiz_container .wps_wpr_quiz_row:first').clone();
+			$firstQuiz.find('input').val('');
+			$firstQuiz.find('.validation_error').hide();
+			$('#wps_wpr_quiz_container').append($firstQuiz);
+
+			toggleRemoveButtons();
 		});
 
-		// Hide remove quiz button if pro plugin is not active
-		jQuery('.wps_wpr_general_actions').hide();
-	}
+		// Remove quiz
+		$('#wps_wpr_quiz_container').on('click', '.wps_wpr_remove_quiz', function(e){
+			e.preventDefault();
+			$(this).closest('.wps_wpr_quiz_row').remove();
+			toggleRemoveButtons();
+		});
+
+		// Initial check
+		toggleRemoveButtons();
+
+		// function calling for remove button which remove the quiz section.
+		function toggleRemoveButtons() {
+
+			var $rows = jQuery('#wps_wpr_quiz_container .wps_wpr_quiz_row');
+			if ($rows.length > 1) {
+				$rows.find('.wps_wpr_remove_quiz').show();
+			} else {
+				$rows.find('.wps_wpr_remove_quiz').hide();
+			}
+		}
+
+		// calling function for validating quiz section fields.
+		function validateLastQuiz() {
+			var lastQuiz = jQuery('#wps_wpr_quiz_container .wps_wpr_quiz_row').last();
+			var valid = true;
+
+			lastQuiz.find('.wps_wpr_quiz_field').each(function(){
+				if(jQuery.trim(jQuery(this).val()) === '') {
+					jQuery(this).next('.validation_error').show();
+					valid = false;
+				} else {
+					jQuery(this).next('.validation_error').hide();
+				}
+			});
+
+			return valid;
+		}
 
 
 	// Open Campaign existing modal template.

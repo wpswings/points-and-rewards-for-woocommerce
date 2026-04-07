@@ -821,7 +821,8 @@ class WPSwings_Onboarding_Helper {
 	public function wps_wpr_add_wps_additional_validation( $result = true ) {
 
 		if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting', ) ) {
-			if ( ! empty( $_GET['tab'] ) && 'general-setting' !== $_GET['tab'] ) {
+			$wps_wpr_tabs = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+			if ( 'general-setting' !== $wps_wpr_tabs ) {
 
 				$result = false;
 			}

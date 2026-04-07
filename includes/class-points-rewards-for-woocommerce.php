@@ -239,6 +239,7 @@ class Points_Rewards_For_Woocommerce {
 
 		// set campaign image.
 		$this->loader->add_action( 'wp_ajax_wps_set_camp_heading_and_image', $plugin_admin, 'wps_wpr_set_camp_heading_and_image', 10 );
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'wps_wpr_org_remove_action' );
 	}
 
 	/**

@@ -484,10 +484,11 @@ if ( isset( $_POST['wps_wpr_items_per_page_nonce'] ) ) {
 	}
 }
 
-if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
-	if ( 'view' == $_GET['action'] ) {
+$wps_wpr_actions = isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '';
+$user_log_id     = isset( $_GET['user_id'] ) ? sanitize_text_field( wp_unslash( $_GET['user_id'] ) ) : '';
+if ( ! empty( $wps_wpr_actions ) && ! empty( $user_log_id ) ) {
+	if ( 'view' == $wps_wpr_actions ) {
 
-		$user_log_id = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
 		$user_log    = get_user_meta( $user_log_id, 'wps_wpr_user_log', true );
 		?>
 		<?php do_action( 'wps_wpr_add_notice' ); ?>
@@ -581,9 +582,9 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 		<a  href="<?php echo esc_url( WPS_RWPR_HOME_URL ); ?>admin.php?page=wps-rwpr-setting&tab=points-table" class="button wps_points_log_list_table_line_height button-primary wps_wpr_save_changes"><?php esc_html_e( 'Go Back', 'points-and-rewards-for-woocommerce' ); ?></a> 
 		<?php
 
-	} elseif ( 'view_point_log' == $_GET['action'] ) {
+	} elseif ( 'view_point_log' == $wps_wpr_actions ) {
 
-		$user_id      = sanitize_text_field( wp_unslash( $_GET['user_id'] ) );
+		$user_id      = $user_log_id;
 		$point_log    = get_user_meta( $user_id, 'points_details', true );
 		$point_log    = ! empty( $point_log ) && is_array( $point_log ) ? $point_log : array();
 		$total_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
@@ -2259,7 +2260,7 @@ if ( isset( $_GET['action'] ) && isset( $_GET['user_id'] ) ) {
 			echo '<h3>' . esc_html__( 'No Points Generated Yet.', 'points-and-rewards-for-woocommerce' ) . '<h3>';
 		}
 		// showing user points report.
-	} elseif ( 'view_point_report' == $_GET['action'] ) {
+	} elseif ( 'view_point_report' == $wps_wpr_actions ) {
 
 		?>
 		<div class="wps-wpg-gen-section-form-container">
