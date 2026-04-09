@@ -199,7 +199,6 @@ class WPSwings_Onboarding_Helper {
 					'banner_nonce'           => wp_create_nonce( 'wps-wpr-verify-nonce' ),
 					'current_screen'         => $pagenow,
 					'current_supported_slug' => apply_filters( 'wps_deactivation_supported_slug', array() ),
-					'is_pro_plugin_active'   => wps_wpr_is_par_pro_plugin_active(),
 				)
 			);
 		}

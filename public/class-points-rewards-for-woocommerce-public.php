@@ -179,7 +179,6 @@ class Points_Rewards_For_WooCommerce_Public {
 					'is_user_login'        => is_user_logged_in(),
 					'wps_modal_color_one'  => $wps_wpr_campaign_color_one,
 					'wps_modal_color_two'  => $wps_wpr_campaign_color_two,
-					'is_pro_plugin_active' => wps_wpr_is_par_pro_plugin_active(),
 				)
 			);
 		}
@@ -713,7 +712,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				$wps_refer_value = ! empty( $wps_refer_value ) ? $wps_refer_value : 1;
 				$cookie_val      = isset( $_COOKIE['wps_wpr_cookie_set'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['wps_wpr_cookie_set'] ) ) : '';
 				if ( ! empty( $cookie_val ) ) {
-					$args['meta_query'] = array(
+					$args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						array(
 							'key'     => 'wps_points_referral',
 							'value'   => trim( $cookie_val ),
@@ -1517,7 +1516,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			}
 		}
 
-		if ( ! wps_wpr_is_par_pro_plugin_active() ) {
+		if ( ! wps_wpr_is_active() ) {
 
 			$wps_wpr_notificatin_array = get_option( 'wps_wpr_notificatin_array', true );
 			$mwb_wpr_array             = array( 'completed' );
@@ -2079,57 +2078,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			$general_settings      = get_option( 'wps_wpr_settings_gallery' );
 			$restrict_sale_on_cart = ! empty( $general_settings['wps_wpr_points_restrict_sale'] ) ? $general_settings['wps_wpr_points_restrict_sale'] : '';
 
-			// check pro plugin is enable.
-			if ( wps_wpr_is_par_pro_plugin_active() ) {
-				if ( $product_sale__price > 0 ) {
-
-					// check sale restrict features is enable.
-					if ( 1 === $restrict_sale_on_cart ) {
-
-						$wps_user_level            = get_user_meta( get_current_user_id(), 'membership_level', true );
-						$membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
-						$wps_wpr_membership_roles  = isset( $membership_settings_array['membership_roles'] ) && ! empty( $membership_settings_array['membership_roles'] ) ? $membership_settings_array['membership_roles'] : array();
-						if ( ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
-							if ( is_array( $wps_wpr_membership_roles ) && ! empty( $wps_wpr_membership_roles ) ) {
-								// get membership discount amount.
-								foreach ( $wps_wpr_membership_roles as $wps_role => $values ) {
-									if ( ! is_array( $values ) ) {
-										break;
-									}
-									if ( $wps_role == $wps_user_level ) {
-
-										$discount_value = ! empty( $values['Discount'] ) ? $values['Discount'] : 0;
-										break;
-									}
-								}
-							}
-						}
-
-						// calculate membership discount on sale product.
-						$discouted_sale_price = ( $product_sale__price * $discount_value ) / 100;
-						$product_sale__price  = $product_sale__price - $discouted_sale_price;
-
-						$cart_price = 0;
-						if ( isset( WC()->cart ) ) {
-
-							// get cart subtotal and minus sale product price and minus points discount price.
-							$cart__subtotal = ! empty( WC()->cart->get_subtotal() ) && WC()->cart->get_subtotal() > 0 ? WC()->cart->get_subtotal() : 0;
-							$cart__subtotal = $cart__subtotal - $wps_wpr_check_points_discount_applied_amount;
-							$cart_price     = $cart__subtotal - $product_sale__price;
-						}
-
-						// check points is equal/lower than product price after sale product price calculated.
-						if ( $wps_cart_points <= $cart_price ) {
-
-							$wps_cart_points = $wps_cart_points;
-						} else {
-
-							$wps_cart_points = $cart_price;
-						}
-					}
-				}
-			}
-
 			// check points redeem restriction by category.
 			$wps_cart_points = apply_filters( 'wps_wpr_restrict_redeem_points_by_category_wise', $wps_cart_points );
 			// Applied points here.
@@ -2237,7 +2185,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @return string
 	 */
 	public function wps_wpr_validate_virtual_coupon_for_points( $response, $coupon_data ) {
-		if ( ! wps_wpr_is_par_pro_plugin_active() ) {
+		if ( ! wps_wpr_is_active() ) {
 			if ( ! is_admin() ) {
 				if ( false !== $coupon_data && 0 !== $coupon_data ) {
 
@@ -3397,7 +3345,7 @@ class Points_Rewards_For_WooCommerce_Public {
 									unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
 								}
 							}
-							if ( ! wps_wpr_is_par_pro_plugin_active() ) {
+							if ( ! wps_wpr_is_active() ) {
 
 								unset( $cart_contents[ $key ]['product_meta']['meta_data']['wps_wpm_points'] );
 							}
@@ -5111,11 +5059,11 @@ class Points_Rewards_For_WooCommerce_Public {
 		// Get all users ordered by their 'wps_wpr_points' in descending order.
 		$user_ids = ( new WP_User_Query(
 			array(
-				'meta_key'   => 'wps_wpr_points',
+				'meta_key'   => 'wps_wpr_points', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 				'orderby'    => 'meta_value_num',
 				'order'      => 'DESC',
 				'fields'     => 'ID',
-				'meta_query' => array(
+				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 					array(
 						'key'     => 'wps_wpr_points',
 						'value'   => 0,

@@ -239,7 +239,7 @@ class Membership_Log_List_Table extends WP_List_Table {
 	 */
 	public function get_users_points() {
 
-		$args['meta_query'] = array(
+		$args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'relation' => 'AND',
 			array(
 				'key'     => 'membership_level',

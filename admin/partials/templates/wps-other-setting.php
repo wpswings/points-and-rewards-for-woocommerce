@@ -242,8 +242,8 @@ if ( isset( $_POST['wps_wpr_save_othersetting'] ) && isset( $_POST['wps-wpr-nonc
 			'wps_wpr_choose_account_page_temp'          => ! empty( $_POST['wps_wpr_choose_account_page_temp'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_choose_account_page_temp'] ) ) : '',
 			'wps_wpr_points_tab_layout_color'           => ! empty( $_POST['wps_wpr_points_tab_layout_color'] ) ? sanitize_hex_color( wp_unslash( $_POST['wps_wpr_points_tab_layout_color'] ) ) : '',
 			'wps_wpr_choose_payment_method'             => ! empty( $_POST['wps_wpr_choose_payment_method'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_choose_payment_method'] ) ) : '',
-			'wps_wpr_payment_method_rewards_points'     => ! empty( $_POST['wps_wpr_payment_method_rewards_points'] ) ? absint( $_POST['wps_wpr_payment_method_rewards_points'] ) : 0,
-			'wps_wpr_guest_user_rewards_points'         => ! empty( $_POST['wps_wpr_guest_user_rewards_points'] ) ? absint( $_POST['wps_wpr_guest_user_rewards_points'] ) : 0,
+			'wps_wpr_payment_method_rewards_points'     => ! empty( $_POST['wps_wpr_payment_method_rewards_points'] ) ? absint( wp_unslash( $_POST['wps_wpr_payment_method_rewards_points'] ) ) : 0,
+			'wps_wpr_guest_user_rewards_points'         => ! empty( $_POST['wps_wpr_guest_user_rewards_points'] ) ? absint( wp_unslash( $_POST['wps_wpr_guest_user_rewards_points'] ) ) : 0,
 		);
 		/* Save settings data into the database*/
 		if ( ! empty( $other_settings ) && is_array( $other_settings ) ) {

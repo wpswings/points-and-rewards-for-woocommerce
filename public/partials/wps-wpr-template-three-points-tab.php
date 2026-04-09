@@ -426,7 +426,7 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 										<span class="wps_wpr_nobr"><?php echo esc_html__( 'Required Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 									</th>
 									<?php
-									if ( ! wps_wpr_is_par_pro_plugin_active() ) {
+									if ( ! wps_wpr_is_active() ) {
 										?>
 										<th class="wps-wpr-points-expiry">
 											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Membership Expiry', 'points-and-rewards-for-woocommerce' ); ?></span>
@@ -603,7 +603,7 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 										</td>
 										<td>
 												<?php
-												if ( ! wps_wpr_is_par_pro_plugin_active() ) {
+												if ( ! wps_wpr_is_active() ) {
 													echo esc_html( $values['Exp_Number'] ) . ' ' . esc_html( $values['Exp_Days'] );
 												}
 												do_action( 'wps_wpr_membership_expiry_date_for_user', $user_id, $values, $wps_role );
@@ -628,15 +628,8 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 				<?php
 			}
 
-			// check pro plugin is not and auto value is true, than make it false.
-			$wps_wpr_enable_automate_membership = ! empty( $membership_settings_array['wps_wpr_enable_automate_membership'] ) ? $membership_settings_array['wps_wpr_enable_automate_membership'] : '';
-			if ( ! wps_wpr_is_par_pro_plugin_active() && '1' == $wps_wpr_enable_automate_membership ) {
-
-				$wps_wpr_enable_automate_membership = 0;
-			}
-
 			// check auto membership upgrade is enable than no need to show manual upgrade option.
-			if ( 1 != $wps_wpr_enable_automate_membership && ( isset( $enable_drop ) && $enable_drop ) ) {
+			if ( ( isset( $enable_drop ) && $enable_drop ) ) {
 				if ( isset( $wps_user_level ) && ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
 
 					$mem_expire_time = get_user_meta( $user_id, 'membership_expiration', true );
@@ -680,34 +673,11 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 			}
 			?>
 		</div>
-		<!-- Coupon section tab details -->
-		<div class="wps-p_masd-item wps-p_masd-i-coupon">
-			<?php
-			if ( wps_wpr_is_par_pro_plugin_active() ) {
-				do_action( 'wps_wpr_add_coupon_generation', $user_id );
-			} else {
-				?>
-				<div class="wps-par_ma-notice par-notice-error">
-					<h4><?php esc_html_e( 'This feature is part of our Pro plugin.', 'points-and-rewards-for-woocommerce' ); ?><a class="wps_wpr_coupon_error_msg" href="'https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro'"><?php esc_html_e( ' Click here to upgrade and unlock Pro features!', 'points-and-rewards-for-woocommerce' ); ?></a></h4>
-				</div>
-				<?php
-			}
-			?>
-		</div>
 		<!-- Claim section tab details -->
 		<div class="wps-p_masd-item wps-p_masd-i-claim">
-			<?php
-			if ( wps_wpr_is_par_pro_plugin_active() ) {
-
-				do_action( 'wps_wpr_add_share_points', $user_id );
-			} else {
-				?>
-				<div class="wps-par_ma-notice par-notice-error">
-					<h4><?php esc_html_e( 'No relevant data found at the moment!.', 'points-and-rewards-for-woocommerce' ); ?></h4>
-				</div>
-				<?php
-			}
-			?>
+			<div class="wps-par_ma-notice par-notice-error">
+				<h4><?php esc_html_e( 'No relevant data found at the moment!.', 'points-and-rewards-for-woocommerce' ); ?></h4>
+			</div>
 		</div>
 		<!-- Referral section tab details -->
 		<div class="wps-p_masd-item wps-p_masd-i-referral wps-p_masd-i--active">

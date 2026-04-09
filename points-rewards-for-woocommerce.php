@@ -385,10 +385,9 @@ if ( $activated ) {
 	function wps_wpr_flush_rewrite_rules( $network_wide ) {
 
 		// Multisite compatibility.
-		global $wpdb;
 		if ( is_multisite() && $network_wide ) {
 			// Get all blogs in the network and activate plugin on each one.
-			$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			$blog_ids = wp_list_pluck( get_sites(), 'blog_id' );
 			foreach ( $blog_ids as $blog_id ) {
 				switch_to_blog( $blog_id );
 
@@ -508,16 +507,6 @@ if ( $activated ) {
 		}
 	}
 
-	register_deactivation_hook( __FILE__, 'wps_wpr_remove_cron_for_banner_update' );
-	/**
-	 * This function is used to remove banner schedule cron.
-	 *
-	 * @return void
-	 */
-	function wps_wpr_remove_cron_for_banner_update() {
-		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
-	}
-
 	/**
 	 * This function is used to restrict user.
 	 *
@@ -582,22 +571,25 @@ if ( $activated ) {
 
 					// prepare data and call sms api.
 					$url       = 'https://api.twilio.com/2010-04-01/Accounts/' . $wps_wpr_sms_account_sid . '/Messages.json';
-					$ch        = curl_init();
-					$curl_data = array(
+					$post_data = array(
 						'From' => $wps_wpr_sms_twilio_num_id,
 						'Body' => $message,
 						'To'   => $wps_send_contact,
 					);
 
-					curl_setopt( $ch, CURLOPT_URL, $url );
-					curl_setopt( $ch, CURLOPT_TIMEOUT, 30 ); // timeout after 30 seconds.
-					curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-					curl_setopt( $ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY );
-					curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_data );
-					curl_setopt( $ch, CURLOPT_USERPWD, "$wps_wpr_sms_account_sid:$wps_wpr_sms_auth_token" );
-					$response    = curl_exec( $ch );
-					$response    = json_decode( $response );
-					$status_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+					$request     = wp_remote_post(
+						$url,
+						array(
+							'timeout' => 30,
+							'headers' => array(
+								'Authorization' => 'Basic ' . base64_encode( $wps_wpr_sms_account_sid . ':' . $wps_wpr_sms_auth_token ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+							),
+							'body'    => $post_data,
+						)
+					);
+					$response_body = is_wp_error( $request ) ? $request->get_error_message() : wp_remote_retrieve_body( $request );
+					$response      = json_decode( $response_body );
+					$status_code   = is_wp_error( $request ) ? 0 : wp_remote_retrieve_response_code( $request );
 				}
 			}
 		}
@@ -800,78 +792,73 @@ if ( $activated ) {
 				$wps_wpr_whatsapp_access_token  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] : '';
 				$wps_wpr_whatsapp_phone_num_id  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] : '';
 				$wps_wpr_whatsapp_msg_temp_name = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_template_name'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_template_name'] : '';
-				$api_header                     = array(
-					'Content-Type: application/json',
-					'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,
-				);
+					$api_header                     = array(
+						'Content-Type: application/json',
+						'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,
+					);
 
-				$curl_data = array(
-					'messaging_product' => 'whatsapp',
-					'to' => $whatsapp_number,
-					'type' => 'template',
-					'template' => array(
-						'name' => $wps_wpr_whatsapp_msg_temp_name,
-						'language' => array(
-							'code' => 'en_US',
-						),
-						'components' => array(
-							array(
-								'type' => 'body',
-								'parameters' => array(
-									array(
-										'type' => 'text',
-										'text' => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
-									),
-									array(
-										'type' => 'text',
-										'text' => $message,
+					$curl_data = array(
+						'messaging_product' => 'whatsapp',
+						'to'                => $whatsapp_number,
+						'type'              => 'template',
+						'template'          => array(
+							'name'      => $wps_wpr_whatsapp_msg_temp_name,
+							'language'  => array(
+								'code' => 'en_US',
+							),
+							'components' => array(
+								array(
+									'type'       => 'body',
+									'parameters' => array(
+										array(
+											'type' => 'text',
+											'text' => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
+										),
+										array(
+											'type' => 'text',
+											'text' => $message,
+										),
 									),
 								),
 							),
 						),
-					),
-				);
+					);
 
-				$data = wp_json_encode( $curl_data );
+					$data = wp_json_encode( $curl_data );
 
-				// LOAD THE WC LOGGER.
-				$logger = wc_get_logger();
+					// LOAD THE WC LOGGER.
+					$logger = wc_get_logger();
 
-				$curl = curl_init();
+					// Prefer WordPress HTTP API over cURL functions.
+					$api_url = 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages';
+					$request = wp_remote_post(
+						$api_url,
+						array(
+							'headers' => array(
+								'Content-Type'  => 'application/json',
+								'Authorization' => 'Bearer ' . $wps_wpr_whatsapp_access_token,
+							),
+							'body'    => $data,
+							'timeout' => 20,
+						)
+					);
 
-				curl_setopt_array(
-					$curl,
-					array(
-						CURLOPT_URL => 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages',
-						CURLOPT_RETURNTRANSFER => true,
-						CURLOPT_ENCODING => '',
-						CURLOPT_MAXREDIRS => 10,
-						CURLOPT_TIMEOUT => 0,
-						CURLOPT_FOLLOWLOCATION => true,
-						CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-						CURLOPT_CUSTOMREQUEST => 'POST',
-						CURLOPT_POSTFIELDS => $data,
-						CURLOPT_HTTPHEADER => $api_header,
-					)
-				);
+					$response_body = is_wp_error( $request ) ? $request->get_error_message() : wp_remote_retrieve_body( $request );
 
-				$response = curl_exec( $curl );
+					// LOG THE Result.
+					$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response_body, true ), array( 'source' => 'response-whatsapp-api' ) );
 
-				// LOG THE Result.
-				$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );
-				curl_close( $curl );
-
-				$response = json_decode( $response, true );
+					$response = json_decode( $response_body, true );
 			}
 		}
 	}
 
 	/**
-	 * This function is used to check PAR pro plugin is active or not.
+	 * Check active.
 	 *
 	 * @return bool
 	 */
-	function wps_wpr_is_par_pro_plugin_active() {
+	function wps_wpr_is_active() {
 
 		$flag = false;
 		if ( is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
@@ -894,7 +881,7 @@ if ( $activated ) {
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure() {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-		$wps_wpr_activated = isset( $_GET['activate'] ) ? sanitize_text_field( wp_unslash( $_GET['activate'] ) ) : '';
+		$wps_wpr_activated = isset( $_GET['activate'] ) ? sanitize_text_field( wp_unslash( $_GET['activate'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		unset( $wps_wpr_activated );
 		// Add admin error notice.
 		add_action( 'admin_notices', 'rewardeem_woocommerce_points_rewards_activation_failure_admin_notice' );

@@ -3,7 +3,7 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points and rewards, loyalty, referral points, reward points, gamification
 Requires at least: 6.7.0
-Tested up to: 6.9.4
+Tested up to: 6.9
 WC requires at least: 6.5.0
 WC tested up to: 10.6.2
 Stable tag: 2.9.8

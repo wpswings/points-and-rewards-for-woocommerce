@@ -103,7 +103,7 @@ if ( ! empty( $wps_wpr_social_share_campaign_label ) && is_array( $wps_wpr_socia
  * @return bool
  */
 function wps_wpr_extract_youtube_video_id( $url ) {
-	$parsed_url = parse_url( $url );
+	$parsed_url = wp_parse_url( $url );
 
 	if ( ! isset( $parsed_url['host'] ) ) {
 		return false;
@@ -591,17 +591,9 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 					</div>
 				</div>
 				<!-- // Footer section data  -->
-				<?php if ( wps_wpr_is_par_pro_plugin_active() ) { ?>
-					<div class="wps-wpr-hlt_co-footer">
-						<?php if ( 'yes' === $wps_wpr_show_content_in_footer ) : ?>
-							<p><?php echo wp_kses_post( $wps_wpr_modal_footer_content ); ?></p>
-						<?php endif; ?>
-					</div>
-				<?php } else { ?>
-					<div class="wps-wpr-hlt_co-footer">
-						<p><?php esc_html_e( 'Created with ❤ by WP Swings’', 'points-and-rewards-for-woocommerce' ); ?></p>
-					</div>
-				<?php } ?>
+				<div class="wps-wpr-hlt_co-footer">
+					<p><?php esc_html_e( 'Created with ❤ by WP Swings’', 'points-and-rewards-for-woocommerce' ); ?></p>
+				</div>
 			</div>
 		</div>
 	</div>

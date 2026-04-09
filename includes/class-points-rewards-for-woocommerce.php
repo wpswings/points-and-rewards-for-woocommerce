@@ -190,9 +190,6 @@ class Points_Rewards_For_Woocommerce {
 
 		/*cron for notification*/
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wps_wpr_check_for_notification_daily' );
-		$this->loader->add_action( 'wps_wpr_check_for_notification_update', $plugin_admin, 'wps_wpr_save_notice_message' );
-		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_wpr_display_notification_bar' );
-		$this->loader->add_action( 'wp_ajax_wps_wpr_dismiss_notice', $plugin_admin, 'wps_wpr_dismiss_notice' );
 
 		// Add your screen.
 		$this->loader->add_filter( 'wps_helper_valid_frontend_screens', $plugin_admin, 'add_wps_frontend_screens' );
@@ -205,9 +202,6 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $plugin_admin, 'wps_wpr_subscription_renewal_point', 10, 1 );
 		// assign points on previous order.
 		$this->loader->add_action( 'wp_ajax_assign_points_on_previous_order', $plugin_admin, 'wps_wpr_assign_points_on_previous_order_call' );
-		// plugin banner notification.
-		$this->loader->add_action( 'wps_wgm_check_for_notification_update', $plugin_admin, 'wps_wpr_save_banner_notice_message' );
-		$this->loader->add_action( 'wp_ajax_wps_wpr_ajax_banner_action', $plugin_admin, 'wps_wpr_dismiss_notice__banner_callback' );
 		// membership plugin compatible.
 		if ( function_exists( 'wps_membership_check_plugin_enable' ) && wps_membership_check_plugin_enable() ) {
 			$this->loader->add_action( 'wps_wpr_extend_membership_metabox_field', $plugin_admin, 'wps_wpr_membership_meta_fields', 10, 3 );

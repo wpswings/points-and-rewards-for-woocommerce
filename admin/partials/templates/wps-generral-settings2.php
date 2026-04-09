@@ -338,9 +338,9 @@ if ( isset( $_POST['wps_wpr_save_general'] ) && isset( $_POST['wps-wpr-nonce'] )
 			$general_settings_array = array(
 				'wps_wpr_general_setting_enable'        => ! empty( $_POST['wps_wpr_general_setting_enable'] ) ? 1 : '',
 				'wps_wpr_general_signup'                => ! empty( $_POST['wps_wpr_general_signup'] ) ? 1 : '',
-				'wps_wpr_general_signup_value'          => ! empty( $_POST['wps_wpr_general_signup_value'] ) ? absint( $_POST['wps_wpr_general_signup_value'] ) : 0,
+				'wps_wpr_general_signup_value'          => ! empty( $_POST['wps_wpr_general_signup_value'] ) ? absint( wp_unslash( $_POST['wps_wpr_general_signup_value'] ) ) : 0,
 				'wps_wpr_general_refer_enable'          => ! empty( $_POST['wps_wpr_general_refer_enable'] ) ? 1 : '',
-				'wps_wpr_general_refer_value'           => ! empty( $_POST['wps_wpr_general_refer_value'] ) ? absint( $_POST['wps_wpr_general_refer_value'] ) : 0,
+				'wps_wpr_general_refer_value'           => ! empty( $_POST['wps_wpr_general_refer_value'] ) ? absint( wp_unslash( $_POST['wps_wpr_general_refer_value'] ) ) : 0,
 				'wps_wpr_general_social_media_enable'   => ! empty( $_POST['wps_wpr_general_social_media_enable'] ) ? 1 : '',
 				'wps_wpr_facebook'                      => ! empty( $_POST['wps_wpr_facebook'] ) ? 1 : '',
 				'wps_wpr_twitter'                       => ! empty( $_POST['wps_wpr_twitter'] ) ? 1 : '',
@@ -441,7 +441,7 @@ do_action( 'wps_wpr_add_notice' );
 						if ( 'radio_button' == $value['type'] ) {
 							$settings_obj->wps_wps_generate_radio_html( $value, $general_settings );
 						}
-						if ( ! wps_wpr_is_par_pro_plugin_active() && 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
+						if ( ! wps_wpr_is_active() && 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
 							$settings_obj->wps_wpr_org_generate_single_select_drop_down_with_key_value_pair( $value, $general_settings );
 						}
 						do_action( 'wps_wpr_additional_general_settings', $value, $general_settings );

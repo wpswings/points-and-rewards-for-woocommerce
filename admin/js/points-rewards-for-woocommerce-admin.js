@@ -373,21 +373,6 @@
 			e("#wps_wpr_membership_setting_enable").attr("checked", !1)),
 			e("#wps_wpr_parent_repeatable_" + r).remove();
 		}),
-		e(document).on("click", "#dismiss_notice", function (r) {
-		  r.preventDefault();
-		  var i = {
-			action: "wps_wpr_dismiss_notice",
-			wps_nonce: wps_wpr_object.wps_wpr_nonce,
-		  };
-		  e.ajax({
-			url: wps_wpr_object.ajaxurl,
-			type: "POST",
-			data: i,
-			success: function (e) {
-			  window.location.reload();
-			},
-		  });
-		}),
 
 		// JS for assign previous order points.
 		jQuery(document).on("click", "#wps_wpr_points_on_previous_order", function (e) {
@@ -798,23 +783,6 @@
 		}
 	});
 
-	// plugin banner ajax.
-	jQuery(document).on( 'click', '#dismiss-banner', function(){
-
-		var data = {
-			action:'wps_wpr_ajax_banner_action',
-			wps_nonce:wps_wpr_object.wps_wpr_nonce
-		};
-		jQuery.ajax({
-			url: wps_wpr_object.ajaxurl,
-			type: "POST",
-			data: data,
-			success: function(response) {
-				window.location.reload();
-			}
-		});
-	});
-
 	// restrict rewards fields to enter more than 100.
 	jQuery(document).on('change', '.wps_wpr_assign_mem_rewards_points', function(){
 
@@ -976,7 +944,6 @@
 
 
 jQuery(document).ready(function($){
-	if ( wps_wpr_object.check_pro_activate ) {
 
 		jQuery(document).on('click','.wps_wpr_repeat_button',function(){
 
@@ -1071,7 +1038,6 @@ jQuery(document).ready(function($){
 				$('#wps_wpr_parent_repeatable_'+count+'').find('#wps_wpr_membership_product_list_'+count).select2();
 			}
 		});
-	}
 
 	// open whatsapp sample template.
     jQuery(document).on('click', '.wps_wpr_preview_whatsapp_sample', function(e){
@@ -1167,13 +1133,6 @@ jQuery(document).ready(function($){
 			}
 		}
 	});
-
-	// Show notice for purchase pro plugin when clicking on Add Quiz Button.
-	// if (wps_wpr_object.check_pro_activate) {
-
-	// 	// Hide remove quiz button if pro plugin is not active
-	// 	jQuery('.wps_wpr_general_actions').hide();
-	// }
 
 	// CAMPAIGN JS part.
 		var maxQuizzes = 4;

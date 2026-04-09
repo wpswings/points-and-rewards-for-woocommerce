@@ -6,17 +6,10 @@
     jQuery(':root').css('--wps-modal-prim-col', wps_wpr_campaign_obj.wps_modal_color_one );
     jQuery(':root').css('--wps-modal-sec-col', wps_wpr_campaign_obj.wps_modal_color_two );
 
-    if (wps_wpr_campaign_obj.is_pro_plugin_active) {
 
-      // Apply the gradient background and white text if the pro plugin is active
-      jQuery('#wps-wpr-campaign-modal .wps-wpr-hlt_co-footer').css('background', 'linear-gradient(45deg, ' + wps_wpr_campaign_obj.wps_modal_color_one + ', ' + wps_wpr_campaign_obj.wps_modal_color_two + ')');
-      jQuery('#wps-wpr-campaign-modal .wps-wpr-hlt_co-footer p').css('color', 'white');
-    } else {
-
-      // Apply a solid gray background and black text if the pro plugin is inactive
-      jQuery('#wps-wpr-campaign-modal .wps-wpr-hlt_co-footer').css('background', '#f4f4f4');
-      jQuery('#wps-wpr-campaign-modal .wps-wpr-hlt_co-footer p').css('color', 'black');
-    }
+    // Apply a solid gray background and black text.
+    jQuery('#wps-wpr-campaign-modal .wps-wpr-hlt_co-footer').css('background', '#f4f4f4');
+    jQuery('#wps-wpr-campaign-modal .wps-wpr-hlt_co-footer p').css('color', 'black');
 
 
     // disabled earn field for guest users.
