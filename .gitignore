@@ -3,4 +3,9 @@ docs
 pull_requests
 script
 .codex
-
+docs
+pull_requests
+script
+task.md
+module_implementation.md
+.claude

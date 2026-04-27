@@ -48,6 +48,9 @@ if ( isset( $_POST['wps_wpr_save_membership'] ) && isset( $_POST['wps-wpr-nonce'
 			$membership_roles_list     = array();
 			$wps_wpr_no_of_section     = isset( $_POST['hidden_count'] ) ? sanitize_text_field( wp_unslash( $_POST['hidden_count'] ) ) : 0;
 			$wps_wpr_mem_enable        = isset( $_POST['wps_wpr_membership_setting_enable'] ) ? 1 : 0;
+			$wps_wpr_enable_automate_membership = isset( $_POST['wps_wpr_enable_automate_membership'] ) ? 1 : 0;
+			$wps_wpr_show_next_membership_level = isset( $_POST['wps_wpr_show_next_membership_level'] ) ? 1 : 0;
+			$wps_wpr_mem_level_notice           = isset( $_POST['wps_wpr_mem_level_notice'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_mem_level_notice'] ) ) : '';
 			$exclude_sale_product      = isset( $_POST['exclude_sale_product'] ) ? 1 : 0;
 			if ( isset( $wps_wpr_no_of_section ) ) {
 				for ( $count = 0; $count <= $wps_wpr_no_of_section; $count++ ) {
@@ -90,6 +93,9 @@ if ( isset( $_POST['wps_wpr_save_membership'] ) && isset( $_POST['wps-wpr-nonce'
 			$membership_settings_array['wps_wpr_membership_setting_enable'] = $wps_wpr_mem_enable;
 			$membership_settings_array['membership_roles']                  = $membership_roles_list;
 			$membership_settings_array['exclude_sale_product']              = $exclude_sale_product;
+			$membership_settings_array['wps_wpr_enable_automate_membership'] = $wps_wpr_enable_automate_membership;
+			$membership_settings_array['wps_wpr_show_next_membership_level'] = $wps_wpr_show_next_membership_level;
+			$membership_settings_array['wps_wpr_mem_level_notice']           = $wps_wpr_mem_level_notice;
 			if ( is_array( $membership_settings_array ) ) {
 				update_option( 'wps_wpr_membership_settings', $membership_settings_array );
 			}
@@ -158,7 +164,7 @@ if ( 'view_membership_log' == $wps_wpr_actions ) {
 		<table class="form-table wps_wpr_membership_setting mwp_wpr_settings">
 			<tbody>
 				<?php foreach ( $wps_wpr_settings as $key => $value ) { ?>
-				<tr valign="top">
+				<tr valign="top" class="wps_wpr_membership_row wps_wpr_membership_row_type_<?php echo isset( $value['type'] ) ? esc_attr( $value['type'] ) : 'default'; ?>">
 					<th scope="row" class="wps-wpr-titledesc">
 						<?php
 						$settings_obj->wps_rwpr_generate_label( $value );

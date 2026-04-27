@@ -117,12 +117,22 @@ endif;
 <div class="wps_wpr_table">
 		<div class="wps_wpr_general_wrapper">
 		<?php
+		$wps_section_open = false;
 		foreach ( $wps_wpr_coupon_settings as $key => $value ) {
 			if ( 'title' == $value['type'] ) {
+				if ( $wps_section_open ) {
+					?>
+					</div></div>
+					<?php
+				}
 				?>
 				<div class="wps_wpr_general_row_wrap">
 					<?php
 					$settings_obj->wps_rwpr_generate_heading( $value );
+					?>
+					<div class="wps_wpr_section_content">
+					<?php
+				$wps_section_open = true;
 			}
 			if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) {
 				?>
@@ -162,11 +172,18 @@ endif;
 				</div>
 				<?php
 			}
-			if ( 'sectionend' == $value['type'] ) {
+			if ( 'sectionend' == $value['type'] && $wps_section_open ) {
 				?>
-				</div> 
+				</div>
+				</div>
 				<?php
+				$wps_section_open = false;
 			}
+		}
+		if ( $wps_section_open ) {
+			?>
+			</div></div>
+			<?php
 		}
 		?>
 	</div>

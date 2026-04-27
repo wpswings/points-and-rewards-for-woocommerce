@@ -83,7 +83,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '2.9.8';
+			$this->version = '2.10.0';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -186,10 +186,8 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
-		$this->loader->add_action( 'admin_head', $plugin_admin, 'wps_wpr_add_membership_rule' );
-
-		/*cron for notification*/
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'wps_wpr_check_for_notification_daily' );
+		$this->loader->add_action( 'current_screen', $plugin_admin, 'wps_wpr_add_membership_rule' );
+		$this->loader->add_action( 'init', $plugin_admin, 'wps_wpr_list_shortcode_in_gutenburg_block' );
 
 		// Add your screen.
 		$this->loader->add_filter( 'wps_helper_valid_frontend_screens', $plugin_admin, 'add_wps_frontend_screens' );
@@ -233,7 +231,7 @@ class Points_Rewards_For_Woocommerce {
 
 		// set campaign image.
 		$this->loader->add_action( 'wp_ajax_wps_set_camp_heading_and_image', $plugin_admin, 'wps_wpr_set_camp_heading_and_image', 10 );
-		$this->loader->add_action( 'admin_head', $plugin_admin, 'wps_wpr_org_remove_action' );
+		$this->loader->add_action( 'current_screen', $plugin_admin, 'wps_wpr_org_remove_action' );
 	}
 
 	/**

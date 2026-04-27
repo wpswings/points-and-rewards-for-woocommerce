@@ -385,12 +385,21 @@ do_action( 'wps_wpr_add_notice' );
 <div class="wps_wpr_table">
 	<div class="wps_wpr_general_wrapper">
 			<?php
+			$wps_section_open = false;
 			foreach ( $wps_wpr_general_settings as $key => $value ) {
 				if ( 'title' == $value['type'] ) {
+					if ( $wps_section_open ) {
+						?>
+						</div></div>
+						<?php
+					}
 					?>
 				<div class="wps_wpr_general_row_wrap">
 					<?php $settings_obj->wps_rwpr_generate_heading( $value ); ?>
-				<?php } ?>
+					<div class="wps_wpr_section_content">
+				<?php
+				$wps_section_open = true;
+				} ?>
 				<?php if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) { ?>
 				<div class="wps_wpr_general_row">
 					<?php $settings_obj->wps_rwpr_generate_label( $value ); ?>
@@ -449,10 +458,16 @@ do_action( 'wps_wpr_add_notice' );
 					</div>
 				</div>
 			<?php } ?>
-				<?php if ( 'sectionend' == $value['type'] ) : ?>
-			</div>	
-			<?php endif; ?>
-		<?php } ?> 		
+				<?php if ( 'sectionend' == $value['type'] && $wps_section_open ) : ?>
+					</div>
+			</div>
+			<?php
+				$wps_section_open = false;
+			endif; ?>
+		<?php } ?>
+		<?php if ( $wps_section_open ) : ?>
+			</div></div>
+		<?php endif; ?>
 	</div>
 </div>
 <div class="clear"></div>
