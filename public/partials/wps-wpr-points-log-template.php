@@ -13,14 +13,52 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Detect if Template Four is active so we can wrap with its design system.
+$wps_wpr_log_other_settings  = get_option( 'wps_wpr_other_settings', array() );
+$wps_wpr_log_active_template = ! empty( $wps_wpr_log_other_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_log_other_settings['wps_wpr_choose_account_page_temp'] : '';
+$wps_t4_log_is_active        = ( 'temp_four' === $wps_wpr_log_active_template );
+$wps_t4_log_accent           = ! empty( $wps_wpr_log_other_settings['wps_wpr_points_tab_layout_color'] ) ? $wps_wpr_log_other_settings['wps_wpr_points_tab_layout_color'] : '#c89a3a';
+
+if ( $wps_t4_log_is_active ) {
+	$wps_t4_log_pts = (int) get_user_meta( isset( $user_ID ) ? $user_ID : get_current_user_id(), 'wps_wpr_points', true );
+	?>
+	<style>.wps-t4-wrap{--t4a:<?php echo esc_attr( $wps_t4_log_accent ); ?>;}</style>
+	<div class="wps-t4-wrap wps-t4-log-wrap">
+		<header class="wps-t4-page-header">
+			<div class="wps-t4-ph-left">
+				<p class="wps-t4-breadcrumb">
+					<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'points' ) ); ?>" style="color:inherit;text-decoration:none;">
+						<?php esc_html_e( 'My account', 'points-and-rewards-for-woocommerce' ); ?> &middot; <?php esc_html_e( 'Rewards', 'points-and-rewards-for-woocommerce' ); ?>
+					</a>
+					&middot; <?php esc_html_e( 'Activity log', 'points-and-rewards-for-woocommerce' ); ?>
+				</p>
+				<h1 class="wps-t4-welcome"><?php esc_html_e( 'Activity log.', 'points-and-rewards-for-woocommerce' ); ?></h1>
+			</div>
+			<div class="wps-t4-ph-actions">
+				<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'points' ) ); ?>" class="wps-t4-btn wps-t4-btn--ghost">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+					<?php esc_html_e( 'Back to Rewards', 'points-and-rewards-for-woocommerce' ); ?>
+				</a>
+			</div>
+		</header>
+
+		<!-- Balance summary card -->
+		<div class="wps-t4-log-summary">
+			<span class="wps-t4-log-summary-label"><?php esc_html_e( 'Current balance', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<span class="wps-t4-log-summary-pts"><?php echo esc_html( number_format( $wps_t4_log_pts ) ); ?></span>
+			<span class="wps-t4-log-summary-unit"><?php esc_html_e( 'PTS', 'points-and-rewards-for-woocommerce' ); ?></span>
+		</div>
+	<?php
+}
+
 $user_id = $user_ID;
 if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 	$point_log    = get_user_meta( $user_id, 'points_details', true );
 	$total_points = get_user_meta( $user_id, 'wps_wpr_points', true );
 	if ( isset( $point_log ) && is_array( $point_log ) && null != $point_log ) {
-		?>
+		if ( ! $wps_t4_log_is_active ) { ?>
 		<h2><?php esc_html_e( ' Point Log Table', 'points-and-rewards-for-woocommerce' ); ?></h2>
-		<?php
+		<?php } ?><?php
 		if ( array_key_exists( 'registration', $point_log ) ) {
 			?>
 			<div class="wps_wpr_slide_toggle">
@@ -1545,7 +1583,14 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		</div>
 		<?php
 	} else {
-		echo '<h3>' . esc_html__( 'No Points Generated Yet.', 'points-and-rewards-for-woocommerce' ) . '<h3>';
+		if ( $wps_t4_log_is_active ) {
+			echo '<div class="wps-t4-log-empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>' . esc_html__( 'No activity yet — start earning points to see your log here.', 'points-and-rewards-for-woocommerce' ) . '</p></div>';
+		} else {
+			echo '<h3>' . esc_html__( 'No Points Generated Yet.', 'points-and-rewards-for-woocommerce' ) . '<h3>';
+		}
 	}
+}
+if ( $wps_t4_log_is_active ) {
+	echo '</div><!-- /.wps-t4-log-wrap -->';
 }
 ?>

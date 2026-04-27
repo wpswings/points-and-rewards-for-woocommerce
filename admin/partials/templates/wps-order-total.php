@@ -54,7 +54,7 @@ $wps_wpr_order_total_points_settings = array(
 if ( isset( $_POST['wps_wpr_save_order_totalsettings'] ) && isset( $_POST['wps-wpr-nonce'] ) ) {
 	unset( $_POST['wps_wpr_save_order_totalsettings'] );
 
-	$wps_wpr_nonce = isset( $_POST['wps_wpr_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) ) : '';
+	$wps_wpr_nonce = isset( $_POST['wps-wpr-nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) ) : '';
 	if ( wp_verify_nonce( $wps_wpr_nonce, 'wps-wpr-nonce' ) ) {
 
 		$wps_wpr_order_total_points                                       = array();
@@ -80,14 +80,14 @@ $wps_wpr_order_total_points_settings = apply_filters( 'wps_wpr_order_total_point
 ?>
 
 <?php do_action( 'wps_wpr_add_notice' ); ?>
-<div class="wps_wpr_wrap_table">
+<div class="wps_wpr_wrap_table wps_wpr_order_total_panel">
 	<table class="form-table wps_wpr_general_setting mwp_wpr_settings">
 	<input type="hidden" id="wps_order_ttol" value = 1 />
 		<tbody>
 			<?php
 			foreach ( $wps_wpr_order_total_points_settings as $key => $value ) {
 				?>
-				<tr valign="top">
+				<tr valign="top" class="wps_wpr_order_total_row wps_wpr_order_total_row_type_<?php echo isset( $value['type'] ) ? esc_attr( $value['type'] ) : 'default'; ?>">
 					<th scope="row" class="wps-wpr-titledesc">
 						<?php $settings_obj->wps_wpr_generate_label_for_order_total_settings( $value ); ?>
 					</th>
@@ -103,7 +103,7 @@ $wps_wpr_order_total_points_settings = apply_filters( 'wps_wpr_order_total_point
 							<?php
 							do_action( 'wps_wpr_order_total_points', $thankyouorder_min, $thankyouorder_max, $thankyouorder_value );
 							?>
-							<input type="button" value="<?php esc_html_e( 'Add More', 'points-and-rewards-for-woocommerce' ); ?>" class="wps_wpr_add_more button" id="wps_wpr_add_more">
+							<input type="button" value="<?php esc_html_e( 'Add More', 'points-and-rewards-for-woocommerce' ); ?>" class="wps_wpr_add_more button wps_wpr_order_total_add_more" id="wps_wpr_add_more">
 							<?php
 						}
 						do_action( 'wps_wpr_additional_order_total', $value, $wps_get_order_total_settings )

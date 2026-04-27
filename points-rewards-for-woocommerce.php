@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           2.9.8
+ * Version:           2.10.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
@@ -57,7 +57,6 @@ if ( file_exists( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' ) && in_array( 
 	$activated = true;
 }
 
-$plug = get_plugins();
 if ( $activated ) {
 
 	// HPOS Compatibility and cart and checkout block.
@@ -81,7 +80,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.9.8' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.10.0' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -326,7 +325,6 @@ if ( $activated ) {
 		$my_link     = array(
 			'settings' => '<a href="' . admin_url( 'admin.php?page=wps-rwpr-setting&nonce=' . $nonce ) . '">' . esc_html__( 'Settings', 'points-and-rewards-for-woocommerce' ) . '</a>',
 		);
-		$mfw_plugins = get_plugins();
 		return array_merge( $my_link, $links );
 	}
 
@@ -580,16 +578,14 @@ if ( $activated ) {
 					$request     = wp_remote_post(
 						$url,
 						array(
-							'timeout' => 30,
+							'blocking' => false,
+							'timeout'  => 0.01,
 							'headers' => array(
 								'Authorization' => 'Basic ' . base64_encode( $wps_wpr_sms_account_sid . ':' . $wps_wpr_sms_auth_token ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 							),
 							'body'    => $post_data,
 						)
 					);
-					$response_body = is_wp_error( $request ) ? $request->get_error_message() : wp_remote_retrieve_body( $request );
-					$response      = json_decode( $response_body );
-					$status_code   = is_wp_error( $request ) ? 0 : wp_remote_retrieve_response_code( $request );
 				}
 			}
 		}
@@ -834,21 +830,18 @@ if ( $activated ) {
 					$request = wp_remote_post(
 						$api_url,
 						array(
+							'blocking' => false,
+							'timeout'  => 0.01,
 							'headers' => array(
 								'Content-Type'  => 'application/json',
 								'Authorization' => 'Bearer ' . $wps_wpr_whatsapp_access_token,
 							),
 							'body'    => $data,
-							'timeout' => 20,
 						)
 					);
 
-					$response_body = is_wp_error( $request ) ? $request->get_error_message() : wp_remote_retrieve_body( $request );
-
 					// LOG THE Result.
-					$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response_body, true ), array( 'source' => 'response-whatsapp-api' ) );
-
-					$response = json_decode( $response_body, true );
+					$logger->info( wc_print_r( 'User ID : ' . $user_id . ' WhatsApp API request dispatched.', true ), array( 'source' => 'response-whatsapp-api' ) );
 			}
 		}
 	}

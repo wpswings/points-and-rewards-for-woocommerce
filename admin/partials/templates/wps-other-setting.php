@@ -148,6 +148,10 @@ $wps_wpr_other_settings = array(
 				'id'   => 'temp_three',
 				'name' => __( 'Template Three', 'points-and-rewards-for-woocommerce' ),
 			),
+			array(
+				'id'   => 'temp_four',
+				'name' => __( 'Template Four', 'points-and-rewards-for-woocommerce' ),
+			),
 		),
 	),
 	array(
@@ -236,8 +240,12 @@ if ( isset( $_POST['wps_wpr_save_othersetting'] ) && isset( $_POST['wps-wpr-nonc
 			'wps_wpr_other_shortcode_text'              => ! empty( $_POST['wps_wpr_other_shortcode_text'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_other_shortcode_text'] ) ) : '',
 			'wps_wpr_shortcode_text_membership'         => ! empty( $_POST['wps_wpr_shortcode_text_membership'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_shortcode_text_membership'] ) ) : '',
 			'wps_wpr_notification_color'                => ! empty( $_POST['wps_wpr_notification_color'] ) ? sanitize_hex_color( wp_unslash( $_POST['wps_wpr_notification_color'] ) ) : '',
-			'wps_wpr_cart_page_apply_point_section'     => ! empty( $_POST['wps_wpr_cart_page_apply_point_section'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_cart_page_apply_point_section'] ) ) : '',
-			'wps_wpr_checkout_page_apply_point_section' => ! empty( $_POST['wps_wpr_checkout_page_apply_point_section'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_checkout_page_apply_point_section'] ) ) : '',
+			'wps_wpr_cart_page_apply_point_section'     => ! empty( $_POST['wps_wpr_cart_page_apply_point_section'] ) ? 1 : 0,
+			'wps_wpr_checkout_page_apply_point_section' => ! empty( $_POST['wps_wpr_checkout_page_apply_point_section'] ) ? 1 : 0,
+			'wps_wpr_restrict_rewards_points'           => ! empty( $_POST['wps_wpr_restrict_rewards_points'] ) ? 1 : 0,
+			'wps_wpr_show_message_on_cart_page'         => ! empty( $_POST['wps_wpr_show_message_on_cart_page'] ) ? 1 : 0,
+			'wps_wpr_enable_payment_rewards_settings'   => ! empty( $_POST['wps_wpr_enable_payment_rewards_settings'] ) ? 1 : 0,
+			'wps_wpr_enable_guest_user_rewards_points'  => ! empty( $_POST['wps_wpr_enable_guest_user_rewards_points'] ) ? 1 : 0,
 			'wps_wpr_restricted_cart_page_msg'          => ! empty( $_POST['wps_wpr_restricted_cart_page_msg'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wps_wpr_restricted_cart_page_msg'] ) ) : '',
 			'wps_wpr_choose_account_page_temp'          => ! empty( $_POST['wps_wpr_choose_account_page_temp'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_choose_account_page_temp'] ) ) : '',
 			'wps_wpr_points_tab_layout_color'           => ! empty( $_POST['wps_wpr_points_tab_layout_color'] ) ? sanitize_hex_color( wp_unslash( $_POST['wps_wpr_points_tab_layout_color'] ) ) : '',
@@ -247,6 +255,7 @@ if ( isset( $_POST['wps_wpr_save_othersetting'] ) && isset( $_POST['wps-wpr-nonc
 		);
 		/* Save settings data into the database*/
 		if ( ! empty( $other_settings ) && is_array( $other_settings ) ) {
+			$other_settings = apply_filters( 'wps_wpr_save_extra_other_settings', $other_settings );
 			update_option( 'wps_wpr_other_settings', $other_settings );
 		}
 		/* Save settings Notification*/
@@ -261,12 +270,21 @@ $other_settings = get_option( 'wps_wpr_other_settings', array() );
 <div class="wps_wpr_table">
 		<div class="wps_wpr_general_wrapper">
 				<?php
+				$wps_section_open = false;
 				foreach ( $wps_wpr_other_settings as $key => $value ) {
 					if ( 'title' == $value['type'] ) {
+						if ( $wps_section_open ) {
+							?>
+							</div></div>
+							<?php
+						}
 						?>
 						<div class="wps_wpr_general_row_wrap">
 							<?php $settings_obj->wps_rwpr_generate_heading( $value ); ?>
-							<?php } ?>
+							<div class="wps_wpr_section_content">
+							<?php
+						$wps_section_open = true;
+						} ?>
 							<?php if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) { ?>
 							<div class="wps_wpr_general_row">
 								<?php $settings_obj->wps_rwpr_generate_label( $value ); ?>
@@ -322,10 +340,16 @@ $other_settings = get_option( 'wps_wpr_other_settings', array() );
 								<?php
 							}
 							?>
-							<?php if ( 'sectionend' == $value['type'] ) : ?>
+							<?php if ( 'sectionend' == $value['type'] && $wps_section_open ) : ?>
+							</div>
 						</div>
-					<?php endif; ?>
-			<?php } ?> 		
+					<?php
+					$wps_section_open = false;
+					endif; ?>
+			<?php } ?>
+			<?php if ( $wps_section_open ) : ?>
+				</div></div>
+			<?php endif; ?>
 		</div>
 	</div>
 <p class="submit">

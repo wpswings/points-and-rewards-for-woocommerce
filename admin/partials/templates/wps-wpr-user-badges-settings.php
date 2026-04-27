@@ -65,27 +65,28 @@ $wps_wpr_badges_rewards_points       = ! empty( $wps_wpr_user_badges_setting['wp
 $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wps_wpr_image_attachment_id'] ) ? $wps_wpr_user_badges_setting['wps_wpr_image_attachment_id'] : array();
 ?>
 
-<div class="wps_wpr_user_badges_main_wrappers">
-	<form method="POST" action="" class="wps_wpr_user_badges_form">
-		<main class="wps_wpr_main_user_badges_wrapper">
-			<section class="wps_wpr_general_row_wrap">
-				<div class="wps_wpr_user_badges_settings_heading wps_wpr_general_sign_title wps_wpr_doc_video_wrapper"><?php esc_html_e( 'Badges', 'points-and-rewards-for-woocommerce' ); ?><div class="wps_wpr_doc_video"><a href="https://docs.wpswings.com/user-badges-and-levels/?utm_source=wpswings-user-badges-doc&utm_medium=par-org-page&utm_campaign=user-badges-documentation" target="_blank" class="button"><?php esc_html_e( 'Docs', 'points-and-rewards-for-woocommerce' ); ?></a><a href="https://www.youtube.com/watch?v=DQ2iN9GHVK8" target="_blank" class="button"><?php esc_html_e( 'Video', 'points-and-rewards-for-woocommerce' ); ?></a></div></div>
+<div class="wps_wpr_user_badges_main_wrappers wps_wpr_badges_panel">
+	<form method="POST" action="" class="wps_wpr_user_badges_form wps_wpr_badges_form_panel">
+		<main class="wps_wpr_main_user_badges_wrapper wps_wpr_badges_settings_panel">
+			<section class="wps_wpr_general_row_wrap wps_wpr_badges_config_panel">
+				<div class="wps_wpr_user_badges_settings_heading wps_wpr_general_sign_title wps_wpr_doc_video_wrapper wps_wpr_badges_heading_bar"><?php esc_html_e( 'Badges', 'points-and-rewards-for-woocommerce' ); ?><div class="wps_wpr_doc_video"><a href="https://docs.wpswings.com/user-badges-and-levels/?utm_source=wpswings-user-badges-doc&utm_medium=par-org-page&utm_campaign=user-badges-documentation" target="_blank" class="button"><?php esc_html_e( 'Docs', 'points-and-rewards-for-woocommerce' ); ?></a><a href="https://www.youtube.com/watch?v=DQ2iN9GHVK8" target="_blank" class="button"><?php esc_html_e( 'Video', 'points-and-rewards-for-woocommerce' ); ?></a></div></div>
+				<div class="wps_wpr_section_content">
 				<input type="hidden" name="wps_wpr_user_badges_setting_nonce" id="wps_wpr_user_badges_setting_nonce" value="<?php echo esc_html( wp_create_nonce( 'user-badges-setting-nonce' ) ); ?>">
-				<article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row wps_wpr_badges_setting_row">
 					<label for="wps_wpr_enable_user_badges_settings" class="wps_wpr_general_label"><?php esc_html_e( 'Enable Badges', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_enable_user_badges_settings" class="wps_wpr_enable_user_badges_settings" value="yes" <?php checked( $wps_wpr_enable_user_badges_settings, 'yes' ); ?>>
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Toggle this to enable this settings.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
-				<article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row wps_wpr_badges_setting_row">
 					<label for="wps_wpr_enable_to_show_bades" class="wps_wpr_general_label"><?php esc_html_e( 'Show User Badges', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_show_badges_setting_wrapper wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_enable_to_show_bades" class="wps_wpr_enable_to_show_bades" value="yes" <?php checked( $wps_wpr_enable_to_show_bades, 'yes' ); ?>>
 						<span class="wps_wpr_show_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Toggle this to show assigned user badges on My Account page.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
-				<article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row wps_wpr_badges_setting_row">
 					<label for="wps_wpr_choose_badges_position" class="wps_wpr_general_label"><?php esc_html_e( 'Choose Badge Position', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_badges_position_setting_wrapper wps_wpr_general_content">
 						<select name="wps_wpr_choose_badges_position" class="wps_wpr_choose_badges_position">
@@ -96,19 +97,21 @@ $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wp
 						<span class="wps_wpr_badges_position_notices wps_wpr_label_notice"><?php esc_html_e( 'Choose badges position to show on My Account Page.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
-				<article class="wps_wpr_general_row">
+				<article class="wps_wpr_general_row wps_wpr_badges_setting_row">
 					<label for="wps_wpr_show_accumulated_points" class="wps_wpr_general_label"><?php esc_html_e( 'Show Total Earning Points', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_show_accumulated_setting_wrapper wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_show_accumulated_points" class="wps_wpr_show_accumulated_points" value="yes" <?php checked( $wps_wpr_show_accumulated_points, 'yes' ); ?>>
 						<span class="wps_wpr_show_accumulated_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Toggle this to show overall accumulated points on My Account page.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
+				</div>
 			</section>
-			<section class="wps_wpr_general_row_wrap">
-				<div class="wps_wpr_user_badges_data_wrapper">
-					<div class="wps_wpr_user__badges_settings wps_wpr_general_sign_title"><?php esc_html_e( 'Create Badges', 'points-and-rewards-for-woocommerce' ); ?></div>
+			<section class="wps_wpr_general_row_wrap wps_wpr_badges_create_panel">
+				<div class="wps_wpr_user_badges_data_wrapper wps_wpr_badges_data_wrapper">
+					<div class="wps_wpr_user__badges_settings wps_wpr_general_sign_title wps_wpr_badges_create_heading"><?php esc_html_e( 'Create Badges', 'points-and-rewards-for-woocommerce' ); ?></div>
+					<div class="wps_wpr_section_content">
 					<div class="wps_wpr_general_row wps_wpr_user_badges_table_wrap">
-						<table class="wps_wpr_user_badges_table_settings_wrappers">
+						<table class="wps_wpr_user_badges_table_settings_wrappers wps_wpr_badges_table">
 							<thead>
 								<tr>
 									<th><?php esc_html_e( 'Badges Name', 'points-and-rewards-for-woocommerce' ); ?></th>
@@ -187,7 +190,8 @@ $wps_wpr_image_attachment_id         = ! empty( $wps_wpr_user_badges_setting['wp
 					</div>
 					<div class="wps_wpr_show_incremented_warning_msg"></div>
 					<div class="wps_wpr_pro_plugin_notices"></div>
-					<input type="button" name="wps_wpr_user_badges_fields_add" id="wps_wpr_user_badges_fields_add" class="wps_wpr_add_more_btn_badge" value="<?php esc_html_e( 'Add More', 'points-and-rewards-for-woocommerce' ); ?>">
+					<input type="button" name="wps_wpr_user_badges_fields_add" id="wps_wpr_user_badges_fields_add" class="wps_wpr_add_more_btn_badge wps_wpr_badges_add_more" value="<?php esc_html_e( 'Add More', 'points-and-rewards-for-woocommerce' ); ?>">
+					</div>
 				</div>
 			</section>
 		</main>

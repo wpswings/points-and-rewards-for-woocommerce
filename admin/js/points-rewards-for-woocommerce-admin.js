@@ -46,6 +46,24 @@
 		  e(this).next(".wps_wpr_points_view").slideToggle("fast"),
 			e(this).toggleClass("active");
 		}),
+		// Wrap content in any section title that doesn't already have a PHP-generated wrapper
+		e(".wps_wpr_general_sign_title").each(function () {
+		  var $title = e(this);
+		  if ($title.next(".wps_wpr_section_content").length === 0 && $title.nextAll().length > 0) {
+			$title.nextAll().wrapAll('<div class="wps_wpr_section_content"></div>');
+		  }
+		});
+		// Open the first section on each page by default
+		var $firstTitle = e(".wps_wpr_general_sign_title").first();
+		if ($firstTitle.length) {
+		  $firstTitle.next(".wps_wpr_section_content").show();
+		  $firstTitle.addClass("wps_wpr_section_active");
+		}
+		e(document).on("click", ".wps_wpr_general_sign_title", function (ev) {
+		  if (e(ev.target).closest("a").length) { return; }
+		  e(this).next(".wps_wpr_section_content").slideToggle(300);
+		  e(this).toggleClass("wps_wpr_section_active");
+		}),
 		e(document).find("#wps_wpr_restrictions_for_purchasing_cat").select2(),
 		e(document).find("#wps_wpr_restrict_redeem_points_category_wise").select2(),
 		e(document).find("#wps_wpr_restrict_redeem_points_membership_wise").select2(),
@@ -941,6 +959,70 @@
 		});
 	}
 });
+
+// Fix notification tab sidebar layout.
+jQuery( document ).ready( function ( $ ) {
+	function wpsFixNotificationSidebar() {
+		const $wrapper = $( '#wps_rwpr_setting_wrapper[data-wps-rma-active-tab="points-notification"]' );
+		if ( ! $wrapper.length ) {
+			return;
+		}
+
+		const $layout = $wrapper.find( '.wps_rma_dashboard_layout' ).first();
+		if ( ! $layout.length ) {
+			return;
+		}
+
+		const $content = $layout.find( '> .wps_rwpr_content_template' ).first();
+		let $sidebar = $layout.find( '> .wps_rma_right_sidebar' ).first();
+		if ( ! $sidebar.length ) {
+			$sidebar = $( '<aside class="wps_rma_right_sidebar"></aside>' );
+			$layout.append( $sidebar );
+		}
+
+		// Move support cards to the right sidebar, regardless of where they got rendered.
+		const $cards = $wrapper.find( '.wps_rma_side_card' );
+		if ( $cards.length ) {
+			$cards.each( function () {
+				$sidebar.append( this );
+			} );
+		}
+
+		if ( $content.length && $content.parent()[0] !== $layout[0] ) {
+			$layout.prepend( $content );
+		}
+		if ( $sidebar.parent()[0] !== $layout[0] ) {
+			$layout.append( $sidebar );
+		}
+
+		$layout[0].style.setProperty( 'display', 'grid', 'important' );
+		$layout[0].style.setProperty( 'grid-template-columns', 'minmax(0,1fr) 275px', 'important' );
+		$layout[0].style.setProperty( 'gap', '14px', 'important' );
+		$layout[0].style.setProperty( 'align-items', 'start', 'important' );
+
+		if ( $content.length ) {
+			$content[0].style.setProperty( 'grid-column', '1', 'important' );
+			$content[0].style.setProperty( 'grid-row', '1', 'important' );
+			$content[0].style.setProperty( 'max-width', '100%', 'important' );
+			$content[0].style.setProperty( 'width', 'auto', 'important' );
+			$content[0].style.setProperty( 'min-width', '0', 'important' );
+		}
+
+		if ( $sidebar.length ) {
+			$sidebar[0].style.setProperty( 'grid-column', '2', 'important' );
+			$sidebar[0].style.setProperty( 'grid-row', '1', 'important' );
+			$sidebar[0].style.setProperty( 'display', 'grid', 'important' );
+			$sidebar[0].style.setProperty( 'gap', '12px', 'important' );
+			$sidebar[0].style.setProperty( 'align-content', 'start', 'important' );
+		}
+	}
+
+	wpsFixNotificationSidebar();
+	setTimeout( wpsFixNotificationSidebar, 100 );
+	setTimeout( wpsFixNotificationSidebar, 400 );
+	setTimeout( wpsFixNotificationSidebar, 900 );
+	$( window ).on( 'load', wpsFixNotificationSidebar );
+} );
 
 
 jQuery(document).ready(function($){
