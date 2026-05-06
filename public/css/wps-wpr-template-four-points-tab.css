@@ -900,6 +900,7 @@
 
 /* Referral hook output overrides */
 .wps-t4-referral-hook-wrap .wps_account_wrapper,
+.wps-t4-referral-hook-wrap .wps_wpr_main_section_all_wrap,
 .wps-t4-referral-hook-wrap .wps_wpr_each_section {
 	background: transparent !important;
 	border: none !important;
@@ -908,50 +909,262 @@
 	margin: 0 !important;
 }
 
+.wps-t4-referral-hook-wrap .wps_wpr_main_section_all_wrap {
+	position: static !important;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_heading {
+	color: #fff;
+	margin: 0 0 12px !important;
+	padding-right: 0 !important;
+}
+
+.wps-t4-referral-hook-wrap,
+.wps-t4-referral-hook-wrap .wps_wpr_main_section_all_wrap,
+.wps-t4-referral-hook-wrap .wps_wpr_each_section {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+}
+
 .wps-t4-referral-hook-wrap .wps_wpr_refrral_code_copy {
 	display: flex;
-	align-items: center;
+	align-items: stretch;
 	gap: 8px;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
+	margin: 0 0 12px;
+	padding: 0 !important;
+	background: transparent !important;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_refrral_code_copy p#wps_wpr_copy {
+	flex: 1 1 auto;
+	min-width: 0;
+	float: none;
+	width: auto;
+	margin: 0 !important;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_refrral_code_copy p#wps_wpr_copy code {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	min-height: 42px;
+	padding: 10px 14px;
+	border: 1.5px solid rgba(255,255,255,.18) !important;
+	border-radius: 8px !important;
+	background: rgba(255,255,255,.08) !important;
+	color: rgba(255,255,255,.9) !important;
+	font-family: var(--t4mono);
+	font-size: 12px;
+	line-height: 1.4;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0;
 }
 
 .wps-t4-referral-hook-wrap .wps_wpr_refrral_code_copy input,
 .wps-t4-referral-hook-wrap input[type="text"],
 .wps-t4-referral-hook-wrap .wps_wpr_referral_url_class {
-	flex: 1 1 0;
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	flex: 1 1 auto;
 	min-width: 0;
+	min-height: 42px;
 	padding: 10px 14px;
 	border: 1.5px solid rgba(255,255,255,.18) !important;
 	border-radius: 8px !important;
 	background: rgba(255,255,255,.08) !important;
-	color: #fff !important;
+	color: rgba(255,255,255,.9) !important;
 	font-family: var(--t4mono);
 	font-size: 12px;
+	line-height: 1.4;
 	outline: none;
+	white-space: nowrap;
+	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-.wps-t4-referral-hook-wrap .wps_wpr_btn_copy,
-.wps-t4-referral-hook-wrap button,
-.wps-t4-referral-hook-wrap .wps_wpr_referral_copy_btn,
-.wps-t4-referral-hook-wrap input[type="button"],
-.wps-t4-referral-hook-wrap input[type="submit"] {
-	padding: 10px 16px !important;
+.wps-t4-referral-hook-wrap .wps_wpr_refrral_code_copy .wps_wpr_btn_copy,
+.wps-t4-referral-hook-wrap .wps_wpr_shared_points_code .wps_wpr_btn_copy,
+.wps-t4-referral-hook-wrap .wps_wpr_referral_copy_btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 42px !important;
+	min-width: 42px;
+	min-height: 42px;
+	padding: 0 !important;
+	margin: 0 !important;
 	background: var(--t4a) !important;
 	color: #fff !important;
 	border: none !important;
 	border-radius: 8px !important;
+	box-shadow: none !important;
 	font-family: var(--t4font) !important;
 	font-size: 13px !important;
 	font-weight: 600 !important;
 	cursor: pointer;
 	transition: opacity .18s;
 	white-space: nowrap;
+	transform: none !important;
+	position: static !important;
+	top: auto !important;
+	right: auto !important;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button button,
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button input[type="button"],
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button input[type="submit"] {
+	width: auto;
+	min-width: 0;
+	min-height: 0;
+	padding: 0;
+	margin: 0;
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_refrral_code_copy .wps_wpr_btn_copy img {
+	width: 14px;
+	height: 14px;
+	max-width: 14px;
+	object-fit: contain;
+	margin: 0;
 }
 
 .wps-t4-referral-hook-wrap .wps_wpr_btn_copy:hover,
-.wps-t4-referral-hook-wrap button:hover {
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button button:hover {
 	opacity: .88;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button {
+	position: relative !important;
+	top: auto !important;
+	right: auto !important;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+	margin: 0 0 10px;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button #fb-root {
+	display: none;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button .wps_wpr_common_class,
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button .wps_wpr_common_class > a,
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button .wps_wpr_whatsapp_share,
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button .wps_wpr_share_pinterest_btn > a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	margin: 0 !important;
+	border: 0;
+	background: transparent;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button .wps_wpr_common_class img,
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button .wps_wpr_whatsapp_share img {
+	width: 24px;
+	height: 24px;
+	max-width: 24px;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button .wps-wpr__email-input {
+	position: absolute;
+	right: 0;
+	top: 36px;
+	z-index: 2;
+	width: min(240px, 100%);
+	padding: 10px;
+	margin: 0;
+	display: none;
+	flex-direction: column;
+	gap: 10px;
+	background: rgba(15,11,8,.96);
+	border: 1px solid rgba(255,255,255,.15);
+	border-radius: 8px;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button .wps-wpr__email-input .wps_wpr_enter_emaill,
+.wps-t4-referral-hook-wrap .wps_wpr_wrapper_button .wps-wpr__email-input .wps_wpr_point {
+	width: 100% !important;
+	margin: 0 !important;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_message,
+.wps-t4-referral-hook-wrap #wps_wpr_referal_points_notification,
+.wps-t4-referral-hook-wrap .wps-wpr_note {
+	color: rgba(255,255,255,.88) !important;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_shared_points_code {
+	display: flex;
+	align-items: stretch;
+	gap: 8px;
+	flex-wrap: nowrap;
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+	margin: 0 0 8px;
+	padding: 0;
+	position: static;
+	border-color: rgba(255,255,255,.25);
+	color: #fff;
+	background: transparent;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_shared_points_code p#wps_copy {
+	flex: 1 1 auto;
+	min-width: 0;
+	border: 1.5px solid rgba(255,255,255,.18);
+	border-radius: 8px;
+	background: rgba(255,255,255,.08);
+	padding: 10px 14px;
+	color: #fff;
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_shared_points_code .wps_wpr_btn_copy {
+	background: var(--t4a) !important;
+	color: #fff !important;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_refrral_code_copy + .wps_wpr_message {
+	margin: 0 0 10px;
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+.wps-t4-referral-hook-wrap .wps_wpr_refrral_code_copy + .wps_wpr_message ~ .wps_wpr_each_section {
+	display: block;
+	width: 100%;
+}
+
+.wps-t4-referral-hook-wrap #wps_wpr_referal_points_notification {
+	margin: 0 0 10px;
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.wps-t4-referral-hook-wrap .wps-wpr_note {
+	display: block;
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.45;
 }
 
 .wps-t4-referral-hook-wrap .wps_wpr_social_share_section,

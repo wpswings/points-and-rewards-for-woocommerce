@@ -851,15 +851,26 @@ if ( $activated ) {
 	 *
 	 * @return bool
 	 */
-	function wps_wpr_is_active() {
+		function wps_wpr_is_active() {
 
-		$flag = false;
-		if ( is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
-
-			$flag = true;
+			$flag = false;
+			if ( defined( 'POINTS_AND_REWARDS_FOR_WOOCOMMERCE_PRO_VERSION' ) ) {
+				return true;
+			}
+			if ( function_exists( 'is_plugin_active' ) ) {
+				$pro_plugins = array(
+					'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php',
+					'ultimate-waoocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php',
+				);
+				foreach ( $pro_plugins as $pro_plugin ) {
+					if ( is_plugin_active( $pro_plugin ) ) {
+						$flag = true;
+						break;
+					}
+				}
+			}
+			return $flag;
 		}
-		return $flag;
-	}
 } else {
 
 	// WooCommerce is not active so deactivate this plugin.

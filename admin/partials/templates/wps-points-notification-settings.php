@@ -417,21 +417,6 @@ do_action( 'wps_wpr_add_notice' ); ?>
 		</div>
 	</div>
 
-	<?php if ( ! empty( $wps_wpr_section_index ) ) { ?>
-		<div class="wps_wpr_notification_jump_card">
-			<h4><?php esc_html_e( 'Jump To Notification Type', 'points-and-rewards-for-woocommerce' ); ?></h4>
-			<div class="wps_wpr_notification_jump_links">
-				<?php foreach ( $wps_wpr_section_index as $section_item ) { ?>
-					<a href="#<?php echo esc_attr( $section_item['id'] ); ?>">
-						<?php echo esc_html( $section_item['title'] ); ?>
-						<?php if ( ! empty( $section_item['field_count'] ) ) { ?>
-							<span><?php echo esc_html( sprintf( _n( '%d field', '%d fields', (int) $section_item['field_count'], 'points-and-rewards-for-woocommerce' ), (int) $section_item['field_count'] ) ); ?></span>
-						<?php } ?>
-					</a>
-				<?php } ?>
-			</div>
-		</div>
-	<?php } ?>
 </div>
 
 <div class="wps_wpr_table wps_wpr_notifications_table">

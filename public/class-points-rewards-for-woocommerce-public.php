@@ -88,6 +88,26 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
+	 * Validate CSS file structure before enqueueing minified assets.
+	 *
+	 * @param string $relative_path Relative path from plugin root.
+	 * @return bool
+	 */
+	private function wps_wpr_is_valid_css_asset( $relative_path ) {
+		$absolute_path = WPS_RWPR_DIR_PATH . ltrim( $relative_path, '/' );
+		if ( ! file_exists( $absolute_path ) || ! is_readable( $absolute_path ) ) {
+			return false;
+		}
+
+		$css_sample = file_get_contents( $absolute_path, false, null, 0, 4096 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		if ( false === $css_sample ) {
+			return false;
+		}
+
+		return ( false !== strpos( $css_sample, '{' ) && false !== strpos( $css_sample, '}' ) && false !== strpos( $css_sample, ':' ) );
+	}
+
+	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
 	 * @since    1.0.0
@@ -95,13 +115,13 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_public_enqueue_styles() {
 
 		// enqueue css for points tab design.
-		wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
-		if ( $this->wps_wpr_check_new_template_active() ) {
-			$account_css_file = 'public/css/points-and-rewards-for-woocommerce-account-page-design.min.css';
-			if ( ! file_exists( WPS_RWPR_DIR_PATH . $account_css_file ) ) {
-				$account_css_file = 'public/css/points-and-rewards-for-woocommerce-account-page-design.css';
-			}
-			wp_enqueue_style( 'wps-account-page-design', WPS_RWPR_DIR_URL . $account_css_file, array(), $this->wps_wpr_get_asset_version( $account_css_file ), 'all' );
+			wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/css/points-rewards-for-woocommerce-public.min.css', array(), $this->version, 'all' );
+			if ( $this->wps_wpr_check_new_template_active() ) {
+				$account_css_file = 'public/css/points-and-rewards-for-woocommerce-account-page-design.min.css';
+				if ( ! file_exists( WPS_RWPR_DIR_PATH . $account_css_file ) || ! $this->wps_wpr_is_valid_css_asset( $account_css_file ) ) {
+					$account_css_file = 'public/css/points-and-rewards-for-woocommerce-account-page-design.css';
+				}
+				wp_enqueue_style( 'wps-account-page-design', WPS_RWPR_DIR_URL . $account_css_file, array(), $this->wps_wpr_get_asset_version( $account_css_file ), 'all' );
 
 			$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
 			$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : '';

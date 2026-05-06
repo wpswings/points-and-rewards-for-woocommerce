@@ -89,6 +89,13 @@ class Points_Rewards_For_WooCommerce_Admin {
 				$this->wps_wpr_get_asset_version( 'admin/css/points-rewards-for-woocommerce-admin-overview.css' ),
 				'all'
 			);
+			wp_enqueue_style(
+				'wps_wpr_talk_to_expert',
+				WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-talk-to-expert.css',
+				array( $this->plugin_name, 'wps_admin_overview' ),
+				$this->wps_wpr_get_asset_version( 'admin/css/points-rewards-for-woocommerce-talk-to-expert.css' ),
+				'all'
+			);
 
 			if ( isset( $_GET['user_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				wp_enqueue_style(
@@ -111,62 +118,69 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function wps_wpr_admin_enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) ) {
+		if ( ! isset( $screen->id ) ) {
+			return;
+		}
 
-			if ( wp_verify_nonce( ! empty( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : '', 'par_main_setting' ) ) {
-				$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-				if ( ( 'wps-rwpr-setting' == $page ) || 'product' == $screen->id ) {
+		$page               = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+		$is_settings_screen = ( 'wps-rwpr-setting' === $page ) || ( 'woocommerce_page_wps-rwpr-setting' === $screen->id );
 
-					wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
-					wp_enqueue_style( 'woocommerce_admin_menu_styles' );
-					wp_enqueue_style( 'woocommerce_admin_styles' );
-					wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION, true );
-					wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery', 'dompurify' ), WC_VERSION, true );
-					wp_enqueue_script( 'sticky_js', WPS_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), WC_VERSION, true );
-					wp_enqueue_media();
+		if ( ! $is_settings_screen && 'product' !== $screen->id ) {
+			return;
+		}
 
-					$locale  = localeconv();
-					$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
-					$params  = array(
-						/* translators: %s: decimal */
-						'i18n_decimal_error'               => sprintf( __( 'Please enter the decimal (%s) format without thousand separators.', 'points-and-rewards-for-woocommerce' ), $decimal ),
-						/* translators: %s: price decimal separator */
-						'i18n_mon_decimal_error'           => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.', 'points-and-rewards-for-woocommerce' ), wc_get_price_decimal_separator() ),
-						'i18n_country_iso_error'           => __( 'Please enter the country code with two capital letters.', 'points-and-rewards-for-woocommerce' ),
-						'i18_sale_less_than_regular_error' => __( 'Please enter the value less than the regular price.', 'points-and-rewards-for-woocommerce' ),
-						'decimal_point'                    => $decimal,
-						'mon_decimal_point'                => wc_get_price_decimal_separator(),
-						'strings'                          => array(
-							'import_products' => __( 'Import', 'points-and-rewards-for-woocommerce' ),
-							'export_products' => __( 'Export', 'points-and-rewards-for-woocommerce' ),
-						),
-						'urls'                             => array(
-							'import_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_importer' ) ),
-							'export_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_exporter' ) ),
-						),
-					);
+		wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
+		wp_enqueue_style( 'woocommerce_admin_menu_styles' );
+		wp_enqueue_style( 'woocommerce_admin_styles' );
+		wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), WC_VERSION, true );
+		wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.js', array( 'jquery', 'dompurify' ), WC_VERSION, true );
+		wp_enqueue_script( 'sticky_js', WPS_RWPR_DIR_URL . '/admin/js/jquery.sticky-sidebar.min.js', array( 'jquery' ), WC_VERSION, true );
+		wp_enqueue_media();
 
-					wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
-					wp_enqueue_script( 'woocommerce_admin' );
-					$args_cat     = array( 'taxonomy' => 'product_cat' );
-					$categories   = get_terms( $args_cat );
-					$option_categ = array();
-					if ( isset( $categories ) && ! empty( $categories ) ) {
-						foreach ( $categories as $category ) {
+		$locale  = localeconv();
+		$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
+		$params  = array(
+			/* translators: %s: decimal */
+			'i18n_decimal_error'               => sprintf( __( 'Please enter the decimal (%s) format without thousand separators.', 'points-and-rewards-for-woocommerce' ), $decimal ),
+			/* translators: %s: price decimal separator */
+			'i18n_mon_decimal_error'           => sprintf( __( 'Please enter in monetary decimal (%s) format without thousand separators and currency symbols.', 'points-and-rewards-for-woocommerce' ), wc_get_price_decimal_separator() ),
+			'i18n_country_iso_error'           => __( 'Please enter the country code with two capital letters.', 'points-and-rewards-for-woocommerce' ),
+			'i18_sale_less_than_regular_error' => __( 'Please enter the value less than the regular price.', 'points-and-rewards-for-woocommerce' ),
+			'decimal_point'                    => $decimal,
+			'mon_decimal_point'                => wc_get_price_decimal_separator(),
+			'strings'                          => array(
+				'import_products' => __( 'Import', 'points-and-rewards-for-woocommerce' ),
+				'export_products' => __( 'Export', 'points-and-rewards-for-woocommerce' ),
+			),
+			'urls'                             => array(
+				'import_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_importer' ) ),
+				'export_products' => esc_url_raw( admin_url( 'edit.php?post_type=product&page=product_exporter' ) ),
+			),
+		);
 
-							$catid   = $category->term_id;
-							$catname = $category->name;
+		wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
+		wp_enqueue_script( 'woocommerce_admin' );
+		$args_cat     = array( 'taxonomy' => 'product_cat' );
+		$categories   = get_terms( $args_cat );
+		$option_categ = array();
+		if ( isset( $categories ) && ! empty( $categories ) ) {
+			foreach ( $categories as $category ) {
 
-							$option_categ[] = array(
-								'id'       => $catid,
-								'cat_name' => $catname,
-							);
-						}
-					}
+				$catid   = $category->term_id;
+				$catname = $category->name;
+
+				$option_categ[] = array(
+					'id'       => $catid,
+					'cat_name' => $catname,
+				);
+			}
+		}
 
 					$url     = admin_url( 'admin.php?page=wps-wpr-setting' );
 					$wps_wpr = array(
 						'ajaxurl'                => admin_url( 'admin-ajax.php' ),
+						'wps_wpr_expert_action'  => Points_Rewards_For_WooCommerce_Talk_To_Expert_Form::AJAX_ACTION,
+						'wps_wpr_expert_nonce'   => wp_create_nonce( Points_Rewards_For_WooCommerce_Talk_To_Expert_Form::NONCE_ACTION ),
 						'validpoint'             => __( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
 						'Labelname'              => __( 'Enter the Name of the Level', 'points-and-rewards-for-woocommerce' ),
 						'Labeltext'              => __( 'Enter Level', 'points-and-rewards-for-woocommerce' ),
@@ -219,9 +233,16 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 					wp_enqueue_script( $this->plugin_name . 'admin-js', WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-admin.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'select2', 'sticky_js' ), $this->wps_wpr_get_asset_version( 'admin/js/points-rewards-for-woocommerce-admin.min.js' ), false );
 					wp_localize_script( $this->plugin_name . 'admin-js', 'wps_wpr_object', $wps_wpr );
+					wp_enqueue_script(
+						$this->plugin_name . '-talk-to-expert-js',
+						WPS_RWPR_DIR_URL . 'admin/js/points-rewards-for-woocommerce-talk-to-expert.js',
+						array( 'jquery', $this->plugin_name . 'admin-js' ),
+						$this->wps_wpr_get_asset_version( 'admin/js/points-rewards-for-woocommerce-talk-to-expert.js' ),
+						false
+					);
 
-					// user report work.
-					if ( isset( $_GET['user_id'] ) ) {
+		// user report work.
+		if ( isset( $_GET['user_id'] ) ) {
 
 						$user_id   = ! empty( $_GET['user_id'] ) ? sanitize_text_field( wp_unslash( $_GET['user_id'] ) ) : '';
 						$user_data = $this->wps_wpr_get_user_reports_data( $user_id );
@@ -262,10 +283,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 								'current_points'  => $user_data['current_points'],
 								'overall_points'  => $user_data['overall_points'],
 							)
-						);
-					}
-				}
-			}
+							);
 		}
 	}
 

@@ -128,6 +128,7 @@ class Points_Rewards_For_Woocommerce {
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'admin/class-points-rewards-for-woocommerce-admin.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-points-rewards-for-woocommerce-talk-to-expert-form.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -178,6 +179,11 @@ class Points_Rewards_For_Woocommerce {
 	 */
 	private function define_admin_hooks() {
 		$plugin_admin = new Points_Rewards_For_WooCommerce_Admin( $this->get_plugin_name(), $this->get_version() );
+		$wps_wpr_talk_to_expert = null;
+
+		if ( is_admin() ) {
+			$wps_wpr_talk_to_expert = new Points_Rewards_For_WooCommerce_Talk_To_Expert_Form();
+		}
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_scripts' );
@@ -186,6 +192,9 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
+		if ( $wps_wpr_talk_to_expert ) {
+			$this->loader->add_action( 'wp_ajax_' . Points_Rewards_For_WooCommerce_Talk_To_Expert_Form::AJAX_ACTION, $wps_wpr_talk_to_expert, 'wps_wpr_handle_ajax_submission' );
+		}
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'wps_wpr_add_membership_rule' );
 		$this->loader->add_action( 'init', $plugin_admin, 'wps_wpr_list_shortcode_in_gutenburg_block' );
 

@@ -145,7 +145,7 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-	public function wps_wpr_enqueue_styles() {
+		public function wps_wpr_enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -158,12 +158,13 @@ class WPSwings_Onboarding_Helper {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( $this->wps_wpr_is_valid_page_screen() ) {
-
-			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_RWPR_DIR_URL . 'admin/css/wpswings-onboarding-admin.css', array(), REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION, 'all' );
-			wp_enqueue_style( 'select2' );
+			if ( $this->wps_wpr_is_valid_page_screen() ) {
+				$style_path    = WPS_RWPR_DIR_PATH . 'admin/css/wpswings-onboarding-admin.css';
+				$style_version = file_exists( $style_path ) ? filemtime( $style_path ) : REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
+				wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_RWPR_DIR_URL . 'admin/css/wpswings-onboarding-admin.css', array(), $style_version, 'all' );
+				wp_enqueue_style( 'select2' );
+			}
 		}
-	}
 
 	/**
 	 * Register the JavaScript for the admin area.
@@ -184,9 +185,10 @@ class WPSwings_Onboarding_Helper {
 		 * class.
 		 */
 
-		if ( $this->wps_wpr_is_valid_page_screen() ) {
-
-			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_RWPR_DIR_URL . 'admin/js/wpswings-onboarding-admin.js', array( 'jquery', 'select2' ), REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION, true );
+			if ( $this->wps_wpr_is_valid_page_screen() ) {
+				$script_path    = WPS_RWPR_DIR_PATH . 'admin/js/wpswings-onboarding-admin.js';
+				$script_version = file_exists( $script_path ) ? filemtime( $script_path ) : REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
+				wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_RWPR_DIR_URL . 'admin/js/wpswings-onboarding-admin.js', array( 'jquery', 'select2' ), $script_version, true );
 
 			global $pagenow;
 			$current_slug = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
