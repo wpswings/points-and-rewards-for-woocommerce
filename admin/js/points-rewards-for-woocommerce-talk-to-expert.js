@@ -156,6 +156,122 @@ jQuery( function( $ ) {
 		}
 	} );
 
+	/**
+	 * Normalize notification sections so each title controls only its own content.
+	 *
+	 * @return {void}
+	 */
+	function wpsWprNormalizeNotificationSections() {
+		var $wrapper = $( '#wps_rwpr_setting_wrapper[data-wps-rma-active-tab="points-notification"]' ).first();
+		if ( ! $wrapper.length ) {
+			return;
+		}
+
+		var $container = $wrapper.find( '.wps_wpr_notifications_table .wps_wpr_general_wrapper' ).first();
+		if ( ! $container.length || $container.data( 'wpsWprNotificationNormalized' ) ) {
+			return;
+		}
+
+		var $nodes = $container.find( '.wps_wpr_general_sign_title, .wps_wpr_general_row' );
+		if ( ! $nodes.length ) {
+			return;
+		}
+
+		var sections = [];
+		var currentSection = null;
+
+		$nodes.each( function() {
+			var $node = $( this );
+			if ( $node.hasClass( 'wps_wpr_general_sign_title' ) ) {
+				var $existingSection = $node.closest( '.wps_wpr_notification_section_wrap' );
+				currentSection = {
+					title: $node,
+					rows: [],
+					id: $existingSection.attr( 'id' ) || ''
+				};
+				sections.push( currentSection );
+				return;
+			}
+
+			if ( currentSection ) {
+				currentSection.rows.push( $node );
+			}
+		} );
+
+		if ( ! sections.length ) {
+			return;
+		}
+
+		$nodes.detach();
+		$container.find( '.wps_wpr_general_row_wrap, .wps_wpr_section_content' ).remove();
+
+		sections.forEach( function( section, index ) {
+			var $wrap = $( '<div class="wps_wpr_general_row_wrap wps_wpr_notification_section_wrap"></div>' );
+			var $content = $( '<div class="wps_wpr_section_content"></div>' );
+
+			if ( section.id ) {
+				$wrap.attr( 'id', section.id );
+			}
+
+			section.title.removeClass( 'wps_wpr_section_active' );
+			$wrap.append( section.title );
+
+			section.rows.forEach( function( $row ) {
+				$content.append( $row );
+			} );
+
+			if ( 0 === index ) {
+				section.title.addClass( 'wps_wpr_section_active' );
+				$content.show();
+			} else {
+				$content.hide();
+			}
+
+			$wrap.append( $content );
+			$container.append( $wrap );
+		} );
+
+		$container.data( 'wpsWprNotificationNormalized', true );
+	}
+
+	/**
+	 * Keep accordion toggling scoped to the section that was clicked.
+	 *
+	 * @return {void}
+	 */
+	function wpsWprRebindSectionAccordion() {
+		$( document ).off( 'click', '.wps_wpr_general_sign_title' );
+		$( document ).on( 'click', '.wps_wpr_general_sign_title', function( event ) {
+			if ( $( event.target ).closest( 'a' ).length ) {
+				return;
+			}
+
+			var $title = $( this );
+			var $content = $title.next( '.wps_wpr_section_content' );
+
+			if ( ! $content.length ) {
+				var $wrap = $title.closest( '.wps_wpr_general_row_wrap' );
+				$content = $wrap.children( '.wps_wpr_section_content' ).first();
+			}
+
+			if ( ! $content.length ) {
+				var $rows = $title.nextUntil( '.wps_wpr_general_sign_title' );
+				if ( $rows.length ) {
+					$rows.wrapAll( '<div class="wps_wpr_section_content"></div>' );
+					$content = $title.next( '.wps_wpr_section_content' );
+				}
+			}
+
+			if ( $content.length ) {
+				$content.stop( true, true ).slideToggle( 300 );
+				$title.toggleClass( 'wps_wpr_section_active' );
+			}
+		} );
+	}
+
+	wpsWprNormalizeNotificationSections();
+	wpsWprRebindSectionAccordion();
+
 		$( document ).off( 'submit.wpsWprExpertModal', formSelector ).on( 'submit.wpsWprExpertModal', formSelector, function( event ) {
 			var $form = $( this );
 			var $modal = $form.closest( modalSelector );

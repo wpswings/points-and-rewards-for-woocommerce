@@ -318,7 +318,7 @@ $wps_wpr_general_settings = array(
 		'type'     => 'text',
 		'id'       => 'wps_wpr_number_order_rewards_messages',
 		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
-		'desc'     => apply_filters( 'wps_wpr_order_rewards_message_desc', __( 'Enter the message that you want to show to customers on cart page about the rewards points they will get when they reach the order limit.', 'points-and-rewards-for-woocommerce' ) ),
+		'desc'     => apply_filters( 'wps_wpr_order_rewards_message_desc', __( 'Use these shortcodes to provide an appropriate message for your customers on his no. of [ORDER] and get rewards points [POINTS]', 'points-and-rewards-for-woocommerce' ) ),
 		'desc_tip' => __( 'Entered message will appears on Cart Page.', 'points-and-rewards-for-woocommerce' ),
 		'default'  => apply_filters( 'wps_wpr_order_rewards_message_default', __( 'Hurry up! You will get %s points if you place %s orders.', 'points-and-rewards-for-woocommerce' ) ),
 	),

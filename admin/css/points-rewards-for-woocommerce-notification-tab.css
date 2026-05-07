@@ -173,8 +173,8 @@
 }
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_sign_title {
-  position: sticky;
-  top: 32px;
+  position: static;
+  top: auto;
   z-index: 1;
   margin: 0;
   border-bottom: 1px solid #dbe6f2;
@@ -183,6 +183,11 @@
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_row {
   padding: 16px;
+  margin-top: 0;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_row + .wps_wpr_general_row {
+  border-top: 1px solid #edf1f7;
 }
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notification_field_hint {
