@@ -3796,8 +3796,7 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_gamification_panel > h4 {
   margin: 0;
   padding: 14px 20px;
-  border-bottom: 1px solid #ddeaf7;
-  background: #cfe7f8;
+  background: var(--rma-bg);
   color: #257ec3;
   font-size: 18px;
   line-height: 1.2;
@@ -3825,8 +3824,8 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_gamification_panel .wps_wpr_doc_video > .button {
   min-height: 32px;
-  border: 1px solid #1676cc;
-  color: #1676cc;
+  border: 1px solid #d19dd6;
+  color: #000;
   border-radius: 6px;
   background: #f8fcff;
   box-shadow: none;
@@ -3918,7 +3917,7 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
   margin: 0;
   padding: 12px 20px;
   border: 0;
-  background: #cfe7f8;
+  background: var(--rma-bg);
   color: #257ec3;
   font-size: 18px;
   line-height: 1.3;
@@ -4033,7 +4032,7 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
   margin: 0;
   padding: 14px 20px;
   border-bottom: 1px solid #ddeaf7;
-  background: #cfe7f8;
+  /* background: #cfe7f8; */
   color: #257ec3;
   font-size: 18px;
   font-weight: 800;
@@ -4060,8 +4059,8 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_badges_panel .wps_wpr_doc_video > .button {
   min-height: 32px;
-  border: 1px solid #1676cc;
-  color: #1676cc;
+  border: 1px solid #dda7dd;
+  color: #000;
   border-radius: 6px;
   background: #f8fcff;
   box-shadow: none;
@@ -4137,7 +4136,7 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_badges_create_panel .wps_wpr_badges_create_heading {
   margin: 0;
   padding: 14px 20px;
-  background: #cfe7f8;
+  /* background: #cfe7f8; */
   color: #257ec3;
   border-bottom: 1px solid #ddeaf7;
   font-size: 18px;

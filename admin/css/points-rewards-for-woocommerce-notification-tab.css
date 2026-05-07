@@ -165,19 +165,87 @@
 }
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_notification_section_wrap {
-  margin-bottom: 16px;
-  border-radius: 12px;
-  border: 1px solid #e7edf4;
-  background: #fff;
-  overflow: hidden;
+  display: block !important;
+  margin: 0 0 14px 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  overflow: visible !important;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_notification_section_wrap:last-child {
+  margin-bottom: 0 !important;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_wrapper {
+  display: block !important;
+}
+
+/* Enforce equal spacing between every notification section, regardless of wrapper shape. */
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_wrapper > .wps_wpr_general_row_wrap,
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_wrapper > .wps_wpr_general_sign_title {
+  margin: 0 !important;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_wrapper > .wps_wpr_general_row_wrap + .wps_wpr_general_row_wrap,
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_wrapper > .wps_wpr_general_sign_title + .wps_wpr_general_sign_title,
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_wrapper > .wps_wpr_general_row_wrap + .wps_wpr_general_sign_title,
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_wrapper > .wps_wpr_general_sign_title + .wps_wpr_general_row_wrap {
+  margin-top: 14px !important;
+}
+
+/* Fallback styling when any section title renders outside the standard wrapper. */
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_wrapper > .wps_wpr_general_sign_title {
+  display: block !important;
+  margin: 0 0 14px 0 !important;
+  border: 1px solid #e5e8f2;
+  border-radius: 14px;
+  background: #f3f4fb;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_wrapper > .wps_wpr_general_sign_title:last-child {
+  margin-bottom: 0 !important;
 }
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_sign_title {
   position: static;
   top: auto;
   z-index: 1;
-  margin: 0;
-  border-bottom: 1px solid #dbe6f2;
+  margin: 0 !important;
+  padding: 12px 18px !important;
+  border: 1px solid #e5e8f2;
+  border-radius: 14px;
+  background: #f3f4fb;
+  box-shadow: none;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_general_sign_title.wps_wpr_section_active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Fallback: if any section title is rendered inside section content, keep same card design + gap. */
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_section_content > .wps_wpr_general_sign_title {
+  margin: 14px 0 0 !important;
+  padding: 12px 18px !important;
+  border: 1px solid #e5e8f2 !important;
+  border-radius: 14px !important;
+  background: #f3f4fb !important;
+  position: static !important;
+  top: auto !important;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_section_content > .wps_wpr_general_sign_title:first-child {
+  margin-top: 0 !important;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notifications_table .wps_wpr_section_content {
+  border: 1px solid #e7edf4;
+  border-top: 0;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  background: #fff;
+  overflow: hidden;
 }
 
 
@@ -195,6 +263,65 @@
   margin: 0 0 10px;
   color: #4c5f73;
   line-height: 1.45;
+}
+
+/* Keep Save Changes visible in points-notification tab (override floating/global offsets). */
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] {
+  padding-bottom: 120px !important;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_notification_submit,
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .submit {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+  padding: 16px 0 8px !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  left: auto !important;
+  right: auto !important;
+  z-index: 20 !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 38%) !important;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap input[name="wps_wpr_save_notification"].button-primary.woocommerce-save-button.wps_wpr_save_changes,
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .button-primary.woocommerce-save-button.wps_wpr_save_changes {
+  display: inline-flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: fixed !important;
+  left: calc(160px + 24px) !important;
+  right: auto !important;
+  bottom: 20px !important;
+  top: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  z-index: 100100 !important;
+  pointer-events: auto !important;
+}
+
+body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap input[name="wps_wpr_save_notification"].button-primary.woocommerce-save-button.wps_wpr_save_changes,
+body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .button-primary.woocommerce-save-button.wps_wpr_save_changes {
+  left: calc(36px + 24px) !important;
+}
+
+@media (max-width: 960px) {
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap input[name="wps_wpr_save_notification"].button-primary.woocommerce-save-button.wps_wpr_save_changes,
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .button-primary.woocommerce-save-button.wps_wpr_save_changes {
+    left: 16px !important;
+    right: auto !important;
+  }
+}
+
+@media (max-width: 782px) {
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap input[name="wps_wpr_save_notification"].button-primary.woocommerce-save-button.wps_wpr_save_changes,
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .button-primary.woocommerce-save-button.wps_wpr_save_changes {
+    left: 12px !important;
+    right: auto !important;
+    bottom: 12px !important;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -216,8 +343,43 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .wps_rwpr_content_template {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 12px !important;
+  }
+
   #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .wps_rma_right_sidebar {
-    grid-column: auto;
-    grid-row: auto;
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .wps_rma_right_sidebar .wps_rma_side_card {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .wps_wpr_notifications_table .wps_wpr_general_row {
+    display: block;
+    padding: 14px 12px;
+  }
+
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .wps_wpr_notifications_table .wps_wpr_general_label,
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .wps_wpr_notifications_table .wps_wpr_general_content {
+    margin-left: 0 !important;
+    min-width: 0 !important;
+    padding: 8px 0 !important;
+    width: 100% !important;
+  }
+
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .wps_wpr_notification_jump_links {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="points-notification"] .wps_wpr_notification_tokens {
+    width: 100%;
   }
 }

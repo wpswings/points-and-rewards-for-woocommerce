@@ -425,14 +425,15 @@ do_action( 'wps_wpr_add_notice' ); ?>
 		$wps_wpr_section_open = false;
 		foreach ( $wps_settings as $key => $value ) {
 			$value_type = isset( $value['type'] ) ? $value['type'] : '';
-			if ( 'title' === $value_type ) {
-				if ( $wps_wpr_section_open ) {
+				if ( 'title' === $value_type ) {
+					if ( $wps_wpr_section_open ) {
+						?>
+						</div>
+						</div>
+						<?php
+					}
+					$section_dom_id = ! empty( $value['section_id'] ) ? $value['section_id'] : '';
 					?>
-					</div>
-					<?php
-				}
-				$section_dom_id = ! empty( $value['section_id'] ) ? $value['section_id'] : '';
-				?>
 				<div class="wps_wpr_general_row_wrap wps_wpr_notification_section_wrap" id="<?php echo esc_attr( $section_dom_id ); ?>">
 				<?php
 				$settings_obj->wps_rwpr_generate_heading( $value );
@@ -486,7 +487,7 @@ do_action( 'wps_wpr_add_notice' ); ?>
 	</div>
 </div>
 <div class="clear"></div>
-<p class="submit">
+<p class="submit wps_wpr_notification_submit">
 	<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
 	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_notification">
 </p>

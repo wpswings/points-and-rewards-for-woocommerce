@@ -79,8 +79,14 @@ class Points_Rewards_For_WooCommerce_Admin {
 		$screen = get_current_screen();
 		$pagescreen = isset( $screen->id ) ? $screen->id : '';
 		if ( 'woocommerce_page_wps-rwpr-setting' == $hook || 'woocommerce_page_wps-rwpr-setting' === $pagescreen ) {
-			wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.min.css', array(), $this->version, 'all' );
-			wp_enqueue_style( 'wps_wpr_notification_tab_styles', WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-notification-tab.css', array( $this->plugin_name ), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name, WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-admin.css', array(), $this->version, 'all' );
+			wp_enqueue_style(
+				'wps_wpr_notification_tab_styles',
+				WPS_RWPR_DIR_URL . 'admin/css/points-rewards-for-woocommerce-notification-tab.css',
+				array( $this->plugin_name ),
+				$this->wps_wpr_get_asset_version( 'admin/css/points-rewards-for-woocommerce-notification-tab.css' ),
+				'all'
+			);
 			wp_enqueue_style( 'select2' );
 			wp_enqueue_style(
 				'wps_admin_overview',

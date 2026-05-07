@@ -269,11 +269,202 @@ jQuery( function( $ ) {
 		} );
 	}
 
-	wpsWprNormalizeNotificationSections();
-	wpsWprRebindSectionAccordion();
+	/**
+	 * Force notification dashboard layout to be mobile-safe on small screens.
+	 * Keeps desktop two-column layout intact and preserves all tab behavior.
+	 *
+	 * @return {void}
+	 */
+	function wpsWprApplyNotificationResponsiveLayout() {
+		var $wrapper = $( '#wps_rwpr_setting_wrapper[data-wps-rma-active-tab="points-notification"]' ).first();
+		if ( ! $wrapper.length ) {
+			return;
+		}
 
-		$( document ).off( 'submit.wpsWprExpertModal', formSelector ).on( 'submit.wpsWprExpertModal', formSelector, function( event ) {
-			var $form = $( this );
+		var $layout = $wrapper.find( '.wps_rma_dashboard_layout' ).first();
+		if ( ! $layout.length ) {
+			return;
+		}
+
+		var $content = $layout.find( '> .wps_rwpr_content_template' ).first();
+		var $sidebar = $layout.find( '> .wps_rma_right_sidebar' ).first();
+		var isMobile = window.matchMedia( '(max-width: 900px)' ).matches;
+
+		$layout[0].style.setProperty( 'display', 'grid', 'important' );
+		$layout[0].style.setProperty( 'align-items', 'start', 'important' );
+		$layout[0].style.setProperty( 'gap', isMobile ? '12px' : '14px', 'important' );
+		$layout[0].style.setProperty( 'grid-template-columns', isMobile ? 'minmax(0,1fr)' : 'minmax(0,1fr) 275px', 'important' );
+
+		if ( $content.length ) {
+			$content[0].style.setProperty( 'grid-column', '1', 'important' );
+			$content[0].style.setProperty( 'grid-row', '1', 'important' );
+			$content[0].style.setProperty( 'max-width', '100%', 'important' );
+			$content[0].style.setProperty( 'width', 'auto', 'important' );
+			$content[0].style.setProperty( 'min-width', '0', 'important' );
+		}
+
+		if ( $sidebar.length ) {
+			$sidebar[0].style.setProperty( 'display', 'grid', 'important' );
+			$sidebar[0].style.setProperty( 'gap', '12px', 'important' );
+			$sidebar[0].style.setProperty( 'align-content', 'start', 'important' );
+			$sidebar[0].style.setProperty( 'grid-column', isMobile ? '1' : '2', 'important' );
+			$sidebar[0].style.setProperty( 'grid-row', isMobile ? '2' : '1', 'important' );
+			$sidebar[0].style.setProperty( 'max-width', '100%', 'important' );
+			$sidebar[0].style.setProperty( 'width', '100%', 'important' );
+			$sidebar[0].style.setProperty( 'min-width', '0', 'important' );
+		}
+	}
+
+	/**
+	 * Ensure points-notification save button stays visible even if global
+	 * admin floating-button rules offset it off-canvas.
+	 *
+	 * @return {void}
+	 */
+	function wpsWprEnsureNotificationSaveButtonVisible() {
+		var $saveBtn = $( '#wps_rwpr_setting_wrapper input[name="wps_wpr_save_notification"].wps_wpr_save_changes' ).first();
+		if ( ! $saveBtn.length ) {
+			return;
+		}
+
+		var $submitWrap = $saveBtn.closest( '.submit' );
+		if ( $submitWrap.length ) {
+			$submitWrap[0].style.setProperty( 'display', 'block', 'important' );
+			$submitWrap[0].style.setProperty( 'visibility', 'visible', 'important' );
+			$submitWrap[0].style.setProperty( 'opacity', '1', 'important' );
+			$submitWrap[0].style.setProperty( 'position', 'sticky', 'important' );
+			$submitWrap[0].style.setProperty( 'bottom', '0', 'important' );
+		}
+
+		$saveBtn[0].style.setProperty( 'display', 'inline-flex', 'important' );
+		$saveBtn[0].style.setProperty( 'visibility', 'visible', 'important' );
+		$saveBtn[0].style.setProperty( 'opacity', '1', 'important' );
+		$saveBtn[0].style.setProperty( 'pointer-events', 'auto', 'important' );
+		$saveBtn[0].style.setProperty( 'position', 'fixed', 'important' );
+		if ( window.matchMedia( '(max-width: 782px)' ).matches ) {
+			$saveBtn[0].style.setProperty( 'left', '12px', 'important' );
+		} else if ( window.matchMedia( '(max-width: 960px)' ).matches ) {
+			$saveBtn[0].style.setProperty( 'left', '16px', 'important' );
+		} else if ( $( 'body' ).hasClass( 'folded' ) ) {
+			$saveBtn[0].style.setProperty( 'left', 'calc(36px + 24px)', 'important' );
+		} else {
+			$saveBtn[0].style.setProperty( 'left', 'calc(160px + 24px)', 'important' );
+		}
+		$saveBtn[0].style.setProperty( 'right', 'auto', 'important' );
+		$saveBtn[0].style.setProperty( 'top', 'auto', 'important' );
+		$saveBtn[0].style.setProperty( 'bottom', window.matchMedia( '(max-width: 782px)' ).matches ? '12px' : '20px', 'important' );
+		$saveBtn[0].style.setProperty( 'transform', 'none', 'important' );
+		$saveBtn[0].style.setProperty( 'z-index', '100100', 'important' );
+	}
+
+	/**
+	 * Persist visibility styles because other delayed scripts/styles can
+	 * override/hide the save button after initial paint.
+	 *
+	 * @return {void}
+	 */
+	function wpsWprLockNotificationSaveButtonVisibility() {
+		wpsWprEnsureNotificationSaveButtonVisible();
+
+		if ( ! window.wpsWprNotificationSaveBtnInterval ) {
+			window.wpsWprNotificationSaveBtnInterval = window.setInterval( function() {
+				wpsWprEnsureNotificationSaveButtonVisible();
+			}, 300 );
+		}
+
+		if ( ! window.wpsWprNotificationSaveBtnObserver ) {
+			window.wpsWprNotificationSaveBtnObserver = new window.MutationObserver( function() {
+				wpsWprEnsureNotificationSaveButtonVisible();
+			} );
+
+			window.wpsWprNotificationSaveBtnObserver.observe( document.body, {
+				childList: true,
+				subtree: true,
+				attributes: true,
+				attributeFilter: [ 'style', 'class' ]
+			} );
+		}
+	}
+
+	/*
+	 * Notification tab DOM/style manipulation is intentionally disabled here.
+	 * It was conflicting with save button rendering in this tab.
+	 */
+	function wpsWprNormalizeNotificationVisualState() {
+		var $wrapper = $( '#wps_rwpr_setting_wrapper[data-wps-rma-active-tab="points-notification"]' ).first();
+		if ( ! $wrapper.length ) {
+			return;
+		}
+
+		var $sections = $wrapper.find( '.wps_wpr_notifications_table .wps_wpr_notification_section_wrap' );
+		if ( ! $sections.length ) {
+			return;
+		}
+
+		$sections.each( function() {
+			var $section = $( this );
+			var $title = $section.children( '.wps_wpr_general_sign_title' ).first();
+			var $content = $section.children( '.wps_wpr_section_content' ).first();
+
+			if ( $content.length ) {
+				$content.hide();
+			}
+
+			if ( $title.length ) {
+				$title.removeClass( 'wps_wpr_section_active' );
+			}
+			} );
+	}
+
+	function wpsWprEnsureNotificationSectionWrappers() {
+		var $wrapper = $( '#wps_rwpr_setting_wrapper[data-wps-rma-active-tab="points-notification"]' ).first();
+		if ( ! $wrapper.length ) {
+			return;
+		}
+
+		var $container = $wrapper.find( '.wps_wpr_notifications_table .wps_wpr_general_wrapper' ).first();
+		if ( ! $container.length ) {
+			return;
+		}
+
+		$container.children( '.wps_wpr_general_sign_title' ).each( function() {
+			var $title = $( this );
+			if ( $title.closest( '.wps_wpr_notification_section_wrap' ).length ) {
+				return;
+			}
+
+			var $wrap = $( '<div class="wps_wpr_general_row_wrap wps_wpr_notification_section_wrap"></div>' );
+			var $next = $title.next();
+			var $content = $( '<div class="wps_wpr_section_content"></div>' );
+
+			$title.before( $wrap );
+			$wrap.append( $title );
+
+			if ( $next.hasClass( 'wps_wpr_section_content' ) ) {
+				$wrap.append( $next );
+				return;
+			}
+
+			var $rows = $title.nextUntil( '.wps_wpr_general_sign_title, .wps_wpr_general_row_wrap' );
+			if ( $rows.length ) {
+				$content.append( $rows );
+			}
+			$wrap.append( $content );
+		} );
+	}
+
+	wpsWprEnsureNotificationSectionWrappers();
+	wpsWprNormalizeNotificationVisualState();
+	wpsWprLockNotificationSaveButtonVisibility();
+	setTimeout( wpsWprEnsureNotificationSectionWrappers, 120 );
+	setTimeout( wpsWprNormalizeNotificationVisualState, 120 );
+	setTimeout( wpsWprLockNotificationSaveButtonVisibility, 120 );
+	setTimeout( wpsWprEnsureNotificationSectionWrappers, 420 );
+	setTimeout( wpsWprNormalizeNotificationVisualState, 420 );
+	setTimeout( wpsWprLockNotificationSaveButtonVisibility, 420 );
+
+			$( document ).off( 'submit.wpsWprExpertModal', formSelector ).on( 'submit.wpsWprExpertModal', formSelector, function( event ) {
+				var $form = $( this );
 			var $modal = $form.closest( modalSelector );
 			var $submitButton = $form.find( 'button[type="submit"]' ).first();
 			var submitLabel = $submitButton.attr( 'data-submit-label' ) || $submitButton.text();

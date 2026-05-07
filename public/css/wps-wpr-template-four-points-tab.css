@@ -31,6 +31,20 @@
 	box-sizing: border-box;
 }
 
+/* Template 4 reuses .wps_wpr_show_points_on_account_page, but global styles
+ * set it as flex for legacy templates; force block layout here to keep
+ * full-width sections (especially the dark hero card) aligned with parent. */
+.wps-t4-wrap.wps_wpr_show_points_on_account_page {
+	display: block !important;
+	width: 100%;
+	max-width: 100%;
+}
+
+.wps-t4-wrap.wps_wpr_show_points_on_account_page > * {
+	width: 100%;
+	max-width: 100%;
+}
+
 .wps-t4-wrap *,
 .wps-t4-wrap *::before,
 .wps-t4-wrap *::after {
@@ -324,7 +338,7 @@
 /* ── Stat strip ───────────────────────────────────────────── */
 .wps-t4-stats {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(4, minmax(0, 1fr));
 	gap: 12px;
 	margin-bottom: var(--t4gap);
 }
@@ -333,6 +347,7 @@
 	display: flex;
 	align-items: center;
 	gap: 14px;
+	min-width: 0;
 	background: var(--t4white);
 	border-radius: var(--t4rad-sm);
 	padding: 18px 20px;
@@ -598,10 +613,12 @@
 
 .wps-t4-tiers-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 	gap: 14px;
 	margin: 0 !important;  /* override plugin styles */
 	padding: 0 !important;
+	width: 100%;
+	max-width: 100%;
 }
 
 .wps-t4-tier-card {
@@ -1345,7 +1362,7 @@
 /* Tablet: ≤ 900px */
 @media (max-width: 900px) {
 	.wps-t4-stats {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
 	.wps-t4-hero {
@@ -1390,7 +1407,7 @@
 	}
 
 	.wps-t4-stats {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 10px;
 	}
 
@@ -1413,7 +1430,7 @@
 	}
 
 	.wps-t4-tiers-grid {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 	}
 
 	.wps-t4-hero-ctas {
