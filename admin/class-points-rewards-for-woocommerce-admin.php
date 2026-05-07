@@ -296,7 +296,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * Show order total points settings.
 	 *
-	 * @return void
+	 * @param  string $screen screen.
+	 * @return bool
 	 */
 	public function wps_wpr_org_remove_action( $screen = null ) {
 		if ( ! $screen ) {
@@ -1027,10 +1028,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	/**
 	 * This function is ised for adding actions
 	 *
-	 * @name wps_wpr_add_membership_rule.
-	 * @since      1.0.0
-	 * @author WP Swings <webmaster@wpswings.com>
-	 * @link https://www.wpswings.com/
+	 * @param  string $screen screen.
+	 * @return bool
 	 */
 	public function wps_wpr_add_membership_rule( $screen = null ) {
 		if ( ! $screen ) {

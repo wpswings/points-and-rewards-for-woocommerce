@@ -223,9 +223,21 @@ class Points_Rewards_For_Woocommerce {
 
 		// restrict user from points table.
 		$this->loader->add_action( 'wp_ajax_restrict_user_from_points_table', $plugin_admin, 'wps_wpr_restrict_user_from_points_table' );
-		// import functionality from org.
-		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
-
+		// Import functionality from org. Hide it when pro is active to avoid duplicate blocks.
+		$is_pro_active = defined( 'POINTS_AND_REWARDS_FOR_WOOCOMMERCE_PRO_VERSION' );
+		if ( ! $is_pro_active ) {
+			$pro_plugins = array(
+				'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php',
+				'ultimate-waoocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php',
+			);
+			foreach ( $pro_plugins as $pro_plugin ) {
+				if ( is_plugin_active( $pro_plugin ) ) {
+					$is_pro_active = true;
+					break;
+				}
+			}
+		}
+		if ( ! $is_pro_active ) {
 			$this->loader->add_action( 'wps_wpr_add_additional_import_points', $plugin_admin, 'wps_wpr_add_additional_import_org_points', 10 );
 		}
 		$this->loader->add_action( 'wp_ajax_wps_large_scv_import', $plugin_admin, 'wps_large_scv_import' );

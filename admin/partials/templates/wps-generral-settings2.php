@@ -320,6 +320,7 @@ $wps_wpr_general_settings = array(
 		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
 		'desc'     => apply_filters( 'wps_wpr_order_rewards_message_desc', __( 'Use these shortcodes to provide an appropriate message for your customers on his no. of [ORDER] and get rewards points [POINTS]', 'points-and-rewards-for-woocommerce' ) ),
 		'desc_tip' => __( 'Entered message will appears on Cart Page.', 'points-and-rewards-for-woocommerce' ),
+		/* translators: 1: reward points, 2: number of orders. */
 		'default'  => apply_filters( 'wps_wpr_order_rewards_message_default', __( 'Hurry up! You will get %s points if you place %s orders.', 'points-and-rewards-for-woocommerce' ) ),
 	),
 	array(
@@ -476,4 +477,3 @@ do_action( 'wps_wpr_add_notice' );
 	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_general">
 </p>
 <?php
-

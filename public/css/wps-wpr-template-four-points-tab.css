@@ -1551,6 +1551,10 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	position: relative;
+	right: auto;
+	top: auto;
+	transform: none;
 	width: 26px;
 	height: 26px;
 	border-radius: 50%;
@@ -1563,10 +1567,16 @@
 	transition: background .15s, transform .2s;
 }
 
+.wps-t4-log-wrap .wps_wpr_view_log_notice.wps_wpr_common_slider .wps_wpr_open_toggle::before {
+	content: none;
+}
+
 .wps-t4-log-wrap .wps_wpr_view_log_notice .wps_wpr_open_toggle::after,
 .wps-t4-log-wrap > .wps_wpr_slide_toggle > .wps_wpr_open_toggle::after {
 	content: '';
 	display: block;
+	position: static;
+	background: transparent;
 	width: 8px;
 	height: 8px;
 	border-right: 2px solid var(--t4a);

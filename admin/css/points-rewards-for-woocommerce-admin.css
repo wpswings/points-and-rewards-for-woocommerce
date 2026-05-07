@@ -3365,9 +3365,16 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
   font-size: 15px;
 }
 
-/* Widen Assign Points on Previous Orders section */
-#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_points_table_second_wrappers .wps_wpr_instructions_tabledata {
+/* Widen only full-width instruction rows (e.g., previous orders section). */
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_points_table_second_wrappers .wps_wpr_instructions_tabledata[colspan] {
   width: 100%;
+}
+
+/* Keep action-button cells visible in pro sections (Reset / Update). */
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_points_table_second_wrappers .wps_wpr_instructions_tabledata_btn {
+  width: 220px;
+  min-width: 180px;
+  white-space: normal;
 }
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_points_table_second_wrappers .wps_wpr_button_to_assign_points {

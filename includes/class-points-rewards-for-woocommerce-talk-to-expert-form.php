@@ -260,7 +260,7 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 			);
 		}
 
-		$form_data = isset( $_POST['form_data'] ) ? wp_unslash( $_POST['form_data'] ) : '';
+		$form_data = isset( $_POST['form_data'] ) ? sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) : '';
 		$form_data = is_string( $form_data ) ? json_decode( $form_data, true ) : array();
 
 		if ( ! is_array( $form_data ) ) {
@@ -508,7 +508,7 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 				continue;
 			}
 
-			$raw_value = wp_unslash( $_SERVER[ $header_key ] );
+			$raw_value = sanitize_text_field( wp_unslash( $_SERVER[ $header_key ] ) );
 			$ip_list   = is_string( $raw_value ) ? explode( ',', $raw_value ) : array( $raw_value );
 
 			foreach ( $ip_list as $ip_candidate ) {

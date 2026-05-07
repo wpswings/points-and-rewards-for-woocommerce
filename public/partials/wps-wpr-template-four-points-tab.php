@@ -720,8 +720,10 @@ $redeem_value         = $coupon_redeem_points > 0 ? round( ( $get_points / $coup
 				<h2 class="wps-t4-rc-heading">
 					<?php esc_html_e( 'Give a discount,', 'points-and-rewards-for-woocommerce' ); ?><br>
 					<?php
-					/* translators: %s: referral points value */
-					printf( esc_html__( 'get %s points.', 'points-and-rewards-for-woocommerce' ), '<em>' . esc_html( number_format( $wps_refer_value ) ) . '</em>' );
+					printf(
+						/* translators: %s: referral points value */	
+						esc_html__( 'get %s points.', 'points-and-rewards-for-woocommerce' ), '<em>' . esc_html( number_format( $wps_refer_value ) ) . '</em>'
+					);
 					?>
 				</h2>
 				<div class="wps-t4-referral-hook-wrap">
