@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points and rewards, loyalty, referral points, reward points, gamification
 Requires at least: 6.7.0
-Tested up to: 6.9
+Tested up to: 6.9.4
 WC requires at least: 6.5.0
-WC tested up to: 10.6.2
-Stable tag: 2.9.8
+WC tested up to: 10.7.0
+Stable tag: 2.10.0
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -380,6 +380,15 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 2.10.0 - Released on 07 May 2026 =
+* New : Compatibility with latest WC ( 10.7.0 ) and WP ( 6.9.4 )
+* New : UI/UX dashboard layout changes
+* New : Points tab template
+* Fix : Performance Optimization
+
+= 2.9.8 - Released on 08 April 2026 =
+* Fix : Deprecated function issues and escaping issues
+
 = 2.9.8 - Released on 02 April 2026 =
 * New : Compatible with latest WP(6.9.4) & WC(10.6.2)
 * Fix : Shortcode issues on Cart Block
@@ -744,6 +753,8 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.9.8 - Released on 02 April 2026 =
-* New : Compatible with latest WP(6.9.4) & WC(10.6.2)
-* Fix : Shortcode issues on Cart Block
+= 2.10.0 - Released on 07 May 2026 =
+* New : Compatibility with latest WC ( 10.7.0 ) and WP ( 6.9.4 )
+* New : UI/UX dashboard layout changes
+* New : Points tab template
+* Fix : Performance Optimization
