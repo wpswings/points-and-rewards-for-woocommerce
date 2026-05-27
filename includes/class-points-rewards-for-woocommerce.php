@@ -83,7 +83,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '2.9.7';
+			$this->version = '2.10.0';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -128,18 +128,7 @@ class Points_Rewards_For_Woocommerce {
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'admin/class-points-rewards-for-woocommerce-admin.php';
-
-		// when pro plugin is not active than show dummy html.
-		$wps_active_plugin = get_plugins();
-		$wps_active_plugin = ! empty( $wps_active_plugin ) && is_array( $wps_active_plugin ) ? $wps_active_plugin : array();
-		if ( ! array_key_exists( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php', $wps_active_plugin ) ) {
-
-			/**
-			 * The class responsible for defining all actions that occur in the admin area for dummy html.
-			 */
-			require_once plugin_dir_path( __DIR__ ) . 'admin/class-points-rewards-for-woocommerce-dummy-settings.php';
-			new Points_Rewards_For_WooCommerce_Dummy_Settings( '', '' );
-		}
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-points-rewards-for-woocommerce-talk-to-expert-form.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -190,21 +179,24 @@ class Points_Rewards_For_Woocommerce {
 	 */
 	private function define_admin_hooks() {
 		$plugin_admin = new Points_Rewards_For_WooCommerce_Admin( $this->get_plugin_name(), $this->get_version() );
+		$wps_wpr_talk_to_expert = null;
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		if ( is_admin() ) {
+			$wps_wpr_talk_to_expert = new Points_Rewards_For_WooCommerce_Talk_To_Expert_Form();
+		}
+
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_rwpr_admin_menu', 10, 2 );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
-		$this->loader->add_action( 'admin_head', $plugin_admin, 'wps_wpr_add_membership_rule' );
-
-		/*cron for notification*/
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'wps_wpr_check_for_notification_daily' );
-		$this->loader->add_action( 'wps_wpr_check_for_notification_update', $plugin_admin, 'wps_wpr_save_notice_message' );
-		$this->loader->add_action( 'admin_notices', $plugin_admin, 'wps_wpr_display_notification_bar' );
-		$this->loader->add_action( 'wp_ajax_wps_wpr_dismiss_notice', $plugin_admin, 'wps_wpr_dismiss_notice' );
+		if ( $wps_wpr_talk_to_expert ) {
+			$this->loader->add_action( 'wp_ajax_' . Points_Rewards_For_WooCommerce_Talk_To_Expert_Form::AJAX_ACTION, $wps_wpr_talk_to_expert, 'wps_wpr_handle_ajax_submission' );
+		}
+		$this->loader->add_action( 'current_screen', $plugin_admin, 'wps_wpr_add_membership_rule' );
+		$this->loader->add_action( 'init', $plugin_admin, 'wps_wpr_list_shortcode_in_gutenburg_block' );
 
 		// Add your screen.
 		$this->loader->add_filter( 'wps_helper_valid_frontend_screens', $plugin_admin, 'add_wps_frontend_screens' );
@@ -217,9 +209,6 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'wps_sfw_compatible_points_and_rewards', $plugin_admin, 'wps_wpr_subscription_renewal_point', 10, 1 );
 		// assign points on previous order.
 		$this->loader->add_action( 'wp_ajax_assign_points_on_previous_order', $plugin_admin, 'wps_wpr_assign_points_on_previous_order_call' );
-		// plugin banner notification.
-		$this->loader->add_action( 'wps_wgm_check_for_notification_update', $plugin_admin, 'wps_wpr_save_banner_notice_message' );
-		$this->loader->add_action( 'wp_ajax_wps_wpr_ajax_banner_action', $plugin_admin, 'wps_wpr_dismiss_notice__banner_callback' );
 		// membership plugin compatible.
 		if ( function_exists( 'wps_membership_check_plugin_enable' ) && wps_membership_check_plugin_enable() ) {
 			$this->loader->add_action( 'wps_wpr_extend_membership_metabox_field', $plugin_admin, 'wps_wpr_membership_meta_fields', 10, 3 );
@@ -234,9 +223,21 @@ class Points_Rewards_For_Woocommerce {
 
 		// restrict user from points table.
 		$this->loader->add_action( 'wp_ajax_restrict_user_from_points_table', $plugin_admin, 'wps_wpr_restrict_user_from_points_table' );
-		// import functionality from org.
-		if ( ! is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
-
+		// Import functionality from org. Hide it when pro is active to avoid duplicate blocks.
+		$is_pro_active = defined( 'POINTS_AND_REWARDS_FOR_WOOCOMMERCE_PRO_VERSION' );
+		if ( ! $is_pro_active ) {
+			$pro_plugins = array(
+				'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php',
+				'ultimate-waoocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php',
+			);
+			foreach ( $pro_plugins as $pro_plugin ) {
+				if ( is_plugin_active( $pro_plugin ) ) {
+					$is_pro_active = true;
+					break;
+				}
+			}
+		}
+		if ( ! $is_pro_active ) {
 			$this->loader->add_action( 'wps_wpr_add_additional_import_points', $plugin_admin, 'wps_wpr_add_additional_import_org_points', 10 );
 		}
 		$this->loader->add_action( 'wp_ajax_wps_large_scv_import', $plugin_admin, 'wps_large_scv_import' );
@@ -251,6 +252,7 @@ class Points_Rewards_For_Woocommerce {
 
 		// set campaign image.
 		$this->loader->add_action( 'wp_ajax_wps_set_camp_heading_and_image', $plugin_admin, 'wps_wpr_set_camp_heading_and_image', 10 );
+		$this->loader->add_action( 'current_screen', $plugin_admin, 'wps_wpr_org_remove_action' );
 	}
 
 	/**
@@ -264,8 +266,8 @@ class Points_Rewards_For_Woocommerce {
 
 		$plugin_public = new Points_Rewards_For_WooCommerce_Public( $this->get_plugin_name(), $this->get_version() );
 		if ( $this->wps_rwpr_is_plugin_enable() ) {
-			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_styles' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_scripts' );
 			/* Include the points tab woocommrerce dashboard and template file*/
 			$this->loader->add_action( 'init', $plugin_public, 'wps_wpr_add_my_account_endpoint' );
 			$this->loader->add_filter( 'woocommerce_account_menu_items', $plugin_public, 'wps_wpr_points_dashboard' );

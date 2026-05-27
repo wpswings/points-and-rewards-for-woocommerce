@@ -32,7 +32,7 @@ $wps_wpr_quiz_option_four               = ! empty( $wps_wpr_campaign_settings['w
 $wps_wpr_quiz_answer                    = ! empty( $wps_wpr_campaign_settings['wps_wpr_quiz_answer'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_quiz_answer'] ) ? $wps_wpr_campaign_settings['wps_wpr_quiz_answer'] : array();
 $wps_wpr_quiz_rewards_points            = ! empty( $wps_wpr_campaign_settings['wps_wpr_quiz_rewards_points'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_quiz_rewards_points'] ) ? $wps_wpr_campaign_settings['wps_wpr_quiz_rewards_points'] : array();
 $wps_wpr_enter_campaign_heading         = ! empty( $wps_wpr_campaign_settings['wps_wpr_enter_campaign_heading'] ) ? $wps_wpr_campaign_settings['wps_wpr_enter_campaign_heading'] : 'Points and Rewards Program';
-$wps_wpr_enter_campaign_image_url       = ! empty( $wps_wpr_campaign_settings['wps_wpr_enter_campaign_image_url'] ) ? $wps_wpr_campaign_settings['wps_wpr_enter_campaign_image_url'] : 'https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/wp-content/uploads/2025/08/reward.webp';
+$wps_wpr_enter_campaign_image_url       = ! empty( $wps_wpr_campaign_settings['wps_wpr_enter_campaign_image_url'] ) ? $wps_wpr_campaign_settings['wps_wpr_enter_campaign_image_url'] : plugin_dir_url( dirname( __FILE__ ) ) . 'public/images/reward.webp';
 $wps_wpr_show_current_points_modal      = ! empty( $wps_wpr_campaign_settings['wps_wpr_show_current_points_modal'] ) ? $wps_wpr_campaign_settings['wps_wpr_show_current_points_modal'] : '';
 $wps_wpr_show_total_referral_count      = ! empty( $wps_wpr_campaign_settings['wps_wpr_show_total_referral_count'] ) ? $wps_wpr_campaign_settings['wps_wpr_show_total_referral_count'] : '';
 $wps_wpr_show_content_in_footer         = ! empty( $wps_wpr_campaign_settings['wps_wpr_show_content_in_footer'] ) ? $wps_wpr_campaign_settings['wps_wpr_show_content_in_footer'] : '';
@@ -103,7 +103,7 @@ if ( ! empty( $wps_wpr_social_share_campaign_label ) && is_array( $wps_wpr_socia
  * @return bool
  */
 function wps_wpr_extract_youtube_video_id( $url ) {
-	$parsed_url = parse_url( $url );
+	$parsed_url = wp_parse_url( $url );
 
 	if ( ! isset( $parsed_url['host'] ) ) {
 		return false;
@@ -591,17 +591,9 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 					</div>
 				</div>
 				<!-- // Footer section data  -->
-				<?php if ( wps_wpr_is_par_pro_plugin_active() ) { ?>
-					<div class="wps-wpr-hlt_co-footer">
-						<?php if ( 'yes' === $wps_wpr_show_content_in_footer ) : ?>
-							<p><?php echo wp_kses_post( $wps_wpr_modal_footer_content ); ?></p>
-						<?php endif; ?>
-					</div>
-				<?php } else { ?>
-					<div class="wps-wpr-hlt_co-footer">
-						<p><?php esc_html_e( 'Created with ❤ by WP Swings’', 'points-and-rewards-for-woocommerce' ); ?></p>
-					</div>
-				<?php } ?>
+				<div class="wps-wpr-hlt_co-footer">
+					<p><?php esc_html_e( 'Created with ❤ by WP Swings’', 'points-and-rewards-for-woocommerce' ); ?></p>
+				</div>
 			</div>
 		</div>
 	</div>

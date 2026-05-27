@@ -31,13 +31,15 @@ jQuery(document).ready( function($) {
 		});
 	}
 
-	else {
+		else {
 
 		// Show Popup after 1 second of entering into the WPS pagescreen.
-		if ( jQuery( '#show-counter' ).length > 0 && jQuery( '#show-counter' ).val() == 'not-sent' ) {
-			setTimeout( wps_wpr_show_onboarding_form(), 1000 );
+			if ( jQuery( '#show-counter' ).length > 0 && jQuery( '#show-counter' ).val() == 'not-sent' ) {
+				setTimeout( wps_wpr_show_onboarding_form, 1000 );
+			}
 		}
-	}
+
+		update_onboarding_body_state();
 
 	/* Close Button Click */
 	jQuery( document ).on( 'click','.wps-on-boarding-close-btn a',function(e){
@@ -105,19 +107,14 @@ jQuery(document).ready( function($) {
 		jQuery( '.wps-wpr-first-on-boarding-wrapper-background' ).addClass( 'deactivate-onboard-popup-show' );
 		jQuery( '.wps-wpr-onboarding-section' ).show();
 		jQuery( '#deactivation-reason-text' ).addClass( 'keep_hidden' );
-
-	    if( ! jQuery( 'body' ).hasClass( 'mobile-device' ) ) {
-	    	jQuery( 'body' ).addClass( 'wps-on-boarding-wrapper-control' );
-	    }
+		update_onboarding_body_state();
 	}
 
 	// Hide deactivation pop-up form.
 	function wps_wpr_hide_deactivation_form() {
 		jQuery( '.wps-wpr-first-on-boarding-wrapper-background' ).removeClass( 'deactivate-onboard-popup-show' );
 		jQuery( '.wps-wpr-onboarding-section' ).hide();
-		if( ! jQuery( 'body' ).hasClass( 'mobile-device' ) ) {
-	    	jQuery( 'body' ).removeClass( 'wps-on-boarding-wrapper-control' );
-	    }
+		update_onboarding_body_state();
 	}
 
 	// Show onboarding form.
@@ -125,19 +122,32 @@ jQuery(document).ready( function($) {
 		jQuery( '.wps-wpr-second-onboarding-section' ).show();
 		jQuery( '.wps-on-second-boarding-wrapper-background' ).addClass( 'onboard-onboard-popup-show' );
 		jQuery( '#deactivation-reason-text' ).addClass( 'keep_hidden' );
-
-	    if( ! jQuery( 'body' ).hasClass( 'mobile-device' ) ) {
-	    	jQuery( 'body' ).addClass( 'wps-on-boarding-wrapper-control' );
-	    }
+		update_onboarding_body_state();
 	}
 
 	// hide onboarding form.
 	function wps_wpr_hide_onboarding_form() {
 		jQuery( '.wps-on-second-boarding-wrapper-background' ).removeClass( 'onboard-onboard-popup-show' );
 		jQuery( '.wps-wpr-second-onboarding-section' ).hide();
-		if( ! jQuery( 'body' ).hasClass( 'mobile-device' ) ) {
-	    	jQuery( 'body' ).removeClass( 'wps-on-boarding-wrapper-control' );
-	    }
+		update_onboarding_body_state();
+	}
+
+	function update_onboarding_body_state() {
+		var popup_visible = jQuery( '.wps-wpr-onboarding-section:visible, .wps-wpr-second-onboarding-section:visible' ).length > 0;
+
+		if ( popup_visible ) {
+			jQuery( 'body' ).addClass( 'wps-wpr-onboarding-open' );
+		} else {
+			jQuery( 'body' ).removeClass( 'wps-wpr-onboarding-open' );
+		}
+
+		if ( ! jQuery( 'body' ).hasClass( 'mobile-device' ) ) {
+			if ( popup_visible ) {
+				jQuery( 'body' ).addClass( 'wps-on-boarding-wrapper-control' );
+			} else {
+				jQuery( 'body' ).removeClass( 'wps-on-boarding-wrapper-control' );
+			}
+		}
 	}
 
 	/* Apply deactivate in all the WPS plugins. */
@@ -172,22 +182,5 @@ jQuery(document).ready( function($) {
 		    }
 		});	
 	}
-	
-	// plugin banner ajax.
-	$(document).on( 'click', '#dismiss-banner', function(){
-
-		var data = {
-			action    : 'wps_wpr_ajax_banner_action',
-			wps_nonce : wps.banner_nonce
-		};
-		$.ajax({
-			url  : wps.ajaxurl,
-			type : "POST",
-			data : data,
-			success: function(response) {
-				window.location.reload();
-			}
-		});
-	});
 // End of scripts.
 });

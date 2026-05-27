@@ -65,6 +65,7 @@ $wps_wpr_preview                     = '<a href="#" target="_blank" class="wps_w
 		<main class="wps_wpr_main_user_badges_wrapper">
 			<section class="wps_wpr_general_row_wrap">
 				<div class="wps_wpr_user_badges_settings_heading wps_wpr_general_sign_title wps_wpr_doc_video_wrapper"><?php esc_html_e( 'SMS Integration', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<div class="wps_wpr_section_content">
 				<input type="hidden" name="wps_wpr_sms_setting_nonce" id="wps_wpr_sms_setting_nonce" value="<?php echo esc_html( wp_create_nonce( 'sms-setting-nonce' ) ); ?>">
 				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_enable_sms_api_settings" class="wps_wpr_general_label"><?php esc_html_e( 'Enable SMS API Features', 'points-and-rewards-for-woocommerce' ); ?></label>
@@ -101,9 +102,11 @@ $wps_wpr_preview                     = '<a href="#" target="_blank" class="wps_w
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Let users manage their SMS notification preferences directly from their account page.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
+				</div>
 			</section>
 			<section class="wps_wpr_general_row_wrap">
 				<div class="wps_wpr_user_badges_settings_heading wps_wpr_general_sign_title wps_wpr_doc_video_wrapper"><?php esc_html_e( 'Whatsapp Integration', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<div class="wps_wpr_section_content">
 				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_enable_whatsapp_api_feature" class="wps_wpr_general_label"><?php esc_html_e( 'Enable whatsapp api feature.', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
@@ -139,6 +142,7 @@ $wps_wpr_preview                     = '<a href="#" target="_blank" class="wps_w
 						<span class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Let users manage their Whatsapp notification preferences directly from their account page.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
+				</div>
 			</section>
 		</main>
 		<input type="submit" name="wps_wpr_save_sms_settings" class="button-primary woocommerce-save-button wps_wpr_save_changes" id="wps_wpr_save_sms_settings" value="<?php esc_html_e( 'Save Changes', 'points-and-rewards-for-woocommerce' ); ?>">

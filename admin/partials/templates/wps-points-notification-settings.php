@@ -364,18 +364,85 @@ if ( ! is_array( $wps_wpr_notification_settings ) ) {
 
 	$wps_wpr_notification_settings = array();
 }
+
+$wps_wpr_notification_enabled = ! empty( $wps_wpr_notification_settings['wps_wpr_notification_setting_enable'] );
+$wps_wpr_section_count        = 0;
+$wps_wpr_section_index        = array();
+if ( ! empty( $wps_settings ) && is_array( $wps_settings ) ) {
+	foreach ( $wps_settings as $setting_key => $setting ) {
+		$setting_type = ! empty( $setting['type'] ) ? $setting['type'] : '';
+		if ( 'title' === $setting_type ) {
+			$wps_wpr_section_count++;
+			$section_id = 'wps_wpr_notification_section_' . $wps_wpr_section_count;
+			$section_title = ! empty( $setting['title'] ) ? $setting['title'] : __( 'Notification Section', 'points-and-rewards-for-woocommerce' );
+
+			$wps_settings[ $setting_key ]['section_id'] = $section_id;
+			$wps_wpr_section_index[]                    = array(
+				'id'          => $section_id,
+				'title'       => $section_title,
+				'field_count' => 0,
+			);
+			continue;
+		}
+
+		if ( 'sectionend' !== $setting_type && ! empty( $wps_wpr_section_index ) ) {
+			$last_index = count( $wps_wpr_section_index ) - 1;
+			$wps_wpr_section_index[ $last_index ]['field_count']++;
+		}
+	}
+}
+
 do_action( 'wps_wpr_add_notice' ); ?>
-<div class="wps_wpr_table">
+
+<div class="wps_wpr_notification_panel">
+	<div class="wps_wpr_notification_overview_card">
+		<div class="wps_wpr_notification_overview_content">
+			<h3><?php esc_html_e( 'Notification Templates', 'points-and-rewards-for-woocommerce' ); ?></h3>
+			<p><?php esc_html_e( 'Manage subject lines and email content for every points event from one place.', 'points-and-rewards-for-woocommerce' ); ?></p>
+			<div class="wps_wpr_notification_status">
+				<span class="wps_wpr_notification_status_label"><?php esc_html_e( 'Status', 'points-and-rewards-for-woocommerce' ); ?>:</span>
+				<span class="wps_wpr_notification_status_badge <?php echo $wps_wpr_notification_enabled ? 'is-enabled' : 'is-disabled'; ?>">
+					<?php echo $wps_wpr_notification_enabled ? esc_html__( 'Enabled', 'points-and-rewards-for-woocommerce' ) : esc_html__( 'Disabled', 'points-and-rewards-for-woocommerce' ); ?>
+				</span>
+			</div>
+		</div>
+		<div class="wps_wpr_notification_tokens">
+			<span class="wps_wpr_notification_tokens_title"><?php esc_html_e( 'Common Placeholders', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<ul>
+				<li><code>[USERNAME]</code></li>
+				<li><code>[TOTALPOINTS]</code></li>
+				<li><code>[Points]</code></li>
+				<li><code>[Refer Points]</code></li>
+			</ul>
+		</div>
+	</div>
+
+</div>
+
+<div class="wps_wpr_table wps_wpr_notifications_table">
 	<div class="wps_wpr_general_wrapper">
 		<?php
+		$wps_wpr_section_open = false;
 		foreach ( $wps_settings as $key => $value ) {
-			if ( 'title' == $value['type'] ) {
-				?>
-				<div class="wps_wpr_general_row_wrap">
+			$value_type = isset( $value['type'] ) ? $value['type'] : '';
+				if ( 'title' === $value_type ) {
+					if ( $wps_wpr_section_open ) {
+						?>
+						</div>
+						</div>
+						<?php
+					}
+					$section_dom_id = ! empty( $value['section_id'] ) ? $value['section_id'] : '';
+					?>
+				<div class="wps_wpr_general_row_wrap wps_wpr_notification_section_wrap" id="<?php echo esc_attr( $section_dom_id ); ?>">
 				<?php
 				$settings_obj->wps_rwpr_generate_heading( $value );
+				$wps_wpr_section_open = true;
+				?>
+				<div class="wps_wpr_section_content">
+				<?php
 			}
-			if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) {
+			if ( 'title' !== $value_type && 'sectionend' !== $value_type ) {
 				?>
 				<div class="wps_wpr_general_row">
 				<?php $settings_obj->wps_rwpr_generate_label( $value ); ?>
@@ -386,7 +453,11 @@ do_action( 'wps_wpr_add_notice' ); ?>
 						$settings_obj->wps_rwpr_generate_checkbox_html( $value, $wps_wpr_notification_settings );
 					}
 					if ( 'textarea_email' == $value['type'] ) {
-						echo esc_html( $value['desc'] );
+						if ( ! empty( $value['desc'] ) ) {
+							?>
+							<p class="wps_wpr_notification_field_hint"><?php echo esc_html( $value['desc'] ); ?></p>
+							<?php
+						}
 						$settings_obj->wps_rwpr_generate_wp_editor( $value, $wps_wpr_notification_settings );
 					}
 					if ( 'text' == $value['type'] ) {
@@ -398,17 +469,25 @@ do_action( 'wps_wpr_add_notice' ); ?>
 				</div>
 				<?php
 			}
-			if ( 'sectionend' == $value['type'] ) {
+			if ( 'sectionend' === $value_type && $wps_wpr_section_open ) {
 				?>
-				</div> 
+				</div>
+				</div>
 				<?php
+				$wps_wpr_section_open = false;
 			}
+		}
+		if ( $wps_wpr_section_open ) {
+			?>
+			</div>
+			</div>
+			<?php
 		}
 		?>
 	</div>
 </div>
 <div class="clear"></div>
-<p class="submit">
+<p class="submit wps_wpr_notification_submit">
 	<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
 	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_notification">
-</p>	
+</p>

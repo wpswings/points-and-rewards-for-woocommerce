@@ -61,6 +61,7 @@
 .wps-wpr-second-onboarding-section {
   position: fixed;
   background-color: rgba(0,0,0,0.6);
+  z-index: 100000;
   top: 0;
   bottom: 0;
   left: 0;
@@ -81,7 +82,20 @@
     transition: 0.5s linear all;
     width: 100%;
     z-index: 999;
+    position: relative;
     transform: translateY(-100%);
+}
+
+body.wps-wpr-onboarding-open #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_rwpr_navigator_template,
+body.wps-wpr-onboarding-open #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_rwpr_tabs,
+body.wps-wpr-onboarding-open #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_rma_more_tabs {
+  visibility: hidden !important;
+}
+
+body.wps-wpr-onboarding-open #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .hubwoo-navigations,
+body.wps-wpr-onboarding-open #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_rwpr_navigator_template .inner-wrapper-sticky,
+body.wps-wpr-onboarding-open #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_rwpr_navigator_template .sticky-sidebar {
+  display: none !important;
 }
 .deactivate-onboard-popup-show,
 .onboard-onboard-popup-show {
@@ -459,3 +473,379 @@ a.wps-wpr-go-pro {
 }
 
 /*end of deactivating popup css*/
+
+/*==========================================
+=    ONBOARDING MODAL REDESIGN (RMA UI)   =
+==========================================*/
+body.wps-wpr-onboarding-open {
+  overflow: hidden;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal {
+  align-items: flex-start;
+  backdrop-filter: blur(3px);
+  background: rgba(17, 10, 36, 0.58);
+  overflow-x: hidden;
+  padding: 20px 10px 28px;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-second-boarding-wrapper-background {
+  margin: 0 auto;
+  max-width: 920px;
+  padding: 0;
+  transform: none !important;
+  width: calc(100% - 14px);
+  z-index: 100001;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-second-boarding-wrapper-background.onboard-onboard-popup-show {
+  display: block;
+  transform: none !important;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-wrapper {
+  background: #f6f2ff;
+  border: 1px solid #ddd2f5;
+  border-radius: 28px;
+  box-shadow: 0 24px 52px rgba(29, 18, 55, 0.22);
+  padding: 22px;
+  position: relative;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-close-btn {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #d9cff4;
+  border-radius: 999px;
+  display: inline-flex;
+  height: 40px;
+  justify-content: center;
+  margin: 0;
+  position: absolute;
+  right: 18px;
+  top: 16px;
+  width: 40px;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-close-btn a {
+  color: #4b3a72;
+  font-size: 30px;
+  line-height: 32px;
+  text-decoration: none;
+  width: 100%;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-close-btn .close-form {
+  display: block;
+  font-family: NunitoSans-Bold, sans-serif;
+  font-size: 30px;
+  line-height: 30px;
+  margin-top: -2px;
+  text-transform: uppercase;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-rma-onboarding-modal__header {
+  margin-bottom: 12px;
+  padding: 8px 60px 8px;
+  text-align: center;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-heading {
+  color: #1f1638;
+  font-family: NunitoSans-ExtraBold, sans-serif;
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  margin: 0 0 10px;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-desc {
+  color: #7b7192;
+  font-family: NunitoSans-Regular, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 auto;
+  max-width: 620px;
+  padding: 0;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-rma-onboarding-modal__panel {
+  background: #ffffff;
+  border: 1px solid #ddd2f5;
+  border-radius: 24px;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  padding: 20px;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-rma-onboarding-modal__form {
+  align-content: start;
+  justify-content: start;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1fr);
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-form-single-field {
+  background: transparent;
+  border-radius: 0;
+  clear: both;
+  display: block;
+  margin: 0;
+  max-width: 100%;
+  padding: 0;
+  width: 100%;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-form-single-field:nth-child(3),
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-form-single-field:nth-child(4) {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .on-boarding-label {
+  color: #1f1638;
+  font-family: NunitoSans-ExtraBold, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.35;
+  margin: 0 0 10px;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-form-single-field:first-child {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-form-single-field:first-child > .on-boarding-label {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-radio-wrapper {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #dccff5;
+  border-radius: 14px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  max-width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  width: 100%;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal input.on-boarding-radio-field[type="radio"] {
+  accent-color: #6a4ee9;
+  margin: 0 !important;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .on-boarding-field-label {
+  color: #4a3a72;
+  font-family: NunitoSans-Bold, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .on-boarding-select-field,
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal input.on-boarding-email-field,
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal input.on-boarding-text-field {
+  background: #ffffff;
+  border: 1px solid #dccff5;
+  border-radius: 14px;
+  box-shadow: none;
+  color: #35255e;
+  font-family: NunitoSans-Regular, sans-serif;
+  font-size: 14px;
+  min-height: 50px;
+  padding: 12px 14px;
+  width: 100%;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .on-boarding-select-field:focus,
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal input.on-boarding-email-field:focus,
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal input.on-boarding-text-field:focus {
+  border-color: #cdbdf0;
+  box-shadow: 0 0 0 3px rgba(163, 137, 225, 0.12);
+  outline: 0;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .select2-container {
+  max-width: 100%;
+  width: 100% !important;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .select2-container-multi .select2-choices {
+  background: #ffffff;
+  border: 1px solid #dccff5;
+  border-radius: 14px;
+  box-shadow: none;
+  min-height: 50px;
+  padding: 6px 8px;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .select2-container-multi.select2-container-active .select2-choices {
+  border-color: #cdbdf0;
+  box-shadow: 0 0 0 3px rgba(163, 137, 225, 0.12);
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .select2-container-multi .select2-search-choice {
+  align-items: center;
+  background: #f5efff !important;
+  border: 1px solid #dfd3f6 !important;
+  border-radius: 999px;
+  color: #35255e !important;
+  display: inline-flex;
+  font-family: NunitoSans-Bold, sans-serif;
+  font-size: 12px;
+  margin: 3px 6px 3px 0;
+  min-height: 30px;
+  padding: 6px 10px 6px 24px !important;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .select2-container-multi .select2-search-choice-close {
+  left: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%);
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .select2-container-multi .select2-search-field input {
+  font-family: NunitoSans-Regular, sans-serif !important;
+  font-size: 14px !important;
+  margin: 0 !important;
+  min-height: 36px;
+  padding: 4px 0 !important;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-form-btn__wrapper {
+  align-items: center;
+  clear: both;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin: 0 !important;
+  padding-top: 0;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-form-submit {
+  float: none !important;
+  margin: 0;
+  max-width: none !important;
+  width: auto;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-form-verify {
+  margin: 0;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-form-verify:after {
+  display: none;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-submit,
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-verify {
+  background: #000000 !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  color: #ffffff !important;
+  font-family: NunitoSans-ExtraBold, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  min-height: 46px !important;
+  min-width: 168px;
+  opacity: 1;
+  padding: 10px 22px !important;
+  text-transform: none;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-form-no_thanks {
+  display: inline-flex;
+  float: none;
+  margin: 0 !important;
+  text-align: right;
+}
+
+.wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-no_thanks {
+  color: #4b3a72 !important;
+  display: inline-flex;
+  font-family: NunitoSans-ExtraBold, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: none;
+}
+
+@media only screen and (max-width: 1024px) {
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-heading {
+    font-size: 42px;
+  }
+}
+
+@media only screen and (max-width: 860px) {
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-wrapper {
+    border-radius: 20px;
+    padding: 16px;
+  }
+
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-rma-onboarding-modal__header {
+    padding: 6px 46px 10px;
+  }
+
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-rma-onboarding-modal__panel {
+    border-radius: 18px;
+    padding: 16px;
+  }
+
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-form-single-field:first-child {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media only screen and (max-width: 620px) {
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal {
+    padding: 12px 6px 18px;
+  }
+
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-second-boarding-wrapper-background {
+    width: calc(100% - 6px);
+  }
+
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-heading {
+    font-size: 34px;
+  }
+
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-desc {
+    font-size: 14px;
+  }
+
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-form-single-field:first-child {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-form-btn__wrapper {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-form-submit,
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-submit,
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-verify {
+    width: 100%;
+  }
+
+  .wps-wpr-second-onboarding-section.wps-rma-onboarding-modal .wps-on-boarding-form-no_thanks {
+    justify-content: center;
+    width: 100%;
+  }
+}

@@ -318,9 +318,10 @@ $wps_wpr_general_settings = array(
 		'type'     => 'text',
 		'id'       => 'wps_wpr_number_order_rewards_messages',
 		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
-		'desc'     => __( 'Use these shortcodes to provide an appropriate message for your customers on his no. of [ORDER] and get rewards points [POINTS]', 'points-and-rewards-for-woocommerce' ),
+		'desc'     => apply_filters( 'wps_wpr_order_rewards_message_desc', __( 'Use these shortcodes to provide an appropriate message for your customers on his no. of [ORDER] and get rewards points [POINTS]', 'points-and-rewards-for-woocommerce' ) ),
 		'desc_tip' => __( 'Entered message will appears on Cart Page.', 'points-and-rewards-for-woocommerce' ),
-		'default'  => __( 'You will get 10 points when you reach order limit', 'points-and-rewards-for-woocommerce' ),
+		/* translators: 1: reward points, 2: number of orders. */
+		'default'  => apply_filters( 'wps_wpr_order_rewards_message_default', __( 'Hurry up! You will get %s points if you place %s orders.', 'points-and-rewards-for-woocommerce' ) ),
 	),
 	array(
 		'type' => 'sectionend',
@@ -335,14 +336,36 @@ if ( isset( $_POST['wps_wpr_save_general'] ) && isset( $_POST['wps-wpr-nonce'] )
 	if ( wp_verify_nonce( $wps_wpr_nonce, 'wps-wpr-nonce' ) ) {
 		if ( 'wps_wpr_general_setting' == $current_tab ) {
 
-			$postdata = $_POST;
-			$postdata = $settings_obj->check_is_settings_is_not_empty( $wps_wpr_general_settings, $postdata );
-			/* End of the save Settings and check is not empty*/
-			$general_settings_array = array();
+			$general_settings_array = array(
+				'wps_wpr_general_setting_enable'        => ! empty( $_POST['wps_wpr_general_setting_enable'] ) ? 1 : '',
+				'wps_wpr_general_signup'                => ! empty( $_POST['wps_wpr_general_signup'] ) ? 1 : '',
+				'wps_wpr_general_signup_value'          => ! empty( $_POST['wps_wpr_general_signup_value'] ) ? absint( wp_unslash( $_POST['wps_wpr_general_signup_value'] ) ) : 0,
+				'wps_wpr_general_refer_enable'          => ! empty( $_POST['wps_wpr_general_refer_enable'] ) ? 1 : '',
+				'wps_wpr_general_refer_value'           => ! empty( $_POST['wps_wpr_general_refer_value'] ) ? absint( wp_unslash( $_POST['wps_wpr_general_refer_value'] ) ) : 0,
+				'wps_wpr_general_social_media_enable'   => ! empty( $_POST['wps_wpr_general_social_media_enable'] ) ? 1 : '',
+				'wps_wpr_facebook'                      => ! empty( $_POST['wps_wpr_facebook'] ) ? 1 : '',
+				'wps_wpr_twitter'                       => ! empty( $_POST['wps_wpr_twitter'] ) ? 1 : '',
+				'wps_wpr_email'                         => ! empty( $_POST['wps_wpr_email'] ) ? 1 : '',
+				'wps_wpr_whatsapp'                      => ! empty( $_POST['wps_wpr_whatsapp'] ) ? 1 : '',
+				'wps_wpr_pinterest'                     => ! empty( $_POST['wps_wpr_pinterest'] ) ? 1 : '',
+				'wps_wpr_general_text_points'           => ! empty( $_POST['wps_wpr_general_text_points'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_general_text_points'] ) ) : '',
+				'wps_wpr_general_ways_to_gain_points'   => ! empty( $_POST['wps_wpr_general_ways_to_gain_points'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wps_wpr_general_ways_to_gain_points'] ) ) : '',
+				'wps_wpr_points_tab_text'               => ! empty( $_POST['wps_wpr_points_tab_text'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_points_tab_text'] ) ) : '',
+				'wps_wpr_assign_pro_text'               => ! empty( $_POST['wps_wpr_assign_pro_text'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_assign_pro_text'] ) ) : '',
+				'wps_wpr_custom_points_on_cart'         => ! empty( $_POST['wps_wpr_custom_points_on_cart'] ) ? 1 : '',
+				'wps_wpr_cart_points_rate'              => ! empty( $_POST['wps_wpr_cart_points_rate'] ) ? sanitize_text_field( wp_unslash( absint( $_POST['wps_wpr_cart_points_rate'] ) ) ) : 0,
+				'wps_wpr_cart_price_rate'               => ! empty( $_POST['wps_wpr_cart_price_rate'] ) ? sanitize_text_field( wp_unslash( absint( $_POST['wps_wpr_cart_price_rate'] ) ) ) : 0,
+				'wps_wpr_apply_points_checkout'         => ! empty( $_POST['wps_wpr_apply_points_checkout'] ) ? 1 : '',
+				'wps_wpr_show_redeem_notice'            => ! empty( $_POST['wps_wpr_show_redeem_notice'] ) ? 1 : '',
+				'wps_wpr_points_redemption_messages'    => ! empty( $_POST['wps_wpr_points_redemption_messages'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wps_wpr_points_redemption_messages'] ) ) : '',
+				'wps_wpr_number_of_reward_order'        => ! empty( $_POST['wps_wpr_number_of_reward_order'] ) ? sanitize_text_field( wp_unslash( absint( $_POST['wps_wpr_number_of_reward_order'] ) ) ) : 0,
+				'wps_wpr_number_of_rewards_points'      => ! empty( $_POST['wps_wpr_number_of_rewards_points'] ) ? sanitize_text_field( wp_unslash( absint( $_POST['wps_wpr_number_of_rewards_points'] ) ) ) : 0,
+				'wps_wpr_order_rewards_points_type'     => ! empty( $_POST['wps_wpr_order_rewards_points_type'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_order_rewards_points_type'] ) ) : '',
+				'wps_wpr_number_order_rewards_messages' => ! empty( $_POST['wps_wpr_number_order_rewards_messages'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wps_wpr_number_order_rewards_messages'] ) ) : '',
+				'wps_wpr_enable_order_rewards_settings' => ! empty( $_POST['wps_wpr_enable_order_rewards_settings'] ) ? 1 : '',
+				'wps_wpr_enable_to_show_order_reward_message' => ! empty( $_POST['wps_wpr_enable_to_show_order_reward_message'] ) ? 1 : '',
+			);
 
-			foreach ( $postdata as $key => $value ) {
-				$general_settings_array[ $key ] = $value;
-			}
 			if ( is_array( $general_settings_array ) && ! empty( $general_settings_array ) ) {
 				$general_settings_array = apply_filters( 'wps_wpr_general_settings_save_option', $general_settings_array );
 				update_option( 'wps_wpr_settings_gallery', $general_settings_array );
@@ -363,12 +386,21 @@ do_action( 'wps_wpr_add_notice' );
 <div class="wps_wpr_table">
 	<div class="wps_wpr_general_wrapper">
 			<?php
+			$wps_section_open = false;
 			foreach ( $wps_wpr_general_settings as $key => $value ) {
 				if ( 'title' == $value['type'] ) {
+					if ( $wps_section_open ) {
+						?>
+						</div></div>
+						<?php
+					}
 					?>
 				<div class="wps_wpr_general_row_wrap">
 					<?php $settings_obj->wps_rwpr_generate_heading( $value ); ?>
-				<?php } ?>
+					<div class="wps_wpr_section_content">
+				<?php
+				$wps_section_open = true;
+				} ?>
 				<?php if ( 'title' != $value['type'] && 'sectionend' != $value['type'] ) { ?>
 				<div class="wps_wpr_general_row">
 					<?php $settings_obj->wps_rwpr_generate_label( $value ); ?>
@@ -419,7 +451,7 @@ do_action( 'wps_wpr_add_notice' );
 						if ( 'radio_button' == $value['type'] ) {
 							$settings_obj->wps_wps_generate_radio_html( $value, $general_settings );
 						}
-						if ( ! wps_wpr_is_par_pro_plugin_active() && 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
+						if ( ! wps_wpr_is_active() && 'singleSelectDropDownWithKeyvalue' == $value['type'] ) {
 							$settings_obj->wps_wpr_org_generate_single_select_drop_down_with_key_value_pair( $value, $general_settings );
 						}
 						do_action( 'wps_wpr_additional_general_settings', $value, $general_settings );
@@ -427,10 +459,16 @@ do_action( 'wps_wpr_add_notice' );
 					</div>
 				</div>
 			<?php } ?>
-				<?php if ( 'sectionend' == $value['type'] ) : ?>
-			</div>	
-			<?php endif; ?>
-		<?php } ?> 		
+				<?php if ( 'sectionend' == $value['type'] && $wps_section_open ) : ?>
+					</div>
+			</div>
+			<?php
+				$wps_section_open = false;
+			endif; ?>
+		<?php } ?>
+		<?php if ( $wps_section_open ) : ?>
+			</div></div>
+		<?php endif; ?>
 	</div>
 </div>
 <div class="clear"></div>
@@ -439,4 +477,3 @@ do_action( 'wps_wpr_add_notice' );
 	<input type="submit" value='<?php esc_html_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_save_general">
 </p>
 <?php
-

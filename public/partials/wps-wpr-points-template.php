@@ -202,7 +202,7 @@ if ( ! is_array( $coupon_settings ) ) {
 							<span class="wps_wpr_nobr"><?php echo esc_html__( 'Required Points', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</th>
 						<?php
-						if ( ! wps_wpr_is_par_pro_plugin_active() ) {
+						if ( ! wps_wpr_is_active() ) {
 							?>
 							<th class="wps-wpr-points-expiry">
 								<span class="wps_wpr_nobr"><?php echo esc_html__( 'Membership Expiry', 'points-and-rewards-for-woocommerce' ); ?></span>
@@ -379,7 +379,7 @@ if ( ! is_array( $coupon_settings ) ) {
 							</td>
 							<td>
 									<?php
-									if ( ! wps_wpr_is_par_pro_plugin_active() ) {
+									if ( ! wps_wpr_is_active() ) {
 										echo esc_html( $values['Exp_Number'] ) . ' ' . esc_html( $values['Exp_Days'] );
 									}
 									do_action( 'wps_wpr_membership_expiry_date_for_user', $user_id, $values, $wps_role );
@@ -412,15 +412,8 @@ if ( ! is_array( $coupon_settings ) ) {
 		<?php
 	}
 
-	// check pro plugin is not and auto value is true, than make it false.
-	$wps_wpr_enable_automate_membership = ! empty( $membership_settings_array['wps_wpr_enable_automate_membership'] ) ? $membership_settings_array['wps_wpr_enable_automate_membership'] : '';
-	if ( ! wps_wpr_is_par_pro_plugin_active() && '1' == $wps_wpr_enable_automate_membership ) {
-
-		$wps_wpr_enable_automate_membership = 0;
-	}
-
 	// check auto membership upgrade is enable than no need to show manual upgrade option.
-	if ( 1 != $wps_wpr_enable_automate_membership && ( isset( $enable_drop ) && $enable_drop ) ) {
+	if ( ( isset( $enable_drop ) && $enable_drop ) ) {
 		if ( isset( $wps_user_level ) && ! empty( $wps_user_level ) && array_key_exists( $wps_user_level, $wps_wpr_membership_roles ) ) {
 
 			$mem_expire_time = get_user_meta( $user_id, 'membership_expiration', true );

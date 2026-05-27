@@ -1572,3 +1572,7 @@ span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wp
 #wps_wpr_each_section .wps_wpr_notify_notice_wrap {
     flex: 1 0 80%;
 }
+
+.wp-block-woocommerce-checkout-order-summary-block #wps_wpr_button_to_add_points_section {
+    padding: 0 15px;
+}

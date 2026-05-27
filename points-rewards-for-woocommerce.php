@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           2.9.7
+ * Version:           2.10.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
@@ -23,9 +23,9 @@
  * Requires Plugins: woocommerce
  *
  * WP Requires at least : 6.7.0
- * WP Tested up to      : 6.9.1
+ * WP Tested up to      : 6.9.4
  * WC requires at least : 6.5.0
- * WC tested up to      : 10.5.2
+ * WC tested up to      : 10.7.0
  * Requires PHP         : 7.4
  *
  * License:           GNU General Public License v3.0
@@ -57,7 +57,6 @@ if ( file_exists( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' ) && in_array( 
 	$activated = true;
 }
 
-$plug = get_plugins();
 if ( $activated ) {
 
 	// HPOS Compatibility and cart and checkout block.
@@ -81,7 +80,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.9.7' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.10.0' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -106,7 +105,7 @@ if ( $activated ) {
 	 * Callable function for adding plugin row meta.
 	 *
 	 * @name wps_wpr_doc_and_premium_link.
-	 * @param string $links link of the constant.
+	 * @param array $links link of the constant.
 	 * @param string $file name of the plugin.
 	 */
 	function wps_wpr_doc_and_premium_link( $links, $file ) {
@@ -250,7 +249,7 @@ if ( $activated ) {
 		}
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
 			$get_points = (int) get_user_meta( $user_ID, 'wps_wpr_points', true );
-			return '<div class="wps_wpr_shortcode_wrapper">' . $wps_wpr_shortcode_text_point . ' ' . $get_points . '</div>';
+			return '<div class="wps_wpr_shortcode_wrapper">' . esc_html( $wps_wpr_shortcode_text_point ) . ' ' . esc_html( $get_points ) . '</div>';
 		}
 	}
 
@@ -273,7 +272,7 @@ if ( $activated ) {
 		if ( isset( $user_ID ) && ! empty( $user_ID ) ) {
 			$user_level = get_user_meta( $user_ID, 'membership_level', true );
 			if ( isset( $user_level ) && ! empty( $user_level ) ) {
-				return $wps_wpr_shortcode_text_membership . ' ' . $user_level;
+				return esc_html( $wps_wpr_shortcode_text_membership ) . ' ' . esc_html( $user_level );
 			}
 		}
 	}
@@ -326,11 +325,6 @@ if ( $activated ) {
 		$my_link     = array(
 			'settings' => '<a href="' . admin_url( 'admin.php?page=wps-rwpr-setting&nonce=' . $nonce ) . '">' . esc_html__( 'Settings', 'points-and-rewards-for-woocommerce' ) . '</a>',
 		);
-		$mfw_plugins = get_plugins();
-		if ( ! isset( $mfw_plugins['ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php'] ) ) {
-
-			$my_link['goPro'] = '<a class="wps-wpr-go-pro" target="_blank" href="https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'points-and-rewards-for-woocommerce' ) . '</a>';
-		}
 		return array_merge( $my_link, $links );
 	}
 
@@ -389,10 +383,9 @@ if ( $activated ) {
 	function wps_wpr_flush_rewrite_rules( $network_wide ) {
 
 		// Multisite compatibility.
-		global $wpdb;
 		if ( is_multisite() && $network_wide ) {
 			// Get all blogs in the network and activate plugin on each one.
-			$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			$blog_ids = wp_list_pluck( get_sites(), 'blog_id' );
 			foreach ( $blog_ids as $blog_id ) {
 				switch_to_blog( $blog_id );
 
@@ -468,7 +461,7 @@ if ( $activated ) {
 							<div class="notice-container">
 								<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
 							</div>
-							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'points-and-rewards-for-woocommerce' ); ?></span></button>
 						</div>
 						<?php
 					}
@@ -487,7 +480,8 @@ if ( $activated ) {
 
 		$nonce = wp_create_nonce( 'par_main_setting' );
 		if ( wp_verify_nonce( $nonce, 'par_main_setting' ) ) {
-			if ( isset( $_GET['page'] ) && 'wps-rwpr-setting' === $_GET['page'] ) {
+			$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			if ( 'wps-rwpr-setting' === $page ) {
 
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
 				if ( ! empty( $banner_id ) ) {
@@ -502,23 +496,13 @@ if ( $activated ) {
 							<div class="notice-container">
 								<a href="<?php echo esc_url( $banner_url ); ?>"target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
 							</div>
-							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'points-and-rewards-for-woocommerce' ); ?></span></button>
 						</div>
 						<?php
 					}
 				}
 			}
 		}
-	}
-
-	register_deactivation_hook( __FILE__, 'wps_wpr_remove_cron_for_banner_update' );
-	/**
-	 * This function is used to remove banner schedule cron.
-	 *
-	 * @return void
-	 */
-	function wps_wpr_remove_cron_for_banner_update() {
-		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
 	}
 
 	/**
@@ -585,23 +569,23 @@ if ( $activated ) {
 
 					// prepare data and call sms api.
 					$url       = 'https://api.twilio.com/2010-04-01/Accounts/' . $wps_wpr_sms_account_sid . '/Messages.json';
-					$ch        = curl_init();
-					$curl_data = array(
+					$post_data = array(
 						'From' => $wps_wpr_sms_twilio_num_id,
 						'Body' => $message,
 						'To'   => $wps_send_contact,
 					);
 
-					curl_setopt( $ch, CURLOPT_URL, $url );
-					curl_setopt( $ch, CURLOPT_TIMEOUT, 30 ); // timeout after 30 seconds.
-					curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-					curl_setopt( $ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY );
-					curl_setopt( $ch, CURLOPT_POSTFIELDS, $curl_data );
-					curl_setopt( $ch, CURLOPT_USERPWD, "$wps_wpr_sms_account_sid:$wps_wpr_sms_auth_token" );
-					$response    = curl_exec( $ch );
-					$response    = json_decode( $response );
-					$status_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-					// check success response '201' == $status_code.
+					$request     = wp_remote_post(
+						$url,
+						array(
+							'blocking' => false,
+							'timeout'  => 0.01,
+							'headers' => array(
+								'Authorization' => 'Basic ' . base64_encode( $wps_wpr_sms_account_sid . ':' . $wps_wpr_sms_auth_token ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+							),
+							'body'    => $post_data,
+						)
+					);
 				}
 			}
 		}
@@ -804,86 +788,89 @@ if ( $activated ) {
 				$wps_wpr_whatsapp_access_token  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] : '';
 				$wps_wpr_whatsapp_phone_num_id  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] : '';
 				$wps_wpr_whatsapp_msg_temp_name = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_template_name'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_template_name'] : '';
-				$api_header                     = array(
-					'Content-Type: application/json',
-					'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,
-				);
+					$api_header                     = array(
+						'Content-Type: application/json',
+						'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,
+					);
 
-				$curl_data = array(
-					'messaging_product' => 'whatsapp',
-					'to' => $whatsapp_number,
-					'type' => 'template',
-					'template' => array(
-						'name' => $wps_wpr_whatsapp_msg_temp_name,
-						'language' => array(
-							'code' => 'en_US',
-						),
-						'components' => array(
-							array(
-								'type' => 'body',
-								'parameters' => array(
-									array(
-										'type' => 'text',
-										'text' => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
-									),
-									array(
-										'type' => 'text',
-										'text' => $message,
+					$curl_data = array(
+						'messaging_product' => 'whatsapp',
+						'to'                => $whatsapp_number,
+						'type'              => 'template',
+						'template'          => array(
+							'name'      => $wps_wpr_whatsapp_msg_temp_name,
+							'language'  => array(
+								'code' => 'en_US',
+							),
+							'components' => array(
+								array(
+									'type'       => 'body',
+									'parameters' => array(
+										array(
+											'type' => 'text',
+											'text' => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
+										),
+										array(
+											'type' => 'text',
+											'text' => $message,
+										),
 									),
 								),
 							),
 						),
-					),
-				);
+					);
 
-				$data = json_encode( $curl_data );
+					$data = wp_json_encode( $curl_data );
 
-				// LOAD THE WC LOGGER.
-				$logger = wc_get_logger();
+					// LOAD THE WC LOGGER.
+					$logger = wc_get_logger();
 
-				$curl = curl_init();
+					// Prefer WordPress HTTP API over cURL functions.
+					$api_url = 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages';
+					$request = wp_remote_post(
+						$api_url,
+						array(
+							'blocking' => false,
+							'timeout'  => 0.01,
+							'headers' => array(
+								'Content-Type'  => 'application/json',
+								'Authorization' => 'Bearer ' . $wps_wpr_whatsapp_access_token,
+							),
+							'body'    => $data,
+						)
+					);
 
-				curl_setopt_array(
-					$curl,
-					array(
-						CURLOPT_URL => 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages',
-						CURLOPT_RETURNTRANSFER => true,
-						CURLOPT_ENCODING => '',
-						CURLOPT_MAXREDIRS => 10,
-						CURLOPT_TIMEOUT => 0,
-						CURLOPT_FOLLOWLOCATION => true,
-						CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-						CURLOPT_CUSTOMREQUEST => 'POST',
-						CURLOPT_POSTFIELDS => $data,
-						CURLOPT_HTTPHEADER => $api_header,
-					)
-				);
-
-				$response = curl_exec( $curl );
-
-				// LOG THE Result.
-				$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );
-				curl_close( $curl );
-
-				$response = json_decode( $response, true );
+					// LOG THE Result.
+					$logger->info( wc_print_r( 'User ID : ' . $user_id . ' WhatsApp API request dispatched.', true ), array( 'source' => 'response-whatsapp-api' ) );
 			}
 		}
 	}
 
 	/**
-	 * This function is used to check PAR pro plugin is active or not.
+	 * Check active.
 	 *
 	 * @return bool
 	 */
-	function wps_wpr_is_par_pro_plugin_active() {
+		function wps_wpr_is_active() {
 
-		$flag = false;
-		if ( is_plugin_active( 'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php' ) ) {
-
-			$flag = true;
+			$flag = false;
+			if ( defined( 'POINTS_AND_REWARDS_FOR_WOOCOMMERCE_PRO_VERSION' ) ) {
+				return true;
+			}
+			if ( function_exists( 'is_plugin_active' ) ) {
+				$pro_plugins = array(
+					'ultimate-woocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php',
+					'ultimate-waoocommerce-points-and-rewards/ultimate-woocommerce-points-and-rewards.php',
+				);
+				foreach ( $pro_plugins as $pro_plugin ) {
+					if ( is_plugin_active( $pro_plugin ) ) {
+						$flag = true;
+						break;
+					}
+				}
+			}
+			return $flag;
 		}
-		return $flag;
-	}
 } else {
 
 	// WooCommerce is not active so deactivate this plugin.
@@ -898,7 +885,8 @@ if ( $activated ) {
 	 */
 	function rewardeem_woocommerce_points_rewards_activation_failure() {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-		unset( $_GET['activate'] );
+		$wps_wpr_activated = isset( $_GET['activate'] ) ? sanitize_text_field( wp_unslash( $_GET['activate'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		unset( $wps_wpr_activated );
 		// Add admin error notice.
 		add_action( 'admin_notices', 'rewardeem_woocommerce_points_rewards_activation_failure_admin_notice' );
 	}
