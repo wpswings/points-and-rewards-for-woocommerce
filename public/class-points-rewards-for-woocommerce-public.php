@@ -2588,6 +2588,30 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
+	 * AJAX handler to get current cart redemption state.
+	 * Returns redeemed points from session to restore UI after page reload.
+	 *
+	 * @name wps_wpr_get_redemption_state
+	 * @since 2.10.1
+	 * @author WP Swings <webmaster@wpswings.com>
+	 * @link https://www.wpswings.com/
+	 */
+	public function wps_wpr_get_redemption_state() {
+		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+
+		$redeemed_points = 0;
+		if ( WC()->session ) {
+			$redeemed_points = (int) WC()->session->get( 'wps_cart_points', 0 );
+		}
+
+		wp_send_json_success(
+			array(
+				'redeemed_points' => $redeemed_points,
+			)
+		);
+	}
+
+	/**
 	 * This function is used to allow customer can apply points during checkout.
 	 *
 	 * @name wps_overwrite_form_temp

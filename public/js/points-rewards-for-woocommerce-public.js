@@ -374,5 +374,37 @@
                 });
             }
 
+            // Restore redemption state after page reload
+            function wps_wpr_restore_redemption_state() {
+                // Only run on cart/checkout pages where apply points section exists
+                if (jQuery('.wps_wpr_apply_custom_points, .custom_point_checkout').length > 0 ||
+                    (wps_wpr.is_checkout || jQuery('body').hasClass('woocommerce-cart'))) {
+
+                    jQuery.ajax({
+                        url: wps_wpr.ajaxurl,
+                        type: 'POST',
+                        data: {
+                            action: 'wps_wpr_get_redemption_state',
+                            wps_nonce: wps_wpr.wps_wpr_nonce
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success && response.data && response.data.redeemed_points > 0) {
+                                // Points are applied - hide the apply form and show applied state
+                                jQuery('.wps_wpr_apply_custom_points').hide();
+                                jQuery('.custom_point_checkout').hide();
+
+                                // The discount row with remove button should already be in the DOM from server
+                                // Just ensure it's visible
+                                jQuery('.wps_remove_virtual_coupon').closest('tr').show();
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Call on page load
+            wps_wpr_restore_redemption_state();
+
         });
 })(jQuery);

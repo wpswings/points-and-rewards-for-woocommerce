@@ -290,6 +290,8 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_woocommerce_before_cart_contents' );
 			$this->loader->add_filter( 'woocommerce_cart_totals_fee_html', $plugin_public, 'wps_wpr_woocommerce_cart_totals_fee_html', 10, 2 );
 			$this->loader->add_action( 'wp_ajax_wps_wpr_remove_cart_point', $plugin_public, 'wps_wpr_remove_cart_point' );
+			$this->loader->add_action( 'wp_ajax_wps_wpr_get_redemption_state', $plugin_public, 'wps_wpr_get_redemption_state' );
+			$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_get_redemption_state', $plugin_public, 'wps_wpr_get_redemption_state' );
 			/*Apply points on the cart sub total*/
 			$this->loader->add_filter( 'wc_get_template', $plugin_public, 'wps_overwrite_form_temp', 10, 2 );
 			// cart block change.
