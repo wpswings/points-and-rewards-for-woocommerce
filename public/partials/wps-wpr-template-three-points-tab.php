@@ -196,20 +196,21 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 			<span class="wps_wpr_view_log">
 				<a href="<?php echo esc_url( wc_get_endpoint_url( 'view-log' ) ); ?>"><?php esc_html_e( 'View Point Log', 'points-and-rewards-for-woocommerce' ); ?></a>
 			</span>
-		</div>
-		<?php
-		// show points expiration time.
-		if ( ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {
-			if ( 1 === $wps_wpr_points_exp_onmyaccount ) {
+			<?php
+		
+			// show points expiration time.
+			if ( ! empty( $wps_user_point_expiry ) && $get_points > 0 ) {
+				if ( 1 == $wps_wpr_points_exp_onmyaccount ) {
 
-				$date_format       = get_option( 'date_format' );
-				$expirydate_format = date_i18n( $date_format, strtotime( $wps_user_point_expiry ) );
-				?>
+					$date_format       = get_option( 'date_format' );
+					$expirydate_format = date_i18n( $date_format, strtotime( $wps_user_point_expiry ) );
+					?>
 					<div class="wps_wpr_points_expiry"><?php echo esc_html__( 'Expiring On : ', 'points-and-rewards-for-woocommerce' ) . esc_html( $expirydate_format ); ?></div>
-				<?php
+					<?php
+				}
 			}
-		}
-		?>
+			?>
+		</div>
 	</div>
 </div>
 
@@ -673,6 +674,10 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 			}
 			?>
 		</div>
+		<!-- Coupon section tab details -->
+		<div class="wps-p_masd-item wps-p_masd-i-coupon">
+			<?php do_action( 'wps_wpr_add_coupon_generation', $user_id ); ?>
+		</div>
 		<!-- Claim section tab details -->
 		<div class="wps-p_masd-item wps-p_masd-i-claim">
 			<div class="wps-par_ma-notice par-notice-error">
@@ -793,6 +798,12 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 			do_action( 'wps_extend_point_tab_section', $user_id );
 			?>
 		</div>
+
+		<!-- Share Points hook -->
+		<div class="wps_wpr_share_points_section">
+			<?php do_action( 'wps_wpr_add_share_points', $user_id ); ?>
+		</div>
+
 		<?php do_action( 'wps_par_extra_template_data' ); ?>
 	</div>
 </div>
