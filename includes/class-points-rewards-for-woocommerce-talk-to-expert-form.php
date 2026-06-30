@@ -631,9 +631,8 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 			return false;
 		}
 
-		$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name );
-
-		return $table_name === (string) $wpdb->get_var( $query );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		return $table_name === (string) $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) );
 	}
 
 	/**
@@ -653,9 +652,9 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 		$start_date    = gmdate( 'Y-m-d H:i:s', strtotime( '-12 months' ) );
 		$sql           = "SELECT COALESCE(SUM(total_sales), 0) FROM {$table_name} WHERE parent_id = 0 AND date_paid IS NOT NULL AND date_paid != '0000-00-00 00:00:00' AND date_paid >= %s AND status IN ({$placeholders})";
 		$args          = array_merge( array( $sql, $start_date ), $paid_statuses );
-		$query         = call_user_func_array( array( $wpdb, 'prepare' ), $args );
 
-		return (float) $wpdb->get_var( $query );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query properly prepared with placeholders, call_user_func_array used for dynamic parameter count.
+		return (float) $wpdb->get_var( call_user_func_array( array( $wpdb, 'prepare' ), $args ) );
 	}
 
 	/**

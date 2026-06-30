@@ -81,6 +81,7 @@ $wps_wpr_setting_tab = array(
 $wps_wpr_setting_tab    = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );
 $wps_wpr_plugin_version = 'v' . REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 $wps_wpr_plugin_name    = apply_filters( 'wps_wpr_pro_plugin_name', /* translators: %s: org name */ sprintf( '%s <span>%s</span>', esc_html__( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_wpr_plugin_version ) ) );
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe read-only tab navigation parameter.
 $wps_wpr_tabs           = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
 
 // check if user is admin.

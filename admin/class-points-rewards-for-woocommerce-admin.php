@@ -128,6 +128,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe read-only page parameter check.
 		$page               = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		$is_settings_screen = ( 'wps-rwpr-setting' === $page ) || ( 'woocommerce_page_wps-rwpr-setting' === $screen->id );
 
@@ -248,9 +249,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 					);
 
 		// user report work.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe read-only user report display.
 		if ( isset( $_GET['user_id'] ) ) {
 
-						$user_id   = ! empty( $_GET['user_id'] ) ? sanitize_text_field( wp_unslash( $_GET['user_id'] ) ) : '';
+						// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe read-only user report display, already checked above.
+					$user_id   = ! empty( $_GET['user_id'] ) ? sanitize_text_field( wp_unslash( $_GET['user_id'] ) ) : '';
 						$user_data = $this->wps_wpr_get_user_reports_data( $user_id );
 						// js for the multistep from.
 						$script_asset_path = WPS_RWPR_DIR_PATH . 'build/index.asset.php';
@@ -2146,6 +2149,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_update_points_of_users( $wps_user_email, $wps_user_points, $import_points_reason ) {
 		$user                        = get_user_by( 'email', $wps_user_email );
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in calling function (CSV import handler).
 		$wps_wpr_export_table_option = ! empty( $_POST['wps_wpr_export_table_option'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_export_table_option'] ) ) : 'add';
 		if ( isset( $user ) ) {
 

@@ -126,7 +126,8 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_others_settings          = get_option( 'wps_wpr_other_settings', array() );
 			$wps_wpr_choose_account_page_temp = ! empty( $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] ) ? $wps_wpr_others_settings['wps_wpr_choose_account_page_temp'] : '';
 			if ( 'temp_four' === $wps_wpr_choose_account_page_temp ) {
-				wp_enqueue_style( 'wps-t4-fonts', 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@700&display=swap', array(), null );
+				// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- External Google Fonts resource, versioned by Google.
+			wp_enqueue_style( 'wps-t4-fonts', 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@700&display=swap', array(), null );
 				$t4_css_file = 'public/css/wps-wpr-template-four-points-tab.css';
 				wp_enqueue_style( 'wps-t4-points-tab', WPS_RWPR_DIR_URL . $t4_css_file, array( 'wps-account-page-design', 'wps-t4-fonts' ), $this->wps_wpr_get_asset_version( $t4_css_file ), 'all' );
 			}
