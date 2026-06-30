@@ -3499,7 +3499,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							<p class="wps-wpr_enter-points-wrap">
 								<input type="number" placeholder="<?php esc_html_e( 'Enter your points:', 'points-and-rewards-for-woocommerce' ); ?>" class="woocommerce-Input woocommerce-Input--number input-number" name="wps_custom_number" min="1" id="wps_custom_wallet_point_num" style="width: 160px;">
 
-								<input type="button" name="wps_wpr_custom_wallet" id= "wps_wpr_custom_wallet" class="wps_wpr_custom_wallet button" value="<?php esc_html_e( 'Redeem to Wallet', 'points-and-rewards-for-woocommerce' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>">
+								<input type="button" name="wps_wpr_custom_wallet" id= "wps_wpr_custom_wallet" class="wps_wpr_custom_wallet button" value="<?php esc_html_e( 'Redeem to Wallet', 'points-and-rewards-for-woocommerce' ); ?>">
 							</p>
 						</form>
 					</fieldset>
@@ -3519,17 +3519,32 @@ class Points_Rewards_For_WooCommerce_Public {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
 		$response['result']  = false;
 		$response['message'] = 'Sorry ! Not Transfered';
-		if ( isset( $_POST['user_id'] ) && ! empty( $_POST['user_id'] ) && isset( $_POST['points'] ) && ! empty( $_POST['points'] ) ) {
-			/*Get the the user id*/
-			$user_id = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
-			$points  = sanitize_text_field( wp_unslash( $_POST['points'] ) );
+
+		// Security fix: Verify user is logged in before processing.
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'Not authorized.', 'points-and-rewards-for-woocommerce' ) ) );
+		}
+
+		// Security fix: Always use the authenticated user's ID, ignore caller-supplied user_id.
+		$user_id = get_current_user_id();
+
+		if ( isset( $_POST['points'] ) && ! empty( $_POST['points'] ) ) {
+			$points = absint( wp_unslash( $_POST['points'] ) );
+
+			// Validate points value.
+			if ( empty( $points ) || $points <= 0 ) {
+				wp_send_json_error( array( 'message' => esc_html__( 'Invalid points value.', 'points-and-rewards-for-woocommerce' ) ) );
+			}
+
 			/*Get all user points*/
 			$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-			if ( empty( $points ) ) {
-				$response['result']  = false;
-				$response['message'] = esc_html__( 'Sorry ! Not Transfered', 'points-and-rewards-for-woocommerce' );
+
+			// Verify user has enough points.
+			if ( $get_points < $points ) {
+				wp_send_json_error( array( 'message' => esc_html__( 'Insufficient points balance.', 'points-and-rewards-for-woocommerce' ) ) );
 			}
-			if ( $get_points >= $points && ! empty( $points ) ) {
+
+			if ( $get_points >= $points && $points > 0 ) {
 
 				$wps_points_par_value_wallet   = $this->wps_wpr_get_general_settings_num( 'wps_wpr_wallet_points_rate' );
 				$wps_currency_par_value_wallet = $this->wps_wpr_get_general_settings_num( 'wps_wpr_wallet_price_rate' );
@@ -3537,10 +3552,8 @@ class Points_Rewards_For_WooCommerce_Public {
 				$prev_wps_mpr_data             = get_user_meta( $user_id, 'wps_wallet', true );
 				$total_data_wps_par            = $prev_wps_mpr_data + $wps_wpr_wallet_roundoff;
 
-				$new_update_points   = $get_points - $points;
-				$response['result']  = true;
-				$response['message'] = esc_html__( 'successfully transfered', 'points-and-rewards-for-woocommerce' );
-				$points_log          = get_user_meta( $user_id, 'points_details', true );
+				$new_update_points = $get_points - $points;
+				$points_log        = get_user_meta( $user_id, 'points_details', true );
 				$points_log          = ! empty( $points_log ) && is_array( $points_log ) ? $points_log : array();
 				if ( isset( $points_log['points_deduct_wallet'] ) && ! empty( $points_log['points_deduct_wallet'] ) ) {
 
@@ -3571,22 +3584,29 @@ class Points_Rewards_For_WooCommerce_Public {
 					'order_id'         => '',
 					'note'             => 'Through Points and rewards',
 				);
-				if ( class_exists( 'Wallet_System_For_Woocommerce' ) ) {
-
-					$wps_par_wallet_payment_gateway = new Wallet_System_For_Woocommerce();
-					update_user_meta( $user_id, 'wps_wallet', $total_data_wps_par );
-					update_user_meta( $user_id, 'wps_wpr_points', $new_update_points );
-					update_user_meta( $user_id, 'points_details', $points_log );
-					$wps_par_wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
-					// send sms.
-					wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( 'Your points have been successfully converted and added to your wallet account. Your wallet balance is now %1$s, and your total remaining points are %2$s', 'points-and-rewards-for-woocommerce' ), $total_data_wps_par, $new_update_points ) );
-					// send messages on whatsapp.
-					wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( 'Your points have been successfully converted and added to your wallet account. Your wallet balance is now %1$s, and your total remaining points are %2$s', 'points-and-rewards-for-woocommerce' ), $total_data_wps_par, $new_update_points ) );
+				// Verify wallet system is available.
+				if ( ! class_exists( 'Wallet_System_For_Woocommerce' ) ) {
+					wp_send_json_error( array( 'message' => esc_html__( 'Wallet system is not available.', 'points-and-rewards-for-woocommerce' ) ) );
 				}
+
+				// Process the conversion.
+				$wps_par_wallet_payment_gateway = new Wallet_System_For_Woocommerce();
+				update_user_meta( $user_id, 'wps_wallet', $total_data_wps_par );
+				update_user_meta( $user_id, 'wps_wpr_points', $new_update_points );
+				update_user_meta( $user_id, 'points_details', $points_log );
+				$wps_par_wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
+
+				// Send notifications.
+				wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( 'Your points have been successfully converted and added to your wallet account. Your wallet balance is now %1$s, and your total remaining points are %2$s', 'points-and-rewards-for-woocommerce' ), $total_data_wps_par, $new_update_points ) );
+				wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( 'Your points have been successfully converted and added to your wallet account. Your wallet balance is now %1$s, and your total remaining points are %2$s', 'points-and-rewards-for-woocommerce' ), $total_data_wps_par, $new_update_points ) );
+
+				// Send success response.
+				wp_send_json_success( array( 'message' => esc_html__( 'Successfully transferred', 'points-and-rewards-for-woocommerce' ) ) );
 			}
 		}
-		wp_send_json( $response );
-		wp_die();
+
+		// If we reach here, something went wrong.
+		wp_send_json_error( array( 'message' => esc_html__( 'An error occurred during the transfer.', 'points-and-rewards-for-woocommerce' ) ) );
 	}
 
 	/**

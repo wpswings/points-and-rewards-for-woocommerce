@@ -323,8 +323,8 @@ class Points_Rewards_For_Woocommerce {
 			// custom_code.
 
 			$this->loader->add_action( 'wps_wpr_add_share_points', $plugin_public, 'wps_wpr_add_wallet_generation', 10, 1 );
+			// Security: Only allow authenticated users to convert points to wallet (removed nopriv hook).
 			$this->loader->add_action( 'wp_ajax_wps_wpr_generate_custom_wallet', $plugin_public, 'wps_wpr_generate_custom_wallet' );
-			$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_generate_custom_wallet', $plugin_public, 'wps_wpr_generate_custom_wallet' );
 
 			// Paypal Issue Change start.
 			$this->loader->add_filter( 'woocommerce_get_shop_coupon_data', $plugin_public, 'wps_wpr_validate_virtual_coupon_for_points', PHP_INT_MAX, 2 );

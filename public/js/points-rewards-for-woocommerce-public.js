@@ -306,18 +306,16 @@
             //custom code
             /*Generate custom coupon*/
             $('.wps_wpr_custom_wallet').click(function() {
-                var user_id = $(this).data('id');
                 var user_points = $('#wps_custom_wallet_point_num').val().trim();
                 $('#wps_wpr_custom_wallet').prop('disabled', true);
                 if (user_points) {
-                    var message = '';
                     var html = '';
                     $("#wps_wpr_wallet_notification").html("");
                     user_points = parseFloat(user_points);
+                    // Security: user_id is now determined server-side from authenticated session.
                     var data = {
                         action: 'wps_wpr_generate_custom_wallet',
                         points: user_points,
-                        user_id: user_id,
                         wps_nonce: wps_wpr.wps_wpr_nonce,
                     };
                     jQuery("#wps_wpr_loader").show();
@@ -329,15 +327,26 @@
                         success: function(response) {
                             $('#wps_wpr_custom_wallet').prop('disabled', false);
                             jQuery("#wps_wpr_loader").hide();
-                            if (response.result == true) {
-                                var html = '<b style="color:green;">' + response.message + '</b>';
-
-                            }
-                            if (response.result == false) {
-                                var html = '<b style="color:red;">' + response.message + '</b>';
+                            // Handle WordPress standardized JSON response format.
+                            if (response.success === true && response.data && response.data.message) {
+                                html = '<b style="color:green;">' + response.data.message + '</b>';
+                            } else if (response.success === false && response.data && response.data.message) {
+                                html = '<b style="color:red;">' + response.data.message + '</b>';
+                            } else {
+                                html = '<b style="color:red;">An unexpected error occurred.</b>';
                             }
                             $("#wps_wpr_wallet_notification").html(html);
-
+                            // Optionally reload the page after successful conversion to update points display.
+                            if (response.success === true) {
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 2000);
+                            }
+                        },
+                        error: function() {
+                            $('#wps_wpr_custom_wallet').prop('disabled', false);
+                            jQuery("#wps_wpr_loader").hide();
+                            $("#wps_wpr_wallet_notification").html('<b style="color:red;">Connection error. Please try again.</b>');
                         }
                     });
                 } else {

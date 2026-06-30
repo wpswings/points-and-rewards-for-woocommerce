@@ -669,7 +669,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 		if ( array_key_exists( 'cart_subtotal_point', $point_log ) ) {
 			?>
 			<div class="wps_wpr_slide_toggle">
-				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Points Applied on Cart/Checkout', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
+				<p class="wps_wpr_view_log_notice wps_wpr_common_slider"><?php esc_html_e( 'Cart Subtotal Points', 'points-and-rewards-for-woocommerce' ); ?><a class ="wps_wpr_open_toggle"  href="javascript:;"></a></p>
 				<div class="wps_wpr_points_view">
 					<table class="wps_wpr_common_table">
 						<thead>
@@ -687,7 +687,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 							?>
 							<tr>
 								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
-								<td><?php echo '-' . esc_html( $value['cart_subtotal_point'] ); ?></td>
+								<td><?php echo '+' . esc_html( $value['cart_subtotal_point'] ); ?></td>
 							</tr>
 							<?php
 						}
@@ -981,7 +981,7 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 							?>
 							<tr>
 								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
-								<td><?php echo esc_html( $value['award_points_on_previous_order'] ); ?></td>
+								<td><?php echo '+' . esc_html( $value['award_points_on_previous_order'] ); ?></td>
 								<td><?php echo esc_html( $value['order_no'] ); ?></td>
 							</tr>
 							<?php
@@ -1010,10 +1010,12 @@ if ( isset( $user_id ) && null != $user_id && is_numeric( $user_id ) ) {
 						</thead>
 						<?php
 						foreach ( $point_log['api_membership_logs'] as $key => $value ) {
+							$api_points = isset( $value['api_membership_logs'] ) ? intval( $value['api_membership_logs'] ) : 0;
+							$api_sign   = ( $api_points >= 0 ) ? '+' : '';
 							?>
 							<tr>
 								<td><?php echo esc_html( wps_wpr_set_the_wordpress_date_format( $value['date'] ) ); ?></td>
-								<td><?php echo '-' . esc_html( $value['api_membership_logs'] ); ?></td>
+								<td><?php echo esc_html( $api_sign ) . esc_html( $api_points ); ?></td>
 							</tr>
 							<?php
 						}
