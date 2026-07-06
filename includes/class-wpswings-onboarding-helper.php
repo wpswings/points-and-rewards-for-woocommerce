@@ -689,6 +689,9 @@ class WPSwings_Onboarding_Helper {
 	public function wps_wpr_send_onboarding_data() {
 
 		check_ajax_referer( 'wps_onboarding_nonce', 'nonce' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) );
+		}
 
 		$form_data      = ! empty( $_POST['form_data'] ) ? map_deep( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ), 'sanitize_text_field' ) : '';
 		$formatted_data = array();
