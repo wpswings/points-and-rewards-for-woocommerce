@@ -212,7 +212,7 @@ GitHub Actions workflow (`.github/workflows/main.yml`) runs on push/PR:
 
 ## Important Files
 
-- **points-rewards-for-woocommerce.php:17**: Plugin version (currently 2.10.1)
+- **points-rewards-for-woocommerce.php:17**: Plugin version (currently 2.10.2)
 - **includes/class-points-rewards-for-woocommerce.php:79**: Main plugin initialization
 - **admin/class-points-rewards-for-woocommerce-admin.php**: All admin functionality (~3800 lines)
 - **public/class-points-rewards-for-woocommerce-public.php**: All frontend functionality (~8000 lines)

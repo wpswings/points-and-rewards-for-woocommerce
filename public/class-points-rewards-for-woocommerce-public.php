@@ -2593,7 +2593,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * Returns redeemed points from session to restore UI after page reload.
 	 *
 	 * @name wps_wpr_get_redemption_state
-	 * @since 2.10.1
+	 * @since 2.10.2
 	 * @author WP Swings <webmaster@wpswings.com>
 	 * @link https://www.wpswings.com/
 	 */
