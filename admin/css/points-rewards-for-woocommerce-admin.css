@@ -3117,6 +3117,8 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_rwpr_navigator_template .inner-wrapper-sticky {
   width: auto !important;
   max-width: 100% !important;
+  display: flex;
+  justify-content: space-between;
 }
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_rwpr_navigator_template {
