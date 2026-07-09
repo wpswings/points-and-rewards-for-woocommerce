@@ -76,7 +76,7 @@ $wps_free_vs_pro_features = array(
 	),
 	array(
 		'feature'     => __( 'Advanced Membership Levels', 'points-and-rewards-for-woocommerce' ),
-		'description' => __( 'Unlimited membership tiers with advanced rules and exclusive benefits', 'points-and-rewards-for-woocommerce' ),
+		'description' => __( 'Membership tiers with advanced rules and exclusive benefits', 'points-and-rewards-for-woocommerce' ),
 		'free'        => false,
 		'pro'         => true,
 	),
