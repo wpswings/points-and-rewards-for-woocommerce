@@ -170,12 +170,7 @@ $wps_free_vs_pro_features = array(
 		'free'        => false,
 		'pro'         => true,
 	),
-	array(
-		'feature'     => __( 'Lifetime Updates', 'points-and-rewards-for-woocommerce' ),
-		'description' => __( 'Receive lifetime plugin updates and security patches', 'points-and-rewards-for-woocommerce' ),
-		'free'        => false,
-		'pro'         => true,
-	),
+	
 );
 
 $wps_pro_upgrade_url = 'https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro';
