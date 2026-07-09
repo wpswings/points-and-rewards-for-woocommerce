@@ -75,6 +75,18 @@ $wps_free_vs_pro_features = array(
 		'pro'         => true,
 	),
 	array(
+		'feature'     => __( 'Subscription Integration', 'points-and-rewards-for-woocommerce' ),
+		'description' => __( 'Full integration with WooCommerce Subscriptions', 'points-and-rewards-for-woocommerce' ),
+		'free'        => true,
+		'pro'         => true,
+	),
+	array(
+		'feature'     => __( 'Multi-Currency Support', 'points-and-rewards-for-woocommerce' ),
+		'description' => __( 'Advanced multi-currency points conversion and management', 'points-and-rewards-for-woocommerce' ),
+		'free'        => true,
+		'pro'         => true,
+	),
+	array(
 		'feature'     => __( 'Advanced Membership Levels', 'points-and-rewards-for-woocommerce' ),
 		'description' => __( 'Membership tiers with advanced rules and exclusive benefits', 'points-and-rewards-for-woocommerce' ),
 		'free'        => false,
@@ -99,13 +111,13 @@ $wps_free_vs_pro_features = array(
 		'pro'         => true,
 	),
 	array(
-		'feature'     => __( 'Points Purchase', 'points-and-rewards-for-woocommerce' ),
-		'description' => __( 'Allow customers to buy points directly', 'points-and-rewards-for-woocommerce' ),
+		'feature'     => __( 'Purchase through Points', 'points-and-rewards-for-woocommerce' ),
+		'description' => __( 'Allow customers to buy through points', 'points-and-rewards-for-woocommerce' ),
 		'free'        => false,
 		'pro'         => true,
 	),
 	array(
-		'feature'     => __( 'Comment Points', 'points-and-rewards-for-woocommerce' ),
+		'feature'     => __( 'Comment Points/Review Points ', 'points-and-rewards-for-woocommerce' ),
 		'description' => __( 'Reward customers for leaving product reviews and comments', 'points-and-rewards-for-woocommerce' ),
 		'free'        => false,
 		'pro'         => true,
@@ -117,7 +129,7 @@ $wps_free_vs_pro_features = array(
 		'pro'         => true,
 	),
 	array(
-		'feature'     => __( 'Cart Abandonment Recovery', 'points-and-rewards-for-woocommerce' ),
+		'feature'     => __( 'At-Risk Customer', 'points-and-rewards-for-woocommerce' ),
 		'description' => __( 'Recover abandoned carts by offering bonus points', 'points-and-rewards-for-woocommerce' ),
 		'free'        => false,
 		'pro'         => true,
@@ -128,18 +140,7 @@ $wps_free_vs_pro_features = array(
 		'free'        => false,
 		'pro'         => true,
 	),
-	array(
-		'feature'     => __( 'Subscription Integration', 'points-and-rewards-for-woocommerce' ),
-		'description' => __( 'Full integration with WooCommerce Subscriptions', 'points-and-rewards-for-woocommerce' ),
-		'free'        => false,
-		'pro'         => true,
-	),
-	array(
-		'feature'     => __( 'Multi-Currency Support', 'points-and-rewards-for-woocommerce' ),
-		'description' => __( 'Advanced multi-currency points conversion and management', 'points-and-rewards-for-woocommerce' ),
-		'free'        => false,
-		'pro'         => true,
-	),
+	
 	array(
 		'feature'     => __( 'API & Webhook Support', 'points-and-rewards-for-woocommerce' ),
 		'description' => __( 'REST API endpoints and webhooks for custom integrations', 'points-and-rewards-for-woocommerce' ),
@@ -167,6 +168,18 @@ $wps_free_vs_pro_features = array(
 	array(
 		'feature'     => __( 'Priority Support', 'points-and-rewards-for-woocommerce' ),
 		'description' => __( 'Get priority email and ticket support', 'points-and-rewards-for-woocommerce' ),
+		'free'        => false,
+		'pro'         => true,
+	),
+	array(
+		'feature'     => __( 'Display Total Eraning Point', 'points-and-rewards-for-woocommerce' ),
+		'description' => __( 'Display the total points earned by each customer', 'points-and-rewards-for-woocommerce' ),
+		'free'        => false,
+		'pro'         => true,
+	),
+	array(
+		'feature'     => __( 'Advanced redemption', 'points-and-rewards-for-woocommerce' ),
+		'description' => __( 'Advanced point redemption options', 'points-and-rewards-for-woocommerce' ),
 		'free'        => false,
 		'pro'         => true,
 	),
