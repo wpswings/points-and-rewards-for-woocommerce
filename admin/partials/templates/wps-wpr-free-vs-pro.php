@@ -195,7 +195,7 @@ $wps_pro_upgrade_url = 'https://wpswings.com/product/points-and-rewards-for-wooc
 			<span class="wps-free-vs-pro__badge"><?php esc_html_e( 'UPGRADE', 'points-and-rewards-for-woocommerce' ); ?></span>
 			<h2><?php esc_html_e( 'Unlock the Full Power of Points and Rewards', 'points-and-rewards-for-woocommerce' ); ?></h2>
 			<p><?php esc_html_e( 'Take your loyalty program to the next level with advanced features, integrations, and priority support.', 'points-and-rewards-for-woocommerce' ); ?></p>
-			<div class="wps-free-vs-pro__hero-actions">
+			<div class="wps-free-vs-pro__hero-actions wp-core-ui">
 				<a href="<?php echo esc_url( $wps_pro_upgrade_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary button-hero">
 					<?php esc_html_e( 'Upgrade to Pro', 'points-and-rewards-for-woocommerce' ); ?>
 				</a>
