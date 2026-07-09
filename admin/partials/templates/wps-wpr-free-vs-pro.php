@@ -252,7 +252,7 @@ $wps_pro_upgrade_url = 'https://wpswings.com/product/points-and-rewards-for-wooc
 		<div class="wps-free-vs-pro__cta-features">
 			<ul>
 				<li><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( '30-Day Money Back Guarantee', 'points-and-rewards-for-woocommerce' ); ?></li>
-				<li><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'Lifetime Updates & Support', 'points-and-rewards-for-woocommerce' ); ?></li>
+				<li><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'SMS/WhatsApp Notifications', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'Priority Email Support', 'points-and-rewards-for-woocommerce' ); ?></li>
 				<li><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e( 'No Hidden Fees', 'points-and-rewards-for-woocommerce' ); ?></li>
 			</ul>
