@@ -196,10 +196,10 @@ $wps_pro_upgrade_url = 'https://wpswings.com/product/points-and-rewards-for-wooc
 			<h2><?php esc_html_e( 'Unlock the Full Power of Points and Rewards', 'points-and-rewards-for-woocommerce' ); ?></h2>
 			<p><?php esc_html_e( 'Take your loyalty program to the next level with advanced features, integrations, and priority support.', 'points-and-rewards-for-woocommerce' ); ?></p>
 			<div class="wps-free-vs-pro__hero-actions wp-core-ui">
-				<a href="<?php echo esc_url( $wps_pro_upgrade_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary button-hero">
+				<a href="<?php echo esc_url( $wps_pro_upgrade_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary button-hero free_vs_pro_button_design">
 					<?php esc_html_e( 'Upgrade to Pro', 'points-and-rewards-for-woocommerce' ); ?>
 				</a>
-				<a href="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=par-org-backend&utm_campaign=demo" target="_blank" rel="noopener noreferrer" class="button button-primary button-hero">
+				<a href="https://demo.wpswings.com/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-demo&utm_medium=par-org-backend&utm_campaign=demo" target="_blank" rel="noopener noreferrer" class="button button-primary button-hero free_vs_pro_button_design">
 					<?php esc_html_e( 'View Live Demo', 'points-and-rewards-for-woocommerce' ); ?>
 				</a>
 			</div>

@@ -13,11 +13,11 @@
 a.wps_wpr_premium--cta {
   text-transform: uppercase;
 }
-.wp-core-ui .button-primary {
-    background: #fff;
-    border-color: transparent;
-    border-radius: 99px;
-    color: #000;
+.free_vs_pro_button_design {
+    background: #fff !important;
+    border-color: transparent !important;
+    border-radius: 99px !important;
+    color: #000 !important;
 }
 #wps_wpr_loader {
   background-color: rgba(255, 255, 255, 0.6);
