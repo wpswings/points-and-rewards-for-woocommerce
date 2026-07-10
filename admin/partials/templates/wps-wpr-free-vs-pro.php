@@ -258,7 +258,7 @@ $wps_pro_upgrade_url = 'https://wpswings.com/product/points-and-rewards-for-wooc
 		<div class="wps-free-vs-pro__cta-content">
 			<h3><?php esc_html_e( 'Ready to Upgrade Your Loyalty Program?', 'points-and-rewards-for-woocommerce' ); ?></h3>
 			<p><?php esc_html_e( 'Join thousands of store owners who have upgraded to Pro and seen their customer engagement skyrocket.', 'points-and-rewards-for-woocommerce' ); ?></p>
-			<a href="<?php echo esc_url( $wps_pro_upgrade_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary button-hero">
+			<a href="<?php echo esc_url( $wps_pro_upgrade_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary button-hero free_vs_pro_button_design">
 				<?php esc_html_e( 'Get Pro Now', 'points-and-rewards-for-woocommerce' ); ?>
 			</a>
 		</div>
