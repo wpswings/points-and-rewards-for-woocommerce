@@ -1084,7 +1084,7 @@ table.wps_wpr_user_badges_table_settings_wrappers {
 }
 .wps_wpr_add_more_btn_badge:hover {
   background: #2196f3;
-  color: #fff;
+  color: #fff !important;
 }
 #wps_rwpr_setting_wrapper input.wps_wpr_add_more_btn_badge:hover {
   background: 0 0;

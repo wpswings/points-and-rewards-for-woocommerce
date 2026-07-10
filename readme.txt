@@ -3,9 +3,9 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points and rewards, loyalty, referral points, reward points, gamification
 Requires at least: 6.7.0
-Tested up to: 7.0
+Tested up to: 7.0.1
 WC requires at least: 6.5.0
-WC tested up to: 10.9.3
+WC tested up to: 10.9.4
 Stable tag: 2.10.2
 Requires PHP: 7.4
 License: GPLv3 or later
@@ -359,7 +359,11 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 2.10.2 - Released on 06 July 2026 =
+= 2.10.2 - Released on 10 July 2026 =
+* New : Compatibility with latest WC ( 10.9.4 ) and WP ( 7.0.1 )
+* Fix : Design issue fix in points table
+
+= 2.10.1 - Released on 06 July 2026 =
 * Fix: Object injection vulnerability (replaced unserialize with json_decode)
 * Fix: Removed nopriv exposure on admin-only AJAX endpoints
 * Fix: cURL SSL bypass and ZIP path traversal in plugin installer
@@ -745,15 +749,6 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.10.2 - Released on 06 July 2026 =
-* Fix: Object injection vulnerability (replaced unserialize with json_decode)
-* Fix: Removed nopriv exposure on admin-only AJAX endpoints
-* Fix: cURL SSL bypass and ZIP path traversal in plugin installer
-* Fix: Added permission_callback to all REST API routes + input sanitization
-* Fix: Points now awarded correctly on all manual order status changes
-* Fix: Resolved $0 discount bug on points redemption at checkout
-* Fix: Cart applied discount persists through page reloads
-* Fix: Category points assignments now save correctly
-* Fix: Memory leak in background processing – batch processing added
-* Fix: PHP 8.3 compatibility + DIVI 5 checkout compatibility
-* New: Compatibility with latest WP (7.0.0) and WC (10.9.3)
+= 2.10.2 - Released on 10 July 2026 =
+* New : Compatibility with latest WC ( 10.9.4 ) and WP ( 7.0.1 )
+* Fix : Design issue fix in points table
