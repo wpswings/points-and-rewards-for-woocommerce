@@ -2291,7 +2291,7 @@ if ( ! empty( $wps_wpr_actions ) && ! empty( $user_log_id ) ) {
 								<input type="number" min="1" id="wps_wpr_previous_order_point_value">
 								<input type="button" id="wps_wpr_points_on_previous_order" class="button-primary woocommerce-save-button" value="<?php esc_html_e( 'Assign Points', 'points-and-rewards-for-woocommerce' ); ?>" />
 								<img class="wps_wpr_previous_order_loader" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/images/loading.gif' ); ?>">
-								<span class="wps_wpr_previous_order_notice"></span>
+								<span class="wps_wpr_previous_order_notice" style="margin-top:-19px"></span>
 							</div>
 						</div>
 					</td>
@@ -2327,12 +2327,24 @@ if ( ! empty( $wps_wpr_actions ) && ! empty( $user_log_id ) ) {
 	<?php endif; ?>
 
 	<!-- === Create HTML for Items per page === -->
-	<div class="wps_wpr_points_table_second_wrappers">
+	<div class="wps_wpr_points_table_second_wrappers" style="margin-bottom: 15px;">
 		<h3 class="wp-heading-inline" id="wps_wpr_points_table_heading"><?php esc_html_e( 'Points Table', 'points-and-rewards-for-woocommerce' ); ?></h3>
-		<p><?php esc_html_e( 'Number of items per page', 'points-and-rewards-for-woocommerce' ); ?></p>
-		<input type="number" max="200" min="1" name="wps_wpr_number_items_per_page" id="wps_wpr_number_items_per_page" value="<?php echo esc_html( ! empty( get_option( 'wps_wpr_number_items_per_page' ) ) ? get_option( 'wps_wpr_number_items_per_page' ) : 10 ); ?>">
-		<input type="hidden" name="wps_wpr_items_per_page_nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-items-per-page-nonce' ) ); ?>">
-		<input type="submit" name="wps_wpr_save_items_per_page" class="button button-primary" id="wps_wpr_save_items_per_page" value="<?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?>">
+		<div style="display: inline-block; margin-left: 5px; vertical-align: middle;">
+			<label style="display: inline-block; margin-right: 8px; font-weight: 500;"><?php esc_html_e( 'Number of items per page', 'points-and-rewards-for-woocommerce' ); ?></label>
+			<input type="number" max="200" min="1" name="wps_wpr_number_items_per_page" id="wps_wpr_number_items_per_page" value="<?php echo esc_html( ! empty( get_option( 'wps_wpr_number_items_per_page' ) ) ? get_option( 'wps_wpr_number_items_per_page' ) : 10 ); ?>" style="width: 70px; margin-right: 8px;">
+			<input type="hidden" name="wps_wpr_items_per_page_nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-items-per-page-nonce' ) ); ?>">
+			<input type="submit" name="wps_wpr_save_items_per_page" class="button button-primary" id="wps_wpr_save_items_per_page" value="<?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?>">
+		</div>
+		<form method="post">
+		<input type="hidden" name="page" value="<?php esc_html_e( 'points_log_list_table', 'points-and-rewards-for-woocommerce' ); ?>">
+		<?php wp_nonce_field( 'points-log', 'points-log' ); ?>
+		<?php
+		$mylisttable = new Points_Log_List_Table();
+		$mylisttable->prepare_items();
+		$mylisttable->search_box( __( 'Search Users', 'points-and-rewards-for-woocommerce' ), 'wps-wpr-user' );
+		$mylisttable->display();
+		?>
+	</form>
 	</div>
 
 	<?php
@@ -2383,15 +2395,6 @@ if ( ! empty( $wps_wpr_actions ) && ! empty( $user_log_id ) ) {
 		}
 	}
 	?>
-	<form method="post">
-		<input type="hidden" name="page" value="<?php esc_html_e( 'points_log_list_table', 'points-and-rewards-for-woocommerce' ); ?>">
-		<?php wp_nonce_field( 'points-log', 'points-log' ); ?>
-		<?php
-		$mylisttable = new Points_Log_List_Table();
-		$mylisttable->prepare_items();
-		$mylisttable->search_box( __( 'Search Users', 'points-and-rewards-for-woocommerce' ), 'wps-wpr-user' );
-		$mylisttable->display();
-		?>
-	</form>
+	
 	<?php
 }
