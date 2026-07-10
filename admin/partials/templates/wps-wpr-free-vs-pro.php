@@ -186,7 +186,7 @@ $wps_free_vs_pro_features = array(
 	
 );
 
-$wps_pro_upgrade_url = 'https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro';
+$wps_pro_upgrade_url = 'https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro';
 ?>
 <div class="wps-free-vs-pro__wrapper">
 	<?php if ( ! $wps_wpr_is_pro_active ) : ?>
