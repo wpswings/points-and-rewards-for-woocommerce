@@ -300,6 +300,10 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'wps_wpr_woocommerce_add_cart_item_data', 10, 4 );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'wps_wpr_woocommerce_get_item_data', 10, 2 );
 			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'wps_display_product_points', 7 );
+			// Display points-to-discount notification on product, cart, and checkout pages.
+			$this->loader->add_action( 'woocommerce_after_single_product_summary', $plugin_public, 'wps_wpr_display_points_to_discount_product', 5 );
+			$this->loader->add_action( 'woocommerce_after_cart_contents', $plugin_public, 'wps_wpr_display_points_to_discount_cart', 10 );
+			$this->loader->add_action( 'woocommerce_review_order_before_order_total', $plugin_public, 'wps_wpr_display_points_to_discount_checkout', 10 );
 			/*Display the meta key*/
 			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $plugin_public, 'wps_wpr_woocommerce_order_item_display_meta_key', 10, 1 );
 			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $plugin_public, 'wps_wpr_woocommerce_add_order_item_meta_version_3', 10, 4 );

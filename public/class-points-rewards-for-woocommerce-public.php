@@ -268,6 +268,36 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_other_settings                 = ! empty( $wps_wpr_other_settings ) && is_array( $wps_wpr_other_settings ) ? $wps_wpr_other_settings : array();
 			$wps_wpr_cart_page_total_earning_points = ! empty( $wps_wpr_other_settings['wps_wpr_cart_page_total_earning_points'] ) ? $wps_wpr_other_settings['wps_wpr_cart_page_total_earning_points'] : 0;
 			$current_points                         = (int) get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
+
+			// Calculate points-to-discount notice data for block cart and checkout.
+			$notice_data = array(
+				'show_cart_notice'     => false,
+				'show_checkout_notice' => false,
+				'notice_html'          => '',
+			);
+
+			$wps_wpr_show_cart_notice      = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_points_notice_on_cart' );
+			$wps_wpr_show_checkout_notice  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_points_notice_on_checkout' );
+			$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+
+			if ( 1 == $wps_wpr_custom_points_on_cart && is_user_logged_in() ) {
+				$next_tier = $this->wps_wpr_calculate_next_discount_tier( $current_points );
+
+				if ( false !== $next_tier ) {
+					$discount_text = wc_price( $next_tier['discount_value'] );
+					/* translators: %1$d: points needed, %2$s: discount value */
+					$notice_data['notice_html'] = sprintf( esc_html__( "You're %1\$d points away from a %2\$s discount!", 'points-and-rewards-for-woocommerce' ), absint( $next_tier['points_needed'] ), wp_kses_post( $discount_text ) );
+
+					if ( 1 == $wps_wpr_show_cart_notice ) {
+						$notice_data['show_cart_notice'] = true;
+					}
+
+					if ( 1 == $wps_wpr_show_checkout_notice ) {
+						$notice_data['show_checkout_notice'] = true;
+					}
+				}
+			}
+
 			wp_register_script( 'wp-wps-wpr-cart-class', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-cart-checkout-block.js', array(), $this->version, true );
 			wp_enqueue_script( 'wp-wps-wpr-cart-class' );
 			$wps_wpr = array(
@@ -276,6 +306,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				'wps_wpr_cart_page_total_earning_points' => $wps_wpr_cart_page_total_earning_points,
 				'current__points'                        => max( 0, $current_points ),
 				'available_points_msg'                   => esc_html__( 'Your available points', 'points-and-rewards-for-woocommerce' ),
+				'checkout_notice_data'                   => $notice_data,
 			);
 			wp_localize_script( 'wp-wps-wpr-cart-class', 'wps_wpr_cart_block_obj', $wps_wpr );
 		}
@@ -329,6 +360,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_get_general_settings_num( $id ) {
 		$wps_wpr_value    = 0;
 		$general_settings = $this->wps_wpr_get_cached_option( 'wps_wpr_settings_gallery', true );
+	
 		if ( ! empty( $general_settings[ $id ] ) ) {
 			$wps_wpr_value = (int) $general_settings[ $id ];
 		}
@@ -2271,7 +2303,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 					$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 					if ( '1' == $my_cart_change_return ) {
-						return;
+						return $response;
 					} else {
 						$user_id = get_current_user_ID();
 						/*Check is custom points on cart is enable*/
@@ -5836,6 +5868,248 @@ class Points_Rewards_For_WooCommerce_Public {
 		} else {
 			wp_mail( $to, $subject, $message, $headers );
 		}
+	}
+
+	/**
+	 * Calculate points needed for next discount tier.
+	 *
+	 * @param int $current_points User's current points balance.
+	 * @return array|false Array with points_needed and discount_value, or false if no next tier.
+	 * @since 2.10.3
+	 */
+	public function wps_wpr_calculate_next_discount_tier( $current_points ) {
+
+		// Get conversion rate settings.
+		$conversion_points = $this->wps_wpr_get_general_settings_num( 'wps_wpr_coupon_conversion_points' );
+		$conversion_price  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_coupon_conversion_price' );
+		$min_redeem        = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' );
+
+		// Validate conversion settings.
+		if ( empty( $conversion_points ) || empty( $conversion_price ) ) {
+			return false;
+		}
+
+		// If below minimum, show minimum requirement.
+		if ( $current_points < $min_redeem ) {
+			$points_needed  = $min_redeem - $current_points;
+			$discount_value = ( $min_redeem / $conversion_points ) * $conversion_price;
+
+			return array(
+				'points_needed'  => $points_needed,
+				'discount_value' => $discount_value,
+			);
+		}
+
+		// Calculate next tier (rounded up to next conversion multiple).
+		$next_tier_points = ceil( ( $current_points + 1 ) / $conversion_points ) * $conversion_points;
+		$points_needed    = $next_tier_points - $current_points;
+		$discount_value   = ( $next_tier_points / $conversion_points ) * $conversion_price;
+
+		return array(
+			'points_needed'  => $points_needed,
+			'discount_value' => $discount_value,
+		);
+	}
+
+	/**
+	 * Display points-to-discount notification on product pages.
+	 *
+	 * @since 2.10.3
+	 */
+	public function wps_wpr_display_points_to_discount_product() {
+
+		if ( wps_wpr_restrict_user_fun() || ! is_user_logged_in() ) {
+			return;
+		}
+
+		// Check if points redemption is enabled.
+		$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+		if ( 1 != $wps_wpr_custom_points_on_cart ) {
+			return;
+		}
+
+		// Check if product page notice is enabled.
+		$wps_wpr_show_product_notice = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_points_notice_on_product' );
+		if ( 1 != $wps_wpr_show_product_notice ) {
+			return;
+		}
+
+		$user_id        = get_current_user_ID();
+		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+
+		if ( empty( $current_points ) ) {
+			$current_points = 0;
+		}
+
+		$next_tier = $this->wps_wpr_calculate_next_discount_tier( $current_points );
+
+		if ( false === $next_tier ) {
+			return;
+		}
+
+		$currency_symbol = get_woocommerce_currency_symbol();
+		$discount_text   = wc_price( $next_tier['discount_value'] );
+
+		?>
+		<div class="wps-wpr-points-to-discount-notice wps-wpr-product-notice">
+			<p class="wps-wpr-notice-text">
+				<span class="wps-wpr-notice-icon">🎁</span>
+				<strong>
+					<?php
+					/* translators: %1$d: points needed, %2$s: discount value with currency */
+					echo sprintf( esc_html__( "You're %1\$d points away from a %2\$s discount!", 'points-and-rewards-for-woocommerce' ), absint( $next_tier['points_needed'] ), wp_kses_post( $discount_text ) );
+					?>
+				</strong>
+			</p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Display points-to-discount notification on cart page.
+	 *
+	 * @since 2.10.3
+	 */
+	public function wps_wpr_display_points_to_discount_cart() {
+
+		if ( wps_wpr_restrict_user_fun() || ! is_user_logged_in() ) {
+			return;
+		}
+
+		// Check if points redemption is enabled.
+		$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+		if ( 1 != $wps_wpr_custom_points_on_cart ) {
+			return;
+		}
+
+		// Check if cart page notice is enabled.
+		$wps_wpr_show_cart_notice = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_points_notice_on_cart' );
+		if ( 1 != $wps_wpr_show_cart_notice ) {
+			return;
+		}
+
+		$user_id        = get_current_user_ID();
+		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+
+		if ( empty( $current_points ) ) {
+			$current_points = 0;
+		}
+
+		// Deduct points if Points Discount is already applied.
+		$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
+		$current_points                               = $current_points - $wps_wpr_check_points_discount_applied_amount;
+
+		// Deduct points if discount applied via product edit page (purchase through only points).
+		$applied__points = 0;
+		if ( isset( WC()->cart ) ) {
+			foreach ( WC()->cart->get_cart() as $cart ) {
+				if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
+					$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
+				}
+			}
+		}
+		$current_points = $current_points - $applied__points;
+
+		$next_tier = $this->wps_wpr_calculate_next_discount_tier( $current_points );
+
+		if ( false === $next_tier ) {
+			return;
+		}
+
+		$currency_symbol = get_woocommerce_currency_symbol();
+		$discount_text   = wc_price( $next_tier['discount_value'] );
+
+		?>
+		<tr class="wps-wpr-points-to-discount-row">
+			<td colspan="6" class="wps-wpr-points-to-discount-cell">
+				<div class="wps-wpr-points-to-discount-notice wps-wpr-cart-notice">
+					<p class="wps-wpr-notice-text">
+						<span class="wps-wpr-notice-icon">🎁</span>
+						<strong>
+							<?php
+							/* translators: %1$d: points needed, %2$s: discount value with currency */
+							echo sprintf( esc_html__( "You're %1\$d points away from a %2\$s discount!", 'points-and-rewards-for-woocommerce' ), absint( $next_tier['points_needed'] ), wp_kses_post( $discount_text ) );
+							?>
+						</strong>
+						<span class="wps-wpr-notice-cta"><?php esc_html_e( 'Keep shopping to earn more points!', 'points-and-rewards-for-woocommerce' ); ?></span>
+					</p>
+				</div>
+			</td>
+		</tr>
+		<?php
+	}
+
+	/**
+	 * Display points-to-discount notification on checkout page.
+	 *
+	 * @since 2.10.3
+	 */
+	public function wps_wpr_display_points_to_discount_checkout() {
+
+		if ( wps_wpr_restrict_user_fun() || ! is_user_logged_in() ) {
+			return;
+		}
+
+		// Check if points redemption is enabled.
+		$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
+		if ( 1 != $wps_wpr_custom_points_on_cart ) {
+			return;
+		}
+
+		// Check if checkout page notice is enabled.
+		$wps_wpr_show_checkout_notice = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_points_notice_on_checkout' );
+		if ( 1 != $wps_wpr_show_checkout_notice ) {
+			return;
+		}
+
+		$user_id        = get_current_user_ID();
+		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+
+		if ( empty( $current_points ) ) {
+			$current_points = 0;
+		}
+
+		// Deduct points if Points Discount is already applied.
+		$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
+		$current_points                               = $current_points - $wps_wpr_check_points_discount_applied_amount;
+
+		// Deduct points if discount applied via product edit page (purchase through only points).
+		$applied__points = 0;
+		if ( isset( WC()->cart ) ) {
+			foreach ( WC()->cart->get_cart() as $cart ) {
+				if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
+					$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
+				}
+			}
+		}
+		$current_points = $current_points - $applied__points;
+
+		$next_tier = $this->wps_wpr_calculate_next_discount_tier( $current_points );
+
+		if ( false === $next_tier ) {
+			return;
+		}
+
+		$currency_symbol = get_woocommerce_currency_symbol();
+		$discount_text   = wc_price( $next_tier['discount_value'] );
+
+		?>
+		<tr class="wps-wpr-points-to-discount-row wps-wpr-checkout-notice-row">
+			<td colspan="2" class="wps-wpr-points-to-discount-cell">
+				<div class="wps-wpr-points-to-discount-notice wps-wpr-checkout-notice">
+					<p class="wps-wpr-notice-text">
+						<span class="wps-wpr-notice-icon">🎁</span>
+						<strong>
+							<?php
+							/* translators: %1$d: points needed, %2$s: discount value with currency */
+							echo sprintf( esc_html__( "You're %1\$d points away from a %2\$s discount!", 'points-and-rewards-for-woocommerce' ), absint( $next_tier['points_needed'] ), wp_kses_post( $discount_text ) );
+							?>
+						</strong>
+					</p>
+				</div>
+			</td>
+		</tr>
+		<?php
 	}
 
 }

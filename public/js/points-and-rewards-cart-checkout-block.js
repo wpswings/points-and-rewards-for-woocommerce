@@ -153,6 +153,93 @@
 		setTimeout(function() {
 			wps_wpr_restore_block_redemption_state();
 		}, 500);
+
+		// Display points-to-discount notice on block cart
+		function wps_wpr_display_cart_notice() {
+			if ( typeof wps_wpr_cart_block_obj !== 'undefined' &&
+				 wps_wpr_cart_block_obj.checkout_notice_data &&
+				 wps_wpr_cart_block_obj.checkout_notice_data.show_cart_notice ) {
+
+				var noticeHtml = '<div class="wps-wpr-points-to-discount-notice wps-wpr-cart-notice" style="margin: 15px 0;">' +
+					'<p class="wps-wpr-notice-text">' +
+					'<span class="wps-wpr-notice-icon">🎁</span>' +
+					'<strong>' + wps_wpr_cart_block_obj.checkout_notice_data.notice_html + '</strong>' +
+					'<span class="wps-wpr-notice-cta">Keep shopping to earn more points!</span>' +
+					'</p>' +
+					'</div>';
+
+				// Try to find the cart order summary coupon form block (best location)
+				var targetElement = jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block');
+
+				if ( targetElement.length === 0 ) {
+					// Fallback: try cart order summary subtotal block
+					targetElement = jQuery('.wp-block-woocommerce-cart-order-summary-subtotal-block');
+				}
+
+				if ( targetElement.length === 0 ) {
+					// Fallback: try cart order summary block
+					targetElement = jQuery('.wp-block-woocommerce-cart-order-summary-block');
+				}
+
+				// Only add if not already present
+				if ( targetElement.length > 0 && jQuery('.wps-wpr-cart-notice').length === 0 ) {
+					targetElement.before(noticeHtml);
+				}
+			}
+		}
+
+		// Display points-to-discount notice on block checkout
+		function wps_wpr_display_checkout_notice() {
+			if ( typeof wps_wpr_cart_block_obj !== 'undefined' &&
+				 wps_wpr_cart_block_obj.checkout_notice_data &&
+				 wps_wpr_cart_block_obj.checkout_notice_data.show_checkout_notice ) {
+
+				var noticeHtml = '<div class="wps-wpr-points-to-discount-notice wps-wpr-checkout-notice" style="margin: 15px 0;">' +
+					'<p class="wps-wpr-notice-text">' +
+					'<span class="wps-wpr-notice-icon">🎁</span>' +
+					'<strong>' + wps_wpr_cart_block_obj.checkout_notice_data.notice_html + '</strong>' +
+					'</p>' +
+					'</div>';
+
+				// Try to find the order summary coupon form block (best location)
+				var targetElement = jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block');
+
+				if ( targetElement.length === 0 ) {
+					// Fallback: try order summary subtotal block
+					targetElement = jQuery('.wp-block-woocommerce-checkout-order-summary-subtotal-block');
+				}
+
+				if ( targetElement.length === 0 ) {
+					// Fallback: try order summary block
+					targetElement = jQuery('.wp-block-woocommerce-checkout-order-summary-block');
+				}
+
+				// Only add if not already present
+				if ( targetElement.length > 0 && jQuery('.wps-wpr-checkout-notice').length === 0 ) {
+					targetElement.before(noticeHtml);
+				}
+			}
+		}
+
+		// Display notices with retry logic (elements may load dynamically)
+		setTimeout(function() {
+			wps_wpr_display_cart_notice();
+			wps_wpr_display_checkout_notice();
+		}, 1000);
+
+		setTimeout(function() {
+			wps_wpr_display_cart_notice();
+			wps_wpr_display_checkout_notice();
+		}, 2000);
+
+		// Also try on mouseover (when user interacts with page)
+		jQuery(document).on('mouseover', '.woocommerce-cart', function() {
+			wps_wpr_display_cart_notice();
+		});
+
+		jQuery(document).on('mouseover', '.woocommerce-checkout', function() {
+			wps_wpr_display_checkout_notice();
+		});
 	});
 })(jQuery);
 

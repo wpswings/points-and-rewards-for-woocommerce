@@ -1576,3 +1576,87 @@ span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wp
 .wp-block-woocommerce-checkout-order-summary-block #wps_wpr_button_to_add_points_section {
     padding: 0 15px;
 }
+
+/* Points to Discount Notification Styles */
+.wps-wpr-points-to-discount-notice {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin: 10px 0;
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.15);
+    animation: wps-wpr-slide-in 0.5s ease-out;
+}
+
+.wps-wpr-product-notice {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.wps-wpr-cart-notice {
+    margin: 0;
+}
+
+.wps-wpr-points-to-discount-notice .wps-wpr-notice-text {
+    color: #ffffff;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 6px;
+}
+
+.wps-wpr-points-to-discount-notice .wps-wpr-notice-icon {
+    font-size: 16px;
+    display: inline-block;
+    margin-right: 2px;
+    flex-shrink: 0;
+}
+
+.wps-wpr-points-to-discount-notice strong {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.wps-wpr-points-to-discount-notice .wps-wpr-notice-cta {
+    display: inline;
+    margin-left: 6px;
+    font-size: 12px;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.wps-wpr-points-to-discount-row td {
+    padding: 0 !important;
+}
+
+.wps-wpr-points-to-discount-cell {
+    border: none !important;
+}
+
+@keyframes wps-wpr-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .wps-wpr-points-to-discount-notice {
+        padding: 12px 16px;
+    }
+
+    .wps-wpr-points-to-discount-notice .wps-wpr-notice-text {
+        font-size: 14px;
+    }
+
+    .wps-wpr-points-to-discount-notice .wps-wpr-notice-icon {
+        font-size: 18px;
+    }
+}
