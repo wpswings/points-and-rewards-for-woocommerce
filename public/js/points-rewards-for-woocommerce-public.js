@@ -91,6 +91,7 @@
                     var order_limit = $(this).data('order-limit');
                     var message = '';
                     var html = '';
+                    // Get cart points from input field
                     var wps_cart_points = $('#wps_cart_points').val().trim();
 
                     $("#wps_wpr_cart_points_notice").html("");
@@ -107,6 +108,7 @@
                                 wps_cart_points: wps_cart_points,
                                 wps_nonce: wps_wpr.wps_wpr_nonce,
                             };
+                            console.log('Sending AJAX request with points: ' + wps_cart_points);
                             $.ajax({
                                 url: wps_wpr.ajaxurl,
                                 type: "POST",

@@ -181,6 +181,13 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// main js file enqueue.
 		wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.min.js', array( 'jquery', 'clipboard' ), $this->version, false );
+
+		// Get conversion rates for slider
+		$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
+		$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+		$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
+		$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+
 		$wps_wpr = array(
 			'ajaxurl'                    => admin_url( 'admin-ajax.php' ),
 			'message'                    => esc_html__( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
@@ -211,6 +218,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			'points_more_to_redeem'      => esc_html__( ' points more to get redeem', 'points-and-rewards-for-woocommerce' ),
 			'wps_add_a_points'           => esc_html__( 'Add a points', 'points-and-rewards-for-woocommerce' ),
 			'wps_apply_points'           => esc_html__( 'Apply Points', 'points-and-rewards-for-woocommerce' ),
+			'cart_points_rate'           => $wps_wpr_cart_points_rate,
+			'cart_price_rate'            => $wps_wpr_cart_price_rate,
+			'currency_symbol'            => get_woocommerce_currency_symbol(),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 
@@ -2121,12 +2131,22 @@ class Points_Rewards_For_WooCommerce_Public {
 			$get_points      = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
 			$get_points      = ! empty( $get_points ) && $get_points > 0 ? $get_points : 0;
 
+			// Debug: Log received points value
+			error_log( 'WPS PAR: Received wps_cart_points from AJAX: ' . $wps_cart_points );
+
 			// Redemption Conversion rate calculate.
 			$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
 			$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
 			$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
 			$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+
+			// Debug: Log conversion rates
+			error_log( 'WPS PAR: Conversion rates - Points: ' . $wps_wpr_cart_points_rate . ', Price: ' . $wps_wpr_cart_price_rate );
+
 			$wps_cart_points          = ( $wps_cart_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+
+			// Debug: Log converted amount
+			error_log( 'WPS PAR: Converted discount amount: ' . $wps_cart_points );
 
 			// when points value is grater than price than convert points.
 			if ( $wps_wpr_cart_price_rate > $wps_wpr_cart_points_rate ) {
@@ -2192,6 +2212,8 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( $get_points >= $wps_cart_points ) {
 
 					WC()->session->set( 'wps_cart_points', $wps_cart_points );
+					// Debug: Log stored session value
+					error_log( 'WPS PAR: Stored in session wps_cart_points: ' . $wps_cart_points );
 					$response['result']  = true;
 					$response['message'] = apply_filters( 'wps_wpr_modify_points_success_msg', esc_html__( 'Custom Point has been applied Successfully!', 'points-and-rewards-for-woocommerce' ) );
 				} else {
@@ -3850,7 +3872,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					do_action( 'wps_wpr_point_limit_on_order_checkout', $get_points, $user_id, $get_min_redeem_req );
 				} elseif ( $get_min_redeem_req <= $get_points ) {
 					?>
-					<div class="custom_point_checkout woocommerce-info wps_wpr_checkout_points_class">
+					<div class="custom_point_checkout wps_wpr_apply_custom_points wps_wpr_checkout_points_class">
 						<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>"/>
 						<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0"><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
 						<p><?php echo esc_html( $get_points ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( $conversion ), $this->wps_wpr_allowed_html() ); ?></p>
@@ -3859,7 +3881,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				} else {
 					$extra_req = abs( $get_min_redeem_req - $get_points );
 					?>
-					<div class="custom_point_checkout woocommerce-info wps_wpr_checkout_points_class">
+					<div class="custom_point_checkout wps_wpr_apply_custom_points wps_wpr_checkout_points_class">
 						<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
 						<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0" disabled><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
 						<p><?php esc_html_e( 'You require :', 'points-and-rewards-for-woocommerce' ); ?> <?php echo esc_html( $extra_req ); ?> <?php esc_html_e( 'more points to get redeem', 'points-and-rewards-for-woocommerce' ); ?></p>
