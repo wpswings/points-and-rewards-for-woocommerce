@@ -580,9 +580,12 @@ class Points_Rewards_For_WooCommerce_Public {
 			<fieldset class="wps_wpr_each_section">
 				<div class="wps_wpr_refrral_code_copy">
 					<p id="wps_wpr_copy"><code><?php echo esc_url( $site_url . '?pkey=' . $get_referral ); ?></code></p>
-					<button class="wps_wpr_btn_copy wps_tooltip" data-clipboard-target="#wps_wpr_copy" aria-label="copied">
+					<button class="wps_wpr_btn_copy wps_tooltip" data-clipboard-target="#wps_wpr_copy" aria-label="Copy to clipboard">
 						<span class="wps_tooltiptext"><?php esc_html_e( 'Copy', 'points-and-rewards-for-woocommerce' ); ?></span>
-						<img src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/images/copy.png' ); ?>" alt="Copy to clipboard">
+						<svg class="wps_wpr_copy_icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+							<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+						</svg>
 					</button>
 				</div>
 				<?php
@@ -5383,9 +5386,12 @@ class Points_Rewards_For_WooCommerce_Public {
 				<p>Share this url to give your friends an awesome offer! You’ll earn rewards when they make a purchase and signup.</p>
 				<div class="wps_wpr_refrral_code_copy">
 					<p id="wps_wpr_copy"><code><?php echo esc_url( $site_url . '?pkey=' . $get_referral ); ?></code></p>
-					<button class="wps_wpr_btn_copy wps_tooltip" data-clipboard-target="#wps_wpr_copy" aria-label="copied">
+					<button class="wps_wpr_btn_copy wps_tooltip" data-clipboard-target="#wps_wpr_copy" aria-label="Copy to clipboard">
 						<span class="wps_tooltiptext"><?php esc_html_e( 'Copy', 'points-and-rewards-for-woocommerce' ); ?></span>
-						<img src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/images/copy.png' ); ?>" alt="Copy to clipboard">
+						<svg class="wps_wpr_copy_icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+							<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+						</svg>
 					</button>
 				</div>
 				<?php
