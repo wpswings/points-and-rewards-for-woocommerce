@@ -1659,4 +1659,66 @@ span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wp
     .wps-wpr-points-to-discount-notice .wps-wpr-notice-icon {
         font-size: 18px;
     }
+
+    .wps-wpr-dashboard-points-balance {
+        padding: 12px !important;
+    }
+
+    .wps-wpr-dashboard-points-balance p {
+        font-size: 14px !important;
+    }
+
+    .wps-wpr-dashboard-points-balance span {
+        display: block;
+        margin: 5px 0 !important;
+    }
+}
+
+/* ============================================
+   My Account Dashboard Points Balance
+   ============================================ */
+.wps-wpr-dashboard-points-balance {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.wps-wpr-dashboard-points-balance:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.wps-wpr-dashboard-points-balance a:hover {
+    opacity: 0.9;
+}
+
+/* ============================================
+   Admin Bar Points Display
+   ============================================ */
+#wpadminbar #wp-admin-bar-wps-wpr-points-balance .ab-icon {
+    font-size: 18px !important;
+    color: #ffd700;
+    margin-right: 5px;
+}
+
+#wpadminbar #wp-admin-bar-wps-wpr-points-balance .ab-label {
+    font-weight: 600;
+}
+
+#wpadminbar #wp-admin-bar-wps-wpr-points-balance:hover .ab-icon {
+    color: #ffed4e;
+}
+
+#wpadminbar #wp-admin-bar-wps-wpr-points-balance > .ab-item {
+    padding: 0 10px;
+}
+
+/* Mobile admin bar */
+@media screen and (max-width: 782px) {
+    #wpadminbar #wp-admin-bar-wps-wpr-points-balance .ab-icon {
+        font-size: 24px !important;
+    }
+
+    #wpadminbar #wp-admin-bar-wps-wpr-points-balance .ab-label {
+        font-size: 14px;
+    }
 }

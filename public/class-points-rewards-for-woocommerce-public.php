@@ -6134,4 +6134,95 @@ class Points_Rewards_For_WooCommerce_Public {
 		<?php
 	}
 
+	/**
+	 * Display points balance on My Account dashboard.
+	 *
+	 * @since 2.10.2
+	 */
+	public function wps_wpr_display_points_on_dashboard() {
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+
+		$user_id        = get_current_user_id();
+		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+
+		// Check if points display is enabled
+		$general_settings = $this->wps_wpr_get_cached_option( 'wps_wpr_settings_gallery', true );
+		if ( empty( $general_settings ) || ! isset( $general_settings['wps_wpr_general_points_label'] ) ) {
+			return;
+		}
+
+		$points_label = ! empty( $general_settings['wps_wpr_general_points_label'] ) ?
+			$general_settings['wps_wpr_general_points_label'] :
+			__( 'Points', 'points-and-rewards-for-woocommerce' );
+
+		// Get notification color
+		$wps_wpr_notification_color = $this->wps_wpr_get_other_settings( 'wps_wpr_notification_color' );
+		$wps_wpr_notification_color = ( ! empty( $wps_wpr_notification_color ) ) ? $wps_wpr_notification_color : '#55b3a5';
+
+		?>
+		<div class="wps-wpr-dashboard-points-balance" style="background-color: <?php echo esc_attr( $wps_wpr_notification_color ); ?>; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+			<p style="margin: 0; color: #fff; font-size: 16px;">
+				<strong><?php esc_html_e( 'Your Points Balance:', 'points-and-rewards-for-woocommerce' ); ?></strong>
+				<span style="font-size: 20px; font-weight: bold; margin-left: 10px;">
+					<?php echo esc_html( number_format( $current_points ) ); ?>
+				</span>
+				<span style="font-size: 14px; opacity: 0.9;">
+					<?php echo esc_html( $points_label ); ?>
+				</span>
+				<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'points' ) ); ?>" style="color: #fff; text-decoration: underline; margin-left: 15px; font-size: 14px;">
+					<?php esc_html_e( 'View Details →', 'points-and-rewards-for-woocommerce' ); ?>
+				</a>
+			</p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Add points balance to WordPress admin bar.
+	 *
+	 * @param WP_Admin_Bar $wp_admin_bar WordPress admin bar object.
+	 * @since 2.10.2
+	 */
+	public function wps_wpr_add_points_to_admin_bar( $wp_admin_bar ) {
+		// Only show for logged-in users on frontend
+		if ( ! is_user_logged_in() || is_admin() ) {
+			return;
+		}
+
+		// Check if admin bar display is enabled (add a setting for this later)
+		$other_settings = $this->wps_wpr_get_cached_option( 'wps_wpr_other_settings', true );
+		$show_in_admin_bar = isset( $other_settings['wps_wpr_show_points_in_admin_bar'] ) ?
+			$other_settings['wps_wpr_show_points_in_admin_bar'] : 'no';
+
+		if ( 'yes' !== $show_in_admin_bar ) {
+			return;
+		}
+
+		$user_id        = get_current_user_id();
+		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+
+		// Get points label
+		$general_settings = $this->wps_wpr_get_cached_option( 'wps_wpr_settings_gallery', true );
+		$points_label = ! empty( $general_settings['wps_wpr_general_points_label'] ) ?
+			$general_settings['wps_wpr_general_points_label'] :
+			__( 'Points', 'points-and-rewards-for-woocommerce' );
+
+		$wp_admin_bar->add_node(
+			array(
+				'id'     => 'wps-wpr-points-balance',
+				'title'  => sprintf(
+					'<span class="ab-icon dashicons dashicons-star-filled"></span><span class="ab-label">%s %s</span>',
+					number_format( $current_points ),
+					esc_html( $points_label )
+				),
+				'href'   => wc_get_account_endpoint_url( 'points' ),
+				'meta'   => array(
+					'title' => __( 'View your points', 'points-and-rewards-for-woocommerce' ),
+				),
+			)
+		);
+	}
+
 }

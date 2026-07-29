@@ -356,6 +356,10 @@ class Points_Rewards_For_Woocommerce {
 			// cart/checkout block js.
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_before', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
+			// Display points balance on My Account dashboard.
+			$this->loader->add_action( 'woocommerce_account_dashboard', $plugin_public, 'wps_wpr_display_points_on_dashboard', 5 );
+			// Add points balance to admin bar (frontend only).
+			$this->loader->add_action( 'admin_bar_menu', $plugin_public, 'wps_wpr_add_points_to_admin_bar', 100 );
 			// Multivendor X compatibility.
 			$this->loader->add_filter( 'mvx_available_payment_gateways', $plugin_public, 'wps_wpr_admin_mvx_list_modules', 10 );
 			// verify cart page nonce.
