@@ -285,8 +285,8 @@
 
   /**
    * AJAX call for social campaign for assigning the points.
-   * @param {*} points 
-   * @param {*} heading 
+   * @param {*} points
+   * @param {*} heading
    */
   function wps_wpr_ajax_call_for_social_campaign( key, $_this ) {
 
@@ -303,6 +303,7 @@
           success : function (response) {
 
             $_this.closest('.wps_wpr_cam_insta_visit').prev('.wps-wpr_campaign-h2').addBack().hide();
+
             // Redirect after logging.
             if ( response ) {
 

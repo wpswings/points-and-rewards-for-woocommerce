@@ -250,6 +250,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_campaign_settings  = is_array( $wps_wpr_campaign_settings ) ? $wps_wpr_campaign_settings : array();
 			$wps_wpr_campaign_color_one = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] : '#a13a93';
 			$wps_wpr_campaign_color_two = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] : '#ffbb21';
+
 			wp_enqueue_script( 'wps-campaign-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-campaign.js', array(), $this->version, true );
 			wp_localize_script(
 				$this->plugin_name,
@@ -4435,99 +4436,159 @@ class Points_Rewards_For_WooCommerce_Public {
 		$response             = array();
 		$response['result']   = false;
 		$response['msg']      = esc_html__( 'Failed', 'points-and-rewards-for-woocommerce' );
+
+		// SECURITY FIX: Check replay protection BEFORE processing any claim type
 		$already_assign_check = get_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', true );
+
 		if ( isset( $_POST['claim_points'] ) ) {
-			if ( empty( $already_assign_check ) ) {
-
-				$wps_claim_points = ! empty( $_POST['claim_points'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_points'] ) ) : 0;
-				$claim_type       = ! empty( $_POST['claim_type'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_type'] ) ) : 'points';
-				// wallet compatibility.
-				if ( 'wallet' === $claim_type && $wps_claim_points > 0 ) {
-
-					$wallet_payment_gateway = new Wallet_System_For_Woocommerce();
-					$wallet_user            = get_user_by( 'id', $user_id );
-					$current_currency       = apply_filters( 'wps_wsfw_get_current_currency', get_woocommerce_currency() );
-
-					$walletamount = (float) get_user_meta( $user_id, 'wps_wallet', true );
-					$walletamount = ! empty( $walletamount ) ? $walletamount : 0;
-
-					// Credit wallet.
-					$credited_amount = apply_filters( 'wps_wsfw_convert_to_base_price', $wps_claim_points );
-					$walletamount   += $credited_amount;
-					update_user_meta( $user_id, 'wps_wallet', $walletamount );
-
-					// Send notification email if enabled.
-					$balance = $current_currency . ' ' . $wps_claim_points;
-					if ( isset( $send_email_enable ) && 'on' === $send_email_enable ) {
-						$user_name = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
-
-						$mail_text  = sprintf( 'Hello %s', $user_name ) . ",\r\n";
-						$mail_text .= __( 'Wallet credited by ', 'points-and-rewards-for-woocommerce' ) . esc_html( $balance ) . __( ' through successfully Win Wheel.', 'points-and-rewards-for-woocommerce' );
-
-						$to       = $wallet_user->user_email;
-						$from     = get_option( 'admin_email' );
-						$subject  = __( 'Wallet updating notification', 'points-and-rewards-for-woocommerce' );
-						$headers  = "MIME-Version: 1.0\r\n";
-						$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-						$headers .= "From: $from\r\nReply-To: $to\r\n";
-
-						// Prefer WooCommerce email if available.
-						if ( ! empty( WC()->mailer()->emails['wps_wswp_wallet_credit'] ) ) {
-
-							$customer_email = WC()->mailer()->emails['wps_wswp_wallet_credit'];
-							$user_name      = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
-							$customer_email->trigger( $user_id, $user_name, $balance, '' );
-						} else {
-							$wallet_payment_gateway->send_mail_on_wallet_updation( $to, $subject, $mail_text, $headers );
-						}
-					}
-
-					// Record transaction.
-					$transaction_type = __( 'Wallet credited through Win Wheel ', 'points-and-rewards-for-woocommerce' );
-					$transaction_data = array(
-						'user_id'            => $user_id,
-						'amount'             => $wps_claim_points,
-						'currency'           => $current_currency,
-						'payment_method'     => 'Win Wheel',
-						'transaction_type'   => htmlentities( $transaction_type ),
-						'transaction_type_1' => 'credit',
-						'order_id'           => '',
-						'note'               => '',
-					);
-					$wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
-
-					$response['result'] = true;
-					$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
-				} elseif ( 'points' == $claim_type && $wps_claim_points > 0 ) {
-
-					// Next play date cal.
-					$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
-					$schedule_date             = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] : 0;
-					if ( $schedule_date > 0 ) {
-
-						$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
-						update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
-					}
-
-					$user_get_points = get_user_meta( $user_id, 'wps_wpr_points', true );
-					$user_get_points = ! empty( $user_get_points ) ? (int) $user_get_points : 0;
-
-					$wps_updated_points = (int) $user_get_points + $wps_claim_points;
-					update_user_meta( $user_id, 'wps_wpr_points', $wps_updated_points );
-					// send sms.
-					wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
-					// send messages on whatsapp.
-					wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
-					// calling function for creating points log.
-					$this->wps_wpr_create_game_points_logs( $wps_claim_points, $user_id, $wps_updated_points );
-
-					$response['result'] = true;
-					$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
-				}
-			} else {
-
+			// SECURITY FIX: Enforce replay protection for ALL claim types
+			if ( ! empty( $already_assign_check ) && is_numeric( $already_assign_check ) && $already_assign_check > time() ) {
 				$response['result'] = false;
 				$response['msg']    = esc_html__( 'Already played by you', 'points-and-rewards-for-woocommerce' );
+				wp_send_json( $response );
+				wp_die();
+			}
+
+			$wps_claim_points = ! empty( $_POST['claim_points'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_points'] ) ) : 0;
+			$claim_type       = ! empty( $_POST['claim_type'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_type'] ) ) : 'points';
+
+			// SECURITY FIX: Get configured prize values from Win Wheel settings
+			$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
+			$configured_prizes         = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] ) && is_array( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] : array();
+
+			// SECURITY FIX: Validate that claimed amount matches a configured prize
+			$is_valid_prize = false;
+			if ( ! empty( $configured_prizes ) ) {
+				foreach ( $configured_prizes as $prize_value ) {
+					if ( absint( $wps_claim_points ) === absint( $prize_value ) ) {
+						$is_valid_prize = true;
+						break;
+					}
+				}
+			}
+
+			// SECURITY FIX: Reject if claim amount does not match any configured prize
+			if ( ! $is_valid_prize ) {
+				$response['result'] = false;
+				$response['msg']    = esc_html__( 'Invalid claim amount', 'points-and-rewards-for-woocommerce' );
+				wp_send_json( $response );
+				wp_die();
+			}
+
+			// SECURITY FIX: Daily rate limiting - prevent abuse
+			$daily_limit_key   = 'wps_wpr_wallet_claims_' . gmdate( 'Y-m-d' );
+			$daily_claim_count = (int) get_user_meta( $user_id, $daily_limit_key, true );
+			$max_daily_claims  = apply_filters( 'wps_wpr_max_daily_wallet_claims', 1 ); // Default: 1 claim per day
+
+			if ( 'wallet' === $claim_type && $daily_claim_count >= $max_daily_claims ) {
+				$response['result'] = false;
+				$response['msg']    = esc_html__( 'Daily claim limit reached', 'points-and-rewards-for-woocommerce' );
+				wp_send_json( $response );
+				wp_die();
+			}
+
+			// wallet compatibility.
+			if ( 'wallet' === $claim_type && $wps_claim_points > 0 ) {
+
+				// SECURITY FIX: Validate Wallet System plugin is active before processing
+				if ( ! class_exists( 'Wallet_System_For_Woocommerce' ) ) {
+					$response['result'] = false;
+					$response['msg']    = esc_html__( 'Wallet system not available', 'points-and-rewards-for-woocommerce' );
+					wp_send_json( $response );
+					wp_die();
+				}
+
+				$wallet_payment_gateway = new Wallet_System_For_Woocommerce();
+				$wallet_user            = get_user_by( 'id', $user_id );
+				$current_currency       = apply_filters( 'wps_wsfw_get_current_currency', get_woocommerce_currency() );
+
+				$walletamount = (float) get_user_meta( $user_id, 'wps_wallet', true );
+				$walletamount = ! empty( $walletamount ) ? $walletamount : 0;
+
+				// Credit wallet.
+				$credited_amount = apply_filters( 'wps_wsfw_convert_to_base_price', $wps_claim_points );
+				$walletamount   += $credited_amount;
+				update_user_meta( $user_id, 'wps_wallet', $walletamount );
+
+				// SECURITY FIX: Set replay protection for wallet claims (same as points)
+				$schedule_date = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? absint( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) : 0;
+				if ( $schedule_date > 0 ) {
+					$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
+					update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
+				}
+
+				// SECURITY FIX: Increment daily claim counter
+				update_user_meta( $user_id, $daily_limit_key, $daily_claim_count + 1 );
+
+				// Send notification email if enabled.
+				$balance = $current_currency . ' ' . $wps_claim_points;
+				if ( isset( $send_email_enable ) && 'on' === $send_email_enable ) {
+					$user_name = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
+
+					$mail_text  = sprintf( 'Hello %s', $user_name ) . ",\r\n";
+					$mail_text .= __( 'Wallet credited by ', 'points-and-rewards-for-woocommerce' ) . esc_html( $balance ) . __( ' through successfully Win Wheel.', 'points-and-rewards-for-woocommerce' );
+
+					$to       = $wallet_user->user_email;
+					$from     = get_option( 'admin_email' );
+					$subject  = __( 'Wallet updating notification', 'points-and-rewards-for-woocommerce' );
+					$headers  = "MIME-Version: 1.0\r\n";
+					$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+					$headers .= "From: $from\r\nReply-To: $to\r\n";
+
+					// Prefer WooCommerce email if available.
+					if ( ! empty( WC()->mailer()->emails['wps_wswp_wallet_credit'] ) ) {
+
+						$customer_email = WC()->mailer()->emails['wps_wswp_wallet_credit'];
+						$user_name      = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
+						$customer_email->trigger( $user_id, $user_name, $balance, '' );
+					} else {
+						$wallet_payment_gateway->send_mail_on_wallet_updation( $to, $subject, $mail_text, $headers );
+					}
+				}
+
+				// Record transaction.
+				$transaction_type = __( 'Wallet credited through Win Wheel ', 'points-and-rewards-for-woocommerce' );
+				$transaction_data = array(
+					'user_id'            => $user_id,
+					'amount'             => $wps_claim_points,
+					'currency'           => $current_currency,
+					'payment_method'     => 'Win Wheel',
+					'transaction_type'   => htmlentities( $transaction_type ),
+					'transaction_type_1' => 'credit',
+					'order_id'           => '',
+					'note'               => '',
+				);
+				$wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
+
+				$response['result'] = true;
+				$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
+			} elseif ( 'points' === $claim_type && $wps_claim_points > 0 ) {
+
+				// Next play date cal.
+				$schedule_date = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? absint( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) : 0;
+				if ( $schedule_date > 0 ) {
+
+					$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
+					update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
+				}
+
+				// SECURITY FIX: Increment daily claim counter for points too
+				update_user_meta( $user_id, $daily_limit_key, $daily_claim_count + 1 );
+
+				$user_get_points = get_user_meta( $user_id, 'wps_wpr_points', true );
+				$user_get_points = ! empty( $user_get_points ) ? (int) $user_get_points : 0;
+
+				$wps_updated_points = (int) $user_get_points + (int) $wps_claim_points;
+				update_user_meta( $user_id, 'wps_wpr_points', $wps_updated_points );
+				// send sms.
+				wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
+				// send messages on whatsapp.
+				wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
+				// calling function for creating points log.
+				$this->wps_wpr_create_game_points_logs( $wps_claim_points, $user_id, $wps_updated_points );
+
+				$response['result'] = true;
+				$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
 			}
 		}
 		wp_send_json( $response );

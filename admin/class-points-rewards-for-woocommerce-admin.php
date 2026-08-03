@@ -103,6 +103,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 				'all'
 			);
 
+
 			if ( isset( $_GET['user_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				wp_enqueue_style(
 					'wps-admin-react-styles',
@@ -247,6 +248,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 						$this->wps_wpr_get_asset_version( 'admin/js/points-rewards-for-woocommerce-talk-to-expert.js' ),
 						false
 					);
+
 
 		// user report work.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe read-only user report display.

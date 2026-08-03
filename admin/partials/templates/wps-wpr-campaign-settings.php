@@ -439,8 +439,13 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 					<label for="wps_wpr_enter_campaign_image_url" class="wps_wpr_general_label"><?php esc_html_e( 'Enter Campaign Image URL', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_user_badges_setting_wrapper wps_wpr_general_content">
 						<input type="text" name="wps_wpr_enter_campaign_image_url" class="wps_wpr_enter_campaign_image_url" id="wps_wpr_enter_campaign_image_url" value="<?php echo esc_html( $wps_wpr_enter_campaign_image_url ); ?>">
-						<div class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice"><?php esc_html_e( 'Set the image URL for the campaign modal.', 'points-and-rewards-for-woocommerce' ); ?></div>
-						<span><button type="button" class="wps_wpr_view_campaign_existing_template" class="button"><?php esc_html_e( 'View Templates', 'points-and-rewards-for-woocommerce' ); ?></button></span>
+						<div class="wps_wpr_enable_user_badges_notices wps_wpr_label_notice">
+							<?php esc_html_e( 'Set the image URL for the campaign modal or browse from our template library.', 'points-and-rewards-for-woocommerce' ); ?>
+						</div>
+						<button type="button" class="button button-primary wps_wpr_view_campaign_existing_template" style="margin-top: 10px;">
+							<span class="dashicons dashicons-images-alt2" style="vertical-align: middle;"></span>
+							<?php esc_html_e( 'Browse Templates', 'points-and-rewards-for-woocommerce' ); ?>
+						</button>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
@@ -538,6 +543,10 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<span class="wps-wpr_temp-select-easter" id="wps_wpr_thanksgiving"><?php esc_html_e( 'Thanksgiving', 'points-and-rewards-for-woocommerce' ); ?></span>
 			<span class="wps-wpr_temp-select-easter" id="wps_wpr_womens_day"><?php esc_html_e( 'Women\'s Day', 'points-and-rewards-for-woocommerce' ); ?></span>
 			<span class="wps-wpr_temp-select-easter" id="wps_wpr_valentines_day"><?php esc_html_e( 'Valentine\'s Day', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<span class="wps-wpr_temp-select-easter" id="wps_wpr_summer_sale"><?php esc_html_e( 'Summer Sale', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<span class="wps-wpr_temp-select-easter" id="wps_wpr_flash_deal"><?php esc_html_e( 'Flash Deal', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<span class="wps-wpr_temp-select-easter" id="wps_wpr_back_to_school"><?php esc_html_e( 'Back to School', 'points-and-rewards-for-woocommerce' ); ?></span>
+			<span class="wps-wpr_temp-select-easter" id="wps_wpr_vip_member"><?php esc_html_e( 'VIP Member Reveal', 'points-and-rewards-for-woocommerce' ); ?></span>
 		</div>
 
 		<!-- Halloween Banners templates -->
@@ -845,11 +854,168 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va5.webp' ); ?>" alt="festive image" />
-				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Sweet Deals for Your Valentine’s Day', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Sweet Deals for Your Valentine\'s Day', 'points-and-rewards-for-woocommerce' ); ?></div>
 				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#600101</span>
 				<span class="wps_wpr_cam_sec_color">#E30000</span>
 			</div>
 		</div>
+
+		<!-- Summer Sale Banners templates -->
+		<div class="wps-popup_m-content wps_wpr_summer_sale">
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/SS1.webp' ); ?>" alt="Summer Sale" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Hot Summer Deals — Cool Down with Huge Savings!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#FF6B35</span>
+				<span class="wps_wpr_cam_sec_color">#F7931E</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/SS2.webp' ); ?>" alt="Summer Sale" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Beat the Heat with Unbeatable Summer Offers!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#00B4D8</span>
+				<span class="wps_wpr_cam_sec_color">#90E0EF</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/SS3.webp' ); ?>" alt="Summer Sale" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Sizzling Summer Savings Start Now!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#FFB703</span>
+				<span class="wps_wpr_cam_sec_color">#FB8500</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/SS4.webp' ); ?>" alt="Summer Sale" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Make Waves with Our Summer Sale — Dive In!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#06FFA5</span>
+				<span class="wps_wpr_cam_sec_color">#00D9FF</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/SS5.webp' ); ?>" alt="Summer Sale" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Sun\'s Out, Deals Out — Shop the Summer Sale!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#FF006E</span>
+				<span class="wps_wpr_cam_sec_color">#FFBE0B</span>
+			</div>
+		</div>
+
+		<!-- Flash Deal Banners templates -->
+		<div class="wps-popup_m-content wps_wpr_flash_deal">
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/FD1.webp' ); ?>" alt="Flash Deal" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Lightning Deals — Grab Them Before They\'re Gone!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#FF0054</span>
+				<span class="wps_wpr_cam_sec_color">#FF4D00</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/FD2.webp' ); ?>" alt="Flash Deal" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Flash Sale Alert — Limited Time Only!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#FFD60A</span>
+				<span class="wps_wpr_cam_sec_color">#FFC300</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/FD3.webp' ); ?>" alt="Flash Deal" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Act Fast — Flash Deals Disappear in Hours!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#7209B7</span>
+				<span class="wps_wpr_cam_sec_color">#F72585</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/FD4.webp' ); ?>" alt="Flash Deal" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Blink and You\'ll Miss It — Flash Sale Now!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#00F5FF</span>
+				<span class="wps_wpr_cam_sec_color">#00B4D8</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/FD5.webp' ); ?>" alt="Flash Deal" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Don\'t Wait — Flash Deals End Tonight!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#F72585</span>
+				<span class="wps_wpr_cam_sec_color">#B5179E</span>
+			</div>
+		</div>
+
+		<!-- Back to School Banners templates -->
+		<div class="wps-popup_m-content wps_wpr_back_to_school">
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/BTS1.webp' ); ?>" alt="Back to School" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Back to School Savings — Get Ready to Ace the Year!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#4361EE</span>
+				<span class="wps_wpr_cam_sec_color">#3A0CA3</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/BTS2.webp' ); ?>" alt="Back to School" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Smart Savings for Smart Students — Shop Now!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#2EC4B6</span>
+				<span class="wps_wpr_cam_sec_color">#FF9F1C</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/BTS3.webp' ); ?>" alt="Back to School" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Gear Up for Success — Back to School Deals Inside!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#06FFA5</span>
+				<span class="wps_wpr_cam_sec_color">#4CC9F0</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/BTS4.webp' ); ?>" alt="Back to School" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Hit the Books — Not Your Budget!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#6A4C93</span>
+				<span class="wps_wpr_cam_sec_color">#1982C4</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/BTS5.webp' ); ?>" alt="Back to School" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'School Essentials at Unbeatable Prices!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#F77F00</span>
+				<span class="wps_wpr_cam_sec_color">#D62828</span>
+			</div>
+		</div>
+
+		<!-- VIP Member Reveal Banners templates -->
+		<div class="wps-popup_m-content wps_wpr_vip_member">
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/VIP1.webp' ); ?>" alt="VIP Member" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Welcome to the VIP Club — Exclusive Perks Await!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#D4AF37</span>
+				<span class="wps_wpr_cam_sec_color">#C9A227</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/VIP2.webp' ); ?>" alt="VIP Member" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'You\'re VIP Now — Unlock Premium Rewards!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#9D4EDD</span>
+				<span class="wps_wpr_cam_sec_color">#7209B7</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/VIP3.webp' ); ?>" alt="VIP Member" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Exclusive Access Granted — VIP Benefits Inside!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#14213D</span>
+				<span class="wps_wpr_cam_sec_color">#FCA311</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/VIP4.webp' ); ?>" alt="VIP Member" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'VIP Treatment — Because You Deserve the Best!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#6A040F</span>
+				<span class="wps_wpr_cam_sec_color">#DC2F02</span>
+			</div>
+			<div class="wps-popup_mcb-img">
+				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/VIP5.webp' ); ?>" alt="VIP Member" />
+				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Join the Elite — VIP Membership Activated!', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
+				<span class="wps_wpr_cam_prim_color">#03045E</span>
+				<span class="wps_wpr_cam_sec_color">#0077B6</span>
+			</div>
+		</div>
 	</div>
 </div>
+

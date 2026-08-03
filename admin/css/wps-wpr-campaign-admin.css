@@ -1,0 +1,697 @@
+/**
+ * Campaign Admin Styles
+ *
+ * Styles for template library modal, A/B testing UI, and campaign scheduling.
+ *
+ * @since 2.10.0
+ * @package Points_Rewards_For_WooCommerce
+ */
+
+/* ==========================================================================
+   Template Library Modal
+   ========================================================================== */
+
+/* Modal Overlay */
+#wps-campaign-template-modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 100000;
+	background: rgba(0, 0, 0, 0.7);
+	align-items: center;
+	justify-content: center;
+	overflow: auto;
+}
+
+.wps-modal-open {
+	overflow: hidden;
+}
+
+/* Modal Container */
+.wps-template-modal-container {
+	position: relative;
+	width: 90%;
+	max-width: 1200px;
+	max-height: 90vh;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	margin: 20px auto;
+}
+
+/* Modal Header */
+.wps-template-modal-header {
+	padding: 20px 30px;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.wps-template-modal-header h2 {
+	margin: 0;
+	font-size: 24px;
+	font-weight: 600;
+}
+
+.wps-template-modal-close {
+	background: rgba(255, 255, 255, 0.2);
+	border: none;
+	color: #fff;
+	font-size: 32px;
+	line-height: 1;
+	cursor: pointer;
+	padding: 5px 15px;
+	border-radius: 4px;
+	transition: all 0.3s ease;
+}
+
+.wps-template-modal-close:hover {
+	background: rgba(255, 255, 255, 0.3);
+	transform: rotate(90deg);
+}
+
+/* Modal Controls */
+.wps-template-modal-controls {
+	padding: 20px 30px;
+	background: #f7f9fc;
+	border-bottom: 1px solid #e0e6ed;
+	display: flex;
+	gap: 15px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+#wps-template-search {
+	flex: 1;
+	min-width: 250px;
+	padding: 10px 15px;
+	border: 1px solid #cbd5e0;
+	border-radius: 6px;
+	font-size: 14px;
+	transition: all 0.3s ease;
+}
+
+#wps-template-search:focus {
+	outline: none;
+	border-color: #667eea;
+	box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#wps-template-season-filter {
+	padding: 10px 15px;
+	border: 1px solid #cbd5e0;
+	border-radius: 6px;
+	font-size: 14px;
+	background: #fff;
+	cursor: pointer;
+}
+
+/* Category Tabs */
+.wps-template-categories {
+	padding: 15px 30px;
+	background: #fff;
+	border-bottom: 1px solid #e0e6ed;
+	display: flex;
+	gap: 10px;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.wps-template-category-tab {
+	padding: 8px 16px;
+	background: #f7f9fc;
+	border: 1px solid #e0e6ed;
+	border-radius: 20px;
+	font-size: 13px;
+	font-weight: 500;
+	color: #4a5568;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	white-space: nowrap;
+}
+
+.wps-template-category-tab:hover {
+	background: #edf2f7;
+	border-color: #cbd5e0;
+}
+
+.wps-template-category-tab.active {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: #fff;
+	border-color: transparent;
+}
+
+.wps-template-category-tab .count {
+	opacity: 0.7;
+	font-size: 11px;
+	margin-left: 4px;
+}
+
+/* Template Grid */
+.wps-template-modal-body {
+	flex: 1;
+	overflow-y: auto;
+	padding: 30px;
+	background: #f7f9fc;
+}
+
+.wps-template-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 25px;
+}
+
+/* Template Card */
+.wps-template-card {
+	background: #fff;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+.wps-template-card:hover {
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+	transform: translateY(-5px);
+}
+
+/* Template Thumbnail */
+.wps-template-thumbnail {
+	position: relative;
+	padding-top: 50%; /* 2:1 aspect ratio */
+	overflow: hidden;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.wps-template-thumbnail img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.3s ease;
+}
+
+.wps-template-card:hover .wps-template-thumbnail img {
+	transform: scale(1.05);
+}
+
+/* Template Overlay */
+.wps-template-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.7);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.wps-template-card:hover .wps-template-overlay {
+	opacity: 1;
+}
+
+.wps-template-preview-btn {
+	background: #fff;
+	color: #333;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	transition: all 0.3s ease;
+}
+
+.wps-template-preview-btn:hover {
+	background: #f7f9fc;
+	transform: scale(1.05);
+}
+
+.wps-template-preview-btn .dashicons {
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+}
+
+/* Template Info */
+.wps-template-info {
+	padding: 20px;
+}
+
+.wps-template-name {
+	margin: 0 0 8px;
+	font-size: 14px;
+	font-weight: 700;
+	color: #667eea;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.wps-template-heading {
+	margin: 0 0 12px;
+	font-size: 13px;
+	line-height: 1.4;
+	color: #4a5568;
+	min-height: 36px;
+}
+
+/* Color Swatches */
+.wps-template-colors {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 15px;
+}
+
+.wps-color-swatch {
+	width: 32px;
+	height: 32px;
+	border-radius: 6px;
+	border: 2px solid #fff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	cursor: help;
+}
+
+/* Select Button */
+.wps-template-select-btn {
+	width: 100%;
+	padding: 10px;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.wps-template-select-btn:hover {
+	background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Loading/Empty States */
+.wps-template-loading,
+.wps-no-templates,
+.wps-template-error {
+	text-align: center;
+	padding: 60px 20px;
+	color: #718096;
+	font-size: 16px;
+}
+
+.wps-template-loading::before {
+	content: "";
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	border: 4px solid #e0e6ed;
+	border-top-color: #667eea;
+	border-radius: 50%;
+	animation: wps-spin 1s linear infinite;
+	margin-bottom: 15px;
+}
+
+@keyframes wps-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Lightbox
+   ========================================================================== */
+
+.wps-template-lightbox {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 100001;
+}
+
+.wps-lightbox-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.9);
+}
+
+.wps-lightbox-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	max-width: 90%;
+	max-height: 90vh;
+}
+
+.wps-lightbox-content img {
+	max-width: 100%;
+	max-height: 90vh;
+	border-radius: 8px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.wps-lightbox-close {
+	position: absolute;
+	top: -50px;
+	right: 0;
+	background: rgba(255, 255, 255, 0.2);
+	color: #fff;
+	border: none;
+	font-size: 40px;
+	line-height: 1;
+	cursor: pointer;
+	padding: 10px 20px;
+	border-radius: 6px;
+	transition: all 0.3s ease;
+}
+
+.wps-lightbox-close:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   Campaign Preview
+   ========================================================================== */
+
+.wps-campaign-preview {
+	animation: wps-fade-in 0.3s ease;
+}
+
+@keyframes wps-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* ==========================================================================
+   A/B Testing UI
+   ========================================================================== */
+
+.wps-ab-testing-section {
+	margin-top: 30px;
+	padding: 20px;
+	background: #f0f4ff;
+	border: 2px dashed #667eea;
+	border-radius: 8px;
+}
+
+.wps-ab-testing-fields {
+	display: none;
+	margin-top: 20px;
+}
+
+.wps-ab-variant-box {
+	background: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	border: 1px solid #e0e6ed;
+	margin-bottom: 20px;
+}
+
+.wps-ab-variant-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	border-bottom: 2px solid #667eea;
+}
+
+.wps-ab-variant-header h3 {
+	margin: 0;
+	color: #667eea;
+	font-size: 18px;
+}
+
+.wps_wpr_copy_from_main {
+	background: #edf2f7;
+	padding: 8px 16px;
+	border: 1px solid #cbd5e0;
+	border-radius: 6px;
+	font-size: 13px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.wps_wpr_copy_from_main:hover {
+	background: #e2e8f0;
+}
+
+/* Traffic Split Slider */
+.wps-traffic-split-container {
+	margin: 20px 0;
+	padding: 20px;
+	background: #fff;
+	border-radius: 8px;
+	border: 1px solid #e0e6ed;
+}
+
+#wps_wpr_ab_traffic_split {
+	width: 100%;
+	height: 8px;
+	border-radius: 4px;
+	background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+	outline: none;
+	opacity: 0.7;
+	transition: opacity 0.2s;
+}
+
+#wps_wpr_ab_traffic_split:hover {
+	opacity: 1;
+}
+
+#wps_wpr_ab_split_display {
+	display: block;
+	margin-top: 10px;
+	font-weight: 600;
+	color: #4a5568;
+	text-align: center;
+}
+
+/* Pro Badge */
+.wps-pro-badge {
+	display: inline-block;
+	background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+	color: #fff;
+	padding: 4px 10px;
+	border-radius: 4px;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-left: 10px;
+	letter-spacing: 0.5px;
+	box-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+}
+
+/* ==========================================================================
+   Campaign Scheduling
+   ========================================================================== */
+
+.wps-scheduling-section {
+	margin-top: 30px;
+}
+
+.wps-scheduling-fields {
+	display: none;
+	margin-top: 20px;
+}
+
+.wps-datetime-input-group {
+	display: flex;
+	gap: 15px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.wps-datetime-field {
+	flex: 1;
+	min-width: 250px;
+}
+
+.wps-datetime-field label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: 600;
+	color: #4a5568;
+}
+
+.wps-datetime-field input[type="datetime-local"] {
+	width: 100%;
+	padding: 10px 15px;
+	border: 1px solid #cbd5e0;
+	border-radius: 6px;
+	font-size: 14px;
+	transition: all 0.3s ease;
+}
+
+.wps-datetime-field input[type="datetime-local"]:focus {
+	outline: none;
+	border-color: #667eea;
+	box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#wps_wpr_clear_schedule {
+	background: #f56565;
+	color: #fff;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	transition: all 0.3s ease;
+}
+
+#wps_wpr_clear_schedule:hover {
+	background: #e53e3e;
+}
+
+/* Campaign Status Indicator */
+.wps-campaign-status {
+	display: inline-block;
+	padding: 6px 12px;
+	border-radius: 20px;
+	font-size: 12px;
+	font-weight: 600;
+	margin-left: 10px;
+}
+
+.wps-campaign-status.scheduled {
+	background: #fef3c7;
+	color: #92400e;
+}
+
+.wps-campaign-status.active {
+	background: #d1fae5;
+	color: #065f46;
+}
+
+.wps-campaign-status.ended {
+	background: #fee2e2;
+	color: #991b1b;
+}
+
+/* ==========================================================================
+   Browse Templates Button
+   ========================================================================== */
+
+.wps_wpr_browse_templates_btn {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: #fff;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	margin-left: 10px;
+}
+
+.wps_wpr_browse_templates_btn:hover {
+	background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 992px) {
+	.wps-template-modal-container {
+		width: 95%;
+		max-height: 95vh;
+	}
+
+	.wps-template-grid {
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		gap: 20px;
+	}
+
+	.wps-template-categories {
+		flex-wrap: wrap;
+	}
+
+	.wps-datetime-input-group {
+		flex-direction: column;
+	}
+
+	.wps-datetime-field {
+		width: 100%;
+	}
+}
+
+@media (max-width: 768px) {
+	.wps-template-modal-header {
+		padding: 15px 20px;
+	}
+
+	.wps-template-modal-header h2 {
+		font-size: 20px;
+	}
+
+	.wps-template-modal-controls {
+		padding: 15px 20px;
+	}
+
+	.wps-template-categories {
+		padding: 10px 20px;
+	}
+
+	.wps-template-modal-body {
+		padding: 20px;
+	}
+
+	.wps-template-grid {
+		grid-template-columns: 1fr;
+		gap: 15px;
+	}
+
+	.wps-ab-variant-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+	#wps-campaign-template-modal,
+	.wps-template-lightbox {
+		display: none !important;
+	}
+}
