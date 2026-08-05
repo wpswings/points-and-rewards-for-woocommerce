@@ -1,0 +1,565 @@
+/**
+ * Activation Wizard Styles
+ *
+ * Provides a clean, modern interface for the guided setup wizard.
+ *
+ * @package    Ultimate_Woocommerce_Points_And_Rewards
+ * @subpackage Ultimate_Woocommerce_Points_And_Rewards/admin/css
+ * @since      3.0.0
+ */
+
+/* ===========================
+   Wizard Container
+   =========================== */
+.mwb-wpr-activation-wizard-wrap {
+	max-width: 900px;
+	margin: 40px auto;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	padding: 0;
+}
+
+/* ===========================
+   Wizard Header
+   =========================== */
+.mwb-wpr-wizard-header {
+	padding: 30px 40px;
+	border-bottom: 1px solid #e5e5e5;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.mwb-wpr-wizard-logo h1 {
+	margin: 0 0 10px 0;
+	font-size: 24px;
+	color: #23282d;
+}
+
+.mwb-wpr-wizard-logo p {
+	margin: 0;
+	color: #666;
+	font-size: 14px;
+}
+
+.mwb-wpr-skip-wizard {
+	color: #999;
+	text-decoration: none;
+	font-size: 14px;
+	transition: color 0.2s;
+}
+
+.mwb-wpr-skip-wizard:hover {
+	color: #2271b1;
+}
+
+/* ===========================
+   Progress Bar
+   =========================== */
+.mwb-wpr-wizard-progress {
+	padding: 30px 40px;
+	background: #f7f7f7;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.mwb-wpr-progress-bar {
+	width: 100%;
+	height: 8px;
+	background: #e5e5e5;
+	border-radius: 4px;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+
+.mwb-wpr-progress-fill {
+	height: 100%;
+	background: linear-gradient(90deg, #2271b1, #00a0d2);
+	transition: width 0.3s ease;
+	border-radius: 4px;
+}
+
+.mwb-wpr-progress-steps {
+	display: flex;
+	justify-content: space-between;
+}
+
+.mwb-wpr-progress-step {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 1;
+	position: relative;
+}
+
+.mwb-wpr-step-number {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: #e5e5e5;
+	color: #999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	font-size: 14px;
+	margin-bottom: 8px;
+	transition: all 0.3s;
+}
+
+.mwb-wpr-step-name {
+	font-size: 12px;
+	color: #666;
+	text-align: center;
+}
+
+.mwb-wpr-progress-step.active .mwb-wpr-step-number {
+	background: #2271b1;
+	color: #fff;
+	box-shadow: 0 0 0 4px rgba(34, 113, 177, 0.1);
+}
+
+.mwb-wpr-progress-step.active .mwb-wpr-step-name {
+	color: #2271b1;
+	font-weight: 600;
+}
+
+.mwb-wpr-progress-step.completed .mwb-wpr-step-number {
+	background: #00a32a;
+	color: #fff;
+}
+
+.mwb-wpr-progress-step.completed .mwb-wpr-step-number::before {
+	content: "✓";
+}
+
+.mwb-wpr-progress-step.completed .mwb-wpr-step-name {
+	color: #00a32a;
+}
+
+/* ===========================
+   Wizard Content
+   =========================== */
+.mwb-wpr-wizard-content {
+	padding: 40px;
+}
+
+.mwb-wpr-wizard-step h2 {
+	margin: 0 0 10px 0;
+	font-size: 22px;
+	color: #23282d;
+}
+
+.mwb-wpr-step-description {
+	margin: 0 0 30px 0;
+	color: #666;
+	font-size: 14px;
+}
+
+/* ===========================
+   Quick Start Templates
+   =========================== */
+.mwb-wpr-quick-start-templates {
+	margin-bottom: 40px;
+}
+
+.mwb-wpr-quick-start-templates h3 {
+	margin: 0 0 10px 0;
+	font-size: 18px;
+	color: #23282d;
+}
+
+.mwb-wpr-quick-start-templates > p {
+	margin: 0 0 20px 0;
+	color: #666;
+	font-size: 14px;
+}
+
+.mwb-wpr-template-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 20px;
+	margin-top: 20px;
+}
+
+.mwb-wpr-template-card {
+	border: 2px solid #e5e5e5;
+	border-radius: 8px;
+	padding: 20px;
+	text-align: center;
+	transition: all 0.3s;
+	cursor: pointer;
+	background: #fff;
+}
+
+.mwb-wpr-template-card:hover {
+	border-color: #2271b1;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	transform: translateY(-2px);
+}
+
+.mwb-wpr-template-card.selected {
+	border-color: #2271b1;
+	background: #f0f6fc;
+	box-shadow: 0 0 0 4px rgba(34, 113, 177, 0.1);
+}
+
+.mwb-wpr-template-icon {
+	font-size: 48px;
+	margin-bottom: 15px;
+}
+
+.mwb-wpr-template-card h4 {
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	color: #23282d;
+}
+
+.mwb-wpr-template-card p {
+	margin: 0 0 15px 0;
+	color: #666;
+	font-size: 13px;
+	line-height: 1.5;
+	min-height: 60px;
+}
+
+.mwb-wpr-apply-template {
+	width: 100%;
+	margin-top: 10px;
+}
+
+/* ===========================
+   Form Fields
+   =========================== */
+.mwb-wpr-wizard-fields {
+	margin-top: 30px;
+}
+
+.mwb-wpr-wizard-fields .form-table {
+	margin-top: 0;
+}
+
+.mwb-wpr-wizard-fields .form-table th {
+	padding: 15px 20px 15px 0;
+	font-weight: 600;
+	color: #23282d;
+}
+
+.mwb-wpr-wizard-fields .form-table td {
+	padding: 15px 0;
+}
+
+.mwb-wpr-wizard-fields .description {
+	margin-top: 8px;
+	color: #666;
+	font-size: 13px;
+}
+
+/* Custom Toggle Switch */
+.mwb-wpr-toggle {
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 26px;
+}
+
+.mwb-wpr-toggle input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.mwb-wpr-toggle-slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	transition: 0.3s;
+	border-radius: 26px;
+}
+
+.mwb-wpr-toggle-slider:before {
+	position: absolute;
+	content: "";
+	height: 20px;
+	width: 20px;
+	left: 3px;
+	bottom: 3px;
+	background-color: white;
+	transition: 0.3s;
+	border-radius: 50%;
+}
+
+.mwb-wpr-toggle input:checked + .mwb-wpr-toggle-slider {
+	background-color: #2271b1;
+}
+
+.mwb-wpr-toggle input:checked + .mwb-wpr-toggle-slider:before {
+	transform: translateX(24px);
+}
+
+/* ===========================
+   Wizard Actions
+   =========================== */
+.mwb-wpr-wizard-actions {
+	margin-top: 40px;
+	padding-top: 30px;
+	border-top: 1px solid #e5e5e5;
+	display: flex;
+	justify-content: space-between;
+	gap: 15px;
+}
+
+.mwb-wpr-wizard-actions .button {
+	min-width: 140px;
+}
+
+.mwb-wpr-wizard-next,
+.mwb-wpr-wizard-complete {
+	margin-left: auto;
+}
+
+/* ===========================
+   Completion Screen
+   =========================== */
+.mwb-wpr-wizard-complete-section {
+	text-align: center;
+}
+
+.mwb-wpr-complete-icon {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	background: #00a32a;
+	color: #fff;
+	font-size: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto 20px;
+	box-shadow: 0 4px 12px rgba(0, 163, 42, 0.2);
+}
+
+.mwb-wpr-wizard-complete h2 {
+	text-align: center;
+	color: #00a32a;
+	margin-bottom: 15px;
+}
+
+/* ===========================
+   Summary
+   =========================== */
+.mwb-wpr-wizard-summary {
+	margin: 30px 0;
+	padding: 30px;
+	background: #f7f7f7;
+	border-radius: 8px;
+}
+
+.mwb-wpr-summary-sections {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 20px;
+}
+
+.mwb-wpr-summary-section {
+	background: #fff;
+	padding: 20px;
+	border-radius: 6px;
+	border-left: 3px solid #2271b1;
+}
+
+.mwb-wpr-summary-section h4 {
+	margin: 0 0 10px 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: #2271b1;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.mwb-wpr-summary-section p {
+	margin: 5px 0;
+	font-size: 13px;
+	color: #666;
+}
+
+/* ===========================
+   Next Steps
+   =========================== */
+.mwb-wpr-next-steps {
+	margin-top: 40px;
+}
+
+.mwb-wpr-next-steps h3 {
+	margin: 0 0 20px 0;
+	font-size: 18px;
+	color: #23282d;
+	text-align: center;
+}
+
+.mwb-wpr-next-steps-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 20px;
+}
+
+.mwb-wpr-next-step-card {
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	border-radius: 8px;
+	padding: 25px;
+	text-align: center;
+	transition: all 0.3s;
+}
+
+.mwb-wpr-next-step-card:hover {
+	border-color: #2271b1;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	transform: translateY(-2px);
+}
+
+.mwb-wpr-next-step-card .dashicons {
+	font-size: 48px;
+	width: 48px;
+	height: 48px;
+	color: #2271b1;
+	margin-bottom: 15px;
+}
+
+.mwb-wpr-next-step-card h4 {
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	color: #23282d;
+}
+
+.mwb-wpr-next-step-card p {
+	margin: 0 0 15px 0;
+	color: #666;
+	font-size: 13px;
+	line-height: 1.5;
+	min-height: 60px;
+}
+
+.mwb-wpr-next-step-card .button {
+	width: 100%;
+}
+
+/* ===========================
+   Responsive Design
+   =========================== */
+@media (max-width: 782px) {
+	.mwb-wpr-activation-wizard-wrap {
+		margin: 20px;
+	}
+
+	.mwb-wpr-wizard-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 15px;
+	}
+
+	.mwb-wpr-wizard-header,
+	.mwb-wpr-wizard-progress,
+	.mwb-wpr-wizard-content {
+		padding: 20px;
+	}
+
+	.mwb-wpr-progress-steps {
+		flex-wrap: wrap;
+	}
+
+	.mwb-wpr-step-name {
+		font-size: 11px;
+	}
+
+	.mwb-wpr-template-cards {
+		grid-template-columns: 1fr;
+	}
+
+	.mwb-wpr-wizard-actions {
+		flex-direction: column;
+	}
+
+	.mwb-wpr-wizard-actions .button {
+		width: 100%;
+		margin: 0 !important;
+	}
+
+	.mwb-wpr-summary-sections,
+	.mwb-wpr-next-steps-cards {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 600px) {
+	.mwb-wpr-wizard-logo h1 {
+		font-size: 20px;
+	}
+
+	.mwb-wpr-wizard-step h2 {
+		font-size: 18px;
+	}
+
+	.mwb-wpr-step-number {
+		width: 30px;
+		height: 30px;
+		font-size: 12px;
+	}
+}
+
+/* ===========================
+   Loading States
+   =========================== */
+.mwb-wpr-wizard-actions .button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* ===========================
+   Animations
+   =========================== */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.mwb-wpr-wizard-step {
+	animation: fadeIn 0.3s ease;
+}
+
+/* ===========================
+   Select2 Overrides
+   =========================== */
+.mwb-wpr-wizard-fields .select2-container {
+	max-width: 400px;
+}
+
+.mwb-wpr-wizard-fields .select2-container .select2-selection--multiple {
+	min-height: 38px;
+	border-color: #8c8f94;
+}
+
+.mwb-wpr-wizard-fields .select2-container--default .select2-selection--multiple .select2-selection__choice {
+	background-color: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+}
+
+.mwb-wpr-wizard-fields .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+	color: #fff;
+	opacity: 0.8;
+}
+
+.mwb-wpr-wizard-fields .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+	opacity: 1;
+}

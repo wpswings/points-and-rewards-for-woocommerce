@@ -401,6 +401,9 @@ if ( $activated ) {
 			add_rewrite_endpoint( 'view-log', EP_PAGES );
 			flush_rewrite_rules();
 		}
+
+		// Set transient to trigger activation wizard redirect.
+		set_transient( 'mwb_wpr_activation_redirect', true, 30 );
 	}
 
 	/**

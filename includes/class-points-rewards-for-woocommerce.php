@@ -136,6 +136,11 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-points-rewards-for-woocommerce-public.php';
 
+		/**
+		 * The class responsible for the activation wizard.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-mwb-wpr-activation-wizard.php';
+
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
 		/**
@@ -180,6 +185,9 @@ class Points_Rewards_For_Woocommerce {
 	private function define_admin_hooks() {
 		$plugin_admin = new Points_Rewards_For_WooCommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 		$wps_wpr_talk_to_expert = null;
+
+		// Initialize activation wizard.
+		$activation_wizard = new MWB_WPR_Activation_Wizard( $this->get_plugin_name(), $this->get_version() );
 
 		if ( is_admin() ) {
 			$wps_wpr_talk_to_expert = new Points_Rewards_For_WooCommerce_Talk_To_Expert_Form();
