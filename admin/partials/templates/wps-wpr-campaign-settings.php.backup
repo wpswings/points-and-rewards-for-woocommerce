@@ -554,35 +554,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/hal1.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Spooky deals await this Halloween Festival!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#582A47</span>
 				<span class="wps_wpr_cam_sec_color">#B14539</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/hal2.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Halloween Festival treats you can’t miss!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#1D092D</span>
 				<span class="wps_wpr_cam_sec_color">#9544D1</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/hal3.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Get your Halloween Festival savings now!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#3B1C57</span>
 				<span class="wps_wpr_cam_sec_color">#703177</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/hal4.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Frightful fun during the Halloween Festival!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#69B827</span>
 				<span class="wps_wpr_cam_sec_color">#388589</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/hal5.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Scare up some deals — Halloween Festival style!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#7671B4</span>
 				<span class="wps_wpr_cam_sec_color">#4D43B3</span>
 			</div>
@@ -593,35 +593,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/bf1.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Black Friday steals are here!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#F6CB31</span>
 				<span class="wps_wpr_cam_sec_color">#E59E0C</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/bf2.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Don’t miss out this Black Friday!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#01A5C2</span>
 				<span class="wps_wpr_cam_sec_color">#6ABA41</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/bf3.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Shop smart with Black Friday deals!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#20A1C3</span>
 				<span class="wps_wpr_cam_sec_color">#72DBFF</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/bf4.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Massive savings waiting — Black Friday!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#DF368E</span>
 				<span class="wps_wpr_cam_sec_color">#CE2350</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/bf5.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Grab it now, only for Black Friday!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#32BDFE</span>
 				<span class="wps_wpr_cam_sec_color">#6CC9F8</span>
 			</div>
@@ -632,35 +632,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/eas1.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Egg-citing deals this Happy Easter!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#B11618</span>
 				<span class="wps_wpr_cam_sec_color">#910C0E</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/eas2.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Hop into savings — Happy Easter!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#6F5345</span>
 				<span class="wps_wpr_cam_sec_color">#140F0C</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/eas3.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Happy Easter treats just for you!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#E11127</span>
 				<span class="wps_wpr_cam_sec_color">#FC1C36</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/eas4.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Celebrate joy with Happy Easter deals!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#000000</span>
 				<span class="wps_wpr_cam_sec_color">#1E1E1E</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/eas5.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Spring into offers this Happy Easter!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FF0009</span>
 				<span class="wps_wpr_cam_sec_color">#84020F</span>
 			</div>
@@ -671,35 +671,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Chr1.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Snow-body beats our Christmas offers!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#AD0003</span>
 				<span class="wps_wpr_cam_sec_color">#380001</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Chr2.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Merry Christmas treats just for you!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#C42424</span>
 				<span class="wps_wpr_cam_sec_color">#5B0E0C</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Chr3.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Ring in Christmas with special deals!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#B1123F</span>
 				<span class="wps_wpr_cam_sec_color">#7B233A</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Chr4.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Warm Christmas greetings & offers!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#007CC3</span>
 				<span class="wps_wpr_cam_sec_color">#89AEC1</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Chr5.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Make spirits bright with Christmas offers!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#DAAD61</span>
 				<span class="wps_wpr_cam_sec_color">#5E1012</span>
 			</div>
@@ -710,35 +710,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/MD1.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Mom-entous deals this Mother\'s Day!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#383E5E</span>
 				<span class="wps_wpr_cam_sec_color">#BC626E</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/MD2.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Mom deserves the best — Happy Mother\'s Day!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#EC1A54</span>
 				<span class="wps_wpr_cam_sec_color">#FB8E76</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/MD3.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Sweet surprises for sweet Moms!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#631500</span>
 				<span class="wps_wpr_cam_sec_color">#03504C</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/MD4.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Treat Mom like the queen she is!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#9E1968</span>
 				<span class="wps_wpr_cam_sec_color">#ED9587</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/MD5.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Love, gratitude & Mother\'s Day offers!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#440003</span>
 				<span class="wps_wpr_cam_sec_color">#940506</span>
 			</div>
@@ -749,35 +749,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/TG1.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Gobble up these Thanksgiving offers!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#4A000B</span>
 				<span class="wps_wpr_cam_sec_color">#F65706</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/TG2.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Grateful hearts, great deals — Happy Thanksgiving!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#A04B02</span>
 				<span class="wps_wpr_cam_sec_color">#B43229</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/TG3.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Share the love with Thanksgiving savings!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#A0173F</span>
 				<span class="wps_wpr_cam_sec_color">#1C3F39</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/TG4.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Thanksgiving traditions and treats!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#801F0A</span>
 				<span class="wps_wpr_cam_sec_color">#FF9233</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/TG5.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Give thanks for these special offers!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FFA437</span>
 				<span class="wps_wpr_cam_sec_color">#CB2525</span>
 			</div>
@@ -788,35 +788,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Wo1.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Women’s Day Special Sale — Because You Deserve the Best!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#9F0308</span>
 				<span class="wps_wpr_cam_sec_color">#E1151C</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Wo2.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'This Women’s Day, Celebrate Your Journey!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FA9DCA</span>
 				<span class="wps_wpr_cam_sec_color">#FE2B57</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Wo3.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Empowering Every Woman — Happy Women’s Day!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#E65485</span>
 				<span class="wps_wpr_cam_sec_color">#FF0956</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Wo4.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Exclusive Women’s Day Offers — Celebrate Yourself!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FF6D79</span>
 				<span class="wps_wpr_cam_sec_color">#AF0815</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Wo5.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Strong. Bold. Fearless. It’s Your Women’s Day!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FF7885</span>
 				<span class="wps_wpr_cam_sec_color">#BD0515</span>
 			</div>
@@ -827,35 +827,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va1.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Make Every Moment Special This Valentine’s Day', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FF6B74</span>
 				<span class="wps_wpr_cam_sec_color">#CB374F</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va2.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Feel the Romance in the Air This Valentine’s Day', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#F48C92</span>
 				<span class="wps_wpr_cam_sec_color">#A60620</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va3.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Fall in Love with Our Valentine’s Day Offers', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#91090B</span>
 				<span class="wps_wpr_cam_sec_color">#EB3C40</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va4.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Spread Love and Kindness This Valentine’s Day', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#DF3C84</span>
 				<span class="wps_wpr_cam_sec_color">#C40A0E</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/Va5.webp' ); ?>" alt="festive image" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Sweet Deals for Your Valentine\'s Day', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#600101</span>
 				<span class="wps_wpr_cam_sec_color">#E30000</span>
 			</div>
@@ -866,35 +866,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/SS1.webp' ); ?>" alt="Summer Sale" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Hot Summer Deals — Cool Down with Huge Savings!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FF6B35</span>
 				<span class="wps_wpr_cam_sec_color">#F7931E</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/SS2.webp' ); ?>" alt="Summer Sale" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Beat the Heat with Unbeatable Summer Offers!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#00B4D8</span>
 				<span class="wps_wpr_cam_sec_color">#90E0EF</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/SS3.webp' ); ?>" alt="Summer Sale" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Sizzling Summer Savings Start Now!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FFB703</span>
 				<span class="wps_wpr_cam_sec_color">#FB8500</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/SS4.webp' ); ?>" alt="Summer Sale" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Make Waves with Our Summer Sale — Dive In!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#06FFA5</span>
 				<span class="wps_wpr_cam_sec_color">#00D9FF</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/SS5.webp' ); ?>" alt="Summer Sale" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Sun\'s Out, Deals Out — Shop the Summer Sale!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FF006E</span>
 				<span class="wps_wpr_cam_sec_color">#FFBE0B</span>
 			</div>
@@ -905,35 +905,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/FD1.webp' ); ?>" alt="Flash Deal" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Lightning Deals — Grab Them Before They\'re Gone!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FF0054</span>
 				<span class="wps_wpr_cam_sec_color">#FF4D00</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/FD2.webp' ); ?>" alt="Flash Deal" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Flash Sale Alert — Limited Time Only!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#FFD60A</span>
 				<span class="wps_wpr_cam_sec_color">#FFC300</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/FD3.webp' ); ?>" alt="Flash Deal" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Act Fast — Flash Deals Disappear in Hours!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#7209B7</span>
 				<span class="wps_wpr_cam_sec_color">#F72585</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/FD4.webp' ); ?>" alt="Flash Deal" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Blink and You\'ll Miss It — Flash Sale Now!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#00F5FF</span>
 				<span class="wps_wpr_cam_sec_color">#00B4D8</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/FD5.webp' ); ?>" alt="Flash Deal" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Don\'t Wait — Flash Deals End Tonight!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#F72585</span>
 				<span class="wps_wpr_cam_sec_color">#B5179E</span>
 			</div>
@@ -944,35 +944,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/BTS1.webp' ); ?>" alt="Back to School" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Back to School Savings — Get Ready to Ace the Year!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#4361EE</span>
 				<span class="wps_wpr_cam_sec_color">#3A0CA3</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/BTS2.webp' ); ?>" alt="Back to School" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Smart Savings for Smart Students — Shop Now!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#2EC4B6</span>
 				<span class="wps_wpr_cam_sec_color">#FF9F1C</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/BTS3.webp' ); ?>" alt="Back to School" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Gear Up for Success — Back to School Deals Inside!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#06FFA5</span>
 				<span class="wps_wpr_cam_sec_color">#4CC9F0</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/BTS4.webp' ); ?>" alt="Back to School" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Hit the Books — Not Your Budget!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#6A4C93</span>
 				<span class="wps_wpr_cam_sec_color">#1982C4</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/BTS5.webp' ); ?>" alt="Back to School" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'School Essentials at Unbeatable Prices!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#F77F00</span>
 				<span class="wps_wpr_cam_sec_color">#D62828</span>
 			</div>
@@ -983,35 +983,35 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/VIP1.webp' ); ?>" alt="VIP Member" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Welcome to the VIP Club — Exclusive Perks Await!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#D4AF37</span>
 				<span class="wps_wpr_cam_sec_color">#C9A227</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/VIP2.webp' ); ?>" alt="VIP Member" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'You\'re VIP Now — Unlock Premium Rewards!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#9D4EDD</span>
 				<span class="wps_wpr_cam_sec_color">#7209B7</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/VIP3.webp' ); ?>" alt="VIP Member" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Exclusive Access Granted — VIP Benefits Inside!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#14213D</span>
 				<span class="wps_wpr_cam_sec_color">#FCA311</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/VIP4.webp' ); ?>" alt="VIP Member" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'VIP Treatment — Because You Deserve the Best!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#6A040F</span>
 				<span class="wps_wpr_cam_sec_color">#DC2F02</span>
 			</div>
 			<div class="wps-popup_mcb-img">
 				<img class="wps_wpr_cam_banner_image" src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'admin/camp-images/VIP5.webp' ); ?>" alt="VIP Member" />
 				<div class="h3 wps_wpr_camp_banner_heading"><?php esc_html_e( 'Join the Elite — VIP Membership Activated!', 'points-and-rewards-for-woocommerce' ); ?></div>
-				<div class="wps_wpr_banner_actions"><button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button><button class="wps_wpr_copy_banner_url" title="<?php esc_attr_e( 'Copy Campaign URL', 'points-and-rewards-for-woocommerce' ); ?>"><span class="dashicons dashicons-admin-links"></span></button></div>
+				<button class="wps_wpr_apply_banner_img"><?php esc_html_e( 'Apply', 'points-and-rewards-for-woocommerce' ); ?></button>
 				<span class="wps_wpr_cam_prim_color">#03045E</span>
 				<span class="wps_wpr_cam_sec_color">#0077B6</span>
 			</div>
@@ -1019,190 +1019,3 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 	</div>
 </div>
 
-
-<style>
-/* Campaign Banner Copy URL Styling */
-.wps_wpr_banner_actions {
-	display: flex;
-	gap: 8px;
-	align-items: center;
-	margin-top: 10px;
-	position: relative;
-	z-index: 10;
-	padding: 0 15px 15px 15px;
-}
-
-.wps_wpr_banner_actions .wps_wpr_apply_banner_img {
-	flex: 1;
-	position: static !important;
-	opacity: 1 !important;
-	background: #2271b1 !important;
-	color: #fff !important;
-	padding: 8px 15px !important;
-	border-radius: 4px !important;
-	font-weight: 600 !important;
-	z-index: 11;
-	cursor: pointer !important;
-	transition: all 0.2s ease !important;
-}
-
-.wps_wpr_banner_actions .wps_wpr_apply_banner_img:hover {
-	background: #135e96 !important;
-	opacity: 1 !important;
-}
-
-.wps-popup_mcb-img.button--active .wps_wpr_banner_actions .wps_wpr_apply_banner_img {
-	background: #46b450 !important;
-	color: #fff !important;
-}
-
-.wps_wpr_copy_banner_url {
-	flex-shrink: 0;
-	min-width: auto !important;
-	padding: 6px 12px !important;
-	background: #f7f7f7 !important;
-	border: 1px solid #ddd !important;
-	color: #555 !important;
-	cursor: pointer !important;
-	transition: all 0.2s ease;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 3px;
-	position: relative;
-	z-index: 12;
-	pointer-events: auto !important;
-}
-
-.wps_wpr_copy_banner_url:hover {
-	background: #2271b1 !important;
-	border-color: #2271b1 !important;
-	color: #fff !important;
-	z-index: 13;
-}
-
-.wps_wpr_copy_banner_url .dashicons {
-	font-size: 18px;
-	width: 18px;
-	height: 18px;
-	line-height: 1;
-	pointer-events: none;
-}
-
-.wps_wpr_copy_banner_url.copied {
-	background: #46b450 !important;
-	border-color: #46b450 !important;
-	color: #fff !important;
-}
-</style>
-
-<script>
-jQuery(document).ready(function($) {
-	// Handle copy campaign URL
-	// Prevent event bubbling on mousedown
-	$(document).on("mousedown mouseup", ".wps_wpr_copy_banner_url", function(e) {
-		e.stopPropagation();
-		e.stopImmediatePropagation();
-	});
-
-	$(document).on('click', '.wps_wpr_copy_banner_url', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-		e.stopImmediatePropagation();
-		
-		var $button = $(this);
-		var $card = $button.closest('.wps-popup_mcb-img');
-		var $img = $card.find('.wps_wpr_cam_banner_image');
-
-		// Get the direct image URL
-		var imageUrl = $img.attr('src');
-
-		if (!imageUrl) {
-			alert('Could not find image URL');
-			return;
-		}
-		
-		// Copy to clipboard
-		if (navigator.clipboard && navigator.clipboard.writeText) {
-			navigator.clipboard.writeText(imageUrl)
-				.then(function() {
-					showCopySuccess($button);
-				})
-				.catch(function(err) {
-					console.error('Copy failed:', err);
-					fallbackCopy(imageUrl, $button);
-				});
-		} else {
-			fallbackCopy(imageUrl, $button);
-		}
-	});
-	
-	// Show success feedback
-	function showCopySuccess($button) {
-		// Add copied class
-		$button.addClass('copied');
-		
-		// Change icon to checkmark
-		var $icon = $button.find('.dashicons');
-		$icon.removeClass('dashicons-admin-links').addClass('dashicons-yes');
-		
-		// Show notice
-		showNotice('success', 'Image URL copied to clipboard!');
-		
-		// Reset after 2 seconds
-		setTimeout(function() {
-			$button.removeClass('copied');
-			$icon.removeClass('dashicons-yes').addClass('dashicons-admin-links');
-		}, 2000);
-	}
-	
-	// Fallback copy method for older browsers
-	function fallbackCopy(text, $button) {
-		var $temp = $('<textarea>');
-		$temp.val(text);
-		$temp.css({
-			position: 'absolute',
-			left: '-9999px',
-			top: '0'
-		});
-		$('body').append($temp);
-		$temp.select();
-		$temp[0].setSelectionRange(0, 99999);
-		
-		try {
-			var successful = document.execCommand('copy');
-			if (successful) {
-				showCopySuccess($button);
-			} else {
-				showNotice('error', 'Failed to copy URL. Please copy manually: ' + text);
-			}
-		} catch (err) {
-			console.error('Fallback copy failed:', err);
-			showNotice('error', 'Failed to copy URL. Please copy manually: ' + text);
-		}
-		
-		$temp.remove();
-	}
-	
-	// Show WordPress-style notice
-	function showNotice(type, message) {
-		var noticeClass = type === 'success' ? 'notice-success' : 'notice-error';
-		var $notice = $('<div class="notice ' + noticeClass + ' is-dismissible"><p>' + message + '</p></div>');
-		
-		// Find a suitable place to show the notice
-		var $target = $('.wrap > h1').first();
-		if ($target.length) {
-			$target.after($notice);
-		} else {
-			$('.wrap').prepend($notice);
-		}
-		
-		// Auto-dismiss after 3 seconds
-		setTimeout(function() {
-			$notice.fadeOut(function() {
-				$(this).remove();
-			});
-		}, 3000);
-	}
-});
-</script>

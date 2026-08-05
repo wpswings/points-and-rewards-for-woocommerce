@@ -34,6 +34,36 @@ $wps_wpr_quiz_rewards_points            = ! empty( $wps_wpr_campaign_settings['w
 $wps_wpr_enter_campaign_heading         = ! empty( $wps_wpr_campaign_settings['wps_wpr_enter_campaign_heading'] ) ? $wps_wpr_campaign_settings['wps_wpr_enter_campaign_heading'] : 'Points and Rewards Program';
 $wps_wpr_enter_campaign_image_url       = ! empty( $wps_wpr_campaign_settings['wps_wpr_enter_campaign_image_url'] ) ? $wps_wpr_campaign_settings['wps_wpr_enter_campaign_image_url'] : plugin_dir_url( dirname( __FILE__ ) ) . 'public/images/reward.webp';
 $wps_wpr_show_current_points_modal      = ! empty( $wps_wpr_campaign_settings['wps_wpr_show_current_points_modal'] ) ? $wps_wpr_campaign_settings['wps_wpr_show_current_points_modal'] : '';
+
+// Check for A/B testing preview mode or active test
+$is_ab_preview = isset( $_GET['wps_wpr_preview'] ) && '1' === $_GET['wps_wpr_preview'];
+$ab_variant = '';
+$ab_custom_image = '';
+
+if ( $is_ab_preview && current_user_can( 'manage_options' ) ) {
+	// Preview mode - use URL parameters
+	$ab_variant = isset( $_GET['preview_variant'] ) ? sanitize_text_field( wp_unslash( $_GET['preview_variant'] ) ) : '';
+	$ab_custom_image = isset( $_GET['preview_custom_image'] ) ? esc_url_raw( wp_unslash( $_GET['preview_custom_image'] ) ) : '';
+} else {
+	// Normal mode - check for active A/B test (from PRO plugin)
+	global $wps_wpr_ab_variant_data;
+	if ( ! empty( $wps_wpr_ab_variant_data ) ) {
+		$ab_variant = isset( $wps_wpr_ab_variant_data['variant_name'] ) ? $wps_wpr_ab_variant_data['variant_name'] : '';
+
+		// Get custom image URL from variant customizations
+		if ( ! empty( $wps_wpr_ab_variant_data['customizations'] ) ) {
+			$customizations = maybe_unserialize( $wps_wpr_ab_variant_data['customizations'] );
+			if ( is_array( $customizations ) && ! empty( $customizations['custom_image_url'] ) ) {
+				$ab_custom_image = esc_url( $customizations['custom_image_url'] );
+			}
+		}
+	}
+}
+
+// Override campaign image URL if A/B test is active
+if ( ! empty( $ab_custom_image ) ) {
+	$wps_wpr_enter_campaign_image_url = $ab_custom_image;
+}
 $wps_wpr_show_total_referral_count      = ! empty( $wps_wpr_campaign_settings['wps_wpr_show_total_referral_count'] ) ? $wps_wpr_campaign_settings['wps_wpr_show_total_referral_count'] : '';
 $wps_wpr_show_content_in_footer         = ! empty( $wps_wpr_campaign_settings['wps_wpr_show_content_in_footer'] ) ? $wps_wpr_campaign_settings['wps_wpr_show_content_in_footer'] : '';
 $wps_wpr_modal_footer_content           = ! empty( $wps_wpr_campaign_settings['wps_wpr_modal_footer_content'] ) ? $wps_wpr_campaign_settings['wps_wpr_modal_footer_content'] : 'Created with ❤ by WP Swings';
@@ -257,7 +287,25 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 
 				<!-- Campaign Modal banner image  -->
 				<div class="wps-wpr-hlw_container" id="container">
-					<img src="<?php echo esc_url( $wps_wpr_enter_campaign_image_url ); ?>" alt="Halloween Image" />
+					<?php
+					// Show preview banner for A/B testing
+					if ( $is_ab_preview && ! empty( $ab_variant ) && current_user_can( 'manage_options' ) ) {
+						$variant_color = 'A' === $ab_variant ?
+							'background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);' :
+							'background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);';
+						?>
+						<div style="<?php echo esc_attr( $variant_color ); ?> color: white; padding: 12px; text-align: center; border-radius: 4px; margin-bottom: 10px;">
+							<div style="font-size: 24px; margin-bottom: 3px;">
+								<?php echo 'A' === $ab_variant ? '🅰️' : '🅱️'; ?>
+							</div>
+							<div style="font-size: 14px; font-weight: bold;">
+								PREVIEW MODE: VARIANT <?php echo esc_html( $ab_variant ); ?>
+							</div>
+						</div>
+						<?php
+					}
+					?>
+					<img src="<?php echo esc_url( $wps_wpr_enter_campaign_image_url ); ?>" alt="Campaign Image" />
 
 					<!-- Per currency earn msg  -->
 					<p class="wps-wpr-hlw_co-p">

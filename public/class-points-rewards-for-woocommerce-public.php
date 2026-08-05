@@ -5405,6 +5405,51 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_show_campaign_modal() {
 		if ( $this->wps_wpr_is_campaign_enable() && $this->wps_wpr_check_selected_page() ) {
 
+			// Get A/B test variant data from PRO plugin if available
+			global $wps_wpr_ab_variant_data;
+
+			// Call PRO plugin's A/B testing function if it exists
+			if ( function_exists( 'wps_wpr_get_active_ab_test_variant' ) ) {
+				// Use the global function approach
+				$wps_wpr_ab_variant_data = wps_wpr_get_active_ab_test_variant();
+			} elseif ( class_exists( 'Points_And_Rewards_For_WooCommerce_Pro_Public' ) ) {
+				// Fallback: Try to get variant data directly
+				$pro_ab_testing_class = WP_PLUGIN_DIR . '/ultimate-woocommerce-points-and-rewards/includes/class-wps-wpr-campaign-ab-testing.php';
+				if ( file_exists( $pro_ab_testing_class ) ) {
+					require_once $pro_ab_testing_class;
+
+					if ( class_exists( 'WPS_WPR_Campaign_AB_Testing' ) ) {
+						$ab_testing = new WPS_WPR_Campaign_AB_Testing();
+						$active_test = $ab_testing->get_active_test();
+
+						if ( $active_test ) {
+							$variant = $ab_testing->get_user_variant( $active_test->id );
+							if ( $variant ) {
+								$variant_data = $ab_testing->get_variant_data( $active_test->id, $variant );
+								if ( $variant_data ) {
+									$wps_wpr_ab_variant_data = array(
+										'test_id' => $active_test->id,
+										'variant_id' => $variant_data['id'],
+										'variant_name' => $variant,
+										'template_id' => $variant_data['template_id'],
+										'occasion_type' => $variant_data['occasion_type'],
+										'template_file' => $variant_data['template_file'],
+										'customizations' => isset( $variant_data['customizations'] ) ? $variant_data['customizations'] : array(),
+									);
+
+									// Track impression event
+									$event_data = array(
+										'url' => isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '',
+										'user_agent' => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '',
+									);
+									$ab_testing->track_event( $active_test->id, $variant_data['id'], 'impression', $event_data );
+								}
+							}
+						}
+					}
+				}
+			}
+
 			require_once plugin_dir_path( __FILE__ ) . 'partials/wps-wpr-points-campaign-template.php';
 		}
 	}
