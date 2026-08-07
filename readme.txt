@@ -6,7 +6,7 @@ Requires at least: 6.7.0
 Tested up to: 7.0.1
 WC requires at least: 6.5.0
 WC tested up to: 10.9.4
-Stable tag: 2.10.2
+Stable tag: 2.10.3
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -358,6 +358,13 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 2.10.3 - Released on 07 August 2026 =
+* Security Fix: Added missing capability check to wps_wpr_assign_claim_points() AJAX endpoint
+* Security Fix: Added server-side validation of claim amounts against configured Win Wheel prizes
+* Security Fix: Fixed anti-repeat-claim mechanism to enforce default 1-day cooldown when not configured
+* Security Fix: Added duplicate action check to wps_wpr_assign_social_share_points() to prevent point farming
+* Security Fix: Extended daily rate limiting to both points and wallet claims (was wallet-only)
 
 = 2.10.2 - Released on 10 July 2026 =
 * New : Compatibility with latest WC ( 10.9.4 ) and WP ( 7.0.1 )

@@ -4437,6 +4437,14 @@ class Points_Rewards_For_WooCommerce_Public {
 		$response['result']   = false;
 		$response['msg']      = esc_html__( 'Failed', 'points-and-rewards-for-woocommerce' );
 
+		// SECURITY FIX: Verify user has customer capability (prevents unauthorized access).
+		if ( ! current_user_can( 'read' ) ) {
+			$response['result'] = false;
+			$response['msg']    = esc_html__( 'Unauthorized access', 'points-and-rewards-for-woocommerce' );
+			wp_send_json( $response );
+			wp_die();
+		}
+
 		// SECURITY FIX: Check replay protection BEFORE processing any claim type
 		$already_assign_check = get_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', true );
 
@@ -4475,12 +4483,12 @@ class Points_Rewards_For_WooCommerce_Public {
 				wp_die();
 			}
 
-			// SECURITY FIX: Daily rate limiting - prevent abuse
-			$daily_limit_key   = 'wps_wpr_wallet_claims_' . gmdate( 'Y-m-d' );
+			// SECURITY FIX: Daily rate limiting - prevent abuse for BOTH wallet and points
+			$daily_limit_key   = 'wps_wpr_game_claims_' . gmdate( 'Y-m-d' );
 			$daily_claim_count = (int) get_user_meta( $user_id, $daily_limit_key, true );
-			$max_daily_claims  = apply_filters( 'wps_wpr_max_daily_wallet_claims', 1 ); // Default: 1 claim per day
+			$max_daily_claims  = apply_filters( 'wps_wpr_max_daily_game_claims', 1 ); // Default: 1 claim per day
 
-			if ( 'wallet' === $claim_type && $daily_claim_count >= $max_daily_claims ) {
+			if ( $daily_claim_count >= $max_daily_claims ) {
 				$response['result'] = false;
 				$response['msg']    = esc_html__( 'Daily claim limit reached', 'points-and-rewards-for-woocommerce' );
 				wp_send_json( $response );
@@ -4510,12 +4518,11 @@ class Points_Rewards_For_WooCommerce_Public {
 				$walletamount   += $credited_amount;
 				update_user_meta( $user_id, 'wps_wallet', $walletamount );
 
-				// SECURITY FIX: Set replay protection for wallet claims (same as points)
-				$schedule_date = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? absint( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) : 0;
-				if ( $schedule_date > 0 ) {
-					$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
-					update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
-				}
+				// SECURITY FIX: Set replay protection for wallet claims - default 1 day if not configured
+				$schedule_date = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? absint( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) : 1;
+				// Always set cooldown (minimum 1 day) to prevent replay attacks
+				$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
+				update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
 
 				// SECURITY FIX: Increment daily claim counter
 				update_user_meta( $user_id, $daily_limit_key, $daily_claim_count + 1 );
@@ -4564,13 +4571,11 @@ class Points_Rewards_For_WooCommerce_Public {
 				$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
 			} elseif ( 'points' === $claim_type && $wps_claim_points > 0 ) {
 
-				// Next play date cal.
-				$schedule_date = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? absint( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) : 0;
-				if ( $schedule_date > 0 ) {
-
-					$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
-					update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
-				}
+				// SECURITY FIX: Set replay protection for points claims - default 1 day if not configured
+				$schedule_date = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? absint( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) : 1;
+				// Always set cooldown (minimum 1 day) to prevent replay attacks
+				$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
+				update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
 
 				// SECURITY FIX: Increment daily claim counter for points too
 				update_user_meta( $user_id, $daily_limit_key, $daily_claim_count + 1 );
@@ -5777,6 +5782,12 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
 
+		// SECURITY FIX: Verify user has customer capability (prevents unauthorized access).
+		if ( ! current_user_can( 'read' ) ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'Unauthorized access', 'points-and-rewards-for-woocommerce' ) ) );
+			wp_die();
+		}
+
 		$wps_wpr_campaign_settings              = get_option( 'wps_wpr_campaign_settings', array() );
 		$wps_wpr_campaign_settings              = is_array( $wps_wpr_campaign_settings ) ? $wps_wpr_campaign_settings : array();
 		$wps_wpr_social_share_campaign_label    = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] : array();
@@ -5822,6 +5833,15 @@ class Points_Rewards_For_WooCommerce_Public {
 		$url            = $wps_wpr_combined[ $social_tag_name ]['link'];
 		$points         = absint( $wps_wpr_combined[ $social_tag_name ]['value'] );
 		$social_heading = $campaign_templates[ $social_tag_name ];
+
+		// SECURITY FIX: Check if user has already performed this social action.
+		$performed = (array) get_user_meta( $user_id, 'wps_wpr_social_action_performed', true );
+		if ( in_array( $social_tag_name, $performed, true ) ) {
+			// Action already performed, just redirect without crediting points.
+			wp_send_json( $url );
+			wp_die();
+		}
+
 		if ( $points > 0 ) {
 
 			$get_points     = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? absint( get_user_meta( $user_id, 'wps_wpr_points', true ) ) : 0;
