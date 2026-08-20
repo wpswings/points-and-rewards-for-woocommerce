@@ -6326,9 +6326,10 @@ class Points_Rewards_For_WooCommerce_Public {
 		// Check if admin bar display is enabled (add a setting for this later)
 		$other_settings = $this->wps_wpr_get_cached_option( 'wps_wpr_other_settings', true );
 		$show_in_admin_bar = isset( $other_settings['wps_wpr_show_points_in_admin_bar'] ) ?
-			$other_settings['wps_wpr_show_points_in_admin_bar'] : 'no';
+			$other_settings['wps_wpr_show_points_in_admin_bar'] : 0;
 
-		if ( 'yes' !== $show_in_admin_bar ) {
+		// Support both old format ('yes') and new format (1)
+		if ( 'yes' !== $show_in_admin_bar && 1 !== intval( $show_in_admin_bar ) ) {
 			return;
 		}
 
