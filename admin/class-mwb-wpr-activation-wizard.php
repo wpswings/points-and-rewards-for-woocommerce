@@ -141,8 +141,9 @@ class MWB_WPR_Activation_Wizard {
 			$this->plugin_name . '-wizard',
 			'mwbWprWizardData',
 			array(
-				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'mwb_wpr_wizard_save' ),
+				'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
+				'nonce'       => wp_create_nonce( 'mwb_wpr_wizard_save' ),
+				'settingsUrl' => admin_url( 'admin.php?page=points_and_rewards_for_woocommerce_menu' ),
 			)
 		);
 	}

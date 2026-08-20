@@ -210,8 +210,8 @@
 					// Clear stored wizard data
 					sessionStorage.removeItem('mwb_wpr_wizard_data');
 
-					// Navigate to completion step
-					navigateToStep(5);
+					// Redirect to Points and Rewards general settings page
+					window.location.href = mwbWprWizardData.settingsUrl || 'admin.php?page=points_and_rewards_for_woocommerce_menu';
 				} else {
 					alert(response.data.message || 'Failed to save settings. Please try again.');
 					$button.prop('disabled', false).text(originalText);
