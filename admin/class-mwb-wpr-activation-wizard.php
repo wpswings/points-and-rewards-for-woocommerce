@@ -143,7 +143,7 @@ class MWB_WPR_Activation_Wizard {
 			array(
 				'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
 				'nonce'       => wp_create_nonce( 'mwb_wpr_wizard_save' ),
-				'settingsUrl' => admin_url( 'admin.php?page=points_and_rewards_for_woocommerce_menu' ),
+				'settingsUrl' => admin_url( 'admin.php?page=wps-rwpr-setting' ),
 			)
 		);
 	}
@@ -308,6 +308,7 @@ class MWB_WPR_Activation_Wizard {
 	 * Redirect to wizard on first activation if not completed.
 	 */
 	public function maybe_redirect_to_wizard() {
+		//set_transient( 'mwb_wpr_activation_redirect', true, 30 );
 		// Check if this is the activation redirect flag.
 		if ( ! get_transient( 'mwb_wpr_activation_redirect' ) ) {
 			return;

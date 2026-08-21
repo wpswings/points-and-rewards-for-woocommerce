@@ -206,12 +206,13 @@
 				wizard_data: wizardData
 			},
 			success: function(response) {
+				debugger;
 				if (response.success) {
 					// Clear stored wizard data
 					sessionStorage.removeItem('mwb_wpr_wizard_data');
 
 					// Redirect to Points and Rewards general settings page
-					window.location.href = mwbWprWizardData.settingsUrl || 'admin.php?page=points_and_rewards_for_woocommerce_menu';
+					window.location.href = mwbWprWizardData.settingsUrl || 'admin.php?page=wps-rwpr-setting';
 				} else {
 					alert(response.data.message || 'Failed to save settings. Please try again.');
 					$button.prop('disabled', false).text(originalText);
