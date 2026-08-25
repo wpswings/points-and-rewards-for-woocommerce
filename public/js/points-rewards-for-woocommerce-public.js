@@ -55,31 +55,6 @@
             var btns = document.querySelectorAll('button');
             var message = '';
             var clipboard = new ClipboardJS(btns);
-
-            // Add success feedback for copy button
-            clipboard.on('success', function(e) {
-                if (e.trigger.classList.contains('wps_wpr_btn_copy')) {
-                    // Add success state (green background)
-                    e.trigger.classList.add('wps_wpr_copied');
-
-                    // Update tooltip text
-                    var tooltip = e.trigger.querySelector('.wps_tooltiptext');
-                    var originalText = tooltip ? tooltip.textContent : '';
-                    if (tooltip) {
-                        tooltip.textContent = 'Copied!';
-                    }
-
-                    // Remove success state after 1.5 seconds
-                    setTimeout(function() {
-                        e.trigger.classList.remove('wps_wpr_copied');
-                        if (tooltip) {
-                            tooltip.textContent = originalText;
-                        }
-                    }, 1500);
-                }
-                e.clearSelection();
-            });
-
             /*View Benefits of the Membership Role*/
             $('.wps_wpr_level_benefits').click(
                 function() {
@@ -116,7 +91,6 @@
                     var order_limit = $(this).data('order-limit');
                     var message = '';
                     var html = '';
-                    // Get cart points from input field
                     var wps_cart_points = $('#wps_cart_points').val().trim();
 
                     $("#wps_wpr_cart_points_notice").html("");
@@ -133,7 +107,6 @@
                                 wps_cart_points: wps_cart_points,
                                 wps_nonce: wps_wpr.wps_wpr_nonce,
                             };
-                            console.log('Sending AJAX request with points: ' + wps_cart_points);
                             $.ajax({
                                 url: wps_wpr.ajaxurl,
                                 type: "POST",

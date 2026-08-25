@@ -359,13 +359,6 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 2.10.3 - Released on 07 August 2026 =
-* Security Fix: Added missing capability check to wps_wpr_assign_claim_points() AJAX endpoint
-* Security Fix: Added server-side validation of claim amounts against configured Win Wheel prizes
-* Security Fix: Fixed anti-repeat-claim mechanism to enforce default 1-day cooldown when not configured
-* Security Fix: Added duplicate action check to wps_wpr_assign_social_share_points() to prevent point farming
-* Security Fix: Extended daily rate limiting to both points and wallet claims (was wallet-only)
-
 = 2.10.2 - Released on 10 July 2026 =
 * New : Compatibility with latest WC ( 10.9.4 ) and WP ( 7.0.1 )
 * Fix : Design issue fix in points table

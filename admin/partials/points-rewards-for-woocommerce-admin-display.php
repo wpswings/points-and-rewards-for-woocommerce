@@ -161,7 +161,7 @@ if ( ! empty( $wps_wpr_setting_tab ) && is_array( $wps_wpr_setting_tab ) ) {
 	}
 }
 $wps_wpr_is_overflow_active = ! empty( $wps_wpr_overflow_tabs ) && isset( $wps_wpr_overflow_tabs[ $wps_wpr_active_tab ] );
-do_action( 'wps_rwpr_after_setting_tabs_lead_engine' );
+
 ?>
 <div class="wrap woocommerce wps-rma-admin-wrap" id="wps_rwpr_setting_wrapper" data-wps-rma-active-tab="<?php echo esc_attr( $wps_wpr_active_tab ); ?>">
 	<form enctype="multipart/form-data" action="" id="mainform"  method="post">

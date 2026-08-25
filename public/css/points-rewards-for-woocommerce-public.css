@@ -172,84 +172,28 @@ a.wps_wpr_whatsapp_share {
 }
 
 .wps_wpr_each_section>#wps_wpr_membership::after,
-.wps_wpr_popup_thumbnail_section::after {
+.wps_wpr_popup_thumbnail_section::after,
+.wps_wpr_refrral_code_copy::after {
     clear: both;
     content: "";
     display: block
 }
 
 .wps_wpr_btn_copy {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background: #fff;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-    min-width: 40px;
-    min-height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.wps_wpr_btn_copy:hover {
-    background: #f5f5f5;
-    border-color: #999;
-}
-
-.wps_wpr_btn_copy:active {
-    transform: scale(0.95);
-}
-
-/* SVG icon styles */
-.wps_wpr_btn_copy .wps_wpr_copy_icon {
-    display: block;
-    width: 18px;
-    height: 18px;
-    transition: all 0.2s ease;
-    color: #555;
-}
-
-.wps_wpr_btn_copy:hover .wps_wpr_copy_icon {
-    color: #000;
-}
-
-/* Success state */
-.wps_wpr_btn_copy.wps_wpr_copied {
-    background: #f0f9f1;
-    border-color: #46b450;
-}
-
-.wps_wpr_btn_copy.wps_wpr_copied .wps_wpr_copy_icon {
-    color: #46b450;
-}
-
-.wps_wpr_refrral_code_copy {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 15px;
+    float: left;
+    padding: 6px
 }
 
 #wps_wpr_copy {
-    flex: 1;
-    min-width: 0;
-    margin: 0;
+    float: left;
+    width: calc(100% - 44px)
 }
 
 #wps_wpr_copy code {
-    background: #f8f8f8;
+    background: #ebe9eb;
     display: block;
-    padding: 10px 12px;
-    word-break: break-all;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    font-family: monospace;
-    font-size: 13px;
-    color: #333;
-    line-height: 1.5;
+    padding: 0 3px;
+    word-break: break-all
 }
 
 .wps_wpr_message {
@@ -1631,150 +1575,4 @@ span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wp
 
 .wp-block-woocommerce-checkout-order-summary-block #wps_wpr_button_to_add_points_section {
     padding: 0 15px;
-}
-
-/* Points to Discount Notification Styles */
-.wps-wpr-points-to-discount-notice {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 4px;
-    padding: 8px 16px;
-    margin: 10px 0;
-    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.15);
-    animation: wps-wpr-slide-in 0.5s ease-out;
-}
-
-.wps-wpr-product-notice {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.wps-wpr-cart-notice {
-    margin: 0;
-}
-
-.wps-wpr-points-to-discount-notice .wps-wpr-notice-text {
-    color: #ffffff;
-    margin: 0;
-    font-size: 13px;
-    line-height: 1.4;
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: 6px;
-}
-
-.wps-wpr-points-to-discount-notice .wps-wpr-notice-icon {
-    font-size: 16px;
-    display: inline-block;
-    margin-right: 2px;
-    flex-shrink: 0;
-}
-
-.wps-wpr-points-to-discount-notice strong {
-    font-weight: 600;
-    color: #ffffff;
-}
-
-.wps-wpr-points-to-discount-notice .wps-wpr-notice-cta {
-    display: inline;
-    margin-left: 6px;
-    font-size: 12px;
-    opacity: 0.9;
-    font-weight: 400;
-}
-
-.wps-wpr-points-to-discount-row td {
-    padding: 0 !important;
-}
-
-.wps-wpr-points-to-discount-cell {
-    border: none !important;
-}
-
-@keyframes wps-wpr-slide-in {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .wps-wpr-points-to-discount-notice {
-        padding: 12px 16px;
-    }
-
-    .wps-wpr-points-to-discount-notice .wps-wpr-notice-text {
-        font-size: 14px;
-    }
-
-    .wps-wpr-points-to-discount-notice .wps-wpr-notice-icon {
-        font-size: 18px;
-    }
-
-    .wps-wpr-dashboard-points-balance {
-        padding: 12px !important;
-    }
-
-    .wps-wpr-dashboard-points-balance p {
-        font-size: 14px !important;
-    }
-
-    .wps-wpr-dashboard-points-balance span {
-        display: block;
-        margin: 5px 0 !important;
-    }
-}
-
-/* ============================================
-   My Account Dashboard Points Balance
-   ============================================ */
-.wps-wpr-dashboard-points-balance {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.wps-wpr-dashboard-points-balance:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-
-.wps-wpr-dashboard-points-balance a:hover {
-    opacity: 0.9;
-}
-
-/* ============================================
-   Admin Bar Points Display
-   ============================================ */
-#wpadminbar #wp-admin-bar-wps-wpr-points-balance .ab-icon {
-    font-size: 18px !important;
-    color: #ffd700;
-    margin-right: 5px;
-}
-
-#wpadminbar #wp-admin-bar-wps-wpr-points-balance .ab-label {
-    font-weight: 600;
-}
-
-#wpadminbar #wp-admin-bar-wps-wpr-points-balance:hover .ab-icon {
-    color: #ffed4e;
-}
-
-#wpadminbar #wp-admin-bar-wps-wpr-points-balance > .ab-item {
-    padding: 0 10px;
-}
-
-/* Mobile admin bar */
-@media screen and (max-width: 782px) {
-    #wpadminbar #wp-admin-bar-wps-wpr-points-balance .ab-icon {
-        font-size: 24px !important;
-    }
-
-    #wpadminbar #wp-admin-bar-wps-wpr-points-balance .ab-label {
-        font-size: 14px;
-    }
 }

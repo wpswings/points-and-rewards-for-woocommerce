@@ -1,6 +1,6 @@
 (function($) {
     'use strict';
-
+    
     jQuery(document).ready(function($){
 
 		// ============= Append Add a points section html ============
@@ -12,14 +12,14 @@
 
 				setTimeout(() => {
 					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
-
+	
 						jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
 					}
 				}, 1000);
 
 				jQuery(document).on('mouseover', '.woocommerce-cart.woocommerce-page', function(){
 					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
-
+	
 						jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
 					}
 				});
@@ -46,7 +46,7 @@
 			}
 		}
 
-		// Append Points apply section on cart and checkout page with slider.
+		// Append Points apply section on cart and checkout page.
 		jQuery(document).on('click', '#wps_wpr_button_to_add_points_section', function(e){
 
 			e.preventDefault();
@@ -54,22 +54,10 @@
 
 			var minimum_redeem_points   = parseInt( wps_wpr.get_min_redeem_req );
 			var wps_user_current_points = parseInt( wps_wpr.wps_user_current_points );
-
 			if ( minimum_redeem_points <= wps_user_current_points ) {
 
-				// Reverted to simple text box (slider removed)
-				var max_points = wps_user_current_points;
-
-				var textBoxHtml = '<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html">' +
-					'<input type="number" min="0" max="' + max_points + '" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="Points"/>' +
-					'<button type="button" class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" data-order-limit="' + max_points + '">Apply Points</button>' +
-					'<p class="wps_wpr_available_info">Available: ' + max_points.toLocaleString() + ' points on this order</p>' +
-				'</div>';
-
-				// Append to cart and checkout
-				jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append(textBoxHtml);
-				jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append(textBoxHtml);
-
+				jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="' + wps_wpr.wps_points_name + '"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" data-order-limit="0">' + wps_wpr.wps_apply_points + '</button><p>' + wps_wpr_cart_block_obj. available_points_msg + ' : ' + wps_wpr_cart_block_obj.current__points + ' </p></div>');
+				jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="' + wps_wpr.wps_points_name + '"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" data-order-limit="0">' + wps_wpr.wps_apply_points + '</button><p>' + wps_wpr_cart_block_obj.available_points_msg + ' : ' + wps_wpr_cart_block_obj.current__points + ' </p></div>');
 			} else {
 
 				var required_points = parseInt( minimum_redeem_points - wps_user_current_points );
@@ -80,7 +68,7 @@
 
 		// Remove coupon when cart block enable.
 		setTimeout(() => {
-
+			
 			jQuery('.wc-block-components-chip__remove').attr('onclick','on_cart_click(this)');
 		}, 2000);
 
@@ -122,7 +110,7 @@
 				}
 			}
 		);
-
+		
 		// update page when cart and checkout total earning points functionality enable.
 		if ( '1' == wps_wpr_cart_block_obj.wps_wpr_cart_page_total_earning_points ) {
 
@@ -165,93 +153,6 @@
 		setTimeout(function() {
 			wps_wpr_restore_block_redemption_state();
 		}, 500);
-
-		// Display points-to-discount notice on block cart
-		function wps_wpr_display_cart_notice() {
-			if ( typeof wps_wpr_cart_block_obj !== 'undefined' &&
-				 wps_wpr_cart_block_obj.checkout_notice_data &&
-				 wps_wpr_cart_block_obj.checkout_notice_data.show_cart_notice ) {
-
-				var noticeHtml = '<div class="wps-wpr-points-to-discount-notice wps-wpr-cart-notice" style="margin: 15px 0;">' +
-					'<p class="wps-wpr-notice-text">' +
-					'<span class="wps-wpr-notice-icon">🎁</span>' +
-					'<strong>' + wps_wpr_cart_block_obj.checkout_notice_data.notice_html + '</strong>' +
-					'<span class="wps-wpr-notice-cta">Keep shopping to earn more points!</span>' +
-					'</p>' +
-					'</div>';
-
-				// Try to find the cart order summary coupon form block (best location)
-				var targetElement = jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block');
-
-				if ( targetElement.length === 0 ) {
-					// Fallback: try cart order summary subtotal block
-					targetElement = jQuery('.wp-block-woocommerce-cart-order-summary-subtotal-block');
-				}
-
-				if ( targetElement.length === 0 ) {
-					// Fallback: try cart order summary block
-					targetElement = jQuery('.wp-block-woocommerce-cart-order-summary-block');
-				}
-
-				// Only add if not already present
-				if ( targetElement.length > 0 && jQuery('.wps-wpr-cart-notice').length === 0 ) {
-					targetElement.before(noticeHtml);
-				}
-			}
-		}
-
-		// Display points-to-discount notice on block checkout
-		function wps_wpr_display_checkout_notice() {
-			if ( typeof wps_wpr_cart_block_obj !== 'undefined' &&
-				 wps_wpr_cart_block_obj.checkout_notice_data &&
-				 wps_wpr_cart_block_obj.checkout_notice_data.show_checkout_notice ) {
-
-				var noticeHtml = '<div class="wps-wpr-points-to-discount-notice wps-wpr-checkout-notice" style="margin: 15px 0;">' +
-					'<p class="wps-wpr-notice-text">' +
-					'<span class="wps-wpr-notice-icon">🎁</span>' +
-					'<strong>' + wps_wpr_cart_block_obj.checkout_notice_data.notice_html + '</strong>' +
-					'</p>' +
-					'</div>';
-
-				// Try to find the order summary coupon form block (best location)
-				var targetElement = jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block');
-
-				if ( targetElement.length === 0 ) {
-					// Fallback: try order summary subtotal block
-					targetElement = jQuery('.wp-block-woocommerce-checkout-order-summary-subtotal-block');
-				}
-
-				if ( targetElement.length === 0 ) {
-					// Fallback: try order summary block
-					targetElement = jQuery('.wp-block-woocommerce-checkout-order-summary-block');
-				}
-
-				// Only add if not already present
-				if ( targetElement.length > 0 && jQuery('.wps-wpr-checkout-notice').length === 0 ) {
-					targetElement.before(noticeHtml);
-				}
-			}
-		}
-
-		// Display notices with retry logic (elements may load dynamically)
-		setTimeout(function() {
-			wps_wpr_display_cart_notice();
-			wps_wpr_display_checkout_notice();
-		}, 1000);
-
-		setTimeout(function() {
-			wps_wpr_display_cart_notice();
-			wps_wpr_display_checkout_notice();
-		}, 2000);
-
-		// Also try on mouseover (when user interacts with page)
-		jQuery(document).on('mouseover', '.woocommerce-cart', function() {
-			wps_wpr_display_cart_notice();
-		});
-
-		jQuery(document).on('mouseover', '.woocommerce-checkout', function() {
-			wps_wpr_display_checkout_notice();
-		});
 	});
 })(jQuery);
 
@@ -303,7 +204,7 @@ function wps_wpr_refresh_cart_page() {
 		data    : data,
 		success : function( response ) {
 			setTimeout(() => {
-
+				
 				window.location.reload();
 			}, 1500);
 		}

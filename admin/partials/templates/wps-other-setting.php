@@ -63,15 +63,6 @@ $wps_wpr_other_settings = array(
 		'default'  => '#55b3a5',
 	),
 	array(
-		'title'    => __( 'Show Points Balance in Admin Bar', 'points-and-rewards-for-woocommerce' ),
-		'type'     => 'checkbox',
-		'id'       => 'wps_wpr_show_points_in_admin_bar',
-		'class'    => 'input-text',
-		'desc_tip' => __( 'Display the current user\'s points balance in the WordPress admin bar on frontend pages.', 'points-and-rewards-for-woocommerce' ),
-		'default'  => 0,
-		'desc'     => __( 'Toggle this to show points balance with a star icon in the top admin bar (frontend only).', 'points-and-rewards-for-woocommerce' ),
-	),
-	array(
 		'type' => 'sectionend',
 	),
 	array(
@@ -249,7 +240,6 @@ if ( isset( $_POST['wps_wpr_save_othersetting'] ) && isset( $_POST['wps-wpr-nonc
 			'wps_wpr_other_shortcode_text'              => ! empty( $_POST['wps_wpr_other_shortcode_text'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_other_shortcode_text'] ) ) : '',
 			'wps_wpr_shortcode_text_membership'         => ! empty( $_POST['wps_wpr_shortcode_text_membership'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_shortcode_text_membership'] ) ) : '',
 			'wps_wpr_notification_color'                => ! empty( $_POST['wps_wpr_notification_color'] ) ? sanitize_hex_color( wp_unslash( $_POST['wps_wpr_notification_color'] ) ) : '',
-			'wps_wpr_show_points_in_admin_bar'          => ! empty( $_POST['wps_wpr_show_points_in_admin_bar'] ) ? 1 : 0,
 			'wps_wpr_cart_page_apply_point_section'     => ! empty( $_POST['wps_wpr_cart_page_apply_point_section'] ) ? 1 : 0,
 			'wps_wpr_checkout_page_apply_point_section' => ! empty( $_POST['wps_wpr_checkout_page_apply_point_section'] ) ? 1 : 0,
 			'wps_wpr_restrict_rewards_points'           => ! empty( $_POST['wps_wpr_restrict_rewards_points'] ) ? 1 : 0,

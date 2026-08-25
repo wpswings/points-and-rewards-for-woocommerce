@@ -1284,11 +1284,6 @@ jQuery(document).ready(function($){
 	jQuery(document).on('click', '.wps_wpr_view_campaign_existing_template', function(e){
 
 		e.preventDefault();
-		var active = jQuery(jQuery('.wps-popup_main').find('.active_tab')).length;
-		if ( active == 2 ) {
-			jQuery('.wps_wpr_halloween').removeClass('active_tab')
-			
-		}
 		$(".wps-popup").addClass("popup--active");
 	});
 

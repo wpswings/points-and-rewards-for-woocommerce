@@ -181,13 +181,6 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// main js file enqueue.
 		wp_enqueue_script( $this->plugin_name, WPS_RWPR_DIR_URL . 'public/js/points-rewards-for-woocommerce-public.min.js', array( 'jquery', 'clipboard' ), $this->version, false );
-
-		// Get conversion rates for slider
-		$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
-		$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
-		$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
-		$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
-
 		$wps_wpr = array(
 			'ajaxurl'                    => admin_url( 'admin-ajax.php' ),
 			'message'                    => esc_html__( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
@@ -218,9 +211,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			'points_more_to_redeem'      => esc_html__( ' points more to get redeem', 'points-and-rewards-for-woocommerce' ),
 			'wps_add_a_points'           => esc_html__( 'Add a points', 'points-and-rewards-for-woocommerce' ),
 			'wps_apply_points'           => esc_html__( 'Apply Points', 'points-and-rewards-for-woocommerce' ),
-			'cart_points_rate'           => $wps_wpr_cart_points_rate,
-			'cart_price_rate'            => $wps_wpr_cart_price_rate,
-			'currency_symbol'            => get_woocommerce_currency_symbol(),
 		);
 		wp_localize_script( $this->plugin_name, 'wps_wpr', $wps_wpr );
 
@@ -250,7 +240,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_campaign_settings  = is_array( $wps_wpr_campaign_settings ) ? $wps_wpr_campaign_settings : array();
 			$wps_wpr_campaign_color_one = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_one'] : '#a13a93';
 			$wps_wpr_campaign_color_two = ! empty( $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] ) ? $wps_wpr_campaign_settings['wps_wpr_campaign_color_two'] : '#ffbb21';
-
 			wp_enqueue_script( 'wps-campaign-js', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-campaign.js', array(), $this->version, true );
 			wp_localize_script(
 				$this->plugin_name,
@@ -279,36 +268,6 @@ class Points_Rewards_For_WooCommerce_Public {
 			$wps_wpr_other_settings                 = ! empty( $wps_wpr_other_settings ) && is_array( $wps_wpr_other_settings ) ? $wps_wpr_other_settings : array();
 			$wps_wpr_cart_page_total_earning_points = ! empty( $wps_wpr_other_settings['wps_wpr_cart_page_total_earning_points'] ) ? $wps_wpr_other_settings['wps_wpr_cart_page_total_earning_points'] : 0;
 			$current_points                         = (int) get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
-
-			// Calculate points-to-discount notice data for block cart and checkout.
-			$notice_data = array(
-				'show_cart_notice'     => false,
-				'show_checkout_notice' => false,
-				'notice_html'          => '',
-			);
-
-			$wps_wpr_show_cart_notice      = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_points_notice_on_cart' );
-			$wps_wpr_show_checkout_notice  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_points_notice_on_checkout' );
-			$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
-
-			if ( 1 == $wps_wpr_custom_points_on_cart && is_user_logged_in() ) {
-				$next_tier = $this->wps_wpr_calculate_next_discount_tier( $current_points );
-
-				if ( false !== $next_tier ) {
-					$discount_text = wc_price( $next_tier['discount_value'] );
-					/* translators: %1$d: points needed, %2$s: discount value */
-					$notice_data['notice_html'] = sprintf( esc_html__( "You're %1\$d points away from a %2\$s discount!", 'points-and-rewards-for-woocommerce' ), absint( $next_tier['points_needed'] ), wp_kses_post( $discount_text ) );
-
-					if ( 1 == $wps_wpr_show_cart_notice ) {
-						$notice_data['show_cart_notice'] = true;
-					}
-
-					if ( 1 == $wps_wpr_show_checkout_notice ) {
-						$notice_data['show_checkout_notice'] = true;
-					}
-				}
-			}
-
 			wp_register_script( 'wp-wps-wpr-cart-class', WPS_RWPR_DIR_URL . 'public/js/points-and-rewards-cart-checkout-block.js', array(), $this->version, true );
 			wp_enqueue_script( 'wp-wps-wpr-cart-class' );
 			$wps_wpr = array(
@@ -317,7 +276,6 @@ class Points_Rewards_For_WooCommerce_Public {
 				'wps_wpr_cart_page_total_earning_points' => $wps_wpr_cart_page_total_earning_points,
 				'current__points'                        => max( 0, $current_points ),
 				'available_points_msg'                   => esc_html__( 'Your available points', 'points-and-rewards-for-woocommerce' ),
-				'checkout_notice_data'                   => $notice_data,
 			);
 			wp_localize_script( 'wp-wps-wpr-cart-class', 'wps_wpr_cart_block_obj', $wps_wpr );
 		}
@@ -371,7 +329,6 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_get_general_settings_num( $id ) {
 		$wps_wpr_value    = 0;
 		$general_settings = $this->wps_wpr_get_cached_option( 'wps_wpr_settings_gallery', true );
-	
 		if ( ! empty( $general_settings[ $id ] ) ) {
 			$wps_wpr_value = (int) $general_settings[ $id ];
 		}
@@ -581,12 +538,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			<fieldset class="wps_wpr_each_section">
 				<div class="wps_wpr_refrral_code_copy">
 					<p id="wps_wpr_copy"><code><?php echo esc_url( $site_url . '?pkey=' . $get_referral ); ?></code></p>
-					<button class="wps_wpr_btn_copy wps_tooltip" data-clipboard-target="#wps_wpr_copy" aria-label="Copy to clipboard">
+					<button class="wps_wpr_btn_copy wps_tooltip" data-clipboard-target="#wps_wpr_copy" aria-label="copied">
 						<span class="wps_tooltiptext"><?php esc_html_e( 'Copy', 'points-and-rewards-for-woocommerce' ); ?></span>
-						<svg class="wps_wpr_copy_icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-							<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-						</svg>
+						<img src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/images/copy.png' ); ?>" alt="Copy to clipboard">
 					</button>
 				</div>
 				<?php
@@ -2135,22 +2089,12 @@ class Points_Rewards_For_WooCommerce_Public {
 			$get_points      = get_user_meta( get_current_user_id(), 'wps_wpr_points', true );
 			$get_points      = ! empty( $get_points ) && $get_points > 0 ? $get_points : 0;
 
-			// Debug: Log received points value
-			error_log( 'WPS PAR: Received wps_cart_points from AJAX: ' . $wps_cart_points );
-
 			// Redemption Conversion rate calculate.
 			$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
 			$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
 			$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
 			$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
-
-			// Debug: Log conversion rates
-			error_log( 'WPS PAR: Conversion rates - Points: ' . $wps_wpr_cart_points_rate . ', Price: ' . $wps_wpr_cart_price_rate );
-
 			$wps_cart_points          = ( $wps_cart_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
-
-			// Debug: Log converted amount
-			error_log( 'WPS PAR: Converted discount amount: ' . $wps_cart_points );
 
 			// when points value is grater than price than convert points.
 			if ( $wps_wpr_cart_price_rate > $wps_wpr_cart_points_rate ) {
@@ -2216,8 +2160,6 @@ class Points_Rewards_For_WooCommerce_Public {
 				if ( $get_points >= $wps_cart_points ) {
 
 					WC()->session->set( 'wps_cart_points', $wps_cart_points );
-					// Debug: Log stored session value
-					error_log( 'WPS PAR: Stored in session wps_cart_points: ' . $wps_cart_points );
 					$response['result']  = true;
 					$response['message'] = apply_filters( 'wps_wpr_modify_points_success_msg', esc_html__( 'Custom Point has been applied Successfully!', 'points-and-rewards-for-woocommerce' ) );
 				} else {
@@ -2329,7 +2271,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 					$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
 					if ( '1' == $my_cart_change_return ) {
-						return $response;
+						return;
 					} else {
 						$user_id = get_current_user_ID();
 						/*Check is custom points on cart is enable*/
@@ -3876,7 +3818,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					do_action( 'wps_wpr_point_limit_on_order_checkout', $get_points, $user_id, $get_min_redeem_req );
 				} elseif ( $get_min_redeem_req <= $get_points ) {
 					?>
-					<div class="custom_point_checkout wps_wpr_apply_custom_points wps_wpr_checkout_points_class">
+					<div class="custom_point_checkout woocommerce-info wps_wpr_checkout_points_class">
 						<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>"/>
 						<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0"><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
 						<p><?php echo esc_html( $get_points ) . esc_html__( ' Points', 'points-and-rewards-for-woocommerce' ) . ' = ' . wp_kses( wc_price( $conversion ), $this->wps_wpr_allowed_html() ); ?></p>
@@ -3885,7 +3827,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				} else {
 					$extra_req = abs( $get_min_redeem_req - $get_points );
 					?>
-					<div class="custom_point_checkout wps_wpr_apply_custom_points wps_wpr_checkout_points_class">
+					<div class="custom_point_checkout woocommerce-info wps_wpr_checkout_points_class">
 						<input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="<?php esc_attr_e( 'Points', 'points-and-rewards-for-woocommerce' ); ?>" readonly/>
 						<button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" value="<?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?>" data-id="<?php echo esc_html( $user_id ); ?>" data-order-limit="0" disabled><?php esc_html_e( 'Apply Points', 'points-and-rewards-for-woocommerce' ); ?></button>
 						<p><?php esc_html_e( 'You require :', 'points-and-rewards-for-woocommerce' ); ?> <?php echo esc_html( $extra_req ); ?> <?php esc_html_e( 'more points to get redeem', 'points-and-rewards-for-woocommerce' ); ?></p>
@@ -4436,164 +4378,99 @@ class Points_Rewards_For_WooCommerce_Public {
 		$response             = array();
 		$response['result']   = false;
 		$response['msg']      = esc_html__( 'Failed', 'points-and-rewards-for-woocommerce' );
-
-		// SECURITY FIX: Verify user has customer capability (prevents unauthorized access).
-		if ( ! current_user_can( 'read' ) ) {
-			$response['result'] = false;
-			$response['msg']    = esc_html__( 'Unauthorized access', 'points-and-rewards-for-woocommerce' );
-			wp_send_json( $response );
-			wp_die();
-		}
-
-		// SECURITY FIX: Check replay protection BEFORE processing any claim type
 		$already_assign_check = get_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', true );
-
 		if ( isset( $_POST['claim_points'] ) ) {
-			// SECURITY FIX: Enforce replay protection for ALL claim types
-			if ( ! empty( $already_assign_check ) && is_numeric( $already_assign_check ) && $already_assign_check > time() ) {
+			if ( empty( $already_assign_check ) ) {
+
+				$wps_claim_points = ! empty( $_POST['claim_points'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_points'] ) ) : 0;
+				$claim_type       = ! empty( $_POST['claim_type'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_type'] ) ) : 'points';
+				// wallet compatibility.
+				if ( 'wallet' === $claim_type && $wps_claim_points > 0 ) {
+
+					$wallet_payment_gateway = new Wallet_System_For_Woocommerce();
+					$wallet_user            = get_user_by( 'id', $user_id );
+					$current_currency       = apply_filters( 'wps_wsfw_get_current_currency', get_woocommerce_currency() );
+
+					$walletamount = (float) get_user_meta( $user_id, 'wps_wallet', true );
+					$walletamount = ! empty( $walletamount ) ? $walletamount : 0;
+
+					// Credit wallet.
+					$credited_amount = apply_filters( 'wps_wsfw_convert_to_base_price', $wps_claim_points );
+					$walletamount   += $credited_amount;
+					update_user_meta( $user_id, 'wps_wallet', $walletamount );
+
+					// Send notification email if enabled.
+					$balance = $current_currency . ' ' . $wps_claim_points;
+					if ( isset( $send_email_enable ) && 'on' === $send_email_enable ) {
+						$user_name = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
+
+						$mail_text  = sprintf( 'Hello %s', $user_name ) . ",\r\n";
+						$mail_text .= __( 'Wallet credited by ', 'points-and-rewards-for-woocommerce' ) . esc_html( $balance ) . __( ' through successfully Win Wheel.', 'points-and-rewards-for-woocommerce' );
+
+						$to       = $wallet_user->user_email;
+						$from     = get_option( 'admin_email' );
+						$subject  = __( 'Wallet updating notification', 'points-and-rewards-for-woocommerce' );
+						$headers  = "MIME-Version: 1.0\r\n";
+						$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+						$headers .= "From: $from\r\nReply-To: $to\r\n";
+
+						// Prefer WooCommerce email if available.
+						if ( ! empty( WC()->mailer()->emails['wps_wswp_wallet_credit'] ) ) {
+
+							$customer_email = WC()->mailer()->emails['wps_wswp_wallet_credit'];
+							$user_name      = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
+							$customer_email->trigger( $user_id, $user_name, $balance, '' );
+						} else {
+							$wallet_payment_gateway->send_mail_on_wallet_updation( $to, $subject, $mail_text, $headers );
+						}
+					}
+
+					// Record transaction.
+					$transaction_type = __( 'Wallet credited through Win Wheel ', 'points-and-rewards-for-woocommerce' );
+					$transaction_data = array(
+						'user_id'            => $user_id,
+						'amount'             => $wps_claim_points,
+						'currency'           => $current_currency,
+						'payment_method'     => 'Win Wheel',
+						'transaction_type'   => htmlentities( $transaction_type ),
+						'transaction_type_1' => 'credit',
+						'order_id'           => '',
+						'note'               => '',
+					);
+					$wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
+
+					$response['result'] = true;
+					$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
+				} elseif ( 'points' == $claim_type && $wps_claim_points > 0 ) {
+
+					// Next play date cal.
+					$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
+					$schedule_date             = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] : 0;
+					if ( $schedule_date > 0 ) {
+
+						$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
+						update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
+					}
+
+					$user_get_points = get_user_meta( $user_id, 'wps_wpr_points', true );
+					$user_get_points = ! empty( $user_get_points ) ? (int) $user_get_points : 0;
+
+					$wps_updated_points = (int) $user_get_points + $wps_claim_points;
+					update_user_meta( $user_id, 'wps_wpr_points', $wps_updated_points );
+					// send sms.
+					wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
+					// send messages on whatsapp.
+					wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
+					// calling function for creating points log.
+					$this->wps_wpr_create_game_points_logs( $wps_claim_points, $user_id, $wps_updated_points );
+
+					$response['result'] = true;
+					$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
+				}
+			} else {
+
 				$response['result'] = false;
 				$response['msg']    = esc_html__( 'Already played by you', 'points-and-rewards-for-woocommerce' );
-				wp_send_json( $response );
-				wp_die();
-			}
-
-			$wps_claim_points = ! empty( $_POST['claim_points'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_points'] ) ) : 0;
-			$claim_type       = ! empty( $_POST['claim_type'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_type'] ) ) : 'points';
-
-			// SECURITY FIX: Get configured prize values from Win Wheel settings
-			$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
-			$configured_prizes         = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] ) && is_array( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] : array();
-
-			// SECURITY FIX: Validate that claimed amount matches a configured prize
-			$is_valid_prize = false;
-			if ( ! empty( $configured_prizes ) ) {
-				foreach ( $configured_prizes as $prize_value ) {
-					if ( absint( $wps_claim_points ) === absint( $prize_value ) ) {
-						$is_valid_prize = true;
-						break;
-					}
-				}
-			}
-
-			// SECURITY FIX: Reject if claim amount does not match any configured prize
-			if ( ! $is_valid_prize ) {
-				$response['result'] = false;
-				$response['msg']    = esc_html__( 'Invalid claim amount', 'points-and-rewards-for-woocommerce' );
-				wp_send_json( $response );
-				wp_die();
-			}
-
-			// SECURITY FIX: Daily rate limiting - prevent abuse for BOTH wallet and points
-			$daily_limit_key   = 'wps_wpr_game_claims_' . gmdate( 'Y-m-d' );
-			$daily_claim_count = (int) get_user_meta( $user_id, $daily_limit_key, true );
-			$max_daily_claims  = apply_filters( 'wps_wpr_max_daily_game_claims', 1 ); // Default: 1 claim per day
-
-			if ( $daily_claim_count >= $max_daily_claims ) {
-				$response['result'] = false;
-				$response['msg']    = esc_html__( 'Daily claim limit reached', 'points-and-rewards-for-woocommerce' );
-				wp_send_json( $response );
-				wp_die();
-			}
-
-			// wallet compatibility.
-			if ( 'wallet' === $claim_type && $wps_claim_points > 0 ) {
-
-				// SECURITY FIX: Validate Wallet System plugin is active before processing
-				if ( ! class_exists( 'Wallet_System_For_Woocommerce' ) ) {
-					$response['result'] = false;
-					$response['msg']    = esc_html__( 'Wallet system not available', 'points-and-rewards-for-woocommerce' );
-					wp_send_json( $response );
-					wp_die();
-				}
-
-				$wallet_payment_gateway = new Wallet_System_For_Woocommerce();
-				$wallet_user            = get_user_by( 'id', $user_id );
-				$current_currency       = apply_filters( 'wps_wsfw_get_current_currency', get_woocommerce_currency() );
-
-				$walletamount = (float) get_user_meta( $user_id, 'wps_wallet', true );
-				$walletamount = ! empty( $walletamount ) ? $walletamount : 0;
-
-				// Credit wallet.
-				$credited_amount = apply_filters( 'wps_wsfw_convert_to_base_price', $wps_claim_points );
-				$walletamount   += $credited_amount;
-				update_user_meta( $user_id, 'wps_wallet', $walletamount );
-
-				// SECURITY FIX: Set replay protection for wallet claims - default 1 day if not configured
-				$schedule_date = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? absint( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) : 1;
-				// Always set cooldown (minimum 1 day) to prevent replay attacks
-				$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
-				update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
-
-				// SECURITY FIX: Increment daily claim counter
-				update_user_meta( $user_id, $daily_limit_key, $daily_claim_count + 1 );
-
-				// Send notification email if enabled.
-				$balance = $current_currency . ' ' . $wps_claim_points;
-				if ( isset( $send_email_enable ) && 'on' === $send_email_enable ) {
-					$user_name = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
-
-					$mail_text  = sprintf( 'Hello %s', $user_name ) . ",\r\n";
-					$mail_text .= __( 'Wallet credited by ', 'points-and-rewards-for-woocommerce' ) . esc_html( $balance ) . __( ' through successfully Win Wheel.', 'points-and-rewards-for-woocommerce' );
-
-					$to       = $wallet_user->user_email;
-					$from     = get_option( 'admin_email' );
-					$subject  = __( 'Wallet updating notification', 'points-and-rewards-for-woocommerce' );
-					$headers  = "MIME-Version: 1.0\r\n";
-					$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-					$headers .= "From: $from\r\nReply-To: $to\r\n";
-
-					// Prefer WooCommerce email if available.
-					if ( ! empty( WC()->mailer()->emails['wps_wswp_wallet_credit'] ) ) {
-
-						$customer_email = WC()->mailer()->emails['wps_wswp_wallet_credit'];
-						$user_name      = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
-						$customer_email->trigger( $user_id, $user_name, $balance, '' );
-					} else {
-						$wallet_payment_gateway->send_mail_on_wallet_updation( $to, $subject, $mail_text, $headers );
-					}
-				}
-
-				// Record transaction.
-				$transaction_type = __( 'Wallet credited through Win Wheel ', 'points-and-rewards-for-woocommerce' );
-				$transaction_data = array(
-					'user_id'            => $user_id,
-					'amount'             => $wps_claim_points,
-					'currency'           => $current_currency,
-					'payment_method'     => 'Win Wheel',
-					'transaction_type'   => htmlentities( $transaction_type ),
-					'transaction_type_1' => 'credit',
-					'order_id'           => '',
-					'note'               => '',
-				);
-				$wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
-
-				$response['result'] = true;
-				$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
-			} elseif ( 'points' === $claim_type && $wps_claim_points > 0 ) {
-
-				// SECURITY FIX: Set replay protection for points claims - default 1 day if not configured
-				$schedule_date = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? absint( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) : 1;
-				// Always set cooldown (minimum 1 day) to prevent replay attacks
-				$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
-				update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
-
-				// SECURITY FIX: Increment daily claim counter for points too
-				update_user_meta( $user_id, $daily_limit_key, $daily_claim_count + 1 );
-
-				$user_get_points = get_user_meta( $user_id, 'wps_wpr_points', true );
-				$user_get_points = ! empty( $user_get_points ) ? (int) $user_get_points : 0;
-
-				$wps_updated_points = (int) $user_get_points + (int) $wps_claim_points;
-				update_user_meta( $user_id, 'wps_wpr_points', $wps_updated_points );
-				// send sms.
-				wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
-				// send messages on whatsapp.
-				wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
-				// calling function for creating points log.
-				$this->wps_wpr_create_game_points_logs( $wps_claim_points, $user_id, $wps_updated_points );
-
-				$response['result'] = true;
-				$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
 			}
 		}
 		wp_send_json( $response );
@@ -5410,51 +5287,6 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_show_campaign_modal() {
 		if ( $this->wps_wpr_is_campaign_enable() && $this->wps_wpr_check_selected_page() ) {
 
-			// Get A/B test variant data from PRO plugin if available
-			global $wps_wpr_ab_variant_data;
-
-			// Call PRO plugin's A/B testing function if it exists
-			if ( function_exists( 'wps_wpr_get_active_ab_test_variant' ) ) {
-				// Use the global function approach
-				$wps_wpr_ab_variant_data = wps_wpr_get_active_ab_test_variant();
-			} elseif ( class_exists( 'Points_And_Rewards_For_WooCommerce_Pro_Public' ) ) {
-				// Fallback: Try to get variant data directly
-				$pro_ab_testing_class = WP_PLUGIN_DIR . '/ultimate-woocommerce-points-and-rewards/includes/class-wps-wpr-campaign-ab-testing.php';
-				if ( file_exists( $pro_ab_testing_class ) ) {
-					require_once $pro_ab_testing_class;
-
-					if ( class_exists( 'WPS_WPR_Campaign_AB_Testing' ) ) {
-						$ab_testing = new WPS_WPR_Campaign_AB_Testing();
-						$active_test = $ab_testing->get_active_test();
-
-						if ( $active_test ) {
-							$variant = $ab_testing->get_user_variant( $active_test->id );
-							if ( $variant ) {
-								$variant_data = $ab_testing->get_variant_data( $active_test->id, $variant );
-								if ( $variant_data ) {
-									$wps_wpr_ab_variant_data = array(
-										'test_id' => $active_test->id,
-										'variant_id' => $variant_data['id'],
-										'variant_name' => $variant,
-										'template_id' => $variant_data['template_id'],
-										'occasion_type' => $variant_data['occasion_type'],
-										'template_file' => $variant_data['template_file'],
-										'customizations' => isset( $variant_data['customizations'] ) ? $variant_data['customizations'] : array(),
-									);
-
-									// Track impression event
-									$event_data = array(
-										'url' => isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '',
-										'user_agent' => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '',
-									);
-									$ab_testing->track_event( $active_test->id, $variant_data['id'], 'impression', $event_data );
-								}
-							}
-						}
-					}
-				}
-			}
-
 			require_once plugin_dir_path( __FILE__ ) . 'partials/wps-wpr-points-campaign-template.php';
 		}
 	}
@@ -5497,12 +5329,9 @@ class Points_Rewards_For_WooCommerce_Public {
 				<p>Share this url to give your friends an awesome offer! You’ll earn rewards when they make a purchase and signup.</p>
 				<div class="wps_wpr_refrral_code_copy">
 					<p id="wps_wpr_copy"><code><?php echo esc_url( $site_url . '?pkey=' . $get_referral ); ?></code></p>
-					<button class="wps_wpr_btn_copy wps_tooltip" data-clipboard-target="#wps_wpr_copy" aria-label="Copy to clipboard">
+					<button class="wps_wpr_btn_copy wps_tooltip" data-clipboard-target="#wps_wpr_copy" aria-label="copied">
 						<span class="wps_tooltiptext"><?php esc_html_e( 'Copy', 'points-and-rewards-for-woocommerce' ); ?></span>
-						<svg class="wps_wpr_copy_icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-							<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-						</svg>
+						<img src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/images/copy.png' ); ?>" alt="Copy to clipboard">
 					</button>
 				</div>
 				<?php
@@ -5782,12 +5611,6 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
 
-		// SECURITY FIX: Verify user has customer capability (prevents unauthorized access).
-		if ( ! current_user_can( 'read' ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Unauthorized access', 'points-and-rewards-for-woocommerce' ) ) );
-			wp_die();
-		}
-
 		$wps_wpr_campaign_settings              = get_option( 'wps_wpr_campaign_settings', array() );
 		$wps_wpr_campaign_settings              = is_array( $wps_wpr_campaign_settings ) ? $wps_wpr_campaign_settings : array();
 		$wps_wpr_social_share_campaign_label    = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] : array();
@@ -5833,15 +5656,6 @@ class Points_Rewards_For_WooCommerce_Public {
 		$url            = $wps_wpr_combined[ $social_tag_name ]['link'];
 		$points         = absint( $wps_wpr_combined[ $social_tag_name ]['value'] );
 		$social_heading = $campaign_templates[ $social_tag_name ];
-
-		// SECURITY FIX: Check if user has already performed this social action.
-		$performed = (array) get_user_meta( $user_id, 'wps_wpr_social_action_performed', true );
-		if ( in_array( $social_tag_name, $performed, true ) ) {
-			// Action already performed, just redirect without crediting points.
-			wp_send_json( $url );
-			wp_die();
-		}
-
 		if ( $points > 0 ) {
 
 			$get_points     = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? absint( get_user_meta( $user_id, 'wps_wpr_points', true ) ) : 0;
@@ -6022,340 +5836,6 @@ class Points_Rewards_For_WooCommerce_Public {
 		} else {
 			wp_mail( $to, $subject, $message, $headers );
 		}
-	}
-
-	/**
-	 * Calculate points needed for next discount tier.
-	 *
-	 * @param int $current_points User's current points balance.
-	 * @return array|false Array with points_needed and discount_value, or false if no next tier.
-	 * @since 2.10.3
-	 */
-	public function wps_wpr_calculate_next_discount_tier( $current_points ) {
-
-		// Get conversion rate settings.
-		$conversion_points = $this->wps_wpr_get_general_settings_num( 'wps_wpr_coupon_conversion_points' );
-		$conversion_price  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_coupon_conversion_price' );
-		$min_redeem        = $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' );
-
-		// Validate conversion settings.
-		if ( empty( $conversion_points ) || empty( $conversion_price ) ) {
-			return false;
-		}
-
-		// If below minimum, show minimum requirement.
-		if ( $current_points < $min_redeem ) {
-			$points_needed  = $min_redeem - $current_points;
-			$discount_value = ( $min_redeem / $conversion_points ) * $conversion_price;
-
-			return array(
-				'points_needed'  => $points_needed,
-				'discount_value' => $discount_value,
-			);
-		}
-
-		// Calculate next tier (rounded up to next conversion multiple).
-		$next_tier_points = ceil( ( $current_points + 1 ) / $conversion_points ) * $conversion_points;
-		$points_needed    = $next_tier_points - $current_points;
-		$discount_value   = ( $next_tier_points / $conversion_points ) * $conversion_price;
-
-		return array(
-			'points_needed'  => $points_needed,
-			'discount_value' => $discount_value,
-		);
-	}
-
-	/**
-	 * Display points-to-discount notification on product pages.
-	 *
-	 * @since 2.10.3
-	 */
-	public function wps_wpr_display_points_to_discount_product() {
-
-		if ( wps_wpr_restrict_user_fun() || ! is_user_logged_in() ) {
-			return;
-		}
-
-		// Check if points redemption is enabled.
-		$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
-		if ( 1 != $wps_wpr_custom_points_on_cart ) {
-			return;
-		}
-
-		// Check if product page notice is enabled.
-		$wps_wpr_show_product_notice = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_points_notice_on_product' );
-		if ( 1 != $wps_wpr_show_product_notice ) {
-			return;
-		}
-
-		$user_id        = get_current_user_ID();
-		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-
-		if ( empty( $current_points ) ) {
-			$current_points = 0;
-		}
-
-		$next_tier = $this->wps_wpr_calculate_next_discount_tier( $current_points );
-
-		if ( false === $next_tier ) {
-			return;
-		}
-
-		$currency_symbol = get_woocommerce_currency_symbol();
-		$discount_text   = wc_price( $next_tier['discount_value'] );
-
-		?>
-		<div class="wps-wpr-points-to-discount-notice wps-wpr-product-notice">
-			<p class="wps-wpr-notice-text">
-				<span class="wps-wpr-notice-icon">🎁</span>
-				<strong>
-					<?php
-					/* translators: %1$d: points needed, %2$s: discount value with currency */
-					echo sprintf( esc_html__( "You're %1\$d points away from a %2\$s discount!", 'points-and-rewards-for-woocommerce' ), absint( $next_tier['points_needed'] ), wp_kses_post( $discount_text ) );
-					?>
-				</strong>
-			</p>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Display points-to-discount notification on cart page.
-	 *
-	 * @since 2.10.3
-	 */
-	public function wps_wpr_display_points_to_discount_cart() {
-
-		if ( wps_wpr_restrict_user_fun() || ! is_user_logged_in() ) {
-			return;
-		}
-
-		// Check if points redemption is enabled.
-		$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
-		if ( 1 != $wps_wpr_custom_points_on_cart ) {
-			return;
-		}
-
-		// Check if cart page notice is enabled.
-		$wps_wpr_show_cart_notice = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_points_notice_on_cart' );
-		if ( 1 != $wps_wpr_show_cart_notice ) {
-			return;
-		}
-
-		$user_id        = get_current_user_ID();
-		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-
-		if ( empty( $current_points ) ) {
-			$current_points = 0;
-		}
-
-		// Deduct points if Points Discount is already applied.
-		$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
-		$current_points                               = $current_points - $wps_wpr_check_points_discount_applied_amount;
-
-		// Deduct points if discount applied via product edit page (purchase through only points).
-		$applied__points = 0;
-		if ( isset( WC()->cart ) ) {
-			foreach ( WC()->cart->get_cart() as $cart ) {
-				if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
-					$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
-				}
-			}
-		}
-		$current_points = $current_points - $applied__points;
-
-		$next_tier = $this->wps_wpr_calculate_next_discount_tier( $current_points );
-
-		if ( false === $next_tier ) {
-			return;
-		}
-
-		$currency_symbol = get_woocommerce_currency_symbol();
-		$discount_text   = wc_price( $next_tier['discount_value'] );
-
-		?>
-		<tr class="wps-wpr-points-to-discount-row">
-			<td colspan="6" class="wps-wpr-points-to-discount-cell">
-				<div class="wps-wpr-points-to-discount-notice wps-wpr-cart-notice">
-					<p class="wps-wpr-notice-text">
-						<span class="wps-wpr-notice-icon">🎁</span>
-						<strong>
-							<?php
-							/* translators: %1$d: points needed, %2$s: discount value with currency */
-							echo sprintf( esc_html__( "You're %1\$d points away from a %2\$s discount!", 'points-and-rewards-for-woocommerce' ), absint( $next_tier['points_needed'] ), wp_kses_post( $discount_text ) );
-							?>
-						</strong>
-						<span class="wps-wpr-notice-cta"><?php esc_html_e( 'Keep shopping to earn more points!', 'points-and-rewards-for-woocommerce' ); ?></span>
-					</p>
-				</div>
-			</td>
-		</tr>
-		<?php
-	}
-
-	/**
-	 * Display points-to-discount notification on checkout page.
-	 *
-	 * @since 2.10.3
-	 */
-	public function wps_wpr_display_points_to_discount_checkout() {
-
-		if ( wps_wpr_restrict_user_fun() || ! is_user_logged_in() ) {
-			return;
-		}
-
-		// Check if points redemption is enabled.
-		$wps_wpr_custom_points_on_cart = $this->wps_wpr_get_general_settings_num( 'wps_wpr_custom_points_on_cart' );
-		if ( 1 != $wps_wpr_custom_points_on_cart ) {
-			return;
-		}
-
-		// Check if checkout page notice is enabled.
-		$wps_wpr_show_checkout_notice = $this->wps_wpr_get_general_settings_num( 'wps_wpr_show_points_notice_on_checkout' );
-		if ( 1 != $wps_wpr_show_checkout_notice ) {
-			return;
-		}
-
-		$user_id        = get_current_user_ID();
-		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-
-		if ( empty( $current_points ) ) {
-			$current_points = 0;
-		}
-
-		// Deduct points if Points Discount is already applied.
-		$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
-		$current_points                               = $current_points - $wps_wpr_check_points_discount_applied_amount;
-
-		// Deduct points if discount applied via product edit page (purchase through only points).
-		$applied__points = 0;
-		if ( isset( WC()->cart ) ) {
-			foreach ( WC()->cart->get_cart() as $cart ) {
-				if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
-					$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
-				}
-			}
-		}
-		$current_points = $current_points - $applied__points;
-
-		$next_tier = $this->wps_wpr_calculate_next_discount_tier( $current_points );
-
-		if ( false === $next_tier ) {
-			return;
-		}
-
-		$currency_symbol = get_woocommerce_currency_symbol();
-		$discount_text   = wc_price( $next_tier['discount_value'] );
-
-		?>
-		<tr class="wps-wpr-points-to-discount-row wps-wpr-checkout-notice-row">
-			<td colspan="2" class="wps-wpr-points-to-discount-cell">
-				<div class="wps-wpr-points-to-discount-notice wps-wpr-checkout-notice">
-					<p class="wps-wpr-notice-text">
-						<span class="wps-wpr-notice-icon">🎁</span>
-						<strong>
-							<?php
-							/* translators: %1$d: points needed, %2$s: discount value with currency */
-							echo sprintf( esc_html__( "You're %1\$d points away from a %2\$s discount!", 'points-and-rewards-for-woocommerce' ), absint( $next_tier['points_needed'] ), wp_kses_post( $discount_text ) );
-							?>
-						</strong>
-					</p>
-				</div>
-			</td>
-		</tr>
-		<?php
-	}
-
-	/**
-	 * Display points balance on My Account dashboard.
-	 *
-	 * @since 2.10.2
-	 */
-	public function wps_wpr_display_points_on_dashboard() {
-		if ( ! is_user_logged_in() ) {
-			return;
-		}
-
-		$user_id        = get_current_user_id();
-		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-
-		// Check if points display is enabled
-		$general_settings = $this->wps_wpr_get_cached_option( 'wps_wpr_settings_gallery', true );
-		if ( empty( $general_settings ) || ! isset( $general_settings['wps_wpr_general_points_label'] ) ) {
-			return;
-		}
-
-		$points_label = ! empty( $general_settings['wps_wpr_general_points_label'] ) ?
-			$general_settings['wps_wpr_general_points_label'] :
-			__( 'Points', 'points-and-rewards-for-woocommerce' );
-
-		// Get notification color
-		$wps_wpr_notification_color = $this->wps_wpr_get_other_settings( 'wps_wpr_notification_color' );
-		$wps_wpr_notification_color = ( ! empty( $wps_wpr_notification_color ) ) ? $wps_wpr_notification_color : '#55b3a5';
-
-		?>
-		<div class="wps-wpr-dashboard-points-balance" style="background-color: <?php echo esc_attr( $wps_wpr_notification_color ); ?>; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-			<p style="margin: 0; color: #fff; font-size: 16px;">
-				<strong><?php esc_html_e( 'Your Points Balance:', 'points-and-rewards-for-woocommerce' ); ?></strong>
-				<span style="font-size: 20px; font-weight: bold; margin-left: 10px;">
-					<?php echo esc_html( number_format( $current_points ) ); ?>
-				</span>
-				<span style="font-size: 14px; opacity: 0.9;">
-					<?php echo esc_html( $points_label ); ?>
-				</span>
-				<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'points' ) ); ?>" style="color: #fff; text-decoration: underline; margin-left: 15px; font-size: 14px;">
-					<?php esc_html_e( 'View Details →', 'points-and-rewards-for-woocommerce' ); ?>
-				</a>
-			</p>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Add points balance to WordPress admin bar.
-	 *
-	 * @param WP_Admin_Bar $wp_admin_bar WordPress admin bar object.
-	 * @since 2.10.2
-	 */
-	public function wps_wpr_add_points_to_admin_bar( $wp_admin_bar ) {
-		// Only show for logged-in users on frontend
-		if ( ! is_user_logged_in() || is_admin() ) {
-			return;
-		}
-
-		// Check if admin bar display is enabled (add a setting for this later)
-		$other_settings = $this->wps_wpr_get_cached_option( 'wps_wpr_other_settings', true );
-		$show_in_admin_bar = isset( $other_settings['wps_wpr_show_points_in_admin_bar'] ) ?
-			$other_settings['wps_wpr_show_points_in_admin_bar'] : 0;
-
-		// Support both old format ('yes') and new format (1)
-		if ( 'yes' !== $show_in_admin_bar && 1 !== intval( $show_in_admin_bar ) ) {
-			return;
-		}
-
-		$user_id        = get_current_user_id();
-		$current_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-
-		// Get points label
-		$general_settings = $this->wps_wpr_get_cached_option( 'wps_wpr_settings_gallery', true );
-		$points_label = ! empty( $general_settings['wps_wpr_general_points_label'] ) ?
-			$general_settings['wps_wpr_general_points_label'] :
-			__( 'Points', 'points-and-rewards-for-woocommerce' );
-
-		$wp_admin_bar->add_node(
-			array(
-				'id'     => 'wps-wpr-points-balance',
-				'title'  => sprintf(
-					'<span class="ab-icon dashicons dashicons-star-filled"></span><span class="ab-label">%s %s</span>',
-					number_format( $current_points ),
-					esc_html( $points_label )
-				),
-				'href'   => wc_get_account_endpoint_url( 'points' ),
-				'meta'   => array(
-					'title' => __( 'View your points', 'points-and-rewards-for-woocommerce' ),
-				),
-			)
-		);
 	}
 
 }

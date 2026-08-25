@@ -136,11 +136,6 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-points-rewards-for-woocommerce-public.php';
 
-		/**
-		 * The class responsible for the activation wizard.
-		 */
-		require_once plugin_dir_path( __DIR__ ) . 'admin/class-mwb-wpr-activation-wizard.php';
-
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
 		/**
@@ -185,9 +180,6 @@ class Points_Rewards_For_Woocommerce {
 	private function define_admin_hooks() {
 		$plugin_admin = new Points_Rewards_For_WooCommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 		$wps_wpr_talk_to_expert = null;
-
-		// Initialize activation wizard.
-		$activation_wizard = new MWB_WPR_Activation_Wizard( $this->get_plugin_name(), $this->get_version() );
 
 		if ( is_admin() ) {
 			$wps_wpr_talk_to_expert = new Points_Rewards_For_WooCommerce_Talk_To_Expert_Form();
@@ -308,10 +300,6 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'wps_wpr_woocommerce_add_cart_item_data', 10, 4 );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'wps_wpr_woocommerce_get_item_data', 10, 2 );
 			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'wps_display_product_points', 7 );
-			// Display points-to-discount notification on product, cart, and checkout pages.
-			$this->loader->add_action( 'woocommerce_after_single_product_summary', $plugin_public, 'wps_wpr_display_points_to_discount_product', 5 );
-			$this->loader->add_action( 'woocommerce_after_cart_contents', $plugin_public, 'wps_wpr_display_points_to_discount_cart', 10 );
-			$this->loader->add_action( 'woocommerce_review_order_before_order_total', $plugin_public, 'wps_wpr_display_points_to_discount_checkout', 10 );
 			/*Display the meta key*/
 			$this->loader->add_filter( 'woocommerce_order_item_display_meta_key', $plugin_public, 'wps_wpr_woocommerce_order_item_display_meta_key', 10, 1 );
 			$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $plugin_public, 'wps_wpr_woocommerce_add_order_item_meta_version_3', 10, 4 );
@@ -364,10 +352,6 @@ class Points_Rewards_For_Woocommerce {
 			// cart/checkout block js.
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_before', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
-			// Display points balance on My Account dashboard.
-			$this->loader->add_action( 'woocommerce_account_dashboard', $plugin_public, 'wps_wpr_display_points_on_dashboard', 5 );
-			// Add points balance to admin bar (frontend only).
-			$this->loader->add_action( 'admin_bar_menu', $plugin_public, 'wps_wpr_add_points_to_admin_bar', 100 );
 			// Multivendor X compatibility.
 			$this->loader->add_filter( 'mvx_available_payment_gateways', $plugin_public, 'wps_wpr_admin_mvx_list_modules', 10 );
 			// verify cart page nonce.
