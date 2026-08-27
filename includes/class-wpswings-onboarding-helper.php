@@ -145,7 +145,7 @@ class WPSwings_Onboarding_Helper {
 	 *
 	 * @since    1.0.0
 	 */
-		public function wps_wpr_enqueue_styles() {
+	public function wps_wpr_enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -158,13 +158,13 @@ class WPSwings_Onboarding_Helper {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-			if ( $this->wps_wpr_is_valid_page_screen() ) {
-				$style_path    = WPS_RWPR_DIR_PATH . 'admin/css/wpswings-onboarding-admin.css';
-				$style_version = file_exists( $style_path ) ? filemtime( $style_path ) : REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
-				wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_RWPR_DIR_URL . 'admin/css/wpswings-onboarding-admin.css', array(), $style_version, 'all' );
-				wp_enqueue_style( 'select2' );
-			}
+		if ( $this->wps_wpr_is_valid_page_screen() ) {
+			$style_path    = WPS_RWPR_DIR_PATH . 'admin/css/wpswings-onboarding-admin.css';
+			$style_version = file_exists( $style_path ) ? filemtime( $style_path ) : REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
+			wp_enqueue_style( 'makewebbetter-onboarding-style', WPS_RWPR_DIR_URL . 'admin/css/wpswings-onboarding-admin.css', array(), $style_version, 'all' );
+			wp_enqueue_style( 'select2' );
 		}
+	}
 
 	/**
 	 * Register the JavaScript for the admin area.
@@ -185,10 +185,10 @@ class WPSwings_Onboarding_Helper {
 		 * class.
 		 */
 
-			if ( $this->wps_wpr_is_valid_page_screen() ) {
-				$script_path    = WPS_RWPR_DIR_PATH . 'admin/js/wpswings-onboarding-admin.js';
-				$script_version = file_exists( $script_path ) ? filemtime( $script_path ) : REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
-				wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_RWPR_DIR_URL . 'admin/js/wpswings-onboarding-admin.js', array( 'jquery', 'select2' ), $script_version, true );
+		if ( $this->wps_wpr_is_valid_page_screen() ) {
+			$script_path    = WPS_RWPR_DIR_PATH . 'admin/js/wpswings-onboarding-admin.js';
+			$script_version = file_exists( $script_path ) ? filemtime( $script_path ) : REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
+			wp_enqueue_script( 'makewebbetter-onboarding-scripts', WPS_RWPR_DIR_URL . 'admin/js/wpswings-onboarding-admin.js', array( 'jquery', 'select2' ), $script_version, true );
 
 			global $pagenow;
 			$current_slug = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
@@ -475,71 +475,71 @@ class WPSwings_Onboarding_Helper {
 			 */
 
 			wp_rand() => array(
-				'id' => 'deactivation-reason',
-				'label' => '',
-				'type' => 'radio',
-				'name' => 'plugin_deactivation_reason',
-				'value' => '',
-				'multiple' => 'no',
-				'required' => 'yes',
+				'id'          => 'deactivation-reason',
+				'label'       => '',
+				'type'        => 'radio',
+				'name'        => 'plugin_deactivation_reason',
+				'value'       => '',
+				'multiple'    => 'no',
+				'required'    => 'yes',
 				'extra-class' => '',
-				'options' => array(
-					'temporary-deactivation-for-debug'      => __( 'It is a temporary deactivation. I am just debugging an issue.', 'points-and-rewards-for-woocommerce' ),
-					'site-layout-broke'         => __( 'The plugin broke my layout or some functionality.', 'points-and-rewards-for-woocommerce' ),
-					'complicated-configuration'         => __( 'The plugin is too complicated to configure.', 'points-and-rewards-for-woocommerce' ),
-					'no-longer-need'        => __( 'I no longer need the plugin', 'points-and-rewards-for-woocommerce' ),
-					'found-better-plugin'       => __( 'I found a better plugin', 'points-and-rewards-for-woocommerce' ),
-					'other'         => __( 'Other', 'points-and-rewards-for-woocommerce' ),
+				'options'     => array(
+					'temporary-deactivation-for-debug' => __( 'It is a temporary deactivation. I am just debugging an issue.', 'points-and-rewards-for-woocommerce' ),
+					'site-layout-broke'                => __( 'The plugin broke my layout or some functionality.', 'points-and-rewards-for-woocommerce' ),
+					'complicated-configuration'        => __( 'The plugin is too complicated to configure.', 'points-and-rewards-for-woocommerce' ),
+					'no-longer-need'                   => __( 'I no longer need the plugin', 'points-and-rewards-for-woocommerce' ),
+					'found-better-plugin'              => __( 'I found a better plugin', 'points-and-rewards-for-woocommerce' ),
+					'other'                            => __( 'Other', 'points-and-rewards-for-woocommerce' ),
 				),
 			),
 
 			wp_rand() => array(
-				'id' => 'deactivation-reason-text',
-				'label' => 'Let us know why you are deactivating {plugin-name} so we can improve the plugin',
-				'type' => 'textarea',
-				'name' => 'deactivation_reason_text',
-				'value' => '',
-				'required' => '',
+				'id'          => 'deactivation-reason-text',
+				'label'       => 'Let us know why you are deactivating {plugin-name} so we can improve the plugin',
+				'type'        => 'textarea',
+				'name'        => 'deactivation_reason_text',
+				'value'       => '',
+				'required'    => '',
 				'extra-class' => 'wps-keep-hidden',
 			),
 
 			wp_rand() => array(
-				'id' => 'admin-email',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'email',
-				'value' => $current_user_email,
-				'required' => '',
+				'id'          => 'admin-email',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'email',
+				'value'       => $current_user_email,
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			wp_rand() => array(
-				'id' => 'store-name',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'company',
-				'value' => $store_name,
-				'required' => '',
+				'id'          => 'store-name',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'company',
+				'value'       => $store_name,
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			wp_rand() => array(
-				'id' => 'store-url',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'website',
-				'value' => $store_url,
-				'required' => '',
+				'id'          => 'store-url',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'website',
+				'value'       => $store_url,
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			wp_rand() => array(
-				'id' => 'plugin-name',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'org_plugin_name',
-				'value' => '',
-				'required' => '',
+				'id'          => 'plugin-name',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'org_plugin_name',
+				'value'       => '',
+				'required'    => '',
 				'extra-class' => '',
 			),
 		);
@@ -621,7 +621,7 @@ class WPSwings_Onboarding_Helper {
 				if ( ! empty( $options ) && is_array( $options ) ) {
 
 					$is_multiple = 'yes' == $multiple ? 'multiple' : '';
-					$select2 = ( 'yes' == $multiple && 'select' == $type ) || 'select2' == $type ? 'on-boarding-select2 ' : '';
+					$select2     = ( 'yes' == $multiple && 'select' == $type ) || 'select2' == $type ? 'on-boarding-select2 ' : '';
 					?>
 
 					<label class="on-boarding-label"  for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $label ); ?></label>
@@ -689,6 +689,9 @@ class WPSwings_Onboarding_Helper {
 	public function wps_wpr_send_onboarding_data() {
 
 		check_ajax_referer( 'wps_onboarding_nonce', 'nonce' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) );
+		}
 
 		$form_data      = ! empty( $_POST['form_data'] ) ? map_deep( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ), 'sanitize_text_field' ) : '';
 		$formatted_data = array();
@@ -734,7 +737,7 @@ class WPSwings_Onboarding_Helper {
 			$found = current(
 				array_filter(
 					$formatted_data,
-					function( $item ) {
+					function ( $item ) {
 						return isset( $item['name'] ) && 'plugin_deactivation_reason' == $item['name'];
 					}
 				)
@@ -867,7 +870,7 @@ class WPSwings_Onboarding_Helper {
 	 */
 	private function wps_wpr_hic_post( $endpoint, $post_params, $headers ) {
 
-		$url = $this->base_url . $endpoint;
+		$url     = $this->base_url . $endpoint;
 		$request = array(
 			'httpversion' => '1.0',
 			'sslverify'   => false,
@@ -919,10 +922,10 @@ class WPSwings_Onboarding_Helper {
 
 		$form_data = wp_json_encode(
 			array(
-				'fields' => $form_data,
-				'context'  => array(
-					'pageUri' => self::$store_url,
-					'pageName' => self::$store_name,
+				'fields'  => $form_data,
+				'context' => array(
+					'pageUri'   => self::$store_url,
+					'pageName'  => self::$store_name,
 					'ipAddress' => $this->wps_wpr_get_client_ip(),
 				),
 			)
@@ -930,7 +933,7 @@ class WPSwings_Onboarding_Helper {
 
 		$response = $this->wps_wpr_hic_post( $url, $form_data, $headers );
 		if ( 200 == $response['status_code'] ) {
-			$result = json_decode( $response['response'], true );
+			$result            = json_decode( $response['response'], true );
 			$result['success'] = true;
 		} else {
 

@@ -1084,7 +1084,7 @@ table.wps_wpr_user_badges_table_settings_wrappers {
 }
 .wps_wpr_add_more_btn_badge:hover {
   background: #2196f3;
-  color: #fff;
+  color: #fff !important;
 }
 #wps_rwpr_setting_wrapper input.wps_wpr_add_more_btn_badge:hover {
   background: 0 0;
@@ -2749,7 +2749,7 @@ body.wp-admin.folded
   background: #fff;
   border-radius: 14px;
   padding: 10px 12px;
-  margin: 12px 0;
+  margin: 12px -11px;
 }
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .search-box input[type="search"],
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .tablenav .actions input,

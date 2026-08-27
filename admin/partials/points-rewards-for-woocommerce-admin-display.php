@@ -78,9 +78,22 @@ $wps_wpr_setting_tab = array(
 	),
 );
 
+// Add Free vs Pro tab only when pro version is not active.
+if ( ! ( function_exists( 'wps_wpr_is_active' ) && wps_wpr_is_active() ) ) {
+	$wps_wpr_free_vs_pro_tab = array(
+		'free-vs-pro' => array(
+			'title'     => __( 'Free vs Pro', 'points-and-rewards-for-woocommerce' ),
+			'file_path' => WPS_RWPR_DIR_PATH . '/admin/partials/templates/wps-wpr-free-vs-pro.php',
+		),
+	);
+	// Insert Free vs Pro tab after Overview tab.
+	$wps_wpr_setting_tab = array_slice( $wps_wpr_setting_tab, 0, 1, true ) + $wps_wpr_free_vs_pro_tab + array_slice( $wps_wpr_setting_tab, 1, null, true );
+}
+
 $wps_wpr_setting_tab    = apply_filters( 'wps_rwpr_add_setting_tab', $wps_wpr_setting_tab );
 $wps_wpr_plugin_version = 'v' . REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 $wps_wpr_plugin_name    = apply_filters( 'wps_wpr_pro_plugin_name', /* translators: %s: org name */ sprintf( '%s <span>%s</span>', esc_html__( 'Points and Rewards for WooCommerce', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_wpr_plugin_version ) ) );
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe read-only tab navigation parameter.
 $wps_wpr_tabs           = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
 
 // check if user is admin.
@@ -105,6 +118,7 @@ $wps_wpr_tab_descriptions = apply_filters(
 	'wps_rwpr_setting_tab_descriptions',
 	array(
 		'overview-setting'      => __( 'Get a quick summary of plugin capabilities, key highlights, and compatibility details.', 'points-and-rewards-for-woocommerce' ),
+		'free-vs-pro'           => __( 'Compare feature sets between free and pro versions to discover advanced capabilities.', 'points-and-rewards-for-woocommerce' ),
 		'general-setting'       => __( 'Configure core earning, redemption, and points behavior across your WooCommerce store.', 'points-and-rewards-for-woocommerce' ),
 		'coupon-setting'        => __( 'Set per-currency point conversion values for earning and redeeming reward points.', 'points-and-rewards-for-woocommerce' ),
 		'points-table'          => __( 'View customer points records, update balances, and manage points history from one table.', 'points-and-rewards-for-woocommerce' ),
@@ -233,10 +247,20 @@ $wps_wpr_is_overflow_active = ! empty( $wps_wpr_overflow_tabs ) && isset( $wps_w
 									?>
 								</div>
 							</div>
+
+							
 							<?php
 						}
 						?>
 					</div>
+					<?php if ( ! $wps_wpr_is_pro_active ) : ?>
+					<div class="wps_rwpr_upgrade_pro_banner">
+						<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro" target="_blank" rel="noopener noreferrer" class="wps_rwpr_upgrade_pro_button">
+							<span class="dashicons dashicons-star-filled"></span>
+							<span><?php esc_html_e( 'Upgrade to Pro', 'points-and-rewards-for-woocommerce' ); ?></span>
+						</a>
+					</div>
+					<?php endif; ?>
 				</div>
 
 				<div class="loading-style-bg wps_rwpr_settings_display_none" id="wps_wpr_loader">
@@ -334,6 +358,63 @@ $wps_wpr_is_overflow_active = ! empty( $wps_wpr_overflow_tabs ) && isset( $wps_w
 		</form>
 		<?php Points_Rewards_For_WooCommerce_Talk_To_Expert_Form::wps_wpr_render_modal(); ?>
 	</div>
+<style type="text/css">
+.wps_rwpr_upgrade_pro_banner {
+
+	padding: 15px 20px;
+	border-radius: 8px;
+	text-align: center;
+}
+
+.wps_rwpr_upgrade_pro_button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 30px;
+	background: #fff;
+	color: var(--rma-yellow);
+	text-decoration: none;
+	border-radius: 6px;
+	font-weight: 600;
+	font-size: 15px;
+	transition: all 0.3s ease;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wps_rwpr_upgrade_pro_button:hover {
+	background: #f8f9fa;
+	color: #764ba2;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	text-decoration: none;
+}
+
+.wps_rwpr_upgrade_pro_button:focus {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+	text-decoration: none;
+}
+
+.wps_rwpr_upgrade_pro_button .dashicons {
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+}
+
+@media (max-width: 782px) {
+	.wps_rwpr_upgrade_pro_banner {
+		margin-top: 15px;
+		padding: 12px 15px;
+	}
+
+	.wps_rwpr_upgrade_pro_button {
+		padding: 10px 20px;
+		font-size: 14px;
+		width: 100%;
+		justify-content: center;
+	}
+}
+</style>
 <script type="text/javascript">
 	(function() {
 		function moveDashboardNotices() {

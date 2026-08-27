@@ -1,0 +1,635 @@
+/**
+ * Setup Wizard Styles
+ *
+ * @package Points_And_Rewards_For_WooCommerce
+ * @since   2.10.3
+ */
+
+/* Wizard Container */
+.wps-wpr-setup-wizard-wrap {
+	max-width: 900px;
+	margin: 40px auto;
+	padding: 0 20px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* Header */
+.wps-wpr-wizard-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 40px;
+	padding-bottom: 20px;
+	border-bottom: 2px solid #e5e7eb;
+}
+
+.wps-wpr-wizard-logo h1 {
+	margin: 0 0 8px 0;
+	font-size: 28px;
+	font-weight: 600;
+	color: #1f2937;
+}
+
+.wps-wpr-wizard-logo p {
+	margin: 0;
+	font-size: 16px;
+	color: #6b7280;
+}
+
+.wps-wpr-skip-wizard {
+	padding: 10px 20px;
+	background: #f3f4f6;
+	color: #374151;
+	text-decoration: none;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	transition: all 0.2s;
+}
+
+.wps-wpr-skip-wizard:hover {
+	background: #e5e7eb;
+	color: #1f2937;
+}
+
+/* Progress Bar */
+.wps-wpr-wizard-progress {
+	margin-bottom: 40px;
+}
+
+.wps-wpr-progress-bar {
+	height: 8px;
+	background: #e5e7eb;
+	border-radius: 4px;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+
+.wps-wpr-progress-fill {
+	height: 100%;
+	background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+	transition: width 0.3s ease;
+}
+
+.wps-wpr-progress-steps {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.wps-wpr-progress-step {
+	flex: 1;
+	text-align: center;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.wps-wpr-step-number {
+	display: block;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	margin: 0 auto 8px;
+	background: #e5e7eb;
+	color: #6b7280;
+	border-radius: 50%;
+	font-weight: 600;
+	transition: all 0.3s;
+}
+
+.wps-wpr-step-name {
+	display: block;
+	font-size: 13px;
+	color: #6b7280;
+	font-weight: 500;
+}
+
+.wps-wpr-progress-step.active .wps-wpr-step-number {
+	background: #3b82f6;
+	color: white;
+	box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.wps-wpr-progress-step.active .wps-wpr-step-name {
+	color: #3b82f6;
+}
+
+.wps-wpr-progress-step.completed .wps-wpr-step-number {
+	background: #10b981;
+	color: white;
+}
+
+.wps-wpr-progress-step.completed .wps-wpr-step-name {
+	color: #10b981;
+}
+
+.wps-wpr-progress-step.completed .wps-wpr-step-number::before {
+	content: "✓";
+}
+
+/* Wizard Content */
+.wps-wpr-wizard-content {
+	background: white;
+	padding: 40px;
+	border-radius: 12px;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+	min-height: 500px;
+}
+
+/* Steps */
+.wps-wpr-wizard-step {
+	display: none;
+	animation: fadeIn 0.3s ease-in;
+}
+
+.wps-wpr-wizard-step-active {
+	display: block;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.wps-wpr-wizard-step h2 {
+	margin: 0 0 12px 0;
+	font-size: 24px;
+	font-weight: 600;
+	color: #1f2937;
+}
+
+.wps-wpr-step-description {
+	margin: 0 0 32px 0;
+	font-size: 15px;
+	color: #6b7280;
+	line-height: 1.6;
+}
+
+/* Form Groups */
+.wps-wpr-form-group {
+	margin-bottom: 24px;
+}
+
+.wps-wpr-form-group > label:not(.wps-wpr-switch):not(.wps-wpr-template-card) {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #374151;
+}
+
+.wps-wpr-input,
+.wps-wpr-select,
+.wps-wpr-textarea {
+	width: 100%;
+	padding: 10px 14px;
+	border: 1px solid #d1d5db;
+	border-radius: 6px;
+	font-size: 14px;
+	color: #1f2937;
+	transition: all 0.2s;
+}
+
+.wps-wpr-input:focus,
+.wps-wpr-select:focus,
+.wps-wpr-textarea:focus {
+	outline: none;
+	border-color: #3b82f6;
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.wps-wpr-input-error {
+	border-color: #ef4444 !important;
+}
+
+.wps-wpr-input-small {
+	width: 120px;
+}
+
+.wps-wpr-field-description {
+	margin: 6px 0 0 0;
+	font-size: 13px;
+	color: #6b7280;
+	line-height: 1.5;
+}
+
+/* Toggle Switch */
+.wps-wpr-switch {
+	position: relative;
+	display: inline-block;
+	width: 52px;
+	height: 28px;
+	margin-right: 12px;
+	vertical-align: middle;
+}
+
+.wps-wpr-switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.wps-wpr-slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #d1d5db;
+	transition: 0.3s;
+	border-radius: 28px;
+}
+
+.wps-wpr-slider::before {
+	position: absolute;
+	content: "";
+	height: 20px;
+	width: 20px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	transition: 0.3s;
+	border-radius: 50%;
+}
+
+.wps-wpr-switch input:checked + .wps-wpr-slider {
+	background-color: #3b82f6;
+}
+
+.wps-wpr-switch input:checked + .wps-wpr-slider::before {
+	transform: translateX(24px);
+}
+
+/* Template Grid */
+.wps-wpr-template-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 16px;
+	margin-top: 16px;
+}
+
+.wps-wpr-template-card {
+	position: relative;
+	padding: 20px;
+	border: 2px solid #e5e7eb;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.2s;
+	background: #fff;
+}
+
+.wps-wpr-template-card:hover {
+	border-color: #3b82f6;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.wps-wpr-template-card input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+}
+
+.wps-wpr-template-preview {
+	text-align: center;
+}
+
+.wps-wpr-template-icon {
+	font-size: 40px;
+	margin-bottom: 12px;
+}
+
+.wps-wpr-template-card span {
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	color: #374151;
+}
+
+.wps-wpr-template-selected {
+	border-color: #3b82f6;
+	background: #eff6ff;
+}
+
+.wps-wpr-template-selected::after {
+	content: "✓";
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	background: #3b82f6;
+	color: white;
+	border-radius: 50%;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+/* Currency Conversion */
+.wps-wpr-currency-list {
+	margin-top: 16px;
+}
+
+.wps-wpr-currency-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px;
+	background: #f9fafb;
+	border-radius: 6px;
+	margin-bottom: 8px;
+}
+
+.wps-wpr-currency-row label {
+	min-width: 80px;
+	font-weight: 600;
+	color: #374151;
+}
+
+.wps-wpr-currency-unit {
+	font-size: 13px;
+	color: #6b7280;
+}
+
+/* Info Box */
+.wps-wpr-info-box {
+	padding: 16px;
+	background: #f0f9ff;
+	border-left: 4px solid #3b82f6;
+	border-radius: 6px;
+	margin-top: 24px;
+}
+
+.wps-wpr-info-box strong {
+	display: block;
+	margin-bottom: 8px;
+	color: #1e40af;
+	font-size: 14px;
+}
+
+.wps-wpr-info-box p,
+.wps-wpr-info-box ul {
+	margin: 0;
+	font-size: 14px;
+	color: #1e40af;
+	line-height: 1.6;
+}
+
+.wps-wpr-info-box ul {
+	padding-left: 20px;
+}
+
+.wps-wpr-success-box {
+	background: #f0fdf4;
+	border-left-color: #10b981;
+}
+
+.wps-wpr-success-box strong,
+.wps-wpr-success-box p {
+	color: #065f46;
+}
+
+/* Navigation Buttons */
+.wps-wpr-wizard-navigation {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 40px;
+	padding-top: 24px;
+	border-top: 1px solid #e5e7eb;
+}
+
+.wps-wpr-btn {
+	padding: 12px 32px;
+	border: none;
+	border-radius: 6px;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.wps-wpr-btn-primary {
+	background: #3b82f6;
+	color: white;
+}
+
+.wps-wpr-btn-primary:hover {
+	background: #2563eb;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.wps-wpr-btn-secondary {
+	background: #f3f4f6;
+	color: #374151;
+}
+
+.wps-wpr-btn-secondary:hover {
+	background: #e5e7eb;
+}
+
+.wps-wpr-btn-success {
+	background: #10b981;
+	color: white;
+	margin-left: auto;
+}
+
+.wps-wpr-btn-success:hover {
+	background: #059669;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.wps-wpr-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Notifications */
+.wps-wpr-notification {
+	position: fixed;
+	top: 32px;
+	right: 32px;
+	padding: 16px 24px;
+	background: white;
+	border-radius: 8px;
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	font-size: 14px;
+	font-weight: 500;
+	z-index: 999999;
+	animation: slideIn 0.3s ease-out;
+	max-width: 400px;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(400px);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+.wps-wpr-notification-success {
+	color: #065f46;
+	border-left: 4px solid #10b981;
+}
+
+.wps-wpr-notification-error {
+	color: #991b1b;
+	border-left: 4px solid #ef4444;
+}
+
+/* Color Picker */
+.wps-wpr-color-picker {
+	width: 80px;
+	height: 40px;
+	border: 1px solid #d1d5db;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.wps-wpr-wizard-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 16px;
+	}
+
+	.wps-wpr-wizard-content {
+		padding: 24px;
+	}
+
+	.wps-wpr-progress-steps {
+		flex-wrap: wrap;
+	}
+
+	.wps-wpr-progress-step {
+		flex: 0 0 calc(33.333% - 10px);
+	}
+
+	.wps-wpr-step-name {
+		font-size: 11px;
+	}
+
+	.wps-wpr-template-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.wps-wpr-currency-row {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.wps-wpr-notification {
+		left: 16px;
+		right: 16px;
+		top: 16px;
+	}
+}
+
+/* Master Enable Toggle - Larger Size */
+.wps-wpr-master-enable {
+	text-align: center;
+	padding: 30px;
+	background: #f9fafb;
+	border-radius: 12px;
+	margin-bottom: 30px;
+}
+
+/* Summary Grid for Step 5 */
+.wps-wpr-summary-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 20px;
+	margin: 24px 0;
+}
+
+.wps-wpr-summary-card {
+	background: #ffffff;
+	border: 2px solid #e5e7eb;
+	border-radius: 12px;
+	padding: 24px;
+	text-align: center;
+	transition: all 0.3s ease;
+}
+
+.wps-wpr-summary-card:hover {
+	border-color: #3b82f6;
+	box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+	transform: translateY(-2px);
+}
+
+.wps-wpr-summary-icon {
+	font-size: 40px;
+	margin-bottom: 12px;
+	line-height: 1;
+}
+
+.wps-wpr-summary-card h3 {
+	font-size: 16px;
+	font-weight: 600;
+	color: #374151;
+	margin: 0 0 12px 0;
+}
+
+.wps-wpr-summary-value {
+	font-size: 18px;
+	font-weight: 600;
+	color: #10b981;
+	margin: 0 0 8px 0;
+}
+
+.wps-wpr-summary-detail {
+	font-size: 14px;
+	color: #6b7280;
+	margin: 0;
+}
+
+/* Responsive adjustments for summary grid */
+@media (max-width: 768px) {
+	.wps-wpr-summary-grid {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+
+	.wps-wpr-summary-card {
+		padding: 20px;
+	}
+}
+
+.wps-wpr-switch-large {
+	width: 80px;
+	height: 44px;
+}
+
+.wps-wpr-switch-large .wps-wpr-slider {
+	border-radius: 44px;
+}
+
+.wps-wpr-switch-large .wps-wpr-slider:before {
+	height: 36px;
+	width: 36px;
+	left: 4px;
+	bottom: 4px;
+}
+
+.wps-wpr-switch-large input:checked + .wps-wpr-slider:before {
+	transform: translateX(36px);
+}
+
+.wps-wpr-master-enable label:last-child {
+	font-size: 18px;
+	margin-left: 15px;
+}

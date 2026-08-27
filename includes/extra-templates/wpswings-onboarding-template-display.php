@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-	$screen = get_current_screen();
+	$screen   = get_current_screen();
 	$is_valid = in_array( $screen->id, apply_filters( 'wps_helper_valid_frontend_screens', array() ) );
 if ( ! $is_valid ) {
 

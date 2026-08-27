@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points and rewards, loyalty, referral points, reward points, gamification
 Requires at least: 6.7.0
-Tested up to: 6.9.4
+Tested up to: 7.0.1
 WC requires at least: 6.5.0
-WC tested up to: 10.7.0
-Stable tag: 2.10.0
+WC tested up to: 10.9.4
+Stable tag: 2.10.3
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -270,37 +270,16 @@ Terms: https://policy.pinterest.com/en/terms-of-service
 Privacy: https://policy.pinterest.com/en/privacy-policy
 
 == Screenshots ==
-1. **General Settings** - Basic settings which are required to run the plugin
-2. **Customer's Earned Points Log Table** - After Earn/Redeem points by the customer log will be listed here
-3. **Share Referral Link Using Social Media** - Customers can also share the referral link on social sites as well.
-4. **Customized Text** - The admin can modify/add the text according to the need. It will be displayed on the My Account > Points page
-5. **Redeem Points On Cart Page** - Customer can redeem their points on the cart page and get a discount
-6. **Redeem Points On Checkout Page** - Customer can also redeem their points on the cart page
-7. **Earn Points Per Currency Setting** - Allow customers to earn on every currency spent
-8. **Frontend For Points Conversion Rate** - The  per currency notice that customers to see.
-9. **Points Table** - Admin can Add/Subtract/View customer's points from here
-10. **Membership Setting** - Add membership level and provide a discount on membership
-11. **Upgrade User Level** - Customers can upgrade their membership and get the benefits.
-12. **Get Discount On Membership Level** - Customers can get discount based on Membership Levels.
-13. **Assign Product Points** - Customers can purchase and get the assigned points.
-14. **Frontend For Assign Product Points** - Customers will be shown how many reward points they will earn. 
-15. **Other Settings** - Allow customers to add different elements to the cart, checkout, and my account page.
-16. **Restrict Rewards Points Settings** - Restrict Customers from earning points.
-17. **New Template** - Admins can implement the new template for the "Points Tab" - Template 1
-18. **My Account Page** - Template 2
-19. **My Account Page** - Template 3
-20. **Rewards Points via Payment Method** - Customers can get points via payment method.
-21. **Order Total Point** - Can provide points to the customer based on their order total
-22. **Gamification Settings** - Allows customers to spin the wheel, and earn rewards
-23. **Gamification Settings** - Spin the wheel frontend
-24. **User Level & Badges** - Badges that represent different levels of achievement
-25. **User Level & Badges** - Frontend Representation Of the Badges
-26. **SMS/WhatsApp Notifications** - Allow admins to send SMS and WhatsApp notifactions to customers.
-27. **Campaigning** - Allow admins to run interactive gamified campaigns.
-28. **Campaigning** - Frontend of the interactive pop-up (Earn Points Tab)
-29. **Campaigning** - Frontend of the interactive pop-up (Referral Tab)
-30. **Campaigning** - Frontend of Quiz Options
-31. **Campaigning** - Pre-Defined Templates for the Campaigns
+1. Referral Setting
+2. Redemption Setting
+3. Per Currency Points Settings
+4. Membership Setting
+5. Gamification Settings
+6. Badges
+7. Campaigning - Frontend of the interactive pop-up (Earn Points Tab)
+8. Campaigning - Frontend of the interactive pop-up (Referral Tab)
+9. Campaigning - Frontend of Quiz Options
+10. SMS/WhatsApp Notifications
 
 
 == Frequently Asked Questions ==
@@ -379,6 +358,23 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 2.10.2 - Released on 10 July 2026 =
+* New : Compatibility with latest WC ( 10.9.4 ) and WP ( 7.0.1 )
+* Fix : Design issue fix in points table
+
+= 2.10.1 - Released on 06 July 2026 =
+* Fix: Object injection vulnerability (replaced unserialize with json_decode)
+* Fix: Removed nopriv exposure on admin-only AJAX endpoints
+* Fix: cURL SSL bypass and ZIP path traversal in plugin installer
+* Fix: Added permission_callback to all REST API routes + input sanitization
+* Fix: Points now awarded correctly on all manual order status changes
+* Fix: Resolved $0 discount bug on points redemption at checkout
+* Fix: Cart applied discount persists through page reloads
+* Fix: Category points assignments now save correctly
+* Fix: Memory leak in background processing – batch processing added
+* Fix: PHP 8.3 compatibility + DIVI 5 checkout compatibility
+* New: Compatibility with latest WP (7.0.0) and WC (10.9.3)
 
 = 2.10.0 - Released on 07 May 2026 =
 * New : Compatibility with latest WC ( 10.7.0 ) and WP ( 6.9.4 )
@@ -753,8 +749,6 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.10.0 - Released on 07 May 2026 =
-* New : Compatibility with latest WC ( 10.7.0 ) and WP ( 6.9.4 )
-* New : UI/UX dashboard layout changes
-* New : Points tab template
-* Fix : Performance Optimization
+= 2.10.2 - Released on 10 July 2026 =
+* New : Compatibility with latest WC ( 10.9.4 ) and WP ( 7.0.1 )
+* Fix : Design issue fix in points table

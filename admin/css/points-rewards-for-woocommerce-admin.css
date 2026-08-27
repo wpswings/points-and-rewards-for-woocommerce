@@ -13,7 +13,12 @@
 a.wps_wpr_premium--cta {
   text-transform: uppercase;
 }
-
+.free_vs_pro_button_design {
+    background: #fff !important;
+    border-color: transparent !important;
+    border-radius: 99px !important;
+    color: #000 !important;
+}
 #wps_wpr_loader {
   background-color: rgba(255, 255, 255, 0.6);
   bottom: 0;
@@ -1317,11 +1322,12 @@ table.wps_wpr_user_badges_table_settings_wrappers {
 
 .wps_wpr_add_more_btn_badge:hover {
   background: #2196f3;
-  color: #fff;
+  color: #fff !important;
 }
 
 #wps_rwpr_setting_wrapper input.wps_wpr_add_more_btn_badge:hover {
   background: none;
+   color: #fff !important;
 }
 
 select.wps_wpr_choose_badges_position {
@@ -3029,6 +3035,7 @@ button.button.wps_wpr_remove_quiz:hover {
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap select {
   border: 1px solid #eceaf4;
   box-shadow: none;
+  margin-top: 7px;
 }
 
 /* Floating Save Changes button */
@@ -3117,6 +3124,8 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_rwpr_navigator_template .inner-wrapper-sticky {
   width: auto !important;
   max-width: 100% !important;
+  display: flex;
+  justify-content: space-between;
 }
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_rwpr_navigator_template {
@@ -3275,7 +3284,7 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wp-list-table .button-primary {
   border-radius: 999px;
   min-height: 36px;
-  padding: 8px 16px;
+  padding: 0px 33px;
   border-color: transparent;
   font-weight: 700;
   transition: all 0.2s ease;
@@ -3325,7 +3334,7 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
   background: #ffffff;
   border-radius: 14px;
   padding: 10px 12px;
-  margin: 12px 0;
+  margin: 12px -11px;
 }
 
 #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .tablenav .actions select,

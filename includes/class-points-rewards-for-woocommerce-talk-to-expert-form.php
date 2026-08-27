@@ -65,9 +65,9 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 	 */
 	public static function wps_wpr_get_service_options() {
 		return array(
-			'seo_services'                      => esc_html__( 'SEO services', 'points-and-rewards-for-woocommerce' ),
+			'seo_services'                     => esc_html__( 'SEO services', 'points-and-rewards-for-woocommerce' ),
 			'google_ads_setup_and_ga4_setup'   => esc_html__( 'Google Ads Setup and GA4 setup', 'points-and-rewards-for-woocommerce' ),
-			'speed_optimization'                => esc_html__( 'Speed Optimization', 'points-and-rewards-for-woocommerce' ),
+			'speed_optimization'               => esc_html__( 'Speed Optimization', 'points-and-rewards-for-woocommerce' ),
 			'woocommerce_development_services' => esc_html__( 'WooCommerce Development Services', 'points-and-rewards-for-woocommerce' ),
 		);
 	}
@@ -80,9 +80,9 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 	public static function wps_wpr_get_budget_options() {
 		return array(
 			''            => 'Please Select',
-			'500-1000'   => '$500 - $1000',
-			'1001-5000'  => '$1001 - $5000',
-			'5001-10000' => '$5001 - $10000',
+			'500-1000'    => '$500 - $1000',
+			'1001-5000'   => '$1001 - $5000',
+			'5001-10000'  => '$5001 - $10000',
 			'10001-15000' => '$10001 - $15000',
 		);
 	}
@@ -333,7 +333,7 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 
 			$submitted_services = array_filter(
 				array_map( 'sanitize_text_field', $raw_services ),
-				static function( $service ) {
+				static function ( $service ) {
 					return '' !== $service;
 				}
 			);
@@ -347,14 +347,14 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 		}
 
 		return array(
-			'firstname'                         => isset( $form_data['firstname'] ) ? sanitize_text_field( wp_unslash( $form_data['firstname'] ) ) : '',
-			'lastname'                          => isset( $form_data['lastname'] ) ? sanitize_text_field( wp_unslash( $form_data['lastname'] ) ) : '',
-			'email'                             => isset( $form_data['email'] ) ? sanitize_email( wp_unslash( $form_data['email'] ) ) : '',
-			'phone'                             => isset( $form_data['phone'] ) ? sanitize_text_field( wp_unslash( $form_data['phone'] ) ) : '',
+			'firstname'                           => isset( $form_data['firstname'] ) ? sanitize_text_field( wp_unslash( $form_data['firstname'] ) ) : '',
+			'lastname'                            => isset( $form_data['lastname'] ) ? sanitize_text_field( wp_unslash( $form_data['lastname'] ) ) : '',
+			'email'                               => isset( $form_data['email'] ) ? sanitize_email( wp_unslash( $form_data['email'] ) ) : '',
+			'phone'                               => isset( $form_data['phone'] ) ? sanitize_text_field( wp_unslash( $form_data['phone'] ) ) : '',
 			'what_services_do_you_need_help_with' => $valid_services,
-			'budget'                            => $budget,
-			'message'                           => isset( $form_data['message'] ) ? sanitize_textarea_field( wp_unslash( $form_data['message'] ) ) : '',
-			'annualrevenue'                     => self::wps_wpr_get_annual_revenue_last_12_months(),
+			'budget'                              => $budget,
+			'message'                             => isset( $form_data['message'] ) ? sanitize_textarea_field( wp_unslash( $form_data['message'] ) ) : '',
+			'annualrevenue'                       => self::wps_wpr_get_annual_revenue_last_12_months(),
 		);
 	}
 
@@ -436,7 +436,7 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 				array_values(
 					array_filter(
 						array_map( 'strval', $field_value ),
-						static function( $value ) {
+						static function ( $value ) {
 							return '' !== $value;
 						}
 					)
@@ -631,9 +631,8 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 			return false;
 		}
 
-		$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name );
-
-		return $table_name === (string) $wpdb->get_var( $query );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		return $table_name === (string) $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) );
 	}
 
 	/**
@@ -653,9 +652,9 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 		$start_date    = gmdate( 'Y-m-d H:i:s', strtotime( '-12 months' ) );
 		$sql           = "SELECT COALESCE(SUM(total_sales), 0) FROM {$table_name} WHERE parent_id = 0 AND date_paid IS NOT NULL AND date_paid != '0000-00-00 00:00:00' AND date_paid >= %s AND status IN ({$placeholders})";
 		$args          = array_merge( array( $sql, $start_date ), $paid_statuses );
-		$query         = call_user_func_array( array( $wpdb, 'prepare' ), $args );
 
-		return (float) $wpdb->get_var( $query );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query properly prepared with placeholders, call_user_func_array used for dynamic parameter count.
+		return (float) $wpdb->get_var( call_user_func_array( array( $wpdb, 'prepare' ), $args ) );
 	}
 
 	/**
@@ -668,7 +667,7 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 			return 0.0;
 		}
 
-		$cutoff_timestamp = strtotime( '-12 months', current_time( 'timestamp', true ) );
+		$cutoff_timestamp = strtotime( '-12 months', time() );
 		$orders           = wc_get_orders(
 			array(
 				'limit'   => -1,

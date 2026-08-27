@@ -320,8 +320,8 @@ $wps_wpr_general_settings = array(
 		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
 		'desc'     => apply_filters( 'wps_wpr_order_rewards_message_desc', __( 'Use these shortcodes to provide an appropriate message for your customers on his no. of [ORDER] and get rewards points [POINTS]', 'points-and-rewards-for-woocommerce' ) ),
 		'desc_tip' => __( 'Entered message will appears on Cart Page.', 'points-and-rewards-for-woocommerce' ),
-		/* translators: 1: reward points, 2: number of orders. */
-		'default'  => apply_filters( 'wps_wpr_order_rewards_message_default', __( 'Hurry up! You will get %s points if you place %s orders.', 'points-and-rewards-for-woocommerce' ) ),
+		/* translators: %1$s: reward points, %2$s: number of orders. */
+		'default'  => apply_filters( 'wps_wpr_order_rewards_message_default', __( 'Hurry up! You will get %1$s points if you place %2$s orders.', 'points-and-rewards-for-woocommerce' ) ),
 	),
 	array(
 		'type' => 'sectionend',

@@ -693,7 +693,12 @@ $redeem_value         = $coupon_redeem_points > 0 ? round( ( $get_points / $coup
 						<span class="wps-t4-nr-dot"></span>
 						<div class="wps-t4-nr-body">
 							<strong><?php esc_html_e( 'Get Points via Payment Method', 'points-and-rewards-for-woocommerce' ); ?></strong>
-							<p><?php printf( esc_html__( 'Earn %1$s reward points when you choose %2$s at checkout.', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_wpr_payment_method_rewards_points ), $gateway ? esc_html( $gateway->get_title() ) : '' ); ?></p>
+							<p>
+								<?php
+								/* translators: %1$s: Number of reward points, %2$s: Payment method name */
+								printf( esc_html__( 'Earn %1$s reward points when you choose %2$s at checkout.', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_wpr_payment_method_rewards_points ), $gateway ? esc_html( $gateway->get_title() ) : '' );
+								?>
+							</p>
 						</div>
 					</div>
 					<?php

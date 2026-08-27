@@ -122,6 +122,37 @@
 				wps_wpr_refresh_cart_page();
 			});
 		}
+
+		// Restore redemption state after page reload for block-based cart/checkout
+		function wps_wpr_restore_block_redemption_state() {
+			// Only run if redemption is enabled for cart or checkout
+			if ( 1 == wps_wpr.is_cart_redeem_sett_enable || 1 == wps_wpr.is_checkout_redeem_enable ) {
+
+				jQuery.ajax({
+					url: wps_wpr.ajaxurl,
+					type: 'POST',
+					data: {
+						action: 'wps_wpr_get_redemption_state',
+						wps_nonce: wps_wpr.wps_wpr_nonce
+					},
+					dataType: 'json',
+					success: function(response) {
+						if (response.success && response.data && response.data.redeemed_points > 0) {
+							// Points are applied - hide the "Add Points" button and apply form
+							jQuery('#wps_wpr_button_to_add_points_section').hide();
+							jQuery('.wps_wpr_append_points_apply_html').hide();
+
+							// The discount with remove button should already be visible from server
+						}
+					}
+				});
+			}
+		}
+
+		// Call on page load with a slight delay to ensure elements are rendered
+		setTimeout(function() {
+			wps_wpr_restore_block_redemption_state();
+		}, 500);
 	});
 })(jQuery);
 

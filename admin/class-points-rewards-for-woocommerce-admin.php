@@ -128,6 +128,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe read-only page parameter check.
 		$page               = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		$is_settings_screen = ( 'wps-rwpr-setting' === $page ) || ( 'woocommerce_page_wps-rwpr-setting' === $screen->id );
 
@@ -248,9 +249,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 					);
 
 		// user report work.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe read-only user report display.
 		if ( isset( $_GET['user_id'] ) ) {
 
-						$user_id   = ! empty( $_GET['user_id'] ) ? sanitize_text_field( wp_unslash( $_GET['user_id'] ) ) : '';
+						// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Safe read-only user report display, already checked above.
+					$user_id   = ! empty( $_GET['user_id'] ) ? sanitize_text_field( wp_unslash( $_GET['user_id'] ) ) : '';
 						$user_data = $this->wps_wpr_get_user_reports_data( $user_id );
 						// js for the multistep from.
 						$script_asset_path = WPS_RWPR_DIR_PATH . 'build/index.asset.php';
@@ -670,6 +673,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_select_category() {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) );
+		}
 		$wps_wpr_categ_list = array();
 		if ( isset( $_POST['wps_wpr_categ_list'] ) && ! empty( $_POST['wps_wpr_categ_list'] ) ) {
 			$wps_wpr_categ_list = map_deep( wp_unslash( $_POST['wps_wpr_categ_list'] ), 'sanitize_text_field' );
@@ -1814,6 +1820,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function wps_wpr_restrict_user_from_points_table() {
 
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) );
+		}
 		$checked = ! empty( $_POST['checked'] ) ? sanitize_text_field( wp_unslash( $_POST['checked'] ) ) : 'no';
 		$user_id = ! empty( $_POST['user_id'] ) ? sanitize_text_field( wp_unslash( $_POST['user_id'] ) ) : 0;
 		if ( 'yes' === $checked ) {
@@ -2146,6 +2155,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_update_points_of_users( $wps_user_email, $wps_user_points, $import_points_reason ) {
 		$user                        = get_user_by( 'email', $wps_user_email );
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in calling function (CSV import handler).
 		$wps_wpr_export_table_option = ! empty( $_POST['wps_wpr_export_table_option'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_export_table_option'] ) ) : 'add';
 		if ( isset( $user ) ) {
 
@@ -2568,6 +2578,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 	public function wps_wpr_sync_points_on_klaviyo_call() {
 
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) );
+		}
 		if ( isset( $_POST ) ) {
 
 			$per_user               = ! empty( $_POST['per_user'] ) ? sanitize_text_field( wp_unslash( $_POST['per_user'] ) ) : 0;
@@ -2655,10 +2668,13 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @return void
 	 */
 	public function wps_wpr_set_camp_heading_and_image() {
-    
+
 		// Verify the nonce for security.
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
-		
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) );
+		}
+
 		// Sanitize the incoming values.
 		$banner_heading = isset( $_POST['banner_heading'] ) ? sanitize_text_field( wp_unslash( $_POST['banner_heading'] ) ) : '';
 		$banner_image   = isset( $_POST['banner_image'] ) ? esc_url_raw( wp_unslash( $_POST['banner_image'] ) ) : '';
