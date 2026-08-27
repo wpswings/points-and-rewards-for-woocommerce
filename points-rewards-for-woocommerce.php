@@ -401,6 +401,9 @@ if ( $activated ) {
 			add_rewrite_endpoint( 'view-log', EP_PAGES );
 			flush_rewrite_rules();
 		}
+
+		// Set transient to redirect to setup wizard.
+		set_transient( 'wps_wpr_activation_redirect', true, 30 );
 	}
 
 	/**
