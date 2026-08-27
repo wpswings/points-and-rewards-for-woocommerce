@@ -107,7 +107,7 @@ class WPS_WPR_Setup_Wizard {
 			'wps-wpr-wizard-style',
 			WPS_RWPR_DIR_URL . 'admin/css/wps-wpr-setup-wizard.css',
 			array(),
-			$this->version,
+			$this->version . '-' . time(),
 			'all'
 		);
 
@@ -120,7 +120,7 @@ class WPS_WPR_Setup_Wizard {
 			'wps-wpr-wizard-script',
 			WPS_RWPR_DIR_URL . 'admin/js/wps-wpr-setup-wizard.js',
 			array( 'jquery', 'select2' ),
-			$this->version,
+			$this->version . '-' . time(),
 			true
 		);
 
