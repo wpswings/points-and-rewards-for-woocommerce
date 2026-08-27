@@ -70,7 +70,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 				<div class="wps-wpr-form-group wps-wpr-master-enable">
 					<label class="wps-wpr-switch wps-wpr-switch-large">
-						<input type="checkbox" name="step0[plugin_enable]" value="1" <?php checked( isset( $general_settings['wps_wpr_general_setting_enable'] ) && '1' === $general_settings['wps_wpr_general_setting_enable'], true, true ); checked( ! isset( $general_settings['wps_wpr_general_setting_enable'] ), true, true ); ?>>
+						<input type="checkbox" name="step0[plugin_enable]" value="1" <?php checked( ! empty( $general_settings['wps_wpr_general_setting_enable'] ), true ); ?>>
 						<span class="wps-wpr-slider"></span>
 					</label>
 					<label><strong><?php esc_html_e( 'Enable WooCommerce Points and Rewards', 'points-and-rewards-for-woocommerce' ); ?></strong></label>
@@ -94,7 +94,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 				<div class="wps-wpr-form-group">
 					<label class="wps-wpr-switch">
-						<input type="checkbox" name="step1[redemption_cart_enable]" value="1" <?php checked( isset( $general_settings['wps_wpr_custom_points_on_cart'] ) && '1' === $general_settings['wps_wpr_custom_points_on_cart'], true, true ); checked( ! isset( $general_settings['wps_wpr_custom_points_on_cart'] ), true, true ); ?>>
+						<input type="checkbox" name="step1[redemption_cart_enable]" value="1" <?php checked( ! empty( $general_settings['wps_wpr_custom_points_on_cart'] ), true ); ?>>
 						<span class="wps-wpr-slider"></span>
 					</label>
 					<label><?php esc_html_e( 'Redemption Over Cart Sub-total', 'points-and-rewards-for-woocommerce' ); ?></label>
@@ -103,7 +103,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 				<div class="wps-wpr-form-group">
 					<label class="wps-wpr-switch">
-						<input type="checkbox" name="step1[redemption_checkout_enable]" value="1" <?php checked( isset( $general_settings['wps_wpr_apply_points_checkout'] ) && '1' === $general_settings['wps_wpr_apply_points_checkout'], true, true ); ?>>
+						<input type="checkbox" name="step1[redemption_checkout_enable]" value="1" <?php checked( ! empty( $general_settings['wps_wpr_apply_points_checkout'] ), true ); ?>>
 						<span class="wps-wpr-slider"></span>
 					</label>
 					<label><?php esc_html_e( 'Apply Points on Checkout', 'points-and-rewards-for-woocommerce' ); ?></label>
@@ -133,7 +133,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 				<div class="wps-wpr-form-group">
 					<label class="wps-wpr-switch">
-						<input type="checkbox" name="step2[referral_enable]" value="1" <?php checked( isset( $general_settings['wps_wpr_general_refer_enable'] ) && '1' === $general_settings['wps_wpr_general_refer_enable'], true, true ); checked( ! isset( $general_settings['wps_wpr_general_refer_enable'] ), true, true ); ?>>
+						<input type="checkbox" name="step2[referral_enable]" value="1" <?php checked( ! empty( $general_settings['wps_wpr_general_refer_enable'] ), true ); ?>>
 						<span class="wps-wpr-slider"></span>
 					</label>
 					<label><?php esc_html_e( 'Enable Referral Program', 'points-and-rewards-for-woocommerce' ); ?></label>
@@ -210,7 +210,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 				<div class="wps-wpr-form-group">
 					<label class="wps-wpr-switch">
-						<input type="checkbox" name="step4[signup_enable]" value="1" <?php checked( isset( $general_settings['wps_wpr_general_signup'] ) && 1 === intval( $general_settings['wps_wpr_general_signup'] ), true, true ); checked( ! isset( $general_settings['wps_wpr_general_signup'] ), true, true ); ?>>
+						<input type="checkbox" name="step4[signup_enable]" value="1" <?php checked( ! empty( $general_settings['wps_wpr_general_signup'] ), true ); ?>>
 						<span class="wps-wpr-slider"></span>
 					</label>
 					<label><?php esc_html_e( 'Enable Signup Points', 'points-and-rewards-for-woocommerce' ); ?></label>
