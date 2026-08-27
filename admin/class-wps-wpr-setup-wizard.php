@@ -245,8 +245,13 @@ class WPS_WPR_Setup_Wizard {
 		if ( isset( $wizard_data['step3'] ) ) {
 			$step3 = $wizard_data['step3'];
 
-			// Point tab template (free version only has template_one).
-			$other_settings['wps_wpr_points_tab_template'] = 'template_one';
+			// Point tab template selection.
+			if ( isset( $step3['point_tab_template'] ) ) {
+				$allowed_templates = array( 'temp_one', 'temp_two', 'temp_three', 'temp_four' );
+				if ( in_array( $step3['point_tab_template'], $allowed_templates, true ) ) {
+					$other_settings['wps_wpr_choose_account_page_temp'] = sanitize_text_field( $step3['point_tab_template'] );
+				}
+			}
 
 			// Show points on product pages.
 			$other_settings['wps_wpr_show_points_on_product'] = isset( $step3['show_points_on_product'] ) && '1' === $step3['show_points_on_product'] ? 'yes' : 'no';

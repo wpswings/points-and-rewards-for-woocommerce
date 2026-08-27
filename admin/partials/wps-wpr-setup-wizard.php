@@ -162,19 +162,24 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 				<p class="wps-wpr-step-description"><?php esc_html_e( 'Customize how points are displayed in customer accounts.', 'points-and-rewards-for-woocommerce' ); ?></p>
 
 				<div class="wps-wpr-form-group">
-					<label><?php esc_html_e( 'Point Tab Template', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<label><?php esc_html_e( 'Select a Points Tab Template for My Account', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps-wpr-template-grid">
 						<?php
 						$templates = array(
-							'template_one' => __( 'Template 1 - Classic', 'points-and-rewards-for-woocommerce' ),
+							'temp_one'   => __( 'Template One', 'points-and-rewards-for-woocommerce' ),
+							'temp_two'   => __( 'Template Two', 'points-and-rewards-for-woocommerce' ),
+							'temp_three' => __( 'Template Three', 'points-and-rewards-for-woocommerce' ),
+							'temp_four'  => __( 'Template Four', 'points-and-rewards-for-woocommerce' ),
 						);
 
-						$current_template = isset( $other_settings['wps_wpr_points_tab_template'] ) ? $other_settings['wps_wpr_points_tab_template'] : 'template_one';
+						$current_template = isset( $other_settings['wps_wpr_choose_account_page_temp'] ) ? $other_settings['wps_wpr_choose_account_page_temp'] : 'temp_one';
 
 						foreach ( $templates as $template_key => $template_name ) {
+							$is_checked = ( $template_key === $current_template ) ? 'checked' : '';
+							$card_class = ( $template_key === $current_template ) ? 'wps-wpr-template-card wps-wpr-template-selected' : 'wps-wpr-template-card';
 							?>
-							<label class="wps-wpr-template-card wps-wpr-template-selected">
-								<input type="radio" name="step3[point_tab_template]" value="<?php echo esc_attr( $template_key ); ?>" checked>
+							<label class="<?php echo esc_attr( $card_class ); ?>">
+								<input type="radio" name="step3[point_tab_template]" value="<?php echo esc_attr( $template_key ); ?>" <?php echo esc_attr( $is_checked ); ?>>
 								<div class="wps-wpr-template-preview">
 									<div class="wps-wpr-template-icon">📊</div>
 									<span><?php echo esc_html( $template_name ); ?></span>
@@ -184,7 +189,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 						}
 						?>
 					</div>
-					<p class="wps-wpr-field-description"><?php esc_html_e( 'More templates available in Pro version', 'points-and-rewards-for-woocommerce' ); ?></p>
+					<p class="wps-wpr-field-description"><?php esc_html_e( 'Choose a layout template for the Points section under the My Account tab', 'points-and-rewards-for-woocommerce' ); ?></p>
 				</div>
 
 				<div class="wps-wpr-form-group">
