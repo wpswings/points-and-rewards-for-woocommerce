@@ -179,13 +179,13 @@ class Points_Rewards_For_Woocommerce {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-		$plugin_admin = new Points_Rewards_For_WooCommerce_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin           = new Points_Rewards_For_WooCommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 		$wps_wpr_talk_to_expert = null;
-		$wps_wpr_setup_wizard = null;
+		$wps_wpr_setup_wizard   = null;
 
 		if ( is_admin() ) {
 			$wps_wpr_talk_to_expert = new Points_Rewards_For_WooCommerce_Talk_To_Expert_Form();
-			$wps_wpr_setup_wizard = new WPS_WPR_Setup_Wizard( $this->get_plugin_name(), $this->get_version() );
+			$wps_wpr_setup_wizard   = new WPS_WPR_Setup_Wizard( $this->get_plugin_name(), $this->get_version() );
 		}
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_styles' );
