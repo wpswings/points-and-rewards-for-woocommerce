@@ -57,7 +57,7 @@
 			return;
 		}
 
-		if (currentStep < totalSteps) {
+		if (currentStep < 5) {
 			currentStep++;
 			updateStepDisplay();
 		}
@@ -131,8 +131,8 @@
 		// Show current step
 		$('.wps-wpr-wizard-step[data-step="' + currentStep + '"]').addClass('wps-wpr-wizard-step-active');
 
-		// Update progress bar
-		const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+		// Update progress bar (steps 0-5, so 5 intervals between 6 steps)
+		const progressPercent = (currentStep / 5) * 100;
 		$('.wps-wpr-progress-fill').css('width', progressPercent + '%');
 
 		// Update progress steps
@@ -153,12 +153,19 @@
 			$('.wps-wpr-btn-prev').show();
 		}
 
-		if (currentStep === totalSteps) {
+		if (currentStep === 5) {
 			$('.wps-wpr-btn-next').hide();
 			$('.wps-wpr-btn-finish').show();
 		} else {
 			$('.wps-wpr-btn-next').show();
 			$('.wps-wpr-btn-finish').hide();
+		}
+
+		// Show/hide additional info section on step 5
+		if (currentStep === 5) {
+			$('.wps-wpr-wizard-info-section[data-step="5"]').show();
+		} else {
+			$('.wps-wpr-wizard-info-section[data-step="5"]').hide();
 		}
 
 		// Scroll to top

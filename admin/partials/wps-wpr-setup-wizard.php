@@ -232,138 +232,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 			<!-- Step 5: Complete Setup -->
 			<div class="wps-wpr-wizard-step" data-step="5">
-				<!-- Hero Section -->
-				<div style="text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; margin-bottom: 30px;">
-					<h2 style="font-size: 32px; margin: 0 0 12px 0; color: white;">🎉 Congratulations! Your Loyalty Program is Ready!</h2>
-					<p style="font-size: 18px; margin: 0; color: rgba(255,255,255,0.9);"><?php esc_html_e( "Your setup is complete! Here's a summary of your configuration.", 'points-and-rewards-for-woocommerce' ); ?></p>
-				</div>
-
-				<!-- Configuration Summary -->
-				<div class="wps-wpr-summary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 24px 0;">
-					<!-- Plugin Status -->
-					<div class="wps-wpr-summary-card" style="background: #ffffff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center;">
-						<div style="font-size: 40px; margin-bottom: 12px;">⚙️</div>
-						<h3 style="font-size: 16px; font-weight: 600; color: #374151; margin: 0 0 12px 0;"><?php esc_html_e( 'Plugin Status', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p style="font-size: 18px; font-weight: 600; color: #10b981; margin: 0;" id="summary-plugin-status">
-							<?php echo ! empty( $general_settings['wps_wpr_general_setting_enable'] ) ? esc_html__( 'Enabled ✓', 'points-and-rewards-for-woocommerce' ) : esc_html__( 'Disabled', 'points-and-rewards-for-woocommerce' ); ?>
-						</p>
-					</div>
-
-					<!-- Redemption Settings -->
-					<div class="wps-wpr-summary-card" style="background: #ffffff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center;">
-						<div style="font-size: 40px; margin-bottom: 12px;">🎁</div>
-						<h3 style="font-size: 16px; font-weight: 600; color: #374151; margin: 0 0 12px 0;"><?php esc_html_e( 'Redemption', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p style="font-size: 18px; font-weight: 600; color: #10b981; margin: 0 0 8px 0;" id="summary-redemption">
-							<?php
-							$cart_enabled     = ! empty( $general_settings['wps_wpr_custom_points_on_cart'] );
-							$checkout_enabled = ! empty( $general_settings['wps_wpr_apply_points_checkout'] );
-							if ( $cart_enabled || $checkout_enabled ) {
-								$locations = array();
-								if ( $cart_enabled ) {
-									$locations[] = esc_html__( 'Cart', 'points-and-rewards-for-woocommerce' );
-								}
-								if ( $checkout_enabled ) {
-									$locations[] = esc_html__( 'Checkout', 'points-and-rewards-for-woocommerce' );
-								}
-								echo esc_html( implode( ' & ', $locations ) ) . ' ✓';
-							} else {
-								esc_html_e( 'Disabled', 'points-and-rewards-for-woocommerce' );
-							}
-							?>
-						</p>
-						<p style="font-size: 14px; color: #6b7280; margin: 0;" id="summary-conversion">
-							<?php
-							$points = isset( $general_settings['wps_wpr_cart_points_rate'] ) ? $general_settings['wps_wpr_cart_points_rate'] : 100;
-							$value  = isset( $general_settings['wps_wpr_cart_price_rate'] ) ? $general_settings['wps_wpr_cart_price_rate'] : 1;
-							/* translators: %1$d: points value, %2$s: currency symbol, %3$s: price value */
-							echo sprintf( esc_html__( '%1$d Points = %2$s%3$s', 'points-and-rewards-for-woocommerce' ), absint( $points ), esc_html( $currency_symbol ), esc_html( $value ) );
-							?>
-						</p>
-					</div>
-
-					<!-- Referral Program -->
-					<div class="wps-wpr-summary-card" style="background: #ffffff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center;">
-						<div style="font-size: 40px; margin-bottom: 12px;">👥</div>
-						<h3 style="font-size: 16px; font-weight: 600; color: #374151; margin: 0 0 12px 0;"><?php esc_html_e( 'Referral Program', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p style="font-size: 18px; font-weight: 600; color: #10b981; margin: 0 0 8px 0;" id="summary-referral">
-							<?php echo ! empty( $general_settings['wps_wpr_general_refer_enable'] ) ? esc_html__( 'Enabled ✓', 'points-and-rewards-for-woocommerce' ) : esc_html__( 'Disabled', 'points-and-rewards-for-woocommerce' ); ?>
-						</p>
-						<p style="font-size: 14px; color: #6b7280; margin: 0;" id="summary-referral-points">
-							<?php
-							if ( ! empty( $general_settings['wps_wpr_general_refer_enable'] ) ) {
-								$refer_points = isset( $general_settings['wps_wpr_general_refer_value'] ) ? $general_settings['wps_wpr_general_refer_value'] : 50;
-								/* translators: %d: referral points value */
-								echo sprintf( esc_html__( '%d points per referral', 'points-and-rewards-for-woocommerce' ), absint( $refer_points ) );
-							}
-							?>
-						</p>
-					</div>
-
-					<!-- Signup Points -->
-					<div class="wps-wpr-summary-card" style="background: #ffffff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center;">
-						<div style="font-size: 40px; margin-bottom: 12px;">✨</div>
-						<h3 style="font-size: 16px; font-weight: 600; color: #374151; margin: 0 0 12px 0;"><?php esc_html_e( 'Signup Points', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p style="font-size: 18px; font-weight: 600; color: #10b981; margin: 0 0 8px 0;" id="summary-signup">
-							<?php echo ! empty( $general_settings['wps_wpr_general_signup'] ) ? esc_html__( 'Enabled ✓', 'points-and-rewards-for-woocommerce' ) : esc_html__( 'Disabled', 'points-and-rewards-for-woocommerce' ); ?>
-						</p>
-						<p style="font-size: 14px; color: #6b7280; margin: 0;" id="summary-signup-points">
-							<?php
-							if ( ! empty( $general_settings['wps_wpr_general_signup'] ) ) {
-								$signup_points = isset( $general_settings['wps_wpr_general_signup_value'] ) ? $general_settings['wps_wpr_general_signup_value'] : 10;
-								/* translators: %d: signup points value */
-								echo sprintf( esc_html__( '%d points on signup', 'points-and-rewards-for-woocommerce' ), absint( $signup_points ) );
-							}
-							?>
-						</p>
-					</div>
-
-					<!-- Points Tab Template -->
-					<div class="wps-wpr-summary-card" style="background: #ffffff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center;">
-						<div style="font-size: 40px; margin-bottom: 12px;">🎨</div>
-						<h3 style="font-size: 16px; font-weight: 600; color: #374151; margin: 0 0 12px 0;"><?php esc_html_e( 'Points Tab Layout', 'points-and-rewards-for-woocommerce' ); ?></h3>
-						<p style="font-size: 18px; font-weight: 600; color: #10b981; margin: 0;" id="summary-template">
-							<?php
-							$template = isset( $other_settings['wps_wpr_choose_account_page_temp'] ) ? $other_settings['wps_wpr_choose_account_page_temp'] : 'temp_one';
-							$template_names = array(
-								'temp_one'   => __( 'Template One', 'points-and-rewards-for-woocommerce' ),
-								'temp_two'   => __( 'Template Two', 'points-and-rewards-for-woocommerce' ),
-								'temp_three' => __( 'Template Three', 'points-and-rewards-for-woocommerce' ),
-								'temp_four'  => __( 'Template Four', 'points-and-rewards-for-woocommerce' ),
-							);
-							echo isset( $template_names[ $template ] ) ? esc_html( $template_names[ $template ] ) : esc_html__( 'Template One', 'points-and-rewards-for-woocommerce' );
-							?>
-						</p>
-					</div>
-				</div>
-
-				<!-- Next Steps -->
-				<div class="wps-wpr-info-box wps-wpr-success-box" style="margin-top: 24px;">
-					<strong><?php esc_html_e( '🚀 What Happens Next?', 'points-and-rewards-for-woocommerce' ); ?></strong>
-					<ul>
-						<li><?php esc_html_e( 'Your Points & Rewards system will be activated with the configuration above', 'points-and-rewards-for-woocommerce' ); ?></li>
-						<li><?php esc_html_e( 'Customers can start earning and redeeming points immediately', 'points-and-rewards-for-woocommerce' ); ?></li>
-						<li><?php esc_html_e( 'Points tab will appear in customer My Account pages', 'points-and-rewards-for-woocommerce' ); ?></li>
-						<li><?php esc_html_e( 'You can adjust all settings anytime from the main settings page', 'points-and-rewards-for-woocommerce' ); ?></li>
-					</ul>
-				</div>
-
-				<!-- Pro Features Highlight -->
-				<div class="wps-wpr-info-box" style="margin-top: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
-					<strong style="color: white;"><?php esc_html_e( '💎 Want More Features?', 'points-and-rewards-for-woocommerce' ); ?></strong>
-					<p style="color: rgba(255,255,255,0.9); margin-bottom: 12px;"><?php esc_html_e( 'Upgrade to Pro for advanced features:', 'points-and-rewards-for-woocommerce' ); ?></p>
-					<ul style="color: rgba(255,255,255,0.9);">
-						<li><?php esc_html_e( 'Membership Levels & Tiered Rewards', 'points-and-rewards-for-woocommerce' ); ?></li>
-						<li><?php esc_html_e( 'Gamification with Spin Wheel & Badges', 'points-and-rewards-for-woocommerce' ); ?></li>
-						<li><?php esc_html_e( 'Points Expiration & Advanced Reports', 'points-and-rewards-for-woocommerce' ); ?></li>
-						<li><?php esc_html_e( 'Product Purchase Points & Category Points', 'points-and-rewards-for-woocommerce' ); ?></li>
-					</ul>
-				</div>
-
-				<!-- Final CTA -->
-				<div class="wps-wpr-info-box wps-wpr-success-box" style="margin-top: 16px; text-align: center; padding: 24px;">
-					<h3 style="margin: 0 0 8px 0; font-size: 20px;"><?php esc_html_e( '🎊 Ready to Launch Your Loyalty Program?', 'points-and-rewards-for-woocommerce' ); ?></h3>
-					<p style="margin: 0; font-size: 16px;"><?php esc_html_e( 'Click "Complete Setup" below to save your settings and start rewarding your customers!', 'points-and-rewards-for-woocommerce' ); ?></p>
-				</div>
+				<!-- Content will be shown below navigation -->
 			</div>
 
 			<!-- Wizard Navigation -->
@@ -377,6 +246,216 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 				<button type="submit" class="wps-wpr-btn wps-wpr-btn-success wps-wpr-btn-finish" style="display: none;">
 					<?php esc_html_e( 'Complete Setup', 'points-and-rewards-for-woocommerce' ); ?>
 				</button>
+			</div>
+
+			<!-- Additional Information Section - Only visible on Step 5 -->
+			<div class="wps-wpr-wizard-info-section" data-step="5" style="display: none; margin-top: 40px; padding-top: 30px; border-top: 2px solid #e5e7eb;">
+
+				<!-- Hero Section -->
+				<div style="text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+					<div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
+					<h2 style="font-size: 32px; margin: 0 0 12px 0; color: white; font-weight: 700;">
+						<?php esc_html_e( 'Congratulations! Your Loyalty Program is Ready!', 'points-and-rewards-for-woocommerce' ); ?>
+					</h2>
+					<p style="font-size: 18px; margin: 0; color: rgba(255,255,255,0.95); line-height: 1.6;">
+						<?php esc_html_e( 'You\'re just steps away from launching a powerful rewards system for your customers!', 'points-and-rewards-for-woocommerce' ); ?>
+					</p>
+				</div>
+
+				<!-- Configuration Summary Cards -->
+				<div style="margin-bottom: 40px;">
+					<h3 style="font-size: 20px; font-weight: 600; color: #1f2937; margin: 0 0 20px 0; text-align: center;">
+						<?php esc_html_e( 'Your Current Configuration', 'points-and-rewards-for-woocommerce' ); ?>
+					</h3>
+					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 24px 0;">
+
+						<!-- Plugin Status -->
+						<div style="background: #ffffff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+							<div style="font-size: 40px; margin-bottom: 12px;">⚙️</div>
+							<h4 style="font-size: 16px; font-weight: 600; color: #374151; margin: 0 0 12px 0;">
+								<?php esc_html_e( 'Plugin Status', 'points-and-rewards-for-woocommerce' ); ?>
+							</h4>
+							<p style="font-size: 18px; font-weight: 600; color: #10b981; margin: 0;">
+								<?php echo ! empty( $general_settings['wps_wpr_general_setting_enable'] ) ? esc_html__( 'Enabled ✓', 'points-and-rewards-for-woocommerce' ) : esc_html__( 'Disabled', 'points-and-rewards-for-woocommerce' ); ?>
+							</p>
+						</div>
+
+						<!-- Redemption Settings -->
+						<div style="background: #ffffff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+							<div style="font-size: 40px; margin-bottom: 12px;">🎁</div>
+							<h4 style="font-size: 16px; font-weight: 600; color: #374151; margin: 0 0 12px 0;">
+								<?php esc_html_e( 'Redemption', 'points-and-rewards-for-woocommerce' ); ?>
+							</h4>
+							<p style="font-size: 18px; font-weight: 600; color: #10b981; margin: 0 0 8px 0;">
+								<?php
+								$cart_enabled     = ! empty( $general_settings['wps_wpr_custom_points_on_cart'] );
+								$checkout_enabled = ! empty( $general_settings['wps_wpr_apply_points_checkout'] );
+								if ( $cart_enabled || $checkout_enabled ) {
+									$locations = array();
+									if ( $cart_enabled ) {
+										$locations[] = esc_html__( 'Cart', 'points-and-rewards-for-woocommerce' );
+									}
+									if ( $checkout_enabled ) {
+										$locations[] = esc_html__( 'Checkout', 'points-and-rewards-for-woocommerce' );
+									}
+									echo esc_html( implode( ' & ', $locations ) ) . ' ✓';
+								} else {
+									esc_html_e( 'Disabled', 'points-and-rewards-for-woocommerce' );
+								}
+								?>
+							</p>
+							<p style="font-size: 14px; color: #6b7280; margin: 0;">
+								<?php
+								$points = isset( $general_settings['wps_wpr_cart_points_rate'] ) ? $general_settings['wps_wpr_cart_points_rate'] : 100;
+								$value  = isset( $general_settings['wps_wpr_cart_price_rate'] ) ? $general_settings['wps_wpr_cart_price_rate'] : 1;
+								/* translators: %1$d: points value, %2$s: currency symbol, %3$s: price value */
+								echo sprintf( esc_html__( '%1$d Points = %2$s%3$s', 'points-and-rewards-for-woocommerce' ), absint( $points ), esc_html( $currency_symbol ), esc_html( $value ) );
+								?>
+							</p>
+						</div>
+
+						<!-- Referral Program -->
+						<div style="background: #ffffff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+							<div style="font-size: 40px; margin-bottom: 12px;">👥</div>
+							<h4 style="font-size: 16px; font-weight: 600; color: #374151; margin: 0 0 12px 0;">
+								<?php esc_html_e( 'Referral Program', 'points-and-rewards-for-woocommerce' ); ?>
+							</h4>
+							<p style="font-size: 18px; font-weight: 600; color: #10b981; margin: 0 0 8px 0;">
+								<?php echo ! empty( $general_settings['wps_wpr_general_refer_enable'] ) ? esc_html__( 'Enabled ✓', 'points-and-rewards-for-woocommerce' ) : esc_html__( 'Disabled', 'points-and-rewards-for-woocommerce' ); ?>
+							</p>
+							<p style="font-size: 14px; color: #6b7280; margin: 0;">
+								<?php
+								$referral_points = isset( $general_settings['wps_wpr_general_refer_value'] ) ? $general_settings['wps_wpr_general_refer_value'] : 50;
+								/* translators: %d: points per referral */
+								echo sprintf( esc_html__( '%d points per referral', 'points-and-rewards-for-woocommerce' ), absint( $referral_points ) );
+								?>
+							</p>
+						</div>
+
+						<!-- Signup Points -->
+						<div style="background: #ffffff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+							<div style="font-size: 40px; margin-bottom: 12px;">⭐</div>
+							<h4 style="font-size: 16px; font-weight: 600; color: #374151; margin: 0 0 12px 0;">
+								<?php esc_html_e( 'Signup Points', 'points-and-rewards-for-woocommerce' ); ?>
+							</h4>
+							<p style="font-size: 18px; font-weight: 600; color: #10b981; margin: 0 0 8px 0;">
+								<?php echo ! empty( $general_settings['wps_wpr_general_signup'] ) ? esc_html__( 'Enabled ✓', 'points-and-rewards-for-woocommerce' ) : esc_html__( 'Disabled', 'points-and-rewards-for-woocommerce' ); ?>
+							</p>
+							<p style="font-size: 14px; color: #6b7280; margin: 0;">
+								<?php
+								$signup_points = isset( $general_settings['wps_wpr_general_signup_value'] ) ? $general_settings['wps_wpr_general_signup_value'] : 10;
+								/* translators: %d: points on signup */
+								echo sprintf( esc_html__( '%d points on signup', 'points-and-rewards-for-woocommerce' ), absint( $signup_points ) );
+								?>
+							</p>
+						</div>
+
+						<!-- Points Tab Layout -->
+						<div style="background: #ffffff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+							<div style="font-size: 40px; margin-bottom: 12px;">🎨</div>
+							<h4 style="font-size: 16px; font-weight: 600; color: #374151; margin: 0 0 12px 0;">
+								<?php esc_html_e( 'Points Tab Layout', 'points-and-rewards-for-woocommerce' ); ?>
+							</h4>
+							<p style="font-size: 18px; font-weight: 600; color: #667eea; margin: 0;">
+								<?php
+								$template_names = array(
+									'temp_one'   => __( 'Template One', 'points-and-rewards-for-woocommerce' ),
+									'temp_two'   => __( 'Template Two', 'points-and-rewards-for-woocommerce' ),
+									'temp_three' => __( 'Template Three', 'points-and-rewards-for-woocommerce' ),
+									'temp_four'  => __( 'Template Four', 'points-and-rewards-for-woocommerce' ),
+								);
+								$selected_template = isset( $other_settings['wps_wpr_choose_account_page_temp'] ) ? $other_settings['wps_wpr_choose_account_page_temp'] : 'temp_one';
+								echo isset( $template_names[ $selected_template ] ) ? esc_html( $template_names[ $selected_template ] ) : esc_html__( 'Template One', 'points-and-rewards-for-woocommerce' );
+								?>
+							</p>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- What Happens Next Section -->
+				<div style="background: #f9fafb; border-left: 4px solid #667eea; border-radius: 8px; padding: 24px; margin-bottom: 30px;">
+					<h3 style="font-size: 20px; font-weight: 600; color: #1f2937; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+						<span style="font-size: 24px;">🚀</span>
+						<?php esc_html_e( 'What Happens Next?', 'points-and-rewards-for-woocommerce' ); ?>
+					</h3>
+					<ul style="margin: 0; padding: 0 0 0 20px; color: #4b5563; line-height: 1.8;">
+						<li style="margin-bottom: 8px;">
+							<strong><?php esc_html_e( 'Plugin Activation:', 'points-and-rewards-for-woocommerce' ); ?></strong>
+							<?php esc_html_e( 'Your loyalty program will be immediately active on your store', 'points-and-rewards-for-woocommerce' ); ?>
+						</li>
+						<li style="margin-bottom: 8px;">
+							<strong><?php esc_html_e( 'Customer Points Tab:', 'points-and-rewards-for-woocommerce' ); ?></strong>
+							<?php esc_html_e( 'A new "Points" tab will appear in customer My Account pages', 'points-and-rewards-for-woocommerce' ); ?>
+						</li>
+						<li style="margin-bottom: 8px;">
+							<strong><?php esc_html_e( 'Redemption Ready:', 'points-and-rewards-for-woocommerce' ); ?></strong>
+							<?php esc_html_e( 'Customers can start earning and redeeming points immediately', 'points-and-rewards-for-woocommerce' ); ?>
+						</li>
+						<li style="margin-bottom: 8px;">
+							<strong><?php esc_html_e( 'Customize Anytime:', 'points-and-rewards-for-woocommerce' ); ?></strong>
+							<?php esc_html_e( 'You can adjust all settings from the main settings page whenever needed', 'points-and-rewards-for-woocommerce' ); ?>
+						</li>
+					</ul>
+				</div>
+
+				<!-- Pro Features Highlight -->
+				<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; padding: 32px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+					<div style="text-align: center; margin-bottom: 20px;">
+						<div style="font-size: 48px; margin-bottom: 12px;">💎</div>
+						<h3 style="font-size: 24px; font-weight: 700; color: white; margin: 0 0 8px 0;">
+							<?php esc_html_e( 'Want More? Upgrade to Pro!', 'points-and-rewards-for-woocommerce' ); ?>
+						</h3>
+						<p style="font-size: 16px; margin: 0; color: rgba(255,255,255,0.9);">
+							<?php esc_html_e( 'Unlock powerful features to maximize customer engagement', 'points-and-rewards-for-woocommerce' ); ?>
+						</p>
+					</div>
+					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+						<div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
+							<div style="font-size: 24px; margin-bottom: 8px;">🏆</div>
+							<strong style="display: block; margin-bottom: 4px; color: white;"><?php esc_html_e( 'Membership Levels', 'points-and-rewards-for-woocommerce' ); ?></strong>
+							<span style="font-size: 14px; color: rgba(255,255,255,0.8);"><?php esc_html_e( 'Create VIP tiers with exclusive benefits', 'points-and-rewards-for-woocommerce' ); ?></span>
+						</div>
+						<div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
+							<div style="font-size: 24px; margin-bottom: 8px;">🎮</div>
+							<strong style="display: block; margin-bottom: 4px; color: white;"><?php esc_html_e( 'Gamification', 'points-and-rewards-for-woocommerce' ); ?></strong>
+							<span style="font-size: 14px; color: rgba(255,255,255,0.8);"><?php esc_html_e( 'Badges, levels, and spin-to-win wheels', 'points-and-rewards-for-woocommerce' ); ?></span>
+						</div>
+						<div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
+							<div style="font-size: 24px; margin-bottom: 8px;">⏰</div>
+							<strong style="display: block; margin-bottom: 4px; color: white;"><?php esc_html_e( 'Points Expiration', 'points-and-rewards-for-woocommerce' ); ?></strong>
+							<span style="font-size: 14px; color: rgba(255,255,255,0.8);"><?php esc_html_e( 'Set expiry rules to drive urgency', 'points-and-rewards-for-woocommerce' ); ?></span>
+						</div>
+						<div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
+							<div style="font-size: 24px; margin-bottom: 8px;">📧</div>
+							<strong style="display: block; margin-bottom: 4px; color: white;"><?php esc_html_e( 'Email Notifications', 'points-and-rewards-for-woocommerce' ); ?></strong>
+							<span style="font-size: 14px; color: rgba(255,255,255,0.8);"><?php esc_html_e( 'Automated emails for point activities', 'points-and-rewards-for-woocommerce' ); ?></span>
+						</div>
+					</div>
+					<div style="text-align: center;">
+						<a href="https://wpswings.com/product/points-and-rewards-for-woocommerce-pro/" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: white; color: #667eea; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; transition: all 0.3s ease;">
+							<?php esc_html_e( 'View Pro Features →', 'points-and-rewards-for-woocommerce' ); ?>
+						</a>
+					</div>
+				</div>
+
+				<!-- Help Links -->
+				<div style="text-align: center; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+					<div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+						<a href="https://docs.wpswings.com/points-and-rewards-for-woocommerce/" target="_blank" rel="noopener noreferrer" style="color: #6b7280; text-decoration: none; font-size: 14px; transition: color 0.2s;">
+							📚 <?php esc_html_e( 'Documentation', 'points-and-rewards-for-woocommerce' ); ?>
+						</a>
+						<span style="color: #d1d5db;">|</span>
+						<a href="https://wpswings.com/submit-query/" target="_blank" rel="noopener noreferrer" style="color: #6b7280; text-decoration: none; font-size: 14px; transition: color 0.2s;">
+							💬 <?php esc_html_e( 'Need Help?', 'points-and-rewards-for-woocommerce' ); ?>
+						</a>
+						<span style="color: #d1d5db;">|</span>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=wps-rwpr-setting' ) ); ?>" style="color: #6b7280; text-decoration: none; font-size: 14px; transition: color 0.2s;">
+							⚙️ <?php esc_html_e( 'Go to Settings', 'points-and-rewards-for-woocommerce' ); ?>
+						</a>
+					</div>
+				</div>
+
 			</div>
 		</form>
 	</div>
