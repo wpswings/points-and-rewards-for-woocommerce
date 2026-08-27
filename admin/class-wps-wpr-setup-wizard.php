@@ -107,7 +107,7 @@ class WPS_WPR_Setup_Wizard {
 			'wps-wpr-wizard-style',
 			WPS_RWPR_DIR_URL . 'admin/css/wps-wpr-setup-wizard.css',
 			array(),
-			$this->version,
+			$this->version . '-' . time(),
 			'all'
 		);
 
@@ -120,7 +120,7 @@ class WPS_WPR_Setup_Wizard {
 			'wps-wpr-wizard-script',
 			WPS_RWPR_DIR_URL . 'admin/js/wps-wpr-setup-wizard.js',
 			array( 'jquery', 'select2' ),
-			$this->version,
+			$this->version . '-' . time(),
 			true
 		);
 
@@ -276,10 +276,12 @@ class WPS_WPR_Setup_Wizard {
 		// Step 5 is just review/complete - no settings to save.
 
 		// Save all settings to database.
-		$general_saved = update_option( 'wps_wpr_settings_gallery', $general_settings );
-		$other_saved   = update_option( 'wps_wpr_other_settings', $other_settings );
+		update_option( 'wps_wpr_settings_gallery', $general_settings );
+		update_option( 'wps_wpr_other_settings', $other_settings );
 
-		return $general_saved || $other_saved;
+		// Always return true as update_option returns false if value hasn't changed.
+		// The operation is still successful even if no database write occurred.
+		return true;
 	}
 
 	/**
