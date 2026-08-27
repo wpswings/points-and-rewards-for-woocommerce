@@ -70,7 +70,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 				<div class="wps-wpr-form-group wps-wpr-master-enable">
 					<label class="wps-wpr-switch wps-wpr-switch-large">
-						<input type="checkbox" name="step0[plugin_enable]" value="1" <?php checked( isset( $general_settings['wps_wpr_general_setting_enable'] ) && '1' === $general_settings['wps_wpr_general_setting_enable'], true, true ); checked( ! isset( $general_settings['wps_wpr_general_setting_enable'] ), true, true ); ?>>
+						<input type="checkbox" name="step0[plugin_enable]" value="1" <?php checked( ! empty( $general_settings['wps_wpr_general_setting_enable'] ), true ); ?>>
 						<span class="wps-wpr-slider"></span>
 					</label>
 					<label><strong><?php esc_html_e( 'Enable WooCommerce Points and Rewards', 'points-and-rewards-for-woocommerce' ); ?></strong></label>
@@ -94,34 +94,35 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 				<div class="wps-wpr-form-group">
 					<label class="wps-wpr-switch">
-						<input type="checkbox" name="step1[redemption_enable]" value="1" <?php checked( isset( $general_settings['wps_wpr_custom_points_on_cart'] ) && '1' === $general_settings['wps_wpr_custom_points_on_cart'], true, true ); checked( ! isset( $general_settings['wps_wpr_custom_points_on_cart'] ), true, true ); ?>>
+						<input type="checkbox" name="step1[redemption_cart_enable]" value="1" <?php checked( ! empty( $general_settings['wps_wpr_custom_points_on_cart'] ), true ); ?>>
 						<span class="wps-wpr-slider"></span>
 					</label>
-					<label><?php esc_html_e( 'Enable Point Redemption', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<label><?php esc_html_e( 'Redemption Over Cart Sub-total', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<p class="wps-wpr-field-description"><?php esc_html_e( 'Allow customers to apply points during Cart', 'points-and-rewards-for-woocommerce' ); ?></p>
 				</div>
 
 				<div class="wps-wpr-form-group">
-					<label for="redemption_points"><?php esc_html_e( 'Points Required for Discount', 'points-and-rewards-for-woocommerce' ); ?></label>
-					<input type="number" id="redemption_points" name="step1[redemption_points]"
-						value="<?php echo esc_attr( isset( $general_settings['wps_wpr_cart_points_rate'] ) ? $general_settings['wps_wpr_cart_points_rate'] : 100 ); ?>"
-						min="1" step="1" class="wps-wpr-input">
-					<p class="wps-wpr-field-description"><?php esc_html_e( 'Number of points needed to get discount', 'points-and-rewards-for-woocommerce' ); ?></p>
+					<label class="wps-wpr-switch">
+						<input type="checkbox" name="step1[redemption_checkout_enable]" value="1" <?php checked( ! empty( $general_settings['wps_wpr_apply_points_checkout'] ), true ); ?>>
+						<span class="wps-wpr-slider"></span>
+					</label>
+					<label><?php esc_html_e( 'Apply Points on Checkout', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<p class="wps-wpr-field-description"><?php esc_html_e( 'Allow customers to apply points during Checkout', 'points-and-rewards-for-woocommerce' ); ?></p>
 				</div>
 
 				<div class="wps-wpr-form-group">
-					<label for="redemption_value"><?php echo sprintf( esc_html__( 'Discount Value (%s)', 'points-and-rewards-for-woocommerce' ), esc_html( $currency_symbol ) ); ?></label>
-					<input type="number" id="redemption_value" name="step1[redemption_value]"
-						value="<?php echo esc_attr( isset( $general_settings['wps_wpr_cart_price_rate'] ) ? $general_settings['wps_wpr_cart_price_rate'] : 1 ); ?>"
-						min="0" step="0.01" class="wps-wpr-input">
-					<p class="wps-wpr-field-description"><?php echo sprintf( esc_html__( 'Discount amount in %s when points are redeemed', 'points-and-rewards-for-woocommerce' ), esc_html( $currency_symbol ) ); ?></p>
-				</div>
-
-				<div class="wps-wpr-form-group">
-					<label><?php esc_html_e( 'Where Can Points Be Redeemed?', 'points-and-rewards-for-woocommerce' ); ?></label>
-					<select name="step1[redeem_location]" class="wps-wpr-select">
-						<option value="cart" selected><?php esc_html_e( 'Cart Page', 'points-and-rewards-for-woocommerce' ); ?></option>
-					</select>
-					<p class="wps-wpr-field-description"><?php esc_html_e( 'In the free version, redemption is available on the cart page', 'points-and-rewards-for-woocommerce' ); ?></p>
+					<label for="redemption_points"><?php esc_html_e( 'Conversion Rate for Cart Sub-total Redemption', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<div class="wps-wpr-currency-row">
+						<input type="number" id="redemption_points" name="step1[redemption_points]"
+							value="<?php echo esc_attr( isset( $general_settings['wps_wpr_cart_points_rate'] ) ? $general_settings['wps_wpr_cart_points_rate'] : 100 ); ?>"
+							min="1" step="1" class="wps-wpr-input" style="width: 120px;">
+						<span style="margin: 0 8px;"><?php esc_html_e( 'Points =', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<span style="margin-right: 8px;"><?php echo esc_html( $currency_symbol ); ?></span>
+						<input type="number" id="redemption_value" name="step1[redemption_value]"
+							value="<?php echo esc_attr( isset( $general_settings['wps_wpr_cart_price_rate'] ) ? $general_settings['wps_wpr_cart_price_rate'] : 1 ); ?>"
+							min="0" step="0.01" class="wps-wpr-input" style="width: 120px;">
+					</div>
+					<p class="wps-wpr-field-description"><?php esc_html_e( 'Set how many points equal to discount amount', 'points-and-rewards-for-woocommerce' ); ?></p>
 				</div>
 			</div>
 
@@ -132,7 +133,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 				<div class="wps-wpr-form-group">
 					<label class="wps-wpr-switch">
-						<input type="checkbox" name="step2[referral_enable]" value="1" <?php checked( isset( $general_settings['wps_wpr_general_refer_enable'] ) && '1' === $general_settings['wps_wpr_general_refer_enable'], true, true ); checked( ! isset( $general_settings['wps_wpr_general_refer_enable'] ), true, true ); ?>>
+						<input type="checkbox" name="step2[referral_enable]" value="1" <?php checked( ! empty( $general_settings['wps_wpr_general_refer_enable'] ), true ); ?>>
 						<span class="wps-wpr-slider"></span>
 					</label>
 					<label><?php esc_html_e( 'Enable Referral Program', 'points-and-rewards-for-woocommerce' ); ?></label>
@@ -162,19 +163,24 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 				<p class="wps-wpr-step-description"><?php esc_html_e( 'Customize how points are displayed in customer accounts.', 'points-and-rewards-for-woocommerce' ); ?></p>
 
 				<div class="wps-wpr-form-group">
-					<label><?php esc_html_e( 'Point Tab Template', 'points-and-rewards-for-woocommerce' ); ?></label>
+					<label><?php esc_html_e( 'Select a Points Tab Template for My Account', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps-wpr-template-grid">
 						<?php
 						$templates = array(
-							'template_one' => __( 'Template 1 - Classic', 'points-and-rewards-for-woocommerce' ),
+							'temp_one'   => __( 'Template One', 'points-and-rewards-for-woocommerce' ),
+							'temp_two'   => __( 'Template Two', 'points-and-rewards-for-woocommerce' ),
+							'temp_three' => __( 'Template Three', 'points-and-rewards-for-woocommerce' ),
+							'temp_four'  => __( 'Template Four', 'points-and-rewards-for-woocommerce' ),
 						);
 
-						$current_template = isset( $other_settings['wps_wpr_points_tab_template'] ) ? $other_settings['wps_wpr_points_tab_template'] : 'template_one';
+						$current_template = isset( $other_settings['wps_wpr_choose_account_page_temp'] ) ? $other_settings['wps_wpr_choose_account_page_temp'] : 'temp_one';
 
 						foreach ( $templates as $template_key => $template_name ) {
+							$is_checked = ( $template_key === $current_template ) ? 'checked' : '';
+							$card_class = ( $template_key === $current_template ) ? 'wps-wpr-template-card wps-wpr-template-selected' : 'wps-wpr-template-card';
 							?>
-							<label class="wps-wpr-template-card wps-wpr-template-selected">
-								<input type="radio" name="step3[point_tab_template]" value="<?php echo esc_attr( $template_key ); ?>" checked>
+							<label class="<?php echo esc_attr( $card_class ); ?>">
+								<input type="radio" name="step3[point_tab_template]" value="<?php echo esc_attr( $template_key ); ?>" <?php echo esc_attr( $is_checked ); ?>>
 								<div class="wps-wpr-template-preview">
 									<div class="wps-wpr-template-icon">📊</div>
 									<span><?php echo esc_html( $template_name ); ?></span>
@@ -184,7 +190,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 						}
 						?>
 					</div>
-					<p class="wps-wpr-field-description"><?php esc_html_e( 'More templates available in Pro version', 'points-and-rewards-for-woocommerce' ); ?></p>
+					<p class="wps-wpr-field-description"><?php esc_html_e( 'Choose a layout template for the Points section under the My Account tab', 'points-and-rewards-for-woocommerce' ); ?></p>
 				</div>
 
 				<div class="wps-wpr-form-group">
@@ -204,7 +210,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 				<div class="wps-wpr-form-group">
 					<label class="wps-wpr-switch">
-						<input type="checkbox" name="step4[signup_enable]" value="1" <?php checked( isset( $general_settings['wps_wpr_general_signup'] ) && 1 === intval( $general_settings['wps_wpr_general_signup'] ), true, true ); checked( ! isset( $general_settings['wps_wpr_general_signup'] ), true, true ); ?>>
+						<input type="checkbox" name="step4[signup_enable]" value="1" <?php checked( ! empty( $general_settings['wps_wpr_general_signup'] ), true ); ?>>
 						<span class="wps-wpr-slider"></span>
 					</label>
 					<label><?php esc_html_e( 'Enable Signup Points', 'points-and-rewards-for-woocommerce' ); ?></label>

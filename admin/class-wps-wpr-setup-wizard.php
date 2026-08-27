@@ -207,16 +207,19 @@ class WPS_WPR_Setup_Wizard {
 		if ( isset( $wizard_data['step0'] ) ) {
 			$step0 = $wizard_data['step0'];
 
-			// Enable/disable plugin.
-			$general_settings['wps_wpr_general_setting_enable'] = isset( $step0['plugin_enable'] ) && '1' === $step0['plugin_enable'] ? '1' : '0';
+			// Enable/disable plugin (save as integer 1 or empty string to match main settings).
+			$general_settings['wps_wpr_general_setting_enable'] = isset( $step0['plugin_enable'] ) && '1' === $step0['plugin_enable'] ? 1 : '';
 		}
 
 		// Step 1: Redemption Settings.
 		if ( isset( $wizard_data['step1'] ) ) {
 			$step1 = $wizard_data['step1'];
 
-			// Enable redemption on cart (free version only has cart).
-			$general_settings['wps_wpr_custom_points_on_cart'] = isset( $step1['redemption_enable'] ) && '1' === $step1['redemption_enable'] ? '1' : '0';
+			// Enable redemption on cart (save as integer 1 or empty string to match main settings).
+			$general_settings['wps_wpr_custom_points_on_cart'] = isset( $step1['redemption_cart_enable'] ) && '1' === $step1['redemption_cart_enable'] ? 1 : '';
+
+			// Enable redemption on checkout (save as integer 1 or empty string to match main settings).
+			$general_settings['wps_wpr_apply_points_checkout'] = isset( $step1['redemption_checkout_enable'] ) && '1' === $step1['redemption_checkout_enable'] ? 1 : '';
 
 			// Redemption rate (conversion rate).
 			if ( isset( $step1['redemption_points'] ) ) {
@@ -232,8 +235,8 @@ class WPS_WPR_Setup_Wizard {
 		if ( isset( $wizard_data['step2'] ) ) {
 			$step2 = $wizard_data['step2'];
 
-			// Enable referral program.
-			$general_settings['wps_wpr_general_refer_enable'] = isset( $step2['referral_enable'] ) && '1' === $step2['referral_enable'] ? '1' : '0';
+			// Enable referral program (save as integer 1 or empty string to match main settings).
+			$general_settings['wps_wpr_general_refer_enable'] = isset( $step2['referral_enable'] ) && '1' === $step2['referral_enable'] ? 1 : '';
 
 			// Referral points (free version only has one value).
 			if ( isset( $step2['referee_points'] ) ) {
@@ -245,8 +248,13 @@ class WPS_WPR_Setup_Wizard {
 		if ( isset( $wizard_data['step3'] ) ) {
 			$step3 = $wizard_data['step3'];
 
-			// Point tab template (free version only has template_one).
-			$other_settings['wps_wpr_points_tab_template'] = 'template_one';
+			// Point tab template selection.
+			if ( isset( $step3['point_tab_template'] ) ) {
+				$allowed_templates = array( 'temp_one', 'temp_two', 'temp_three', 'temp_four' );
+				if ( in_array( $step3['point_tab_template'], $allowed_templates, true ) ) {
+					$other_settings['wps_wpr_choose_account_page_temp'] = sanitize_text_field( $step3['point_tab_template'] );
+				}
+			}
 
 			// Show points on product pages.
 			$other_settings['wps_wpr_show_points_on_product'] = isset( $step3['show_points_on_product'] ) && '1' === $step3['show_points_on_product'] ? 'yes' : 'no';
@@ -256,8 +264,8 @@ class WPS_WPR_Setup_Wizard {
 		if ( isset( $wizard_data['step4'] ) ) {
 			$step4 = $wizard_data['step4'];
 
-			// Enable signup points.
-			$general_settings['wps_wpr_general_signup'] = isset( $step4['signup_enable'] ) && '1' === $step4['signup_enable'] ? 1 : 0;
+			// Enable signup points (save as integer 1 or empty string to match main settings).
+			$general_settings['wps_wpr_general_signup'] = isset( $step4['signup_enable'] ) && '1' === $step4['signup_enable'] ? 1 : '';
 
 			// Signup points value.
 			if ( isset( $step4['signup_points'] ) ) {
