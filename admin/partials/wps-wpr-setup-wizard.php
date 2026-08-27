@@ -232,22 +232,134 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 
 			<!-- Step 5: Complete Setup -->
 			<div class="wps-wpr-wizard-step" data-step="5">
-				<h2><?php esc_html_e( 'Step 5: Review & Complete', 'points-and-rewards-for-woocommerce' ); ?></h2>
-				<p class="wps-wpr-step-description"><?php esc_html_e( "You're all set! Review your settings and complete the setup.", 'points-and-rewards-for-woocommerce' ); ?></p>
+				<h2><?php esc_html_e( '🎉 Setup Complete! Review Your Configuration', 'points-and-rewards-for-woocommerce' ); ?></h2>
+				<p class="wps-wpr-step-description"><?php esc_html_e( "Here's a summary of your loyalty program configuration. You can change these settings anytime from the main settings page.", 'points-and-rewards-for-woocommerce' ); ?></p>
 
-				<div class="wps-wpr-info-box wps-wpr-success-box">
-					<strong><?php esc_html_e( 'What happens next?', 'points-and-rewards-for-woocommerce' ); ?></strong>
+				<!-- Configuration Summary -->
+				<div class="wps-wpr-summary-grid">
+					<!-- Plugin Status -->
+					<div class="wps-wpr-summary-card">
+						<div class="wps-wpr-summary-icon">⚙️</div>
+						<h3><?php esc_html_e( 'Plugin Status', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-wpr-summary-value" id="summary-plugin-status">
+							<?php echo ! empty( $general_settings['wps_wpr_general_setting_enable'] ) ? esc_html__( 'Enabled ✓', 'points-and-rewards-for-woocommerce' ) : esc_html__( 'Disabled', 'points-and-rewards-for-woocommerce' ); ?>
+						</p>
+					</div>
+
+					<!-- Redemption Settings -->
+					<div class="wps-wpr-summary-card">
+						<div class="wps-wpr-summary-icon">🎁</div>
+						<h3><?php esc_html_e( 'Redemption', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-wpr-summary-value" id="summary-redemption">
+							<?php
+							$cart_enabled     = ! empty( $general_settings['wps_wpr_custom_points_on_cart'] );
+							$checkout_enabled = ! empty( $general_settings['wps_wpr_apply_points_checkout'] );
+							if ( $cart_enabled || $checkout_enabled ) {
+								$locations = array();
+								if ( $cart_enabled ) {
+									$locations[] = esc_html__( 'Cart', 'points-and-rewards-for-woocommerce' );
+								}
+								if ( $checkout_enabled ) {
+									$locations[] = esc_html__( 'Checkout', 'points-and-rewards-for-woocommerce' );
+								}
+								echo esc_html( implode( ' & ', $locations ) ) . ' ✓';
+							} else {
+								esc_html_e( 'Disabled', 'points-and-rewards-for-woocommerce' );
+							}
+							?>
+						</p>
+						<p class="wps-wpr-summary-detail" id="summary-conversion">
+							<?php
+							$points = isset( $general_settings['wps_wpr_cart_points_rate'] ) ? $general_settings['wps_wpr_cart_points_rate'] : 100;
+							$value  = isset( $general_settings['wps_wpr_cart_price_rate'] ) ? $general_settings['wps_wpr_cart_price_rate'] : 1;
+							/* translators: %1$d: points value, %2$s: currency symbol, %3$s: price value */
+							echo sprintf( esc_html__( '%1$d Points = %2$s%3$s', 'points-and-rewards-for-woocommerce' ), absint( $points ), esc_html( $currency_symbol ), esc_html( $value ) );
+							?>
+						</p>
+					</div>
+
+					<!-- Referral Program -->
+					<div class="wps-wpr-summary-card">
+						<div class="wps-wpr-summary-icon">👥</div>
+						<h3><?php esc_html_e( 'Referral Program', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-wpr-summary-value" id="summary-referral">
+							<?php echo ! empty( $general_settings['wps_wpr_general_refer_enable'] ) ? esc_html__( 'Enabled ✓', 'points-and-rewards-for-woocommerce' ) : esc_html__( 'Disabled', 'points-and-rewards-for-woocommerce' ); ?>
+						</p>
+						<p class="wps-wpr-summary-detail" id="summary-referral-points">
+							<?php
+							if ( ! empty( $general_settings['wps_wpr_general_refer_enable'] ) ) {
+								$refer_points = isset( $general_settings['wps_wpr_general_refer_value'] ) ? $general_settings['wps_wpr_general_refer_value'] : 50;
+								/* translators: %d: referral points value */
+								echo sprintf( esc_html__( '%d points per referral', 'points-and-rewards-for-woocommerce' ), absint( $refer_points ) );
+							}
+							?>
+						</p>
+					</div>
+
+					<!-- Signup Points -->
+					<div class="wps-wpr-summary-card">
+						<div class="wps-wpr-summary-icon">✨</div>
+						<h3><?php esc_html_e( 'Signup Points', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-wpr-summary-value" id="summary-signup">
+							<?php echo ! empty( $general_settings['wps_wpr_general_signup'] ) ? esc_html__( 'Enabled ✓', 'points-and-rewards-for-woocommerce' ) : esc_html__( 'Disabled', 'points-and-rewards-for-woocommerce' ); ?>
+						</p>
+						<p class="wps-wpr-summary-detail" id="summary-signup-points">
+							<?php
+							if ( ! empty( $general_settings['wps_wpr_general_signup'] ) ) {
+								$signup_points = isset( $general_settings['wps_wpr_general_signup_value'] ) ? $general_settings['wps_wpr_general_signup_value'] : 10;
+								/* translators: %d: signup points value */
+								echo sprintf( esc_html__( '%d points on signup', 'points-and-rewards-for-woocommerce' ), absint( $signup_points ) );
+							}
+							?>
+						</p>
+					</div>
+
+					<!-- Points Tab Template -->
+					<div class="wps-wpr-summary-card">
+						<div class="wps-wpr-summary-icon">🎨</div>
+						<h3><?php esc_html_e( 'Points Tab Layout', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-wpr-summary-value" id="summary-template">
+							<?php
+							$template = isset( $other_settings['wps_wpr_choose_account_page_temp'] ) ? $other_settings['wps_wpr_choose_account_page_temp'] : 'temp_one';
+							$template_names = array(
+								'temp_one'   => __( 'Template One', 'points-and-rewards-for-woocommerce' ),
+								'temp_two'   => __( 'Template Two', 'points-and-rewards-for-woocommerce' ),
+								'temp_three' => __( 'Template Three', 'points-and-rewards-for-woocommerce' ),
+								'temp_four'  => __( 'Template Four', 'points-and-rewards-for-woocommerce' ),
+							);
+							echo isset( $template_names[ $template ] ) ? esc_html( $template_names[ $template ] ) : esc_html__( 'Template One', 'points-and-rewards-for-woocommerce' );
+							?>
+						</p>
+					</div>
+				</div>
+
+				<!-- Next Steps -->
+				<div class="wps-wpr-info-box wps-wpr-success-box" style="margin-top: 24px;">
+					<strong><?php esc_html_e( '🚀 What Happens Next?', 'points-and-rewards-for-woocommerce' ); ?></strong>
 					<ul>
-						<li><?php esc_html_e( 'Your Points & Rewards system will be activated', 'points-and-rewards-for-woocommerce' ); ?></li>
-						<li><?php esc_html_e( 'Customers can start earning and redeeming points', 'points-and-rewards-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Your Points & Rewards system will be activated with the configuration above', 'points-and-rewards-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Customers can start earning and redeeming points immediately', 'points-and-rewards-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Points tab will appear in customer My Account pages', 'points-and-rewards-for-woocommerce' ); ?></li>
 						<li><?php esc_html_e( 'You can adjust all settings anytime from the main settings page', 'points-and-rewards-for-woocommerce' ); ?></li>
-						<li><?php esc_html_e( 'Check out the Pro version for advanced features like membership levels, gamification, and more', 'points-and-rewards-for-woocommerce' ); ?></li>
 					</ul>
 				</div>
 
-				<div class="wps-wpr-info-box wps-wpr-success-box">
-					<strong><?php esc_html_e( 'Almost Done!', 'points-and-rewards-for-woocommerce' ); ?></strong>
-					<p><?php esc_html_e( 'Click "Complete Setup" to save your settings and start rewarding your customers!', 'points-and-rewards-for-woocommerce' ); ?></p>
+				<!-- Pro Features Highlight -->
+				<div class="wps-wpr-info-box" style="margin-top: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+					<strong style="color: white;"><?php esc_html_e( '💎 Want More Features?', 'points-and-rewards-for-woocommerce' ); ?></strong>
+					<p style="color: rgba(255,255,255,0.9); margin-bottom: 12px;"><?php esc_html_e( 'Upgrade to Pro for advanced features:', 'points-and-rewards-for-woocommerce' ); ?></p>
+					<ul style="color: rgba(255,255,255,0.9);">
+						<li><?php esc_html_e( 'Membership Levels & Tiered Rewards', 'points-and-rewards-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Gamification with Spin Wheel & Badges', 'points-and-rewards-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Points Expiration & Advanced Reports', 'points-and-rewards-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Product Purchase Points & Category Points', 'points-and-rewards-for-woocommerce' ); ?></li>
+					</ul>
+				</div>
+
+				<!-- Final CTA -->
+				<div class="wps-wpr-info-box wps-wpr-success-box" style="margin-top: 16px; text-align: center; padding: 24px;">
+					<h3 style="margin: 0 0 8px 0; font-size: 20px;"><?php esc_html_e( '🎊 Ready to Launch Your Loyalty Program?', 'points-and-rewards-for-woocommerce' ); ?></h3>
+					<p style="margin: 0; font-size: 16px;"><?php esc_html_e( 'Click "Complete Setup" below to save your settings and start rewarding your customers!', 'points-and-rewards-for-woocommerce' ); ?></p>
 				</div>
 			</div>
 
