@@ -231,7 +231,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 			</div>
 
 			<!-- Step 5: Complete Setup -->
-			<div class="wps-wpr-wizard-step" data-step="5" style="display: none;">
+			<div class="wps-wpr-wizard-step" data-step="5">
 				<!-- Hero Section -->
 				<div style="text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; margin-bottom: 30px;">
 					<h2 style="font-size: 32px; margin: 0 0 12px 0; color: white;">🎉 Congratulations! Your Loyalty Program is Ready!</h2>
