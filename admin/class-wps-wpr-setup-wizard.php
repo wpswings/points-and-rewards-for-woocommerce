@@ -215,8 +215,11 @@ class WPS_WPR_Setup_Wizard {
 		if ( isset( $wizard_data['step1'] ) ) {
 			$step1 = $wizard_data['step1'];
 
-			// Enable redemption on cart (free version only has cart).
-			$general_settings['wps_wpr_custom_points_on_cart'] = isset( $step1['redemption_enable'] ) && '1' === $step1['redemption_enable'] ? '1' : '0';
+			// Enable redemption on cart.
+			$general_settings['wps_wpr_custom_points_on_cart'] = isset( $step1['redemption_cart_enable'] ) && '1' === $step1['redemption_cart_enable'] ? '1' : '0';
+
+			// Enable redemption on checkout.
+			$general_settings['wps_wpr_apply_points_checkout'] = isset( $step1['redemption_checkout_enable'] ) && '1' === $step1['redemption_checkout_enable'] ? '1' : '0';
 
 			// Redemption rate (conversion rate).
 			if ( isset( $step1['redemption_points'] ) ) {
