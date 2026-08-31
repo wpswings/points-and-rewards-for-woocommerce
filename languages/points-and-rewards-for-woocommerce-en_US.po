@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Points and Rewards for WooCommerce 2.10.2\n"
-"POT-Creation-Date: 2026-07-10 14:43+0530\n"
-"PO-Revision-Date: 2026-07-10 14:44+0530\n"
+"Project-Id-Version: Points and Rewards for WooCommerce 2.10.3\n"
+"POT-Creation-Date: 2026-08-27 17:38+0530\n"
+"PO-Revision-Date: 2026-08-27 17:38+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -712,6 +712,37 @@ msgid ""
 "Your points have been successfully synced to Klaviyo under your user profile."
 msgstr ""
 
+#: admin/class-wps-wpr-setup-wizard.php:79
+#: admin/class-wps-wpr-setup-wizard.php:80
+msgid "Setup Wizard"
+msgstr ""
+
+#: admin/class-wps-wpr-setup-wizard.php:137
+msgid "Saving..."
+msgstr ""
+
+#: admin/class-wps-wpr-setup-wizard.php:138
+#: admin/class-wps-wpr-setup-wizard.php:182
+msgid "Settings saved successfully!"
+msgstr ""
+
+#: admin/class-wps-wpr-setup-wizard.php:139
+#: admin/class-wps-wpr-setup-wizard.php:189
+msgid "Failed to save settings. Please try again."
+msgstr ""
+
+#: admin/class-wps-wpr-setup-wizard.php:140
+msgid "Please fill all required fields."
+msgstr ""
+
+#: admin/class-wps-wpr-setup-wizard.php:157
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: admin/class-wps-wpr-setup-wizard.php:168
+msgid "No data received. Please try again."
+msgstr ""
+
 #: admin/index.php:14 admin/partials/index.php:14 includes/index.php:14
 #: index.php:14 public/index.php:14
 msgid "oops looks like nothing is here"
@@ -759,6 +790,7 @@ msgstr ""
 
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:64
 #: admin/partials/templates/wps-wpr-gamifications-settings.php:86
+#: admin/partials/wps-wpr-setup-wizard.php:426
 msgid "Gamification"
 msgstr ""
 
@@ -934,6 +966,7 @@ msgid "Watch Video"
 msgstr ""
 
 #: admin/partials/points-rewards-for-woocommerce-admin-display.php:294
+#: admin/partials/wps-wpr-setup-wizard.php:451
 #: points-rewards-for-woocommerce.php:117
 msgid "Documentation"
 msgstr ""
@@ -1054,8 +1087,8 @@ msgstr ""
 #: admin/partials/templates/wps-assign-pro-points.php:80
 #: admin/partials/templates/wps-assign-pro-points.php:119
 #: admin/partials/templates/wps-membership-settings.php:108
-#: points-rewards-for-woocommerce.php:464
-#: points-rewards-for-woocommerce.php:499
+#: points-rewards-for-woocommerce.php:467
+#: points-rewards-for-woocommerce.php:502
 msgid "Dismiss this notice."
 msgstr ""
 
@@ -1877,10 +1910,12 @@ msgstr ""
 #: admin/partials/templates/wps-generral-settings2.php:22
 #: admin/partials/templates/wps-generral-settings2.php:26
 #: admin/partials/templates/wps-points-notification-settings.php:27
+#: admin/partials/wps-wpr-setup-wizard.php:41
 msgid "Enable"
 msgstr ""
 
 #: admin/partials/templates/wps-generral-settings2.php:28
+#: admin/partials/wps-wpr-setup-wizard.php:76
 msgid "Enable WooCommerce Points and Rewards"
 msgstr ""
 
@@ -1889,10 +1924,12 @@ msgid "Toggle This to Enable The Plugin"
 msgstr ""
 
 #: admin/partials/templates/wps-generral-settings2.php:37
+#: admin/partials/wps-wpr-setup-wizard.php:45
 msgid "Signup"
 msgstr ""
 
 #: admin/partials/templates/wps-generral-settings2.php:41
+#: admin/partials/wps-wpr-setup-wizard.php:344
 msgid "Signup Points"
 msgstr ""
 
@@ -1918,6 +1955,7 @@ msgid "Points That The New Customers Will Get After Signup."
 msgstr ""
 
 #: admin/partials/templates/wps-generral-settings2.php:63
+#: admin/partials/wps-wpr-setup-wizard.php:43
 #: public/partials/wps-wpr-points-campaign-template.php:278
 #: public/partials/wps-wpr-template-three-points-tab.php:365
 msgid "Referral"
@@ -1925,6 +1963,7 @@ msgstr ""
 
 #: admin/partials/templates/wps-generral-settings2.php:67
 #: admin/partials/templates/wps-wpr-campaign-settings.php:301
+#: admin/partials/wps-wpr-setup-wizard.php:143
 msgid "Referral Points"
 msgstr ""
 
@@ -2064,6 +2103,7 @@ msgid "Redemption Settings"
 msgstr ""
 
 #: admin/partials/templates/wps-generral-settings2.php:194
+#: admin/partials/wps-wpr-setup-wizard.php:100
 msgid "Redemption Over Cart Sub-total"
 msgstr ""
 
@@ -2089,6 +2129,7 @@ msgid ""
 msgstr ""
 
 #: admin/partials/templates/wps-generral-settings2.php:232
+#: admin/partials/wps-wpr-setup-wizard.php:109
 msgid "Apply Points on Checkout"
 msgstr ""
 
@@ -2411,18 +2452,27 @@ msgid ""
 msgstr ""
 
 #: admin/partials/templates/wps-other-setting.php:141
+#: admin/partials/wps-wpr-setup-wizard.php:170
+#: admin/partials/wps-wpr-setup-wizard.php:367
+#: admin/partials/wps-wpr-setup-wizard.php:373
 msgid "Template One"
 msgstr ""
 
 #: admin/partials/templates/wps-other-setting.php:145
+#: admin/partials/wps-wpr-setup-wizard.php:171
+#: admin/partials/wps-wpr-setup-wizard.php:368
 msgid "Template Two"
 msgstr ""
 
 #: admin/partials/templates/wps-other-setting.php:149
+#: admin/partials/wps-wpr-setup-wizard.php:172
+#: admin/partials/wps-wpr-setup-wizard.php:369
 msgid "Template Three"
 msgstr ""
 
 #: admin/partials/templates/wps-other-setting.php:153
+#: admin/partials/wps-wpr-setup-wizard.php:173
+#: admin/partials/wps-wpr-setup-wizard.php:370
 msgid "Template Four"
 msgstr ""
 
@@ -2885,6 +2935,10 @@ msgid "Enabled"
 msgstr ""
 
 #: admin/partials/templates/wps-points-notification-settings.php:405
+#: admin/partials/wps-wpr-setup-wizard.php:284
+#: admin/partials/wps-wpr-setup-wizard.php:308
+#: admin/partials/wps-wpr-setup-wizard.php:329
+#: admin/partials/wps-wpr-setup-wizard.php:347
 msgid "Disabled"
 msgstr ""
 
@@ -4021,6 +4075,325 @@ msgstr ""
 msgid "Badge -"
 msgstr ""
 
+#: admin/partials/wps-wpr-setup-wizard.php:25
+msgid "Welcome to Points and Rewards for WooCommerce!"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:26
+msgid "Let's configure your loyalty program in just 5 quick steps."
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:29
+msgid "Skip Setup"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:42
+#: admin/partials/wps-wpr-setup-wizard.php:292
+msgid "Redemption"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:44
+msgid "Layout"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:46
+msgid "Complete"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:68
+msgid "Welcome! Enable Points and Rewards"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:69
+msgid "Enable the Points and Rewards system for your WooCommerce store."
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:80
+msgid "What happens when enabled?"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:82
+msgid "Customers can earn points on purchases"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:83
+msgid "Points can be redeemed for discounts"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:84
+msgid "Referral program becomes active"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:85
+msgid "Points tab appears in customer accounts"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:92
+msgid "Step 1: Redemption Settings"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:93
+msgid "Configure how customers can redeem their points for discounts."
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:101
+msgid "Allow customers to apply points during Cart"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:110
+msgid "Allow customers to apply points during Checkout"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:114
+msgid "Conversion Rate for Cart Sub-total Redemption"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:119
+msgid "Points ="
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:125
+msgid "Set how many points equal to discount amount"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:131
+msgid "Step 2: Referral Program"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:132
+msgid "Reward customers for referring their friends to your store."
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:139
+msgid "Enable Referral Program"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:147
+msgid "Points awarded to new customer when they sign up using a referral link"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:151
+msgid "How it works:"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:153
+msgid "Each customer gets a unique referral link in their My Account page"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:154
+msgid "When a friend signs up using that link, both receive points"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:155
+msgid ""
+"Points are awarded after the referred friend completes their first order"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:162
+msgid "Step 3: Point Tab Layout"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:163
+msgid "Customize how points are displayed in customer accounts."
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:166
+msgid "Select a Points Tab Template for My Account"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:193
+msgid ""
+"Choose a layout template for the Points section under the My Account tab"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:206
+msgid "Show Potential Points on Product Pages"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:207
+msgid "Display how many points customers can earn by purchasing each product"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:213
+msgid "Step 4: Signup Points"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:214
+msgid "Reward new customers with points when they create an account."
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:221
+msgid "Enable Signup Points"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:225
+msgid "Signup Points Value"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:229
+msgid "Points awarded when a new customer creates an account"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:233
+msgid "Tip:"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:234
+msgid ""
+"Signup points help attract new customers and encourage account creation."
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:246
+msgid "Previous"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:249
+msgid "Next Step"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:252
+msgid "Complete Setup"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:263
+msgid "Congratulations! Your Loyalty Program is Ready!"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:266
+msgid ""
+"You're just steps away from launching a powerful rewards system for your "
+"customers!"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:273
+msgid "Your Current Configuration"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:281
+msgid "Plugin Status"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:284
+#: admin/partials/wps-wpr-setup-wizard.php:329
+#: admin/partials/wps-wpr-setup-wizard.php:347
+msgid "Enabled ✓"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:301
+msgid "Cart"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:304
+msgid "Checkout"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:317
+#, php-format
+msgid "%1$d Points = %2$s%3$s"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:326
+msgid "Referral Program"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:335
+#, php-format
+msgid "%d points per referral"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:353
+#, php-format
+msgid "%d points on signup"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:362
+msgid "Points Tab Layout"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:385
+msgid "What Happens Next?"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:389
+msgid "Plugin Activation:"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:390
+msgid "Your loyalty program will be immediately active on your store"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:393
+msgid "Customer Points Tab:"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:394
+msgid "A new \"Points\" tab will appear in customer My Account pages"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:397
+msgid "Redemption Ready:"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:398
+msgid "Customers can start earning and redeeming points immediately"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:401
+msgid "Customize Anytime:"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:402
+msgid "You can adjust all settings from the main settings page whenever needed"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:412
+msgid "Want More? Upgrade to Pro!"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:415
+msgid "Unlock powerful features to maximize customer engagement"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:421
+msgid "Membership Levels"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:422
+msgid "Create VIP tiers with exclusive benefits"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:427
+msgid "Badges, levels, and spin-to-win wheels"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:431
+msgid "Points Expiration"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:432
+msgid "Set expiry rules to drive urgency"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:436
+msgid "Email Notifications"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:437
+msgid "Automated emails for point activities"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:442
+msgid "View Pro Features →"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:455
+msgid "Need Help?"
+msgstr ""
+
+#: admin/partials/wps-wpr-setup-wizard.php:459
+msgid "Go to Settings"
+msgstr ""
+
 #: emails/class-wps-wpr-emails-notification.php:41
 msgid "Points and rewards email"
 msgstr ""
@@ -4353,7 +4726,7 @@ msgstr ""
 msgid " points for SignUp"
 msgstr ""
 
-#: points-rewards-for-woocommerce.php:906
+#: points-rewards-for-woocommerce.php:909
 msgid ""
 "WooCommerce is not activated, Please activate WooCommerce first to activate "
 "Points and Rewards for WooCommerce."
