@@ -361,7 +361,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 = 2.10.3 - Released on 31 August 2026 =
 * New: Setup Wizard on Plugin Activation
-* New: Compatibility with latest WP 7.1 and WC 10.9.4 update 
+* New: Compatibility with latest WP 7.1 and WC 11.0.1 update  
 * Fix: Save settings issue where update_option returning false was treated as failure
 * Fix: PHPCS coding standards compliance issues across multiple core files
 * Fix: Cleaned up unused code in onboarding templates
@@ -768,7 +768,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 = 2.10.3 - Released on 31 August 2026 =
 * New: Setup Wizard on Plugin Activation
-* New: Compatibility with latest WP 7.1 and WC 10.9.4 update 
+* New: Compatibility with latest WP 7.1 and WC 11.0.1 update 
 * Fix: Save settings issue where update_option returning false was treated as failure
 * Fix: PHPCS coding standards compliance issues across multiple core files
 * Fix: Cleaned up unused code in onboarding templates
