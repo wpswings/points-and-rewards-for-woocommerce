@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link: https://wpswings.com/
 Tags: points and rewards, loyalty, referral points, reward points, gamification
 Requires at least: 6.7.0
-Tested up to: 7.0.1
+Tested up to: 7.1
 WC requires at least: 6.5.0
 WC tested up to: 10.9.4
-Stable tag: 2.10.3
+Stable tag: 2.10.4
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -358,6 +358,23 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 2.10.3 - Released on 31 August 2026 =
+* New: Setup Wizard on Plugin Activation
+* New: Compatibility with latest WP 7.1 and WC 10.9.4 update 
+* Fix: Save settings issue where update_option returning false was treated as failure
+* Fix: PHPCS coding standards compliance issues across multiple core files
+* Fix: Cleaned up unused code in onboarding templates
+* Improvement: Various UI/UX improvements across admin interface
+* Improvement: Functionality improvements in core plugin architecture
+* Improvement: All styling inline to bypass cache issues
+* Improvement: Added cache busting to wizard assets (CSS/JS) for immediate 
+* Fix: Added missing capability check to wps_wpr_assign_claim_points() AJAX endpoint to prevent unauthorized access
+* Fix: Added server-side validation of claim amounts against configured Win Wheel prizes to prevent manipulation
+* Fix: Fixed anti-repeat-claim mechanism to enforce default 1-day cooldown when not configured (was 0 days)
+* Fix: Added duplicate action check to wps_wpr_assign_social_share_points() to prevent social share point farming
+* Fix: Extended daily rate limiting to both points and wallet claims (previously wallet-only)
+* Fix: Added maximum daily claim limit (default: 1 claim per day per user) with filter hook wps_wpr_max_daily_game_claims
 
 = 2.10.2 - Released on 10 July 2026 =
 * New : Compatibility with latest WC ( 10.9.4 ) and WP ( 7.0.1 )
@@ -749,6 +766,19 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.10.2 - Released on 10 July 2026 =
-* New : Compatibility with latest WC ( 10.9.4 ) and WP ( 7.0.1 )
-* Fix : Design issue fix in points table
+= 2.10.3 - Released on 31 August 2026 =
+* New: Setup Wizard on Plugin Activation
+* New: Compatibility with latest WP 7.1 and WC 10.9.4 update 
+* Fix: Save settings issue where update_option returning false was treated as failure
+* Fix: PHPCS coding standards compliance issues across multiple core files
+* Fix: Cleaned up unused code in onboarding templates
+* Improvement: Various UI/UX improvements across admin interface
+* Improvement: Functionality improvements in core plugin architecture
+* Improvement: All styling inline to bypass cache issues
+* Improvement: Added cache busting to wizard assets (CSS/JS) for immediate 
+* Fix: Added missing capability check to wps_wpr_assign_claim_points() AJAX endpoint to prevent unauthorized access
+* Fix: Added server-side validation of claim amounts against configured Win Wheel prizes to prevent manipulation
+* Fix: Fixed anti-repeat-claim mechanism to enforce default 1-day cooldown when not configured (was 0 days)
+* Fix: Added duplicate action check to wps_wpr_assign_social_share_points() to prevent social share point farming
+* Fix: Extended daily rate limiting to both points and wallet claims (previously wallet-only)
+* Fix: Added maximum daily claim limit (default: 1 claim per day per user) with filter hook wps_wpr_max_daily_game_claims
