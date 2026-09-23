@@ -359,6 +359,15 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
+= 2.10.4 - Released on 15 September 2026 =
+* Security Fix: Added missing capability check on wps_wpr_assign_claim_points() AJAX endpoint (CVE-PENDING)
+* Security Fix: Implemented server-side validation of Win Wheel claim amounts against admin-configured segment values
+* Security Fix: Fixed anti-repeat-claim mechanism to enforce minimum 1-day cooldown even when admin value is unset/0
+* Security Fix: Added duplicate action check to wps_wpr_assign_social_share_points() to prevent social share farming
+* Security Fix: Extended validation to wallet claims (previously only points were validated)
+* Security: Added security audit logging for invalid claim attempts with wps_wpr_invalid_claim_attempt action hook
+* Improvement: Enhanced input sanitization using absint() for all numeric claim values
+
 = 2.10.3 - Released on 31 August 2026 =
 * New: Setup Wizard on Plugin Activation
 * New: Compatibility with latest WP 7.1 and WC 11.0.1 update  
@@ -766,19 +775,11 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.10.3 - Released on 31 August 2026 =
-* New: Setup Wizard on Plugin Activation
-* New: Compatibility with latest WP 7.1 and WC 11.0.1 update 
-* Fix: Save settings issue where update_option returning false was treated as failure
-* Fix: PHPCS coding standards compliance issues across multiple core files
-* Fix: Cleaned up unused code in onboarding templates
-* Improvement: Various UI/UX improvements across admin interface
-* Improvement: Functionality improvements in core plugin architecture
-* Improvement: All styling inline to bypass cache issues
-* Improvement: Added cache busting to wizard assets (CSS/JS) for immediate 
-* Fix: Added missing capability check to wps_wpr_assign_claim_points() AJAX endpoint to prevent unauthorized access
-* Fix: Added server-side validation of claim amounts against configured Win Wheel prizes to prevent manipulation
-* Fix: Fixed anti-repeat-claim mechanism to enforce default 1-day cooldown when not configured (was 0 days)
-* Fix: Added duplicate action check to wps_wpr_assign_social_share_points() to prevent social share point farming
-* Fix: Extended daily rate limiting to both points and wallet claims (previously wallet-only)
-* Fix: Added maximum daily claim limit (default: 1 claim per day per user) with filter hook wps_wpr_max_daily_game_claims
+= 2.10.4 - Released on 15 September 2026 =
+* Security Fix: Added missing capability check on wps_wpr_assign_claim_points() AJAX endpoint (CVE-PENDING)
+* Security Fix: Implemented server-side validation of Win Wheel claim amounts against admin-configured segment values
+* Security Fix: Fixed anti-repeat-claim mechanism to enforce minimum 1-day cooldown even when admin value is unset/0
+* Security Fix: Added duplicate action check to wps_wpr_assign_social_share_points() to prevent social share farming
+* Security Fix: Extended validation to wallet claims (previously only points were validated)
+* Security: Added security audit logging for invalid claim attempts with wps_wpr_invalid_claim_attempt action hook
+* Improvement: Enhanced input sanitization using absint() for all numeric claim values
