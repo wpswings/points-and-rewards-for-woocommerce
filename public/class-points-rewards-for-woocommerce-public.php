@@ -4232,7 +4232,8 @@ class Points_Rewards_For_WooCommerce_Public {
 					<span class="wps_wpr_container-close">+</span>
 					<div class="wps_wpr_container-shadow"></div>
 					<div class="wps_wpr_container">
-						<audio controls class="wps_wpr_audio-spin">
+						<audio controls preload="none" class="wps_wpr_audio-spin">
+							<source src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/audio/spin.mp3' ); ?>" type="audio/mpeg">
 							<source src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/audio/spin.wav' ); ?>" type="audio/wav">
 						</audio>
 						<div id="wps_wpr_spinWheelButton"><?php esc_html_e( 'Spin', 'points-and-rewards-for-woocommerce' ); ?></div>
@@ -4249,7 +4250,8 @@ class Points_Rewards_For_WooCommerce_Public {
 						</div>
 					</div>
 					<div class="wps_wpr_container-popup">
-						<audio controls class="wps_wpr_audio-cheer">
+						<audio controls preload="none" class="wps_wpr_audio-cheer">
+							<source src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/audio/applose.mp3' ); ?>" type="audio/mpeg">
 							<source src="<?php echo esc_url( WPS_RWPR_DIR_URL . 'public/audio/applose.wav' ); ?>" type="audio/wav">
 						</audio>
 						<div class="wps_wpr_container-popup-gif">
