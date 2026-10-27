@@ -4374,105 +4374,177 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_assign_claim_points() {
 
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
+
+		// Security: Verify user has customer capability (blocks non-authenticated users).
+		if ( ! current_user_can( 'read' ) ) {
+			wp_send_json(
+				array(
+					'result' => false,
+					'msg'    => esc_html__( 'Unauthorized access.', 'points-and-rewards-for-woocommerce' ),
+				)
+			);
+			wp_die();
+		}
+
 		$user_id              = get_current_user_id();
 		$response             = array();
 		$response['result']   = false;
 		$response['msg']      = esc_html__( 'Failed', 'points-and-rewards-for-woocommerce' );
+
+		// Check if gamification is enabled.
+		$wps_wpr_save_gami_setting            = get_option( 'wps_wpr_save_gami_setting', array() );
+		$wps_wpr_enable_gamification_settings = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enable_gamification_settings'] ) ? $wps_wpr_save_gami_setting['wps_wpr_enable_gamification_settings'] : '';
+
+		if ( 'yes' !== $wps_wpr_enable_gamification_settings ) {
+			wp_send_json(
+				array(
+					'result' => false,
+					'msg'    => esc_html__( 'Gamification is not enabled.', 'points-and-rewards-for-woocommerce' ),
+				)
+			);
+			wp_die();
+		}
+
+		// Security: Check cooldown timing regardless of configuration to prevent repeat abuse.
 		$already_assign_check = get_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', true );
-		if ( isset( $_POST['claim_points'] ) ) {
-			if ( empty( $already_assign_check ) ) {
+		$schedule_date        = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? absint( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) : 0;
 
-				$wps_claim_points = ! empty( $_POST['claim_points'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_points'] ) ) : 0;
-				$claim_type       = ! empty( $_POST['claim_type'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_type'] ) ) : 'points';
-				// wallet compatibility.
-				if ( 'wallet' === $claim_type && $wps_claim_points > 0 ) {
-
-					$wallet_payment_gateway = new Wallet_System_For_Woocommerce();
-					$wallet_user            = get_user_by( 'id', $user_id );
-					$current_currency       = apply_filters( 'wps_wsfw_get_current_currency', get_woocommerce_currency() );
-
-					$walletamount = (float) get_user_meta( $user_id, 'wps_wallet', true );
-					$walletamount = ! empty( $walletamount ) ? $walletamount : 0;
-
-					// Credit wallet.
-					$credited_amount = apply_filters( 'wps_wsfw_convert_to_base_price', $wps_claim_points );
-					$walletamount   += $credited_amount;
-					update_user_meta( $user_id, 'wps_wallet', $walletamount );
-
-					// Send notification email if enabled.
-					$balance = $current_currency . ' ' . $wps_claim_points;
-					if ( isset( $send_email_enable ) && 'on' === $send_email_enable ) {
-						$user_name = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
-
-						$mail_text  = sprintf( 'Hello %s', $user_name ) . ",\r\n";
-						$mail_text .= __( 'Wallet credited by ', 'points-and-rewards-for-woocommerce' ) . esc_html( $balance ) . __( ' through successfully Win Wheel.', 'points-and-rewards-for-woocommerce' );
-
-						$to       = $wallet_user->user_email;
-						$from     = get_option( 'admin_email' );
-						$subject  = __( 'Wallet updating notification', 'points-and-rewards-for-woocommerce' );
-						$headers  = "MIME-Version: 1.0\r\n";
-						$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-						$headers .= "From: $from\r\nReply-To: $to\r\n";
-
-						// Prefer WooCommerce email if available.
-						if ( ! empty( WC()->mailer()->emails['wps_wswp_wallet_credit'] ) ) {
-
-							$customer_email = WC()->mailer()->emails['wps_wswp_wallet_credit'];
-							$user_name      = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
-							$customer_email->trigger( $user_id, $user_name, $balance, '' );
-						} else {
-							$wallet_payment_gateway->send_mail_on_wallet_updation( $to, $subject, $mail_text, $headers );
-						}
-					}
-
-					// Record transaction.
-					$transaction_type = __( 'Wallet credited through Win Wheel ', 'points-and-rewards-for-woocommerce' );
-					$transaction_data = array(
-						'user_id'            => $user_id,
-						'amount'             => $wps_claim_points,
-						'currency'           => $current_currency,
-						'payment_method'     => 'Win Wheel',
-						'transaction_type'   => htmlentities( $transaction_type ),
-						'transaction_type_1' => 'credit',
-						'order_id'           => '',
-						'note'               => '',
-					);
-					$wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
-
-					$response['result'] = true;
-					$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
-				} elseif ( 'points' == $claim_type && $wps_claim_points > 0 ) {
-
-					// Next play date cal.
-					$wps_wpr_save_gami_setting = get_option( 'wps_wpr_save_gami_setting', array() );
-					$schedule_date             = ! empty( $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] ) ? $wps_wpr_save_gami_setting['wps_wpr_days_after_user_play_again'] : 0;
-					if ( $schedule_date > 0 ) {
-
-						$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
-						update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
-					}
-
-					$user_get_points = get_user_meta( $user_id, 'wps_wpr_points', true );
-					$user_get_points = ! empty( $user_get_points ) ? (int) $user_get_points : 0;
-
-					$wps_updated_points = (int) $user_get_points + $wps_claim_points;
-					update_user_meta( $user_id, 'wps_wpr_points', $wps_updated_points );
-					// send sms.
-					wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
-					// send messages on whatsapp.
-					wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
-					// calling function for creating points log.
-					$this->wps_wpr_create_game_points_logs( $wps_claim_points, $user_id, $wps_updated_points );
-
-					$response['result'] = true;
-					$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
-				}
-			} else {
-
-				$response['result'] = false;
-				$response['msg']    = esc_html__( 'Already played by you', 'points-and-rewards-for-woocommerce' );
+		// If cooldown is set and user has already played, check if enough time has passed.
+		if ( ! empty( $already_assign_check ) ) {
+			$current_time = strtotime( gmdate( 'Y-m-d' ) );
+			if ( $current_time < $already_assign_check ) {
+				wp_send_json(
+					array(
+						'result' => false,
+						'msg'    => esc_html__( 'Already played by you', 'points-and-rewards-for-woocommerce' ),
+					)
+				);
+				wp_die();
 			}
 		}
+
+		if ( isset( $_POST['claim_points'] ) ) {
+
+			$wps_claim_points = ! empty( $_POST['claim_points'] ) ? absint( wp_unslash( $_POST['claim_points'] ) ) : 0;
+			$claim_type       = ! empty( $_POST['claim_type'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_type'] ) ) : 'points';
+
+			// Security: Validate claim amount against configured Win Wheel segment values.
+			$wps_wpr_enter_segment_points = ! empty( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] ) && is_array( $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] ) ? array_map( 'absint', $wps_wpr_save_gami_setting['wps_wpr_enter_segment_points'] ) : array();
+			$wps_wpr_game_rewards_type    = ! empty( $wps_wpr_save_gami_setting['wps_wpr_game_rewards_type'] ) && is_array( $wps_wpr_save_gami_setting['wps_wpr_game_rewards_type'] ) ? $wps_wpr_save_gami_setting['wps_wpr_game_rewards_type'] : array();
+
+			$valid_claim_values = array();
+			foreach ( $wps_wpr_enter_segment_points as $index => $segment_points ) {
+				$reward_type = ! empty( $wps_wpr_game_rewards_type[ $index ] ) ? $wps_wpr_game_rewards_type[ $index ] : 'points';
+				if ( $reward_type === $claim_type ) {
+					$valid_claim_values[] = absint( $segment_points );
+				}
+			}
+
+			// Remove zero values and duplicates.
+			$valid_claim_values = array_unique( array_filter( $valid_claim_values ) );
+
+			// Security: Reject if claim amount is not in the configured segment values.
+			if ( empty( $valid_claim_values ) || ! in_array( $wps_claim_points, $valid_claim_values, true ) ) {
+				do_action( 'wps_wpr_invalid_claim_attempt', $user_id, $wps_claim_points, $claim_type, $valid_claim_values );
+				wp_send_json(
+					array(
+						'result' => false,
+						'msg'    => esc_html__( 'Invalid claim value.', 'points-and-rewards-for-woocommerce' ),
+					)
+				);
+				wp_die();
+			}
+			// wallet compatibility.
+			if ( 'wallet' === $claim_type && $wps_claim_points > 0 ) {
+
+				$wallet_payment_gateway = new Wallet_System_For_Woocommerce();
+				$wallet_user            = get_user_by( 'id', $user_id );
+				$current_currency       = apply_filters( 'wps_wsfw_get_current_currency', get_woocommerce_currency() );
+
+				$walletamount = (float) get_user_meta( $user_id, 'wps_wallet', true );
+				$walletamount = ! empty( $walletamount ) ? $walletamount : 0;
+
+				// Credit wallet.
+				$credited_amount = apply_filters( 'wps_wsfw_convert_to_base_price', $wps_claim_points );
+				$walletamount   += $credited_amount;
+				update_user_meta( $user_id, 'wps_wallet', $walletamount );
+
+				// Send notification email if enabled.
+				$balance = $current_currency . ' ' . $wps_claim_points;
+				if ( isset( $send_email_enable ) && 'on' === $send_email_enable ) {
+					$user_name = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
+
+					$mail_text  = sprintf( 'Hello %s', $user_name ) . ",\r\n";
+					$mail_text .= __( 'Wallet credited by ', 'points-and-rewards-for-woocommerce' ) . esc_html( $balance ) . __( ' through successfully Win Wheel.', 'points-and-rewards-for-woocommerce' );
+
+					$to       = $wallet_user->user_email;
+					$from     = get_option( 'admin_email' );
+					$subject  = __( 'Wallet updating notification', 'points-and-rewards-for-woocommerce' );
+					$headers  = "MIME-Version: 1.0\r\n";
+					$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+					$headers .= "From: $from\r\nReply-To: $to\r\n";
+
+					// Prefer WooCommerce email if available.
+					if ( ! empty( WC()->mailer()->emails['wps_wswp_wallet_credit'] ) ) {
+
+						$customer_email = WC()->mailer()->emails['wps_wswp_wallet_credit'];
+						$user_name      = trim( $wallet_user->first_name . ' ' . $wallet_user->last_name );
+						$customer_email->trigger( $user_id, $user_name, $balance, '' );
+					} else {
+						$wallet_payment_gateway->send_mail_on_wallet_updation( $to, $subject, $mail_text, $headers );
+					}
+				}
+
+				// Record transaction.
+				$transaction_type = __( 'Wallet credited through Win Wheel ', 'points-and-rewards-for-woocommerce' );
+				$transaction_data = array(
+					'user_id'            => $user_id,
+					'amount'             => $wps_claim_points,
+					'currency'           => $current_currency,
+					'payment_method'     => 'Win Wheel',
+					'transaction_type'   => htmlentities( $transaction_type ),
+					'transaction_type_1' => 'credit',
+					'order_id'           => '',
+					'note'               => '',
+				);
+				$wallet_payment_gateway->insert_transaction_data_in_table( $transaction_data );
+
+				$response['result'] = true;
+				$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
+
+			} elseif ( 'points' === $claim_type && $wps_claim_points > 0 ) {
+
+				$user_get_points = get_user_meta( $user_id, 'wps_wpr_points', true );
+				$user_get_points = ! empty( $user_get_points ) ? absint( $user_get_points ) : 0;
+
+				$wps_updated_points = absint( $user_get_points ) + $wps_claim_points;
+				update_user_meta( $user_id, 'wps_wpr_points', $wps_updated_points );
+
+				// send sms.
+				wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
+				// send messages on whatsapp.
+				wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( "You've received claim points from the Win Wheel. Your total points balance is now %s", 'points-and-rewards-for-woocommerce' ), $wps_updated_points ) );
+				// calling function for creating points log.
+				$this->wps_wpr_create_game_points_logs( $wps_claim_points, $user_id, $wps_updated_points );
+
+				$response['result'] = true;
+				$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
+			}
+
+			// Security: Always set cooldown meta after successful claim (regardless of admin config).
+			// This prevents repeated exploitation even if admin hasn't configured a cooldown period.
+			if ( $response['result'] ) {
+				if ( $schedule_date > 0 ) {
+					// Admin configured a specific cooldown period.
+					$next_date = strtotime( gmdate( 'Y-m-d', strtotime( " + $schedule_date day" ) ) );
+				} else {
+					// Default: 1 day cooldown as security measure even when not configured.
+					$next_date = strtotime( gmdate( 'Y-m-d', strtotime( ' + 1 day' ) ) );
+				}
+				update_user_meta( $user_id, 'wps_wpr_check_game_points_assign_timing', $next_date );
+			}
+		}
+
 		wp_send_json( $response );
 		wp_die();
 	}
@@ -5611,6 +5683,12 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
 
+		// Security: Verify user has customer capability (blocks non-authenticated users).
+		if ( ! current_user_can( 'read' ) ) {
+			wp_send_json_error( esc_html__( 'Unauthorized access.', 'points-and-rewards-for-woocommerce' ) );
+			wp_die();
+		}
+
 		$wps_wpr_campaign_settings              = get_option( 'wps_wpr_campaign_settings', array() );
 		$wps_wpr_campaign_settings              = is_array( $wps_wpr_campaign_settings ) ? $wps_wpr_campaign_settings : array();
 		$wps_wpr_social_share_campaign_label    = ! empty( $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] ) && is_array( $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] ) ? $wps_wpr_campaign_settings['wps_wpr_social_share_campaign_label'] : array();
@@ -5621,7 +5699,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			foreach ( $wps_wpr_social_share_campaign_label as $index => $key ) {
 
 				$wps_wpr_combined[ $key ] = array(
-					'link' => $wps_wpr_social_share_url[ $index ] ?? null,
+					'link'  => $wps_wpr_social_share_url[ $index ] ?? null,
 					'value' => $wps_wpr_social_share_points[ $index ] ?? null,
 				);
 			}
@@ -5630,7 +5708,19 @@ class Points_Rewards_For_WooCommerce_Public {
 		$social_tag_name = ! empty( $_POST['key'] ) ? sanitize_text_field( wp_unslash( $_POST['key'] ) ) : '';
 
 		if ( ! array_key_exists( $social_tag_name, $wps_wpr_combined ) ) {
-			return;
+			wp_send_json_error( esc_html__( 'Invalid social action.', 'points-and-rewards-for-woocommerce' ) );
+			wp_die();
+		}
+
+		$user_id = get_current_user_id();
+
+		// Security: Check if user has already performed this specific social action.
+		$performed_actions = get_user_meta( $user_id, 'wps_wpr_social_action_performed', true );
+		$performed_actions = is_array( $performed_actions ) ? $performed_actions : array();
+
+		if ( in_array( $social_tag_name, $performed_actions, true ) ) {
+			wp_send_json_error( esc_html__( 'You have already claimed points for this action.', 'points-and-rewards-for-woocommerce' ) );
+			wp_die();
 		}
 
 		$campaign_templates = array(
@@ -5652,10 +5742,9 @@ class Points_Rewards_For_WooCommerce_Public {
 			'follow_board_pinterest' => 'Follow a Pinterest Board',
 		);
 
-		$user_id        = get_current_user_id();
 		$url            = $wps_wpr_combined[ $social_tag_name ]['link'];
 		$points         = absint( $wps_wpr_combined[ $social_tag_name ]['value'] );
-		$social_heading = $campaign_templates[ $social_tag_name ];
+		$social_heading = isset( $campaign_templates[ $social_tag_name ] ) ? $campaign_templates[ $social_tag_name ] : '';
 		if ( $points > 0 ) {
 
 			$get_points     = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? absint( get_user_meta( $user_id, 'wps_wpr_points', true ) ) : 0;
@@ -5836,6 +5925,64 @@ class Points_Rewards_For_WooCommerce_Public {
 		} else {
 			wp_mail( $to, $subject, $message, $headers );
 		}
+	}
+
+	/**
+	 * Log invalid claim attempts for security auditing.
+	 *
+	 * This method is hooked to 'wps_wpr_invalid_claim_attempt' action and logs
+	 * suspicious activity when users attempt to claim invalid point amounts.
+	 *
+	 * @param int   $user_id            User ID attempting the claim.
+	 * @param int   $attempted_amount   Amount user attempted to claim.
+	 * @param string $claim_type        Type of claim ('points' or 'wallet').
+	 * @param array $valid_values       Array of valid claim values configured by admin.
+	 * @return void
+	 */
+	public function wps_wpr_log_invalid_claim_attempt( $user_id, $attempted_amount, $claim_type, $valid_values ) {
+		// Only log if user is valid.
+		if ( ! $user_id ) {
+			return;
+		}
+
+		$user = get_userdata( $user_id );
+		if ( ! $user ) {
+			return;
+		}
+
+		// Prepare log entry.
+		$log_entry = array(
+			'timestamp'        => current_time( 'mysql' ),
+			'user_id'          => $user_id,
+			'username'         => $user->user_login,
+			'user_email'       => $user->user_email,
+			'user_ip'          => ! empty( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '',
+			'attempted_amount' => $attempted_amount,
+			'claim_type'       => $claim_type,
+			'valid_values'     => wp_json_encode( $valid_values ),
+			'user_agent'       => ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '',
+			'request_uri'      => ! empty( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '',
+		);
+
+		// Get existing security log.
+		$security_log = get_option( 'wps_wpr_security_log', array() );
+		if ( ! is_array( $security_log ) ) {
+			$security_log = array();
+		}
+
+		// Add new entry.
+		$security_log[] = $log_entry;
+
+		// Keep only last 100 entries to prevent database bloat.
+		if ( count( $security_log ) > 100 ) {
+			$security_log = array_slice( $security_log, -100 );
+		}
+
+		// Update option.
+		update_option( 'wps_wpr_security_log', $security_log );
+
+		// Trigger action for admins to hook into (e.g., send email alerts for repeated attempts).
+		do_action( 'wps_wpr_security_alert', $user_id, $log_entry );
 	}
 
 }

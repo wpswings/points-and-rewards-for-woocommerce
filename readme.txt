@@ -359,7 +359,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Changelog ==
 
-= 2.10.4 – Released on 15 September 2026
+= 2.10.4 - Released on 15 September 2026 =
 * Security Fix: Added missing capability check on wps_wpr_assign_claim_points() AJAX endpoint (CVE-PENDING)
 * Security Fix: Implemented server-side validation of Win Wheel claim amounts against admin-configured segment values
 * Security Fix: Fixed anti-repeat-claim mechanism to enforce minimum 1-day cooldown even when admin value is unset/0
@@ -775,7 +775,7 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 
 == Upgrade Notice ==
 
-= 2.10.4 – Released on 15 September 2026
+= 2.10.4 - Released on 15 September 2026 =
 * Security Fix: Added missing capability check on wps_wpr_assign_claim_points() AJAX endpoint (CVE-PENDING)
 * Security Fix: Implemented server-side validation of Win Wheel claim amounts against admin-configured segment values
 * Security Fix: Fixed anti-repeat-claim mechanism to enforce minimum 1-day cooldown even when admin value is unset/0
@@ -783,3 +783,4 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 * Security Fix: Extended validation to wallet claims (previously only points were validated)
 * Security: Added security audit logging for invalid claim attempts with wps_wpr_invalid_claim_attempt action hook
 * Improvement: Enhanced input sanitization using absint() for all numeric claim values
+

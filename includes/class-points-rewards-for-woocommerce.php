@@ -351,6 +351,8 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_footer', $plugin_public, 'wps_wpr_show_canvas_icons' );
 			// assign claim points.
 			$this->loader->add_action( 'wp_ajax_assign_claim_points', $plugin_public, 'wps_wpr_assign_claim_points' );
+			// Security: Hook to log invalid claim attempts.
+			$this->loader->add_action( 'wps_wpr_invalid_claim_attempt', $plugin_public, 'wps_wpr_log_invalid_claim_attempt', 10, 4 );
 			$this->loader->add_action( 'wps_wpr_top_account_page_section_hook', $plugin_public, 'wps_wpr_display_earn_user_badges', 10, 1 );
 			// cart/checkout block js.
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
