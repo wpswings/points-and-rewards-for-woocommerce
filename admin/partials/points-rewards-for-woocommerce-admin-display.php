@@ -76,6 +76,10 @@ $wps_wpr_setting_tab = array(
 		'title'     => __( 'Campaigning', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-campaign-settings.php',
 	),
+	'abandoned-cart-settings' => array(
+		'title'     => __( 'Abandoned Cart', 'points-and-rewards-for-woocommerce' ),
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-abandoned-cart-settings.php',
+	),
 );
 
 // Add Free vs Pro tab only when pro version is not active.
@@ -131,6 +135,7 @@ $wps_wpr_tab_descriptions = apply_filters(
 		'user-badges-settings'  => __( 'Create badge tiers and user level achievements based on collected reward points.', 'points-and-rewards-for-woocommerce' ),
 		'wps-sms-settings'      => __( 'Configure SMS and WhatsApp notifications to communicate points activity in real time.', 'points-and-rewards-for-woocommerce' ),
 		'wps-campaign-settings' => __( 'Create referral and promotional campaigns to drive engagement using reward incentives.', 'points-and-rewards-for-woocommerce' ),
+		'abandoned-cart-settings' => __( 'Recover abandoned carts by offering bonus points to customers who complete their purchase.', 'points-and-rewards-for-woocommerce' ),
 	)
 );
 $wps_wpr_active_tab_desc = ! empty( $wps_wpr_tab_descriptions[ $wps_wpr_active_tab ] ) ? $wps_wpr_tab_descriptions[ $wps_wpr_active_tab ] : __( 'Configure and manage all points and rewards options from this section.', 'points-and-rewards-for-woocommerce' );

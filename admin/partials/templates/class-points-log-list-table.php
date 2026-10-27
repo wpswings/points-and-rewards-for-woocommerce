@@ -1454,6 +1454,41 @@ if ( ! empty( $wps_wpr_actions ) && ! empty( $user_log_id ) ) {
 					</div>
 					<?php
 				}
+				if ( array_key_exists( 'abandoned_cart_points', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Abandoned Cart Recovery Points', 'points-and-rewards-for-woocommerce' ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
+								<thead>
+									<tr valign="top">
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Order', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+									</tr>
+								</thead>
+								<?php
+								foreach ( $point_log['abandoned_cart_points'] as $key => $value ) {
+									?>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['abandoned_cart_points'] ); ?> </td>
+										<td class="forminp forminp-text"><?php echo ! empty( $value['order_id'] ) ? '#' . esc_html( $value['order_id'] ) : ''; ?></td>
+									</tr>
+									<?php
+								}
+								?>
+						</table>
+					</div>
+					<?php
+				}
 				if ( array_key_exists( 'user_badges_rewards_points', $point_log ) ) {
 					?>
 					<div class="wps_wpr_slide_toggle">
