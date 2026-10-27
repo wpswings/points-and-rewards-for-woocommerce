@@ -374,6 +374,16 @@ if ( $activated ) {
 
 	register_activation_hook( __FILE__, 'wps_wpr_flush_rewrite_rules' );
 	register_deactivation_hook( __FILE__, 'wps_wpr_flush_rewrite_rules' );
+	register_deactivation_hook( __FILE__, 'wps_wpr_clear_abandoned_cart_cron' );
+
+	/**
+	 * Clear the abandoned cart recovery cron on deactivation.
+	 *
+	 * @return void
+	 */
+	function wps_wpr_clear_abandoned_cart_cron() {
+		wp_clear_scheduled_hook( 'wps_wpr_abandoned_cart_check' );
+	}
 	/**
 	 * This function is used to create points tab.
 	 *

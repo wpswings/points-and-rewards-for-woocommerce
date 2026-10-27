@@ -137,6 +137,11 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-points-rewards-for-woocommerce-public.php';
 
+		/**
+		 * The class responsible for abandoned cart recovery with points incentive.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
+
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
 		/**
@@ -386,6 +391,18 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_update_quiz_data', $plugin_public, 'wps_wpr_rewards_quiz_points', 10 );
 			// assign social share points.
 			$this->loader->add_action( 'wp_ajax_action_social_link_click', $plugin_public, 'wps_wpr_assign_social_share_points', 10 );
+
+			// abandoned cart recovery with points incentive.
+			$abandoned_cart = new WPS_WPR_Abandoned_Cart_Recovery();
+			$this->loader->add_action( 'init', $abandoned_cart, 'wps_wpr_maybe_schedule_cron' );
+			$this->loader->add_action( WPS_WPR_Abandoned_Cart_Recovery::CRON_HOOK, $abandoned_cart, 'wps_wpr_process_abandoned_carts' );
+			$this->loader->add_action( 'woocommerce_cart_updated', $abandoned_cart, 'wps_wpr_track_cart_activity' );
+			$this->loader->add_action( 'woocommerce_cart_emptied', $abandoned_cart, 'wps_wpr_cart_emptied', 10, 1 );
+			$this->loader->add_action( 'woocommerce_checkout_order_processed', $abandoned_cart, 'wps_wpr_order_placed', 10, 1 );
+			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $abandoned_cart, 'wps_wpr_order_placed', 10, 1 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $abandoned_cart, 'wps_wpr_award_recovery_points', 20, 3 );
+			$this->loader->add_action( 'woocommerce_before_cart', $abandoned_cart, 'wps_wpr_show_incentive_notice' );
+			$this->loader->add_action( 'woocommerce_before_checkout_form', $abandoned_cart, 'wps_wpr_show_incentive_notice', 5 );
 		}
 	}
 
