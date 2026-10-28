@@ -1,0 +1,151 @@
+/* AI settings assistant chat panel. */
+.wps_wpr_ai_chat {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	max-width: 860px;
+}
+
+.wps_wpr_ai_messages {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	min-height: 260px;
+	max-height: 520px;
+	overflow-y: auto;
+	padding: 16px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+}
+
+.wps_wpr_ai_message {
+	max-width: 80%;
+	padding: 10px 14px;
+	border-radius: 12px;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+
+.wps_wpr_ai_message--user {
+	align-self: flex-end;
+	background: #2271b1;
+	color: #fff;
+}
+
+.wps_wpr_ai_message--assistant {
+	align-self: flex-start;
+	background: #fff;
+	border: 1px solid #dcdcde;
+}
+
+.wps_wpr_ai_message--pending {
+	color: #646970;
+	font-style: italic;
+}
+
+.wps_wpr_ai_message--error {
+	align-self: flex-start;
+	background: #fcf0f1;
+	border: 1px solid #d63638;
+	color: #8a2424;
+}
+
+.wps_wpr_ai_proposal {
+	align-self: flex-start;
+	max-width: 80%;
+	padding: 12px 14px;
+	background: #fff;
+	border: 1px solid #2271b1;
+	border-left-width: 4px;
+	border-radius: 8px;
+}
+
+.wps_wpr_ai_proposal p,
+.wps_wpr_ai_proposal ul {
+	margin: 6px 0;
+}
+
+.wps_wpr_ai_proposal ul {
+	padding-left: 18px;
+	list-style: disc;
+}
+
+.wps_wpr_ai_proposal_from {
+	color: #646970;
+	text-decoration: line-through;
+}
+
+.wps_wpr_ai_proposal_to {
+	font-weight: 600;
+}
+
+.wps_wpr_ai_proposal_actions {
+	display: flex;
+	gap: 8px;
+	margin-top: 8px;
+}
+
+.wps_wpr_ai_proposal.is-applied {
+	border-color: #00a32a;
+}
+
+.wps_wpr_ai_proposal.is-canceled {
+	border-color: #a7aaad;
+	opacity: 0.75;
+}
+
+.wps_wpr_ai_proposal_status.is-error {
+	color: #d63638;
+}
+
+.wps_wpr_ai_suggestions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.wps_wpr_ai_composer {
+	display: flex;
+	gap: 8px;
+	align-items: flex-end;
+}
+
+.wps_wpr_ai_composer textarea {
+	flex: 1;
+	resize: vertical;
+}
+
+@media (max-width: 782px) {
+	.wps_wpr_ai_message,
+	.wps_wpr_ai_proposal {
+		max-width: 100%;
+	}
+}
+
+.wps_wpr_ai_status {
+	display: inline-block;
+	margin-right: 8px;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-weight: 600;
+}
+
+.wps_wpr_ai_status.is-success {
+	background: #edfaef;
+	color: #00a32a;
+}
+
+.wps_wpr_ai_status.is-error {
+	background: #fcf0f1;
+	color: #d63638;
+}
+
+.wps_wpr_ai_unavailable {
+	color: #646970;
+	font-style: italic;
+}
+
+.wps_wpr_ai_chat.is-disabled {
+	opacity: 0.6;
+}

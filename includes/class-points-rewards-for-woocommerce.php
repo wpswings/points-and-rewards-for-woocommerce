@@ -142,6 +142,11 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
+		/**
+		 * The class responsible for the AI settings assistant.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-ai-assistant.php';
+
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
 		/**
@@ -261,6 +266,16 @@ class Points_Rewards_For_Woocommerce {
 		// set campaign image.
 		$this->loader->add_action( 'wp_ajax_wps_set_camp_heading_and_image', $plugin_admin, 'wps_wpr_set_camp_heading_and_image', 10 );
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'wps_wpr_org_remove_action' );
+
+		// AI settings assistant (needs the WordPress AI Client, WP 7.0+).
+		if ( WPS_WPR_AI_Assistant::wps_wpr_has_ai_api() ) {
+			$ai_assistant = new WPS_WPR_AI_Assistant();
+			$this->loader->add_action( 'wp_abilities_api_categories_init', $ai_assistant, 'wps_wpr_register_ability_category' );
+			$this->loader->add_action( 'wp_abilities_api_init', $ai_assistant, 'wps_wpr_register_abilities' );
+			$this->loader->add_action( 'wp_ajax_wps_wpr_ai_chat', $ai_assistant, 'wps_wpr_ajax_chat' );
+			$this->loader->add_action( 'wp_ajax_wps_wpr_ai_resolve_proposal', $ai_assistant, 'wps_wpr_ajax_resolve_proposal' );
+			$this->loader->add_action( 'admin_enqueue_scripts', $ai_assistant, 'wps_wpr_enqueue_assets' );
+		}
 	}
 
 	/**
