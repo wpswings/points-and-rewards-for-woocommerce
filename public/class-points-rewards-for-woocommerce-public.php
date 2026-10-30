@@ -5548,6 +5548,13 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		if ( $submitted_answer && $submitted_answer === $quiz_correct_answer && $reward_points > 0 ) {
 
+			// Enforce one-time claim server side; the template only hides answered quizzes.
+			$rewarded_key = 'wps_wpr_quiz_points_rewarded_' . $quiz_correct_answer;
+			if ( 'done' === get_user_meta( $user_id, $rewarded_key, true ) || ! add_user_meta( $user_id, $rewarded_key, 'done', true ) ) {
+				$response['msg'] = esc_html__( 'You have already claimed points for this quiz.', 'points-and-rewards-for-woocommerce' );
+				wp_send_json( $response );
+			}
+
 			// Update points.
 			$current_points = intval( get_user_meta( $user_id, 'wps_wpr_points', true ) );
 			update_user_meta( $user_id, 'wps_wpr_points', $current_points + $reward_points );
@@ -5560,9 +5567,6 @@ class Points_Rewards_For_WooCommerce_Public {
 				'date' => date_i18n( 'Y-m-d H:i:s' ),
 			);
 			update_user_meta( $user_id, 'points_details', $points_log );
-
-			// Mark quiz as rewarded.
-			update_user_meta( $user_id, 'wps_wpr_quiz_points_rewarded_' . $submitted_answer, 'done' );
 
 			$response['result'] = true;
 			$response['msg'] = sprintf(
