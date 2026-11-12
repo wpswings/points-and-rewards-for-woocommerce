@@ -53,6 +53,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+
+		// Security: the Klaviyo key is saved by its own admin-only action, never by the sync request.
+		add_action( 'wp_ajax_wps_wpr_save_klaviyo_api_key', array( $this, 'wps_wpr_save_klaviyo_api_key_call' ) );
 	}
 
 	/**
@@ -214,6 +217,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 						'wps_wpr_url'            => $url,
 						'reason'                 => __( 'Please enter Remark', 'points-and-rewards-for-woocommerce' ),
 						'wps_wpr_nonce'          => wp_create_nonce( 'wps-wpr-verify-nonce' ),
+					// Security: separate nonce for admin-only AJAX actions, never exposed on the storefront.
+					'wps_wpr_admin_nonce'    => wp_create_nonce( 'wps-wpr-admin-nonce' ),
 						'pro_link_text'          => __( 'Click here', 'points-and-rewards-for-woocommerce' ),
 						'pro_link'               => 'https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/?utm_source=wpswings-par-pro&utm_medium=par-org-backend&utm_campaign=go-pro',
 						'success_update'         => __( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' ),
@@ -460,14 +465,20 @@ class Points_Rewards_For_WooCommerce_Admin {
 			return;
 		}
 
-		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+		// Security: admin-only action uses the admin nonce, not the storefront nonce.
+		check_ajax_referer( 'wps-wpr-admin-nonce', 'wps_nonce' );
 		if ( isset( $_POST['points'] ) && is_numeric( $_POST['points'] ) && isset( $_POST['user_id'] ) && isset( $_POST['sign'] ) && isset( $_POST['reason'] ) ) {
 
-			$user_id    = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
+			$user_id    = absint( wp_unslash( $_POST['user_id'] ) );
 			$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-			$points     = sanitize_text_field( wp_unslash( $_POST['points'] ) );
+			$points     = absint( wp_unslash( $_POST['points'] ) );
 			$sign       = sanitize_text_field( wp_unslash( $_POST['sign'] ) );
 			$reason     = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
+
+			// Validate: only '+' / '-' are allowed, points must be a positive whole number and the user must exist.
+			if ( ! in_array( $sign, array( '+', '-' ), true ) || $points <= 0 || (float) wp_unslash( $_POST['points'] ) !== (float) $points || ! get_user_by( 'ID', $user_id ) ) {
+				wp_send_json_error( array( 'msg' => esc_html__( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ) ), 400 );
+			}
 
 			if ( '+' === $sign ) {
 
@@ -672,8 +683,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @link https://www.wpswings.com/
 	 */
 	public function wps_wpr_select_category() {
-		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		// Security: admin-only action uses the admin nonce and requires manage_options.
+		check_ajax_referer( 'wps-wpr-admin-nonce', 'wps_nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) );
 		}
 		$wps_wpr_categ_list = array();
@@ -1218,7 +1230,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @return void
 	 */
 	public function wps_wpr_assign_points_on_previous_order_call() {
-		check_ajax_referer( 'wps-wpr-verify-nonce', 'nonce' );
+		// Security: admin-only action uses the admin nonce.
+		check_ajax_referer( 'wps-wpr-admin-nonce', 'nonce' );
 
 		// Ensure user has permission.
 		if ( ! current_user_can( 'manage_options' ) || wps_wpr_restrict_user_fun() ) {
@@ -1235,8 +1248,17 @@ class Points_Rewards_For_WooCommerce_Admin {
 		$limit          = 200;
 		$positive_count = 0;
 
-		// Sanitize and get points value from request.
-		$rewards_points = isset( $_POST['rewards_points'] ) ? sanitize_text_field( wp_unslash( $_POST['rewards_points'] ) ) : '0';
+		// Validate: points must be a positive whole number; never subtract from customers on invalid input.
+		$rewards_points_raw = isset( $_POST['rewards_points'] ) ? sanitize_text_field( wp_unslash( $_POST['rewards_points'] ) ) : '';
+		$rewards_points     = absint( $rewards_points_raw );
+		if ( ! is_numeric( $rewards_points_raw ) || $rewards_points <= 0 || (float) $rewards_points_raw !== (float) $rewards_points ) {
+			wp_send_json(
+				array(
+					'result' => false,
+					'msg'    => esc_html__( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ),
+				)
+			);
+		}
 
 		do {
 			// Build base query arguments.
@@ -1491,7 +1513,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$member_status = ! empty( $data['member_status'] ) ? sanitize_text_field( wp_unslash( $data['member_status'] ) ) : '';
 			$plan_id       = ! empty( $data['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $data['members_plan_assign'] ) ) : 0;
 			if ( 'complete' === $member_status ) {
-				if ( $plan_id > 0 ) {
+				// Skip if points were already awarded for this member post, so re-saving does not award them again.
+				if ( $plan_id > 0 && empty( wps_wpr_hpos_get_meta_data( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', true ) ) ) {
 
 					$get_points                              = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
 					$mem_assign_points_log                   = get_user_meta( $user_id, 'points_details', true );
@@ -1576,7 +1599,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$member_status = ! empty( $_POST['member_status'] ) ? sanitize_text_field( wp_unslash( $_POST['member_status'] ) ) : '';
 			$plan_id       = ! empty( $_POST['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $_POST['members_plan_assign'] ) ) : 0;
 			if ( 'complete' === $member_status ) {
-				if ( $plan_id > 0 ) {
+				// Skip if points were already awarded for this member post, so re-saving does not award them again.
+				if ( $plan_id > 0 && empty( wps_wpr_hpos_get_meta_data( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done', true ) ) ) {
 
 					$get_points                              = ! empty( get_user_meta( $user_id, 'wps_wpr_points', true ) ) ? get_user_meta( $user_id, 'wps_wpr_points', true ) : 0;
 					$mem_assign_points_log                   = get_user_meta( $user_id, 'points_details', true );
@@ -1649,6 +1673,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 							}
 							update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
 							update_user_meta( $user_id, 'points_details', $mem_assign_points_refund_log );
+							// Clear the rewarded flag so the deduction is not repeated on the next save.
+							wps_wpr_hpos_delete_meta_data( $post_id, 'wps_wpr_membership_plugin_assign_points_rewarded_done' );
 							// send sms.
 							wps_wpr_send_sms_org( $user_id, /* translators: %s: sid */ sprintf( esc_html__( 'Your membership plan was cancelled, so %1$s points have been deducted. Your current points balance is %2$s', 'points-and-rewards-for-woocommerce' ), $wps_wpr_membership_assign_points_values, $updated_points ) );
 							// send messages on whatsapp.
@@ -1821,12 +1847,16 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_restrict_user_from_points_table() {
 
-		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		// Security: admin-only action uses the admin nonce and requires manage_options.
+		check_ajax_referer( 'wps-wpr-admin-nonce', 'wps_nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) );
 		}
 		$checked = ! empty( $_POST['checked'] ) ? sanitize_text_field( wp_unslash( $_POST['checked'] ) ) : 'no';
-		$user_id = ! empty( $_POST['user_id'] ) ? sanitize_text_field( wp_unslash( $_POST['user_id'] ) ) : 0;
+		$user_id = ! empty( $_POST['user_id'] ) ? absint( wp_unslash( $_POST['user_id'] ) ) : 0;
+		if ( $user_id <= 0 ) {
+			wp_die();
+		}
 		if ( 'yes' === $checked ) {
 
 			update_user_meta( $user_id, 'wps_wpr_restrict_user', $checked );
@@ -2026,7 +2056,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_large_scv_import() {
 
-		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+		// Security: admin-only action uses the admin nonce.
+		check_ajax_referer( 'wps-wpr-admin-nonce', 'wps_nonce' );
 
 		// Authentication check.
 		if ( ! is_user_logged_in() ) {
@@ -2083,8 +2114,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$start,
 			$chunk_size,
 			function ( $chunk, &$handle, $iteration ) use ( &$imp_counter ) {
-				if ( 0 != $imp_counter ) {
-					$this->wps_update_points_of_users( $chunk[0], $chunk[1], $chunk[2] );
+				// Skip blank/invalid rows (fgetcsv returns false or a single null field).
+				if ( 0 != $imp_counter && is_array( $chunk ) && isset( $chunk[0], $chunk[1] ) ) {
+					$this->wps_update_points_of_users( $chunk[0], $chunk[1], isset( $chunk[2] ) ? $chunk[2] : '' );
 				}
 				$imp_counter = 1;
 			}
@@ -2159,7 +2191,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 		$user                        = get_user_by( 'email', $wps_user_email );
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in calling function (CSV import handler).
 		$wps_wpr_export_table_option = ! empty( $_POST['wps_wpr_export_table_option'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_export_table_option'] ) ) : 'add';
-		if ( isset( $user ) ) {
+		// Skip rows whose email does not belong to an existing user.
+		if ( $user instanceof WP_User ) {
 
 			$user_id         = $user->ID;
 			$get_user_points = get_user_meta( $user_id, 'wps_wpr_points', true );
@@ -2181,12 +2214,13 @@ class Points_Rewards_For_WooCommerce_Admin {
 
 				$wps_wpr_reason        = $import_points_reason;
 				$sign                  = '-';
-				$wps_update_csv_points = $get_user_points - (int) $wps_user_points;
+				// Floor the balance at 0 when subtracting more than the user has.
+				$wps_update_csv_points = max( 0, $get_user_points - (int) $wps_user_points );
 			} elseif ( 'override' === $wps_wpr_export_table_option ) {
 
 				// translators: %s: get_user_points.
 				$wps_wpr_reason        = $import_points_reason;
-				$wps_update_csv_points = (int) $wps_user_points;
+				$wps_update_csv_points = max( 0, (int) $wps_user_points );
 			}
 
 			if ( isset( $wps_user_points ) && ! empty( $wps_user_points ) ) {
@@ -2212,9 +2246,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 				update_user_meta( $user_id, 'points_details', $admin_points );
 				update_user_meta( $user_id, 'wps_wpr_points', $wps_update_csv_points );
 				// send sms.
-				wps_wpr_send_sms_org( $user_id, /* translators: %s: sid */ sprintf( esc_html__( 'Your points have been updated by the admin through a CSV file. Your current total points is %s', 'points-and-rewards-for-woocommerce' ), $admin_points ) );
+				wps_wpr_send_sms_org( $user_id, /* translators: %s: sid */ sprintf( esc_html__( 'Your points have been updated by the admin through a CSV file. Your current total points is %s', 'points-and-rewards-for-woocommerce' ), $wps_update_csv_points ) );
 				// send messages on whatsapp.
-				wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sid */ sprintf( esc_html__( 'Your points have been updated by the admin through a CSV file. Your current total points is %s', 'points-and-rewards-for-woocommerce' ), $admin_points ) );
+				wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sid */ sprintf( esc_html__( 'Your points have been updated by the admin through a CSV file. Your current total points is %s', 'points-and-rewards-for-woocommerce' ), $wps_update_csv_points ) );
 			}
 		}
 		return true;
@@ -2579,17 +2613,26 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_sync_points_on_klaviyo_call() {
 
-		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		// Security: admin-only action uses the admin nonce and requires manage_options.
+		check_ajax_referer( 'wps-wpr-admin-nonce', 'wps_nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) );
 		}
+
+		// Security: only the saved Klaviyo key is used; the sync request can no longer set or override it.
+		$klaviyo_public_api_key = get_option( 'wps_wpr_klaviyo_public_api_key', '' );
+		if ( empty( $klaviyo_public_api_key ) ) {
+			wp_send_json_error( array( 'msg' => esc_html__( 'Please save your Klaviyo public API key first.', 'points-and-rewards-for-woocommerce' ) ) );
+		}
+
 		if ( isset( $_POST ) ) {
 
-			$per_user               = ! empty( $_POST['per_user'] ) ? sanitize_text_field( wp_unslash( $_POST['per_user'] ) ) : 0;
-			$current_page           = ! empty( $_POST['current_page'] ) ? sanitize_text_field( wp_unslash( $_POST['current_page'] ) ) : 1;
-			$klaviyo_public_api_key = ! empty( $_POST['klaviyo_public_api_key'] ) ? sanitize_text_field( wp_unslash( $_POST['klaviyo_public_api_key'] ) ) : '';
-			update_option( 'wps_wpr_klaviyo_public_api_key', $klaviyo_public_api_key );
-			$args = array(
+			// Security: clamp batch size and page number to a sane range.
+			$per_user     = ! empty( $_POST['per_user'] ) ? absint( wp_unslash( $_POST['per_user'] ) ) : 50;
+			$per_user     = min( 100, max( 1, $per_user ) );
+			$current_page = ! empty( $_POST['current_page'] ) ? absint( wp_unslash( $_POST['current_page'] ) ) : 1;
+			$current_page = max( 1, $current_page );
+			$args         = array(
 				'fields'     => 'ID',
 				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 					array(
@@ -2632,6 +2675,28 @@ class Points_Rewards_For_WooCommerce_Admin {
 	}
 
 	/**
+	 * Ajax call to save the Klaviyo public API key (admin only).
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_save_klaviyo_api_key_call() {
+
+		// Security: saving the key is a separate, admin-only action guarded by the admin nonce and manage_options.
+		check_ajax_referer( 'wps-wpr-admin-nonce', 'wps_nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'msg' => esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) ), 403 );
+		}
+
+		$klaviyo_public_api_key = ! empty( $_POST['klaviyo_public_api_key'] ) ? sanitize_text_field( wp_unslash( $_POST['klaviyo_public_api_key'] ) ) : '';
+		if ( empty( $klaviyo_public_api_key ) ) {
+			wp_send_json_error( array( 'msg' => esc_html__( 'Please enter your Klaviyo public API key.', 'points-and-rewards-for-woocommerce' ) ) );
+		}
+
+		update_option( 'wps_wpr_klaviyo_public_api_key', $klaviyo_public_api_key );
+		wp_send_json_success();
+	}
+
+	/**
 	 * Function to sync points on Klaviyo.
 	 *
 	 * @param  int    $user_id                user_id.
@@ -2671,9 +2736,9 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_set_camp_heading_and_image() {
 
-		// Verify the nonce for security.
-		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		// Security: admin-only action uses the admin nonce and requires manage_options.
+		check_ajax_referer( 'wps-wpr-admin-nonce', 'wps_nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'points-and-rewards-for-woocommerce' ) );
 		}
 

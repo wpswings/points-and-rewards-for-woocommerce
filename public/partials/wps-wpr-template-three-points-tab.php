@@ -119,8 +119,8 @@ $membership_settings_array = get_option( 'wps_wpr_membership_settings', true );
 $wps_wpr_mem_enable        = isset( $membership_settings_array['wps_wpr_membership_setting_enable'] ) ? intval( $membership_settings_array['wps_wpr_membership_setting_enable'] ) : 0;
 
 $coupon_settings               = get_option( 'wps_wpr_coupons_gallery', true );
-$wps_per_currency_spent_price  = isset( $coupon_settings['wps_wpr_coupon_conversion_price'] ) ? intval( $coupon_settings['wps_wpr_coupon_conversion_price'] ) : 1;
-$wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_conversion_points'] ) ? intval( $coupon_settings['wps_wpr_coupon_conversion_points'] ) : 1;
+$wps_per_currency_spent_price  = isset( $coupon_settings['wps_wpr_coupon_conversion_price'] ) ? floatval( $coupon_settings['wps_wpr_coupon_conversion_price'] ) : 1;
+$wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_conversion_points'] ) ? floatval( $coupon_settings['wps_wpr_coupon_conversion_points'] ) : 1;
 ?>
 <div class="wps-par_ma-badge-wrap">
 

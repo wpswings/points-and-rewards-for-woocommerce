@@ -29,6 +29,7 @@
 
 .wps_wpr_ai_message--user {
 	align-self: flex-end;
+	white-space: pre-wrap;
 	background: #2271b1;
 	color: #fff;
 }
@@ -46,6 +47,7 @@
 
 .wps_wpr_ai_message--error {
 	align-self: flex-start;
+	white-space: pre-wrap;
 	background: #fcf0f1;
 	border: 1px solid #d63638;
 	color: #8a2424;
@@ -148,4 +150,78 @@
 
 .wps_wpr_ai_chat.is-disabled {
 	opacity: 0.6;
+}
+
+/* Markdown subset in assistant replies. */
+.wps_wpr_ai_message--assistant > :first-child {
+	margin-top: 0;
+}
+
+.wps_wpr_ai_message--assistant > :last-child {
+	margin-bottom: 0;
+}
+
+.wps_wpr_ai_message--assistant p,
+.wps_wpr_ai_message--assistant ul,
+.wps_wpr_ai_message--assistant ol,
+.wps_wpr_ai_message--assistant pre {
+	margin: 0 0 8px;
+}
+
+.wps_wpr_ai_message--assistant h4,
+.wps_wpr_ai_message--assistant h5,
+.wps_wpr_ai_message--assistant h6 {
+	margin: 10px 0 6px;
+	font-size: 14px;
+}
+
+.wps_wpr_ai_message--assistant ul {
+	padding-left: 18px;
+	list-style: disc;
+}
+
+.wps_wpr_ai_message--assistant ol {
+	padding-left: 22px;
+	list-style: decimal;
+}
+
+.wps_wpr_ai_message--assistant li {
+	margin-bottom: 2px;
+}
+
+.wps_wpr_ai_message--assistant code {
+	padding: 1px 4px;
+	background: #f0f0f1;
+	border-radius: 3px;
+	font-size: 12px;
+}
+
+.wps_wpr_ai_message--assistant pre {
+	padding: 8px 10px;
+	overflow-x: auto;
+	background: #f0f0f1;
+	border-radius: 4px;
+}
+
+.wps_wpr_ai_message--assistant pre code {
+	padding: 0;
+	white-space: pre;
+}
+
+.wps_wpr_ai_retry {
+	margin-left: 4px;
+}
+
+/* Keep Save Changes in the page flow on this tab so it does not cover the settings labels. */
+body.wp-admin #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .wps_wpr_ai_assistant_wrapper .button-primary.woocommerce-save-button.wps_wpr_save_changes {
+	position: static !important;
+	left: auto !important;
+	right: auto !important;
+	bottom: auto !important;
+	margin-top: 16px;
+	box-shadow: none;
+}
+
+#wps_rwpr_setting_wrapper.wps-rma-admin-wrap[data-wps-rma-active-tab="ai-assistant"] {
+	padding-bottom: 20px;
 }

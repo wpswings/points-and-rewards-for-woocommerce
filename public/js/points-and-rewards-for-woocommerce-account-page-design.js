@@ -78,13 +78,13 @@
                 const fieldset = $('.wps_wpr_points_tab_temp_three_wrap .wps-par_ma-tool-tip .wps-par_matt-desc li fieldset');
                 const rawText = fieldset.text();
                 
-                const wrappedHtml = rawText
+                // Security: build the bullets as text nodes, never as HTML (the setting text is decoded by .text()).
+                const bullets = rawText
                     .split('*')
                     .filter(item => item.trim() !== '')
-                    .map(item => `<div class="bullet-wrap">• ${item.trim()}</div>`)
-                    .join('');
+                    .map(item => $('<div class="bullet-wrap"></div>').text('• ' + item.trim()));
 
-                fieldset.html(wrappedHtml);
+                fieldset.empty().append(bullets);
             },500)
         } else {
 

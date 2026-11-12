@@ -189,7 +189,8 @@
                 $loader.hide();
                 const success_error_notice = $notice.show().css("color", response.result ? "green" : "red")
                   .html(response.msg || "Something went wrong. Please try again.");
-                  if ( response.result == true ) {
+                  // One attempt per quiz: hide it after any answered attempt, right or wrong.
+                  if ( response.result == true || response.attempted ) {
 
                     $this.hide();
                     $quiz_modal.hide();

@@ -410,9 +410,9 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 									if ( ! empty( $wps_wpr_quiz_question ) && ! empty( $wps_wpr_quiz_option_one ) && ! empty( $wps_wpr_quiz_option_four ) ) {
 										foreach ( $wps_wpr_quiz_question as $index => $quiz_question ) {
 
-											$rewarded_key     = isset( $wps_wpr_quiz_answer[ $index ] ) ? 'wps_wpr_quiz_points_rewarded_' . $wps_wpr_quiz_answer[ $index ] : '';
-											$already_rewarded = $rewarded_key ? get_user_meta( $user_id, $rewarded_key, true ) : false;
-											if ( ! $already_rewarded ) :
+											// One attempt per quiz, keyed by quiz index.
+											$quiz_attempt_status = $this->wps_wpr_get_quiz_attempt_status( $user_id, $index );
+											if ( '' === $quiz_attempt_status ) :
 												?>
 												<div class="wps-wpr_campaign-quiz-wrap">
 													<div class="wps-wpr_campaign-h3"><?php echo esc_html( $quiz_question ); ?></div>
@@ -438,10 +438,14 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 											<?php else : ?>
 												<div class="wps-wpr_campaign-h2">
 													<?php echo esc_html( $quiz_question ); ?>
+													<?php if ( 'won' === $quiz_attempt_status ) : ?>
 													<span class="wps-wpr_camp-h2-icon-done">
 														<?php echo esc_html( $wps_wpr_quiz_rewards_points[ $index ] ?? 0 ); ?>
 														<img class="wps-wpr-hlw_co-icon" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'images/tick3.svg' ); ?>">
 													</span>
+													<?php else : ?>
+													<span class="wps-wpr_camp-h2-icon-done"><?php esc_html_e( 'Attempted', 'points-and-rewards-for-woocommerce' ); ?></span>
+													<?php endif; ?>
 												</div>
 												<?php
 											endif;

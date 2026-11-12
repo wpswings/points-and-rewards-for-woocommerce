@@ -1,0 +1,45 @@
+# Files and folders excluded from the release zip (wp dist-archive / 10up deploy action).
+# Version control and CI
+/.git
+/.github
+/.gitignore
+/.gitattributes
+/.distignore
+
+# Local tooling / editor state
+/.claude
+/.codex
+/.history
+/.vscode
+/.idea
+.DS_Store
+
+# Dependencies and build sources (runtime assets are loaded from build/)
+/node_modules
+/src
+/package.json
+/package-lock.json
+/wp-composer.json
+/composer.json
+/composer.lock
+/vendor-bin
+
+# Tests and test output
+/tests
+/playwright-report
+/test-results
+/playwright.config.js
+/phpcs.xml
+/phpcs.xml.dist
+
+# Maintenance scripts (never ship)
+/reset-redemption-setting.php
+/reset-wizard-helper.php
+
+# Development docs (readme.txt is the shipped readme)
+/readme.md
+/task.md
+/module_implementation.md
+/docs
+/pull_requests
+/script

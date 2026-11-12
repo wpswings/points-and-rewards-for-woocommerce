@@ -122,6 +122,26 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 	}
 
 	/**
+	 * Get the store details pre-filled in the form.
+	 *
+	 * These are only sent when they are left in the (visible, editable) form fields.
+	 *
+	 * @return array
+	 */
+	public static function wps_wpr_get_store_detail_defaults() {
+		$annual_revenue = get_transient( 'wps_wpr_expert_annual_revenue' );
+		if ( false === $annual_revenue ) {
+			$annual_revenue = self::wps_wpr_get_annual_revenue_last_12_months();
+			set_transient( 'wps_wpr_expert_annual_revenue', $annual_revenue, 12 * HOUR_IN_SECONDS );
+		}
+
+		return array(
+			'country'       => self::wps_wpr_get_store_country_label(),
+			'annualrevenue' => (string) $annual_revenue,
+		);
+	}
+
+	/**
 	 * Derive the plugin label from the plugin header.
 	 *
 	 * @return string
@@ -151,7 +171,7 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 	 * @return void
 	 */
 	public static function wps_wpr_render_modal() {
-		$defaults        = self::wps_wpr_get_default_form_values();
+		$defaults        = array_merge( self::wps_wpr_get_default_form_values(), self::wps_wpr_get_store_detail_defaults() );
 		$service_options = self::wps_wpr_get_service_options();
 		$budget_options  = self::wps_wpr_get_budget_options();
 		?>
@@ -192,6 +212,14 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 								<label for="wps_wpr_expert_phone"><?php esc_html_e( 'Contact Number', 'points-and-rewards-for-woocommerce' ); ?></label>
 								<input id="wps_wpr_expert_phone" type="text" name="phone" value="<?php echo esc_attr( $defaults['phone'] ); ?>" placeholder="<?php esc_attr_e( '+1 000 000 0000', 'points-and-rewards-for-woocommerce' ); ?>">
 							</div>
+							<div class="wps-rma-expert-modal__field">
+								<label for="wps_wpr_expert_country"><?php esc_html_e( 'Store Country (optional)', 'points-and-rewards-for-woocommerce' ); ?></label>
+								<input id="wps_wpr_expert_country" type="text" name="country" value="<?php echo esc_attr( $defaults['country'] ); ?>">
+							</div>
+							<div class="wps-rma-expert-modal__field">
+								<label for="wps_wpr_expert_annualrevenue"><?php esc_html_e( 'Store revenue, last 12 months (optional)', 'points-and-rewards-for-woocommerce' ); ?></label>
+								<input id="wps_wpr_expert_annualrevenue" type="text" name="annualrevenue" value="<?php echo esc_attr( $defaults['annualrevenue'] ); ?>">
+							</div>
 						</div>
 						<div class="wps-rma-expert-modal__field">
 							<span class="wps-rma-expert-modal__legend"><?php esc_html_e( 'What services do you need help with?', 'points-and-rewards-for-woocommerce' ); ?></span>
@@ -216,6 +244,9 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 							<label for="wps_wpr_expert_message"><?php esc_html_e( 'What do you need help with?', 'points-and-rewards-for-woocommerce' ); ?></label>
 							<textarea id="wps_wpr_expert_message" name="message" rows="4" placeholder="<?php esc_attr_e( 'Share your goals, blockers, or the service you need.', 'points-and-rewards-for-woocommerce' ); ?>"><?php echo esc_textarea( $defaults['message'] ); ?></textarea>
 						</div>
+						<p class="wps-rma-expert-modal__privacy">
+							<?php esc_html_e( 'The details above are sent to WP Swings via HubSpot when you submit, together with your store name, website URL and store currency. Clear any optional field you do not want to share.', 'points-and-rewards-for-woocommerce' ); ?>
+						</p>
 						<div class="wps-rma-expert-modal__actions">
 							<button
 								type="submit"
@@ -354,7 +385,8 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 			'what_services_do_you_need_help_with' => $valid_services,
 			'budget'                            => $budget,
 			'message'                           => isset( $form_data['message'] ) ? sanitize_textarea_field( wp_unslash( $form_data['message'] ) ) : '',
-			'annualrevenue'                     => self::wps_wpr_get_annual_revenue_last_12_months(),
+			'country'                           => isset( $form_data['country'] ) ? sanitize_text_field( wp_unslash( $form_data['country'] ) ) : '',
+			'annualrevenue'                     => isset( $form_data['annualrevenue'] ) ? sanitize_text_field( wp_unslash( $form_data['annualrevenue'] ) ) : '',
 		);
 	}
 
@@ -373,6 +405,7 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 			'redirection' => 5,
 			'httpversion' => '1.0',
 			'blocking'    => true,
+			'sslverify'   => true,
 			'headers'     => array(
 				'Content-Type' => 'application/json',
 			),
@@ -380,9 +413,8 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 				array(
 					'fields'  => array_values( array_filter( $payload['fields'] ) ),
 					'context' => array(
-						'pageUri'   => admin_url( 'admin.php?page=wps-rwpr-setting' ),
-						'pageName'  => self::wps_wpr_get_plugin_label(),
-						'ipAddress' => self::wps_wpr_get_client_ip(),
+						'pageUri'  => admin_url( 'admin.php?page=wps-rwpr-setting' ),
+						'pageName' => self::wps_wpr_get_plugin_label(),
 					),
 				)
 			),
@@ -413,8 +445,9 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 			self::wps_wpr_maybe_build_hubspot_field( 'org_plugin_name', self::wps_wpr_get_plugin_label() ),
 			self::wps_wpr_maybe_build_hubspot_field( 'company', function_exists( 'get_bloginfo' ) ? get_bloginfo( 'name' ) : '' ),
 			self::wps_wpr_maybe_build_hubspot_field( 'website', function_exists( 'home_url' ) ? home_url( '/' ) : '' ),
-			self::wps_wpr_maybe_build_hubspot_field( 'country', self::wps_wpr_get_store_country_label() ),
-			self::wps_wpr_maybe_build_hubspot_field( 'annualrevenue', isset( $sanitized_data['annualrevenue'] ) ? $sanitized_data['annualrevenue'] : self::wps_wpr_get_annual_revenue_last_12_months() ),
+			// Country and revenue are only sent when the admin left them in the visible form fields.
+			self::wps_wpr_maybe_build_hubspot_field( 'country', isset( $sanitized_data['country'] ) ? $sanitized_data['country'] : '' ),
+			self::wps_wpr_maybe_build_hubspot_field( 'annualrevenue', isset( $sanitized_data['annualrevenue'] ) ? $sanitized_data['annualrevenue'] : '' ),
 		);
 
 		return array(
@@ -488,39 +521,6 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 	 */
 	public static function wps_wpr_get_hubspot_endpoint() {
 		return self::HUBSPOT_BASE_URL . 'submissions/v3/integration/submit/' . self::HUBSPOT_PORTAL_ID . '/' . self::HUBSPOT_FORM_ID;
-	}
-
-	/**
-	 * Resolve the client IP address for HubSpot context.
-	 *
-	 * @return string
-	 */
-	public static function wps_wpr_get_client_ip() {
-		$ip_headers = array(
-			'HTTP_CF_CONNECTING_IP',
-			'HTTP_X_FORWARDED_FOR',
-			'HTTP_X_REAL_IP',
-			'REMOTE_ADDR',
-		);
-
-		foreach ( $ip_headers as $header_key ) {
-			if ( empty( $_SERVER[ $header_key ] ) ) {
-				continue;
-			}
-
-			$raw_value = sanitize_text_field( wp_unslash( $_SERVER[ $header_key ] ) );
-			$ip_list   = is_string( $raw_value ) ? explode( ',', $raw_value ) : array( $raw_value );
-
-			foreach ( $ip_list as $ip_candidate ) {
-				$ip_candidate = trim( sanitize_text_field( (string) $ip_candidate ) );
-
-				if ( filter_var( $ip_candidate, FILTER_VALIDATE_IP ) ) {
-					return $ip_candidate;
-				}
-			}
-		}
-
-		return '';
 	}
 
 	/**
@@ -658,54 +658,41 @@ class Points_Rewards_For_WooCommerce_Talk_To_Expert_Form {
 	}
 
 	/**
-	 * Get revenue using wc_get_orders when the analytics table is unavailable.
+	 * Get revenue from the order tables when the analytics table is unavailable.
+	 *
+	 * Uses a single SQL SUM against the HPOS or legacy order storage instead of
+	 * loading every order into memory.
 	 *
 	 * @return float
 	 */
 	public static function wps_wpr_get_revenue_from_wc_orders() {
-		if ( ! function_exists( 'wc_get_orders' ) ) {
+		global $wpdb;
+
+		if ( ! isset( $wpdb ) || ! is_object( $wpdb ) || ! function_exists( 'wc_get_orders' ) ) {
 			return 0.0;
 		}
 
-		$cutoff_timestamp = strtotime( '-12 months', current_time( 'timestamp', true ) );
-		$orders           = wc_get_orders(
-			array(
-				'limit'   => -1,
-				'status'  => function_exists( 'wc_get_is_paid_statuses' ) ? wc_get_is_paid_statuses() : array( 'processing', 'completed' ),
-				'type'    => 'shop_order',
-				'parent'  => 0,
-				'return'  => 'objects',
-				'orderby' => 'date',
-				'order'   => 'DESC',
-			)
-		);
-
-		$total = 0.0;
-
-		foreach ( (array) $orders as $order ) {
-			if ( ! is_object( $order ) ) {
-				continue;
-			}
-
-			if ( ! method_exists( $order, 'get_date_paid' ) || ! $order->get_date_paid() ) {
-				continue;
-			}
-
-			if ( method_exists( $order, 'get_parent_id' ) && (int) $order->get_parent_id() > 0 ) {
-				continue;
-			}
-
-			$date_paid = $order->get_date_paid();
-			if ( ! $date_paid || ! method_exists( $date_paid, 'getTimestamp' ) || $date_paid->getTimestamp() < $cutoff_timestamp ) {
-				continue;
-			}
-
-			if ( method_exists( $order, 'get_total' ) ) {
-				$total += (float) $order->get_total();
-			}
+		$paid_statuses = self::wps_wpr_get_paid_status_values();
+		if ( empty( $paid_statuses ) ) {
+			return 0.0;
 		}
 
-		return $total;
+		$placeholders = implode( ', ', array_fill( 0, count( $paid_statuses ), '%s' ) );
+		$cutoff       = strtotime( '-12 months', time() );
+		$hpos_enabled = class_exists( 'Automattic\\WooCommerce\\Utilities\\OrderUtil' ) && \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled();
+
+		if ( $hpos_enabled ) {
+			$orders_table      = $wpdb->prefix . 'wc_orders';
+			$operational_table = $wpdb->prefix . 'wc_order_operational_data';
+			$sql               = "SELECT COALESCE(SUM(o.total_amount), 0) FROM {$orders_table} o INNER JOIN {$operational_table} od ON od.order_id = o.id WHERE o.type = 'shop_order' AND o.parent_order_id = 0 AND od.date_paid_gmt IS NOT NULL AND od.date_paid_gmt >= %s AND o.status IN ({$placeholders})";
+			$args              = array_merge( array( $sql, gmdate( 'Y-m-d H:i:s', $cutoff ) ), $paid_statuses );
+		} else {
+			$sql  = "SELECT COALESCE(SUM(CAST(total.meta_value AS DECIMAL(26,8))), 0) FROM {$wpdb->posts} p INNER JOIN {$wpdb->postmeta} total ON total.post_id = p.ID AND total.meta_key = '_order_total' INNER JOIN {$wpdb->postmeta} paid ON paid.post_id = p.ID AND paid.meta_key = '_date_paid' WHERE p.post_type = 'shop_order' AND p.post_parent = 0 AND paid.meta_value != '' AND CAST(paid.meta_value AS UNSIGNED) >= %d AND p.post_status IN ({$placeholders})";
+			$args = array_merge( array( $sql, $cutoff ), $paid_statuses );
+		}
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query properly prepared with placeholders, call_user_func_array used for dynamic parameter count.
+		return (float) $wpdb->get_var( call_user_func_array( array( $wpdb, 'prepare' ), $args ) );
 	}
 
 	/**

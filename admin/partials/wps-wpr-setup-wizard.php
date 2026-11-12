@@ -25,7 +25,7 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 			<h1><?php esc_html_e( 'Welcome to Points and Rewards for WooCommerce!', 'points-and-rewards-for-woocommerce' ); ?></h1>
 			<p><?php esc_html_e( "Let's configure your loyalty program in just 5 quick steps.", 'points-and-rewards-for-woocommerce' ); ?></p>
 		</div>
-		<a href="<?php echo esc_url( admin_url( 'admin.php?page=wps-rwpr-setting&wps_wpr_skip_wizard=1' ) ); ?>" class="wps-wpr-skip-wizard">
+		<a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?page=wps-rwpr-setting&wps_wpr_skip_wizard=1' ), 'wps_wpr_skip_wizard' ) ); ?>" class="wps-wpr-skip-wizard">
 			<?php esc_html_e( 'Skip Setup', 'points-and-rewards-for-woocommerce' ); ?>
 		</a>
 	</div>

@@ -92,9 +92,9 @@ $wps_wpr_ai_suggestions = array(
 		</div>
 	</section>
 
-	<section class="wps_wpr_general_row_wrap">
-		<div class="wps_wpr_general_sign_title"><?php esc_html_e( 'Chat With AI Assistant', 'points-and-rewards-for-woocommerce' ); ?></div>
-		<div class="wps_wpr_section_content">
+	<section class="wps_wpr_general_row_wrap wps_wpr_ai_chat_section">
+		<div class="wps_wpr_general_sign_title wps_wpr_section_active"><?php esc_html_e( 'Chat With AI Assistant', 'points-and-rewards-for-woocommerce' ); ?></div>
+		<div class="wps_wpr_section_content" style="display: block;">
 			<?php if ( ! $wps_wpr_ai_connected ) : ?>
 				<p class="wps_wpr_ai_unavailable"><?php esc_html_e( 'Connect an AI provider to start chatting. The chat will be enabled once a provider is connected.', 'points-and-rewards-for-woocommerce' ); ?></p>
 			<?php elseif ( ! $wps_wpr_ai_enabled ) : ?>
@@ -110,7 +110,7 @@ $wps_wpr_ai_suggestions = array(
 					<?php endforeach; ?>
 				</div>
 				<div class="wps_wpr_ai_composer">
-					<textarea id="wps_wpr_ai_input" rows="2" placeholder="<?php esc_attr_e( 'Ask about your points and rewards setup…', 'points-and-rewards-for-woocommerce' ); ?>" <?php disabled( ! $wps_wpr_ai_ready ); ?>></textarea>
+					<textarea id="wps_wpr_ai_input" rows="2" maxlength="<?php echo esc_attr( WPS_WPR_AI_Assistant::MAX_MESSAGE_LENGTH ); ?>" aria-label="<?php esc_attr_e( 'Message to the AI Assistant', 'points-and-rewards-for-woocommerce' ); ?>" placeholder="<?php esc_attr_e( 'Ask about your points and rewards setup…', 'points-and-rewards-for-woocommerce' ); ?>" <?php disabled( ! $wps_wpr_ai_ready ); ?>></textarea>
 					<button type="button" class="button button-primary" id="wps_wpr_ai_send" <?php disabled( ! $wps_wpr_ai_ready ); ?>><?php esc_html_e( 'Send', 'points-and-rewards-for-woocommerce' ); ?></button>
 				</div>
 			</div>
