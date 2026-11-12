@@ -2,10 +2,9 @@
 /**
  * Helper Script to Reset Setup Wizard
  *
- * Load this file in your browser to reset the setup wizard.
- * URL: http://your-site.local/wp-content/plugins/points-and-rewards-for-woocommerce/reset-wizard-helper.php
- *
- * IMPORTANT: Delete this file after use for security!
+ * Development/maintenance helper only; it is excluded from release builds.
+ * Open it in the browser as an administrator and confirm with the button
+ * (POST + nonce). Plain GET requests never change settings.
  */
 
 // Load WordPress.
@@ -13,8 +12,10 @@ require_once dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) . '/wp-load.ph
 
 // Security check - only admins.
 if ( ! current_user_can( 'manage_options' ) ) {
-	wp_die( 'You do not have permission to access this page.' );
+	wp_die( esc_html__( 'You do not have permission to access this page.', 'points-and-rewards-for-woocommerce' ), 403 );
 }
+
+$wps_wpr_request_method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) ) : '';
 
 ?>
 <!DOCTYPE html>
@@ -77,9 +78,9 @@ if ( ! current_user_can( 'manage_options' ) ) {
 		<h1>Reset Points and Rewards Setup Wizard</h1>
 
 <?php
-if ( isset( $_GET['action'] ) && 'reset' === $_GET['action'] ) {
+if ( 'POST' === $wps_wpr_request_method && isset( $_POST['action'] ) && 'reset' === $_POST['action'] ) {
 	// Verify nonce.
-	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'reset_wizard' ) ) {
+	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'reset_wizard' ) ) {
 		echo '<div class="warning">Security check failed. Please try again.</div>';
 	} else {
 		// Delete wizard flags.
@@ -99,12 +100,6 @@ if ( isset( $_GET['action'] ) && 'reset' === $_GET['action'] ) {
 		echo '<a href="' . esc_url( admin_url( 'admin.php?page=wps-wpr-setup-wizard' ) ) . '" class="button">Go to Setup Wizard</a>';
 	}
 } else {
-	$reset_url = add_query_arg(
-		array(
-			'action'   => 'reset',
-			'_wpnonce' => wp_create_nonce( 'reset_wizard' ),
-		)
-	);
 	?>
 		<div class="info">
 			<strong>This will:</strong><br>
@@ -114,7 +109,11 @@ if ( isset( $_GET['action'] ) && 'reset' === $_GET['action'] ) {
 			• Allow the setup wizard to be displayed again
 		</div>
 
-		<a href="<?php echo esc_url( $reset_url ); ?>" class="button">Reset Setup Wizard</a>
+		<form method="post">
+			<input type="hidden" name="action" value="reset">
+			<?php wp_nonce_field( 'reset_wizard' ); ?>
+			<button type="submit" class="button">Reset Setup Wizard</button>
+		</form>
 
 		<div class="warning" style="margin-top: 30px;">
 			<strong>Security Notice:</strong><br>

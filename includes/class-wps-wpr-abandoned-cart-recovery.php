@@ -43,6 +43,40 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 	const BATCH_SIZE = 50;
 
 	/**
+	 * Log key used in points_details user meta when a bonus is reversed.
+	 */
+	const REVERSAL_LOG_KEY = 'abandoned_cart_points_reversed';
+
+	/**
+	 * Register hooks owned by this class.
+	 */
+	public function __construct() {
+		// Take the bonus back when the recovered order is cancelled or refunded.
+		add_action( 'woocommerce_order_status_changed', array( $this, 'wps_wpr_reverse_recovery_points' ), 25, 3 );
+	}
+
+	/**
+	 * Number of days a customer must wait between two recovery bonuses.
+	 *
+	 * @return int
+	 */
+	public function wps_wpr_get_bonus_cooldown_days() {
+		return absint( apply_filters( 'wps_wpr_abandoned_cart_bonus_cooldown_days', 30 ) );
+	}
+
+	/**
+	 * Check whether the user received a recovery bonus within the cooldown.
+	 *
+	 * @param  int $user_id user id.
+	 * @return bool
+	 */
+	public function wps_wpr_is_in_bonus_cooldown( $user_id ) {
+		$last_awarded = (int) get_user_meta( $user_id, 'wps_wpr_ac_last_awarded', true );
+		$cooldown     = $this->wps_wpr_get_bonus_cooldown_days();
+		return $last_awarded > 0 && $cooldown > 0 && ( time() - $last_awarded ) < ( $cooldown * DAY_IN_SECONDS );
+	}
+
+	/**
 	 * Get default settings.
 	 *
 	 * @return array
@@ -272,6 +306,21 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 				continue;
 			}
 
+			// No new offer while the customer is still in the bonus cooldown.
+			if ( $this->wps_wpr_is_in_bonus_cooldown( $user_id ) ) {
+				update_user_meta( $user_id, 'wps_wpr_ac_status', 'skipped' );
+				continue;
+			}
+
+			// Remember which products were in the abandoned cart.
+			$product_ids = array();
+			foreach ( $persistent_cart['cart'] as $cart_item ) {
+				if ( ! empty( $cart_item['product_id'] ) ) {
+					$product_ids[] = absint( $cart_item['product_id'] );
+				}
+			}
+			$settings['wps_wpr_ac_cart_product_ids'] = array_values( array_unique( $product_ids ) );
+
 			$this->wps_wpr_send_incentive( $user_id, $bonus_points, $cart_total, $settings );
 		}
 	}
@@ -294,9 +343,11 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 			$user_id,
 			'wps_wpr_ac_incentive',
 			array(
-				'points'  => $bonus_points,
-				'sent'    => $sent,
-				'expires' => $expires,
+				'points'      => $bonus_points,
+				'sent'        => $sent,
+				'expires'     => $expires,
+				'min_total'   => (float) $settings['wps_wpr_ac_min_cart_total'],
+				'product_ids' => ! empty( $settings['wps_wpr_ac_cart_product_ids'] ) ? array_map( 'absint', (array) $settings['wps_wpr_ac_cart_product_ids'] ) : array(),
 			)
 		);
 		update_user_meta( $user_id, 'wps_wpr_ac_status', 'reminded' );
@@ -389,9 +440,19 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 			return;
 		}
 
+		// One bonus per cooldown period.
+		if ( $this->wps_wpr_is_in_bonus_cooldown( $user_id ) ) {
+			return;
+		}
+
+		if ( ! $this->wps_wpr_order_qualifies( $order, $incentive ) ) {
+			return;
+		}
+
 		$user_points    = absint( get_user_meta( $user_id, 'wps_wpr_points', true ) );
 		$updated_points = $user_points + $bonus_points;
 		update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+		update_user_meta( $user_id, 'wps_wpr_ac_last_awarded', time() );
 		delete_user_meta( $user_id, 'wps_wpr_ac_incentive' );
 		$this->wps_wpr_clear_tracking( $user_id );
 
@@ -414,6 +475,90 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 		}
 
 		do_action( 'wps_wpr_abandoned_cart_points_awarded', $user_id, $bonus_points, $order_id );
+	}
+
+	/**
+	 * Check that the order really recovers the abandoned cart.
+	 *
+	 * The order total (net of refunds) must meet the same minimum used when the
+	 * offer was sent, and the order must contain the abandoned cart's products.
+	 *
+	 * @param  WC_Order $order     order object.
+	 * @param  array    $incentive stored incentive.
+	 * @return bool
+	 */
+	public function wps_wpr_order_qualifies( $order, $incentive ) {
+		$settings    = self::wps_wpr_get_settings();
+		$min_total   = isset( $incentive['min_total'] ) ? (float) $incentive['min_total'] : (float) $settings['wps_wpr_ac_min_cart_total'];
+		$order_total = (float) $order->get_total() - (float) $order->get_total_refunded();
+		$qualifies   = $order_total > 0 && $order_total >= $min_total;
+
+		if ( $qualifies && ! empty( $incentive['product_ids'] ) && is_array( $incentive['product_ids'] ) ) {
+			$order_product_ids = array();
+			foreach ( $order->get_items() as $item ) {
+				if ( is_callable( array( $item, 'get_product_id' ) ) ) {
+					$order_product_ids[] = absint( $item->get_product_id() );
+				}
+			}
+			$missing   = array_diff( array_map( 'absint', $incentive['product_ids'] ), $order_product_ids );
+			$qualifies = empty( $missing );
+		}
+
+		return (bool) apply_filters( 'wps_wpr_abandoned_cart_order_qualifies', $qualifies, $order, $incentive );
+	}
+
+	/**
+	 * Reverse the recovery bonus when its order is cancelled or refunded.
+	 *
+	 * @param  int    $order_id   order id.
+	 * @param  string $old_status old status.
+	 * @param  string $new_status new status.
+	 * @return void
+	 */
+	public function wps_wpr_reverse_recovery_points( $order_id, $old_status, $new_status ) {
+		if ( $old_status === $new_status || ! in_array( $new_status, array( 'cancelled', 'refunded' ), true ) ) {
+			return;
+		}
+
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			return;
+		}
+
+		$awarded = absint( $order->get_meta( 'wps_wpr_ac_points_awarded' ) );
+		if ( $awarded <= 0 || $order->get_meta( 'wps_wpr_ac_points_reversed' ) ) {
+			return;
+		}
+
+		$user_id = absint( $order->get_user_id() );
+		if ( ! $user_id ) {
+			return;
+		}
+
+		// Balances are stored unsigned, so never go below zero.
+		$user_points = absint( get_user_meta( $user_id, 'wps_wpr_points', true ) );
+		$deducted    = min( $awarded, $user_points );
+		update_user_meta( $user_id, 'wps_wpr_points', $user_points - $deducted );
+
+		$order->update_meta_data( 'wps_wpr_ac_points_reversed', $deducted );
+		$order->save();
+		$order->add_order_note(
+			/* translators: %s: deducted points */
+			sprintf( esc_html__( '%s abandoned cart recovery bonus points deducted because the order was cancelled or refunded.', 'points-and-rewards-for-woocommerce' ), $deducted )
+		);
+
+		$points_log = get_user_meta( $user_id, 'points_details', true );
+		$points_log = ! empty( $points_log ) && is_array( $points_log ) ? $points_log : array();
+
+		$points_log[ self::REVERSAL_LOG_KEY ][] = array(
+			self::REVERSAL_LOG_KEY => $deducted,
+			'date'                 => date_i18n( 'Y-m-d h:i:sa' ),
+			'order_id'             => $order_id,
+		);
+		update_user_meta( $user_id, 'points_details', $points_log );
+		do_action( 'wps_wpr_update_points_log', $user_id );
+
+		do_action( 'wps_wpr_abandoned_cart_points_reversed', $user_id, $deducted, $order_id );
 	}
 
 	/**

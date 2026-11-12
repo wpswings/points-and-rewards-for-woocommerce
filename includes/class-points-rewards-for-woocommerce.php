@@ -201,10 +201,9 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_rwpr_admin_menu', 10, 2 );
+		// Security: admin-only actions are not registered for anonymous users (removed wp_ajax_nopriv_ hooks).
 		$this->loader->add_action( 'wp_ajax_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
 		if ( $wps_wpr_talk_to_expert ) {
 			$this->loader->add_action( 'wp_ajax_' . Points_Rewards_For_WooCommerce_Talk_To_Expert_Form::AJAX_ACTION, $wps_wpr_talk_to_expert, 'wps_wpr_handle_ajax_submission' );
 		}

@@ -114,11 +114,9 @@ class WPSwings_Onboarding_Helper {
 
 		// Ajax to send data.
 		add_action( 'wp_ajax_send_onboarding_data', array( $this, 'wps_wpr_send_onboarding_data' ) );
-		add_action( 'wp_ajax_nopriv_send_onboarding_data', array( $this, 'wps_wpr_send_onboarding_data' ) );
 
 		// Ajax to Skip popup.
 		add_action( 'wp_ajax_skip_onboarding_popup', array( $this, 'wps_wpr_skip_onboarding_popup' ) );
-		add_action( 'wp_ajax_nopriv_skip_onboarding_popup', array( $this, 'wps_wpr_skip_onboarding_popup' ) );
 	}
 
 	/**
@@ -505,8 +503,8 @@ class WPSwings_Onboarding_Helper {
 
 			wp_rand() => array(
 				'id' => 'admin-email',
-				'label' => '',
-				'type' => 'hidden',
+				'label' => esc_html__( 'Your email (optional, so we can follow up)', 'points-and-rewards-for-woocommerce' ),
+				'type' => 'email',
 				'name' => 'email',
 				'value' => $current_user_email,
 				'required' => '',
@@ -811,6 +809,11 @@ class WPSwings_Onboarding_Helper {
 	 */
 	public function wps_wpr_skip_onboarding_popup() {
 
+		check_ajax_referer( 'wps_onboarding_nonce', 'nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( esc_html__( 'You do not have sufficient permissions to perform this action.', 'points-and-rewards-for-woocommerce' ), 403 );
+		}
+
 		$get_skipped_timstamp = update_option( 'wps_wpr_onboarding-data-skipped', time() );
 		echo wp_json_encode( 'true' );
 		wp_die();
@@ -873,7 +876,7 @@ class WPSwings_Onboarding_Helper {
 		$url = $this->base_url . $endpoint;
 		$request = array(
 			'httpversion' => '1.0',
-			'sslverify'   => false,
+			'sslverify'   => true,
 			'method'      => 'POST',
 			'timeout'     => 45,
 			'headers'     => $headers,
@@ -926,7 +929,6 @@ class WPSwings_Onboarding_Helper {
 				'context'  => array(
 					'pageUri' => self::$store_url,
 					'pageName' => self::$store_name,
-					'ipAddress' => $this->wps_wpr_get_client_ip(),
 				),
 			)
 		);
@@ -943,31 +945,6 @@ class WPSwings_Onboarding_Helper {
 		return $result;
 	}
 
-
-	/**
-	 * Get_client_ip function
-	 *
-	 * @return ipaddress
-	 */
-	private function wps_wpr_get_client_ip() {
-		$ipaddress = '';
-		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
-			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
-		} elseif ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
-			$ipaddress = getenv( 'HTTP_X_FORWARDED_FOR' );
-		} elseif ( getenv( 'HTTP_X_FORWARDED' ) ) {
-			$ipaddress = getenv( 'HTTP_X_FORWARDED' );
-		} elseif ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
-			$ipaddress = getenv( 'HTTP_FORWARDED_FOR' );
-		} elseif ( getenv( 'HTTP_FORWARDED' ) ) {
-			$ipaddress = getenv( 'HTTP_FORWARDED' );
-		} elseif ( getenv( 'REMOTE_ADDR' ) ) {
-			$ipaddress = getenv( 'REMOTE_ADDR' );
-		} else {
-			$ipaddress = 'UNKNOWN';
-		}
-		return $ipaddress;
-	}
 
 	// End of Class.
 }

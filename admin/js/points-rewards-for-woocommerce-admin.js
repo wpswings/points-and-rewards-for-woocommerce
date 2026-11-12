@@ -89,7 +89,7 @@
 				user_id: r,
 				sign: p,
 				reason: s,
-				wps_nonce: wps_wpr_object.wps_wpr_nonce,
+				wps_nonce: wps_wpr_object.wps_wpr_admin_nonce,
 			  };
 			  e.ajax({
 				url: wps_wpr_object.ajaxurl,
@@ -135,7 +135,7 @@
 		  var p = {
 			action: "wps_wpr_select_category",
 			wps_wpr_categ_list: i,
-			wps_nonce: wps_wpr_object.wps_wpr_nonce,
+			wps_nonce: wps_wpr_object.wps_wpr_admin_nonce,
 		  };
 		  e.ajax({
 			url: wps_wpr_object.ajaxurl,
@@ -430,7 +430,7 @@
 			if (parseInt(points) > 0) {
 			  const data = {
 				action: "assign_points_on_previous_order",
-				nonce: wps_wpr_object.wps_wpr_nonce,
+				nonce: wps_wpr_object.wps_wpr_admin_nonce,
 				rewards_points: points,
 				start_date : start_date,
 				end_date : end_date
@@ -859,7 +859,7 @@
 	function wps_wpr_restrict_user_call( user_id, checked ) {
 		var data    = {
 			'action'  : 'restrict_user_from_points_table',
-			wps_nonce : wps_wpr_object.wps_wpr_nonce,
+			wps_nonce : wps_wpr_object.wps_wpr_admin_nonce,
 			'user_id' : user_id,
 			'checked' : checked,
 		};
@@ -908,7 +908,7 @@
 			var form_data = new FormData(jQuery('form#mainform')[0]);
 			form_data.append( 'action', 'wps_large_scv_import' );
 			form_data.append( 'wps_wpr_export_table_option', wps_wpr_export_table_option );
-			form_data.append( 'wps_nonce', wps_wpr_object.wps_wpr_nonce );
+			form_data.append( 'wps_nonce', wps_wpr_object.wps_wpr_admin_nonce );
 			form_data.append('start', 0);
 			wps_wpr_process_csv_chunk(form_data);
 		}
@@ -1142,8 +1142,30 @@ jQuery(document).ready(function($){
 		var wps_wpr_klaviyo_public_api_key = jQuery('#wps_wpr_klaviyo_public_api_key').val().trim();
 		if ( wps_wpr_klaviyo_public_api_key ) {
 
-			jQuery(this).prop( 'disabled', true );
-			wps_wpr_recursive_to_sync_points_on_klaviyo( wps_wpr_object.wps_user_count );
+			var $sync_btn = jQuery(this);
+			$sync_btn.prop( 'disabled', true );
+			// Security: save the key with its own admin-only request; the sync request no longer sends it.
+			jQuery.ajax({
+				'method' : 'POST',
+				'url'    : wps_wpr_object.ajaxurl,
+				'data'   : {
+					'action'                 : 'wps_wpr_save_klaviyo_api_key',
+					'wps_nonce'              : wps_wpr_object.wps_wpr_admin_nonce,
+					'klaviyo_public_api_key' : wps_wpr_klaviyo_public_api_key,
+				},
+				success  : function( response ) {
+					if ( response && response.success ) {
+						wps_wpr_recursive_to_sync_points_on_klaviyo( wps_wpr_object.wps_user_count );
+					} else {
+						$sync_btn.prop( 'disabled', false );
+						jQuery('.wps_wpr_klaviyo_sync_notice').show().css('color', 'red').html( wps_wpr_object.wps_ajax_error );
+					}
+				},
+				error    : function() {
+					$sync_btn.prop( 'disabled', false );
+					jQuery('.wps_wpr_klaviyo_sync_notice').show().css('color', 'red').html( wps_wpr_object.wps_ajax_error );
+				}
+			});
 		} else {
 
 			jQuery('.wps_wpr_klaviyo_sync_notice').show().css('color', 'red').html('please enter your Klaviyo public API key.');
@@ -1153,7 +1175,6 @@ jQuery(document).ready(function($){
 	// Recursive call back.
 	function wps_wpr_recursive_to_sync_points_on_klaviyo( user_count, current_page = '' ) {
 
-		var wps_wpr_klaviyo_public_api_key = jQuery('#wps_wpr_klaviyo_public_api_key').val().trim();
 		var get_count                      = 50; // Default count to sync per request.
 		if ( user_count > get_count ) {
 
@@ -1164,10 +1185,9 @@ jQuery(document).ready(function($){
 
 		var data = {
 			'action'                 : 'wps_sync_points_on_klaviyo',
-			'wps_nonce'              : wps_wpr_object.wps_wpr_nonce,
+			'wps_nonce'              : wps_wpr_object.wps_wpr_admin_nonce,
 			'current_page'           : current_page,
 			'per_user'               : get_count,
-			'klaviyo_public_api_key' : wps_wpr_klaviyo_public_api_key,
 		};
 
 		jQuery('.wps_wpr_klaviyo_sync_loader').show();
@@ -1363,7 +1383,7 @@ jQuery(document).ready(function($){
 			method  : "POST",
 			data    : {
 				action         : "wps_set_camp_heading_and_image",
-				wps_nonce      : wps_wpr_object.wps_wpr_nonce,
+				wps_nonce      : wps_wpr_object.wps_wpr_admin_nonce,
 				banner_heading : banner_heading,
 				banner_image   : banner_image,
 				modal_prim_col : modal_prim_col,

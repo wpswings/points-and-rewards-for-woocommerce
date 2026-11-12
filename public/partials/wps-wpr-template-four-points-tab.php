@@ -97,8 +97,8 @@ $wps_wpr_mem_enable        = isset( $membership_settings_array['wps_wpr_membersh
 // ── Coupons ──────────────────────────────────────────────────────────────────
 $coupon_settings               = get_option( 'wps_wpr_coupons_gallery', true );
 $coupon_settings               = is_array( $coupon_settings ) ? $coupon_settings : array();
-$wps_per_currency_spent_price  = isset( $coupon_settings['wps_wpr_coupon_conversion_price'] ) ? intval( $coupon_settings['wps_wpr_coupon_conversion_price'] ) : 1;
-$wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_conversion_points'] ) ? intval( $coupon_settings['wps_wpr_coupon_conversion_points'] ) : 1;
+$wps_per_currency_spent_price  = isset( $coupon_settings['wps_wpr_coupon_conversion_price'] ) ? floatval( $coupon_settings['wps_wpr_coupon_conversion_price'] ) : 1;
+$wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_conversion_points'] ) ? floatval( $coupon_settings['wps_wpr_coupon_conversion_points'] ) : 1;
 
 // ── Accent color ──────────────────────────────────────────────────────────────
 $wps_wpr_other_settings = get_option( 'wps_wpr_other_settings', array() );

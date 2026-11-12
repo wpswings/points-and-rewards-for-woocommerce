@@ -207,11 +207,14 @@ Endpoint: https://wpswings.com/submit-query/
 Terms: https://wpswings.com/terms-and-conditions/  
 Privacy: https://wpswings.com/privacy-policy/  
 
-**HubSpot Forms**  
-Used for onboarding and feedback collection.
+**HubSpot Forms (WP Swings)**  
+Used for the optional onboarding form, the optional deactivation feedback form and the "Talk to an Expert" form in the plugin admin. Nothing is sent unless an administrator submits one of these forms, and the visitor's or admin's IP address is not sent.
 
-Data sent: Name, email, website URL, and feedback  
-When: When forms are submitted
+Data sent:  
+* Onboarding form: monthly revenue range, industry, email address and contact number entered in the form, plus the store name, store URL, plugin name and store currency.  
+* Deactivation form: the selected reason and optional comment, the email address shown in the form (optional, editable), plus the store name, store URL and plugin name.  
+* Talk to an Expert form: first and last name, email, contact number, selected services, budget and message entered in the form; the store country and last-12-months store revenue only if left in their visible, editable form fields; plus the store name, store URL, store currency, plugin name and the plugin settings page URL.  
+When: Only when an administrator submits one of the forms above  
 Endpoint: https://api.hsforms.com/  
 Terms: https://legal.hubspot.com/terms-of-service  
 Privacy: https://legal.hubspot.com/privacy-policy  

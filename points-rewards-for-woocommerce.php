@@ -428,7 +428,7 @@ if ( $activated ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
 
-		if ( is_plugin_active_for_network( 'points-rewards-for-woocommerce/points-rewards-for-woocommerce.php' ) ) {
+		if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
 			$blog_id = $new_site->blog_id;
 			switch_to_blog( $blog_id );
 
@@ -676,8 +676,10 @@ if ( $activated ) {
 					$country_code_name = get_user_meta( $user_id, 'billing_country', true );
 					$country_code      = wps_wpr_get_country_code_by_name( $country_code_name );
 					$billing_phone     = get_user_meta( $user_id, 'billing_phone', true );
-					$billing_phone     = ! empty( $billing_phone ) ? $country_code . $billing_phone : '';
-					$wps_send_contact  = '+' . $billing_phone;
+					$wps_send_contact  = wps_wpr_normalize_phone_number( $billing_phone, $country_code );
+					if ( '' === $wps_send_contact ) {
+						return;
+					}
 
 					// prepare data and call sms api.
 					$url       = 'https://api.twilio.com/2010-04-01/Accounts/' . $wps_wpr_sms_account_sid . '/Messages.json';
@@ -701,6 +703,43 @@ if ( $activated ) {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Build an E.164 style number ("+<country code><number>") from a billing phone.
+	 *
+	 * Numbers that already start with "+" or "00" are treated as international and
+	 * are not prefixed again, so the "+" is only ever added once.
+	 *
+	 * @param  string     $phone        billing phone.
+	 * @param  string|int $country_code dialling code without "+", or 0 when unknown.
+	 * @return string empty string when there is no usable number.
+	 */
+	function wps_wpr_normalize_phone_number( $phone, $country_code ) {
+		$phone = trim( (string) $phone );
+		if ( '' === $phone ) {
+			return '';
+		}
+
+		$is_international = ( 0 === strpos( $phone, '+' ) || 0 === strpos( $phone, '00' ) );
+		$digits           = preg_replace( '/\D+/', '', $phone );
+		if ( 0 === strpos( $phone, '00' ) ) {
+			$digits = substr( $digits, 2 );
+		}
+		if ( '' === $digits ) {
+			return '';
+		}
+
+		if ( ! $is_international ) {
+			// Drop the national trunk prefix and add the country code once.
+			$digits       = ltrim( $digits, '0' );
+			$country_code = preg_replace( '/\D+/', '', (string) $country_code );
+			if ( ! empty( $country_code ) ) {
+				$digits = $country_code . $digits;
+			}
+		}
+
+		return '+' . $digits;
 	}
 
 	/**
@@ -895,7 +934,7 @@ if ( $activated ) {
 				$country_code_name              = get_user_meta( $user_id, 'billing_country', true );
 				$country_code                   = wps_wpr_get_country_code_by_name( $country_code_name );
 				$whatsapp_number                = get_user_meta( $user_id, 'billing_phone', true );
-				$whatsapp_number                = ! empty( $whatsapp_number ) ? $country_code . $whatsapp_number : '';
+				$whatsapp_number                = ltrim( wps_wpr_normalize_phone_number( $whatsapp_number, $country_code ), '+' );
 				$user_obj                       = get_user_by( 'id', $user_id );
 				$wps_wpr_whatsapp_access_token  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] : '';
 				$wps_wpr_whatsapp_phone_num_id  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] : '';

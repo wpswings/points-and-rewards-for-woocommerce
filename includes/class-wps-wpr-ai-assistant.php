@@ -60,6 +60,21 @@ class WPS_WPR_AI_Assistant {
 	const MAX_HISTORY = 12;
 
 	/**
+	 * Max characters of a chat message (and of each history turn).
+	 */
+	const MAX_MESSAGE_LENGTH = 4000;
+
+	/**
+	 * Default max characters of a text setting changed by the assistant.
+	 */
+	const MAX_TEXT_LENGTH = 200;
+
+	/**
+	 * Default max value of a numeric setting changed by the assistant.
+	 */
+	const MAX_NUMBER = 1000000;
+
+	/**
 	 * Option that stores the assistant settings.
 	 */
 	const OPTION = 'wps_wpr_ai_assistant_settings';
@@ -206,9 +221,10 @@ class WPS_WPR_AI_Assistant {
 				'desc'  => __( 'Show a notice on the cart page telling customers they can redeem points.', 'points-and-rewards-for-woocommerce' ),
 			),
 			'wps_wpr_points_redemption_messages'    => $general + array(
-				'type'  => 'text',
-				'label' => __( 'Points Redemption Message', 'points-and-rewards-for-woocommerce' ),
-				'desc'  => __( 'Text of the redeem notice on the cart page.', 'points-and-rewards-for-woocommerce' ),
+				'type'      => 'text',
+				'maxlength' => 500,
+				'label'     => __( 'Points Redemption Message', 'points-and-rewards-for-woocommerce' ),
+				'desc'      => __( 'Text of the redeem notice on the cart page.', 'points-and-rewards-for-woocommerce' ),
 			),
 			'wps_wpr_enable_order_rewards_settings' => $general + array(
 				'type'  => 'bool',
@@ -234,9 +250,10 @@ class WPS_WPR_AI_Assistant {
 				'desc'    => __( 'fixed = fixed points, percent = percentage of the order total.', 'points-and-rewards-for-woocommerce' ),
 			),
 			'wps_wpr_points_tab_text'               => $general + array(
-				'type'  => 'text',
-				'label' => __( 'Points Tab Text', 'points-and-rewards-for-woocommerce' ),
-				'desc'  => __( 'Label of the points tab in My Account.', 'points-and-rewards-for-woocommerce' ),
+				'type'      => 'text',
+				'maxlength' => 200,
+				'label'     => __( 'Points Tab Text', 'points-and-rewards-for-woocommerce' ),
+				'desc'      => __( 'Label of the points tab in My Account.', 'points-and-rewards-for-woocommerce' ),
 			),
 			'wps_wpr_coupon_conversion_enable'      => $coupon + array(
 				'type'  => 'bool',
@@ -261,9 +278,10 @@ class WPS_WPR_AI_Assistant {
 				'desc'  => __( 'Show the earning message on the cart page.', 'points-and-rewards-for-woocommerce' ),
 			),
 			'wps_wpr_per_curr_earning_messages'     => $coupon + array(
-				'type'  => 'text',
-				'label' => __( 'Per Currency Earning Message', 'points-and-rewards-for-woocommerce' ),
-				'desc'  => __( 'Cart page message. Supports [POINTS] and [CURRENCY].', 'points-and-rewards-for-woocommerce' ),
+				'type'      => 'text',
+				'maxlength' => 500,
+				'label'     => __( 'Per Currency Earning Message', 'points-and-rewards-for-woocommerce' ),
+				'desc'      => __( 'Cart page message. Supports [POINTS] and [CURRENCY].', 'points-and-rewards-for-woocommerce' ),
 			),
 			'wps_wpr_cart_page_apply_point_section' => $other + array(
 				'type'  => 'bool',
@@ -399,15 +417,23 @@ class WPS_WPR_AI_Assistant {
 				return $bool ? $spec['on'] : $spec['off'];
 			case 'int':
 			case 'number':
-				if ( ! is_numeric( $value ) ) {
+				if ( ! is_numeric( $value ) || ! is_finite( (float) $value ) ) {
 					return new WP_Error( 'invalid_value', __( 'Expected a number.', 'points-and-rewards-for-woocommerce' ) );
 				}
-				$number = 'int' === $spec['type'] ? (int) $value : (float) $value;
+				$number = (float) $value;
+				if ( 'int' === $spec['type'] && floor( $number ) !== $number ) {
+					return new WP_Error( 'invalid_value', __( 'Expected a whole number.', 'points-and-rewards-for-woocommerce' ) );
+				}
 				if ( isset( $spec['min'] ) && $number < $spec['min'] ) {
 					/* translators: %s: minimum value */
 					return new WP_Error( 'invalid_value', sprintf( __( 'Value must be at least %s.', 'points-and-rewards-for-woocommerce' ), $spec['min'] ) );
 				}
-				return $number;
+				$max = isset( $spec['max'] ) ? $spec['max'] : self::MAX_NUMBER;
+				if ( $number > $max ) {
+					/* translators: %s: maximum value */
+					return new WP_Error( 'invalid_value', sprintf( __( 'Value must be at most %s.', 'points-and-rewards-for-woocommerce' ), $max ) );
+				}
+				return 'int' === $spec['type'] ? (int) $number : $number;
 			case 'enum':
 				if ( ! in_array( (string) $value, $spec['options'], true ) ) {
 					/* translators: %s: allowed values */
@@ -415,7 +441,17 @@ class WPS_WPR_AI_Assistant {
 				}
 				return (string) $value;
 			default:
-				return sanitize_text_field( (string) $value );
+				if ( ! is_scalar( $value ) ) {
+					return new WP_Error( 'invalid_value', __( 'Expected text.', 'points-and-rewards-for-woocommerce' ) );
+				}
+				$text      = sanitize_text_field( (string) $value );
+				$maxlength = isset( $spec['maxlength'] ) ? (int) $spec['maxlength'] : self::MAX_TEXT_LENGTH;
+				$length    = function_exists( 'mb_strlen' ) ? mb_strlen( $text ) : strlen( $text );
+				if ( $length > $maxlength ) {
+					/* translators: %d: maximum number of characters */
+					return new WP_Error( 'invalid_value', sprintf( __( 'Text must be at most %d characters.', 'points-and-rewards-for-woocommerce' ), $maxlength ) );
+				}
+				return $text;
 		}
 	}
 
@@ -464,6 +500,7 @@ class WPS_WPR_AI_Assistant {
 						),
 					),
 					'additionalProperties' => false,
+					'default'              => array(),
 				),
 				'execute_callback'    => array( $this, 'wps_wpr_ability_get_settings' ),
 				'permission_callback' => $permission,
@@ -547,6 +584,14 @@ class WPS_WPR_AI_Assistant {
 				'type'        => 'enum' === $spec['type'] ? 'one of: ' . implode( ', ', $spec['options'] ) : $spec['type'],
 				'value'       => $this->wps_wpr_get_setting_value( $id, $spec ),
 			);
+			if ( in_array( $spec['type'], array( 'int', 'number' ), true ) ) {
+				if ( isset( $spec['min'] ) ) {
+					$setting['min'] = $spec['min'];
+				}
+				$setting['max'] = isset( $spec['max'] ) ? $spec['max'] : self::MAX_NUMBER;
+			} elseif ( 'text' === $spec['type'] ) {
+				$setting['maxlength'] = isset( $spec['maxlength'] ) ? (int) $spec['maxlength'] : self::MAX_TEXT_LENGTH;
+			}
 			$settings[] = $setting;
 		}
 
@@ -584,13 +629,28 @@ class WPS_WPR_AI_Assistant {
 			if ( is_wp_error( $stored ) ) {
 				return new WP_Error( 'invalid_value', $spec['label'] . ': ' . $stored->get_error_message() );
 			}
-			$validated[] = array(
+			$from = $this->wps_wpr_get_setting_value( $id, $spec );
+			$to   = 'bool' === $spec['type'] ? $stored === $spec['on'] : $stored;
+			// The same setting given twice: the last value wins, in a single row.
+			unset( $validated[ $id ] );
+			if ( null !== $from && ( 'number' === $spec['type'] ? abs( (float) $from - (float) $to ) < 1e-9 : $from === $to ) ) {
+				continue;
+			}
+			$validated[ $id ] = array(
 				'id'     => $id,
 				'label'  => $spec['label'],
 				'tab'    => $spec['tab'],
-				'from'   => $this->wps_wpr_get_setting_value( $id, $spec ),
-				'to'     => 'bool' === $spec['type'] ? $stored === $spec['on'] : $stored,
+				'from'   => $from,
+				'to'     => $to,
 				'stored' => $stored,
+			);
+		}
+		$validated = array_values( $validated );
+
+		if ( empty( $validated ) ) {
+			return array(
+				'status'  => 'no_change_needed',
+				'message' => 'All proposed values already match the current settings. Nothing to change; tell the admin these settings are already set.',
 			);
 		}
 
@@ -674,15 +734,91 @@ class WPS_WPR_AI_Assistant {
 		$messages = array();
 		$history  = array_slice( is_array( $history ) ? $history : array(), -self::MAX_HISTORY );
 		foreach ( $history as $turn ) {
-			$text = isset( $turn['text'] ) ? sanitize_textarea_field( $turn['text'] ) : '';
+			$text = is_array( $turn ) && isset( $turn['text'] ) ? self::wps_wpr_clean_prompt_text( $turn['text'] ) : '';
 			if ( '' === $text ) {
 				continue;
 			}
+			$is_model = isset( $turn['role'] ) && 'assistant' === $turn['role'];
+			// After slicing, drop leading model turns: the conversation must start with a user turn.
+			if ( empty( $messages ) && $is_model ) {
+				continue;
+			}
 			$part       = array( new MessagePart( $text ) );
-			$messages[] = ( isset( $turn['role'] ) && 'assistant' === $turn['role'] ) ? new ModelMessage( $part ) : new UserMessage( $part );
+			$messages[] = $is_model ? new ModelMessage( $part ) : new UserMessage( $part );
 		}
 		$messages[] = new UserMessage( array( new MessagePart( $message ) ) );
 		return $messages;
+	}
+
+	/**
+	 * Clean text sent to the model without altering what the admin typed.
+	 *
+	 * The text is never output as HTML here, so it is not HTML-sanitized
+	 * (that would mangle "%xx" sequences and "<" characters). Invalid UTF-8
+	 * and null bytes are removed and the length is capped.
+	 *
+	 * @param  mixed $text raw text.
+	 * @return string
+	 */
+	public static function wps_wpr_clean_prompt_text( $text ) {
+		if ( ! is_scalar( $text ) ) {
+			return '';
+		}
+		$text = wp_check_invalid_utf8( str_replace( "\0", '', (string) $text ), true );
+		$text = trim( $text );
+		if ( function_exists( 'mb_substr' ) ) {
+			return mb_substr( $text, 0, self::MAX_MESSAGE_LENGTH );
+		}
+		return substr( $text, 0, self::MAX_MESSAGE_LENGTH );
+	}
+
+	/**
+	 * Map a provider or transport error to a message that is safe to show.
+	 *
+	 * The raw error (cURL text, provider response) is only written to the
+	 * debug log when WP_DEBUG is on.
+	 *
+	 * @param  WP_Error|Throwable $error error.
+	 * @return string
+	 */
+	public function wps_wpr_get_friendly_error( $error ) {
+		$raw    = $error instanceof WP_Error ? $error->get_error_code() . ': ' . $error->get_error_message() : $error->getMessage();
+		$status = 0;
+		if ( $error instanceof WP_Error ) {
+			$data = $error->get_error_data();
+			if ( is_array( $data ) && isset( $data['status'] ) ) {
+				$status = (int) $data['status'];
+			} elseif ( is_array( $data ) && isset( $data['response']['code'] ) ) {
+				$status = (int) $data['response']['code'];
+			}
+		} elseif ( $error->getCode() >= 400 && $error->getCode() < 600 ) {
+			$status = (int) $error->getCode();
+		}
+		if ( ! $status && preg_match( '/\b(?:HTTP|status|code)\D{0,3}([45]\d\d)\b/i', $raw, $matches ) ) {
+			$status = (int) $matches[1];
+		}
+
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug only.
+			error_log( 'Points and Rewards AI Assistant: ' . $raw );
+		}
+
+		if ( preg_match( '/cURL error 28|timed? ?out/i', $raw ) || 408 === $status || 504 === $status ) {
+			return __( 'The AI provider took too long to respond. Please try again in a moment.', 'points-and-rewards-for-woocommerce' );
+		}
+		if ( 401 === $status || 403 === $status ) {
+			return __( 'The AI provider rejected the request. Check the API key in Settings > Connectors.', 'points-and-rewards-for-woocommerce' );
+		}
+		if ( 429 === $status ) {
+			return __( 'The AI provider is receiving too many requests or the usage limit was reached. Please try again later.', 'points-and-rewards-for-woocommerce' );
+		}
+		if ( $status >= 500 ) {
+			return __( 'The AI provider is temporarily unavailable. Please try again later.', 'points-and-rewards-for-woocommerce' );
+		}
+		if ( preg_match( '/cURL error|http_request_failed|could not resolve|connection/i', $raw ) ) {
+			return __( 'Could not connect to the AI provider. Check your internet connection and try again.', 'points-and-rewards-for-woocommerce' );
+		}
+		return __( 'The AI provider could not answer this request. Please try again.', 'points-and-rewards-for-woocommerce' );
 	}
 
 	/**
@@ -711,8 +847,14 @@ class WPS_WPR_AI_Assistant {
 			$messages[] = $reply;
 
 			if ( ! $resolver->has_ability_calls( $reply ) ) {
+				$text = $this->wps_wpr_get_message_text( $reply );
+				if ( '' === $text ) {
+					$text = empty( $proposals )
+						? __( 'Sorry, I did not get an answer for that. Please try again or rephrase your question.', 'points-and-rewards-for-woocommerce' )
+						: __( 'Please review the proposed change below and click Apply to save it.', 'points-and-rewards-for-woocommerce' );
+				}
 				return array(
-					'reply'     => $this->wps_wpr_get_message_text( $reply ),
+					'reply'     => $text,
 					'proposals' => $proposals,
 				);
 			}
@@ -791,9 +933,16 @@ class WPS_WPR_AI_Assistant {
 	public function wps_wpr_ajax_chat() {
 		$this->wps_wpr_verify_ajax_request();
 
-		$message = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON; each turn is sanitized in wps_wpr_build_messages().
-		$history = isset( $_POST['history'] ) ? json_decode( wp_unslash( $_POST['history'] ), true ) : array();
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Prompt text, never output as HTML; cleaned below.
+		$raw_message = isset( $_POST['message'] ) && is_string( $_POST['message'] ) ? wp_unslash( $_POST['message'] ) : '';
+		$length      = function_exists( 'mb_strlen' ) ? mb_strlen( trim( $raw_message ) ) : strlen( trim( $raw_message ) );
+		if ( $length > self::MAX_MESSAGE_LENGTH ) {
+			/* translators: %d: maximum number of characters */
+			wp_send_json_error( array( 'message' => sprintf( __( 'Your message is too long. Please keep it under %d characters.', 'points-and-rewards-for-woocommerce' ), self::MAX_MESSAGE_LENGTH ) ) );
+		}
+		$message = self::wps_wpr_clean_prompt_text( $raw_message );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON; each turn is cleaned in wps_wpr_build_messages().
+		$history = isset( $_POST['history'] ) && is_string( $_POST['history'] ) ? json_decode( wp_unslash( $_POST['history'] ), true ) : array();
 		if ( '' === $message ) {
 			wp_send_json_error( array( 'message' => __( 'Please enter a message.', 'points-and-rewards-for-woocommerce' ) ) );
 		}
@@ -805,9 +954,13 @@ class WPS_WPR_AI_Assistant {
 			wp_send_json_error( array( 'message' => __( 'No AI provider is configured. Connect one in Settings > Connectors.', 'points-and-rewards-for-woocommerce' ) ) );
 		}
 
-		$result = $this->wps_wpr_run_conversation( $this->wps_wpr_build_messages( $history, $message ) );
-		if ( is_wp_error( $result ) ) {
-			wp_send_json_error( array( 'message' => $result->get_error_message() ) );
+		try {
+			$result = $this->wps_wpr_run_conversation( $this->wps_wpr_build_messages( $history, $message ) );
+		} catch ( Throwable $e ) {
+			$result = $e;
+		}
+		if ( is_wp_error( $result ) || $result instanceof Throwable ) {
+			wp_send_json_error( array( 'message' => $this->wps_wpr_get_friendly_error( $result ) ) );
 		}
 		wp_send_json_success( $result );
 	}
@@ -892,9 +1045,11 @@ class WPS_WPR_AI_Assistant {
 			'wps-wpr-ai-assistant',
 			'wps_wpr_ai',
 			array(
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( self::NONCE ),
-				'i18n'    => array(
+				'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+				'nonce'      => wp_create_nonce( self::NONCE ),
+				'maxHistory' => self::MAX_HISTORY,
+				'maxLength'  => self::MAX_MESSAGE_LENGTH,
+				'i18n'       => array(
 					'thinking' => __( 'Thinking…', 'points-and-rewards-for-woocommerce' ),
 					'error'    => __( 'Something went wrong. Please try again.', 'points-and-rewards-for-woocommerce' ),
 					'apply'    => __( 'Apply', 'points-and-rewards-for-woocommerce' ),
@@ -905,6 +1060,9 @@ class WPS_WPR_AI_Assistant {
 					'empty'    => __( '(empty)', 'points-and-rewards-for-woocommerce' ),
 					'applied'  => __( 'Applied', 'points-and-rewards-for-woocommerce' ),
 					'canceled' => __( 'Canceled', 'points-and-rewards-for-woocommerce' ),
+					'retry'    => __( 'Retry', 'points-and-rewards-for-woocommerce' ),
+					'network'  => __( 'Could not reach the server. Your message was not sent. Check your connection and try again.', 'points-and-rewards-for-woocommerce' ),
+					'noReply'  => __( 'Sorry, I did not get an answer for that. Please try again or rephrase your question.', 'points-and-rewards-for-woocommerce' ),
 				),
 			)
 		);

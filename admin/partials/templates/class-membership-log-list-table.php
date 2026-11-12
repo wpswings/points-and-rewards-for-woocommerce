@@ -67,13 +67,13 @@ class Membership_Log_List_Table extends WP_List_Table {
 		switch ( $column_name ) {
 
 			case 'user_name':
-				return $item[ $column_name ];
+				return esc_html( $item[ $column_name ] );
 			case 'user_email':
-				return '<b>' . $item[ $column_name ] . '</b>';
+				return '<b>' . esc_html( $item[ $column_name ] ) . '</b>';
 			case 'user_points':
-				return '<b>' . $item[ $column_name ] . '</b>';
+				return '<b>' . esc_html( $item[ $column_name ] ) . '</b>';
 			case 'user_level':
-				return '<b>' . $item[ $column_name ] . '</b>';
+				return '<b>' . esc_html( $item[ $column_name ] ) . '</b>';
 
 			default:
 				return false;
