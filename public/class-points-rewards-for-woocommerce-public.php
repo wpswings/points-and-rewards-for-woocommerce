@@ -2366,7 +2366,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @return string
 	 */
 	public function wps_wpr_validate_virtual_coupon_for_points( $response, $coupon_data ) {
-		if ( ! wps_wpr_is_active() ) {
+		//if ( ! wps_wpr_is_active() ) {
 			if ( ! is_admin() ) {
 				if ( false !== $coupon_data && 0 !== $coupon_data ) {
 
@@ -2434,7 +2434,7 @@ class Points_Rewards_For_WooCommerce_Public {
 					}
 				}
 			}
-		}
+		//}
 		return $response;
 	}
 	// Paypal Issue Change End.
