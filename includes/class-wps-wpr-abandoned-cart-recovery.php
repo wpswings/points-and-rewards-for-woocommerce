@@ -356,6 +356,8 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 	 * @return void
 	 */
 	public function wps_wpr_award_recovery_points( $order_id, $old_status, $new_status ) {
+		// Award points at the configured order status (see wps_wpr_get_points_award_status()).
+		list( $old_status, $new_status ) = wps_wpr_map_award_order_statuses( $order_id, $old_status, $new_status );
 		$award_statuses = apply_filters( 'wps_wpr_abandoned_cart_award_statuses', array( 'completed' ) );
 		if ( $old_status === $new_status || ! in_array( $new_status, $award_statuses, true ) ) {
 			return;

@@ -535,6 +535,105 @@ if ( $activated ) {
 	}
 
 	/**
+	 * Order status (without the "wc-" prefix) at which order points are awarded.
+	 * Defaults to "completed". The Pro plugin sets this from its settings; sites can also use the
+	 * `wps_wpr_points_award_order_status` filter, e.g. to award on a custom status such as "scans-delivered".
+	 *
+	 * @return string
+	 */
+	function wps_wpr_get_points_award_status() {
+		$status = (string) apply_filters( 'wps_wpr_points_award_order_status', 'completed' );
+		$status = sanitize_key( preg_replace( '/^wc-/', '', $status ) );
+		// Never award on unpaid / reversed statuses.
+		if ( '' === $status || in_array( $status, array( 'pending', 'failed', 'cancelled', 'refunded', 'on-hold', 'checkout-draft' ), true ) ) {
+			$status = 'completed';
+		}
+		return $status;
+	}
+
+	/**
+	 * Map an order status transition onto the plugin's "completed" logic when a custom award status is set.
+	 *
+	 * - Entering the award status (or "completed", if the order skipped the award status) is reported as
+	 *   "completed" exactly once per order; later visits to either status are reported as a no-op status,
+	 *   so moving an order back and forth between custom statuses never awards points twice.
+	 * - Once points have been awarded, the old status is reported as "completed" so the existing
+	 *   cancel / refund handlers still deduct the points.
+	 * - Cancelling, refunding or failing an order clears the marker.
+	 *
+	 * @param int         $order_id   order id.
+	 * @param string|null $old_status old status (null when unknown).
+	 * @param string      $new_status new status.
+	 * @return array      array( $old_status, $new_status ) as the handlers should see them.
+	 */
+	function wps_wpr_map_award_order_statuses( $order_id, $old_status, $new_status ) {
+		$decisions = &$GLOBALS['wps_wpr_award_status_decisions'];
+		if ( ! is_array( $decisions ) ) {
+			$decisions = array();
+		}
+
+		$trigger = wps_wpr_get_points_award_status();
+		if ( 'completed' === $trigger ) {
+			return array( $old_status, $new_status );
+		}
+
+		$key = $order_id . '|' . $new_status;
+		if ( ! isset( $decisions[ $key ] ) ) {
+
+			$order   = wc_get_order( $order_id );
+			$already = $order && (
+				$order->get_meta( '_wps_wpr_award_status_reached' )
+				|| $order->get_meta( '_wps_par_points_awarded' )
+				|| 'set' === $order->get_meta( $order_id . '#item_conversion_id' )
+			);
+
+			$mapped_new = $new_status;
+			if ( $new_status === $trigger || 'completed' === $new_status ) {
+				if ( $already ) {
+					$mapped_new = 'wps-wpr-points-already-awarded';
+				} elseif ( $order ) {
+					$mapped_new = 'completed';
+					$order->update_meta_data( '_wps_wpr_award_status_reached', $trigger );
+					$order->save_meta_data();
+				}
+			} elseif ( $order && in_array( $new_status, array( 'cancelled', 'refunded', 'failed' ), true ) ) {
+				$order->delete_meta_data( '_wps_wpr_award_status_reached' );
+				$order->save_meta_data();
+			}
+			$decisions[ $key ] = array(
+				'already' => (bool) $already,
+				'new'     => $mapped_new,
+			);
+		}
+
+		$decision   = $decisions[ $key ];
+		$mapped_old = $old_status;
+		if ( $decision['already'] && null !== $old_status && ! in_array( $old_status, array( 'pending', 'failed', 'cancelled', 'refunded', 'on-hold', 'checkout-draft' ), true ) ) {
+			// Points already belong to this order: treat any post-award status as "completed" for revocation logic.
+			$mapped_old = 'completed';
+		}
+		return array( $mapped_old, $decision['new'] );
+	}
+
+	/**
+	 * Forget the per-request award decision once every handler has seen the transition, so a second
+	 * status change of the same order within one request is evaluated afresh.
+	 *
+	 * @param int $order_id order id.
+	 * @return void
+	 */
+	function wps_wpr_reset_award_order_status_decision( $order_id ) {
+		if ( ! empty( $GLOBALS['wps_wpr_award_status_decisions'] ) && is_array( $GLOBALS['wps_wpr_award_status_decisions'] ) ) {
+			foreach ( array_keys( $GLOBALS['wps_wpr_award_status_decisions'] ) as $key ) {
+				if ( 0 === strpos( $key, $order_id . '|' ) ) {
+					unset( $GLOBALS['wps_wpr_award_status_decisions'][ $key ] );
+				}
+			}
+		}
+	}
+	add_action( 'woocommerce_order_status_changed', 'wps_wpr_reset_award_order_status_decision', PHP_INT_MAX, 1 );
+
+	/**
 	 * This function is used to check whether subscription is active or not.
 	 *
 	 * @return bool
