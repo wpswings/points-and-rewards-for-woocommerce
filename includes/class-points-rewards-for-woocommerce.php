@@ -367,9 +367,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_extend_point_tab_section', $plugin_public, 'wps_wpr_show_subscription_message', 10, 1 );
 			// order rewards points functionality.
 			$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_public, 'wps_wpr_order_rewards_points_callback', 20, 2 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_order_rewards_points_on_award_status', 20, 4 );
 			// Gamification features.
 			$this->loader->add_action( 'wp_footer', $plugin_public, 'wps_wpr_show_canvas_icons' );
 			// assign claim points.
+			$this->loader->add_action( 'wp_ajax_wps_wpr_spin_win_wheel', $plugin_public, 'wps_wpr_spin_win_wheel' );
 			$this->loader->add_action( 'wp_ajax_assign_claim_points', $plugin_public, 'wps_wpr_assign_claim_points' );
 			// Security: Hook to log invalid claim attempts.
 			$this->loader->add_action( 'wps_wpr_invalid_claim_attempt', $plugin_public, 'wps_wpr_log_invalid_claim_attempt', 10, 4 );

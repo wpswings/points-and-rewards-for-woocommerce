@@ -1721,6 +1721,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @return void
 	 */
 	public function wps_wpr_assign_vendor_commission_points( $order_id, $old_status, $new_status ) {
+		// Award points at the configured order status (see wps_wpr_get_points_award_status()).
+		list( $old_status, $new_status ) = wps_wpr_map_award_order_statuses( $order_id, $old_status, $new_status );
 
 		if ( $old_status != $new_status ) {
 			if ( wps_wpr_restrict_user_fun() ) {

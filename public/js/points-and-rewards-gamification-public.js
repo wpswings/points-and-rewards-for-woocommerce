@@ -231,27 +231,35 @@
         let rotationDeg   = 360;
         let totalRotation = rotationDeg * rotationSpeed;
 
-        // Rotate spinner when click on Win Wheel.
+        // Prize decided by the server for this spin.
+        var wps_wpr_server_prize = null;
+
+        // Rotate spinner when click on Win Wheel. The server picks the segment; the wheel only animates to it.
         jQuery(document).on('click', '#wps_wpr_spinWheelButton', function() {
 
-            var rotationValues = [];
-            // get segment count and stop segments accordingly.
-            wps_wpr.wps_wpr_select_spin_stop.forEach(function(element) {
+            var $btn = $(this);
+            $btn.css('pointer-events', 'none');
 
-                rotationValues.push(items_to_select_from[element]);
+            jQuery.ajax({
+                'url'    : wps_wpr.ajaxurl,
+                'method' : 'POST',
+                'async'  : false,
+                'data'   : {
+                    'action' : 'wps_wpr_spin_win_wheel',
+                    'nonce'  : wps_wpr.wps_wpr_nonce,
+                },
+                success : function( response ) {
+                    if ( response && true == response.result ) {
+                        wps_wpr_server_prize = response;
+                    }
+                }
             });
 
-            // if segemnts ar not set to stop win wheel, set default.
-            if ( rotationValues.length == 0 ) {
-
-                rotationValues = [items_to_select_from[5],items_to_select_from[4],items_to_select_from[3],items_to_select_from[2]];
+            if ( ! wps_wpr_server_prize || 'undefined' === typeof items_to_select_from[ wps_wpr_server_prize.segment ] ) {
+                return;
             }
 
-            let randomIndex    = Math.floor(Math.random() * rotationValues.length);
-            let randomValue    = rotationValues[randomIndex];
-            let time           = totalRotation + (randomValue * 3.6);
-
-            $(this).css('pointer-events', 'none');
+            let time = totalRotation + ( items_to_select_from[ wps_wpr_server_prize.segment ] * 3.6 );
             wheel.animate({ deg: time }, {
                 duration: 0,
                 easing: 'swing',
@@ -407,6 +415,12 @@
                             closestRewardsType = currentElement.attr('data-rewards');
                         }
                     });
+
+                    // the server-decided prize is authoritative.
+                    if ( wps_wpr_server_prize ) {
+                        closestElement     = wps_wpr_server_prize.points;
+                        closestRewardsType = wps_wpr_server_prize.type;
+                    }
 
                     // set claim points to show on pop-up.
                     $('.wps_wpr_container-popup-val .wps_wpr-val').empty();
