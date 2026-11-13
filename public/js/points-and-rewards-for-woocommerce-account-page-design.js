@@ -79,8 +79,10 @@
                 const rawText = fieldset.text();
                 
                 // Security: build the bullets as text nodes, never as HTML (the setting text is decoded by .text()).
-                const bullets = rawText
-                    .split('*')
+                // One bullet per list item / line / "*" so separate ways are never run together.
+                const $items  = fieldset.find('li');
+                const parts   = $items.length ? $items.map(function () { return $(this).text(); }).get() : rawText.split(/\*|\r?\n/);
+                const bullets = parts
                     .filter(item => item.trim() !== '')
                     .map(item => $('<div class="bullet-wrap"></div>').text('• ' + item.trim()));
 

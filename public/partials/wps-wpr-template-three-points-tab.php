@@ -164,10 +164,7 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 			<li>
 				<fieldset>
 				<?php
-					$wps_ways_to_gain_points_value = str_replace( '[Comment Points]', $wps_comment_value, $wps_ways_to_gain_points_value );
-					$wps_ways_to_gain_points_value = str_replace( '[Refer Points]', $wps_refer_value, $wps_ways_to_gain_points_value );
-					$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $wps_per_currency_spent_points, $wps_ways_to_gain_points_value );
-					$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $wps_per_currency_spent_price, $wps_ways_to_gain_points_value );
+					$wps_ways_to_gain_points_value = $this->wps_wpr_format_ways_to_gain_points( $wps_ways_to_gain_points_value, $wps_comment_value, $wps_refer_value, $wps_per_currency_spent_points, $wps_per_currency_spent_price );
 					echo wp_kses_post( $wps_ways_to_gain_points_value );
 				?>
 				</fieldset>
@@ -680,9 +677,22 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 		</div>
 		<!-- Claim section tab details -->
 		<div class="wps-p_masd-item wps-p_masd-i-claim">
-			<div class="wps-par_ma-notice par-notice-error">
-				<h4><?php esc_html_e( 'No relevant data found at the moment!.', 'points-and-rewards-for-woocommerce' ); ?></h4>
-			</div>
+			<?php
+			// Share points / claim features (Pro) render inside this tab and print their own empty state.
+			if ( has_action( 'wps_wpr_add_share_points' ) ) {
+				?>
+				<div class="wps_wpr_share_points_section">
+					<?php do_action( 'wps_wpr_add_share_points', $user_id ); ?>
+				</div>
+				<?php
+			} else {
+				?>
+				<div class="wps-par_ma-notice par-notice-error">
+					<h4><?php esc_html_e( 'No relevant data found at the moment!', 'points-and-rewards-for-woocommerce' ); ?></h4>
+				</div>
+				<?php
+			}
+			?>
 		</div>
 		<!-- Referral section tab details -->
 		<div class="wps-p_masd-item wps-p_masd-i-referral wps-p_masd-i--active">
@@ -799,10 +809,7 @@ $wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_convers
 			?>
 		</div>
 
-		<!-- Share Points hook -->
-		<div class="wps_wpr_share_points_section">
-			<?php do_action( 'wps_wpr_add_share_points', $user_id ); ?>
-		</div>
+		<!-- Share Points hook: rendered inside the Claim tab above. -->
 
 		<?php do_action( 'wps_par_extra_template_data' ); ?>
 	</div>

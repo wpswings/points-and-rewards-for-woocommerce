@@ -162,7 +162,7 @@ $wps_wpr_general_settings = array(
 		'id'                => 'wps_wpr_general_ways_to_gain_points',
 		'class'             => 'input-text',
 		'desc_tip'          => __( 'The entered text will append before the Total Number of Point', 'points-and-rewards-for-woocommerce' ),
-		'desc2'             => '[Refer Points]' . __( ' for Referral Points', 'points-and-rewards-for-woocommerce' ) . '[Per Currency Spent Points]' . __( ' for Per currency spent points and', 'points-and-rewards-for-woocommerce' ) . '[Per Currency Spent Price]' . __( ' for per currency spent price', 'points-and-rewards-for-woocommerce' ),
+		'desc2'             => '[Refer Points]' . __( ' for referral points', 'points-and-rewards-for-woocommerce' ) . ', [Per Currency Spent Points]' . __( ' for per-currency spent points', 'points-and-rewards-for-woocommerce' ) . ', [Per Currency Spent Price]' . __( ' for per-currency spent price', 'points-and-rewards-for-woocommerce' ),
 		'desc'              => __( 'Use these shortcodes to provide ways to gain points on the front end', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
@@ -251,7 +251,7 @@ $wps_wpr_general_settings = array(
 		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
 		'desc'     => __( 'Enter a message for your customers about the points redemption rate. Use the [POINTS] shortcode for points and the [CURRENCY] shortcode to display the currency value.', 'points-and-rewards-for-woocommerce' ),
 		'desc_tip' => __( 'Entered message will appears on Cart Page.', 'points-and-rewards-for-woocommerce' ),
-		'default'  => __( 'Here is the Discount Rule for Applying your Points to Cart Total 1 Points = $1.00', 'points-and-rewards-for-woocommerce' ),
+		'default'  => __( 'Here is the Discount Rule for Applying your Points to Cart Total [POINTS] Points = [CURRENCY]', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type' => 'sectionend',
@@ -320,8 +320,7 @@ $wps_wpr_general_settings = array(
 		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
 		'desc'     => apply_filters( 'wps_wpr_order_rewards_message_desc', __( 'Use these shortcodes to provide an appropriate message for your customers on his no. of [ORDER] and get rewards points [POINTS]', 'points-and-rewards-for-woocommerce' ) ),
 		'desc_tip' => __( 'Entered message will appears on Cart Page.', 'points-and-rewards-for-woocommerce' ),
-		/* translators: %1$s: reward points, %2$s: number of orders. */
-		'default'  => apply_filters( 'wps_wpr_order_rewards_message_default', __( 'Hurry up! You will get %1$s points if you place %2$s orders.', 'points-and-rewards-for-woocommerce' ) ),
+		'default'  => apply_filters( 'wps_wpr_order_rewards_message_default', __( 'Place [ORDER] orders and earn [POINTS] points', 'points-and-rewards-for-woocommerce' ) ),
 	),
 	array(
 		'type' => 'sectionend',
@@ -366,9 +365,71 @@ if ( isset( $_POST['wps_wpr_save_general'] ) && isset( $_POST['wps-wpr-nonce'] )
 				'wps_wpr_enable_to_show_order_reward_message' => ! empty( $_POST['wps_wpr_enable_to_show_order_reward_message'] ) ? 1 : '',
 			);
 
+			// Server-side validation of numeric fields: reject non-numeric / below-minimum values instead of silently coercing them.
+			$wps_wpr_prev_settings   = get_option( 'wps_wpr_settings_gallery', array() );
+			$wps_wpr_prev_settings   = is_array( $wps_wpr_prev_settings ) ? $wps_wpr_prev_settings : array();
+			$wps_wpr_number_fields   = array();
+			$wps_wpr_invalid_fields  = array();
+			$wps_wpr_forced_min_ones = array( 'wps_wpr_cart_points_rate', 'wps_wpr_cart_price_rate' );
+			foreach ( $wps_wpr_general_settings as $wps_wpr_field ) {
+				if ( ! is_array( $wps_wpr_field ) || empty( $wps_wpr_field['type'] ) ) {
+					continue;
+				}
+				$wps_wpr_children = ( 'number_text' === $wps_wpr_field['type'] && ! empty( $wps_wpr_field['number_text'] ) && is_array( $wps_wpr_field['number_text'] ) ) ? $wps_wpr_field['number_text'] : array( $wps_wpr_field );
+				foreach ( $wps_wpr_children as $wps_wpr_child ) {
+					if ( empty( $wps_wpr_child['id'] ) || empty( $wps_wpr_child['type'] ) ) {
+						continue;
+					}
+					if ( 'number' !== $wps_wpr_child['type'] && ! in_array( $wps_wpr_child['id'], $wps_wpr_forced_min_ones, true ) ) {
+						continue;
+					}
+					$wps_wpr_min = null;
+					if ( isset( $wps_wpr_child['custom_attributes']['min'] ) ) {
+						$wps_wpr_min = trim( (string) $wps_wpr_child['custom_attributes']['min'], "\"' " );
+						$wps_wpr_min = is_numeric( $wps_wpr_min ) ? (float) $wps_wpr_min : null;
+					}
+					if ( in_array( $wps_wpr_child['id'], $wps_wpr_forced_min_ones, true ) ) {
+						$wps_wpr_min = 1;
+					}
+					$wps_wpr_number_fields[ $wps_wpr_child['id'] ] = array(
+						'min'   => $wps_wpr_min,
+						'title' => ! empty( $wps_wpr_field['title'] ) ? $wps_wpr_field['title'] : $wps_wpr_child['id'],
+						'def'   => isset( $wps_wpr_child['default'] ) ? $wps_wpr_child['default'] : '',
+					);
+				}
+			}
+			foreach ( $wps_wpr_number_fields as $wps_wpr_field_id => $wps_wpr_field_info ) {
+				if ( ! isset( $_POST[ $wps_wpr_field_id ] ) || is_array( $_POST[ $wps_wpr_field_id ] ) ) {
+					continue;
+				}
+				$wps_wpr_raw = trim( sanitize_text_field( wp_unslash( $_POST[ $wps_wpr_field_id ] ) ) );
+				if ( '' === $wps_wpr_raw && ( null === $wps_wpr_field_info['min'] || $wps_wpr_field_info['min'] <= 0 ) ) {
+					continue;
+				}
+				// Don't nag about a value the admin didn't change (e.g. a legacy 0 stored for a disabled feature).
+				$wps_wpr_prev_val = isset( $wps_wpr_prev_settings[ $wps_wpr_field_id ] ) ? (string) $wps_wpr_prev_settings[ $wps_wpr_field_id ] : null;
+				if ( null !== $wps_wpr_prev_val && is_numeric( $wps_wpr_raw ) && is_numeric( $wps_wpr_prev_val ) && (float) $wps_wpr_raw === (float) $wps_wpr_prev_val && ! in_array( $wps_wpr_field_id, $wps_wpr_forced_min_ones, true ) ) {
+					continue;
+				}
+				if ( ! is_numeric( $wps_wpr_raw ) || ( null !== $wps_wpr_field_info['min'] && (float) $wps_wpr_raw < $wps_wpr_field_info['min'] ) ) {
+					$wps_wpr_invalid_fields[ $wps_wpr_field_id ] = $wps_wpr_field_info['title'];
+				}
+			}
+
 			if ( is_array( $general_settings_array ) && ! empty( $general_settings_array ) ) {
 				$general_settings_array = apply_filters( 'wps_wpr_general_settings_save_option', $general_settings_array );
+				// Keep the previously saved value for every invalid numeric field.
+				foreach ( $wps_wpr_invalid_fields as $wps_wpr_field_id => $wps_wpr_field_title ) {
+					$general_settings_array[ $wps_wpr_field_id ] = isset( $wps_wpr_prev_settings[ $wps_wpr_field_id ] ) ? $wps_wpr_prev_settings[ $wps_wpr_field_id ] : $wps_wpr_number_fields[ $wps_wpr_field_id ]['def'];
+				}
 				update_option( 'wps_wpr_settings_gallery', $general_settings_array );
+			}
+			if ( ! empty( $wps_wpr_invalid_fields ) ) {
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p><strong><?php esc_html_e( 'Some values were not saved because they are not valid numbers or are below the allowed minimum. The previous values were kept for:', 'points-and-rewards-for-woocommerce' ); ?></strong> <?php echo esc_html( implode( ', ', array_unique( array_map( 'wp_strip_all_tags', $wps_wpr_invalid_fields ) ) ) ); ?></p>
+				</div>
+				<?php
 			}
 			$settings_obj->wps_wpr_settings_saved();
 			do_action( 'wps_wpr_general_settings_save_option', $general_settings_array );

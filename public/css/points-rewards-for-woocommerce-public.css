@@ -1576,3 +1576,42 @@ span.wps_wpr_all_referral_name:hover~span.wps_wpr_all_referral_view, span.wps_wp
 .wp-block-woocommerce-checkout-order-summary-block #wps_wpr_button_to_add_points_section {
     padding: 0 15px;
 }
+/* BUG-13: readable "X Points = amount" helper on the (theme-coloured) checkout notice. */
+.custom_point_checkout.woocommerce-info > p,
+.wps_wpr_apply_custom_points.custom_point_checkout > p {
+    display: inline-block;
+    margin: 8px 0 0;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: #fff;
+    color: #1d2327;
+    font-weight: 600;
+}
+.custom_point_checkout.woocommerce-info > p .woocommerce-Price-amount {
+    color: inherit;
+}
+
+/* BUG-14: spin-wheel launcher must not sit on the admin bar / site header. */
+.wps_wpr_wheel_icon {
+    z-index: 99990;
+}
+.wps_wpr_wheel_icon.wps_wpr_canvas_top_left_position,
+.wps_wpr_wheel_icon.wps_wpr_canvas_top_right_position {
+    top: calc(var(--wp-admin--admin-bar--height, 0px) + 120px);
+}
+body.admin-bar .wps_wpr_wheel_icon.wps_wpr_canvas_top_left_position,
+body.admin-bar .wps_wpr_wheel_icon.wps_wpr_canvas_top_right_position {
+    top: calc(var(--wp-admin--admin-bar--height, 32px) + 120px);
+}
+
+/* BUG-14: "Ways to gain more points" list. */
+.wps_wpr_ways_to_gain_list {
+    margin: 0;
+    padding-left: 1.2em;
+}
+.wps_wpr_ways_to_gain_list li {
+    margin: 0 0 4px;
+}
+.wps_wpr_block_points_required_msg {
+    margin-top: 8px;
+}

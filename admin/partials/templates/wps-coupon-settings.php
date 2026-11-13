@@ -73,7 +73,7 @@ $wps_wpr_coupon_settings = array(
 		'class'    => 'text_points wps_wpr_new_woo_ver_style_text',
 		'desc'     => __( 'Enter a message for your customers to earn points. Use the [POINTS] shortcode for points and the [CURRENCY] shortcode to display the currency value.', 'points-and-rewards-for-woocommerce' ),
 		'desc_tip' => __( 'Entered message will appears on Cart Page.', 'points-and-rewards-for-woocommerce' ),
-		'default'  => __( 'Place an order and earn reward points in return. Conversion rate: $1 = 1 point.', 'points-and-rewards-for-woocommerce' ),
+		'default'  => __( 'Place an order and earn reward points in return. Conversion rate: [CURRENCY] = [POINTS] point.', 'points-and-rewards-for-woocommerce' ),
 	),
 	array(
 		'type' => 'sectionend',

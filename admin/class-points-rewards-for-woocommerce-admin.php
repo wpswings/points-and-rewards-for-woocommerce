@@ -475,22 +475,40 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$sign       = sanitize_text_field( wp_unslash( $_POST['sign'] ) );
 			$reason     = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
 
-			// Validate: only '+' / '-' are allowed, points must be a positive whole number and the user must exist.
-			if ( ! in_array( $sign, array( '+', '-' ), true ) || $points <= 0 || (float) wp_unslash( $_POST['points'] ) !== (float) $points || ! get_user_by( 'ID', $user_id ) ) {
+			// Validate: the user must exist.
+			if ( ! $user_id || ! get_user_by( 'ID', $user_id ) ) {
+				wp_send_json_error( array( 'msg' => esc_html__( 'User not found', 'points-and-rewards-for-woocommerce' ) ), 404 );
+			}
+
+			// Validate: only '+' / '-' are allowed and points must be a positive whole number.
+			if ( ! in_array( $sign, array( '+', '-' ), true ) || $points <= 0 || (float) wp_unslash( $_POST['points'] ) !== (float) $points ) {
 				wp_send_json_error( array( 'msg' => esc_html__( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ) ), 400 );
 			}
 
+			$wps_wpr_notice_type = 'success';
+			$wps_wpr_notice_msg  = esc_html__( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' );
 			if ( '+' === $sign ) {
 
 				$total_points = $get_points + $points;
 			} elseif ( '-' === $sign ) {
+				if ( $get_points <= 0 ) {
+					wp_send_json_error( array( 'msg' => esc_html__( 'This user has no points to deduct.', 'points-and-rewards-for-woocommerce' ) ), 400 );
+				}
 				if ( $points <= $get_points ) {
 
 					$total_points = $get_points - $points;
 				} else {
 
-					$points       = $get_points;
-					$total_points = $get_points - $points;
+					// Deduct only up to the available balance and tell the admin.
+					$points              = $get_points;
+					$total_points        = $get_points - $points;
+					$wps_wpr_notice_type = 'warning';
+					$wps_wpr_notice_msg  = sprintf(
+						/* translators: %1$s: points deducted, %2$s: balance before deduction */
+						esc_html__( 'Only %1$s points were deducted because the user\'s balance was %2$s.', 'points-and-rewards-for-woocommerce' ),
+						$points,
+						$get_points
+					);
 				}
 			}
 			$data = array(
@@ -510,7 +528,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 			// send messages on whatsapp.
 			wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sid */ sprintf( esc_html__( 'Your points have been updated by Admin. Your total points are now %s', 'points-and-rewards-for-woocommerce' ), $total_points ) );
 			do_action( 'wps_wpr_update_user_points_manually', $user_id );
-			wp_die();
+			wp_send_json_success(
+				array(
+					'msg'         => $wps_wpr_notice_msg,
+					'notice_type' => $wps_wpr_notice_type,
+				)
+			);
 		}
 	}
 

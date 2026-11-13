@@ -143,6 +143,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
 		/**
+		 * The class keeping order points consistent across cancel / refund / re-complete.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
+
+		/**
 		 * The class responsible for the AI settings assistant.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-ai-assistant.php';
@@ -410,6 +415,9 @@ class Points_Rewards_For_Woocommerce {
 
 			// abandoned cart recovery with points incentive.
 			$abandoned_cart = new WPS_WPR_Abandoned_Cart_Recovery();
+
+			// order points lifecycle ( re-complete after cancel, partial refunds, order rewards reversal ).
+			new WPS_WPR_Order_Points_Lifecycle();
 			$this->loader->add_action( 'init', $abandoned_cart, 'wps_wpr_maybe_schedule_cron' );
 			$this->loader->add_action( WPS_WPR_Abandoned_Cart_Recovery::CRON_HOOK, $abandoned_cart, 'wps_wpr_process_abandoned_carts' );
 			$this->loader->add_action( 'woocommerce_cart_updated', $abandoned_cart, 'wps_wpr_track_cart_activity' );

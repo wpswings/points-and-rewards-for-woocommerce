@@ -13,14 +13,14 @@
 				setTimeout(() => {
 					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
 	
-						jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
+						wps_wpr_block_points_target('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
 					}
 				}, 1000);
 
 				jQuery(document).on('mouseover', '.woocommerce-cart.woocommerce-page', function(){
 					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
 	
-						jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
+						wps_wpr_block_points_target('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
 					}
 				});
 			}
@@ -33,14 +33,14 @@
 				setTimeout(() => {
 					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
 
-						jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
+						wps_wpr_block_points_target('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
 					}
 				}, 1000);
 
 				jQuery(document).on('mouseover', '.woocommerce-checkout.woocommerce-page', function(){
 					if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
 
-						jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
+						wps_wpr_block_points_target('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div id="wps_wpr_button_to_add_points_section"><a href="#">' + wps_wpr.wps_add_a_points + '</a></div>');
 					}
 				});
 			}
@@ -52,17 +52,23 @@
 			e.preventDefault();
 			jQuery(this).hide();
 
+			// Only one points form per page (the block may render more than one summary container).
+			if ( jQuery('.wps_wpr_append_points_apply_html, .wps_wpr_block_points_required_msg').length ) {
+				jQuery('.wps_wpr_append_points_apply_html, .wps_wpr_block_points_required_msg').show();
+				return;
+			}
+
 			var minimum_redeem_points   = parseInt( wps_wpr.get_min_redeem_req );
 			var wps_user_current_points = parseInt( wps_wpr.wps_user_current_points );
 			if ( minimum_redeem_points <= wps_user_current_points ) {
 
-				jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="' + wps_wpr.wps_points_name + '"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" data-order-limit="0">' + wps_wpr.wps_apply_points + '</button><p>' + wps_wpr_cart_block_obj. available_points_msg + ' : ' + wps_wpr_cart_block_obj.current__points + ' </p></div>');
-				jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="' + wps_wpr.wps_points_name + '"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" data-order-limit="0">' + wps_wpr.wps_apply_points + '</button><p>' + wps_wpr_cart_block_obj.available_points_msg + ' : ' + wps_wpr_cart_block_obj.current__points + ' </p></div>');
+				wps_wpr_block_points_target('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append('<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="' + wps_wpr.wps_points_name + '"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" data-order-limit="0">' + wps_wpr.wps_apply_points + '</button><p>' + wps_wpr_cart_block_obj. available_points_msg + ' : ' + wps_wpr_cart_block_obj.current__points + ' </p></div>');
+				wps_wpr_block_points_target('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append('<div class="wps_wpr_apply_custom_points custom_point_checkout wps_wpr_append_points_apply_html"><input type="number" min="0" name="wps_cart_points" class="input-text" id="wps_cart_points" value="" placeholder="' + wps_wpr.wps_points_name + '"/><button class="button wps_cart_points_apply" name="wps_cart_points_apply" id="wps_cart_points_apply" data-order-limit="0">' + wps_wpr.wps_apply_points + '</button><p>' + wps_wpr_cart_block_obj.available_points_msg + ' : ' + wps_wpr_cart_block_obj.current__points + ' </p></div>');
 			} else {
 
 				var required_points = parseInt( minimum_redeem_points - wps_user_current_points );
-				jQuery('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append( wps_wpr.points_message_require + required_points + wps_wpr.points_more_to_redeem );
-				jQuery('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append( wps_wpr.points_message_require + required_points + wps_wpr.points_more_to_redeem );
+				wps_wpr_block_points_target('.wp-block-woocommerce-cart-order-summary-coupon-form-block').append( jQuery('<div class="wps_wpr_block_points_required_msg"></div>').text( wps_wpr.points_message_require + required_points + wps_wpr.points_more_to_redeem ) );
+				wps_wpr_block_points_target('.wp-block-woocommerce-checkout-order-summary-coupon-form-block').append( jQuery('<div class="wps_wpr_block_points_required_msg"></div>').text( wps_wpr.points_message_require + required_points + wps_wpr.points_more_to_redeem ) );
 			}
 		});
 
@@ -209,4 +215,11 @@ function wps_wpr_refresh_cart_page() {
 			}, 1500);
 		}
 	});
+}
+
+// Return only the first visible container for the points UI so it is never rendered twice.
+function wps_wpr_block_points_target( selector ) {
+	var $all     = jQuery( selector );
+	var $visible = $all.filter( ':visible' );
+	return ( $visible.length ? $visible : $all ).first();
 }
