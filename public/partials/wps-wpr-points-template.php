@@ -161,10 +161,7 @@ if ( ! is_array( $coupon_settings ) ) {
 			</p>
 			<div class="wps_wpr_each_section_wrap">
 				<?php
-				$wps_ways_to_gain_points_value = str_replace( '[Comment Points]', $wps_comment_value, $wps_ways_to_gain_points_value );
-				$wps_ways_to_gain_points_value = str_replace( '[Refer Points]', $wps_refer_value, $wps_ways_to_gain_points_value );
-				$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $wps_per_currency_spent_points, $wps_ways_to_gain_points_value );
-				$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $wps_per_currency_spent_price, $wps_ways_to_gain_points_value );
+				$wps_ways_to_gain_points_value = $this->wps_wpr_format_ways_to_gain_points( $wps_ways_to_gain_points_value, $wps_comment_value, $wps_refer_value, $wps_per_currency_spent_points, $wps_per_currency_spent_price );
 				echo '<fieldset class="wps_wpr_each_section">' . wp_kses_post( $wps_ways_to_gain_points_value ) . '</fieldset>';
 				?>
 			</div>

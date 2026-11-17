@@ -143,6 +143,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
 		/**
+		 * The class keeping order points consistent across cancel / refund / re-complete.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
+
+		/**
 		 * The class responsible for the AI settings assistant.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-ai-assistant.php';
@@ -302,6 +307,8 @@ class Points_Rewards_For_Woocommerce {
 			/*Assign signup points and referral points in woocommerce*/
 			$this->loader->add_action( 'user_register', $plugin_public, 'wps_wpr_new_customer_registerd', 10, 1 );
 			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_woocommerce_order_status_changed', 10, 3 );
+			// Orders paid only with points earn no per-currency points.
+			$this->loader->add_filter( 'wps_wpr_per_currency_points_on_subtotal', $plugin_public, 'wps_wpr_exclude_points_only_from_per_currency', 20, 2 );
 
 			$this->loader->add_action( 'woocommerce_before_customer_login_form', $plugin_public, 'wps_wpr_woocommerce_signup_point' );
 			/*Add html in the cart for apply points*/
@@ -319,6 +326,12 @@ class Points_Rewards_For_Woocommerce {
 			// cart block change.
 			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta' );
 			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta' );
+			// Return redeemed points on failed payment / cancel / refund.
+			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_return_redeemed_cart_points', 10, 3 );
+			$this->loader->add_action( 'woocommerce_before_pay_action', $plugin_public, 'wps_wpr_validate_pay_for_order_points', 10, 1 );
+			// Keep applied points in the session until the order is paid.
+			$this->loader->add_action( 'woocommerce_cart_emptied', $plugin_public, 'wps_wpr_clear_cart_points_session', 10, 1 );
+			$this->loader->add_action( 'woocommerce_thankyou', $plugin_public, 'wps_wpr_clear_cart_points_session', 10, 1 );
 			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'wps_wpr_woocommerce_add_cart_item_data', 10, 4 );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'wps_wpr_woocommerce_get_item_data', 10, 2 );
 			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'wps_display_product_points', 7 );
@@ -410,6 +423,9 @@ class Points_Rewards_For_Woocommerce {
 
 			// abandoned cart recovery with points incentive.
 			$abandoned_cart = new WPS_WPR_Abandoned_Cart_Recovery();
+
+			// order points lifecycle ( re-complete after cancel, partial refunds, order rewards reversal ).
+			new WPS_WPR_Order_Points_Lifecycle();
 			$this->loader->add_action( 'init', $abandoned_cart, 'wps_wpr_maybe_schedule_cron' );
 			$this->loader->add_action( WPS_WPR_Abandoned_Cart_Recovery::CRON_HOOK, $abandoned_cart, 'wps_wpr_process_abandoned_carts' );
 			$this->loader->add_action( 'woocommerce_cart_updated', $abandoned_cart, 'wps_wpr_track_cart_activity' );

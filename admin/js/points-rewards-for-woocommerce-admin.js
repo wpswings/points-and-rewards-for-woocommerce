@@ -96,19 +96,28 @@
 				type: "POST",
 				data: t,
 				success: function (r) {
+				  var d = r && r.data ? r.data : {},
+					w = "warning" === d.notice_type;
 				  jQuery("#wps_wpr_loader").hide(),
 					e("html, body").animate(
 					  { scrollTop: e(".wps_rwpr_header").offset().top },
 					  800
 					),
 					e(
-					  '<div class="notice notice-success is-dismissible"><p><strong>' +
-						wps_wpr_object.success_update +
-						"</strong></p></div>"
-					).insertAfter(e(".wps_rwpr_header")),
+					  '<div class="notice ' + (w ? "notice-warning" : "notice-success") + ' is-dismissible"><p><strong></strong></p></div>'
+					)
+					  .find("strong")
+					  .text(d.msg || wps_wpr_object.success_update)
+					  .end()
+					  .insertAfter(e(".wps_rwpr_header")),
 					setTimeout(function () {
 					  location.reload();
-					}, 1e3);
+					}, w ? 4e3 : 1e3);
+				},
+				error: function (x) {
+				  jQuery("#wps_wpr_loader").hide();
+				  var m = x && x.responseJSON && x.responseJSON.data && x.responseJSON.data.msg;
+				  alert(m || wps_wpr_object.validpoint);
 				},
 			  });
 			} else alert(wps_wpr_object.reason);
