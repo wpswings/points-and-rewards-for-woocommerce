@@ -14,30 +14,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <?php
-echo esc_html( $email_heading ) . "\n\n"; // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo wp_strip_all_tags( $email_heading ) . "\n\n"; // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Plain-text email.
 $email_content = apply_filters( 'wps_wpr_preview_email_content', $email_content );
 ?>
 
 <?php
-$template = '<table class="wps_wuc_email_template" style="width: 100%!important; max-width: 600px; text-align: center; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
-	<tbody>
-		<tr>
-			<td style="background: #fff;">
-				<table style="border: 2px dashed #b9aca1;" border="0" width="100%" cellspacing="0" cellpadding="0">
-					<tbody>
-						<tr>
-							<td colspan="2">
-								<div style="text-align: center;"><span style="display: inline-block;padding: 5px 15px; margin-bottom: 10px; background-color: rgba(241, 225, 225, 0.12); font-weight: bold;">' . esc_html( $email_content ) . '</span></div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-		</tr>
-	</tbody>
-</table>';
+// Plain-text body: keep link targets, turn line breaks into new lines and drop all markup.
+$email_text = preg_replace( '/<a\s[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)<\/a>/is', '$2 ($1)', (string) $email_content );
+$email_text = preg_replace( '/<br\s*\/?>|<\/p>|<\/div>|<\/li>|<\/h[1-6]>/i', "\n", $email_text );
+$email_text = wp_strip_all_tags( $email_text );
+$email_text = html_entity_decode( $email_text, ENT_QUOTES, get_bloginfo( 'charset' ) );
+$email_text = preg_replace( "/\n{3,}/", "\n\n", $email_text );
 
-echo wp_kses_post( html_entity_decode( $template ) ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo trim( $email_text ) . "\n\n"; // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Plain-text email, markup already stripped.
 
-
-echo wp_kses_post( apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) ) ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo wp_strip_all_tags( apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) ) ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Plain-text email.

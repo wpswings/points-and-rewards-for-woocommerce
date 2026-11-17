@@ -53,6 +53,7 @@ class Points_Rewards_For_Woocommerce_Loader {
 
 		$this->actions = array();
 		$this->filters = array();
+
 	}
 
 	/**
@@ -108,6 +109,7 @@ class Points_Rewards_For_Woocommerce_Loader {
 		);
 
 		return $hooks;
+
 	}
 
 	/**
@@ -124,5 +126,7 @@ class Points_Rewards_For_Woocommerce_Loader {
 		foreach ( $this->actions as $hook ) {
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
+
 	}
+
 }

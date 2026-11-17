@@ -329,6 +329,9 @@ class WPS_WPR_Setup_Wizard {
 			return;
 		}
 
+		// Verify the request came from the wizard's skip link.
+		check_admin_referer( 'wps_wpr_skip_wizard' );
+
 		// Mark wizard as completed and skipped.
 		update_option( 'wps_wpr_wizard_completed', true );
 		update_option( 'wps_wpr_wizard_skipped', true );

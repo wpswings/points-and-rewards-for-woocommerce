@@ -22,8 +22,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email );
 $email_content = apply_filters( 'wps_wpr_preview_email_content', $email_content );
 ?>
 
-<?php
-$template = '<table class="wps_wuc_email_template" style="width: 100%!important; max-width: 600px; text-align: center; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+<table class="wps_wuc_email_template" style="width: 100%!important; max-width: 600px; text-align: center; font-size: 20px;" role="presentation" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
 	<tbody>
 		<tr>
 			<td style="background: #fff;">
@@ -31,7 +30,7 @@ $template = '<table class="wps_wuc_email_template" style="width: 100%!important;
 					<tbody>
 						<tr>
 							<td colspan="2">
-								<div style="text-align: center;"><span style="display: inline-block;padding: 5px 15px; margin-bottom: 10px; background-color: rgba(241, 225, 225, 0.12); font-weight: bold;">' . esc_html( $email_content ) . '</span></div>
+								<div style="text-align: center;"><span style="display: inline-block;padding: 5px 15px; margin-bottom: 10px; background-color: rgba(241, 225, 225, 0.12); font-weight: bold;"><?php echo wp_kses_post( $email_content ); ?></span></div>
 							</td>
 						</tr>
 					</tbody>
@@ -39,9 +38,8 @@ $template = '<table class="wps_wuc_email_template" style="width: 100%!important;
 			</td>
 		</tr>
 	</tbody>
-</table>';
-
-echo wp_kses_post( html_entity_decode( $template ) ); // PHPCS:Ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+</table>
+<?php
 
 /**
 * This hooks use for emaail footer

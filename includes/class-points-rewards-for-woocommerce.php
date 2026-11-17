@@ -83,7 +83,7 @@ class Points_Rewards_For_Woocommerce {
 			$this->version = REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION;
 		} else {
 
-			$this->version = '2.10.4';
+			$this->version = '2.10.5';
 		}
 
 		$this->plugin_name = 'points-and-rewards-for-woocommerce';
@@ -137,6 +137,21 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-points-rewards-for-woocommerce-public.php';
 
+		/**
+		 * The class responsible for abandoned cart recovery with points incentive.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
+
+		/**
+		 * The class keeping order points consistent across cancel / refund / re-complete.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
+
+		/**
+		 * The class responsible for the AI settings assistant.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-ai-assistant.php';
+
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
 		/**
@@ -179,22 +194,21 @@ class Points_Rewards_For_Woocommerce {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-		$plugin_admin           = new Points_Rewards_For_WooCommerce_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Points_Rewards_For_WooCommerce_Admin( $this->get_plugin_name(), $this->get_version() );
 		$wps_wpr_talk_to_expert = null;
-		$wps_wpr_setup_wizard   = null;
+		$wps_wpr_setup_wizard = null;
 
 		if ( is_admin() ) {
 			$wps_wpr_talk_to_expert = new Points_Rewards_For_WooCommerce_Talk_To_Expert_Form();
-			$wps_wpr_setup_wizard   = new WPS_WPR_Setup_Wizard( $this->get_plugin_name(), $this->get_version() );
+			$wps_wpr_setup_wizard = new WPS_WPR_Setup_Wizard( $this->get_plugin_name(), $this->get_version() );
 		}
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_rwpr_admin_menu', 10, 2 );
+		// Security: admin-only actions are not registered for anonymous users (removed wp_ajax_nopriv_ hooks).
 		$this->loader->add_action( 'wp_ajax_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
 		if ( $wps_wpr_talk_to_expert ) {
 			$this->loader->add_action( 'wp_ajax_' . Points_Rewards_For_WooCommerce_Talk_To_Expert_Form::AJAX_ACTION, $wps_wpr_talk_to_expert, 'wps_wpr_handle_ajax_submission' );
 		}
@@ -256,6 +270,16 @@ class Points_Rewards_For_Woocommerce {
 		// set campaign image.
 		$this->loader->add_action( 'wp_ajax_wps_set_camp_heading_and_image', $plugin_admin, 'wps_wpr_set_camp_heading_and_image', 10 );
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'wps_wpr_org_remove_action' );
+
+		// AI settings assistant (needs the WordPress AI Client, WP 7.0+).
+		if ( WPS_WPR_AI_Assistant::wps_wpr_has_ai_api() ) {
+			$ai_assistant = new WPS_WPR_AI_Assistant();
+			$this->loader->add_action( 'wp_abilities_api_categories_init', $ai_assistant, 'wps_wpr_register_ability_category' );
+			$this->loader->add_action( 'wp_abilities_api_init', $ai_assistant, 'wps_wpr_register_abilities' );
+			$this->loader->add_action( 'wp_ajax_wps_wpr_ai_chat', $ai_assistant, 'wps_wpr_ajax_chat' );
+			$this->loader->add_action( 'wp_ajax_wps_wpr_ai_resolve_proposal', $ai_assistant, 'wps_wpr_ajax_resolve_proposal' );
+			$this->loader->add_action( 'admin_enqueue_scripts', $ai_assistant, 'wps_wpr_enqueue_assets' );
+		}
 	}
 
 	/**
@@ -283,6 +307,8 @@ class Points_Rewards_For_Woocommerce {
 			/*Assign signup points and referral points in woocommerce*/
 			$this->loader->add_action( 'user_register', $plugin_public, 'wps_wpr_new_customer_registerd', 10, 1 );
 			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_woocommerce_order_status_changed', 10, 3 );
+			// Orders paid only with points earn no per-currency points.
+			$this->loader->add_filter( 'wps_wpr_per_currency_points_on_subtotal', $plugin_public, 'wps_wpr_exclude_points_only_from_per_currency', 20, 2 );
 
 			$this->loader->add_action( 'woocommerce_before_customer_login_form', $plugin_public, 'wps_wpr_woocommerce_signup_point' );
 			/*Add html in the cart for apply points*/
@@ -300,6 +326,12 @@ class Points_Rewards_For_Woocommerce {
 			// cart block change.
 			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta' );
 			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta' );
+			// Return redeemed points on failed payment / cancel / refund.
+			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_return_redeemed_cart_points', 10, 3 );
+			$this->loader->add_action( 'woocommerce_before_pay_action', $plugin_public, 'wps_wpr_validate_pay_for_order_points', 10, 1 );
+			// Keep applied points in the session until the order is paid.
+			$this->loader->add_action( 'woocommerce_cart_emptied', $plugin_public, 'wps_wpr_clear_cart_points_session', 10, 1 );
+			$this->loader->add_action( 'woocommerce_thankyou', $plugin_public, 'wps_wpr_clear_cart_points_session', 10, 1 );
 			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'wps_wpr_woocommerce_add_cart_item_data', 10, 4 );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'wps_wpr_woocommerce_get_item_data', 10, 2 );
 			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'wps_display_product_points', 7 );
@@ -347,10 +379,14 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_extend_point_tab_section', $plugin_public, 'wps_wpr_show_subscription_message', 10, 1 );
 			// order rewards points functionality.
 			$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_public, 'wps_wpr_order_rewards_points_callback', 20, 2 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_order_rewards_points_on_award_status', 20, 4 );
 			// Gamification features.
 			$this->loader->add_action( 'wp_footer', $plugin_public, 'wps_wpr_show_canvas_icons' );
 			// assign claim points.
+			$this->loader->add_action( 'wp_ajax_wps_wpr_spin_win_wheel', $plugin_public, 'wps_wpr_spin_win_wheel' );
 			$this->loader->add_action( 'wp_ajax_assign_claim_points', $plugin_public, 'wps_wpr_assign_claim_points' );
+			// Security: Hook to log invalid claim attempts.
+			$this->loader->add_action( 'wps_wpr_invalid_claim_attempt', $plugin_public, 'wps_wpr_log_invalid_claim_attempt', 10, 4 );
 			$this->loader->add_action( 'wps_wpr_top_account_page_section_hook', $plugin_public, 'wps_wpr_display_earn_user_badges', 10, 1 );
 			// cart/checkout block js.
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
@@ -384,6 +420,21 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_update_quiz_data', $plugin_public, 'wps_wpr_rewards_quiz_points', 10 );
 			// assign social share points.
 			$this->loader->add_action( 'wp_ajax_action_social_link_click', $plugin_public, 'wps_wpr_assign_social_share_points', 10 );
+
+			// abandoned cart recovery with points incentive.
+			$abandoned_cart = new WPS_WPR_Abandoned_Cart_Recovery();
+
+			// order points lifecycle ( re-complete after cancel, partial refunds, order rewards reversal ).
+			new WPS_WPR_Order_Points_Lifecycle();
+			$this->loader->add_action( 'init', $abandoned_cart, 'wps_wpr_maybe_schedule_cron' );
+			$this->loader->add_action( WPS_WPR_Abandoned_Cart_Recovery::CRON_HOOK, $abandoned_cart, 'wps_wpr_process_abandoned_carts' );
+			$this->loader->add_action( 'woocommerce_cart_updated', $abandoned_cart, 'wps_wpr_track_cart_activity' );
+			$this->loader->add_action( 'woocommerce_cart_emptied', $abandoned_cart, 'wps_wpr_cart_emptied', 10, 1 );
+			$this->loader->add_action( 'woocommerce_checkout_order_processed', $abandoned_cart, 'wps_wpr_order_placed', 10, 1 );
+			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $abandoned_cart, 'wps_wpr_order_placed', 10, 1 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $abandoned_cart, 'wps_wpr_award_recovery_points', 20, 3 );
+			$this->loader->add_action( 'woocommerce_before_cart', $abandoned_cart, 'wps_wpr_show_incentive_notice' );
+			$this->loader->add_action( 'woocommerce_before_checkout_form', $abandoned_cart, 'wps_wpr_show_incentive_notice', 5 );
 		}
 	}
 
