@@ -307,6 +307,8 @@ class Points_Rewards_For_Woocommerce {
 			/*Assign signup points and referral points in woocommerce*/
 			$this->loader->add_action( 'user_register', $plugin_public, 'wps_wpr_new_customer_registerd', 10, 1 );
 			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_woocommerce_order_status_changed', 10, 3 );
+			// Orders paid only with points earn no per-currency points.
+			$this->loader->add_filter( 'wps_wpr_per_currency_points_on_subtotal', $plugin_public, 'wps_wpr_exclude_points_only_from_per_currency', 20, 2 );
 
 			$this->loader->add_action( 'woocommerce_before_customer_login_form', $plugin_public, 'wps_wpr_woocommerce_signup_point' );
 			/*Add html in the cart for apply points*/

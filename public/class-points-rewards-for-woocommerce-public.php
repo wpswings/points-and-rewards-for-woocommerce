@@ -1301,6 +1301,43 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
+	 * Whether every line item of the order was bought with points only.
+	 *
+	 * @param WC_Order $order order.
+	 * @return bool
+	 */
+	public function wps_wpr_is_points_only_order( $order ) {
+		if ( ! $order instanceof WC_Order ) {
+			return false;
+		}
+		$items = $order->get_items();
+		if ( empty( $items ) ) {
+			return false;
+		}
+		foreach ( $items as $item ) {
+			if ( ! $item->get_meta( 'Purchased By Points' ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Per-currency points: an order paid only with points (plus shipping / fees) is not a
+	 * currency purchase, so it earns no per-currency points.
+	 *
+	 * @param float    $order_total order total used for per-currency points.
+	 * @param WC_Order $order       order.
+	 * @return float
+	 */
+	public function wps_wpr_exclude_points_only_from_per_currency( $order_total, $order ) {
+		if ( $this->wps_wpr_is_points_only_order( $order ) ) {
+			return 0;
+		}
+		return $order_total;
+	}
+
+	/**
 	 * This function is used for calculate points in the order settings
 	 *
 	 * @name calculate_points
@@ -1321,6 +1358,10 @@ class Points_Rewards_For_WooCommerce_Public {
 			/*Get the order points value that will assigned to the user*/
 			$thankyouorder_value = $this->wps_wpr_get_order_total_settings( 'wps_wpr_thankyouorder_current_type' );
 			$order               = wc_get_order( $order_id );
+			// An order paid only with points (shipping/fees aside) earns no order total points.
+			if ( $this->wps_wpr_is_points_only_order( $order ) ) {
+				return;
+			}
 			/*Get the order total points*/
 			$order_total = $order->get_total();
 			// WOOCS - WooCommerce Currency Switcher Compatibility.
@@ -1499,6 +1540,10 @@ class Points_Rewards_For_WooCommerce_Public {
 
 					}
 					foreach ( $order->get_items() as $item_id => $item ) {
+						// Products bought with points do not earn product points.
+						if ( $item->get_meta( 'Purchased By Points' ) ) {
+							continue;
+						}
 						/*Get The item meta data*/
 						$wps_wpr_items = $item->get_meta_data();
 						foreach ( $wps_wpr_items as $key => $wps_wpr_value ) {
@@ -2326,7 +2371,8 @@ class Points_Rewards_For_WooCommerce_Public {
 					if ( 'yes' == wps_wpr_hpos_get_meta_data( $cart['product_id'], 'wps_product_purchase_points_only', true ) ) {
 						if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
 
-							$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] * (int) $cart['quantity'];
+							// Already stored as cost x quantity by the Pro plugin.
+							$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
 						}
 					}
 
@@ -4342,6 +4388,11 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// if user is not logged in then return from here.
 		if ( ! is_user_logged_in() ) {
+			return;
+		}
+
+		// Check the order's customer, not the user completing the order (e.g. an admin).
+		if ( wps_wpr_restrict_user_fun( $order->get_user_id() ) ) {
 			return;
 		}
 

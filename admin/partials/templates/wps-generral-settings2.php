@@ -363,6 +363,15 @@ if ( isset( $_POST['wps_wpr_save_general'] ) && isset( $_POST['wps-wpr-nonce'] )
 				'wps_wpr_number_order_rewards_messages' => ! empty( $_POST['wps_wpr_number_order_rewards_messages'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wps_wpr_number_order_rewards_messages'] ) ) : '',
 				'wps_wpr_enable_order_rewards_settings' => ! empty( $_POST['wps_wpr_enable_order_rewards_settings'] ) ? 1 : '',
 				'wps_wpr_enable_to_show_order_reward_message' => ! empty( $_POST['wps_wpr_enable_to_show_order_reward_message'] ) ? 1 : '',
+				// Wallet settings (added to this tab via the wps_wpr_general_settings filter).
+				'wps_wpr_general_setting_wallet_enablee'      => ! empty( $_POST['wps_wpr_general_setting_wallet_enablee'] ) ? 1 : 0,
+				'wps_wpr_wallet_points_rate'                  => ! empty( $_POST['wps_wpr_wallet_points_rate'] ) ? absint( wp_unslash( $_POST['wps_wpr_wallet_points_rate'] ) ) : 1,
+				'wps_wpr_wallet_price_rate'                   => ! empty( $_POST['wps_wpr_wallet_price_rate'] ) ? wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['wps_wpr_wallet_price_rate'] ) ) ) : 1,
+				// Subscription renewal settings (added to this tab via the wps_wpr_general_settings filter).
+				'wps_wpr_enable_subscription_renewal_settings' => ! empty( $_POST['wps_wpr_enable_subscription_renewal_settings'] ) ? 1 : 0,
+				'wps_wpr_subscription__renewal_points'        => ! empty( $_POST['wps_wpr_subscription__renewal_points'] ) ? absint( wp_unslash( $_POST['wps_wpr_subscription__renewal_points'] ) ) : 1,
+				'wps_wpr_enable__renewal_message_settings'    => ! empty( $_POST['wps_wpr_enable__renewal_message_settings'] ) ? 1 : 0,
+				'wps_wpr_subscription__renewal_message'       => ! empty( $_POST['wps_wpr_subscription__renewal_message'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_subscription__renewal_message'] ) ) : '',
 			);
 
 			// Server-side validation of numeric fields: reject non-numeric / below-minimum values instead of silently coercing them.

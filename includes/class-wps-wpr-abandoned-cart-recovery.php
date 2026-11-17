@@ -137,7 +137,7 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 	 * @return bool
 	 */
 	public function wps_wpr_is_user_restricted( $user_id ) {
-		return 'yes' === get_user_meta( $user_id, 'wps_wpr_restrict_user', true );
+		return wps_wpr_restrict_user_fun( absint( $user_id ) );
 	}
 
 	/**

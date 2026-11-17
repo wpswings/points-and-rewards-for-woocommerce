@@ -519,19 +519,22 @@ if ( $activated ) {
 	}
 
 	/**
-	 * This function is used to restrict user.
+	 * Check whether a user is restricted from the points features.
 	 *
+	 * Pass the user explicitly whenever the code can run outside that user's own request
+	 * (admin order screens, cron, webhooks), e.g. the order customer's ID. When omitted,
+	 * the current logged-in user is checked.
+	 *
+	 * @param int|null $user_id User ID to check; null = current user.
 	 * @return bool
 	 */
-	function wps_wpr_restrict_user_fun() {
+	function wps_wpr_restrict_user_fun( $user_id = null ) {
 
-		$wps_wpr_restrict_user = get_user_meta( get_current_user_id(), 'wps_wpr_restrict_user', true );
-		$check_enable          = false;
-		if ( 'yes' === $wps_wpr_restrict_user ) {
-
-			$check_enable = true;
+		$user_id = ( null === $user_id ) ? get_current_user_id() : absint( $user_id );
+		if ( ! $user_id ) {
+			return false;
 		}
-		return $check_enable;
+		return 'yes' === get_user_meta( $user_id, 'wps_wpr_restrict_user', true );
 	}
 
 	/**

@@ -225,8 +225,15 @@ class WPS_WPR_Order_Points_Lifecycle {
 		$total_deduct = array_sum( $deduct_by_type );
 		if ( $total_deduct > 0 ) {
 			$user_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-			$new_points  = $user_points - $total_deduct;
+			// Never push the balance below zero (the customer may have spent the returned points already).
+			$new_points = max( 0, $user_points - $total_deduct );
 			update_user_meta( $user_id, 'wps_wpr_points', $new_points );
+			if ( $user_points - $total_deduct < 0 ) {
+				$order->add_order_note(
+					/* translators: 1: points to deduct, 2: points actually deducted */
+					sprintf( esc_html__( 'The customer did not have enough points to deduct %1$s again; only %2$s points were deducted and the balance was set to 0.', 'points-and-rewards-for-woocommerce' ), $total_deduct, max( 0, $user_points ) )
+				);
+			}
 
 			$points_log = get_user_meta( $user_id, 'points_details', true );
 			$points_log = ! empty( $points_log ) && is_array( $points_log ) ? $points_log : array();
@@ -290,8 +297,8 @@ class WPS_WPR_Order_Points_Lifecycle {
 					break;
 				}
 			}
-			// Do not add points to items already reversed / handled.
-			if ( $has_points_meta || 'yes' === $order->get_meta( "$order_id#$item_id#cancel_points" ) || 'yes' === $order->get_meta( "$order_id#$item_id#refund_points" ) ) {
+			// Do not add points to items already reversed / handled, or bought with points only.
+			if ( $has_points_meta || $item->get_meta( 'Purchased By Points' ) || 'yes' === $order->get_meta( "$order_id#$item_id#cancel_points" ) || 'yes' === $order->get_meta( "$order_id#$item_id#refund_points" ) ) {
 				continue;
 			}
 
