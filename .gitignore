@@ -10,3 +10,6 @@ task.md
 module_implementation.md
 .claude
 .history
+.md
+playwright-report/
+test-results/

@@ -97,8 +97,8 @@ $wps_wpr_mem_enable        = isset( $membership_settings_array['wps_wpr_membersh
 // ── Coupons ──────────────────────────────────────────────────────────────────
 $coupon_settings               = get_option( 'wps_wpr_coupons_gallery', true );
 $coupon_settings               = is_array( $coupon_settings ) ? $coupon_settings : array();
-$wps_per_currency_spent_price  = isset( $coupon_settings['wps_wpr_coupon_conversion_price'] ) ? intval( $coupon_settings['wps_wpr_coupon_conversion_price'] ) : 1;
-$wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_conversion_points'] ) ? intval( $coupon_settings['wps_wpr_coupon_conversion_points'] ) : 1;
+$wps_per_currency_spent_price  = isset( $coupon_settings['wps_wpr_coupon_conversion_price'] ) ? floatval( $coupon_settings['wps_wpr_coupon_conversion_price'] ) : 1;
+$wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_conversion_points'] ) ? floatval( $coupon_settings['wps_wpr_coupon_conversion_points'] ) : 1;
 
 // ── Accent color ──────────────────────────────────────────────────────────────
 $wps_wpr_other_settings = get_option( 'wps_wpr_other_settings', array() );
@@ -392,18 +392,14 @@ $redeem_value         = $coupon_redeem_points > 0 ? round( ( $get_points / $coup
 				</li>
 				<?php endif; ?>
 				<?php if ( ! empty( $wps_ways_to_gain_points_value ) ) :
-					$wps_ways_clean = str_replace(
-						array( '[Comment Points]', '[Refer Points]', '[Per Currency Spent Points]', '[Per Currency Spent Price]' ),
-						array( $wps_comment_value, $wps_refer_value, $wps_per_currency_spent_points, $wps_per_currency_spent_price ),
-						$wps_ways_to_gain_points_value
-					);
+					$wps_ways_clean = $this->wps_wpr_format_ways_to_gain_points( $wps_ways_to_gain_points_value, $wps_comment_value, $wps_refer_value, $wps_per_currency_spent_points, $wps_per_currency_spent_price );
 				?>
 				<li class="wps-t4-earn-item wps-t4-earn-item--custom">
 					<span class="wps-t4-earn-icon">
 						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
 					</span>
 					<div class="wps-t4-earn-text">
-						<?php echo wp_kses_post( $wps_clean ?? $wps_ways_clean ); ?>
+						<?php echo wp_kses_post( $wps_ways_clean ); ?>
 					</div>
 				</li>
 				<?php endif; ?>

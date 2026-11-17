@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       Points and Rewards for WooCommerce
  * Description:       <code><strong>Points and Rewards for WooCommerce</strong></code> plugin allow merchants to reward their loyal customers with referral rewards points on store activities. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-shop-page&utm_medium=par-org-backend&utm_campaign=more-plugin" target="_blank"> Elevate your e-commerce store by exploring more on <strong> WP Swings </strong></a>
- * Version:           2.10.4
+ * Version:           2.10.5
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-par-official&utm_medium=par-org-backend&utm_campaign=official
  * Plugin URI:        https://wordpress.org/plugins/points-and-rewards-for-woocommerce/
@@ -25,7 +25,7 @@
  * WP Requires at least : 6.7.0
  * WP Tested up to      : 7.1
  * WC requires at least : 6.5.0
- * WC tested up to      : 11.1.0
+ * WC tested up to      : 11.3.0
  * Requires PHP         : 7.4
  *
  * License:           GNU General Public License v3.0
@@ -80,7 +80,7 @@ if ( $activated ) {
 	 */
 	function define_rewardeem_woocommerce_points_rewards_constants() {
 
-		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.10.4' );
+		rewardeem_woocommerce_points_rewards_constants( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION', '2.10.5' );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
@@ -374,6 +374,16 @@ if ( $activated ) {
 
 	register_activation_hook( __FILE__, 'wps_wpr_flush_rewrite_rules' );
 	register_deactivation_hook( __FILE__, 'wps_wpr_flush_rewrite_rules' );
+	register_deactivation_hook( __FILE__, 'wps_wpr_clear_abandoned_cart_cron' );
+
+	/**
+	 * Clear the abandoned cart recovery cron on deactivation.
+	 *
+	 * @return void
+	 */
+	function wps_wpr_clear_abandoned_cart_cron() {
+		wp_clear_scheduled_hook( 'wps_wpr_abandoned_cart_check' );
+	}
 	/**
 	 * This function is used to create points tab.
 	 *
@@ -418,7 +428,7 @@ if ( $activated ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
 
-		if ( is_plugin_active_for_network( 'points-rewards-for-woocommerce/points-rewards-for-woocommerce.php' ) ) {
+		if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
 			$blog_id = $new_site->blog_id;
 			switch_to_blog( $blog_id );
 
@@ -509,20 +519,122 @@ if ( $activated ) {
 	}
 
 	/**
-	 * This function is used to restrict user.
+	 * Check whether a user is restricted from the points features.
 	 *
+	 * Pass the user explicitly whenever the code can run outside that user's own request
+	 * (admin order screens, cron, webhooks), e.g. the order customer's ID. When omitted,
+	 * the current logged-in user is checked.
+	 *
+	 * @param int|null $user_id User ID to check; null = current user.
 	 * @return bool
 	 */
-	function wps_wpr_restrict_user_fun() {
+	function wps_wpr_restrict_user_fun( $user_id = null ) {
 
-		$wps_wpr_restrict_user = get_user_meta( get_current_user_id(), 'wps_wpr_restrict_user', true );
-		$check_enable          = false;
-		if ( 'yes' === $wps_wpr_restrict_user ) {
-
-			$check_enable = true;
+		$user_id = ( null === $user_id ) ? get_current_user_id() : absint( $user_id );
+		if ( ! $user_id ) {
+			return false;
 		}
-		return $check_enable;
+		return 'yes' === get_user_meta( $user_id, 'wps_wpr_restrict_user', true );
 	}
+
+	/**
+	 * Order status (without the "wc-" prefix) at which order points are awarded.
+	 * Defaults to "completed". The Pro plugin sets this from its settings; sites can also use the
+	 * `wps_wpr_points_award_order_status` filter, e.g. to award on a custom status such as "scans-delivered".
+	 *
+	 * @return string
+	 */
+	function wps_wpr_get_points_award_status() {
+		$status = (string) apply_filters( 'wps_wpr_points_award_order_status', 'completed' );
+		$status = sanitize_key( preg_replace( '/^wc-/', '', $status ) );
+		// Never award on unpaid / reversed statuses.
+		if ( '' === $status || in_array( $status, array( 'pending', 'failed', 'cancelled', 'refunded', 'on-hold', 'checkout-draft' ), true ) ) {
+			$status = 'completed';
+		}
+		return $status;
+	}
+
+	/**
+	 * Map an order status transition onto the plugin's "completed" logic when a custom award status is set.
+	 *
+	 * - Entering the award status (or "completed", if the order skipped the award status) is reported as
+	 *   "completed" exactly once per order; later visits to either status are reported as a no-op status,
+	 *   so moving an order back and forth between custom statuses never awards points twice.
+	 * - Once points have been awarded, the old status is reported as "completed" so the existing
+	 *   cancel / refund handlers still deduct the points.
+	 * - Cancelling, refunding or failing an order clears the marker.
+	 *
+	 * @param int         $order_id   order id.
+	 * @param string|null $old_status old status (null when unknown).
+	 * @param string      $new_status new status.
+	 * @return array      array( $old_status, $new_status ) as the handlers should see them.
+	 */
+	function wps_wpr_map_award_order_statuses( $order_id, $old_status, $new_status ) {
+		$decisions = &$GLOBALS['wps_wpr_award_status_decisions'];
+		if ( ! is_array( $decisions ) ) {
+			$decisions = array();
+		}
+
+		$trigger = wps_wpr_get_points_award_status();
+		if ( 'completed' === $trigger ) {
+			return array( $old_status, $new_status );
+		}
+
+		$key = $order_id . '|' . $new_status;
+		if ( ! isset( $decisions[ $key ] ) ) {
+
+			$order   = wc_get_order( $order_id );
+			$already = $order && (
+				$order->get_meta( '_wps_wpr_award_status_reached' )
+				|| $order->get_meta( '_wps_par_points_awarded' )
+				|| 'set' === $order->get_meta( $order_id . '#item_conversion_id' )
+			);
+
+			$mapped_new = $new_status;
+			if ( $new_status === $trigger || 'completed' === $new_status ) {
+				if ( $already ) {
+					$mapped_new = 'wps-wpr-points-already-awarded';
+				} elseif ( $order ) {
+					$mapped_new = 'completed';
+					$order->update_meta_data( '_wps_wpr_award_status_reached', $trigger );
+					$order->save_meta_data();
+				}
+			} elseif ( $order && in_array( $new_status, array( 'cancelled', 'refunded', 'failed' ), true ) ) {
+				$order->delete_meta_data( '_wps_wpr_award_status_reached' );
+				$order->save_meta_data();
+			}
+			$decisions[ $key ] = array(
+				'already' => (bool) $already,
+				'new'     => $mapped_new,
+			);
+		}
+
+		$decision   = $decisions[ $key ];
+		$mapped_old = $old_status;
+		if ( $decision['already'] && null !== $old_status && ! in_array( $old_status, array( 'pending', 'failed', 'cancelled', 'refunded', 'on-hold', 'checkout-draft' ), true ) ) {
+			// Points already belong to this order: treat any post-award status as "completed" for revocation logic.
+			$mapped_old = 'completed';
+		}
+		return array( $mapped_old, $decision['new'] );
+	}
+
+	/**
+	 * Forget the per-request award decision once every handler has seen the transition, so a second
+	 * status change of the same order within one request is evaluated afresh.
+	 *
+	 * @param int $order_id order id.
+	 * @return void
+	 */
+	function wps_wpr_reset_award_order_status_decision( $order_id ) {
+		if ( ! empty( $GLOBALS['wps_wpr_award_status_decisions'] ) && is_array( $GLOBALS['wps_wpr_award_status_decisions'] ) ) {
+			foreach ( array_keys( $GLOBALS['wps_wpr_award_status_decisions'] ) as $key ) {
+				if ( 0 === strpos( $key, $order_id . '|' ) ) {
+					unset( $GLOBALS['wps_wpr_award_status_decisions'][ $key ] );
+				}
+			}
+		}
+	}
+	add_action( 'woocommerce_order_status_changed', 'wps_wpr_reset_award_order_status_decision', PHP_INT_MAX, 1 );
 
 	/**
 	 * This function is used to check whether subscription is active or not.
@@ -567,8 +679,10 @@ if ( $activated ) {
 					$country_code_name = get_user_meta( $user_id, 'billing_country', true );
 					$country_code      = wps_wpr_get_country_code_by_name( $country_code_name );
 					$billing_phone     = get_user_meta( $user_id, 'billing_phone', true );
-					$billing_phone     = ! empty( $billing_phone ) ? $country_code . $billing_phone : '';
-					$wps_send_contact  = '+' . $billing_phone;
+					$wps_send_contact  = wps_wpr_normalize_phone_number( $billing_phone, $country_code );
+					if ( '' === $wps_send_contact ) {
+						return;
+					}
 
 					// prepare data and call sms api.
 					$url       = 'https://api.twilio.com/2010-04-01/Accounts/' . $wps_wpr_sms_account_sid . '/Messages.json';
@@ -592,6 +706,43 @@ if ( $activated ) {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Build an E.164 style number ("+<country code><number>") from a billing phone.
+	 *
+	 * Numbers that already start with "+" or "00" are treated as international and
+	 * are not prefixed again, so the "+" is only ever added once.
+	 *
+	 * @param  string     $phone        billing phone.
+	 * @param  string|int $country_code dialling code without "+", or 0 when unknown.
+	 * @return string empty string when there is no usable number.
+	 */
+	function wps_wpr_normalize_phone_number( $phone, $country_code ) {
+		$phone = trim( (string) $phone );
+		if ( '' === $phone ) {
+			return '';
+		}
+
+		$is_international = ( 0 === strpos( $phone, '+' ) || 0 === strpos( $phone, '00' ) );
+		$digits           = preg_replace( '/\D+/', '', $phone );
+		if ( 0 === strpos( $phone, '00' ) ) {
+			$digits = substr( $digits, 2 );
+		}
+		if ( '' === $digits ) {
+			return '';
+		}
+
+		if ( ! $is_international ) {
+			// Drop the national trunk prefix and add the country code once.
+			$digits       = ltrim( $digits, '0' );
+			$country_code = preg_replace( '/\D+/', '', (string) $country_code );
+			if ( ! empty( $country_code ) ) {
+				$digits = $country_code . $digits;
+			}
+		}
+
+		return '+' . $digits;
 	}
 
 	/**
@@ -786,7 +937,7 @@ if ( $activated ) {
 				$country_code_name              = get_user_meta( $user_id, 'billing_country', true );
 				$country_code                   = wps_wpr_get_country_code_by_name( $country_code_name );
 				$whatsapp_number                = get_user_meta( $user_id, 'billing_phone', true );
-				$whatsapp_number                = ! empty( $whatsapp_number ) ? $country_code . $whatsapp_number : '';
+				$whatsapp_number                = ltrim( wps_wpr_normalize_phone_number( $whatsapp_number, $country_code ), '+' );
 				$user_obj                       = get_user_by( 'id', $user_id );
 				$wps_wpr_whatsapp_access_token  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_access_token'] : '';
 				$wps_wpr_whatsapp_phone_num_id  = ! empty( $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] ) ? $wps_wpr_save_sms_settings['wps_wpr_whatsapp_phone_number'] : '';

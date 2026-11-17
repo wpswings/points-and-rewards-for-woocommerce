@@ -2,8 +2,13 @@ const { test, expect } = require('@playwright/test');
 
 // Test configuration
 const ADMIN_URL = '/wp-admin/admin.php?page=wps-rwpr-setting&tab=wps-campaign-settings';
-const USERNAME = 'admin';
-const PASSWORD = 'admin';
+// Credentials come from the environment (WP_USERNAME / WP_PASSWORD); never commit real logins.
+const USERNAME = process.env.WP_USERNAME;
+const PASSWORD = process.env.WP_PASSWORD;
+
+if ( ! USERNAME || ! PASSWORD ) {
+  throw new Error( 'Set WP_USERNAME and WP_PASSWORD environment variables to run the e2e tests.' );
+}
 
 test.describe('A/B Testing for Campaign Modal', () => {
 

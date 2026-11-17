@@ -1,0 +1,18 @@
+# Exclude development-only files from `git archive` release builds.
+/.github                     export-ignore
+/.gitignore                  export-ignore
+/.gitattributes              export-ignore
+/.distignore                 export-ignore
+/node_modules                export-ignore
+/src                         export-ignore
+/package.json                export-ignore
+/package-lock.json           export-ignore
+/wp-composer.json            export-ignore
+/tests                       export-ignore
+/playwright-report           export-ignore
+/test-results                export-ignore
+/playwright.config.js        export-ignore
+/phpcs.xml                   export-ignore
+/reset-redemption-setting.php export-ignore
+/reset-wizard-helper.php     export-ignore
+/readme.md                   export-ignore

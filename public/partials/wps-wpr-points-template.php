@@ -97,8 +97,8 @@ $coupon_settings           = get_option( 'wps_wpr_coupons_gallery', true );
 $coupon_redeem_price       = ( isset( $coupon_settings['coupon_redeem_price'] ) && null != $coupon_settings['coupon_redeem_price'] ) ? $coupon_settings['coupon_redeem_price'] : 1;
 $coupon_redeem_points      = ( isset( $coupon_settings['coupon_redeem_points'] ) && null != $coupon_settings['coupon_redeem_points'] ) ? intval( $coupon_settings['coupon_redeem_points'] ) : 1;
 
-$wps_per_currency_spent_price  = isset( $coupon_settings['wps_wpr_coupon_conversion_price'] ) ? intval( $coupon_settings['wps_wpr_coupon_conversion_price'] ) : 1;
-$wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_conversion_points'] ) ? intval( $coupon_settings['wps_wpr_coupon_conversion_points'] ) : 1;
+$wps_per_currency_spent_price  = isset( $coupon_settings['wps_wpr_coupon_conversion_price'] ) ? floatval( $coupon_settings['wps_wpr_coupon_conversion_price'] ) : 1;
+$wps_per_currency_spent_points = isset( $coupon_settings['wps_wpr_coupon_conversion_points'] ) ? floatval( $coupon_settings['wps_wpr_coupon_conversion_points'] ) : 1;
 $wps_comment_value             = isset( $general_settings['wps_comment_value'] ) ? intval( $general_settings['wps_comment_value'] ) : 1;
 $wps_refer_value_disable       = isset( $general_settings['wps_wpr_general_refer_value_disable'] ) ? intval( $general_settings['wps_wpr_general_refer_value_disable'] ) : 0;
 $wps_user_point_expiry         = get_user_meta( $user_id, 'wps_wpr_points_expiration_date', true );
@@ -161,10 +161,7 @@ if ( ! is_array( $coupon_settings ) ) {
 			</p>
 			<div class="wps_wpr_each_section_wrap">
 				<?php
-				$wps_ways_to_gain_points_value = str_replace( '[Comment Points]', $wps_comment_value, $wps_ways_to_gain_points_value );
-				$wps_ways_to_gain_points_value = str_replace( '[Refer Points]', $wps_refer_value, $wps_ways_to_gain_points_value );
-				$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Points]', $wps_per_currency_spent_points, $wps_ways_to_gain_points_value );
-				$wps_ways_to_gain_points_value = str_replace( '[Per Currency Spent Price]', $wps_per_currency_spent_price, $wps_ways_to_gain_points_value );
+				$wps_ways_to_gain_points_value = $this->wps_wpr_format_ways_to_gain_points( $wps_ways_to_gain_points_value, $wps_comment_value, $wps_refer_value, $wps_per_currency_spent_points, $wps_per_currency_spent_price );
 				echo '<fieldset class="wps_wpr_each_section">' . wp_kses_post( $wps_ways_to_gain_points_value ) . '</fieldset>';
 				?>
 			</div>
