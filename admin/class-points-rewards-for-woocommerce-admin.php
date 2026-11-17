@@ -475,22 +475,40 @@ class Points_Rewards_For_WooCommerce_Admin {
 			$sign       = sanitize_text_field( wp_unslash( $_POST['sign'] ) );
 			$reason     = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
 
-			// Validate: only '+' / '-' are allowed, points must be a positive whole number and the user must exist.
-			if ( ! in_array( $sign, array( '+', '-' ), true ) || $points <= 0 || (float) wp_unslash( $_POST['points'] ) !== (float) $points || ! get_user_by( 'ID', $user_id ) ) {
+			// Validate: the user must exist.
+			if ( ! $user_id || ! get_user_by( 'ID', $user_id ) ) {
+				wp_send_json_error( array( 'msg' => esc_html__( 'User not found', 'points-and-rewards-for-woocommerce' ) ), 404 );
+			}
+
+			// Validate: only '+' / '-' are allowed and points must be a positive whole number.
+			if ( ! in_array( $sign, array( '+', '-' ), true ) || $points <= 0 || (float) wp_unslash( $_POST['points'] ) !== (float) $points ) {
 				wp_send_json_error( array( 'msg' => esc_html__( 'Please enter a valid points', 'points-and-rewards-for-woocommerce' ) ), 400 );
 			}
 
+			$wps_wpr_notice_type = 'success';
+			$wps_wpr_notice_msg  = esc_html__( 'Points are updated successfully', 'points-and-rewards-for-woocommerce' );
 			if ( '+' === $sign ) {
 
 				$total_points = $get_points + $points;
 			} elseif ( '-' === $sign ) {
+				if ( $get_points <= 0 ) {
+					wp_send_json_error( array( 'msg' => esc_html__( 'This user has no points to deduct.', 'points-and-rewards-for-woocommerce' ) ), 400 );
+				}
 				if ( $points <= $get_points ) {
 
 					$total_points = $get_points - $points;
 				} else {
 
-					$points       = $get_points;
-					$total_points = $get_points - $points;
+					// Deduct only up to the available balance and tell the admin.
+					$points              = $get_points;
+					$total_points        = $get_points - $points;
+					$wps_wpr_notice_type = 'warning';
+					$wps_wpr_notice_msg  = sprintf(
+						/* translators: %1$s: points deducted, %2$s: balance before deduction */
+						esc_html__( 'Only %1$s points were deducted because the user\'s balance was %2$s.', 'points-and-rewards-for-woocommerce' ),
+						$points,
+						$get_points
+					);
 				}
 			}
 			$data = array(
@@ -510,7 +528,12 @@ class Points_Rewards_For_WooCommerce_Admin {
 			// send messages on whatsapp.
 			wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sid */ sprintf( esc_html__( 'Your points have been updated by Admin. Your total points are now %s', 'points-and-rewards-for-woocommerce' ), $total_points ) );
 			do_action( 'wps_wpr_update_user_points_manually', $user_id );
-			wp_die();
+			wp_send_json_success(
+				array(
+					'msg'         => $wps_wpr_notice_msg,
+					'notice_type' => $wps_wpr_notice_type,
+				)
+			);
 		}
 	}
 
@@ -1234,7 +1257,7 @@ class Points_Rewards_For_WooCommerce_Admin {
 		check_ajax_referer( 'wps-wpr-admin-nonce', 'nonce' );
 
 		// Ensure user has permission.
-		if ( ! current_user_can( 'manage_options' ) || wps_wpr_restrict_user_fun() ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json(
 				array(
 					'result' => false,
@@ -1349,6 +1372,11 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 * @return bool
 	 */
 	public function wps_wpr_add_points_on_old_orders( $order, $rewards_points ) {
+
+		// Skip customers the admin has restricted from earning points.
+		if ( wps_wpr_restrict_user_fun( $order->get_user_id() ) ) {
+			return false;
+		}
 
 		// check for if rewards is not assigned.
 		$wps_wpr_assign_points_to_old_orders = wps_wpr_hpos_get_meta_data( $order->get_id(), 'wps_wpr_assign_points_to_old_orders', true );
@@ -1506,8 +1534,8 @@ class Points_Rewards_For_WooCommerce_Admin {
 	 */
 	public function wps_wpr_assign_points_to_user_call( $data ) {
 
-		$user_id = ! empty( $data['user_id'] ) ? sanitize_text_field( wp_unslash( $data['user_id'] ) ) : 0;
-		if ( $user_id > 0 ) {
+		$user_id = ! empty( $data['user_id'] ) ? absint( wp_unslash( $data['user_id'] ) ) : 0;
+		if ( $user_id > 0 && ! wps_wpr_restrict_user_fun( $user_id ) ) {
 
 			$post_id       = ! empty( $data['post_id'] ) ? sanitize_text_field( wp_unslash( $data['post_id'] ) ) : 0;
 			$member_status = ! empty( $data['member_status'] ) ? sanitize_text_field( wp_unslash( $data['member_status'] ) ) : '';
@@ -1751,16 +1779,20 @@ class Points_Rewards_For_WooCommerce_Admin {
 		list( $old_status, $new_status ) = wps_wpr_map_award_order_statuses( $order_id, $old_status, $new_status );
 
 		if ( $old_status != $new_status ) {
-			if ( wps_wpr_restrict_user_fun() ) {
-
+			// Check the order's customer, not the user changing the status (e.g. an admin).
+			$wps_wpr_status_order = wc_get_order( $order_id );
+			if ( ! $wps_wpr_status_order ) {
 				return;
 			}
 
-			// assigning payment method points.
-			$this->wps_wpr_rewards_payment_method_points( $order_id, $old_status, $new_status );
+			if ( ! wps_wpr_restrict_user_fun( $wps_wpr_status_order->get_user_id() ) ) {
 
-			// Assign points when a WooCommerce Subscription plugin order is renewed.
-			$this->wps_wpr_woo_subs_renewal_rewards_points( $order_id, $old_status, $new_status );
+				// assigning payment method points.
+				$this->wps_wpr_rewards_payment_method_points( $order_id, $old_status, $new_status );
+
+				// Assign points when a WooCommerce Subscription plugin order is renewed.
+				$this->wps_wpr_woo_subs_renewal_rewards_points( $order_id, $old_status, $new_status );
+			}
 
 			// save points for guest user.
 			$this->wps_wpr_save_points_for_guest_user( $order_id, $old_status, $new_status );
@@ -2324,7 +2356,10 @@ class Points_Rewards_For_WooCommerce_Admin {
 		if ( wps_wpr_check_is_subscription_plugin_active() ) {
 			if ( ! empty( $order_id ) && ! is_null( $order_id ) ) {
 
-				$order              = wc_get_order( $order_id );
+				$order = wc_get_order( $order_id );
+				if ( ! $order || wps_wpr_restrict_user_fun( $order->get_user_id() ) ) {
+					return;
+				}
 				$order_status       = $order->get_status();
 				$user_id            = absint( $order->get_user_id() );
 				$user               = get_user_by( 'ID', $user_id );

@@ -904,7 +904,7 @@ if ( ! empty( $wps_wpr_actions ) && ! empty( $user_log_id ) ) {
 									?>
 									<tr valign="top">
 										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
-										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['refund_points_applied_on_cart'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '+' . esc_html( $value['refund_points_applied_on_cart'] ); ?></td>
 									</tr>
 									<?php
 								}
@@ -1515,6 +1515,50 @@ if ( ! empty( $wps_wpr_actions ) && ! empty( $user_log_id ) ) {
 									<tr valign="top">
 										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
 										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['abandoned_cart_points_reversed'] ); ?> </td>
+										<td class="forminp forminp-text"><?php echo ! empty( $value['order_id'] ) ? '#' . esc_html( $value['order_id'] ) : ''; ?></td>
+									</tr>
+									<?php
+								}
+								?>
+						</table>
+					</div>
+					<?php
+				}
+				// order lifecycle adjustments ( partial refunds, order rewards reversal ).
+				$wps_wpr_order_adjust_logs = array(
+					'partial_refund_points_deducted' => array( esc_html__( 'Earned points deducted for a partial refund', 'points-and-rewards-for-woocommerce' ), '-' ),
+					'partial_refund_points_restored' => array( esc_html__( 'Partial refund deduction added back after the full order points were deducted', 'points-and-rewards-for-woocommerce' ), '+' ),
+					'order_rewards_points_reversed'  => array( esc_html__( 'Order Rewards points deducted after the order was cancelled or refunded', 'points-and-rewards-for-woocommerce' ), '-' ),
+				);
+				foreach ( $wps_wpr_order_adjust_logs as $wps_wpr_log_type => $wps_wpr_log_info ) {
+					if ( empty( $point_log[ $wps_wpr_log_type ] ) || ! is_array( $point_log[ $wps_wpr_log_type ] ) ) {
+						continue;
+					}
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php echo esc_html( $wps_wpr_log_info[0] ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
+								<thead>
+									<tr valign="top">
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Order', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+									</tr>
+								</thead>
+								<?php
+								foreach ( $point_log[ $wps_wpr_log_type ] as $key => $value ) {
+									?>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo esc_html( $wps_wpr_log_info[1] . $value[ $wps_wpr_log_type ] ); ?> </td>
 										<td class="forminp forminp-text"><?php echo ! empty( $value['order_id'] ) ? '#' . esc_html( $value['order_id'] ) : ''; ?></td>
 									</tr>
 									<?php

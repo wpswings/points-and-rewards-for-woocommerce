@@ -23,6 +23,11 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 	$wps_wpr_nonce = sanitize_text_field( wp_unslash( $_POST['wps-wpr-nonce'] ) );
 	if ( wp_verify_nonce( $wps_wpr_nonce, 'wps-wpr-nonce' ) ) {
 
+		// Previous global settings: used to tell products that only carry the old global value apart from products with their own points.
+		$wps_wpr_prev_assign_points = get_option( 'wps_wpr_assign_products_points', array() );
+		$wps_wpr_prev_assign_points = is_array( $wps_wpr_prev_assign_points ) ? $wps_wpr_prev_assign_points : array();
+		$wps_wpr_prev_global_points = ! empty( $wps_wpr_prev_assign_points['wps_wpr_global_product_enable'] ) && isset( $wps_wpr_prev_assign_points['wps_wpr_pro_points_to_all'] ) ? (string) $wps_wpr_prev_assign_points['wps_wpr_pro_points_to_all'] : '';
+		$wps_wpr_overwrite_points   = ! empty( $_POST['wps_wpr_overwrite_existing_product_points'] );
 		if ( isset( $_POST['wps_wpr_global_product_enable'] ) && ! empty( $_POST['wps_wpr_global_product_enable'] ) ) {
 			if ( isset( $_POST['wps_wpr_pro_points_to_all'] ) && ! empty( $_POST['wps_wpr_pro_points_to_all'] ) ) {
 
@@ -42,8 +47,12 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 				);
 				$loop = new WP_Query( $args );
 
+				$wps_wpr_skipped_products = 0;
 				foreach ( $loop->posts as $key => $value ) {
 					$product = wc_get_product( $value->ID );
+					if ( ! $product ) {
+						continue;
+					}
 
 					if ( apply_filters( 'wps_wpr_is_variable_product', false, $product ) ) {
 
@@ -51,10 +60,22 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 						$parent_product = wc_get_product( $parent_id );
 						foreach ( $parent_product->get_children() as $child_id ) {
 
+							// Without the overwrite flag, keep variations that have their own points (anything other than the previous global value).
+							$wps_wpr_own_points = (string) wps_wpr_hpos_get_meta_data( $child_id, 'wps_wpr_variable_points', true );
+							if ( ! $wps_wpr_overwrite_points && '' !== $wps_wpr_own_points && $wps_wpr_own_points !== $wps_wpr_prev_global_points ) {
+								++$wps_wpr_skipped_products;
+								continue;
+							}
 							wps_wpr_hpos_update_meta_data( $parent_id, 'wps_product_points_enable', 'yes' );
 							wps_wpr_hpos_update_meta_data( $child_id, 'wps_wpr_variable_points', $wps_wpr_pro_points_to_all );
 						}
 					} else {
+						// Without the overwrite flag, keep products that have their own points (anything other than the previous global value).
+						$wps_wpr_own_points = (string) wps_wpr_hpos_get_meta_data( $value->ID, 'wps_points_product_value', true );
+						if ( ! $wps_wpr_overwrite_points && '' !== $wps_wpr_own_points && $wps_wpr_own_points !== $wps_wpr_prev_global_points && 'yes' === wps_wpr_hpos_get_meta_data( $value->ID, 'wps_product_points_enable', true ) ) {
+							++$wps_wpr_skipped_products;
+							continue;
+						}
 						wps_wpr_hpos_update_meta_data( $value->ID, 'wps_product_points_enable', 'yes' );
 						wps_wpr_hpos_update_meta_data( $value->ID, 'wps_points_product_value', $wps_wpr_pro_points_to_all );
 					}
@@ -65,6 +86,10 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 					<?php
 					echo esc_html( $wps_wpr_pro_points_to_all );
 					esc_html_e( ' Point Assigned Successfully to All Products', 'points-and-rewards-for-woocommerce' );
+					if ( $wps_wpr_skipped_products > 0 ) {
+						/* translators: %d: number of products/variations kept. */
+						echo ' ' . esc_html( sprintf( __( '(%d products/variations with their own points were kept; tick "Overwrite existing product points" to replace them.)', 'points-and-rewards-for-woocommerce' ), $wps_wpr_skipped_products ) );
+					}
 					?>
 					</strong></p>
 					<button type="button" class="notice-dismiss">
@@ -82,7 +107,8 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 				</div>
 				<?php
 			}
-		} else {
+		} elseif ( ! empty( $wps_wpr_prev_assign_points['wps_wpr_global_product_enable'] ) ) {
+			// Only clear product points when global points were enabled before (i.e. the admin is turning it off), never on a plain save.
 			$wps_wpr_assing_product_points['wps_wpr_global_product_enable']           = 0;
 			$wps_wpr_assing_product_points['wps_wpr_pro_points_to_all']               = '';
 			$wps_wpr_assing_product_points['wps_wpr_show_assign_points_on_shop_page'] = ! empty( $_POST['wps_wpr_show_assign_points_on_shop_page'] ) ? '1' : 0;
@@ -97,16 +123,29 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 			$loop = new WP_Query( $args );
 			foreach ( $loop->posts as $key => $value ) {
 				$product = wc_get_product( $value->ID );
+				if ( ! $product ) {
+					continue;
+				}
 
 				if ( $product->is_type( 'variable' ) && $product->has_child() ) {
 
 					$parent_id      = $product->get_id();
 					$parent_product = wc_get_product( $parent_id );
 					foreach ( $parent_product->get_children() as $child_id ) {
+						// Keep variations with their own points unless overwrite is ticked.
+						$wps_wpr_own_points = (string) wps_wpr_hpos_get_meta_data( $child_id, 'wps_wpr_variable_points', true );
+						if ( ! $wps_wpr_overwrite_points && '' !== $wps_wpr_own_points && $wps_wpr_own_points !== $wps_wpr_prev_global_points ) {
+							continue;
+						}
 						wps_wpr_hpos_update_meta_data( $parent_id, 'wps_product_points_enable', 'no' );
 						wps_wpr_hpos_update_meta_data( $child_id, 'wps_wpr_variable_points', '' );
 					}
 				} else {
+					// Keep products with their own points unless overwrite is ticked.
+					$wps_wpr_own_points = (string) wps_wpr_hpos_get_meta_data( $value->ID, 'wps_points_product_value', true );
+					if ( ! $wps_wpr_overwrite_points && '' !== $wps_wpr_own_points && $wps_wpr_own_points !== $wps_wpr_prev_global_points ) {
+						continue;
+					}
 					wps_wpr_hpos_update_meta_data( $value->ID, 'wps_product_points_enable', 'no' );
 					wps_wpr_hpos_update_meta_data( $value->ID, 'wps_points_product_value', '' );
 				}
@@ -120,6 +159,11 @@ if ( isset( $_POST['wps_wpr_select_all_products'] ) && isset( $_POST['wps-wpr-no
 				</button>
 			</div>
 			<?php
+		} else {
+			$wps_wpr_prev_assign_points['wps_wpr_global_product_enable']           = 0;
+			$wps_wpr_prev_assign_points['wps_wpr_show_assign_points_on_shop_page'] = ! empty( $_POST['wps_wpr_show_assign_points_on_shop_page'] ) ? '1' : 0;
+			update_option( 'wps_wpr_assign_products_points', $wps_wpr_prev_assign_points );
+			$settings_obj->wps_wpr_settings_saved();
 		}
 	}
 }
@@ -145,6 +189,13 @@ $wps_wpr_assign_product_table_settings = array(
 		'desc_tip'          => __( 'Entered Points are assigned to All Products.', 'points-and-rewards-for-woocommerce' ),
 		'custom_attributes' => array( 'min' => '"0"' ),
 		'class'             => 'input-text wps_wpr_common_width',
+	),
+	array(
+		'title'    => __( 'Overwrite existing product points', 'points-and-rewards-for-woocommerce' ),
+		'type'     => 'checkbox',
+		'desc'     => __( 'Also replace points that were set individually on products/variations', 'points-and-rewards-for-woocommerce' ),
+		'id'       => 'wps_wpr_overwrite_existing_product_points',
+		'desc_tip' => __( 'When unchecked, the global points are only applied to products that do not have their own points.', 'points-and-rewards-for-woocommerce' ),
 	),
 );
 $wps_wpr_assign_product_table_settings = apply_filters( 'wps_wpr_assign_product_points_settings', $wps_wpr_assign_product_table_settings );
@@ -226,4 +277,26 @@ $wps_wpr_assign_product_table_settings = apply_filters( 'wps_wpr_assign_product_
 	<input type="hidden" name="wps-wpr-nonce" value="<?php echo esc_html( wp_create_nonce( 'wps-wpr-nonce' ) ); ?>">
 	<input type="submit" value='<?php esc_attr_e( 'Save changes', 'points-and-rewards-for-woocommerce' ); ?>' class="button-primary woocommerce-save-button wps_wpr_save_changes" name="wps_wpr_select_all_products">
 </p>
+<script type="text/javascript">
+	( function () {
+		var btn = document.querySelector( 'input[name="wps_wpr_select_all_products"]' );
+		if ( ! btn ) {
+			return;
+		}
+		var wasEnabled = <?php echo ! empty( $wps_wpr_assing_product_points['wps_wpr_global_product_enable'] ) ? 'true' : 'false'; ?>;
+		btn.addEventListener( 'click', function ( e ) {
+			var enable    = document.getElementById( 'wps_wpr_global_product_enable' );
+			var overwrite = document.getElementById( 'wps_wpr_overwrite_existing_product_points' );
+			var msg       = '';
+			if ( enable && enable.checked ) {
+				msg = ( overwrite && overwrite.checked ) ? <?php echo wp_json_encode( __( 'This will replace the points of EVERY product, including products with their own points. Continue?', 'points-and-rewards-for-woocommerce' ) ); ?> : <?php echo wp_json_encode( __( 'This will assign the global points to all products that do not have their own points. Continue?', 'points-and-rewards-for-woocommerce' ) ); ?>;
+			} else if ( enable && wasEnabled ) {
+				msg = <?php echo wp_json_encode( __( 'Disabling global product points will remove the global points from all products (and also individually set points if "Overwrite existing product points" is ticked). Continue?', 'points-and-rewards-for-woocommerce' ) ); ?>;
+			}
+			if ( msg && ! window.confirm( msg ) ) {
+				e.preventDefault();
+			}
+		} );
+	} )();
+</script>
 <?php do_action( 'wps_wpr_product_assign_points' ); ?>
