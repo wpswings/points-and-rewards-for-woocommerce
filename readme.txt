@@ -308,32 +308,18 @@ Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wor
 == Changelog ==
 
 = 2.10.5 - Released on 17 Nov 2026 =
-New: AI Assistant in admin, with chat history, a settings tool, change proposals with validation, and session persistence
-New: Abandoned cart recovery that offers points as an incentive, with its own settings page and points-log entries 
-New: Choose which order status awards order points ("Award Order Points On Status"). It applies to every order-status handler, including abandoned cart recovery 
-New: Order points lifecycle:
-    - Points are awarded again when an order goes from cancelled/refunded back to an active status.
-    - Partial refunds take back a proportional share of the earned points.
-    - Order Rewards points are reversed when the order is cancelled.
-    - Product points are now given on admin- and REST-created orders.
-New: Redeemed cart points are returned when a payment fails or the order is cancelled or refunded. Applied points stay in the session until the order is paid, and points are re-checked on the "pay for order" page 
-New: Compatibility with latest WP 7.1 and WC 11.3.0 update  
-Fix: Points-only items no longer earn product points. Orders paid fully with points earn no per-currency or order-total points
-Fix: Restriction checks use the order's customer instead of the logged-in admin (wps_wpr_restrict_user_fun() now accepts a user ID)
-Fix: Restoring a reversed order no longer pushes the balance below zero
-Fix: Quantity was counted twice in the reserved points-only total
-Fix: Wallet and subscription renewal settings now save in General Settings
-Fix: Referral key warnings, fractional points, membership awarded twice, validation for CSV import and manual point changes, plain-text email, SMS phone prefix, network activation slug, decimal earning rate display, revenue query 
-Fix: AI Assistant error handling, input limits, markdown rendering, accessibility and layout 
-Improvement: Smaller media files 
-Improvement: PHPCS coding standards fixes
-Security Hardening: Points-to-wallet conversion now checks on the server that the wallet setting is on, and runs under a per-user lock
-Security Hardening: Quiz contest reward can be claimed only once per quiz, enforced on the server (replaying the request no longer gives points again) 
-Security Hardening: Redeemed points are checked against the user's balance before conversion. Restricted-user and minimum-redeem rules are enforced on the server, only whole positive points are accepted, and the balance is re-checked under a lock at checkout 
-Security Hardening: Admin AJAX actions now require manage_options and a separate admin nonce. Logged-out (nopriv) access to admin actions is removed.
-Security Hardening: Self-referral is blocked, and rewarded referral signups are capped per day
-Security Hardening: The abandoned-cart bonus is checked against the order and reversed on cancel/refund 
-Security Hardening: Campaign redirect now uses a cookie instead of option rows. skip_onboarding_popup is secured. Email placeholders and list-table cells are escaped. A DOM XSS in the account page design is fixed. 
+* New: AI Assistant in admin to help configure plugin settings
+* New: Abandoned cart recovery with bonus points incentives
+* New: "Award Order Points On Status" setting to choose when customers earn points
+* New: Smart order points handling for cancelled, restored and partially refunded orders
+* New: Redeemed points are automatically returned on failed, cancelled or refunded orders
+* New: Points support for orders created from admin and REST API
+* New: Compatibility with WordPress 7.1 and WooCommerce 11.3.0
+* Enhancement: More accurate point calculation for orders paid with points
+* Enhancement: Improved referrals, CSV import, emails, SMS, multisite and reports
+* Enhancement: Performance and code quality improvements
+* Security Hardening: Stronger server-side validation for redemption, wallet, quiz, Win Wheel, referral and abandoned cart rewards
+* Security Hardening: Stricter permission checks and improved data sanitisation across admin and frontend
 
 = 2.10.4 - Released on 15 September 2026 =
 * Security Fix: Added missing capability check on wps_wpr_assign_claim_points() AJAX endpoint (CVE-PENDING)
@@ -752,29 +738,15 @@ Security Hardening: Campaign redirect now uses a cookie instead of option rows. 
 == Upgrade Notice ==
 
 = 2.10.5 - Released on 17 Nov 2026 =
-New: AI Assistant in admin, with chat history, a settings tool, change proposals with validation, and session persistence
-New: Abandoned cart recovery that offers points as an incentive, with its own settings page and points-log entries 
-New: Choose which order status awards order points ("Award Order Points On Status"). It applies to every order-status handler, including abandoned cart recovery 
-New: Order points lifecycle:
-    - Points are awarded again when an order goes from cancelled/refunded back to an active status.
-    - Partial refunds take back a proportional share of the earned points.
-    - Order Rewards points are reversed when the order is cancelled.
-    - Product points are now given on admin- and REST-created orders.
-New: Redeemed cart points are returned when a payment fails or the order is cancelled or refunded. Applied points stay in the session until the order is paid, and points are re-checked on the "pay for order" page 
-New: Compatibility with latest WP 7.1 and WC 11.3.0 update  
-Fix: Points-only items no longer earn product points. Orders paid fully with points earn no per-currency or order-total points
-Fix: Restriction checks use the order's customer instead of the logged-in admin (wps_wpr_restrict_user_fun() now accepts a user ID)
-Fix: Restoring a reversed order no longer pushes the balance below zero
-Fix: Quantity was counted twice in the reserved points-only total
-Fix: Wallet and subscription renewal settings now save in General Settings
-Fix: Referral key warnings, fractional points, membership awarded twice, validation for CSV import and manual point changes, plain-text email, SMS phone prefix, network activation slug, decimal earning rate display, revenue query 
-Fix: AI Assistant error handling, input limits, markdown rendering, accessibility and layout 
-Improvement: Smaller media files 
-Improvement: PHPCS coding standards fixes
-Security Hardening: Points-to-wallet conversion now checks on the server that the wallet setting is on, and runs under a per-user lock
-Security Hardening: Quiz contest reward can be claimed only once per quiz, enforced on the server (replaying the request no longer gives points again) 
-Security Hardening: Redeemed points are checked against the user's balance before conversion. Restricted-user and minimum-redeem rules are enforced on the server, only whole positive points are accepted, and the balance is re-checked under a lock at checkout 
-Security Hardening: Admin AJAX actions now require manage_options and a separate admin nonce. Logged-out (nopriv) access to admin actions is removed.
-Security Hardening: Self-referral is blocked, and rewarded referral signups are capped per day
-Security Hardening: The abandoned-cart bonus is checked against the order and reversed on cancel/refund 
-Security Hardening: Campaign redirect now uses a cookie instead of option rows. skip_onboarding_popup is secured. Email placeholders and list-table cells are escaped. A DOM XSS in the account page design is fixed. 
+* New: AI Assistant in admin to help configure plugin settings
+* New: Abandoned cart recovery with bonus points incentives
+* New: "Award Order Points On Status" setting to choose when customers earn points
+* New: Smart order points handling for cancelled, restored and partially refunded orders
+* New: Redeemed points are automatically returned on failed, cancelled or refunded orders
+* New: Points support for orders created from admin and REST API
+* New: Compatibility with WordPress 7.1 and WooCommerce 11.3.0
+* Enhancement: More accurate point calculation for orders paid with points
+* Enhancement: Improved referrals, CSV import, emails, SMS, multisite and reports
+* Enhancement: Performance and code quality improvements
+* Security Hardening: Stronger server-side validation for redemption, wallet, quiz, Win Wheel, referral and abandoned cart rewards
+* Security Hardening: Stricter permission checks and improved data sanitisation across admin and frontend
