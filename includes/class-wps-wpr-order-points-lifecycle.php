@@ -127,10 +127,12 @@ class WPS_WPR_Order_Points_Lifecycle {
 	 * @return void
 	 */
 	public function wps_wpr_restore_reversed_order_points( $order_id, $old_status, $new_status ) {
-		if ( ! in_array( $old_status, array( 'cancelled', 'refunded' ), true ) ) {
+		if ( ! in_array( $old_status, array( 'cancelled', 'refunded', 'failed' ), true ) ) {
 			return;
 		}
 
+		// Not "pending": a checkout retry re-deducts in wps_wpr_woocommerce_checkout_update_order_meta() (with the balance
+		// check and lock), and "Pay for order" is blocked up front when the points are gone (wps_wpr_validate_pay_for_order_points()).
 		$live_statuses = array( 'processing', 'on-hold', 'completed', wps_wpr_get_points_award_status() );
 		if ( ! in_array( $new_status, $live_statuses, true ) ) {
 			return;
@@ -200,8 +202,13 @@ class WPS_WPR_Order_Points_Lifecycle {
 		$returned = is_array( $returned ) ? $returned : array();
 		if ( 'done' === $order->get_meta( 'refunded_points_by_cart' ) && ! isset( $returned['refunded_points_by_cart'] ) ) {
 			// Cancelled before this give-back was tracked.
+			$deducted_points = (int) $order->get_meta( 'wps_wpr_cart_points_deducted_points' );
+			if ( $deducted_points <= 0 ) {
+				// Same rounding as the deduction at checkout.
+				$deducted_points = (int) ceil( round( (float) $order->get_meta( 'wps_cart_discount#points' ), 4 ) );
+			}
 			$returned['refunded_points_by_cart'] = array(
-				'points' => absint( $order->get_meta( 'wps_cart_discount#points' ) ),
+				'points' => $deducted_points,
 				'type'   => 'cart_subtotal_point',
 			);
 		}

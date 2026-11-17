@@ -1717,58 +1717,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$user_id        = absint( $order->get_user_id() );
 			$wps_points_log = get_user_meta( $user_id, 'points_details', true );
 			$wps_points_log = ! empty( $wps_points_log ) && is_array( $wps_points_log ) ? $wps_points_log : array();
-			if ( array_key_exists( 'cart_subtotal_point', $wps_points_log ) ) {
-
-				$today_date = date_i18n( 'Y-m-d h:i:sa' );
-				// hpos.
-				$wps_value_to_check = absint( wps_wpr_hpos_get_meta_data( $order_id, 'wps_cart_discount#points', true ) );
-				foreach ( $wps_points_log['cart_subtotal_point'] as $key => $value ) {
-					// hpos.
-					$pre_wps_check = wps_wpr_hpos_get_meta_data( $order_id, 'refunded_points_by_cart', true );
-
-					if ( ! isset( $pre_wps_check ) || 'done' != $pre_wps_check ) {
-						if ( $value['cart_subtotal_point'] == $wps_value_to_check ) {
-
-							$value_to_refund          = $value['cart_subtotal_point'];
-							$wps_total_points_par     = get_user_meta( $user_id, 'wps_wpr_points', true );
-							$wps_points_newly_updated = (int) ( $wps_total_points_par + $value_to_refund );
-							$wps_refer_deduct_points  = get_user_meta( $user_id, 'points_details', true );
-							$wps_refer_deduct_points  = ! empty( $wps_refer_deduct_points ) && is_array( $wps_refer_deduct_points ) ? $wps_refer_deduct_points : array();
-							if ( isset( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) && ! empty( $wps_refer_deduct_points['refund_points_applied_on_cart'] ) ) {
-
-								$wps_par_refund_purchase = array();
-								$wps_par_refund_purchase = array(
-									'refund_points_applied_on_cart' => $value_to_refund,
-									'date' => $today_date,
-								);
-								$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
-							} else {
-								if ( ! is_array( $wps_refer_deduct_points ) ) {
-									$wps_refer_deduct_points = array();
-								}
-								$wps_par_refund_purchase = array();
-								$wps_par_refund_purchase = array(
-									'refund_points_applied_on_cart' => $value_to_refund,
-									'date' => $today_date,
-								);
-								$wps_refer_deduct_points['refund_points_applied_on_cart'][] = $wps_par_refund_purchase;
-							}
-							update_user_meta( $user_id, 'wps_wpr_points', $wps_points_newly_updated );
-							update_user_meta( $user_id, 'points_details', $wps_refer_deduct_points );
-							// hpos.
-							wps_wpr_hpos_update_meta_data( $order_id, 'refunded_points_by_cart', 'done' );
-							// remember the give-back so the points are taken again if the order is re-completed.
-							if ( class_exists( 'WPS_WPR_Order_Points_Lifecycle' ) ) {
-								WPS_WPR_Order_Points_Lifecycle::wps_wpr_track_returned_redeem_points( $order_id, 'refunded_points_by_cart', $value_to_refund, 'cart_subtotal_point' );
-							}
-							// send sms.
-							wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( 'Your points have been added back to your account due to the order cancellation. Your total points balance is now %s', 'points-and-rewards-for-woocommerce' ), $wps_points_newly_updated ) );
-							// send messages on whatsapp.
-							wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( 'Your points have been added back to your account due to the order cancellation. Your total points balance is now %s', 'points-and-rewards-for-woocommerce' ), $wps_points_newly_updated ) );
-						}
-					}
-				}
-			}
+			// Redeemed (Cart Discount) points are returned by wps_wpr_return_redeemed_cart_points().
 
 			// Refund subscription renewal awarded points when subscription is cancelled or refunded.
 			if ( wps_wpr_check_is_subscription_plugin_active() ) {
@@ -2870,6 +2819,190 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
+	 * Points that were deducted for the Cart Discount (redeemed points) of an order.
+	 *
+	 * @param WC_Order $order order.
+	 * @return int
+	 */
+	private function wps_wpr_get_order_redeemed_cart_points( $order ) {
+		$order_id = $order->get_id();
+		$points   = (int) wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_cart_points_deducted_points', true );
+		if ( $points > 0 ) {
+			return $points;
+		}
+
+		// Orders placed before the exact amount was stored: use the same rounding as the deduction.
+		$legacy = (float) wps_wpr_hpos_get_meta_data( $order_id, 'wps_cart_discount#points', true );
+		return $legacy > 0 ? (int) ceil( round( $legacy, 4 ) ) : 0;
+	}
+
+	/**
+	 * Give the redeemed (Cart Discount) points back when the payment fails or the order is cancelled / refunded.
+	 * Runs on its own so the earning restrictions in wps_wpr_woocommerce_order_status_changed() never block it.
+	 *
+	 * @param int    $order_id   order id.
+	 * @param string $old_status old status.
+	 * @param string $new_status new status.
+	 * @return void
+	 */
+	public function wps_wpr_return_redeemed_cart_points( $order_id, $old_status, $new_status ) {
+		if ( $old_status === $new_status || ! in_array( $new_status, array( 'failed', 'cancelled', 'refunded' ), true ) ) {
+			return;
+		}
+
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			return;
+		}
+
+		$user_id = absint( $order->get_user_id() );
+		if ( empty( $user_id ) || 'done' === wps_wpr_hpos_get_meta_data( $order_id, 'refunded_points_by_cart', true ) ) {
+			return;
+		}
+
+		$points = $this->wps_wpr_get_order_redeemed_cart_points( $order );
+		if ( $points <= 0 ) {
+			return;
+		}
+
+		// Security: only one request may return the points of an order (e.g. gateway webhook + admin at the same time).
+		if ( ! $this->wps_wpr_acquire_user_lock( 'cart_return', $order_id ) ) {
+			return;
+		}
+		$order = wc_get_order( $order_id );
+		if ( ! $order || 'done' === $order->get_meta( 'refunded_points_by_cart' ) ) {
+			$this->wps_wpr_release_user_lock( 'cart_return', $order_id );
+			return;
+		}
+		wps_wpr_hpos_update_meta_data( $order_id, 'refunded_points_by_cart', 'done' );
+		$this->wps_wpr_release_user_lock( 'cart_return', $order_id );
+
+		// Serialize with checkout deductions of the same customer so no balance update is lost.
+		$wps_wpr_has_lock = false;
+		for ( $attempt = 0; $attempt < 5 && ! $wps_wpr_has_lock; $attempt++ ) {
+			$wps_wpr_has_lock = $this->wps_wpr_acquire_user_lock( 'redeem', $user_id );
+			if ( ! $wps_wpr_has_lock ) {
+				usleep( 200000 );
+			}
+		}
+		wp_cache_delete( $user_id, 'user_meta' );
+		$new_balance = (int) get_user_meta( $user_id, 'wps_wpr_points', true ) + $points;
+		update_user_meta( $user_id, 'wps_wpr_points', $new_balance );
+		if ( $wps_wpr_has_lock ) {
+			$this->wps_wpr_release_user_lock( 'redeem', $user_id );
+		}
+
+		$points_log = get_user_meta( $user_id, 'points_details', true );
+		$points_log = ! empty( $points_log ) && is_array( $points_log ) ? $points_log : array();
+		$points_log['refund_points_applied_on_cart'][] = array(
+			'refund_points_applied_on_cart' => $points,
+			'date'                          => date_i18n( 'Y-m-d h:i:sa' ),
+			'order_id'                      => $order_id,
+		);
+		update_user_meta( $user_id, 'points_details', $points_log );
+		do_action( 'wps_wpr_update_points_log', $user_id );
+
+		// Remember the give-back so the points are taken again if the order is paid / re-completed later.
+		if ( class_exists( 'WPS_WPR_Order_Points_Lifecycle' ) ) {
+			WPS_WPR_Order_Points_Lifecycle::wps_wpr_track_returned_redeem_points( $order_id, 'refunded_points_by_cart', $points, 'cart_subtotal_point' );
+		}
+
+		$order = wc_get_order( $order_id );
+		if ( $order ) {
+			$order->add_order_note(
+				/* translators: 1: points, 2: order status */
+				sprintf( esc_html__( '%1$s redeemed points returned to the customer because the order is %2$s.', 'points-and-rewards-for-woocommerce' ), $points, wc_get_order_status_name( $new_status ) )
+			);
+		}
+
+		if ( 'failed' === $new_status ) {
+			/* translators: %s: points balance */
+			$message = sprintf( esc_html__( 'Your payment failed, so the points you applied have been added back to your account. Your total points balance is now %s', 'points-and-rewards-for-woocommerce' ), $new_balance );
+		} else {
+			/* translators: %s: points balance */
+			$message = sprintf( esc_html__( 'Your points have been added back to your account due to the order cancellation. Your total points balance is now %s', 'points-and-rewards-for-woocommerce' ), $new_balance );
+		}
+		wps_wpr_send_sms_org( $user_id, $message );
+		wps_wpr_send_messages_on_whatsapp( $user_id, $message );
+	}
+
+	/**
+	 * "Pay for order" on an order whose redeemed points were given back (failed payment): the points are
+	 * taken again when the order is paid, so block the payment if the customer no longer has them.
+	 * Otherwise the points could be spent elsewhere and the old order paid with the discount for free.
+	 *
+	 * @param WC_Order $order order.
+	 * @return void
+	 */
+	public function wps_wpr_validate_pay_for_order_points( $order ) {
+		if ( ! $order instanceof WC_Order || 'done' !== wps_wpr_hpos_get_meta_data( $order->get_id(), 'refunded_points_by_cart', true ) ) {
+			return;
+		}
+
+		$user_id = absint( $order->get_user_id() );
+		if ( empty( $user_id ) ) {
+			return;
+		}
+
+		$points = $this->wps_wpr_get_order_redeemed_cart_points( $order );
+		if ( $points > 0 && $points > $this->wps_wpr_get_fresh_user_points( $user_id ) ) {
+			wc_add_notice(
+				/* translators: %s: points */
+				sprintf( esc_html__( 'This order uses a %s points discount, but your points balance no longer covers it. Please place a new order.', 'points-and-rewards-for-woocommerce' ), $points ),
+				'error'
+			);
+		}
+	}
+
+	/**
+	 * The redeemed points of an order were taken again at checkout: clear the earlier give-back
+	 * so it is not deducted a second time when the order is paid.
+	 *
+	 * @param int $order_id order id.
+	 * @return void
+	 */
+	private function wps_wpr_forget_returned_cart_points( $order_id ) {
+		wps_wpr_hpos_delete_meta_data( $order_id, 'refunded_points_by_cart' );
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			return;
+		}
+
+		if ( class_exists( 'WPS_WPR_Order_Points_Lifecycle' ) ) {
+			$returned = $order->get_meta( WPS_WPR_Order_Points_Lifecycle::RETURNED_REDEEM_META );
+			if ( is_array( $returned ) && isset( $returned['refunded_points_by_cart'] ) ) {
+				unset( $returned['refunded_points_by_cart'] );
+				if ( empty( $returned ) ) {
+					$order->delete_meta_data( WPS_WPR_Order_Points_Lifecycle::RETURNED_REDEEM_META );
+				} else {
+					$order->update_meta_data( WPS_WPR_Order_Points_Lifecycle::RETURNED_REDEEM_META, $returned );
+				}
+			}
+		}
+		$order->save();
+	}
+
+	/**
+	 * Clear the applied points from the session once the order is paid (the cart is emptied
+	 * on a successful checkout, never on a failed payment).
+	 *
+	 * @param mixed $order_id order id (woocommerce_thankyou) or clear-persistent-cart flag (woocommerce_cart_emptied).
+	 * @return void
+	 */
+	public function wps_wpr_clear_cart_points_session( $order_id = 0 ) {
+		if ( 'woocommerce_thankyou' === current_action() ) {
+			$order = wc_get_order( absint( $order_id ) );
+			if ( ! $order || ! $order->is_paid() ) {
+				return;
+			}
+		}
+		if ( function_exists( 'WC' ) && WC()->session ) {
+			WC()->session->__unset( 'wps_cart_points' );
+			WC()->session->__unset( 'wps_wpr_tax_before_coupon' );
+		}
+	}
+
+	/**
 	 * AJAX handler to get current cart redemption state.
 	 * Returns redeemed points from session to restore UI after page reload.
 	 *
@@ -2950,7 +3083,9 @@ class Points_Rewards_For_WooCommerce_Public {
 						if ( strtolower( $cart_discount ) == strtolower( $coupon_name ) ) {
 
 							// Security: deduct the applied points only once per order (e.g. when checkout is retried for the same order).
-							if ( 'yes' === wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_cart_points_deducted', true ) ) {
+							// If the points were given back (failed payment) and the same order is checked out again, deduct them again.
+							$wps_wpr_points_returned = 'done' === wps_wpr_hpos_get_meta_data( $order_id, 'refunded_points_by_cart', true );
+							if ( 'yes' === wps_wpr_hpos_get_meta_data( $order_id, 'wps_wpr_cart_points_deducted', true ) && ! $wps_wpr_points_returned ) {
 								continue;
 							}
 
@@ -2991,6 +3126,12 @@ class Points_Rewards_For_WooCommerce_Public {
 							update_user_meta( $user_id, 'wps_wpr_points', $remaining_point );
 							$this->wps_wpr_release_user_lock( 'redeem', $user_id );
 							wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_cart_points_deducted', 'yes' );
+							// exact points taken, returned as-is on failed payment / cancel / refund.
+							wps_wpr_hpos_update_meta_data( $order_id, 'wps_wpr_cart_points_deducted_points', $fee_to_point );
+							if ( $wps_wpr_points_returned ) {
+								// Points are taken again for this order: forget the earlier give-back.
+								$this->wps_wpr_forget_returned_cart_points( $order_id );
+							}
 							$data = array();
 							/*update points of the customer*/
 							$this->wps_wpr_update_points_details( $user_id, 'cart_subtotal_point', $fee_to_point, $data );
@@ -3000,12 +3141,11 @@ class Points_Rewards_For_WooCommerce_Public {
 							wps_wpr_send_sms_org( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( '%1$s applied points used at Cart/Checkout have been deducted from your account. Your total points balance is now %2$s', 'points-and-rewards-for-woocommerce' ), $fee_to_point, $remaining_point ) );
 							// send messages on whatsapp.
 							wps_wpr_send_messages_on_whatsapp( $user_id, /* translators: %s: sms msg */ sprintf( esc_html__( '%1$s applied points used at Cart/Checkout have been deducted from your account. Your total points balance is now %2$s', 'points-and-rewards-for-woocommerce' ), $fee_to_point, $remaining_point ) );
-							/*Unset the session*/
-							if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
+							// Keep the applied points in the session until the payment succeeds, so a failed payment can be
+							// retried without the points discount being removed (see wps_wpr_clear_cart_points_session()).
+							if ( WC()->session && ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
 								// hpos.
 								wps_wpr_hpos_update_meta_data( $order_id, 'wps_cart_discount#points', $coupon_amount );
-								WC()->session->__unset( 'wps_cart_points' );
-								WC()->session->__unset( 'wps_wpr_tax_before_coupon' );
 							}
 
 							// updating redeemed points.

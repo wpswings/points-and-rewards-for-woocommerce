@@ -326,6 +326,12 @@ class Points_Rewards_For_Woocommerce {
 			// cart block change.
 			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta' );
 			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'wps_wpr_woocommerce_checkout_update_order_meta' );
+			// Return redeemed points on failed payment / cancel / refund.
+			$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_public, 'wps_wpr_return_redeemed_cart_points', 10, 3 );
+			$this->loader->add_action( 'woocommerce_before_pay_action', $plugin_public, 'wps_wpr_validate_pay_for_order_points', 10, 1 );
+			// Keep applied points in the session until the order is paid.
+			$this->loader->add_action( 'woocommerce_cart_emptied', $plugin_public, 'wps_wpr_clear_cart_points_session', 10, 1 );
+			$this->loader->add_action( 'woocommerce_thankyou', $plugin_public, 'wps_wpr_clear_cart_points_session', 10, 1 );
 			$this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'wps_wpr_woocommerce_add_cart_item_data', 10, 4 );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'wps_wpr_woocommerce_get_item_data', 10, 2 );
 			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'wps_display_product_points', 7 );
