@@ -5072,18 +5072,14 @@ class Points_Rewards_For_WooCommerce_Public {
 			wp_send_json( $response );
 		}
 
-		// Atomic per-user lock so two parallel claims cannot both pay out.
-		$lock_key = 'wps_wpr_lock_wheel_' . $user_id;
-		if ( ! add_option( $lock_key, time(), '', 'no' ) ) {
-			if ( time() - (int) get_option( $lock_key, 0 ) > 30 ) {
-				delete_option( $lock_key );
-			}
+		// Atomic per-user lock (INSERT IGNORE) so two parallel claims cannot both pay out.
+		if ( ! $this->wps_wpr_acquire_user_lock( 'wheel', $user_id ) ) {
 			wp_send_json( $response );
 		}
 
 		$pending = get_user_meta( $user_id, 'wps_wpr_pending_wheel_prize', true );
 		if ( empty( $pending ) || ! is_array( $pending ) ) {
-			delete_option( $lock_key );
+			$this->wps_wpr_release_user_lock( 'wheel', $user_id );
 			$response['msg'] = esc_html__( 'Please spin the wheel first', 'points-and-rewards-for-woocommerce' );
 			wp_send_json( $response );
 		}
@@ -5175,7 +5171,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			$response['msg']    = esc_html__( 'Success', 'points-and-rewards-for-woocommerce' );
 		}
 		$response['points'] = $wps_claim_points;
-		delete_option( $lock_key );
+		$this->wps_wpr_release_user_lock( 'wheel', $user_id );
 		wp_send_json( $response );
 	}
 
@@ -6224,7 +6220,15 @@ class Points_Rewards_For_WooCommerce_Public {
 		// Security: one attempt per quiz, keyed by quiz index (not the answer text). A wrong answer uses up the attempt.
 		$is_correct  = $submitted_answer === $quiz_correct_answer && $reward_points > 0;
 		$attempt_key = 'wps_wpr_quiz_attempt_' . $wps_index;
+
+		// Security: per-user lock so parallel requests cannot both pass the one-attempt check.
+		if ( ! $this->wps_wpr_acquire_user_lock( 'quiz', $user_id ) ) {
+			$response['msg'] = esc_html__( 'Another request is in progress. Please try again.', 'points-and-rewards-for-woocommerce' );
+			wp_send_json( $response );
+		}
+
 		if ( '' !== $this->wps_wpr_get_quiz_attempt_status( $user_id, $wps_index ) || ! add_user_meta( $user_id, $attempt_key, $is_correct ? 'won' : 'lost', true ) ) {
+			$this->wps_wpr_release_user_lock( 'quiz', $user_id );
 			$response['msg']       = esc_html__( 'You have already attempted this quiz.', 'points-and-rewards-for-woocommerce' );
 			$response['attempted'] = true;
 			wp_send_json( $response );
@@ -6253,6 +6257,7 @@ class Points_Rewards_For_WooCommerce_Public {
 			);
 		}
 
+		$this->wps_wpr_release_user_lock( 'quiz', $user_id );
 		wp_send_json( $response );
 		wp_die();
 	}
@@ -6398,11 +6403,18 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		$user_id = get_current_user_id();
 
+		// Security: per-user lock so parallel requests cannot both pass the "already claimed" check.
+		if ( ! $this->wps_wpr_acquire_user_lock( 'social_share', $user_id ) ) {
+			wp_send_json_error( esc_html__( 'Another request is in progress. Please try again.', 'points-and-rewards-for-woocommerce' ) );
+			wp_die();
+		}
+
 		// Security: Check if user has already performed this specific social action.
 		$performed_actions = get_user_meta( $user_id, 'wps_wpr_social_action_performed', true );
 		$performed_actions = is_array( $performed_actions ) ? $performed_actions : array();
 
 		if ( in_array( $social_tag_name, $performed_actions, true ) ) {
+			$this->wps_wpr_release_user_lock( 'social_share', $user_id );
 			wp_send_json_error( esc_html__( 'You have already claimed points for this action.', 'points-and-rewards-for-woocommerce' ) );
 			wp_die();
 		}
@@ -6460,11 +6472,14 @@ class Points_Rewards_For_WooCommerce_Public {
 			$performed = array_unique( array_merge( $performed, (array) $social_tag_name ) );
 			update_user_meta( $user_id, 'wps_wpr_social_action_performed', $performed );
 
+			$this->wps_wpr_release_user_lock( 'social_share', $user_id );
+
 			// send mail.
 			$this->wps_wpr_send_social_campaign_mail( $user_id, $points, $social_heading, $updated_points );
 
 			wp_send_json( $url );
 		}
+		$this->wps_wpr_release_user_lock( 'social_share', $user_id );
 		wp_die();
 	}
 
