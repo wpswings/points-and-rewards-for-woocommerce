@@ -152,6 +152,11 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-ai-assistant.php';
 
+		/**
+		 * The class responsible for points CSV import and export.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-import-export.php';
+
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
 		/**
@@ -258,6 +263,9 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_wpr_add_additional_import_points', $plugin_admin, 'wps_wpr_add_additional_import_org_points', 10 );
 		}
 		$this->loader->add_action( 'wp_ajax_wps_large_scv_import', $plugin_admin, 'wps_large_scv_import' );
+		// points CSV export (runs before admin output so the file can be streamed).
+		$points_import_export = new WPS_WPR_Points_Import_Export();
+		$this->loader->add_action( 'admin_init', $points_import_export, 'wps_wpr_maybe_export_points' );
 		// email preview.
 		$this->loader->add_filter( 'wps_wpr_preview_email_content', $plugin_admin, 'wps_wpr_preview_email_content_call', 10, 1 );
 		// manage discount on order edit page.
