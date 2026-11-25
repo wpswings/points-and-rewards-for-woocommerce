@@ -84,6 +84,8 @@ if ( $activated ) {
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_DIR_URL', plugin_dir_url( __FILE__ ) );
 		rewardeem_woocommerce_points_rewards_constants( 'WPS_RWPR_HOME_URL', admin_url() );
+		// The free plugin owns the award / reversal order status settings (Pro defers to it).
+		rewardeem_woocommerce_points_rewards_constants( 'WPS_WPR_FREE_ORDER_STATUS_SETTINGS', true );
 	}
 
 	/**
@@ -555,6 +557,51 @@ if ( $activated ) {
 	}
 
 	/**
+	 * Order statuses (without the "wc-" prefix) at which awarded order points are taken back.
+	 *
+	 * "cancelled" and "refunded" are always included. Admins can add more statuses (e.g. "failed" or a
+	 * custom "returned" status) from the General settings; sites can also use the
+	 * `wps_wpr_points_reversal_order_statuses` filter. The award status, "completed", "pending" and
+	 * "checkout-draft" can never be reversal statuses.
+	 *
+	 * @return array
+	 */
+	function wps_wpr_get_points_reversal_statuses() {
+		$settings = get_option( 'wps_wpr_settings_gallery', array() );
+		$extra    = ( is_array( $settings ) && ! empty( $settings['wps_wpr_points_reversal_order_statuses'] ) && is_array( $settings['wps_wpr_points_reversal_order_statuses'] ) ) ? $settings['wps_wpr_points_reversal_order_statuses'] : array();
+		$statuses = (array) apply_filters( 'wps_wpr_points_reversal_order_statuses', array_merge( array( 'cancelled', 'refunded' ), $extra ) );
+
+		$blocked = array( 'completed', 'pending', 'checkout-draft', wps_wpr_get_points_award_status() );
+		$clean   = array( 'cancelled', 'refunded' );
+		foreach ( $statuses as $status ) {
+			$status = sanitize_key( preg_replace( '/^wc-/', '', (string) $status ) );
+			if ( '' !== $status && ! in_array( $status, $blocked, true ) && ! in_array( $status, $clean, true ) ) {
+				$clean[] = $status;
+			}
+		}
+		return $clean;
+	}
+
+	/**
+	 * Reversal statuses added on top of "cancelled" and "refunded".
+	 *
+	 * @return array
+	 */
+	function wps_wpr_get_extra_points_reversal_statuses() {
+		return array_values( array_diff( wps_wpr_get_points_reversal_statuses(), array( 'cancelled', 'refunded' ) ) );
+	}
+
+	/**
+	 * Whether awarded order points are taken back when an order enters this status.
+	 *
+	 * @param string $status order status, with or without the "wc-" prefix.
+	 * @return bool
+	 */
+	function wps_wpr_is_points_reversal_status( $status ) {
+		return in_array( preg_replace( '/^wc-/', '', (string) $status ), wps_wpr_get_points_reversal_statuses(), true );
+	}
+
+	/**
 	 * Map an order status transition onto the plugin's "completed" logic when a custom award status is set.
 	 *
 	 * - Entering the award status (or "completed", if the order skipped the award status) is reported as
@@ -576,6 +623,35 @@ if ( $activated ) {
 		}
 
 		$trigger = wps_wpr_get_points_award_status();
+
+		// Admin-configured extra reversal status (e.g. "failed" or a custom "returned"): report it as
+		// "cancelled" (and the old status as "completed") once points were earned, so every existing
+		// cancel handler takes the points back.
+		$extra_reversal = wps_wpr_get_extra_points_reversal_statuses();
+		if ( ! empty( $extra_reversal ) && in_array( $new_status, $extra_reversal, true ) ) {
+			$key = $order_id . '|' . $new_status;
+			if ( ! isset( $decisions[ $key ] ) ) {
+				$order  = wc_get_order( $order_id );
+				$earned = $order && (
+					$order->get_meta( '_wps_wpr_award_status_reached' )
+					|| $order->get_meta( '_wps_par_points_awarded' )
+					|| 'set' === $order->get_meta( $order_id . '#item_conversion_id' )
+					|| ( 'completed' === $trigger && $order->get_date_completed() )
+				);
+				$earned = $earned || ( null !== $old_status && in_array( $old_status, array( 'completed', $trigger ), true ) );
+				if ( $order && $order->get_meta( '_wps_wpr_award_status_reached' ) ) {
+					$order->delete_meta_data( '_wps_wpr_award_status_reached' );
+					$order->save_meta_data();
+				}
+				$decisions[ $key ] = array(
+					'already' => (bool) $earned,
+					'new'     => $earned ? 'cancelled' : $new_status,
+				);
+			}
+			$decision = $decisions[ $key ];
+			return array( $decision['already'] ? 'completed' : $old_status, $decision['new'] );
+		}
+
 		if ( 'completed' === $trigger ) {
 			return array( $old_status, $new_status );
 		}
@@ -599,7 +675,7 @@ if ( $activated ) {
 					$order->update_meta_data( '_wps_wpr_award_status_reached', $trigger );
 					$order->save_meta_data();
 				}
-			} elseif ( $order && in_array( $new_status, array( 'cancelled', 'refunded', 'failed' ), true ) ) {
+			} elseif ( $order && ( 'failed' === $new_status || wps_wpr_is_points_reversal_status( $new_status ) ) ) {
 				$order->delete_meta_data( '_wps_wpr_award_status_reached' );
 				$order->save_meta_data();
 			}
@@ -611,7 +687,7 @@ if ( $activated ) {
 
 		$decision   = $decisions[ $key ];
 		$mapped_old = $old_status;
-		if ( $decision['already'] && null !== $old_status && ! in_array( $old_status, array( 'pending', 'failed', 'cancelled', 'refunded', 'on-hold', 'checkout-draft' ), true ) ) {
+		if ( $decision['already'] && null !== $old_status && ! in_array( $old_status, array( 'pending', 'failed', 'cancelled', 'refunded', 'on-hold', 'checkout-draft' ), true ) && ! wps_wpr_is_points_reversal_status( $old_status ) ) {
 			// Points already belong to this order: treat any post-award status as "completed" for revocation logic.
 			$mapped_old = 'completed';
 		}

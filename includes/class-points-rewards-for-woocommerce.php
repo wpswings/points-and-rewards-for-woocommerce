@@ -148,6 +148,13 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
 
 		/**
+		 * The class providing the configurable award / reversal order status settings.
+		 * Loaded on every request: the award status is needed wherever order statuses change.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-status-settings.php';
+		new WPS_WPR_Order_Status_Settings();
+
+		/**
 		 * The class responsible for the AI settings assistant.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-ai-assistant.php';

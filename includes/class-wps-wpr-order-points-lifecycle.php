@@ -127,7 +127,7 @@ class WPS_WPR_Order_Points_Lifecycle {
 	 * @return void
 	 */
 	public function wps_wpr_restore_reversed_order_points( $order_id, $old_status, $new_status ) {
-		if ( ! in_array( $old_status, array( 'cancelled', 'refunded', 'failed' ), true ) ) {
+		if ( 'failed' !== $old_status && ! wps_wpr_is_points_reversal_status( $old_status ) ) {
 			return;
 		}
 
@@ -349,7 +349,7 @@ class WPS_WPR_Order_Points_Lifecycle {
 	 * @return void
 	 */
 	public function wps_wpr_reverse_order_rewards_points( $order_id, $old_status, $new_status ) {
-		if ( $old_status === $new_status || ! in_array( $new_status, array( 'cancelled', 'refunded' ), true ) ) {
+		if ( $old_status === $new_status || ! wps_wpr_is_points_reversal_status( $new_status ) ) {
 			return;
 		}
 
@@ -521,7 +521,7 @@ class WPS_WPR_Order_Points_Lifecycle {
 	 * @return void
 	 */
 	public function wps_wpr_settle_partial_refunds_on_reversal( $order_id, $old_status, $new_status ) {
-		if ( $old_status === $new_status || ! in_array( $new_status, array( 'cancelled', 'refunded' ), true ) ) {
+		if ( $old_status === $new_status || ! wps_wpr_is_points_reversal_status( $new_status ) ) {
 			return;
 		}
 

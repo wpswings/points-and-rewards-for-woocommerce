@@ -516,7 +516,7 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 	 * @return void
 	 */
 	public function wps_wpr_reverse_recovery_points( $order_id, $old_status, $new_status ) {
-		if ( $old_status === $new_status || ! in_array( $new_status, array( 'cancelled', 'refunded' ), true ) ) {
+		if ( $old_status === $new_status || ! wps_wpr_is_points_reversal_status( $new_status ) ) {
 			return;
 		}
 

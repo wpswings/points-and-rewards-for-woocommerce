@@ -277,7 +277,7 @@ Privacy: https://policy.pinterest.com/en/privacy-policy
 Set up your loyalty program with the [**best rewards plugin for WordPress**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/). Configure earning settings to award points for customer purchases and other eligible actions, and redemption settings to define how customers can convert their points into discounts. [**Install the plugin today**](https://downloads.wordpress.org/plugin/points-and-rewards-for-woocommerce.2.10.4.zip) and start rewarding loyal customers!
 
 =Why are points not added to the user account after placing an order?=
-Points are rewarded on " completed" order status, so make sure the order placed by the user is marked as completed for the points to be successfully added to user account. 
+By default, points are rewarded when the order status is "Completed". You can choose another status, such as "Processing" or a custom status, under General Settings > Order Status Settings > Award Order Points On Status. Points are taken back when the order is cancelled or refunded, and you can add more statuses, such as "Failed", under "Also Deduct Points On Status".
 
 =Is it possible to assign Points Badges to users based on the points they have accumulated?=
 Yes, there is an option to assign point badges to the user based on the points they have accumulated. However, if you would like to add multiple levels, you will need to purchase our [**Points and Rewards for WooCommerce Pro**](https://wpswings.com/product/points-and-rewards-for-woocommerce-plugin/) for this feature.
