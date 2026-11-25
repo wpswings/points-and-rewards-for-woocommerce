@@ -152,6 +152,11 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-ai-assistant.php';
 
+		/**
+		 * The class responsible for campaign and reward display ordering.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-campaign-ordering.php';
+
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
 		/**
@@ -270,6 +275,11 @@ class Points_Rewards_For_Woocommerce {
 		// set campaign image.
 		$this->loader->add_action( 'wp_ajax_wps_set_camp_heading_and_image', $plugin_admin, 'wps_wpr_set_camp_heading_and_image', 10 );
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'wps_wpr_org_remove_action' );
+
+		// campaign and reward display ordering.
+		$campaign_ordering = new WPS_WPR_Campaign_Ordering();
+		$this->loader->add_action( 'admin_enqueue_scripts', $campaign_ordering, 'wps_wpr_enqueue_admin_assets' );
+		$this->loader->add_filter( 'wps_wpr_reward_catalog_available_rewards', 'WPS_WPR_Campaign_Ordering', 'wps_wpr_sort_rewards', 20 );
 
 		// AI settings assistant (needs the WordPress AI Client, WP 7.0+).
 		if ( WPS_WPR_AI_Assistant::wps_wpr_has_ai_api() ) {

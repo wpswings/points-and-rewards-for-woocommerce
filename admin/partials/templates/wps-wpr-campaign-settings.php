@@ -98,6 +98,28 @@ function wps_wpr_process_campaign_settings( $post_data ) {
 		$processed_data[ $field ] = wps_wpr_sanitize_field( $post_data[ $field ] ?? null, $sanitization_type, $defaults[ $field ] ?? '' );
 	}
 
+	// Drop blank quiz rows. Saving the tab with an unused quiz otherwise stores one empty
+	// row, which renders as required-but-empty fields and blocks every later save.
+	$wps_wpr_quiz_fields = array( 'wps_wpr_quiz_question', 'wps_wpr_quiz_option_one', 'wps_wpr_quiz_option_two', 'wps_wpr_quiz_option_three', 'wps_wpr_quiz_option_four', 'wps_wpr_quiz_answer', 'wps_wpr_quiz_rewards_points' );
+	if ( ! empty( $processed_data['wps_wpr_quiz_question'] ) && is_array( $processed_data['wps_wpr_quiz_question'] ) ) {
+		foreach ( $processed_data['wps_wpr_quiz_question'] as $wps_wpr_index => $wps_wpr_question ) {
+			if ( '' !== trim( (string) $wps_wpr_question ) ) {
+				continue;
+			}
+			foreach ( $wps_wpr_quiz_fields as $wps_wpr_quiz_field ) {
+				if ( is_array( $processed_data[ $wps_wpr_quiz_field ] ) ) {
+					unset( $processed_data[ $wps_wpr_quiz_field ][ $wps_wpr_index ] );
+				}
+			}
+		}
+		foreach ( $wps_wpr_quiz_fields as $wps_wpr_quiz_field ) {
+			$processed_data[ $wps_wpr_quiz_field ] = is_array( $processed_data[ $wps_wpr_quiz_field ] ) ? array_values( $processed_data[ $wps_wpr_quiz_field ] ) : array();
+		}
+	}
+
+	// Campaign display order (key => order number).
+	$processed_data[ WPS_WPR_Campaign_Ordering::SETTING_KEY ] = WPS_WPR_Campaign_Ordering::wps_wpr_sanitize_priorities( isset( $post_data[ WPS_WPR_Campaign_Ordering::SETTING_KEY ] ) ? wp_unslash( $post_data[ WPS_WPR_Campaign_Ordering::SETTING_KEY ] ) : array() );
+
 	// Apply filters for additional processing.
 	return apply_filters( 'wps_wpr_save_campaign_extra_data', $processed_data );
 }
@@ -513,6 +535,44 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 				</template>
 
 				<?php do_action( 'wps_wpr_add_social_share_additional_html', $wps_wpr_campaign_settings ); ?>
+			</section>
+
+			<!-- Campaign display order -->
+			<?php
+			$wps_wpr_orderable_campaigns = WPS_WPR_Campaign_Ordering::wps_wpr_get_admin_items( $wps_wpr_campaign_types, $wps_wpr_campaign_settings );
+			$wps_wpr_campaign_priorities = WPS_WPR_Campaign_Ordering::wps_wpr_get_priorities( $wps_wpr_campaign_settings );
+			?>
+			<section class="wps_wpr_general_row_wrap wps_wpr_campaign_order_wrap" id="wps_wpr_campaign_order_wrap">
+				<div class="wps_wpr_user_badges_settings_heading wps_wpr_general_sign_title wps_wpr_doc_video_wrapper"><?php esc_html_e( 'Campaign Display Order', 'points-and-rewards-for-woocommerce' ); ?></div>
+				<div class="wps_wpr_section_content">
+					<article class="wps_wpr_general_row">
+						<div class="wps_wpr_general_content">
+							<span class="wps_wpr_label_notice"><?php esc_html_e( 'Drag campaigns into the order they should appear in the campaign popup, or type an order number (lower numbers show first). Campaigns without a number keep their default position after the numbered ones. New social share tasks appear here after you save them.', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<ul class="wps_wpr_campaign_order_list" id="wps_wpr_campaign_order_list" style="margin:12px 0 0;max-width:520px;">
+								<?php
+								$wps_wpr_position = 0;
+								foreach ( $wps_wpr_orderable_campaigns as $wps_wpr_campaign_key => $wps_wpr_campaign_label ) {
+									++$wps_wpr_position;
+									$wps_wpr_order_value = isset( $wps_wpr_campaign_priorities[ $wps_wpr_campaign_key ] ) ? $wps_wpr_campaign_priorities[ $wps_wpr_campaign_key ] : '';
+									?>
+									<li class="wps_wpr_campaign_order_item" data-key="<?php echo esc_attr( $wps_wpr_campaign_key ); ?>" style="display:flex;align-items:center;gap:10px;padding:8px 12px;margin:0 0 6px;background:#fff;border:1px solid #dcdcde;border-radius:4px;cursor:move;">
+										<span class="dashicons dashicons-menu wps_wpr_campaign_order_handle" aria-hidden="true"></span>
+										<span class="wps_wpr_campaign_order_label" style="flex:1;"><?php echo esc_html( $wps_wpr_campaign_label ); ?></span>
+										<label class="screen-reader-text" for="wps_wpr_campaign_priority_<?php echo esc_attr( $wps_wpr_campaign_key ); ?>">
+											<?php
+											/* translators: %s: campaign name */
+											printf( esc_html__( 'Order number for %s', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_wpr_campaign_label ) );
+											?>
+										</label>
+										<input type="number" min="0" max="<?php echo esc_attr( WPS_WPR_Campaign_Ordering::MAX_ORDER ); ?>" step="1" style="width:80px;" class="wps_wpr_campaign_priority_input" id="wps_wpr_campaign_priority_<?php echo esc_attr( $wps_wpr_campaign_key ); ?>" name="<?php echo esc_attr( WPS_WPR_Campaign_Ordering::SETTING_KEY ); ?>[<?php echo esc_attr( $wps_wpr_campaign_key ); ?>]" value="<?php echo esc_attr( $wps_wpr_order_value ); ?>" placeholder="<?php echo esc_attr( $wps_wpr_position ); ?>">
+									</li>
+									<?php
+								}
+								?>
+							</ul>
+						</div>
+					</article>
+				</div>
 			</section>
 		</main>
 		<input type="submit" name="wps_wpr_save_campaign_settings" class="button-primary woocommerce-save-button wps_wpr_save_changes" id="wps_wpr_save_campaign_settings" value="<?php esc_html_e( 'Save Changes', 'points-and-rewards-for-woocommerce' ); ?>">
