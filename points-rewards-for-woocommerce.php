@@ -384,6 +384,18 @@ if ( $activated ) {
 	function wps_wpr_clear_abandoned_cart_cron() {
 		wp_clear_scheduled_hook( 'wps_wpr_abandoned_cart_check' );
 	}
+	register_deactivation_hook( __FILE__, 'wps_wpr_clear_points_expiry_cron' );
+
+	/**
+	 * Clear the free plugin's points expiry cron on deactivation.
+	 *
+	 * Only the free plugin's own hook is cleared; Pro's expiry cron is left alone.
+	 *
+	 * @return void
+	 */
+	function wps_wpr_clear_points_expiry_cron() {
+		wp_clear_scheduled_hook( 'wps_wpr_free_points_expiry_cron' );
+	}
 	/**
 	 * This function is used to create points tab.
 	 *

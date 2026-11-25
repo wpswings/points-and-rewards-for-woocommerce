@@ -29,6 +29,7 @@ if ( isset( $_POST['wps_wpr_points_expiry_setting_nonce'] ) && isset( $_POST['wp
 			}
 		}
 		update_option( WPS_WPR_Points_Expiry::OPTION, WPS_WPR_Points_Expiry::wps_wpr_sanitize_settings( $wps_wpr_expiry_request ) );
+		WPS_WPR_Points_Expiry::wps_wpr_update_activation();
 		WPS_WPR_Points_Expiry::wps_wpr_sync_cron_schedule();
 
 		// Show saved msg.
@@ -38,6 +39,22 @@ if ( isset( $_POST['wps_wpr_points_expiry_setting_nonce'] ) && isset( $_POST['wp
 
 $wps_wpr_expiry_settings = WPS_WPR_Points_Expiry::wps_wpr_get_settings();
 $wps_wpr_expiry_unit     = WPS_WPR_Points_Expiry::wps_wpr_get_unit( $wps_wpr_expiry_settings );
+$wps_wpr_general_opts    = get_option( 'wps_wpr_settings_gallery', array() );
+
+if ( WPS_WPR_Points_Expiry::wps_wpr_has_unreviewed_settings() ) {
+	?>
+	<div class="notice notice-warning wps_wpr_points_expiry_review_notice">
+		<p><?php esc_html_e( 'Points expiry settings saved earlier (for example by the Pro plugin) were found. Points do not expire until you review the settings below and click Save Changes. On the first daily check after saving, customers whose expiry date has already passed get a reminder email, and their points expire only after the reminder period.', 'points-and-rewards-for-woocommerce' ); ?></p>
+	</div>
+	<?php
+}
+if ( empty( $wps_wpr_general_opts['wps_wpr_general_setting_enable'] ) ) {
+	?>
+	<div class="notice notice-info wps_wpr_points_expiry_program_notice">
+		<p><?php esc_html_e( 'The points program is turned off in the General settings, so points do not expire until it is turned on.', 'points-and-rewards-for-woocommerce' ); ?></p>
+	</div>
+	<?php
+}
 ?>
 
 <div class="wps_wpr_points_expiry_main_wrappers">

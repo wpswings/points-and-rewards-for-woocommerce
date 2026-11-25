@@ -34,9 +34,33 @@ class WPS_WPR_Points_Expiry {
 	const OPTION = 'wps_wpr_points_expiration_settings';
 
 	/**
-	 * Daily cron hook (shared with Pro).
+	 * Daily cron hook of the free expiry. Pro uses its own hook
+	 * (PRO_CRON_HOOK), so the free plugin never schedules or clears Pro's event.
 	 */
-	const CRON_HOOK = 'wps_wpr_points_expiration_cron_schedule';
+	const CRON_HOOK = 'wps_wpr_free_points_expiry_cron';
+
+	/**
+	 * Pro's daily expiry cron hook. Only read, to detect older Pro versions.
+	 */
+	const PRO_CRON_HOOK = 'wps_wpr_points_expiration_cron_schedule';
+
+	/**
+	 * Option set when an admin saves the free Points Expiration tab with
+	 * expiry on. Until then the free expiry stays idle, even when an
+	 * "enabled" value saved earlier by Pro is present in the shared option.
+	 */
+	const ACTIVATED_OPTION = 'wps_wpr_free_points_expiry_activated';
+
+	/**
+	 * Option set once the first free run after activation has moved past-due
+	 * expiry dates forward (see wps_wpr_process_expiry()).
+	 */
+	const GRACE_DONE_OPTION = 'wps_wpr_free_points_expiry_grace_done';
+
+	/**
+	 * Grace period in days for past-due dates when no reminder window is set.
+	 */
+	const DEFAULT_GRACE_DAYS = 7;
 
 	/**
 	 * User meta holding the expiry date (Y-m-d, shared with Pro).
@@ -144,6 +168,45 @@ class WPS_WPR_Points_Expiry {
 	}
 
 	/**
+	 * Whether an admin has switched the free expiry on from the free tab.
+	 *
+	 * @return bool
+	 */
+	public static function wps_wpr_is_activated() {
+		return (bool) get_option( self::ACTIVATED_OPTION, false );
+	}
+
+	/**
+	 * Whether the shared option has expiry switched on without it being
+	 * saved from the free tab (for example by Pro before it was deactivated).
+	 *
+	 * @return bool
+	 */
+	public static function wps_wpr_has_unreviewed_settings() {
+		return self::wps_wpr_is_enabled() && ! self::wps_wpr_is_activated();
+	}
+
+	/**
+	 * Record the admin's choice after the free tab is saved.
+	 *
+	 * Saving with expiry on activates the free expiry. The first run after
+	 * that moves past-due dates forward. Saving with expiry off deactivates it.
+	 *
+	 * @return void
+	 */
+	public static function wps_wpr_update_activation() {
+		if ( self::wps_wpr_is_enabled() ) {
+			if ( ! self::wps_wpr_is_activated() ) {
+				update_option( self::ACTIVATED_OPTION, time(), false );
+				delete_option( self::GRACE_DONE_OPTION );
+			}
+		} else {
+			delete_option( self::ACTIVATED_OPTION );
+			delete_option( self::GRACE_DONE_OPTION );
+		}
+	}
+
+	/**
 	 * Whether the Pro plugin runs its own (advanced) points expiry.
 	 *
 	 * Newer Pro versions define WPS_WPR_PRO_HANDLES_POINTS_EXPIRY when they hook
@@ -156,8 +219,8 @@ class WPS_WPR_Points_Expiry {
 
 		if ( ! $handled ) {
 			global $wp_filter;
-			if ( isset( $wp_filter[ self::CRON_HOOK ] ) && is_object( $wp_filter[ self::CRON_HOOK ] ) ) {
-				foreach ( $wp_filter[ self::CRON_HOOK ]->callbacks as $callbacks ) {
+			if ( isset( $wp_filter[ self::PRO_CRON_HOOK ] ) && is_object( $wp_filter[ self::PRO_CRON_HOOK ] ) ) {
+				foreach ( $wp_filter[ self::PRO_CRON_HOOK ]->callbacks as $callbacks ) {
 					foreach ( $callbacks as $callback ) {
 						if ( is_array( $callback['function'] ) && isset( $callback['function'][1] ) && 'wps_wpr_check_daily_about_points_expiration' === $callback['function'][1] ) {
 							$handled = true;
@@ -182,7 +245,7 @@ class WPS_WPR_Points_Expiry {
 	 * @return bool
 	 */
 	public static function wps_wpr_is_active() {
-		return self::wps_wpr_is_enabled() && ! self::wps_wpr_pro_handles_expiry();
+		return self::wps_wpr_is_enabled() && self::wps_wpr_is_activated() && ! self::wps_wpr_pro_handles_expiry();
 	}
 
 	/**
@@ -214,34 +277,45 @@ class WPS_WPR_Points_Expiry {
 	}
 
 	/**
-	 * Schedule the daily cron while expiry is active.
+	 * Keep the free cron in line with the state on init.
+	 *
+	 * While Pro runs expiry the free cron is removed, and the past-due grace
+	 * pass is armed again, so dates Pro left behind get a reminder before the
+	 * free expiry acts on them.
 	 *
 	 * @return void
 	 */
 	public function wps_wpr_maybe_schedule_cron() {
-		if ( self::wps_wpr_is_active() && ! wp_next_scheduled( self::CRON_HOOK ) ) {
-			wp_schedule_event( time(), 'daily', self::CRON_HOOK );
+		if ( self::wps_wpr_pro_handles_expiry() && false !== get_option( self::GRACE_DONE_OPTION, false ) ) {
+			delete_option( self::GRACE_DONE_OPTION );
 		}
+		self::wps_wpr_sync_cron_schedule();
 	}
 
 	/**
-	 * Keep the cron in line with the setting after a save.
+	 * Schedule the free cron while the free expiry is active, clear it otherwise.
 	 *
-	 * The hook is shared with Pro, so it is only cleared when Pro is not using it.
+	 * Only the free plugin's own hook is touched, never Pro's.
 	 *
 	 * @return void
 	 */
 	public static function wps_wpr_sync_cron_schedule() {
-		if ( self::wps_wpr_pro_handles_expiry() ) {
-			return;
-		}
-		if ( self::wps_wpr_is_enabled() ) {
+		if ( self::wps_wpr_is_active() ) {
 			if ( ! wp_next_scheduled( self::CRON_HOOK ) ) {
 				wp_schedule_event( time(), 'daily', self::CRON_HOOK );
 			}
-		} else {
+		} elseif ( wp_next_scheduled( self::CRON_HOOK ) ) {
 			wp_clear_scheduled_hook( self::CRON_HOOK );
 		}
+	}
+
+	/**
+	 * Remove the free cron (plugin deactivation).
+	 *
+	 * @return void
+	 */
+	public static function wps_wpr_clear_cron() {
+		wp_clear_scheduled_hook( self::CRON_HOOK );
 	}
 
 	/**
@@ -262,17 +336,26 @@ class WPS_WPR_Points_Expiry {
 		$settings = self::wps_wpr_get_settings();
 		$today    = date_i18n( 'Y-m-d' );
 		$last_id  = 0;
+		// First run after activation: past-due dates get a reminder and a grace period instead of expiring.
+		$grace = false === get_option( self::GRACE_DONE_OPTION, false );
+		if ( $grace ) {
+			$counts['grace'] = 0;
+		}
 
 		do {
 			$user_ids = $this->wps_wpr_get_user_batch( $last_id );
 			foreach ( $user_ids as $user_id ) {
-				$result = $this->wps_wpr_process_user( $user_id, $settings, $today );
+				$result = $this->wps_wpr_process_user( $user_id, $settings, $today, $grace );
 				if ( isset( $counts[ $result ] ) ) {
 					++$counts[ $result ];
 				}
 				$last_id = max( $last_id, (int) $user_id );
 			}
 		} while ( count( $user_ids ) === self::BATCH_SIZE );
+
+		if ( $grace ) {
+			update_option( self::GRACE_DONE_OPTION, time(), false );
+		}
 
 		return $counts;
 	}
@@ -332,19 +415,22 @@ class WPS_WPR_Points_Expiry {
 	 * @param  int    $user_id  user id.
 	 * @param  array  $settings settings.
 	 * @param  string $today    Y-m-d.
-	 * @return string scheduled|reminded|expired|none.
+	 * @param  bool   $grace    true on the first run after activation: a past-due
+	 *                          date is moved forward and a reminder sent instead.
+	 * @return string scheduled|reminded|expired|grace|none.
 	 */
-	public function wps_wpr_process_user( $user_id, $settings, $today ) {
+	public function wps_wpr_process_user( $user_id, $settings, $today, $grace = false ) {
 		if ( function_exists( 'wps_wpr_restrict_user_fun' ) && wps_wpr_restrict_user_fun( $user_id ) ) {
 			return 'none';
 		}
 
-		$points = absint( get_user_meta( $user_id, 'wps_wpr_points', true ) );
+		$points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 		$date   = (string) get_user_meta( $user_id, self::DATE_META, true );
 
-		// Nothing left to expire: drop a stale date so the next earning starts fresh.
+		// Nothing left to expire (a negative balance is left alone). For an
+		// empty balance, drop a stale date so the next earning starts fresh.
 		if ( $points <= 0 ) {
-			if ( '' !== $date ) {
+			if ( 0 === $points && '' !== $date ) {
 				delete_user_meta( $user_id, self::DATE_META );
 				delete_user_meta( $user_id, self::REMINDER_META );
 			}
@@ -361,12 +447,25 @@ class WPS_WPR_Points_Expiry {
 			return 'scheduled';
 		}
 
+		$reminder_days = absint( $settings['wps_wpr_points_expiration_email'] );
+
+		if ( $today >= $date && $grace ) {
+			// Date set before the free expiry was switched on (e.g. by Pro): never wipe it without notice.
+			$date = gmdate( 'Y-m-d', strtotime( $today . ' +' . ( $reminder_days > 0 ? $reminder_days : self::DEFAULT_GRACE_DAYS ) . ' days' ) );
+			update_user_meta( $user_id, self::DATE_META, $date );
+			update_user_meta( $user_id, self::REMINDER_META, $date );
+			$message = $settings['wps_wpr_re_notification'];
+			$message = '' !== trim( (string) $message ) ? $message : self::wps_wpr_get_default_settings()['wps_wpr_re_notification'];
+			$message = $this->wps_wpr_replace_placeholders( $message, $user_id, $points, $date );
+			$this->wps_wpr_send_email( $user_id, __( 'Your points are expiring soon', 'points-and-rewards-for-woocommerce' ), $message );
+			return 'grace';
+		}
+
 		if ( $today >= $date ) {
 			$this->wps_wpr_expire_points( $user_id, $points, $today, $settings );
 			return 'expired';
 		}
 
-		$reminder_days = absint( $settings['wps_wpr_points_expiration_email'] );
 		if ( 1 === (int) $settings['wps_wpr_enable_expire_notify_setting'] && $reminder_days > 0 ) {
 			$remind_on = gmdate( 'Y-m-d', strtotime( $date . ' -' . $reminder_days . ' days' ) );
 			if ( $today >= $remind_on && get_user_meta( $user_id, self::REMINDER_META, true ) !== $date ) {

@@ -27,6 +27,20 @@ class PointsExpiryTest extends TestCase {
 	private $saved_option;
 
 	/**
+	 * Saved activation / grace options before the test.
+	 *
+	 * @var array
+	 */
+	private $saved_flags = array();
+
+	/**
+	 * Next run of the free and Pro cron hooks before the test.
+	 *
+	 * @var array
+	 */
+	private $saved_crons = array();
+
+	/**
 	 * Emails captured during a test.
 	 *
 	 * @var array
@@ -45,6 +59,12 @@ class PointsExpiryTest extends TestCase {
 	 */
 	protected function setUp(): void {
 		$this->saved_option = get_option( WPS_WPR_Points_Expiry::OPTION, null );
+		foreach ( array( WPS_WPR_Points_Expiry::ACTIVATED_OPTION, WPS_WPR_Points_Expiry::GRACE_DONE_OPTION ) as $flag ) {
+			$this->saved_flags[ $flag ] = get_option( $flag, null );
+		}
+		foreach ( array( WPS_WPR_Points_Expiry::CRON_HOOK, WPS_WPR_Points_Expiry::PRO_CRON_HOOK ) as $hook ) {
+			$this->saved_crons[ $hook ] = wp_next_scheduled( $hook );
+		}
 		$this->expiry       = new WPS_WPR_Points_Expiry();
 		$this->mails        = array();
 		add_filter( 'pre_wp_mail', array( $this, 'capture_mail' ), 10, 2 );
@@ -69,6 +89,19 @@ class PointsExpiryTest extends TestCase {
 			delete_option( WPS_WPR_Points_Expiry::OPTION );
 		} else {
 			update_option( WPS_WPR_Points_Expiry::OPTION, $this->saved_option );
+		}
+		foreach ( $this->saved_flags as $flag => $value ) {
+			if ( null === $value ) {
+				delete_option( $flag );
+			} else {
+				update_option( $flag, $value, false );
+			}
+		}
+		foreach ( $this->saved_crons as $hook => $next ) {
+			wp_clear_scheduled_hook( $hook );
+			if ( $next ) {
+				wp_schedule_event( $next, 'daily', $hook );
+			}
 		}
 	}
 
@@ -124,7 +157,26 @@ class PointsExpiryTest extends TestCase {
 			$overrides
 		);
 		update_option( WPS_WPR_Points_Expiry::OPTION, $settings );
+		// As if the admin saved the free tab and the first run already happened.
+		update_option( WPS_WPR_Points_Expiry::ACTIVATED_OPTION, time(), false );
+		update_option( WPS_WPR_Points_Expiry::GRACE_DONE_OPTION, time(), false );
 		return WPS_WPR_Points_Expiry::wps_wpr_get_settings();
+	}
+
+	/**
+	 * Limit the daily run to the given users.
+	 *
+	 * @param int[] $ids user IDs.
+	 * @return void
+	 */
+	private function limit_run_to( $ids ) {
+		add_filter(
+			'wps_wpr_points_expiry_user_query_args',
+			function ( $args ) use ( $ids ) {
+				$args['include'] = $ids;
+				return $args;
+			}
+		);
 	}
 
 	/**
@@ -339,17 +391,15 @@ class PointsExpiryTest extends TestCase {
 			 */
 			public function wps_wpr_check_daily_about_points_expiration() {}
 		};
-		add_action( WPS_WPR_Points_Expiry::CRON_HOOK, array( $fake, 'wps_wpr_check_daily_about_points_expiration' ) );
+		add_action( WPS_WPR_Points_Expiry::PRO_CRON_HOOK, array( $fake, 'wps_wpr_check_daily_about_points_expiration' ) );
 		$this->assertTrue( WPS_WPR_Points_Expiry::wps_wpr_pro_handles_expiry() );
-		remove_action( WPS_WPR_Points_Expiry::CRON_HOOK, array( $fake, 'wps_wpr_check_daily_about_points_expiration' ) );
+		remove_action( WPS_WPR_Points_Expiry::PRO_CRON_HOOK, array( $fake, 'wps_wpr_check_daily_about_points_expiration' ) );
 	}
 
 	/**
-	 * Saving keeps the daily cron in line with the setting.
+	 * Saving keeps the free cron in line with the setting.
 	 */
 	public function test_cron_synced_with_setting() {
-		$was_scheduled = wp_next_scheduled( WPS_WPR_Points_Expiry::CRON_HOOK );
-
 		$this->enable();
 		WPS_WPR_Points_Expiry::wps_wpr_sync_cron_schedule();
 		$this->assertNotFalse( wp_next_scheduled( WPS_WPR_Points_Expiry::CRON_HOOK ) );
@@ -357,16 +407,126 @@ class PointsExpiryTest extends TestCase {
 		$this->enable( array( 'wps_wpr_points_expiration_enable' => 0 ) );
 		WPS_WPR_Points_Expiry::wps_wpr_sync_cron_schedule();
 		$this->assertFalse( wp_next_scheduled( WPS_WPR_Points_Expiry::CRON_HOOK ) );
+	}
 
-		// When Pro uses the shared hook, saving never clears it.
-		wp_schedule_event( time(), 'daily', WPS_WPR_Points_Expiry::CRON_HOOK );
-		add_filter( 'wps_wpr_pro_handles_points_expiry', '__return_true' );
+	/**
+	 * The free plugin never schedules or clears Pro's expiry cron.
+	 */
+	public function test_free_never_touches_pro_cron() {
+		wp_clear_scheduled_hook( WPS_WPR_Points_Expiry::PRO_CRON_HOOK );
+		wp_schedule_event( time() + HOUR_IN_SECONDS, 'daily', WPS_WPR_Points_Expiry::PRO_CRON_HOOK );
+		$pro_next = wp_next_scheduled( WPS_WPR_Points_Expiry::PRO_CRON_HOOK );
+
+		// Expiry off, Pro "not handling" (e.g. licence lapsed): the free save must leave Pro's event alone.
+		$this->enable( array( 'wps_wpr_points_expiration_enable' => 0 ) );
+		WPS_WPR_Points_Expiry::wps_wpr_update_activation();
+		WPS_WPR_Points_Expiry::wps_wpr_sync_cron_schedule();
+		$this->assertSame( $pro_next, wp_next_scheduled( WPS_WPR_Points_Expiry::PRO_CRON_HOOK ) );
+
+		// Pro handling expiry: the free cron is removed, Pro's stays.
+		$this->enable();
 		WPS_WPR_Points_Expiry::wps_wpr_sync_cron_schedule();
 		$this->assertNotFalse( wp_next_scheduled( WPS_WPR_Points_Expiry::CRON_HOOK ) );
+		add_filter( 'wps_wpr_pro_handles_points_expiry', '__return_true' );
+		$this->expiry->wps_wpr_maybe_schedule_cron();
+		$this->assertFalse( wp_next_scheduled( WPS_WPR_Points_Expiry::CRON_HOOK ) );
+		$this->assertSame( $pro_next, wp_next_scheduled( WPS_WPR_Points_Expiry::PRO_CRON_HOOK ) );
 
-		if ( ! $was_scheduled ) {
-			wp_clear_scheduled_hook( WPS_WPR_Points_Expiry::CRON_HOOK );
-		}
+		// Deactivating free clears only the free cron.
+		wp_schedule_event( time(), 'daily', WPS_WPR_Points_Expiry::CRON_HOOK );
+		wps_wpr_clear_points_expiry_cron();
+		$this->assertFalse( wp_next_scheduled( WPS_WPR_Points_Expiry::CRON_HOOK ) );
+		$this->assertSame( $pro_next, wp_next_scheduled( WPS_WPR_Points_Expiry::PRO_CRON_HOOK ) );
+	}
+
+	/**
+	 * Settings saved earlier by Pro (enabled, past dates) do nothing until the
+	 * free tab is saved. The first run after saving sends a reminder and moves
+	 * the past date forward instead of expiring the balance.
+	 */
+	public function test_pro_settings_idle_until_free_saved_then_reminder_first() {
+		// Pro's leftovers: enabled option, a past date, no free activation.
+		update_option(
+			WPS_WPR_Points_Expiry::OPTION,
+			array(
+				'wps_wpr_points_expiration_enable'     => 1,
+				'wps_wpr_points_expiration_threshold'  => 10,
+				'wps_wpr_points_expiration_time_num'   => 1,
+				'wps_wpr_points_expiration_time_drop'  => array( 'months' ),
+				'wps_wpr_enable_expire_notify_setting' => 0,
+				'wps_wpr_points_expiration_email'      => 5,
+				'wps_wpr_threshold_notif'              => 'Pro message',
+			)
+		);
+		delete_option( WPS_WPR_Points_Expiry::ACTIVATED_OPTION );
+		delete_option( WPS_WPR_Points_Expiry::GRACE_DONE_OPTION );
+		$user_id = $this->make_user( 100 );
+		update_user_meta( $user_id, WPS_WPR_Points_Expiry::DATE_META, '2000-01-01' );
+		$this->limit_run_to( array( $user_id ) );
+
+		$this->assertTrue( WPS_WPR_Points_Expiry::wps_wpr_has_unreviewed_settings() );
+		$this->assertFalse( WPS_WPR_Points_Expiry::wps_wpr_is_active() );
+		WPS_WPR_Points_Expiry::wps_wpr_sync_cron_schedule();
+		$this->assertFalse( wp_next_scheduled( WPS_WPR_Points_Expiry::CRON_HOOK ), 'No free cron before the admin saves.' );
+		$this->assertSame( 0, array_sum( $this->expiry->wps_wpr_process_expiry() ) );
+		$this->assertSame( 100, (int) get_user_meta( $user_id, 'wps_wpr_points', true ) );
+		$this->assertCount( 0, $this->mails );
+
+		// Admin reviews and saves the free tab with expiry on.
+		WPS_WPR_Points_Expiry::wps_wpr_update_activation();
+		$this->assertFalse( WPS_WPR_Points_Expiry::wps_wpr_has_unreviewed_settings() );
+		$this->assertTrue( WPS_WPR_Points_Expiry::wps_wpr_is_active() );
+
+		$today  = date_i18n( 'Y-m-d' );
+		$counts = $this->expiry->wps_wpr_process_expiry();
+		$this->assertSame( 1, $counts['grace'] );
+		$this->assertSame( 0, $counts['expired'] );
+		$this->assertSame( 100, (int) get_user_meta( $user_id, 'wps_wpr_points', true ), 'Not wiped on the first run.' );
+		$new_date = gmdate( 'Y-m-d', strtotime( $today . ' +5 days' ) );
+		$this->assertSame( $new_date, get_user_meta( $user_id, WPS_WPR_Points_Expiry::DATE_META, true ) );
+		$this->assertCount( 1, $this->mails, 'Reminder sent even with expiry emails off.' );
+		$this->assertStringContainsString( '100', $this->mails[0]['message'] );
+
+		// Next run: no second reminder, no expiry before the new date.
+		$counts = $this->expiry->wps_wpr_process_expiry();
+		$this->assertArrayNotHasKey( 'grace', $counts );
+		$this->assertSame( 0, array_sum( $counts ) );
+		$this->assertCount( 1, $this->mails );
+
+		// On the new date the balance expires as usual.
+		$settings = WPS_WPR_Points_Expiry::wps_wpr_get_settings();
+		$this->assertSame( 'expired', $this->expiry->wps_wpr_process_user( $user_id, $settings, $new_date ) );
+		$this->assertSame( 0, (int) get_user_meta( $user_id, 'wps_wpr_points', true ) );
+	}
+
+	/**
+	 * Saving with expiry off deactivates it; Pro taking over re-arms the grace pass.
+	 */
+	public function test_activation_flags() {
+		$this->enable( array( 'wps_wpr_points_expiration_enable' => 0 ) );
+		WPS_WPR_Points_Expiry::wps_wpr_update_activation();
+		$this->assertFalse( WPS_WPR_Points_Expiry::wps_wpr_is_activated() );
+		$this->assertFalse( get_option( WPS_WPR_Points_Expiry::GRACE_DONE_OPTION, false ) );
+
+		$this->enable();
+		add_filter( 'wps_wpr_pro_handles_points_expiry', '__return_true' );
+		$this->expiry->wps_wpr_maybe_schedule_cron();
+		$this->assertFalse( get_option( WPS_WPR_Points_Expiry::GRACE_DONE_OPTION, false ) );
+		$this->assertTrue( WPS_WPR_Points_Expiry::wps_wpr_is_activated() );
+	}
+
+	/**
+	 * A negative balance is skipped: no "expired" log, no reset to 0.
+	 */
+	public function test_negative_balance_skipped() {
+		$settings = $this->enable();
+		$user_id  = $this->make_user( -50 );
+		update_user_meta( $user_id, WPS_WPR_Points_Expiry::DATE_META, '2026-11-01' );
+
+		$this->assertSame( 'none', $this->expiry->wps_wpr_process_user( $user_id, $settings, '2026-11-25' ) );
+		$this->assertSame( -50, (int) get_user_meta( $user_id, 'wps_wpr_points', true ) );
+		$this->assertSame( '', get_user_meta( $user_id, 'points_details', true ) );
+		$this->assertCount( 0, $this->mails );
 	}
 
 	/**
