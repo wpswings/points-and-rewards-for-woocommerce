@@ -27,7 +27,7 @@ class FloatingWidgetTest extends TestCase {
 	private $users = array();
 
 	protected function setUp(): void {
-		foreach ( array( WPS_WPR_Floating_Widget::OPTION, 'wps_wpr_settings_gallery', 'wps_wpr_coupons_gallery', 'wps_wpr_membership_settings' ) as $option ) {
+		foreach ( array( WPS_WPR_Floating_Widget::OPTION, 'wps_wpr_settings_gallery', 'wps_wpr_coupons_gallery', 'wps_wpr_membership_settings', 'wps_wpr_save_gami_setting' ) as $option ) {
 			$this->backup[ $option ] = get_option( $option, null );
 		}
 		wp_set_current_user( 0 );
@@ -47,6 +47,7 @@ class FloatingWidgetTest extends TestCase {
 		}
 		wp_set_current_user( 0 );
 		remove_all_filters( 'wps_wpr_floating_widget_sections' );
+		remove_action( 'wps_wpr_before_add_referral_section', array( $this, 'rotate_referral_key' ), 99 );
 	}
 
 	private function make_user( $points = 0 ) {
@@ -212,5 +213,91 @@ class FloatingWidgetTest extends TestCase {
 			}
 		}
 		$this->assertTrue( $found );
+	}
+
+	/**
+	 * Stands in for pro's key rotation on wps_wpr_before_add_referral_section.
+	 *
+	 * @param int $user_id user id.
+	 */
+	public function rotate_referral_key( $user_id ) {
+		update_user_meta( $user_id, 'wps_points_referral', 'ROTATEDKEY' );
+		update_user_meta( $user_id, 'wps_points_referral_invite', 0 );
+	}
+
+	private function enable_referrals() {
+		update_option(
+			'wps_wpr_settings_gallery',
+			array_merge( (array) $this->backup['wps_wpr_settings_gallery'], array( 'wps_wpr_general_refer_enable' => 1 ) )
+		);
+	}
+
+	public function test_sanitize_clamps_negative_offset_to_zero() {
+		$clean = WPS_WPR_Floating_Widget::wps_wpr_sanitize_settings( array( 'wps_wpr_fw_offset' => '-50' ) );
+		$this->assertSame( 0, $clean['wps_wpr_fw_offset'] );
+	}
+
+	public function test_render_resanitizes_raw_option() {
+		update_option(
+			WPS_WPR_Floating_Widget::OPTION,
+			array(
+				'wps_wpr_fw_enable'   => 'yes',
+				'wps_wpr_fw_color'    => 'red;position:static;background:url(https://evil.test/x)',
+				'wps_wpr_fw_position' => 'x" onmouseover="alert(1)',
+				'wps_wpr_fw_offset'   => '-30',
+			)
+		);
+		$widget = new WPS_WPR_Floating_Widget();
+		$html   = $widget->wps_wpr_get_markup( 0 );
+		$this->assertStringContainsString( '--wps-wpr-fw-color:#6c3fc5;--wps-wpr-fw-offset:0px;', $html );
+		$this->assertStringContainsString( 'wps-wpr-fw--bottom-right', $html );
+		$this->assertStringNotContainsString( 'evil.test', $html );
+		$this->assertStringNotContainsString( 'onmouseover', $html );
+	}
+
+	public function test_negative_balance_is_shown_as_negative() {
+		$this->enable();
+		$user_id = $this->make_user( -30 );
+		$widget  = new WPS_WPR_Floating_Widget();
+		$html    = $widget->wps_wpr_get_markup( $user_id );
+		$this->assertStringContainsString( 'data-wps-wpr-fw-balance>' . esc_html( number_format_i18n( -30 ) ) . '<', $html );
+	}
+
+	public function test_widget_is_raised_above_canvas_icon_in_same_corner() {
+		update_option( 'wps_wpr_save_gami_setting', array( 'wps_wpr_enable_gamification_settings' => 'yes', 'wps_wpr_select_icon_position' => 'bottom_right' ) );
+		$widget = new WPS_WPR_Floating_Widget();
+
+		$this->enable( array( 'wps_wpr_fw_offset' => '24' ) );
+		$html = $widget->wps_wpr_get_markup( 0 );
+		$this->assertStringContainsString( 'wps-wpr-fw--above-canvas', $html );
+		$this->assertStringContainsString( '--wps-wpr-fw-offset:' . WPS_WPR_Floating_Widget::CANVAS_CLEARANCE . 'px', $html );
+
+		$this->enable( array( 'wps_wpr_fw_offset' => '300' ) );
+		$this->assertStringContainsString( '--wps-wpr-fw-offset:300px', $widget->wps_wpr_get_markup( 0 ), 'a larger offset is kept' );
+
+		$this->enable( array( 'wps_wpr_fw_position' => 'bottom-left' ) );
+		$this->assertStringNotContainsString( 'wps-wpr-fw--above-canvas', $widget->wps_wpr_get_markup( 0 ), 'other corner is untouched' );
+
+		update_option( 'wps_wpr_save_gami_setting', array( 'wps_wpr_enable_gamification_settings' => 'yes', 'wps_wpr_select_icon_position' => 'bottom_left' ) );
+		$this->assertStringContainsString( 'wps-wpr-fw--above-canvas', $widget->wps_wpr_get_markup( 0 ) );
+
+		update_option( 'wps_wpr_save_gami_setting', array( 'wps_wpr_enable_gamification_settings' => 'no', 'wps_wpr_select_icon_position' => 'bottom_left' ) );
+		$this->assertStringNotContainsString( 'wps-wpr-fw--above-canvas', $widget->wps_wpr_get_markup( 0 ), 'gamification off' );
+	}
+
+	public function test_referral_link_runs_my_account_referral_hooks() {
+		$this->enable_referrals();
+		$user_id = $this->make_user();
+		$widget  = new WPS_WPR_Floating_Widget();
+
+		$link = $widget->wps_wpr_get_referral_link( $user_id );
+		$this->assertNotSame( '', $link );
+		$this->assertSame( '0', (string) get_user_meta( $user_id, 'wps_points_referral_invite', true ), 'invite count initialised like My Account' );
+
+		add_action( 'wps_wpr_before_add_referral_section', array( $this, 'rotate_referral_key' ), 99 );
+		$fired = did_action( 'wps_wpr_before_add_referral_section' );
+		$link  = $widget->wps_wpr_get_referral_link( $user_id );
+		$this->assertGreaterThan( $fired, did_action( 'wps_wpr_before_add_referral_section' ) );
+		$this->assertStringEndsWith( '?pkey=ROTATEDKEY', $link, 'key rotated by the hook is the one shown' );
 	}
 }
