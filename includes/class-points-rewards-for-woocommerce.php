@@ -148,6 +148,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
 
 		/**
+		 * The class responsible for the reward catalog.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-reward-catalog.php';
+
+		/**
 		 * The class responsible for the AI settings assistant.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-ai-assistant.php';
@@ -206,6 +211,10 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_rwpr_admin_menu', 10, 2 );
+
+		// reward catalog admin assets.
+		$reward_catalog_admin = new WPS_WPR_Reward_Catalog();
+		$this->loader->add_action( 'admin_enqueue_scripts', $reward_catalog_admin, 'wps_wpr_admin_enqueue_scripts' );
 		// Security: admin-only actions are not registered for anonymous users (removed wp_ajax_nopriv_ hooks).
 		$this->loader->add_action( 'wp_ajax_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
@@ -435,6 +444,13 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_order_status_changed', $abandoned_cart, 'wps_wpr_award_recovery_points', 20, 3 );
 			$this->loader->add_action( 'woocommerce_before_cart', $abandoned_cart, 'wps_wpr_show_incentive_notice' );
 			$this->loader->add_action( 'woocommerce_before_checkout_form', $abandoned_cart, 'wps_wpr_show_incentive_notice', 5 );
+
+			// reward catalog.
+			$reward_catalog = new WPS_WPR_Reward_Catalog();
+			$this->loader->add_action( 'wp_enqueue_scripts', $reward_catalog, 'wps_wpr_enqueue_scripts' );
+			$this->loader->add_action( 'wps_extend_point_tab_section', $reward_catalog, 'wps_wpr_render_catalog', 5, 1 );
+			$this->loader->add_action( 'wp_ajax_' . WPS_WPR_Reward_Catalog::AJAX_ACTION, $reward_catalog, 'wps_wpr_ajax_redeem_reward' );
+			$this->loader->add_action( 'wp_loaded', $reward_catalog, 'wps_wpr_maybe_apply_reward_coupon', 30 );
 		}
 	}
 

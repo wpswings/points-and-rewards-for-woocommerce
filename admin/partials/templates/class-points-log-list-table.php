@@ -1524,6 +1524,45 @@ if ( ! empty( $wps_wpr_actions ) && ! empty( $user_log_id ) ) {
 					</div>
 					<?php
 				}
+				if ( array_key_exists( 'reward_catalog_redeemed', $point_log ) ) {
+					?>
+					<div class="wps_wpr_slide_toggle">
+						<p class="wps_wpr_view_log_notice wps_wpr_common_slider" ><?php esc_html_e( 'Reward Catalog Redemptions', 'points-and-rewards-for-woocommerce' ); ?>
+							<a class ="wps_wpr_open_toggle"  href="javascript:;"></a>
+						</p>
+						<table class = "form-table mwp_wpr_settings wps_wpr_points_view wps_wpr_common_table">
+								<thead>
+									<tr valign="top">
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Date & Time', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Point Status', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Reward', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+										<th scope="row" class="wps_wpr_head_titledesc">
+											<span class="wps_wpr_nobr"><?php echo esc_html__( 'Coupon', 'points-and-rewards-for-woocommerce' ); ?></span>
+										</th>
+									</tr>
+								</thead>
+								<?php
+								foreach ( $point_log['reward_catalog_redeemed'] as $key => $value ) {
+									?>
+									<tr valign="top">
+										<td class="forminp forminp-text"><?php echo esc_html( $value['date'] ); ?></td>
+										<td class="forminp forminp-text"><?php echo '-' . esc_html( $value['reward_catalog_redeemed'] ); ?> </td>
+										<td class="forminp forminp-text"><?php echo esc_html( isset( $value['reward'] ) ? $value['reward'] : '' ); ?></td>
+										<td class="forminp forminp-text"><?php echo esc_html( isset( $value['coupon'] ) ? $value['coupon'] : '' ); ?></td>
+									</tr>
+									<?php
+								}
+								?>
+						</table>
+					</div>
+					<?php
+				}
 				// order lifecycle adjustments ( partial refunds, order rewards reversal ).
 				$wps_wpr_order_adjust_logs = array(
 					'partial_refund_points_deducted' => array( esc_html__( 'Earned points deducted for a partial refund', 'points-and-rewards-for-woocommerce' ), '-' ),
