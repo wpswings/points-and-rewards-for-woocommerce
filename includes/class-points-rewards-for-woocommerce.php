@@ -266,6 +266,10 @@ class Points_Rewards_For_Woocommerce {
 		// points CSV export (runs before admin output so the file can be streamed).
 		$points_import_export = new WPS_WPR_Points_Import_Export();
 		$this->loader->add_action( 'admin_init', $points_import_export, 'wps_wpr_maybe_export_points' );
+		// points CSV import, applied in AJAX batches.
+		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_start', $points_import_export, 'wps_wpr_ajax_import_start' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_batch', $points_import_export, 'wps_wpr_ajax_import_batch' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_discard', $points_import_export, 'wps_wpr_ajax_import_discard' );
 		// email preview.
 		$this->loader->add_filter( 'wps_wpr_preview_email_content', $plugin_admin, 'wps_wpr_preview_email_content_call', 10, 1 );
 		// manage discount on order edit page.

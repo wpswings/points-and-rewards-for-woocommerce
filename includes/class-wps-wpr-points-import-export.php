@@ -44,6 +44,36 @@ class WPS_WPR_Points_Import_Export {
 	const EXPORT_BATCH = 500;
 
 	/**
+	 * Rows applied per AJAX import request.
+	 */
+	const IMPORT_BATCH = 200;
+
+	/**
+	 * Rows stored per option while an import job is pending.
+	 */
+	const IMPORT_PAGE = 1000;
+
+	/**
+	 * Option holding the pending import job (progress, options, totals).
+	 */
+	const JOB_OPTION = 'wps_wpr_points_import_job';
+
+	/**
+	 * Prefix of the options holding the pending job's rows.
+	 */
+	const ROWS_OPTION = 'wps_wpr_points_import_rows_';
+
+	/**
+	 * Option used as a lock so two requests never run the same job at once.
+	 */
+	const LOCK_OPTION = 'wps_wpr_points_import_lock';
+
+	/**
+	 * Default largest points value accepted from a CSV cell.
+	 */
+	const MAX_POINTS = 1000000000;
+
+	/**
 	 * Header names recognised as the user email column (lower case).
 	 *
 	 * @return array
@@ -219,7 +249,7 @@ class WPS_WPR_Points_Import_Export {
 	 * Read a CSV file into headers and rows.
 	 *
 	 * @param  string $path file path.
-	 * @return array|WP_Error array( 'headers' => array, 'rows' => array ).
+	 * @return array|WP_Error array( 'headers' => array, 'rows' => array, 'delimiter' => string ).
 	 */
 	public function wps_wpr_read_csv( $path ) {
 		if ( empty( $path ) || ! is_readable( $path ) ) {
@@ -268,8 +298,9 @@ class WPS_WPR_Points_Import_Export {
 		fclose( $handle ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 
 		return array(
-			'headers' => $headers,
-			'rows'    => $rows,
+			'headers'   => $headers,
+			'rows'      => $rows,
+			'delimiter' => $delimiter,
 		);
 	}
 
@@ -319,22 +350,13 @@ class WPS_WPR_Points_Import_Export {
 	}
 
 	/**
-	 * Import a parsed CSV.
+	 * Fill in the default import options.
 	 *
-	 * @param  array $csv  array( 'headers' => array, 'rows' => array ) from wps_wpr_read_csv().
-	 * @param  array $args {
-	 *     Import options.
-	 *
-	 *     @type string $mode           add|subtract|override (default add).
-	 *     @type string $user_column    header name / column number of the email or user ID column.
-	 *     @type string $points_column  header name / column number of the points column.
-	 *     @type string $reason_column  header name / column number of the reason column.
-	 *     @type string $default_reason reason used when a row has none.
-	 * }
-	 * @return array|WP_Error summary: imported, skipped, errors (row messages).
+	 * @param  array $args import options (see wps_wpr_import()).
+	 * @return array
 	 */
-	public function wps_wpr_import( $csv, $args = array() ) {
-		$args = wp_parse_args(
+	public function wps_wpr_import_args( $args ) {
+		$args         = wp_parse_args(
 			$args,
 			array(
 				'mode'           => 'add',
@@ -342,13 +364,32 @@ class WPS_WPR_Points_Import_Export {
 				'points_column'  => '',
 				'reason_column'  => '',
 				'default_reason' => __( 'Points imported from CSV', 'points-and-rewards-for-woocommerce' ),
+				'decimal'        => '.',
 			)
 		);
-		$mode = in_array( $args['mode'], array( 'add', 'subtract', 'override' ), true ) ? $args['mode'] : 'add';
+		$args['mode']    = in_array( $args['mode'], array( 'add', 'subtract', 'override' ), true ) ? $args['mode'] : 'add';
+		$args['decimal'] = ',' === $args['decimal'] ? ',' : '.';
+		return $args;
+	}
 
-		$headers = isset( $csv['headers'] ) ? (array) $csv['headers'] : array();
-		$rows    = isset( $csv['rows'] ) ? (array) $csv['rows'] : array();
+	/**
+	 * Decimal separator for a CSV: files separated by ";" use the European "1.234,5" format.
+	 *
+	 * @param  array $csv parsed CSV from wps_wpr_read_csv().
+	 * @return string "," or ".".
+	 */
+	public static function wps_wpr_csv_decimal( $csv ) {
+		return ( isset( $csv['delimiter'] ) && ';' === $csv['delimiter'] ) ? ',' : '.';
+	}
 
+	/**
+	 * Resolve the user, points and reason columns.
+	 *
+	 * @param  array $headers CSV headers.
+	 * @param  array $args    import options.
+	 * @return array|WP_Error array( user, points, reason ) zero-based indexes (reason may be -1).
+	 */
+	public function wps_wpr_resolve_import_columns( $headers, $args ) {
 		// The user column may hold an email or a user ID.
 		$user_col = $this->wps_wpr_resolve_column( $headers, $args['user_column'], self::wps_wpr_email_aliases() );
 		if ( -1 === $user_col && '' === trim( (string) $args['user_column'] ) ) {
@@ -363,6 +404,61 @@ class WPS_WPR_Points_Import_Export {
 		if ( -1 === $points_col ) {
 			return new WP_Error( 'wps_wpr_no_points_column', __( 'Could not find the points column. Enter its header name or column number.', 'points-and-rewards-for-woocommerce' ) );
 		}
+		return array(
+			'user'   => $user_col,
+			'points' => $points_col,
+			'reason' => $reason_col,
+		);
+	}
+
+	/**
+	 * Reduce a CSV row to array( identifier, points cell, reason ) using the resolved columns.
+	 *
+	 * @param  array $row  CSV row.
+	 * @param  array $cols resolved columns.
+	 * @return array
+	 */
+	public function wps_wpr_compact_row( $row, $cols ) {
+		$reason = ( -1 !== $cols['reason'] && isset( $row[ $cols['reason'] ] ) ) ? sanitize_text_field( $row[ $cols['reason'] ] ) : '';
+		return array(
+			isset( $row[ $cols['user'] ] ) ? trim( (string) $row[ $cols['user'] ] ) : '',
+			isset( $row[ $cols['points'] ] ) ? trim( (string) $row[ $cols['points'] ] ) : '',
+			trim( $reason ),
+		);
+	}
+
+	/**
+	 * Import a parsed CSV in one go.
+	 *
+	 * The admin screen uses the batched job (wps_wpr_start_import_job() and
+	 * wps_wpr_run_import_batch()) instead, so large files never run in a
+	 * single request. This method is kept for code that imports small files.
+	 *
+	 * @param  array $csv  array( 'headers' => array, 'rows' => array ) from wps_wpr_read_csv().
+	 * @param  array $args {
+	 *     Import options.
+	 *
+	 *     @type string $mode           add|subtract|override (default add).
+	 *     @type string $user_column    header name / column number of the email or user ID column.
+	 *     @type string $points_column  header name / column number of the points column.
+	 *     @type string $reason_column  header name / column number of the reason column.
+	 *     @type string $default_reason reason used when a row has none.
+	 *     @type string $decimal        decimal separator ("." or ","). Defaults from the CSV delimiter.
+	 * }
+	 * @return array|WP_Error summary: imported, skipped, errors (row messages).
+	 */
+	public function wps_wpr_import( $csv, $args = array() ) {
+		if ( ! isset( $args['decimal'] ) ) {
+			$args['decimal'] = self::wps_wpr_csv_decimal( $csv );
+		}
+		$args    = $this->wps_wpr_import_args( $args );
+		$headers = isset( $csv['headers'] ) ? (array) $csv['headers'] : array();
+		$rows    = isset( $csv['rows'] ) ? (array) $csv['rows'] : array();
+
+		$cols = $this->wps_wpr_resolve_import_columns( $headers, $args );
+		if ( is_wp_error( $cols ) ) {
+			return $cols;
+		}
 
 		$summary = array(
 			'imported' => 0,
@@ -370,37 +466,406 @@ class WPS_WPR_Points_Import_Export {
 			'errors'   => array(),
 		);
 
-		foreach ( $rows as $index => $row ) {
-			$line       = $index + 2; // Header is line 1.
-			$identifier = isset( $row[ $user_col ] ) ? trim( (string) $row[ $user_col ] ) : '';
-			$raw_points = isset( $row[ $points_col ] ) ? trim( (string) $row[ $points_col ] ) : '';
-			$reason     = ( -1 !== $reason_col && isset( $row[ $reason_col ] ) && '' !== trim( (string) $row[ $reason_col ] ) ) ? sanitize_text_field( $row[ $reason_col ] ) : $args['default_reason'];
-
-			$user = $this->wps_wpr_find_user( $identifier );
-			if ( ! $user ) {
-				++$summary['skipped'];
-				/* translators: 1: line number, 2: email or user id */
-				$summary['errors'][] = sprintf( __( 'Line %1$d: no user found for "%2$s".', 'points-and-rewards-for-woocommerce' ), $line, $identifier );
-				continue;
-			}
-
-			$points = $this->wps_wpr_parse_points( $raw_points );
-			if ( null === $points ) {
-				++$summary['skipped'];
-				/* translators: 1: line number, 2: points value */
-				$summary['errors'][] = sprintf( __( 'Line %1$d: "%2$s" is not a valid points value.', 'points-and-rewards-for-woocommerce' ), $line, $raw_points );
-				continue;
-			}
-
-			if ( $this->wps_wpr_apply_points( $user->ID, $points, $mode, $reason ) ) {
+		foreach ( array_values( $rows ) as $index => $row ) {
+			$row    = $this->wps_wpr_compact_row( $row, $cols );
+			$result = $this->wps_wpr_import_row( $row, $index + 2, $args ); // Header is line 1.
+			if ( $result['imported'] ) {
 				++$summary['imported'];
 			} else {
 				++$summary['skipped'];
+				$summary['errors'][] = $result['error'];
 			}
 		}
 
 		do_action( 'wps_wpr_points_import_completed', $summary, $args );
 		return $summary;
+	}
+
+	/**
+	 * Apply one compact row.
+	 *
+	 * @param  array $row  array( identifier, points cell, reason ) from wps_wpr_compact_row().
+	 * @param  int   $line CSV line number, for messages.
+	 * @param  array $args import options (mode, default_reason, decimal).
+	 * @return array array( 'imported' => bool, 'error' => string ).
+	 */
+	public function wps_wpr_import_row( $row, $line, $args ) {
+		$identifier = isset( $row[0] ) ? (string) $row[0] : '';
+		$raw_points = isset( $row[1] ) ? (string) $row[1] : '';
+		$reason     = ! empty( $row[2] ) ? (string) $row[2] : $args['default_reason'];
+
+		$user = $this->wps_wpr_find_user( $identifier );
+		if ( ! $user ) {
+			return array(
+				'imported' => false,
+				/* translators: 1: line number, 2: email or user id */
+				'error'    => sprintf( __( 'Line %1$d: no user found for "%2$s".', 'points-and-rewards-for-woocommerce' ), $line, $identifier ),
+			);
+		}
+
+		$points = $this->wps_wpr_parse_points( $raw_points, $args['decimal'] );
+		if ( null === $points ) {
+			return array(
+				'imported' => false,
+				/* translators: 1: line number, 2: points value */
+				'error'    => sprintf( __( 'Line %1$d: "%2$s" is not a valid points value.', 'points-and-rewards-for-woocommerce' ), $line, $raw_points ),
+			);
+		}
+
+		if ( ! $this->wps_wpr_apply_points( $user->ID, $points, $args['mode'], $reason ) ) {
+			return array(
+				'imported' => false,
+				/* translators: 1: line number, 2: email or user id */
+				'error'    => sprintf( __( 'Line %1$d: the balance of "%2$s" did not change.', 'points-and-rewards-for-woocommerce' ), $line, $identifier ),
+			);
+		}
+
+		return array(
+			'imported' => true,
+			'error'    => '',
+		);
+	}
+
+	/**
+	 * Check an uploaded CSV file ($_FILES entry) and return its temp path.
+	 *
+	 * @param  array $file array( 'error' => int, 'tmp_name' => string, 'name' => string ).
+	 * @return string|WP_Error temp path.
+	 */
+	public function wps_wpr_check_upload( $file ) {
+		$error = isset( $file['error'] ) ? (int) $file['error'] : UPLOAD_ERR_NO_FILE;
+
+		if ( UPLOAD_ERR_INI_SIZE === $error || UPLOAD_ERR_FORM_SIZE === $error ) {
+			return new WP_Error(
+				'wps_wpr_csv_too_large',
+				/* translators: %s: maximum upload size */
+				sprintf( __( 'The file is larger than the maximum upload size (%s).', 'points-and-rewards-for-woocommerce' ), size_format( wp_max_upload_size() ) )
+			);
+		}
+		if ( UPLOAD_ERR_NO_FILE === $error ) {
+			return new WP_Error( 'wps_wpr_csv_missing', __( 'Please choose a CSV file to import.', 'points-and-rewards-for-woocommerce' ) );
+		}
+		if ( UPLOAD_ERR_OK !== $error ) {
+			/* translators: %d: PHP upload error code */
+			return new WP_Error( 'wps_wpr_csv_upload_failed', sprintf( __( 'The file could not be uploaded (error code %d).', 'points-and-rewards-for-woocommerce' ), $error ) );
+		}
+
+		$tmp  = isset( $file['tmp_name'] ) ? (string) $file['tmp_name'] : '';
+		$name = isset( $file['name'] ) ? (string) $file['name'] : '';
+		if ( '' === $tmp || ! is_uploaded_file( $tmp ) ) {
+			return new WP_Error( 'wps_wpr_csv_missing', __( 'Please choose a CSV file to import.', 'points-and-rewards-for-woocommerce' ) );
+		}
+		if ( 'csv' !== strtolower( pathinfo( $name, PATHINFO_EXTENSION ) ) ) {
+			return new WP_Error( 'wps_wpr_csv_type', __( 'Please choose a CSV file.', 'points-and-rewards-for-woocommerce' ) );
+		}
+		return $tmp;
+	}
+
+	/**
+	 * The pending import job, if any.
+	 *
+	 * @return array|null
+	 */
+	public function wps_wpr_get_import_job() {
+		$job = get_option( self::JOB_OPTION );
+		return ( is_array( $job ) && ! empty( $job['id'] ) ) ? $job : null;
+	}
+
+	/**
+	 * Store a parsed CSV as an import job, to be applied in batches.
+	 *
+	 * Any previous unfinished job is discarded.
+	 *
+	 * @param  array  $csv       parsed CSV from wps_wpr_read_csv().
+	 * @param  array  $args      import options (see wps_wpr_import()).
+	 * @param  string $file_name uploaded file name, for display.
+	 * @return array|WP_Error the job.
+	 */
+	public function wps_wpr_start_import_job( $csv, $args = array(), $file_name = '' ) {
+		if ( ! isset( $args['decimal'] ) ) {
+			$args['decimal'] = self::wps_wpr_csv_decimal( $csv );
+		}
+		$args    = $this->wps_wpr_import_args( $args );
+		$headers = isset( $csv['headers'] ) ? (array) $csv['headers'] : array();
+		$rows    = isset( $csv['rows'] ) ? (array) $csv['rows'] : array();
+
+		$cols = $this->wps_wpr_resolve_import_columns( $headers, $args );
+		if ( is_wp_error( $cols ) ) {
+			return $cols;
+		}
+		if ( empty( $rows ) ) {
+			return new WP_Error( 'wps_wpr_csv_no_rows', __( 'The CSV file has no rows to import.', 'points-and-rewards-for-woocommerce' ) );
+		}
+
+		$this->wps_wpr_discard_import_job();
+
+		$job = array(
+			'id'             => strtolower( wp_generate_password( 16, false ) ),
+			'file'           => sanitize_file_name( $file_name ),
+			'total'          => count( $rows ),
+			'offset'         => 0,
+			'imported'       => 0,
+			'skipped'        => 0,
+			'errors'         => array(),
+			'mode'           => $args['mode'],
+			'decimal'        => $args['decimal'],
+			'default_reason' => $args['default_reason'],
+			'user_id'        => get_current_user_id(),
+			'started'        => time(),
+		);
+		// Save the job first so a failure while saving rows can still be discarded.
+		update_option( self::JOB_OPTION, $job, false );
+
+		$page = 0;
+		foreach ( array_chunk( array_values( $rows ), self::IMPORT_PAGE ) as $chunk ) {
+			$compact = array();
+			foreach ( $chunk as $row ) {
+				$compact[] = $this->wps_wpr_compact_row( $row, $cols );
+			}
+			update_option( self::ROWS_OPTION . $page, $compact, false );
+			++$page;
+		}
+
+		return $job;
+	}
+
+	/**
+	 * Apply the next batch of rows of the pending job.
+	 *
+	 * Progress is saved after every row, so an interrupted request resumes at
+	 * the next row instead of applying rows a second time.
+	 *
+	 * @param  string $import_id job id.
+	 * @param  int    $limit     rows to apply (0 = default batch size).
+	 * @return array|WP_Error progress: processed, total, imported, skipped, errors (this batch), done.
+	 */
+	public function wps_wpr_run_import_batch( $import_id, $limit = 0 ) {
+		$job = $this->wps_wpr_get_import_job();
+		if ( ! $job || (string) $import_id !== $job['id'] ) {
+			return new WP_Error( 'wps_wpr_import_not_found', __( 'This import is no longer available. Please upload the file again.', 'points-and-rewards-for-woocommerce' ) );
+		}
+		if ( ! $this->wps_wpr_acquire_import_lock() ) {
+			return new WP_Error( 'wps_wpr_import_busy', __( 'This import is already running in another window.', 'points-and-rewards-for-woocommerce' ) );
+		}
+
+		$limit      = $limit > 0 ? (int) $limit : (int) apply_filters( 'wps_wpr_points_import_batch_size', self::IMPORT_BATCH );
+		$limit      = max( 1, $limit );
+		$end        = min( (int) $job['total'], (int) $job['offset'] + $limit );
+		$started    = microtime( true );
+		$new_errors = array();
+		$page_no    = -1;
+		$page       = array();
+
+		try {
+			while ( $job['offset'] < $end ) {
+				$index = (int) $job['offset'];
+				if ( intdiv( $index, self::IMPORT_PAGE ) !== $page_no ) {
+					$page_no = intdiv( $index, self::IMPORT_PAGE );
+					$page    = get_option( self::ROWS_OPTION . $page_no, array() );
+				}
+				$row    = isset( $page[ $index % self::IMPORT_PAGE ] ) ? $page[ $index % self::IMPORT_PAGE ] : array( '', '', '' );
+				$result = $this->wps_wpr_import_row( $row, $index + 2, $job );
+
+				if ( $result['imported'] ) {
+					++$job['imported'];
+				} else {
+					++$job['skipped'];
+					$new_errors[] = $result['error'];
+					if ( count( $job['errors'] ) < 50 ) {
+						$job['errors'][] = $result['error'];
+					}
+				}
+				$job['offset'] = $index + 1;
+				update_option( self::JOB_OPTION, $job, false );
+
+				// Stay well inside max_execution_time; the next request continues.
+				if ( microtime( true ) - $started > 20 ) {
+					break;
+				}
+			}
+		} finally {
+			$this->wps_wpr_release_import_lock();
+		}
+
+		$done     = $job['offset'] >= $job['total'];
+		$progress = array(
+			'import_id' => $job['id'],
+			'processed' => (int) $job['offset'],
+			'total'     => (int) $job['total'],
+			'imported'  => (int) $job['imported'],
+			'skipped'   => (int) $job['skipped'],
+			'errors'    => $new_errors,
+			'done'      => $done,
+		);
+
+		if ( $done ) {
+			$this->wps_wpr_discard_import_job();
+			do_action(
+				'wps_wpr_points_import_completed',
+				array(
+					'imported' => (int) $job['imported'],
+					'skipped'  => (int) $job['skipped'],
+					'errors'   => $job['errors'],
+				),
+				array(
+					'mode'           => $job['mode'],
+					'default_reason' => $job['default_reason'],
+				)
+			);
+		}
+		return $progress;
+	}
+
+	/**
+	 * Delete the pending import job and its rows.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_discard_import_job() {
+		$job = get_option( self::JOB_OPTION );
+		if ( is_array( $job ) && ! empty( $job['total'] ) ) {
+			$pages = (int) ceil( $job['total'] / self::IMPORT_PAGE );
+			for ( $i = 0; $i < $pages; $i++ ) {
+				delete_option( self::ROWS_OPTION . $i );
+			}
+		}
+		delete_option( self::JOB_OPTION );
+	}
+
+	/**
+	 * Take the import lock. A lock older than a minute is treated as left over
+	 * from a request that died and is taken over.
+	 *
+	 * @return bool
+	 */
+	private function wps_wpr_acquire_import_lock() {
+		global $wpdb;
+		$now = time();
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery -- atomic lock row; must bypass the options cache.
+		$taken = $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO {$wpdb->options} (option_name, option_value, autoload) VALUES (%s, %s, 'no')", self::LOCK_OPTION, $now ) );
+		if ( $taken ) {
+			return true;
+		}
+		$since = $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", self::LOCK_OPTION ) );
+		if ( null !== $since && $now - (int) $since < 60 ) {
+			return false;
+		}
+		$taken = $wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->options} SET option_value = %s WHERE option_name = %s AND option_value = %s", $now, self::LOCK_OPTION, (string) $since ) );
+		// phpcs:enable WordPress.DB.DirectDatabaseQuery
+		return (bool) $taken;
+	}
+
+	/**
+	 * Release the import lock.
+	 *
+	 * @return void
+	 */
+	private function wps_wpr_release_import_lock() {
+		global $wpdb;
+		$wpdb->delete( $wpdb->options, array( 'option_name' => self::LOCK_OPTION ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	}
+
+	/**
+	 * Nonce and capability check for the import AJAX actions.
+	 *
+	 * @return void
+	 */
+	private function wps_wpr_import_ajax_guard() {
+		if ( ! check_ajax_referer( self::IMPORT_NONCE, 'nonce', false ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'points-and-rewards-for-woocommerce' ) ), 403 );
+		}
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Access denied', 'points-and-rewards-for-woocommerce' ) ), 403 );
+		}
+	}
+
+	/**
+	 * AJAX: upload and parse a CSV, and store it as an import job.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_ajax_import_start() {
+		// A request over post_max_size arrives with empty $_POST and $_FILES.
+		if ( empty( $_POST ) && empty( $_FILES ) && ! empty( $_SERVER['CONTENT_LENGTH'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			wp_send_json_error(
+				array(
+					/* translators: %s: maximum upload size */
+					'message' => sprintf( __( 'The file is larger than the maximum upload size (%s).', 'points-and-rewards-for-woocommerce' ), size_format( wp_max_upload_size() ) ),
+				)
+			);
+		}
+		$this->wps_wpr_import_ajax_guard();
+
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- verified in wps_wpr_import_ajax_guard().
+		$field = 'wps_wpr_points_import_file';
+		$path  = $this->wps_wpr_check_upload(
+			array(
+				'error'    => isset( $_FILES[ $field ]['error'] ) ? absint( $_FILES[ $field ]['error'] ) : UPLOAD_ERR_NO_FILE,
+				'tmp_name' => isset( $_FILES[ $field ]['tmp_name'] ) ? sanitize_text_field( wp_unslash( $_FILES[ $field ]['tmp_name'] ) ) : '',
+				'name'     => isset( $_FILES[ $field ]['name'] ) ? sanitize_file_name( wp_unslash( $_FILES[ $field ]['name'] ) ) : '',
+			)
+		);
+		if ( is_wp_error( $path ) ) {
+			wp_send_json_error( array( 'message' => $path->get_error_message() ) );
+		}
+
+		$csv = $this->wps_wpr_read_csv( $path );
+		if ( is_wp_error( $csv ) ) {
+			wp_send_json_error( array( 'message' => $csv->get_error_message() ) );
+		}
+
+		$job = $this->wps_wpr_start_import_job(
+			$csv,
+			array(
+				'mode'          => ! empty( $_POST['wps_wpr_import_mode'] ) ? sanitize_key( wp_unslash( $_POST['wps_wpr_import_mode'] ) ) : 'add',
+				'user_column'   => ! empty( $_POST['wps_wpr_import_user_column'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_import_user_column'] ) ) : '',
+				'points_column' => ! empty( $_POST['wps_wpr_import_points_column'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_import_points_column'] ) ) : '',
+				'reason_column' => ! empty( $_POST['wps_wpr_import_reason_column'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_import_reason_column'] ) ) : '',
+			),
+			isset( $_FILES[ $field ]['name'] ) ? sanitize_file_name( wp_unslash( $_FILES[ $field ]['name'] ) ) : ''
+		);
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		if ( is_wp_error( $job ) ) {
+			wp_send_json_error( array( 'message' => $job->get_error_message() ) );
+		}
+
+		wp_send_json_success(
+			array(
+				'import_id' => $job['id'],
+				'total'     => $job['total'],
+			)
+		);
+	}
+
+	/**
+	 * AJAX: apply the next batch of the pending import job.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_ajax_import_batch() {
+		$this->wps_wpr_import_ajax_guard();
+		$import_id = isset( $_POST['import_id'] ) ? sanitize_text_field( wp_unslash( $_POST['import_id'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$progress  = $this->wps_wpr_run_import_batch( $import_id );
+		if ( is_wp_error( $progress ) ) {
+			wp_send_json_error(
+				array(
+					'code'    => $progress->get_error_code(),
+					'message' => $progress->get_error_message(),
+				)
+			);
+		}
+		wp_send_json_success( $progress );
+	}
+
+	/**
+	 * AJAX: discard the pending import job.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_ajax_import_discard() {
+		$this->wps_wpr_import_ajax_guard();
+		$this->wps_wpr_discard_import_job();
+		wp_send_json_success();
 	}
 
 	/**
@@ -411,6 +876,10 @@ class WPS_WPR_Points_Import_Export {
 	 */
 	public function wps_wpr_find_user( $identifier ) {
 		$identifier = trim( (string) $identifier );
+		// Undo the formula guard added by wps_wpr_csv_safe() so this plugin's export imports back.
+		if ( strlen( $identifier ) > 1 && "'" === $identifier[0] && in_array( $identifier[1], array( '=', '+', '-', '@' ), true ) ) {
+			$identifier = substr( $identifier, 1 );
+		}
 		if ( '' === $identifier ) {
 			return false;
 		}
@@ -424,18 +893,45 @@ class WPS_WPR_Points_Import_Export {
 	}
 
 	/**
-	 * Parse a points cell. Accepts thousands separators and decimals (rounded down).
+	 * Parse a points cell.
 	 *
-	 * @param  string $value raw cell.
+	 * Thousands separators must group digits in threes. Decimals are rounded
+	 * down. Values above the maximum (filter wps_wpr_import_max_points) are
+	 * rejected so huge numbers cannot overflow.
+	 *
+	 * @param  string $value   raw cell.
+	 * @param  string $decimal decimal separator: "." (1,234.5) or "," (1.234,5).
 	 * @return int|null points (>= 0) or null when invalid.
 	 */
-	public function wps_wpr_parse_points( $value ) {
-		$value = str_replace( array( ',', ' ' ), '', trim( (string) $value ) );
-		if ( '' === $value || ! is_numeric( $value ) ) {
+	public function wps_wpr_parse_points( $value, $decimal = '.' ) {
+		$value     = str_replace( array( ' ', "\xC2\xA0" ), '', trim( (string) $value ) );
+		$decimal   = ',' === $decimal ? ',' : '.';
+		$thousands = ',' === $decimal ? '.' : ',';
+		if ( '' === $value ) {
 			return null;
 		}
-		$points = (int) floor( (float) $value );
-		return $points < 0 ? null : $points;
+
+		if ( false !== strpos( $value, $thousands ) ) {
+			$dec_pos  = strpos( $value, $decimal );
+			$int_part = false === $dec_pos ? $value : substr( $value, 0, $dec_pos );
+			if ( ! preg_match( '/^\d{1,3}(' . preg_quote( $thousands, '/' ) . '\d{3})+$/', $int_part ) ) {
+				return null; // Ambiguous, e.g. "1,5" in a comma-decimal-point file.
+			}
+			$value = str_replace( $thousands, '', $value );
+		}
+		if ( ',' === $decimal ) {
+			$value = str_replace( ',', '.', $value );
+		}
+		if ( ! is_numeric( $value ) ) {
+			return null;
+		}
+
+		$number = (float) $value;
+		$max    = min( PHP_INT_MAX, (int) apply_filters( 'wps_wpr_import_max_points', self::MAX_POINTS ) );
+		if ( $number < 0 || $number > $max ) {
+			return null;
+		}
+		return (int) floor( $number );
 	}
 
 	/**
