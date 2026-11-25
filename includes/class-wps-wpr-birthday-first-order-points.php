@@ -21,6 +21,15 @@
  * WPS_WPR_PRO_DEFERS_BIRTHDAY_FIRST_ORDER) is active, Pro keeps handling both
  * rules and this class stays idle, so points are never awarded twice.
  *
+ * Differences from the Pro copy:
+ * - First-order points are taken back when that order is cancelled or refunded,
+ *   and a later order can then earn them.
+ * - Birthdays are matched in the site timezone (Pro used UTC), and a 29 February
+ *   birthday counts on 28 February in common years.
+ * - Only a strict Y-m-d date of birth earns points; a malformed date saved by an
+ *   older version earns nothing until an admin corrects it.
+ * - Guest orders placed before the account was created are not counted, as in Pro.
+ *
  * @link       https://wpswings.com/
  * @since      2.10.6
  *
@@ -321,7 +330,7 @@ class WPS_WPR_Birthday_First_Order_Points {
 	 */
 	public static function wps_wpr_add_points( $user_id, $points, $log_key, $extra = array() ) {
 		$balance = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-		$balance = max( 0, $balance ) + $points;
+		$balance = $balance + $points;
 		update_user_meta( $user_id, 'wps_wpr_points', $balance );
 
 		$points_log = get_user_meta( $user_id, 'points_details', true );
@@ -425,35 +434,21 @@ class WPS_WPR_Birthday_First_Order_Points {
 	}
 
 	/**
-	 * Is this the customer's first paid order?
+	 * Does this order earn the customer's first-order points?
 	 *
-	 * True when the customer has no other order in a paid status
-	 * (processing / completed by default).
+	 * Same rule Pro used: the first of the customer's orders to reach the points
+	 * award status (see wps_wpr_get_points_award_status()) earns the points, once
+	 * per customer. The `points_on_first_order` user meta records that the points
+	 * were given; other orders that are still processing or on hold do not block
+	 * the award, so orders completed out of sequence still earn it.
 	 *
 	 * @param  WC_Order $order   order.
 	 * @param  int      $user_id user id.
 	 * @return bool
 	 */
 	public static function wps_wpr_is_first_order( $order, $user_id ) {
-		$paid_statuses = function_exists( 'wc_get_is_paid_statuses' ) ? wc_get_is_paid_statuses() : array( 'processing', 'completed' );
-
-		$other_orders = wc_get_orders(
-			array(
-				'customer_id' => $user_id,
-				'status'      => array_map(
-					function ( $status ) {
-						return 'wc-' . $status;
-					},
-					$paid_statuses
-				),
-				'exclude'     => array( $order->get_id() ),
-				'limit'       => 1,
-				'return'      => 'ids',
-				'type'        => 'shop_order',
-			)
-		);
-
-		return (bool) apply_filters( 'wps_wpr_is_first_order', empty( $other_orders ), $order, $user_id );
+		$is_first = '' === (string) get_user_meta( $user_id, 'points_on_first_order', true );
+		return (bool) apply_filters( 'wps_wpr_is_first_order', $is_first, $order, $user_id );
 	}
 
 	/**
@@ -487,10 +482,6 @@ class WPS_WPR_Birthday_First_Order_Points {
 		}
 
 		// Once per customer (same meta Pro used).
-		if ( '' !== (string) get_user_meta( $user_id, 'points_on_first_order', true ) ) {
-			return 0;
-		}
-
 		if ( ! self::wps_wpr_is_first_order( $order, $user_id ) ) {
 			return 0;
 		}
@@ -526,6 +517,65 @@ class WPS_WPR_Birthday_First_Order_Points {
 		do_action( 'wps_wpr_first_order_points_awarded', $user_id, $points, $order_id );
 
 		return $points;
+	}
+
+	/**
+	 * Take back first-order points when the order that earned them is cancelled or
+	 * refunded, and let a later order earn them again.
+	 *
+	 * Only the points the customer still has are taken, so the balance never goes
+	 * below 0.
+	 *
+	 * @param  int    $order_id   order id.
+	 * @param  string $old_status old status.
+	 * @param  string $new_status new status.
+	 * @return int    points taken back (0 when nothing was taken).
+	 */
+	public function wps_wpr_reverse_first_order_points( $order_id, $old_status, $new_status ) {
+		if ( ! self::wps_wpr_is_handled_here() || $old_status === $new_status || ! in_array( $new_status, array( 'cancelled', 'refunded' ), true ) ) {
+			return 0;
+		}
+
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			return 0;
+		}
+
+		$awarded = absint( $order->get_meta( 'wps_wpr_first_order_points_awarded' ) );
+		$user_id = absint( $order->get_user_id() );
+		if ( $awarded <= 0 || ! $user_id ) {
+			return 0;
+		}
+
+		$balance = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+		$deduct  = min( $awarded, max( 0, $balance ) );
+		if ( $deduct > 0 ) {
+			update_user_meta( $user_id, 'wps_wpr_points', $balance - $deduct );
+		}
+
+		$points_log = get_user_meta( $user_id, 'points_details', true );
+		$points_log = ! empty( $points_log ) && is_array( $points_log ) ? $points_log : array();
+
+		$points_log['first_order_points_reversed'][] = array(
+			'first_order_points_reversed' => $deduct,
+			'date'                        => date_i18n( 'Y-m-d h:i:sa' ),
+			'order_id'                    => $order_id,
+		);
+		update_user_meta( $user_id, 'points_details', $points_log );
+		do_action( 'wps_wpr_update_points_log', $user_id );
+
+		// The order no longer counts, so a later order can earn the first-order points.
+		delete_user_meta( $user_id, 'points_on_first_order' );
+		$order->delete_meta_data( 'wps_wpr_first_order_points_awarded' );
+		$order->save();
+		$order->add_order_note(
+			/* translators: %s: points */
+			sprintf( esc_html__( '%s first order points deducted because the order was cancelled or refunded.', 'points-and-rewards-for-woocommerce' ), $deduct )
+		);
+
+		do_action( 'wps_wpr_first_order_points_reversed', $user_id, $deduct, $order_id );
+
+		return $deduct;
 	}
 
 	/* ------------------------------------------------------------------

@@ -122,9 +122,32 @@ class BirthdayFirstOrderPointsTest extends TestCase {
 		$order->set_customer_id( $user_id );
 		$order->set_total( $total );
 		$order->set_status( $status );
-		$order->save();
+		$this->save_without_status_hooks( $order );
 		$this->order_ids[] = $order->get_id();
 		return $order;
+	}
+
+	/**
+	 * Save an order without running the woocommerce_order_status_* hooks, so the
+	 * site's live handlers (which depend on the site's settings) do not award
+	 * points while the test sets up its orders.
+	 *
+	 * @param  WC_Order $order order.
+	 * @return void
+	 */
+	private function save_without_status_hooks( $order ) {
+		global $wp_filter;
+		$saved = array();
+		foreach ( array_keys( $wp_filter ) as $hook ) {
+			if ( 0 === strpos( $hook, 'woocommerce_order_status_' ) ) {
+				$saved[ $hook ] = $wp_filter[ $hook ];
+				unset( $wp_filter[ $hook ] );
+			}
+		}
+		$order->save();
+		foreach ( $saved as $hook => $callbacks ) {
+			$wp_filter[ $hook ] = $callbacks; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		}
 	}
 
 	public function test_free_handles_rules_when_pro_is_inactive() {
@@ -205,12 +228,71 @@ class BirthdayFirstOrderPointsTest extends TestCase {
 		$this->assertSame( 26, $this->feature->wps_wpr_award_first_order_points( $order->get_id(), 'processing', 'completed' ) );
 	}
 
-	public function test_no_first_order_points_when_customer_already_has_a_paid_order() {
+	public function test_overlapping_orders_award_first_order_points_once() {
+		$user_id = $this->make_user();
+		$order_a = $this->make_order( $user_id, 100, 'processing' );
+		$order_b = $this->make_order( $user_id, 100, 'processing' );
+
+		// B reaches the award status while A is still processing: B earns the points.
+		$order_b->set_status( 'completed' );
+		$this->save_without_status_hooks( $order_b );
+		$this->assertSame( 25, $this->feature->wps_wpr_award_first_order_points( $order_b->get_id(), 'processing', 'completed' ) );
+
+		// A completes later: nothing more.
+		$order_a->set_status( 'completed' );
+		$this->save_without_status_hooks( $order_a );
+		$this->assertSame( 0, $this->feature->wps_wpr_award_first_order_points( $order_a->get_id(), 'processing', 'completed' ) );
+
+		$this->assertSame( 25, (int) get_user_meta( $user_id, 'wps_wpr_points', true ) );
+		$log = get_user_meta( $user_id, 'points_details', true );
+		$this->assertCount( 1, $log['points_on_first_order'] );
+		$this->assertSame( $order_b->get_id(), $log['points_on_first_order'][0]['order_id'] );
+	}
+
+	public function test_existing_customer_without_marker_earns_on_next_order_like_pro() {
 		$user_id = $this->make_user();
 		$this->make_order( $user_id, 50, 'completed' );
 		$order = $this->make_order( $user_id );
 
-		$this->assertSame( 0, $this->feature->wps_wpr_award_first_order_points( $order->get_id(), 'processing', 'completed' ) );
+		$this->assertSame( 25, $this->feature->wps_wpr_award_first_order_points( $order->get_id(), 'processing', 'completed' ) );
+	}
+
+	public function test_first_order_points_reversed_on_cancel_and_earned_again() {
+		$user_id = $this->make_user();
+		$order_a = $this->make_order( $user_id );
+		$this->assertSame( 25, $this->feature->wps_wpr_award_first_order_points( $order_a->get_id(), 'processing', 'completed' ) );
+
+		$this->assertSame( 25, $this->feature->wps_wpr_reverse_first_order_points( $order_a->get_id(), 'completed', 'cancelled' ) );
+		$this->assertSame( 0, (int) get_user_meta( $user_id, 'wps_wpr_points', true ) );
+		$this->assertSame( '', get_user_meta( $user_id, 'points_on_first_order', true ) );
+		$this->assertSame( '', wc_get_order( $order_a->get_id() )->get_meta( 'wps_wpr_first_order_points_awarded' ) );
+		$log = get_user_meta( $user_id, 'points_details', true );
+		$this->assertSame( 25, $log['first_order_points_reversed'][0]['first_order_points_reversed'] );
+		$this->assertSame( $order_a->get_id(), $log['first_order_points_reversed'][0]['order_id'] );
+
+		// Repeating the cancel takes nothing more.
+		$this->assertSame( 0, $this->feature->wps_wpr_reverse_first_order_points( $order_a->get_id(), 'cancelled', 'refunded' ) );
+
+		// A later order earns the points again.
+		$order_b = $this->make_order( $user_id );
+		$this->assertSame( 25, $this->feature->wps_wpr_award_first_order_points( $order_b->get_id(), 'processing', 'completed' ) );
+		$this->assertSame( 25, (int) get_user_meta( $user_id, 'wps_wpr_points', true ) );
+	}
+
+	public function test_first_order_reversal_on_refund_never_goes_below_zero() {
+		$user_id = $this->make_user();
+		$order   = $this->make_order( $user_id );
+		$this->assertSame( 25, $this->feature->wps_wpr_award_first_order_points( $order->get_id(), 'processing', 'completed' ) );
+
+		// The customer spent most of the points.
+		update_user_meta( $user_id, 'wps_wpr_points', 10 );
+		$this->assertSame( 10, $this->feature->wps_wpr_reverse_first_order_points( $order->get_id(), 'completed', 'refunded' ) );
+		$this->assertSame( 0, (int) get_user_meta( $user_id, 'wps_wpr_points', true ) );
+
+		// Other statuses and orders without first-order points are ignored.
+		$other = $this->make_order( $user_id );
+		$this->assertSame( 0, $this->feature->wps_wpr_reverse_first_order_points( $other->get_id(), 'processing', 'cancelled' ) );
+		$this->assertSame( 0, $this->feature->wps_wpr_reverse_first_order_points( $order->get_id(), 'completed', 'processing' ) );
 	}
 
 	public function test_no_first_order_points_when_disabled_restricted_guest_or_not_completed() {

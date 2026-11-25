@@ -304,6 +304,10 @@ class Points_Rewards_For_Woocommerce {
 	private function define_public_hooks() {
 
 		$plugin_public = new Points_Rewards_For_WooCommerce_Public( $this->get_plugin_name(), $this->get_version() );
+
+		// Schedules the birthday cron, or clears it when birthday points or the plugin are switched off.
+		$this->loader->add_action( 'init', new WPS_WPR_Birthday_First_Order_Points(), 'wps_wpr_maybe_schedule_cron' );
+
 		if ( $this->wps_rwpr_is_plugin_enable() ) {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_styles' );
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_scripts' );
@@ -450,9 +454,9 @@ class Points_Rewards_For_Woocommerce {
 
 			// birthday and first-order points.
 			$birthday_first_order = new WPS_WPR_Birthday_First_Order_Points();
-			$this->loader->add_action( 'init', $birthday_first_order, 'wps_wpr_maybe_schedule_cron' );
 			$this->loader->add_action( WPS_WPR_Birthday_First_Order_Points::CRON_HOOK, $birthday_first_order, 'wps_wpr_process_birthdays', 10, 0 );
 			$this->loader->add_action( 'woocommerce_order_status_changed', $birthday_first_order, 'wps_wpr_award_first_order_points', 20, 3 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $birthday_first_order, 'wps_wpr_reverse_first_order_points', 25, 3 );
 			$this->loader->add_action( 'woocommerce_edit_account_form', $birthday_first_order, 'wps_wpr_account_birthday_field' );
 			$this->loader->add_action( 'woocommerce_save_account_details', $birthday_first_order, 'wps_wpr_save_account_birthday', 10, 1 );
 			$this->loader->add_action( 'wps_points_on_first_order', $birthday_first_order, 'wps_wpr_public_points_log', 5, 1 );
