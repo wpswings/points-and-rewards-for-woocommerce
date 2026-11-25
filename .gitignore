@@ -13,3 +13,4 @@ module_implementation.md
 .md
 playwright-report/
 test-results/
+.phpunit.cache

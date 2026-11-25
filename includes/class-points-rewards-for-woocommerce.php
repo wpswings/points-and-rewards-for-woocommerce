@@ -143,6 +143,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
 		/**
+		 * The class responsible for earn-points messages on shop, product and cart pages.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-earn-messages.php';
+
+		/**
 		 * The class keeping order points consistent across cancel / refund / re-complete.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
@@ -435,6 +440,10 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_order_status_changed', $abandoned_cart, 'wps_wpr_award_recovery_points', 20, 3 );
 			$this->loader->add_action( 'woocommerce_before_cart', $abandoned_cart, 'wps_wpr_show_incentive_notice' );
 			$this->loader->add_action( 'woocommerce_before_checkout_form', $abandoned_cart, 'wps_wpr_show_incentive_notice', 5 );
+
+			// earn-points messages on shop, product, cart and checkout pages.
+			$earn_messages = new WPS_WPR_Earn_Messages();
+			$earn_messages->wps_wpr_register_hooks();
 		}
 	}
 
