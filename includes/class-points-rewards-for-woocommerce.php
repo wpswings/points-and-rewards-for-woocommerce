@@ -302,6 +302,9 @@ class Points_Rewards_For_Woocommerce {
 		$wps_wpr_blocks = new WPS_WPR_Blocks();
 		$this->loader->add_action( 'init', $wps_wpr_blocks, 'wps_wpr_register_blocks' );
 		$this->loader->add_filter( 'block_categories_all', $wps_wpr_blocks, 'wps_wpr_block_category', 10, 1 );
+		foreach ( array( 'added_user_meta', 'updated_user_meta', 'deleted_user_meta' ) as $wps_wpr_meta_hook ) {
+			$this->loader->add_action( $wps_wpr_meta_hook, $wps_wpr_blocks, 'wps_wpr_flush_leaderboard_cache', 10, 3 );
+		}
 
 		if ( $this->wps_rwpr_is_plugin_enable() ) {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_styles' );

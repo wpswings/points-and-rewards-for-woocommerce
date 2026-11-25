@@ -48,6 +48,16 @@ class WPS_WPR_Blocks {
 	const LEADERBOARD_MAX = 50;
 
 	/**
+	 * Seconds a leaderboard query is cached.
+	 */
+	const LEADERBOARD_CACHE_TTL = 600;
+
+	/**
+	 * Option holding the leaderboard cache version (bumped to invalidate).
+	 */
+	const LEADERBOARD_CACHE_VERSION = 'wps_wpr_leaderboard_cache_version';
+
+	/**
 	 * Block folder names mapped to their render methods.
 	 *
 	 * @return array
@@ -132,7 +142,11 @@ class WPS_WPR_Blocks {
 	 * @return bool
 	 */
 	public static function wps_wpr_is_editor_preview() {
-		return defined( 'REST_REQUEST' ) && REST_REQUEST && current_user_can( 'edit_posts' );
+		if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST || ! current_user_can( 'edit_posts' ) ) {
+			return false;
+		}
+		$route = isset( $GLOBALS['wp'] ) && $GLOBALS['wp'] instanceof WP && isset( $GLOBALS['wp']->query_vars['rest_route'] ) ? (string) $GLOBALS['wp']->query_vars['rest_route'] : '';
+		return 0 === strpos( $route, '/wp/v2/block-renderer/' );
 	}
 
 	/**
@@ -366,7 +380,12 @@ class WPS_WPR_Blocks {
 			return $this->wps_wpr_editor_notice( $class, __( 'Enable the points program to show this block.', 'points-and-rewards-for-woocommerce' ) );
 		}
 
-		$items = self::wps_wpr_get_earn_items();
+		$items = array_filter(
+			self::wps_wpr_get_earn_items(),
+			function ( $item ) {
+				return is_array( $item ) && ! empty( $item['label'] ) && isset( $item['points'] ) && (int) $item['points'] > 0;
+			}
+		);
 		if ( empty( $items ) ) {
 			return $this->wps_wpr_editor_notice( $class, __( 'No earning rules are enabled yet.', 'points-and-rewards-for-woocommerce' ) );
 		}
@@ -375,10 +394,7 @@ class WPS_WPR_Blocks {
 
 		$html = '<p class="wps-wpr-block__heading">' . esc_html( $heading ) . '</p><ul class="wps-wpr-block__list">';
 		foreach ( $items as $item ) {
-			if ( empty( $item['label'] ) ) {
-				continue;
-			}
-			$points = isset( $item['points'] ) ? absint( $item['points'] ) : 0;
+			$points = (int) $item['points'];
 			$html  .= '<li class="wps-wpr-block__item wps-wpr-earn-' . esc_attr( sanitize_html_class( isset( $item['key'] ) ? $item['key'] : '' ) ) . '">';
 			$html  .= '<span class="wps-wpr-block__item-label">' . esc_html( $item['label'] ) . '</span>';
 			/* translators: %s: points */
@@ -423,7 +439,35 @@ class WPS_WPR_Blocks {
 	}
 
 	/**
-	 * Name shown on the leaderboard. Never returns an email address.
+	 * Whether a name looks like the user's login or email, so it must not be shown.
+	 *
+	 * @param  string  $name name.
+	 * @param  WP_User $user user.
+	 * @return bool
+	 */
+	public static function wps_wpr_name_reveals_account( $name, $user ) {
+		$name = strtolower( trim( (string) $name ) );
+		if ( '' === $name || false !== strpos( $name, '@' ) || is_email( $name ) ) {
+			return true;
+		}
+
+		$email = strtolower( (string) $user->user_email );
+		$local = false !== strpos( $email, '@' ) ? substr( $email, 0, strpos( $email, '@' ) ) : $email;
+
+		foreach ( array( (string) $user->user_login, (string) $user->user_nicename, $local ) as $private ) {
+			if ( '' !== $private && strtolower( $private ) === $name ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Name shown on the leaderboard. Never returns an email address or login.
+	 *
+	 * The default "first_initial" format shows "First L." and falls back to
+	 * "Customer #N" when no first name is set. It never falls back to the
+	 * display name, which WordPress and WooCommerce default to the login.
 	 *
 	 * @param  WP_User $user   user.
 	 * @param  string  $format first_initial|display_name|anonymous.
@@ -437,19 +481,18 @@ class WPS_WPR_Blocks {
 			return $anonymous;
 		}
 
-		$first = trim( (string) $user->first_name );
-		$last  = trim( (string) $user->last_name );
-
 		if ( 'display_name' === $format ) {
 			$name = trim( (string) $user->display_name );
-		} elseif ( '' !== $first ) {
-			$name = $first . ( '' !== $last ? ' ' . mb_substr( $last, 0, 1 ) . '.' : '' );
 		} else {
-			$name = trim( (string) $user->display_name );
+			$first = trim( (string) $user->first_name );
+			$last  = trim( (string) $user->last_name );
+			if ( '' === $first || self::wps_wpr_name_reveals_account( $first, $user ) ) {
+				return $anonymous;
+			}
+			$name = $first . ( '' !== $last ? ' ' . mb_substr( $last, 0, 1 ) . '.' : '' );
 		}
 
-		// Display names often default to the login, which can be an email.
-		if ( '' === $name || false !== strpos( $name, '@' ) || is_email( $name ) || $name === $user->user_email ) {
+		if ( self::wps_wpr_name_reveals_account( $name, $user ) ) {
 			return $anonymous;
 		}
 
@@ -457,49 +500,127 @@ class WPS_WPR_Blocks {
 	}
 
 	/**
-	 * Top users by points balance, excluding users restricted from points.
+	 * Roles kept off the leaderboard: by default every role that can manage
+	 * the store or the site (manage_woocommerce or manage_options).
+	 *
+	 * @return string[]
+	 */
+	public static function wps_wpr_leaderboard_excluded_roles() {
+		$roles = array();
+		$wp_roles = wp_roles();
+		foreach ( $wp_roles->roles as $role => $data ) {
+			$caps = isset( $data['capabilities'] ) ? (array) $data['capabilities'] : array();
+			if ( ! empty( $caps['manage_woocommerce'] ) || ! empty( $caps['manage_options'] ) ) {
+				$roles[] = $role;
+			}
+		}
+
+		/**
+		 * Filter the roles that never appear on the points leaderboard.
+		 *
+		 * @param string[] $roles role slugs.
+		 */
+		$roles = (array) apply_filters( 'wps_wpr_block_leaderboard_excluded_roles', $roles );
+		$roles = array_values( array_unique( array_filter( array_map( 'sanitize_key', $roles ) ) ) );
+		sort( $roles );
+		return $roles;
+	}
+
+	/**
+	 * Cache key for a leaderboard query.
+	 *
+	 * @param  int      $limit limit.
+	 * @param  string[] $roles excluded roles.
+	 * @return string
+	 */
+	private static function wps_wpr_leaderboard_cache_key( $limit, $roles ) {
+		$version = (int) get_option( self::LEADERBOARD_CACHE_VERSION, 0 );
+		return 'wps_wpr_lb_' . md5( $limit . '|' . implode( ',', $roles ) . '|' . $version . '|' . get_current_blog_id() );
+	}
+
+	/**
+	 * Invalidate cached leaderboards when a user's points or restriction change.
+	 *
+	 * Hooked to added_user_meta, updated_user_meta and deleted_user_meta.
+	 * Cached rows also expire after LEADERBOARD_CACHE_TTL, which covers
+	 * other changes such as a role change.
+	 *
+	 * @param  int|array $meta_id  meta id(s).
+	 * @param  int       $user_id  user id.
+	 * @param  string    $meta_key meta key.
+	 * @return void
+	 */
+	public static function wps_wpr_flush_leaderboard_cache( $meta_id, $user_id, $meta_key ) {
+		if ( in_array( $meta_key, array( 'wps_wpr_points', 'wps_wpr_restrict_user' ), true ) ) {
+			update_option( self::LEADERBOARD_CACHE_VERSION, (int) get_option( self::LEADERBOARD_CACHE_VERSION, 0 ) + 1, false );
+		}
+	}
+
+	/**
+	 * Top users by points balance, excluding users restricted from points
+	 * and store/site managers.
+	 *
+	 * One SQL query, cached in a transient for LEADERBOARD_CACHE_TTL and
+	 * invalidated when any user's points or restriction meta changes.
 	 *
 	 * @param  int $limit number of users.
 	 * @return array list of array( 'user' => WP_User, 'points' => int ).
 	 */
 	public static function wps_wpr_get_leaderboard( $limit ) {
-		$limit = min( self::LEADERBOARD_MAX, max( 1, absint( $limit ) ) );
+		global $wpdb;
 
-		$query = new WP_User_Query(
-			array(
-				'number'      => $limit,
-				'count_total' => false,
-				'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-					'relation'      => 'AND',
-					'points_clause' => array(
-						'key'     => 'wps_wpr_points',
-						'value'   => 0,
-						'compare' => '>',
-						'type'    => 'NUMERIC',
-					),
-					array(
-						'relation' => 'OR',
-						array(
-							'key'     => 'wps_wpr_restrict_user',
-							'compare' => 'NOT EXISTS',
-						),
-						array(
-							'key'     => 'wps_wpr_restrict_user',
-							'value'   => 'yes',
-							'compare' => '!=',
-						),
-					),
-				),
-				'orderby'     => array( 'points_clause' => 'DESC' ),
-			)
-		);
+		$limit     = min( self::LEADERBOARD_MAX, max( 1, absint( $limit ) ) );
+		$roles     = self::wps_wpr_leaderboard_excluded_roles();
+		$cache_key = self::wps_wpr_leaderboard_cache_key( $limit, $roles );
+		$cached    = get_transient( $cache_key );
+
+		if ( is_array( $cached ) ) {
+			$results = $cached;
+		} else {
+			$role_sql = '';
+			$args     = array( 'wps_wpr_restrict_user', $wpdb->get_blog_prefix() . 'capabilities', 'wps_wpr_points' );
+			if ( ! empty( $roles ) ) {
+				$likes = array();
+				foreach ( $roles as $role ) {
+					$likes[] = 'caps.meta_value LIKE %s';
+					$args[]  = '%' . $wpdb->esc_like( '"' . $role . '"' ) . '%';
+				}
+				$role_sql = ' AND ( caps.meta_value IS NULL OR NOT ( ' . implode( ' OR ', $likes ) . ' ) )';
+			}
+			$args[] = $limit;
+
+			// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery
+			$sql = "SELECT pts.user_id AS user_id, CAST( pts.meta_value AS SIGNED ) AS points
+				FROM {$wpdb->usermeta} pts
+				INNER JOIN {$wpdb->users} u ON u.ID = pts.user_id
+				LEFT JOIN {$wpdb->usermeta} restr ON restr.user_id = pts.user_id AND restr.meta_key = %s
+				LEFT JOIN {$wpdb->usermeta} caps ON caps.user_id = pts.user_id AND caps.meta_key = %s
+				WHERE pts.meta_key = %s
+				AND CAST( pts.meta_value AS SIGNED ) > 0
+				AND ( restr.meta_value IS NULL OR restr.meta_value <> 'yes' ){$role_sql}
+				ORDER BY points DESC, pts.user_id ASC
+				LIMIT %d";
+
+			$results = $wpdb->get_results( $wpdb->prepare( $sql, $args ), ARRAY_A );
+			// phpcs:enable
+			$results = is_array( $results ) ? $results : array();
+			set_transient( $cache_key, $results, self::LEADERBOARD_CACHE_TTL );
+		}
+
+		$ids = array_map( 'absint', wp_list_pluck( $results, 'user_id' ) );
+		if ( ! empty( $ids ) ) {
+			cache_users( $ids );
+		}
 
 		$rows = array();
-		foreach ( $query->get_results() as $user ) {
-			$rows[] = array(
-				'user'   => $user,
-				'points' => (int) get_user_meta( $user->ID, 'wps_wpr_points', true ),
-			);
+		foreach ( $results as $result ) {
+			$user = get_userdata( (int) $result['user_id'] );
+			if ( $user ) {
+				$rows[] = array(
+					'user'   => $user,
+					'points' => (int) $result['points'],
+				);
+			}
 		}
 
 		return (array) apply_filters( 'wps_wpr_block_leaderboard_rows', $rows, $limit );
@@ -530,14 +651,18 @@ class WPS_WPR_Blocks {
 		$current = get_current_user_id();
 
 		$html = '<p class="wps-wpr-block__heading">' . esc_html( $heading ) . '</p><ol class="wps-wpr-block__list wps-wpr-block__leaderboard">';
-		foreach ( $rows as $index => $row ) {
-			$rank     = $index + 1;
+		$rank = 0;
+		foreach ( $rows as $row ) {
+			if ( ! is_array( $row ) || empty( $row['user'] ) || ! $row['user'] instanceof WP_User ) {
+				continue;
+			}
+			++$rank;
 			$is_me    = $current && $row['user']->ID === $current;
 			$html    .= '<li class="wps-wpr-block__item' . ( $is_me ? ' is-current-user' : '' ) . '">';
 			$html    .= '<span class="wps-wpr-block__rank">' . esc_html( $rank ) . '</span> ';
 			$html    .= '<span class="wps-wpr-block__item-label">' . esc_html( self::wps_wpr_leaderboard_name( $row['user'], $format, $rank ) ) . '</span>';
 			if ( $show_points ) {
-				$html .= ' <span class="wps-wpr-block__item-points">' . esc_html( number_format_i18n( $row['points'] ) ) . '</span>';
+				$html .= ' <span class="wps-wpr-block__item-points">' . esc_html( number_format_i18n( isset( $row['points'] ) ? (int) $row['points'] : 0 ) ) . '</span>';
 			}
 			$html .= '</li>';
 		}
