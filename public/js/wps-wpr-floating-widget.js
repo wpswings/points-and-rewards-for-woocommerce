@@ -168,9 +168,44 @@
 			}
 		} );
 
+		function focusables() {
+			var nodes = panel.querySelectorAll( 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])' );
+			return Array.prototype.filter.call( nodes, function ( node ) {
+				// Skip roving-tabindex items (inactive launcher tabs) and hidden nodes.
+				if ( '-1' === node.getAttribute( 'tabindex' ) ) {
+					return false;
+				}
+				return node.offsetWidth > 0 || node.offsetHeight > 0 || node.getClientRects().length > 0;
+			} );
+		}
+
 		document.addEventListener( 'keydown', function ( event ) {
-			if ( ( 'Escape' === event.key || 'Esc' === event.key ) && isOpen() ) {
+			if ( ! isOpen() ) {
+				return;
+			}
+			if ( 'Escape' === event.key || 'Esc' === event.key ) {
 				close( true );
+				return;
+			}
+			if ( 'Tab' !== event.key ) {
+				return;
+			}
+			// Keep Tab / Shift+Tab inside the open panel.
+			var items = focusables();
+			if ( ! items.length ) {
+				event.preventDefault();
+				panel.focus();
+				return;
+			}
+			var first = items[ 0 ];
+			var last = items[ items.length - 1 ];
+			var active = document.activeElement;
+			if ( event.shiftKey && ( active === first || active === panel || ! panel.contains( active ) ) ) {
+				event.preventDefault();
+				last.focus();
+			} else if ( ! event.shiftKey && ( active === last || ! panel.contains( active ) ) ) {
+				event.preventDefault();
+				first.focus();
 			}
 		} );
 

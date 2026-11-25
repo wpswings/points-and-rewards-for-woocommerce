@@ -37,6 +37,12 @@ class WPS_WPR_Floating_Widget {
 	const HANDLE = 'wps-wpr-floating-widget';
 
 	/**
+	 * Minimum bottom offset (px) when the gamification wheel icon sits in the
+	 * same bottom corner. The wheel is 150px tall and fixed at bottom: 0.
+	 */
+	const CANVAS_CLEARANCE = 170;
+
+	/**
 	 * Default settings.
 	 *
 	 * @return array
@@ -69,12 +75,16 @@ class WPS_WPR_Floating_Widget {
 	/**
 	 * Saved settings merged over the defaults.
 	 *
+	 * The stored option is sanitized again on every read, so a value written
+	 * outside the settings form (import, wp-cli, another plugin) can never
+	 * reach the inline style or class attributes unchecked.
+	 *
 	 * @return array
 	 */
 	public static function wps_wpr_get_settings() {
 		$saved = get_option( self::OPTION, array() );
 		$saved = is_array( $saved ) ? $saved : array();
-		return wp_parse_args( $saved, self::wps_wpr_get_default_settings() );
+		return self::wps_wpr_sanitize_settings( wp_parse_args( $saved, self::wps_wpr_get_default_settings() ) );
 	}
 
 	/**
@@ -95,7 +105,7 @@ class WPS_WPR_Floating_Widget {
 		$color    = isset( $input['wps_wpr_fw_color'] ) ? sanitize_hex_color( $input['wps_wpr_fw_color'] ) : '';
 		$label    = isset( $input['wps_wpr_fw_label'] ) ? sanitize_text_field( $input['wps_wpr_fw_label'] ) : '';
 		$icon     = isset( $input['wps_wpr_fw_icon'] ) ? sanitize_text_field( $input['wps_wpr_fw_icon'] ) : '';
-		$offset   = isset( $input['wps_wpr_fw_offset'] ) ? absint( $input['wps_wpr_fw_offset'] ) : $defaults['wps_wpr_fw_offset'];
+		$offset   = isset( $input['wps_wpr_fw_offset'] ) ? max( 0, (int) $input['wps_wpr_fw_offset'] ) : $defaults['wps_wpr_fw_offset'];
 		$mode     = isset( $input['wps_wpr_fw_mode'] ) ? sanitize_key( $input['wps_wpr_fw_mode'] ) : '';
 		$target   = isset( $input['wps_wpr_fw_targeting'] ) ? sanitize_key( $input['wps_wpr_fw_targeting'] ) : '';
 		$page_ids = isset( $input['wps_wpr_fw_page_ids'] ) && class_exists( 'WPS_WPR_Rewards_Launcher' ) ? WPS_WPR_Rewards_Launcher::wps_wpr_parse_page_ids( $input['wps_wpr_fw_page_ids'] ) : array();
@@ -266,11 +276,20 @@ class WPS_WPR_Floating_Widget {
 		if ( ! $this->wps_wpr_general_setting( 'wps_wpr_general_refer_enable' ) ) {
 			return '';
 		}
-		$key = get_user_meta( $user_id, 'wps_points_referral', true );
+		// Same key handling as the My Account referral section, so pro can
+		// rotate the key and reset the invite count before it is shown.
+		$key    = get_user_meta( $user_id, 'wps_points_referral', true );
+		$invite = get_user_meta( $user_id, 'wps_points_referral_invite', true );
 		if ( empty( $key ) && function_exists( 'wps_wpr_create_referral_code' ) ) {
-			$key = wps_wpr_create_referral_code();
-			update_user_meta( $user_id, 'wps_points_referral', $key );
+			update_user_meta( $user_id, 'wps_points_referral', wps_wpr_create_referral_code() );
+			if ( '' === $invite ) {
+				update_user_meta( $user_id, 'wps_points_referral_invite', 0 );
+			}
 		}
+
+		/** This action is documented in public/class-points-rewards-for-woocommerce-public.php */
+		do_action( 'wps_wpr_before_add_referral_section', $user_id );
+		$key = get_user_meta( $user_id, 'wps_points_referral', true );
 		if ( empty( $key ) ) {
 			return '';
 		}
@@ -306,7 +325,7 @@ class WPS_WPR_Floating_Widget {
 		$sections = array();
 
 		if ( $user_id ) {
-			$points    = absint( get_user_meta( $user_id, 'wps_wpr_points', true ) );
+			$points    = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
 			$level     = $this->wps_wpr_get_membership_level( $user_id );
 			$balance   = '<div class="wps-wpr-fw__balance"><span class="wps-wpr-fw__balance-label">' . esc_html__( 'Your points', 'points-and-rewards-for-woocommerce' ) . '</span>';
 			$balance  .= '<strong class="wps-wpr-fw__balance-value" data-wps-wpr-fw-balance>' . esc_html( number_format_i18n( $points ) ) . '</strong>';
@@ -365,6 +384,28 @@ class WPS_WPR_Floating_Widget {
 	}
 
 	/**
+	 * Whether the gamification wheel icon sits in the widget's bottom corner.
+	 *
+	 * @param  array $settings widget settings.
+	 * @return bool
+	 */
+	public function wps_wpr_canvas_shares_corner( $settings ) {
+		$game    = get_option( 'wps_wpr_save_gami_setting', array() );
+		$game    = is_array( $game ) ? $game : array();
+		$shares  = ! empty( $game['wps_wpr_enable_gamification_settings'] ) && 'yes' === $game['wps_wpr_enable_gamification_settings']
+			&& ! empty( $game['wps_wpr_select_icon_position'] )
+			&& str_replace( '-', '_', $settings['wps_wpr_fw_position'] ) === $game['wps_wpr_select_icon_position'];
+
+		/**
+		 * Filter whether the floating widget must clear the gamification icon.
+		 *
+		 * @param bool  $shares   true when both sit in the same bottom corner.
+		 * @param array $settings widget settings.
+		 */
+		return (bool) apply_filters( 'wps_wpr_floating_widget_canvas_shares_corner', $shares, $settings );
+	}
+
+	/**
 	 * Full widget markup.
 	 *
 	 * @param  int $user_id user id (0 for guests).
@@ -378,7 +419,15 @@ class WPS_WPR_Floating_Widget {
 		if ( 'yes' !== $settings['wps_wpr_fw_show_mobile'] ) {
 			$classes[] = 'wps-wpr-fw--hide-mobile';
 		}
-		$style = sprintf( '--wps-wpr-fw-color:%s;--wps-wpr-fw-offset:%dpx;', $settings['wps_wpr_fw_color'], absint( $settings['wps_wpr_fw_offset'] ) );
+		$offset = absint( $settings['wps_wpr_fw_offset'] );
+		if ( $this->wps_wpr_canvas_shares_corner( $settings ) ) {
+			// Stack the widget above the wheel icon instead of on top of it.
+			$classes[] = 'wps-wpr-fw--above-canvas';
+			$offset    = max( $offset, self::CANVAS_CLEARANCE );
+		}
+		$color = sanitize_hex_color( $settings['wps_wpr_fw_color'] );
+		$color = $color ? $color : '#6c3fc5';
+		$style = sprintf( '--wps-wpr-fw-color:%s;--wps-wpr-fw-offset:%dpx;', $color, $offset );
 
 		$body = '';
 		if ( $this->wps_wpr_is_launcher_mode( $settings ) ) {
@@ -395,7 +444,7 @@ class WPS_WPR_Floating_Widget {
 		$title = $user_id ? __( 'Your rewards', 'points-and-rewards-for-woocommerce' ) : __( 'Rewards', 'points-and-rewards-for-woocommerce' );
 
 		$html  = '<div id="wps-wpr-floating-widget" class="' . esc_attr( implode( ' ', $classes ) ) . '" style="' . esc_attr( $style ) . '">';
-		$html .= '<div class="wps-wpr-fw__panel" id="wps-wpr-fw-panel" role="dialog" aria-modal="false" aria-labelledby="wps-wpr-fw-title" hidden tabindex="-1">';
+		$html .= '<div class="wps-wpr-fw__panel" id="wps-wpr-fw-panel" role="dialog" aria-modal="true" aria-labelledby="wps-wpr-fw-title" hidden tabindex="-1">';
 		$html .= '<div class="wps-wpr-fw__header"><span class="wps-wpr-fw__title" id="wps-wpr-fw-title">' . esc_html( $title ) . '</span>';
 		$html .= '<button type="button" class="wps-wpr-fw__close" data-wps-wpr-fw-close aria-label="' . esc_attr__( 'Close rewards panel', 'points-and-rewards-for-woocommerce' ) . '">&times;</button></div>';
 		$html .= '<div class="wps-wpr-fw__body">' . $body . '</div></div>';

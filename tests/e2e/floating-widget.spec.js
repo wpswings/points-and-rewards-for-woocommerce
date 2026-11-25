@@ -56,6 +56,56 @@ test.describe.serial( 'Floating loyalty widget', () => {
 		await expect( launcher ).toBeFocused();
 	} );
 
+	test( 'Tab and Shift+Tab stay inside the open panel', async ( { page } ) => {
+		await page.goto( '/' );
+		const launcher = page.locator( '#wps-wpr-floating-widget .wps-wpr-fw__launcher' );
+		await launcher.click();
+		const panel = page.locator( '#wps-wpr-fw-panel' );
+		await expect( panel ).toBeVisible();
+		const inPanel = () => page.evaluate( () => document.getElementById( 'wps-wpr-fw-panel' ).contains( document.activeElement ) );
+		for ( let i = 0; i < 8; i++ ) {
+			await page.keyboard.press( 'Tab' );
+			expect( await inPanel() ).toBe( true );
+		}
+		for ( let i = 0; i < 8; i++ ) {
+			await page.keyboard.press( 'Shift+Tab' );
+			expect( await inPanel() ).toBe( true );
+		}
+		await page.keyboard.press( 'Escape' );
+		await expect( panel ).toBeHidden();
+		await expect( launcher ).toBeFocused();
+	} );
+
+	test( 'panel close button stays on screen with a large offset', async ( { page } ) => {
+		const setOffset = async ( value ) => {
+			await page.goto( SETTINGS_URL );
+			await dismissOnboarding( page );
+			if ( ! ( await page.locator( '#wps_wpr_fw_offset' ).isVisible() ) ) {
+				await page.locator( '.wps_wpr_general_sign_title', { hasText: 'Floating Loyalty Widget' } ).click();
+			}
+			await page.locator( '#wps_wpr_fw_offset' ).fill( String( value ) );
+			await page.locator( '#wps_wpr_save_floating_widget_settings' ).click();
+			await page.waitForLoadState( 'domcontentloaded' );
+		};
+		await setOffset( 400 );
+		try {
+			await page.setViewportSize( { width: 360, height: 640 } );
+			await page.goto( '/?fw=' + Date.now() );
+			await page.locator( '#wps-wpr-floating-widget .wps-wpr-fw__launcher' ).click();
+			const close = page.locator( '#wps-wpr-fw-panel [data-wps-wpr-fw-close]' );
+			await expect( close ).toBeVisible();
+			const panelBox = await page.locator( '#wps-wpr-fw-panel' ).boundingBox();
+			const closeBox = await close.boundingBox();
+			expect( panelBox.y ).toBeGreaterThanOrEqual( 0 );
+			expect( closeBox.y ).toBeGreaterThanOrEqual( 0 );
+			await close.click();
+			await expect( page.locator( '#wps-wpr-fw-panel' ) ).toBeHidden();
+		} finally {
+			await page.setViewportSize( { width: 1280, height: 720 } );
+			await setOffset( 24 );
+		}
+	} );
+
 	test( 'guest sees the join call to action', async ( { browser, baseURL } ) => {
 		const context = await browser.newContext( { storageState: { cookies: [], origins: [] }, baseURL } );
 		const page = await context.newPage();

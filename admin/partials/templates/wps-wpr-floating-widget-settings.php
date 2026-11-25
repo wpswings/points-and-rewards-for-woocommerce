@@ -63,6 +63,7 @@ $wps_wpr_fw = WPS_WPR_Floating_Widget::wps_wpr_get_settings();
 					<div class="wps_wpr_general_content">
 						<input type="number" min="0" max="400" name="wps_wpr_fw_offset" id="wps_wpr_fw_offset" value="<?php echo esc_attr( $wps_wpr_fw['wps_wpr_fw_offset'] ); ?>">
 						<span class="wps_wpr_label_notice"><?php esc_html_e( 'Raise the button if it overlaps a chat or cookie banner.', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<span class="wps_wpr_label_notice"><?php esc_html_e( 'If the gamification wheel icon is set to the same bottom corner, the button is raised above it automatically.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
