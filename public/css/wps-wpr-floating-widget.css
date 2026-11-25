@@ -1,0 +1,123 @@
+/* Floating loyalty widget. */
+.wps-wpr-fw {
+	--wps-wpr-fw-color: #6c3fc5;
+	--wps-wpr-fw-offset: 24px;
+	position: fixed;
+	bottom: var(--wps-wpr-fw-offset);
+	z-index: 99990;
+	font-size: 14px;
+	line-height: 1.4;
+}
+.wps-wpr-fw--bottom-right { right: 24px; }
+.wps-wpr-fw--bottom-left { left: 24px; }
+
+.wps-wpr-fw__launcher {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 18px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--wps-wpr-fw-color);
+	color: #fff;
+	font-weight: 600;
+	font-size: 15px;
+	cursor: pointer;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+.wps-wpr-fw__launcher:hover { filter: brightness(1.08); }
+.wps-wpr-fw__launcher:focus-visible,
+.wps-wpr-fw__close:focus-visible,
+.wps-wpr-fw__copy:focus-visible,
+.wps-wpr-fw__button:focus-visible {
+	outline: 3px solid var(--wps-wpr-fw-color);
+	outline-offset: 2px;
+}
+.wps-wpr-fw__icon { font-size: 18px; line-height: 1; }
+
+.wps-wpr-fw__panel {
+	position: absolute;
+	bottom: calc(100% + 12px);
+	width: 320px;
+	max-width: calc(100vw - 32px);
+	max-height: min(520px, calc(100vh - 120px));
+	overflow-y: auto;
+	background: #fff;
+	color: #1e1e1e;
+	border-radius: 14px;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+}
+.wps-wpr-fw__panel[hidden] { display: none; }
+.wps-wpr-fw__panel:focus { outline: none; }
+.wps-wpr-fw--bottom-right .wps-wpr-fw__panel { right: 0; }
+.wps-wpr-fw--bottom-left .wps-wpr-fw__panel { left: 0; }
+
+.wps-wpr-fw__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 16px;
+	background: var(--wps-wpr-fw-color);
+	color: #fff;
+	border-radius: 14px 14px 0 0;
+}
+.wps-wpr-fw__title { font-weight: 700; font-size: 16px; }
+.wps-wpr-fw__close {
+	background: transparent;
+	border: 0;
+	color: #fff;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+	padding: 0 4px;
+}
+
+.wps-wpr-fw__body { padding: 8px 16px 16px; }
+.wps-wpr-fw__section { padding: 10px 0; border-bottom: 1px solid #eee; }
+.wps-wpr-fw__section:last-child { border-bottom: 0; }
+.wps-wpr-fw__section-title { display: block; font-weight: 600; margin-bottom: 6px; }
+
+.wps-wpr-fw__balance { display: flex; flex-direction: column; gap: 2px; }
+.wps-wpr-fw__balance-label { color: #666; }
+.wps-wpr-fw__balance-value { font-size: 28px; color: var(--wps-wpr-fw-color); }
+.wps-wpr-fw__level { font-size: 13px; color: #444; }
+
+.wps-wpr-fw__earn ul { margin: 0; padding-left: 18px; }
+.wps-wpr-fw__earn li { margin: 2px 0; }
+
+.wps-wpr-fw__join-title { display: block; font-size: 16px; margin-bottom: 4px; }
+.wps-wpr-fw__join p { margin: 0 0 10px; color: #555; }
+
+.wps-wpr-fw__referral-row { display: flex; gap: 6px; }
+.wps-wpr-fw__referral-input {
+	flex: 1;
+	min-width: 0;
+	padding: 6px 8px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 12px;
+}
+.wps-wpr-fw__copy {
+	padding: 6px 10px;
+	border: 1px solid var(--wps-wpr-fw-color);
+	border-radius: 6px;
+	background: #fff;
+	color: var(--wps-wpr-fw-color);
+	cursor: pointer;
+}
+
+.wps-wpr-fw__button {
+	display: inline-block;
+	padding: 8px 14px;
+	border-radius: 8px;
+	background: var(--wps-wpr-fw-color);
+	color: #fff !important;
+	text-decoration: none !important;
+	font-weight: 600;
+}
+
+@media (max-width: 768px) {
+	.wps-wpr-fw--hide-mobile { display: none !important; }
+	.wps-wpr-fw--bottom-right { right: 16px; }
+	.wps-wpr-fw--bottom-left { left: 16px; }
+}
