@@ -82,16 +82,17 @@ class WizardTemplatesTest extends TestCase {
 	}
 
 	public function test_preview_describes_template_values() {
+		delete_option( 'wps_wpr_coupons_gallery' );
 		$starter = WPS_WPR_Wizard_Templates::wps_wpr_get_template( 'starter' );
 		$preview = implode( ' | ', $starter['preview'] );
 
-		$this->assertStringContainsString( 'Earn 1 point(s) per', $preview );
+		$this->assertStringContainsString( 'Earn 1 point per', $preview );
 		$this->assertStringContainsString( 'Redeem 100 points', $preview );
 		$this->assertStringContainsString( '50 sign-up points', $preview );
 		$this->assertStringContainsString( 'Referral program off', $preview );
 
 		$vip = WPS_WPR_Wizard_Templates::wps_wpr_get_template( 'vip' );
-		$this->assertStringContainsString( 'Earn 2 point(s) per', implode( ' | ', $vip['preview'] ) );
+		$this->assertStringContainsString( 'Earn 2 points per', implode( ' | ', $vip['preview'] ) );
 	}
 
 	public function test_filter_can_add_templates_and_invalid_ones_are_dropped() {
@@ -208,5 +209,135 @@ class WizardTemplatesTest extends TestCase {
 
 		$this->assertSame( array( 'wps_wpr_coupon_conversion_price' => '9' ), get_option( 'wps_wpr_coupons_gallery' ) );
 		$this->assertFalse( get_option( 'wps_wpr_wizard_template' ) );
+	}
+
+	public function test_engagement_sets_default_earning_message_on_new_store() {
+		// New install: the Coupon settings tab was never saved.
+		delete_option( 'wps_wpr_coupons_gallery' );
+
+		$this->assertTrue( WPS_WPR_Wizard_Templates::wps_wpr_apply_template_extras( 'engagement' ) );
+
+		$coupon = get_option( 'wps_wpr_coupons_gallery' );
+		$this->assertSame( '1', $coupon['wps_wpr_per_currency_discount_notice'] );
+		$this->assertSame( WPS_WPR_Wizard_Templates::wps_wpr_default_earning_message(), $coupon['wps_wpr_per_curr_earning_messages'] );
+		$this->assertStringContainsString( '[POINTS]', $coupon['wps_wpr_per_curr_earning_messages'] );
+	}
+
+	public function test_saved_earning_message_is_never_replaced() {
+		update_option( 'wps_wpr_coupons_gallery', array( 'wps_wpr_per_curr_earning_messages' => 'My own text [POINTS]' ) );
+		add_filter(
+			'wps_wpr_wizard_templates',
+			function ( $templates ) {
+				$templates['msg'] = array(
+					'title' => 'Msg',
+					'extra' => array(
+						'wps_wpr_coupons_gallery' => array(
+							'wps_wpr_per_currency_discount_notice' => 1,
+							'wps_wpr_per_curr_earning_messages'    => 'Template text',
+						),
+					),
+				);
+				return $templates;
+			}
+		);
+
+		WPS_WPR_Wizard_Templates::wps_wpr_apply_template_extras( 'engagement' );
+		WPS_WPR_Wizard_Templates::wps_wpr_apply_template_extras( 'msg' );
+
+		$coupon = get_option( 'wps_wpr_coupons_gallery' );
+		$this->assertSame( 'My own text [POINTS]', $coupon['wps_wpr_per_curr_earning_messages'] );
+	}
+
+	public function test_custom_earning_rate_is_kept_and_shown_in_preview() {
+		// The store earns 10 points per 1 currency unit.
+		update_option(
+			'wps_wpr_coupons_gallery',
+			array(
+				'wps_wpr_coupon_conversion_points' => '1',
+				'wps_wpr_coupon_conversion_price'  => '10',
+			)
+		);
+
+		$vip     = WPS_WPR_Wizard_Templates::wps_wpr_get_template( 'vip' );
+		$preview = implode( ' | ', $vip['preview'] );
+		$this->assertStringContainsString( 'Earn 10 points per', $preview );
+		$this->assertStringContainsString( 'your current rate is kept', $preview );
+
+		WPS_WPR_Wizard_Templates::wps_wpr_apply_template_extras( 'vip' );
+
+		$coupon = get_option( 'wps_wpr_coupons_gallery' );
+		$this->assertSame( '1', $coupon['wps_wpr_coupon_conversion_points'] );
+		$this->assertSame( '10', $coupon['wps_wpr_coupon_conversion_price'] );
+		$this->assertSame( '1', $coupon['wps_wpr_coupon_conversion_enable'] );
+	}
+
+	public function test_default_earning_rate_takes_template_values() {
+		update_option(
+			'wps_wpr_coupons_gallery',
+			array(
+				'wps_wpr_coupon_conversion_points' => '1',
+				'wps_wpr_coupon_conversion_price'  => 1,
+			)
+		);
+		$this->assertNull( WPS_WPR_Wizard_Templates::wps_wpr_get_store_custom_rate() );
+
+		WPS_WPR_Wizard_Templates::wps_wpr_apply_template_extras( 'vip' );
+
+		$coupon = get_option( 'wps_wpr_coupons_gallery' );
+		$this->assertSame( '2', $coupon['wps_wpr_coupon_conversion_price'] );
+	}
+
+	public function test_filter_template_ids_are_normalised_for_prefill_and_save() {
+		update_option( 'wps_wpr_coupons_gallery', array() );
+		add_filter(
+			'wps_wpr_wizard_templates',
+			function ( $templates ) {
+				$templates['Pro-VIP'] = array(
+					'title' => 'Pro VIP',
+					'extra' => array( 'wps_wpr_coupons_gallery' => array( 'wps_wpr_coupon_conversion_enable' => 1 ) ),
+				);
+				return $templates;
+			}
+		);
+
+		$templates = WPS_WPR_Wizard_Templates::wps_wpr_get_templates();
+		$this->assertArrayHasKey( 'pro-vip', $templates );
+		$this->assertArrayNotHasKey( 'Pro-VIP', $templates );
+
+		$this->process_wizard_data( array( 'step0' => array( 'plugin_enable' => '1', 'program_template' => 'Pro-VIP' ) ) );
+
+		$coupon = get_option( 'wps_wpr_coupons_gallery' );
+		$this->assertSame( '1', $coupon['wps_wpr_coupon_conversion_enable'] );
+		$this->assertSame( 'pro-vip', get_option( 'wps_wpr_wizard_template' ) );
+	}
+
+	public function test_disabled_features_keep_their_stored_values() {
+		$general                                 = get_option( 'wps_wpr_settings_gallery', array() );
+		$general                                 = is_array( $general ) ? $general : array();
+		$general['wps_wpr_general_refer_value']  = 50;
+		$general['wps_wpr_general_signup_value'] = 40;
+		update_option( 'wps_wpr_settings_gallery', $general );
+
+		$starter = WPS_WPR_Wizard_Templates::wps_wpr_get_template( 'starter' );
+		$this->assertArrayNotHasKey( 'referee_points', $starter['wizard']['step2'] );
+		$data                              = $starter['wizard'];
+		$data['step0']['program_template'] = 'starter';
+		$this->process_wizard_data( $data );
+		$general = get_option( 'wps_wpr_settings_gallery' );
+		$this->assertSame( '', $general['wps_wpr_general_refer_enable'] );
+		$this->assertSame( 50, $general['wps_wpr_general_refer_value'] );
+
+		// Starter turns sign-up on with its own value; put the stored value back before VIP.
+		$general['wps_wpr_general_signup_value'] = 40;
+		update_option( 'wps_wpr_settings_gallery', $general );
+
+		$vip = WPS_WPR_Wizard_Templates::wps_wpr_get_template( 'vip' );
+		$this->assertArrayNotHasKey( 'signup_points', $vip['wizard']['step4'] );
+		$data                              = $vip['wizard'];
+		$data['step0']['program_template'] = 'vip';
+		$this->process_wizard_data( $data );
+		$general = get_option( 'wps_wpr_settings_gallery' );
+		$this->assertSame( '', $general['wps_wpr_general_signup'] );
+		$this->assertSame( 40, $general['wps_wpr_general_signup_value'] );
 	}
 }

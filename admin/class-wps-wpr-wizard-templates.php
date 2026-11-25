@@ -39,6 +39,31 @@ class WPS_WPR_Wizard_Templates {
 	);
 
 	/**
+	 * Earning-rate keys. The template's values are only written when the store
+	 * has no earning rate yet or still has the default 1 = 1, so a rate the
+	 * admin set is never replaced silently.
+	 *
+	 * @var array
+	 */
+	private static $rate_keys = array(
+		'wps_wpr_coupon_conversion_points',
+		'wps_wpr_coupon_conversion_price',
+	);
+
+	/**
+	 * Notice toggles and the message key each one shows. When a template turns
+	 * a notice on, its message is filled with the settings page default unless
+	 * the store already has text saved.
+	 *
+	 * @var array option => array( toggle key => message key )
+	 */
+	private static $notice_messages = array(
+		'wps_wpr_coupons_gallery' => array(
+			'wps_wpr_per_currency_discount_notice' => 'wps_wpr_per_curr_earning_messages',
+		),
+	);
+
+	/**
 	 * Get all templates.
 	 *
 	 * Each template:
@@ -49,7 +74,9 @@ class WPS_WPR_Wizard_Templates {
 	 * - preview: human-readable list of what the template sets.
 	 *
 	 * Pro (or a site) can add or change templates with the
-	 * `wps_wpr_wizard_templates` filter.
+	 * `wps_wpr_wizard_templates` filter. Template IDs are normalised with
+	 * sanitize_key() (lowercase a-z, 0-9, "_" and "-"), so "Pro-VIP" becomes
+	 * "pro-vip"; if two IDs normalise to the same key, the first one wins.
 	 *
 	 * @return array
 	 */
@@ -70,7 +97,6 @@ class WPS_WPR_Wizard_Templates {
 					),
 					'step2' => array(
 						'referral_enable' => '0',
-						'referee_points'  => '0',
 					),
 					'step3' => array(
 						'point_tab_template'     => 'temp_one',
@@ -142,7 +168,6 @@ class WPS_WPR_Wizard_Templates {
 					),
 					'step4' => array(
 						'signup_enable' => '0',
-						'signup_points' => '0',
 					),
 				),
 				'extra'       => array(
@@ -191,17 +216,20 @@ class WPS_WPR_Wizard_Templates {
 		$templates = apply_filters( 'wps_wpr_wizard_templates', $templates );
 		$templates = is_array( $templates ) ? $templates : array();
 
+		// Same normalisation as the save path, so a pre-filled template is always found on save.
+		$normalised = array();
 		foreach ( $templates as $id => $template ) {
-			if ( ! is_array( $template ) || empty( $template['title'] ) ) {
-				unset( $templates[ $id ] );
+			$key = sanitize_key( (string) $id );
+			if ( '' === $key || isset( $normalised[ $key ] ) || ! is_array( $template ) || empty( $template['title'] ) ) {
 				continue;
 			}
-			$templates[ $id ]['wizard']  = isset( $template['wizard'] ) && is_array( $template['wizard'] ) ? $template['wizard'] : array();
-			$templates[ $id ]['extra']   = isset( $template['extra'] ) && is_array( $template['extra'] ) ? $template['extra'] : array();
-			$templates[ $id ]['preview'] = ! empty( $template['preview'] ) && is_array( $template['preview'] ) ? $template['preview'] : self::wps_wpr_build_preview( $templates[ $id ], $currency );
+			$template['wizard']  = isset( $template['wizard'] ) && is_array( $template['wizard'] ) ? $template['wizard'] : array();
+			$template['extra']   = isset( $template['extra'] ) && is_array( $template['extra'] ) ? $template['extra'] : array();
+			$template['preview'] = ! empty( $template['preview'] ) && is_array( $template['preview'] ) ? $template['preview'] : self::wps_wpr_build_preview( $template, $currency );
+			$normalised[ $key ]  = $template;
 		}
 
-		return $templates;
+		return $normalised;
 	}
 
 	/**
@@ -230,15 +258,20 @@ class WPS_WPR_Wizard_Templates {
 
 		$coupon = isset( $extra['wps_wpr_coupons_gallery'] ) ? $extra['wps_wpr_coupons_gallery'] : array();
 		if ( ! empty( $coupon['wps_wpr_coupon_conversion_enable'] ) ) {
-			$amount    = ! empty( $coupon['wps_wpr_coupon_conversion_points'] ) ? $coupon['wps_wpr_coupon_conversion_points'] : 1;
-			$points    = ! empty( $coupon['wps_wpr_coupon_conversion_price'] ) ? $coupon['wps_wpr_coupon_conversion_price'] : 1;
-			$preview[] = sprintf(
+			$amount     = ! empty( $coupon['wps_wpr_coupon_conversion_points'] ) ? $coupon['wps_wpr_coupon_conversion_points'] : 1;
+			$points     = ! empty( $coupon['wps_wpr_coupon_conversion_price'] ) ? $coupon['wps_wpr_coupon_conversion_price'] : 1;
+			$store_rate = self::wps_wpr_get_store_custom_rate();
+			if ( null !== $store_rate ) {
+				// The store's own rate is kept (see wps_wpr_apply_template_extras()).
+				$amount = $store_rate['amount'];
+				$points = $store_rate['points'];
 				/* translators: 1: points, 2: currency symbol, 3: amount */
-				__( 'Earn %1$s point(s) per %2$s%3$s spent', 'points-and-rewards-for-woocommerce' ),
-				$points,
-				$currency,
-				$amount
-			);
+				$format = _n( 'Earn %1$s point per %2$s%3$s spent (your current rate is kept)', 'Earn %1$s points per %2$s%3$s spent (your current rate is kept)', (int) $points, 'points-and-rewards-for-woocommerce' );
+			} else {
+				/* translators: 1: points, 2: currency symbol, 3: amount */
+				$format = _n( 'Earn %1$s point per %2$s%3$s spent', 'Earn %1$s points per %2$s%3$s spent', (int) $points, 'points-and-rewards-for-woocommerce' );
+			}
+			$preview[] = sprintf( $format, $points, $currency, $amount );
 		}
 
 		$step1 = isset( $wizard['step1'] ) ? $wizard['step1'] : array();
@@ -270,10 +303,44 @@ class WPS_WPR_Wizard_Templates {
 	}
 
 	/**
+	 * The store's earning rate when the admin has set one other than the default.
+	 *
+	 * @return array|null array( 'amount' => currency amount, 'points' => points ), or null when unset or 1 = 1.
+	 */
+	public static function wps_wpr_get_store_custom_rate() {
+		$coupon = get_option( 'wps_wpr_coupons_gallery', array() );
+		$coupon = is_array( $coupon ) ? $coupon : array();
+		$amount = isset( $coupon['wps_wpr_coupon_conversion_points'] ) ? (string) $coupon['wps_wpr_coupon_conversion_points'] : '';
+		$points = isset( $coupon['wps_wpr_coupon_conversion_price'] ) ? (string) $coupon['wps_wpr_coupon_conversion_price'] : '';
+
+		$is_default = function ( $value ) {
+			return '' === $value || ( is_numeric( $value ) && 1.0 === (float) $value );
+		};
+		if ( $is_default( $amount ) && $is_default( $points ) ) {
+			return null;
+		}
+
+		return array(
+			'amount' => '' === $amount ? '1' : $amount,
+			'points' => '' === $points ? '1' : $points,
+		);
+	}
+
+	/**
+	 * Default per-currency earning message, the same text the Coupon settings page uses.
+	 *
+	 * @return string
+	 */
+	public static function wps_wpr_default_earning_message() {
+		return __( 'Place an order and earn reward points in return. Conversion rate: [CURRENCY] = [POINTS] point.', 'points-and-rewards-for-woocommerce' );
+	}
+
+	/**
 	 * Apply a template's extra settings (the ones without a wizard step).
 	 *
 	 * Wizard field values are not touched here: they come from the submitted
-	 * form so the admin's own changes win.
+	 * form so the admin's own changes win. An earning rate the store already
+	 * set is kept, and a notice the template turns on always gets a message.
 	 *
 	 * @param string $id template id.
 	 * @return bool True when the template exists and was applied.
@@ -288,10 +355,27 @@ class WPS_WPR_Wizard_Templates {
 			if ( ! in_array( $option, self::$allowed_options, true ) || ! is_array( $values ) ) {
 				continue;
 			}
-			$current = get_option( $option, array() );
-			$current = is_array( $current ) ? $current : array();
+			$current   = get_option( $option, array() );
+			$current   = is_array( $current ) ? $current : array();
+			$keep_rate = 'wps_wpr_coupons_gallery' === $option && null !== self::wps_wpr_get_store_custom_rate();
+			$messages  = isset( self::$notice_messages[ $option ] ) ? array_values( self::$notice_messages[ $option ] ) : array();
 			foreach ( $values as $key => $value ) {
-				$current[ sanitize_key( $key ) ] = is_scalar( $value ) ? sanitize_text_field( (string) $value ) : '';
+				$key = sanitize_key( $key );
+				if ( $keep_rate && in_array( $key, self::$rate_keys, true ) ) {
+					continue;
+				}
+				// Never replace message text the store already saved.
+				if ( in_array( $key, $messages, true ) && isset( $current[ $key ] ) && '' !== trim( (string) $current[ $key ] ) ) {
+					continue;
+				}
+				$current[ $key ] = is_scalar( $value ) ? sanitize_text_field( (string) $value ) : '';
+			}
+			if ( isset( self::$notice_messages[ $option ] ) ) {
+				foreach ( self::$notice_messages[ $option ] as $toggle => $message ) {
+					if ( ! empty( $current[ $toggle ] ) && ( ! isset( $current[ $message ] ) || '' === trim( (string) $current[ $message ] ) ) ) {
+						$current[ $message ] = self::wps_wpr_default_earning_message();
+					}
+				}
 			}
 			update_option( $option, $current );
 		}

@@ -30,7 +30,7 @@ test.describe( 'Setup wizard templates', () => {
 		await expect( cards.filter( { hasText: 'Engagement Booster' } ) ).toBeVisible();
 
 		const vip = page.locator( '.wps-wpr-program-template[data-template="vip"]' );
-		await expect( vip.locator( '.wps-wpr-program-template-preview li' ).first() ).toContainText( 'Earn 2 point(s) per' );
+		await expect( vip.locator( '.wps-wpr-program-template-preview li' ).first() ).toContainText( 'Earn 2 points per' );
 	} );
 
 	test( 'applying a template pre-fills the steps and "start from scratch" restores them', async ( { page } ) => {
@@ -61,6 +61,21 @@ test.describe( 'Setup wizard templates', () => {
 		await expect( page.locator( '#wps_wpr_program_template' ) ).toHaveValue( '' );
 		await expect( page.locator( '.wps-wpr-program-template-selected' ) ).toHaveCount( 0 );
 		await expect( page.locator( '#redemption_points' ) ).toHaveValue( originalRedeem );
+		await expect( page.locator( '#referee_points' ) ).toHaveValue( originalReferral );
+	} );
+
+	test( 'switching templates keeps the stored points of features the new template turns off', async ( { page } ) => {
+		await openWizard( page );
+
+		const originalReferral = await page.locator( '#referee_points' ).inputValue();
+
+		await page.locator( '.wps-wpr-apply-template[data-template="vip"]' ).click();
+		await expect( page.locator( '#referee_points' ) ).toHaveValue( '100' );
+
+		// Starter turns referral off and leaves its points alone.
+		await page.locator( '.wps-wpr-apply-template[data-template="starter"]' ).click();
+		await expect( page.locator( '#wps_wpr_program_template' ) ).toHaveValue( 'starter' );
+		await expect( page.locator( 'input[name="step2[referral_enable]"]' ) ).not.toBeChecked();
 		await expect( page.locator( '#referee_points' ) ).toHaveValue( originalReferral );
 	} );
 

@@ -258,6 +258,9 @@
 		if (!values) {
 			return;
 		}
+		// Start from the stored values, so fields this template leaves out
+		// (e.g. the points of a feature it turns off) keep the store's value.
+		restoreFormValues();
 		$.each(values, function(step, fields) {
 			$.each(fields, function(field, value) {
 				setWizardField(step, field, value);
@@ -271,9 +274,9 @@
 	}
 
 	/**
-	 * Drop the selected template and restore the original values.
+	 * Put every wizard field back to the value the page loaded with.
 	 */
-	function clearProgramTemplate() {
+	function restoreFormValues() {
 		$('#wps-wpr-wizard-form').find('input[name^="step"]').each(function() {
 			const $field = $(this);
 			const type = $field.attr('type');
@@ -288,6 +291,13 @@
 			}
 		});
 		$('.wps-wpr-template-card input[type="radio"]:checked').trigger('change');
+	}
+
+	/**
+	 * Drop the selected template and restore the original values.
+	 */
+	function clearProgramTemplate() {
+		restoreFormValues();
 		$('#wps_wpr_program_template').val('');
 		$('.wps-wpr-program-template').removeClass('wps-wpr-program-template-selected');
 		$('.wps-wpr-clear-template').hide();
