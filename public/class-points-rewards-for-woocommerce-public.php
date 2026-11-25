@@ -2837,7 +2837,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * Give the redeemed (Cart Discount) points back when the payment fails or the order is cancelled / refunded.
+	 * Give the redeemed (Cart Discount) points back when the payment fails or the order is cancelled / refunded
+	 * (or enters another status configured to deduct points, see wps_wpr_get_points_reversal_statuses()).
 	 * Runs on its own so the earning restrictions in wps_wpr_woocommerce_order_status_changed() never block it.
 	 *
 	 * @param int    $order_id   order id.
@@ -2846,7 +2847,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @return void
 	 */
 	public function wps_wpr_return_redeemed_cart_points( $order_id, $old_status, $new_status ) {
-		if ( $old_status === $new_status || ! in_array( $new_status, array( 'failed', 'cancelled', 'refunded' ), true ) ) {
+		if ( $old_status === $new_status || ( 'failed' !== $new_status && ! wps_wpr_is_points_reversal_status( $new_status ) ) ) {
 			return;
 		}
 

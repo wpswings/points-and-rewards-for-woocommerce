@@ -561,8 +561,8 @@ if ( $activated ) {
 	 *
 	 * "cancelled" and "refunded" are always included. Admins can add more statuses (e.g. "failed" or a
 	 * custom "returned" status) from the General settings; sites can also use the
-	 * `wps_wpr_points_reversal_order_statuses` filter. The award status, "completed", "pending" and
-	 * "checkout-draft" can never be reversal statuses.
+	 * `wps_wpr_points_reversal_order_statuses` filter. The award status, "completed", "processing",
+	 * "pending" and "checkout-draft" can never be reversal statuses.
 	 *
 	 * @return array
 	 */
@@ -571,7 +571,7 @@ if ( $activated ) {
 		$extra    = ( is_array( $settings ) && ! empty( $settings['wps_wpr_points_reversal_order_statuses'] ) && is_array( $settings['wps_wpr_points_reversal_order_statuses'] ) ) ? $settings['wps_wpr_points_reversal_order_statuses'] : array();
 		$statuses = (array) apply_filters( 'wps_wpr_points_reversal_order_statuses', array_merge( array( 'cancelled', 'refunded' ), $extra ) );
 
-		$blocked = array( 'completed', 'pending', 'checkout-draft', wps_wpr_get_points_award_status() );
+		$blocked = array( 'completed', 'processing', 'pending', 'checkout-draft', wps_wpr_get_points_award_status() );
 		$clean   = array( 'cancelled', 'refunded' );
 		foreach ( $statuses as $status ) {
 			$status = sanitize_key( preg_replace( '/^wc-/', '', (string) $status ) );

@@ -54,6 +54,8 @@ class WPS_WPR_Order_Status_Settings {
 		// Before the Pro plugin's filters (priority 10 / 20), so a saved Pro value is read the same way.
 		add_filter( 'wps_wpr_points_award_order_status', array( $this, 'wps_wpr_saved_award_status' ), 5, 1 );
 		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_add_settings' ), 15, 1 );
+		// After every other plugin: an older Pro (3.7.5 and below) adds its own award status select at priority 20.
+		add_filter( 'wps_wpr_general_settings', array( $this, 'wps_wpr_defer_award_field_to_old_pro' ), PHP_INT_MAX, 1 );
 		add_filter( 'wps_wpr_general_settings_save_option', array( $this, 'wps_wpr_save_settings' ), 15, 1 );
 		add_action( 'wps_wpr_additional_general_settings', array( $this, 'wps_wpr_render_field' ), 10, 2 );
 	}
@@ -142,6 +144,45 @@ class WPS_WPR_Order_Status_Settings {
 	}
 
 	/**
+	 * Older Pro versions (3.7.5 and below) render their own "Award Order Points On Status" select with the
+	 * same field name. Two selects with one name would let Pro's value silently win on save, so keep Pro's
+	 * select and replace ours with a short note. The extra deduct statuses field stays.
+	 *
+	 * @param array $settings settings fields.
+	 * @return array
+	 */
+	public function wps_wpr_defer_award_field_to_old_pro( $settings ) {
+		if ( ! is_array( $settings ) || ! self::wps_wpr_other_award_field_exists( $settings ) ) {
+			return $settings;
+		}
+		foreach ( $settings as $index => $field ) {
+			if ( is_array( $field ) && isset( $field['id'], $field['type'] ) && self::AWARD_KEY === $field['id'] && 'wps_wpr_award_status_select' === $field['type'] ) {
+				$settings[ $index ] = array(
+					'title' => __( 'Award Order Points On Status', 'points-and-rewards-for-woocommerce' ),
+					'id'    => self::AWARD_KEY . '_note',
+					'type'  => 'wps_wpr_award_status_note',
+				);
+			}
+		}
+		return $settings;
+	}
+
+	/**
+	 * Whether a field other than ours (e.g. an older Pro's select) saves the award status.
+	 *
+	 * @param array $settings settings fields.
+	 * @return bool
+	 */
+	public static function wps_wpr_other_award_field_exists( $settings ) {
+		foreach ( $settings as $field ) {
+			if ( is_array( $field ) && isset( $field['id'] ) && self::AWARD_KEY === $field['id'] && ( ! isset( $field['type'] ) || 'wps_wpr_award_status_select' !== $field['type'] ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Save the section. The General tab verifies the nonce before this filter runs.
 	 *
 	 * @param array $general_settings_array settings to save.
@@ -197,12 +238,19 @@ class WPS_WPR_Order_Status_Settings {
 			return;
 		}
 
+		if ( 'wps_wpr_award_status_note' === $value['type'] ) {
+			?>
+			<p class="description wps_wpr_award_status_note"><?php esc_html_e( 'Set in the "Order Points Award Trigger" section of Points and Rewards Pro. Update Pro to manage it here.', 'points-and-rewards-for-woocommerce' ); ?></p>
+			<?php
+			return;
+		}
+
 		if ( 'wps_wpr_reversal_statuses' === $value['type'] ) {
 			$saved = ! empty( $general_settings[ self::REVERSAL_KEY ] ) && is_array( $general_settings[ self::REVERSAL_KEY ] ) ? $general_settings[ self::REVERSAL_KEY ] : array();
 			?>
 			<fieldset id="<?php echo esc_attr( self::REVERSAL_KEY ); ?>" class="wps_wpr_reversal_statuses">
-				<label><input type="checkbox" checked disabled> <?php esc_html_e( 'Cancelled', 'points-and-rewards-for-woocommerce' ); ?></label><br>
-				<label><input type="checkbox" checked disabled> <?php esc_html_e( 'Refunded', 'points-and-rewards-for-woocommerce' ); ?></label><br>
+				<label><input type="checkbox" checked disabled> <?php echo esc_html( wc_get_order_status_name( 'cancelled' ) ); ?></label><br>
+				<label><input type="checkbox" checked disabled> <?php echo esc_html( wc_get_order_status_name( 'refunded' ) ); ?></label><br>
 				<?php foreach ( self::wps_wpr_reversal_status_options() as $slug => $label ) : ?>
 					<label>
 						<input type="checkbox" name="<?php echo esc_attr( self::REVERSAL_KEY ); ?>[]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( in_array( $slug, $saved, true ) ); ?>>
