@@ -143,6 +143,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
 		/**
+		 * The class responsible for basic points expiry.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-expiry.php';
+
+		/**
 		 * The class keeping order points consistent across cancel / refund / re-complete.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
@@ -435,6 +440,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_order_status_changed', $abandoned_cart, 'wps_wpr_award_recovery_points', 20, 3 );
 			$this->loader->add_action( 'woocommerce_before_cart', $abandoned_cart, 'wps_wpr_show_incentive_notice' );
 			$this->loader->add_action( 'woocommerce_before_checkout_form', $abandoned_cart, 'wps_wpr_show_incentive_notice', 5 );
+
+			// basic points expiry ( stays idle when Pro runs its own expiry ).
+			$points_expiry = new WPS_WPR_Points_Expiry();
+			$this->loader->add_action( 'init', $points_expiry, 'wps_wpr_maybe_schedule_cron' );
+			$this->loader->add_action( WPS_WPR_Points_Expiry::CRON_HOOK, $points_expiry, 'wps_wpr_process_expiry' );
 		}
 	}
 

@@ -423,8 +423,8 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 						</div>
 						<div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
 							<div style="font-size: 24px; margin-bottom: 8px;">⏰</div>
-							<strong style="display: block; margin-bottom: 4px; color: white;"><?php esc_html_e( 'Points Expiration', 'points-and-rewards-for-woocommerce' ); ?></strong>
-							<span style="font-size: 14px; color: rgba(255,255,255,0.8);"><?php esc_html_e( 'Set expiry rules to drive urgency', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<strong style="display: block; margin-bottom: 4px; color: white;"><?php esc_html_e( 'Advanced Points Expiry', 'points-and-rewards-for-woocommerce' ); ?></strong>
+							<span style="font-size: 14px; color: rgba(255,255,255,0.8);"><?php esc_html_e( 'Threshold alerts and letting customers extend expiry', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</div>
 						<div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
 							<div style="font-size: 24px; margin-bottom: 8px;">📧</div>

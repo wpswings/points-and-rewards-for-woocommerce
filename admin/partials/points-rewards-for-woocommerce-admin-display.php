@@ -86,6 +86,20 @@ $wps_wpr_setting_tab = array(
 	),
 );
 
+// Basic points expiry tab, placed after Points Notification. Pro replaces it with its
+// advanced Points Expiration tab (same key) when Pro runs its own expiry.
+if ( class_exists( 'WPS_WPR_Points_Expiry' ) && ! WPS_WPR_Points_Expiry::wps_wpr_pro_handles_expiry() ) {
+	$wps_wpr_expiry_tab = array(
+		'points-expiration' => array(
+			'title'     => __( 'Points Expiration', 'points-and-rewards-for-woocommerce' ),
+			'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-points-expiration-settings.php',
+		),
+	);
+	$wps_wpr_expiry_pos  = array_search( 'points-notification', array_keys( $wps_wpr_setting_tab ), true );
+	$wps_wpr_expiry_pos  = false === $wps_wpr_expiry_pos ? count( $wps_wpr_setting_tab ) : $wps_wpr_expiry_pos + 1;
+	$wps_wpr_setting_tab = array_slice( $wps_wpr_setting_tab, 0, $wps_wpr_expiry_pos, true ) + $wps_wpr_expiry_tab + array_slice( $wps_wpr_setting_tab, $wps_wpr_expiry_pos, null, true );
+}
+
 // Add Free vs Pro tab only when pro version is not active.
 if ( ! ( function_exists( 'wps_wpr_is_active' ) && wps_wpr_is_active() ) ) {
 	$wps_wpr_free_vs_pro_tab = array(
@@ -139,6 +153,7 @@ $wps_wpr_tab_descriptions = apply_filters(
 		'user-badges-settings'  => __( 'Create badge tiers and user level achievements based on collected reward points.', 'points-and-rewards-for-woocommerce' ),
 		'wps-sms-settings'      => __( 'Configure SMS and WhatsApp notifications to communicate points activity in real time.', 'points-and-rewards-for-woocommerce' ),
 		'wps-campaign-settings' => __( 'Create referral and promotional campaigns to drive engagement using reward incentives.', 'points-and-rewards-for-woocommerce' ),
+		'points-expiration'       => __( 'Let unused points expire after a set period and remind customers before they do.', 'points-and-rewards-for-woocommerce' ),
 		'abandoned-cart-settings' => __( 'Recover abandoned carts by offering bonus points to customers who complete their purchase.', 'points-and-rewards-for-woocommerce' ),
 		'ai-assistant'            => __( 'Ask questions about your loyalty program and let AI help you configure settings.', 'points-and-rewards-for-woocommerce' ),
 	)
