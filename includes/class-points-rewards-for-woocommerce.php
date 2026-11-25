@@ -143,6 +143,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
 		/**
+		 * The class responsible for the native Gutenberg blocks pack.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-blocks.php';
+
+		/**
 		 * The class keeping order points consistent across cancel / refund / re-complete.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
@@ -292,6 +297,12 @@ class Points_Rewards_For_Woocommerce {
 	private function define_public_hooks() {
 
 		$plugin_public = new Points_Rewards_For_WooCommerce_Public( $this->get_plugin_name(), $this->get_version() );
+
+		// Gutenberg blocks pack. Registered even when the program is off so saved content never breaks.
+		$wps_wpr_blocks = new WPS_WPR_Blocks();
+		$this->loader->add_action( 'init', $wps_wpr_blocks, 'wps_wpr_register_blocks' );
+		$this->loader->add_filter( 'block_categories_all', $wps_wpr_blocks, 'wps_wpr_block_category', 10, 1 );
+
 		if ( $this->wps_rwpr_is_plugin_enable() ) {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_styles' );
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_scripts' );
