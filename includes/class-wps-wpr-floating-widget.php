@@ -53,6 +53,16 @@ class WPS_WPR_Floating_Widget {
 			'wps_wpr_fw_hide_checkout' => 'yes',
 			'wps_wpr_fw_show_mobile'   => 'yes',
 			'wps_wpr_fw_offset'        => 24,
+			'wps_wpr_fw_mode'          => 'compact',
+			'wps_wpr_fw_tab_home'      => 'yes',
+			'wps_wpr_fw_tab_earn'      => 'yes',
+			'wps_wpr_fw_tab_redeem'    => 'yes',
+			'wps_wpr_fw_tab_activity'  => 'yes',
+			'wps_wpr_fw_tab_refer'     => 'yes',
+			'wps_wpr_fw_targeting'     => 'all',
+			'wps_wpr_fw_page_ids'      => '',
+			/* translators: [NAME] is replaced with the customer's first name. */
+			'wps_wpr_fw_welcome'       => __( 'Welcome back, [NAME]!', 'points-and-rewards-for-woocommerce' ),
 		);
 	}
 
@@ -86,6 +96,10 @@ class WPS_WPR_Floating_Widget {
 		$label    = isset( $input['wps_wpr_fw_label'] ) ? sanitize_text_field( $input['wps_wpr_fw_label'] ) : '';
 		$icon     = isset( $input['wps_wpr_fw_icon'] ) ? sanitize_text_field( $input['wps_wpr_fw_icon'] ) : '';
 		$offset   = isset( $input['wps_wpr_fw_offset'] ) ? absint( $input['wps_wpr_fw_offset'] ) : $defaults['wps_wpr_fw_offset'];
+		$mode     = isset( $input['wps_wpr_fw_mode'] ) ? sanitize_key( $input['wps_wpr_fw_mode'] ) : '';
+		$target   = isset( $input['wps_wpr_fw_targeting'] ) ? sanitize_key( $input['wps_wpr_fw_targeting'] ) : '';
+		$page_ids = isset( $input['wps_wpr_fw_page_ids'] ) && class_exists( 'WPS_WPR_Rewards_Launcher' ) ? WPS_WPR_Rewards_Launcher::wps_wpr_parse_page_ids( $input['wps_wpr_fw_page_ids'] ) : array();
+		$welcome  = isset( $input['wps_wpr_fw_welcome'] ) ? sanitize_text_field( $input['wps_wpr_fw_welcome'] ) : $defaults['wps_wpr_fw_welcome'];
 
 		return array(
 			'wps_wpr_fw_enable'        => $yes_no( 'wps_wpr_fw_enable' ),
@@ -98,6 +112,15 @@ class WPS_WPR_Floating_Widget {
 			'wps_wpr_fw_hide_checkout' => $yes_no( 'wps_wpr_fw_hide_checkout' ),
 			'wps_wpr_fw_show_mobile'   => $yes_no( 'wps_wpr_fw_show_mobile' ),
 			'wps_wpr_fw_offset'        => min( 400, $offset ),
+			'wps_wpr_fw_mode'          => in_array( $mode, array( 'compact', 'launcher' ), true ) ? $mode : $defaults['wps_wpr_fw_mode'],
+			'wps_wpr_fw_tab_home'      => $yes_no( 'wps_wpr_fw_tab_home' ),
+			'wps_wpr_fw_tab_earn'      => $yes_no( 'wps_wpr_fw_tab_earn' ),
+			'wps_wpr_fw_tab_redeem'    => $yes_no( 'wps_wpr_fw_tab_redeem' ),
+			'wps_wpr_fw_tab_activity'  => $yes_no( 'wps_wpr_fw_tab_activity' ),
+			'wps_wpr_fw_tab_refer'     => $yes_no( 'wps_wpr_fw_tab_refer' ),
+			'wps_wpr_fw_targeting'     => in_array( $target, array( 'all', 'include', 'exclude' ), true ) ? $target : $defaults['wps_wpr_fw_targeting'],
+			'wps_wpr_fw_page_ids'      => implode( ',', $page_ids ),
+			'wps_wpr_fw_welcome'       => mb_substr( $welcome, 0, 120 ),
 		);
 	}
 
@@ -147,14 +170,25 @@ class WPS_WPR_Floating_Widget {
 		$version = defined( 'REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION' ) ? REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION : '1.0.0';
 		wp_enqueue_style( self::HANDLE, WPS_RWPR_DIR_URL . 'public/css/wps-wpr-floating-widget.css', array(), $version );
 		wp_enqueue_script( self::HANDLE, WPS_RWPR_DIR_URL . 'public/js/wps-wpr-floating-widget.js', array(), $version, true );
-		wp_localize_script(
-			self::HANDLE,
-			'wpsWprFloatingWidget',
-			array(
-				'copied' => __( 'Copied!', 'points-and-rewards-for-woocommerce' ),
-				'copy'   => __( 'Copy', 'points-and-rewards-for-woocommerce' ),
-			)
+		$data = array(
+			'copied' => __( 'Copied!', 'points-and-rewards-for-woocommerce' ),
+			'copy'   => __( 'Copy', 'points-and-rewards-for-woocommerce' ),
 		);
+		if ( $this->wps_wpr_is_launcher_mode() ) {
+			$data = array_merge( $data, WPS_WPR_Rewards_Launcher::wps_wpr_get_script_data() );
+		}
+		wp_localize_script( self::HANDLE, 'wpsWprFloatingWidget', $data );
+	}
+
+	/**
+	 * Whether the widget runs as the full rewards launcher (tabbed panel).
+	 *
+	 * @param  array|null $settings widget settings (defaults to the saved ones).
+	 * @return bool
+	 */
+	public function wps_wpr_is_launcher_mode( $settings = null ) {
+		$settings = is_array( $settings ) ? $settings : self::wps_wpr_get_settings();
+		return 'launcher' === $settings['wps_wpr_fw_mode'] && class_exists( 'WPS_WPR_Rewards_Launcher' );
 	}
 
 	/**
@@ -347,8 +381,14 @@ class WPS_WPR_Floating_Widget {
 		$style = sprintf( '--wps-wpr-fw-color:%s;--wps-wpr-fw-offset:%dpx;', $settings['wps_wpr_fw_color'], absint( $settings['wps_wpr_fw_offset'] ) );
 
 		$body = '';
-		foreach ( $sections as $key => $html ) {
-			$body .= '<div class="wps-wpr-fw__section wps-wpr-fw__section--' . esc_attr( sanitize_html_class( $key ) ) . '">' . $html . '</div>';
+		if ( $this->wps_wpr_is_launcher_mode( $settings ) ) {
+			$classes[] = 'wps-wpr-fw--launcher';
+			$launcher  = new WPS_WPR_Rewards_Launcher( $this );
+			$body      = $launcher->wps_wpr_get_panel_body( absint( $user_id ), $settings, $sections );
+		} else {
+			foreach ( $sections as $key => $html ) {
+				$body .= '<div class="wps-wpr-fw__section wps-wpr-fw__section--' . esc_attr( sanitize_html_class( $key ) ) . '">' . $html . '</div>';
+			}
 		}
 
 		$icon  = '' !== $settings['wps_wpr_fw_icon'] ? '<span class="wps-wpr-fw__icon" aria-hidden="true">' . esc_html( $settings['wps_wpr_fw_icon'] ) . '</span>' : '';

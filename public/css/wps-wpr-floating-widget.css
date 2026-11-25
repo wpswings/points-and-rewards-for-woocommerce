@@ -121,3 +121,105 @@
 	.wps-wpr-fw--bottom-right { right: 16px; }
 	.wps-wpr-fw--bottom-left { left: 16px; }
 }
+
+/* Hidden while the campaign popup is open. */
+.wps-wpr-fw--suppressed { display: none !important; }
+
+/* Rewards launcher (tabbed mode). */
+.wps-wpr-fw--launcher .wps-wpr-fw__panel {
+	width: 380px;
+	max-height: min(600px, calc(100vh - 110px));
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	animation: wps-wpr-fw-slide-up 0.2s ease-out;
+}
+.wps-wpr-fw--launcher .wps-wpr-fw__panel[hidden] { display: none; }
+.wps-wpr-fw--launcher .wps-wpr-fw__body {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	padding: 0;
+	flex: 1;
+}
+@keyframes wps-wpr-fw-slide-up {
+	from { opacity: 0; transform: translateY(12px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+	.wps-wpr-fw--launcher .wps-wpr-fw__panel { animation: none; }
+}
+.wps-wpr-fw__tabs {
+	display: flex;
+	gap: 2px;
+	padding: 6px 8px 0;
+	border-bottom: 1px solid #eee;
+	overflow-x: auto;
+}
+.wps-wpr-fw__tab {
+	flex: 1 0 auto;
+	padding: 8px 10px;
+	border: 0;
+	border-bottom: 3px solid transparent;
+	background: transparent;
+	color: #555;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+}
+.wps-wpr-fw__tab[aria-selected="true"] {
+	color: var(--wps-wpr-fw-color);
+	border-bottom-color: var(--wps-wpr-fw-color);
+}
+.wps-wpr-fw__tab:focus-visible,
+.wps-wpr-fw__tabpanel:focus-visible {
+	outline: 3px solid var(--wps-wpr-fw-color);
+	outline-offset: -3px;
+}
+.wps-wpr-fw__tabpanels { flex: 1; min-height: 0; overflow-y: auto; }
+.wps-wpr-fw__tabpanel { padding: 14px 16px 16px; }
+.wps-wpr-fw__tabpanel[hidden] { display: none; }
+.wps-wpr-fw__tabpanel > * + * { margin-top: 12px; }
+.wps-wpr-fw__welcome { margin: 0; font-size: 15px; font-weight: 600; }
+.wps-wpr-fw__empty, .wps-wpr-fw__loading, .wps-wpr-fw__hint { margin: 0; color: #666; }
+
+.wps-wpr-fw__next span:first-child { display: block; font-size: 13px; margin-bottom: 6px; }
+.wps-wpr-fw__progress {
+	display: block;
+	height: 8px;
+	border-radius: 999px;
+	background: #eee;
+	overflow: hidden;
+}
+.wps-wpr-fw__progress span { display: block; height: 100%; background: var(--wps-wpr-fw-color); }
+
+.wps-wpr-fw__activity-list, .wps-wpr-fw__rewards { list-style: none; margin: 0; padding: 0; }
+.wps-wpr-fw__activity-item, .wps-wpr-fw__reward {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 8px 0;
+	border-bottom: 1px solid #f0f0f0;
+}
+.wps-wpr-fw__activity-item:last-child, .wps-wpr-fw__reward:last-child { border-bottom: 0; }
+.wps-wpr-fw__activity-text { display: flex; flex-direction: column; }
+.wps-wpr-fw__activity-date { font-size: 12px; color: #777; }
+.wps-wpr-fw__activity-points { font-weight: 700; white-space: nowrap; }
+.wps-wpr-fw__activity-points--plus { color: #1a7f37; }
+.wps-wpr-fw__activity-points--minus { color: #b42318; }
+.wps-wpr-fw__reward-cost { font-weight: 600; color: var(--wps-wpr-fw-color); white-space: nowrap; }
+.wps-wpr-fw__reward--available .wps-wpr-fw__reward-title::after { content: " ✓"; color: #1a7f37; }
+.wps-wpr-fw__share { display: flex; flex-wrap: wrap; gap: 8px; }
+.wps-wpr-fw__share-link {
+	padding: 6px 10px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	color: #1e1e1e !important;
+	text-decoration: none !important;
+	font-size: 13px;
+}
+
+@media (max-width: 480px) {
+	.wps-wpr-fw--launcher .wps-wpr-fw__panel { width: calc(100vw - 32px); }
+}
