@@ -157,6 +157,11 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-import-export.php';
 
+		/**
+		 * The class responsible for migrating points from other loyalty plugins.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-migration.php';
+
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
 		/**
@@ -266,6 +271,10 @@ class Points_Rewards_For_Woocommerce {
 		// points CSV export (runs before admin output so the file can be streamed).
 		$points_import_export = new WPS_WPR_Points_Import_Export();
 		$this->loader->add_action( 'admin_init', $points_import_export, 'wps_wpr_maybe_export_points' );
+		// points migration from other loyalty plugins.
+		$points_migration = new WPS_WPR_Points_Migration();
+		$this->loader->add_action( 'wp_ajax_wps_wpr_migration_preview', $points_migration, 'wps_wpr_ajax_preview' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_migration_run', $points_migration, 'wps_wpr_ajax_run' );
 		// email preview.
 		$this->loader->add_filter( 'wps_wpr_preview_email_content', $plugin_admin, 'wps_wpr_preview_email_content_call', 10, 1 );
 		// manage discount on order edit page.
