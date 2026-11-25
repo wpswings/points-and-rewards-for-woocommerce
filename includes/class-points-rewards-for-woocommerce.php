@@ -143,6 +143,14 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
 		/**
+		 * The class providing the "earn with or without tax / shipping" settings and the
+		 * wps_wpr_get_order_amount_for_points() helper. Loaded on every request because order
+		 * points can be awarded wherever an order status changes.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-amount-settings.php';
+		new WPS_WPR_Points_Amount_Settings();
+
+		/**
 		 * The class keeping order points consistent across cancel / refund / re-complete.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
