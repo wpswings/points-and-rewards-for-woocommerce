@@ -27,12 +27,12 @@ async function adminEmail( page ) {
 	return page.locator( '#email' ).inputValue();
 }
 
-// The admin's balance, read from an export of every user.
+// The admin's balance, read from an export of every user (posted directly, so no UI timing is involved).
 async function exportedPoints( page, email ) {
-	await openTab( page );
-	await page.uncheck( '#wps_wpr_export_only_with_points' );
-	const [ download ] = await Promise.all( [ page.waitForEvent( 'download' ), page.click( '#wps_wpr_export_points_csv' ) ] );
-	const line = fs.readFileSync( await download.path(), 'utf8' ).split( '\n' ).find( ( l ) => l.startsWith( email + ',' ) );
+	await page.goto( TAB_URL );
+	const nonce = await page.locator( 'input[name="wps_wpr_points_export_nonce"]' ).inputValue();
+	const res = await page.request.post( TAB_URL, { form: { wps_wpr_export_points_csv: '1', wps_wpr_points_export_nonce: nonce } } );
+	const line = ( await res.text() ).split( '\n' ).find( ( l ) => l.startsWith( email + ',' ) );
 	return parseInt( line.split( ',' )[ 1 ], 10 );
 }
 
