@@ -60,11 +60,18 @@ wp_localize_script(
 			'failed'    => __( 'The request failed. Please try again.', 'points-and-rewards-for-woocommerce' ),
 			/* translators: 1: customers, 2: points */
 			'totals'    => __( '%1$s customers with a total of %2$s points found.', 'points-and-rewards-for-woocommerce' ),
+			/* translators: 1: source records, 2: points */
+			'unmatched' => __( '%1$s source records (%2$s points) have no matching customer (guests or deleted users) and will be skipped.', 'points-and-rewards-for-woocommerce' ),
+			/* translators: 1: processed customers, 2: total customers */
+			'resume'    => __( 'An unfinished migration has processed %1$s of %2$s customers. Resume it, or start over from the beginning.', 'points-and-rewards-for-woocommerce' ),
+			'resumeBtn' => __( 'Resume', 'points-and-rewards-for-woocommerce' ),
+			'restart'   => __( 'Start over', 'points-and-rewards-for-woocommerce' ),
+			'restartConfirm' => __( 'Start over from the beginning? Customers already updated by the unfinished migration keep their points.', 'points-and-rewards-for-woocommerce' ),
 			'customer'  => __( 'Customer', 'points-and-rewards-for-woocommerce' ),
 			'points'    => __( 'Points', 'points-and-rewards-for-woocommerce' ),
 			'match'     => __( 'Match', 'points-and-rewards-for-woocommerce' ),
 			'matched'   => __( 'Found', 'points-and-rewards-for-woocommerce' ),
-			'unmatched' => __( 'No matching customer', 'points-and-rewards-for-woocommerce' ),
+			'noMatch'   => __( 'No matching customer', 'points-and-rewards-for-woocommerce' ),
 			'confirm'   => __( 'Start the migration? Customer balances will be updated.', 'points-and-rewards-for-woocommerce' ),
 			/* translators: %s: processed rows */
 			'running'   => __( 'Migrating... %s customers processed.', 'points-and-rewards-for-woocommerce' ),
@@ -183,8 +190,12 @@ $wps_wpr_migration_sources = WPS_WPR_Points_Migration::wps_wpr_get_sources();
 						<span class="wps_wpr_label_notice"><?php esc_html_e( 'In "Add" mode, customers already migrated from a source are skipped so points are not counted twice. Tick to add them again.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
+				<p class="wps_wpr_label_notice"><?php echo wp_kses_post( __( 'On multisite, or for a custom myCred point type, the user meta key a source reads can be changed with the <code>wps_wpr_migration_meta_key_{source}</code> filter.', 'points-and-rewards-for-woocommerce' ) ); ?></p>
 				<?php foreach ( $wps_wpr_migration_sources as $wps_wpr_source ) : ?>
-					<?php $wps_wpr_source_found = $wps_wpr_source->is_available(); ?>
+					<?php
+					$wps_wpr_source_found = $wps_wpr_source->is_available();
+					$wps_wpr_source_run   = $wps_wpr_source_found ? WPS_WPR_Points_Migration::wps_wpr_get_run( $wps_wpr_source->get_id() ) : null;
+					?>
 					<article class="wps_wpr_general_row wps_wpr_migration_source" data-source="<?php echo esc_attr( $wps_wpr_source->get_id() ); ?>" id="wps_wpr_migration_source_<?php echo esc_attr( $wps_wpr_source->get_id() ); ?>">
 						<label class="wps_wpr_general_label"><?php echo esc_html( $wps_wpr_source->get_label() ); ?></label>
 						<div class="wps_wpr_general_content">
@@ -192,6 +203,23 @@ $wps_wpr_migration_sources = WPS_WPR_Points_Migration::wps_wpr_get_sources();
 								<span class="wps_wpr_migration_detected"><?php esc_html_e( 'Data detected', 'points-and-rewards-for-woocommerce' ); ?></span>
 								<button type="button" class="button wps_wpr_migration_preview_btn"><?php esc_html_e( 'Preview', 'points-and-rewards-for-woocommerce' ); ?></button>
 								<button type="button" class="button button-primary wps_wpr_migration_run_btn" disabled><?php esc_html_e( 'Migrate Points', 'points-and-rewards-for-woocommerce' ); ?></button>
+								<?php if ( method_exists( $wps_wpr_source, 'set_include_banned' ) ) : ?>
+									<label class="wps_wpr_migration_banned_label"><input type="checkbox" class="wps_wpr_migration_include_banned" value="yes"> <?php esc_html_e( 'Include banned customers', 'points-and-rewards-for-woocommerce' ); ?></label>
+								<?php endif; ?>
+								<?php if ( $wps_wpr_source_run ) : ?>
+									<div class="wps_wpr_migration_resume" data-run="<?php echo esc_attr( $wps_wpr_source_run['run_id'] ); ?>">
+										<p>
+											<?php
+											/* translators: 1: processed customers, 2: total customers */
+											echo esc_html( sprintf( __( 'An unfinished migration has processed %1$s of %2$s customers. Resume it, or start over from the beginning.', 'points-and-rewards-for-woocommerce' ), (int) $wps_wpr_source_run['processed'], (int) $wps_wpr_source_run['total'] ) );
+											?>
+										</p>
+										<p>
+											<button type="button" class="button button-primary wps_wpr_migration_resume_btn"><?php esc_html_e( 'Resume', 'points-and-rewards-for-woocommerce' ); ?></button>
+											<button type="button" class="button wps_wpr_migration_restart_btn"><?php esc_html_e( 'Start over', 'points-and-rewards-for-woocommerce' ); ?></button>
+										</p>
+									</div>
+								<?php endif; ?>
 								<div class="wps_wpr_migration_preview"></div>
 								<div class="wps_wpr_migration_status" aria-live="polite"></div>
 							<?php else : ?>
