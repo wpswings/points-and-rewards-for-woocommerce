@@ -28,6 +28,20 @@ class WPS_WPR_Earn_Messages {
 	const OPTION = 'wps_wpr_earn_message_settings';
 
 	/**
+	 * Points ranges worked out during this request, keyed by product and user.
+	 *
+	 * @var array
+	 */
+	private $range_cache = array();
+
+	/**
+	 * Parent product ids whose variation meta is already loaded in this request.
+	 *
+	 * @var array
+	 */
+	private static $primed_parents = array();
+
+	/**
 	 * Default settings.
 	 *
 	 * @return array
@@ -37,7 +51,7 @@ class WPS_WPR_Earn_Messages {
 			'wps_wpr_em_enable_product' => 'no',
 			'wps_wpr_em_enable_shop'    => 'no',
 			'wps_wpr_em_enable_cart'    => 'no',
-			'wps_wpr_em_show_guests'    => 'yes',
+			'wps_wpr_em_show_guests'    => 'no',
 			'wps_wpr_em_product_text'   => __( 'Earn [POINTS] points on this item', 'points-and-rewards-for-woocommerce' ),
 			'wps_wpr_em_shop_text'      => __( 'Earn [POINTS] points', 'points-and-rewards-for-woocommerce' ),
 			'wps_wpr_em_cart_text'      => __( 'Points you will earn', 'points-and-rewards-for-woocommerce' ),
@@ -115,7 +129,17 @@ class WPS_WPR_Earn_Messages {
 	 * @return bool
 	 */
 	public function wps_wpr_hide_legacy_badge( $show ) {
-		return self::wps_wpr_is_location_enabled( 'product' ) ? false : $show;
+		if ( ! $show || ! self::wps_wpr_is_location_enabled( 'product' ) || ! $this->wps_wpr_can_show_to_current_user() ) {
+			return $show;
+		}
+		global $product;
+		$current = $product instanceof WC_Product ? $product : wc_get_product( get_the_ID() );
+		if ( ! $current instanceof WC_Product ) {
+			return $show;
+		}
+		// Only hide the badge when the new message will actually be shown in its place.
+		$range = $this->wps_wpr_get_cached_range( $current );
+		return $range[1] > 0 ? false : $show;
 	}
 
 	/**
@@ -197,6 +221,73 @@ class WPS_WPR_Earn_Messages {
 	}
 
 	/**
+	 * Whether the pro plugin is active.
+	 *
+	 * @return bool
+	 */
+	public static function wps_wpr_is_pro_active() {
+		return function_exists( 'wps_wpr_is_active' ) && wps_wpr_is_active();
+	}
+
+	/**
+	 * Whether per-currency points are worked out on an amount excluding tax.
+	 *
+	 * Orders earn on their total including tax, unless the "Calculate Earned Points On"
+	 * setting (WPS_WPR_Points_Amount_Settings) is set to exclude tax, or pro's
+	 * "per currency points on order subtotal" option is on (the subtotal excludes tax).
+	 *
+	 * @return bool
+	 */
+	public static function wps_wpr_amount_excludes_tax() {
+		if ( self::wps_wpr_pro_per_currency_on_subtotal() ) {
+			return true;
+		}
+		if ( class_exists( 'WPS_WPR_Points_Amount_Settings' ) && method_exists( 'WPS_WPR_Points_Amount_Settings', 'wps_wpr_get_tax_mode' ) ) {
+			return 'excl' === WPS_WPR_Points_Amount_Settings::wps_wpr_get_tax_mode();
+		}
+		return false;
+	}
+
+	/**
+	 * Whether pro's "per currency points on order subtotal" option is on.
+	 *
+	 * @return bool
+	 */
+	public static function wps_wpr_pro_per_currency_on_subtotal() {
+		if ( ! self::wps_wpr_is_pro_active() ) {
+			return false;
+		}
+		$coupon_settings = get_option( 'wps_wpr_coupons_gallery', array() );
+		return is_array( $coupon_settings ) && ! empty( $coupon_settings['wps_wpr_per_cerrency_points_on_order_subtotal'] ) && 1 === (int) $coupon_settings['wps_wpr_per_cerrency_points_on_order_subtotal'];
+	}
+
+	/**
+	 * Whether a product can only be bought with points (pro). Such purchases earn no points.
+	 *
+	 * @param  WC_Product $product product or variation.
+	 * @return bool
+	 */
+	public static function wps_wpr_is_points_only_product( $product ) {
+		if ( ! self::wps_wpr_is_pro_active() ) {
+			return false;
+		}
+		$parent_id = $product->get_parent_id() ? $product->get_parent_id() : $product->get_id();
+		return 'yes' === get_post_meta( $parent_id, 'wps_product_purchase_points_only', true );
+	}
+
+	/**
+	 * Amount of one unit that earns per-currency points, on the same basis as the order award.
+	 *
+	 * @param  WC_Product   $product product (its tax status and class are used).
+	 * @param  string|float $price   price to use instead of the product's own price.
+	 * @return float
+	 */
+	public static function wps_wpr_get_product_amount( $product, $price = '' ) {
+		$args = '' === $price ? array() : array( 'price' => $price );
+		return (float) ( self::wps_wpr_amount_excludes_tax() ? wc_get_price_excluding_tax( $product, $args ) : wc_get_price_including_tax( $product, $args ) );
+	}
+
+	/**
 	 * Product-assigned points for a simple product or a single variation.
 	 *
 	 * @param  WC_Product $product product or variation.
@@ -225,8 +316,11 @@ class WPS_WPR_Earn_Messages {
 			return 0;
 		}
 		$user_id = null === $user_id ? get_current_user_id() : absint( $user_id );
-		$price   = (float) apply_filters( 'wps_wpr_earn_message_product_price', wc_get_price_to_display( $product ), $product );
-		$points  = self::wps_wpr_get_assigned_points( $product ) + self::wps_wpr_get_per_currency_points( $price, $user_id );
+		$points  = 0;
+		if ( ! self::wps_wpr_is_points_only_product( $product ) ) {
+			$price  = (float) apply_filters( 'wps_wpr_earn_message_product_price', self::wps_wpr_get_product_amount( $product ), $product );
+			$points = self::wps_wpr_get_assigned_points( $product ) + self::wps_wpr_get_per_currency_points( $price, $user_id );
+		}
 		return (int) apply_filters( 'wps_wpr_earn_message_product_points', $points, $product, $user_id );
 	}
 
@@ -242,17 +336,117 @@ class WPS_WPR_Earn_Messages {
 			return array( 0, 0 );
 		}
 		if ( $product->is_type( 'variable' ) ) {
-			$points = array();
-			foreach ( $product->get_visible_children() as $variation_id ) {
-				$variation = wc_get_product( $variation_id );
-				if ( $variation && $variation->is_purchasable() ) {
-					$points[] = self::wps_wpr_get_points_for_product( $variation, $user_id );
+			$user_id = null === $user_id ? get_current_user_id() : absint( $user_id );
+			if ( has_filter( 'wps_wpr_earn_message_product_price' ) || has_filter( 'wps_wpr_earn_message_product_points' ) ) {
+				// The filters need each variation object, so load them one by one.
+				$points = array();
+				foreach ( $product->get_visible_children() as $variation_id ) {
+					$variation = wc_get_product( $variation_id );
+					if ( $variation && $variation->is_purchasable() ) {
+						$points[] = self::wps_wpr_get_points_for_product( $variation, $user_id );
+					}
 				}
+			} else {
+				$points = self::wps_wpr_get_variation_points_list( $product, $user_id );
 			}
 			return empty( $points ) ? array( 0, 0 ) : array( min( $points ), max( $points ) );
 		}
 		$points = self::wps_wpr_get_points_for_product( $product, $user_id );
 		return array( $points, $points );
+	}
+
+	/**
+	 * Points for each purchasable variation without loading every variation object.
+	 *
+	 * Uses WooCommerce's cached variation prices and, only when product points or taxes
+	 * are involved, one batched meta read for the variations on the page.
+	 *
+	 * @param  WC_Product_Variable $product variable product.
+	 * @param  int                 $user_id user id.
+	 * @return int[]
+	 */
+	private static function wps_wpr_get_variation_points_list( $product, $user_id ) {
+		$prices = $product->get_variation_prices( false );
+		$prices = ( isset( $prices['price'] ) && is_array( $prices['price'] ) ) ? $prices['price'] : array();
+		if ( empty( $prices ) ) {
+			return array();
+		}
+		if ( self::wps_wpr_is_points_only_product( $product ) ) {
+			return array( 0 );
+		}
+		$assigned_on = 'yes' === get_post_meta( $product->get_id(), 'wps_product_points_enable', true );
+		$need_meta   = $assigned_on || $product->is_taxable();
+		if ( $need_meta ) {
+			self::wps_wpr_prime_variation_meta( $product, array_keys( $prices ) );
+		}
+		$parent_class = $product->get_tax_class( 'edit' );
+		$points       = array();
+		foreach ( $prices as $variation_id => $price ) {
+			$variation_id = absint( $variation_id );
+			$tax_source   = $product;
+			if ( $product->is_taxable() && metadata_exists( 'post', $variation_id, '_tax_class' ) ) {
+				$tax_class = (string) get_post_meta( $variation_id, '_tax_class', true );
+				if ( 'parent' !== $tax_class && $tax_class !== $parent_class ) {
+					// A variation with its own tax class: use the variation itself for the tax.
+					$tax_source = wc_get_product( $variation_id );
+					if ( ! $tax_source ) {
+						continue;
+					}
+				}
+			}
+			$assigned = $assigned_on ? absint( get_post_meta( $variation_id, 'wps_wpr_variable_points', true ) ) : 0;
+			$points[] = $assigned + self::wps_wpr_get_per_currency_points( self::wps_wpr_get_product_amount( $tax_source, $price ), $user_id );
+		}
+		return $points;
+	}
+
+	/**
+	 * Load the meta of the variations in one query. In a product loop the variations of
+	 * every product in the main query are loaded together, so a shop page costs two queries.
+	 *
+	 * @param  WC_Product_Variable $product       variable product.
+	 * @param  array               $variation_ids variation ids of this product.
+	 * @return void
+	 */
+	private static function wps_wpr_prime_variation_meta( $product, $variation_ids ) {
+		$product_id = $product->get_id();
+		if ( isset( self::$primed_parents[ $product_id ] ) ) {
+			return;
+		}
+		global $wp_query, $wpdb;
+		$parent_ids = array( $product_id );
+		if ( $wp_query instanceof WP_Query && ! empty( $wp_query->posts ) ) {
+			$loop_ids = array_map( 'absint', wp_list_pluck( $wp_query->posts, 'ID' ) );
+			if ( in_array( $product_id, $loop_ids, true ) ) {
+				$parent_ids = array_values( array_diff( $loop_ids, array_keys( self::$primed_parents ) ) );
+			}
+		}
+		if ( count( $parent_ids ) > 1 ) {
+			$placeholders  = implode( ',', array_fill( 0, count( $parent_ids ), '%d' ) );
+			$variation_ids = array_merge(
+				$variation_ids,
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+				$wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'product_variation' AND post_parent IN ( $placeholders )", $parent_ids ) )
+			);
+		}
+		update_meta_cache( 'post', array_unique( array_map( 'absint', $variation_ids ) ) );
+		foreach ( $parent_ids as $parent_id ) {
+			self::$primed_parents[ $parent_id ] = true;
+		}
+	}
+
+	/**
+	 * Points range for a product, worked out once per request.
+	 *
+	 * @param  WC_Product $product product.
+	 * @return array
+	 */
+	public function wps_wpr_get_cached_range( $product ) {
+		$key = $product->get_id() . ':' . get_current_user_id();
+		if ( ! isset( $this->range_cache[ $key ] ) ) {
+			$this->range_cache[ $key ] = self::wps_wpr_get_points_range( $product );
+		}
+		return $this->range_cache[ $key ];
 	}
 
 	/**
@@ -310,7 +504,7 @@ class WPS_WPR_Earn_Messages {
 		if ( ! $product ) {
 			return;
 		}
-		$range = self::wps_wpr_get_points_range( $product );
+		$range = $this->wps_wpr_get_cached_range( $product );
 		if ( $range[1] <= 0 ) {
 			return;
 		}
@@ -335,15 +529,15 @@ class WPS_WPR_Earn_Messages {
 		if ( ! self::wps_wpr_is_location_enabled( 'shop' ) || ! $this->wps_wpr_can_show_to_current_user() ) {
 			return;
 		}
-		// Pro already prints assigned points in the loop when its own option is on; avoid a second message.
-		if ( $this->wps_wpr_pro_shows_loop_points() ) {
-			return;
-		}
 		global $product;
 		if ( ! $product instanceof WC_Product ) {
 			return;
 		}
-		$range = self::wps_wpr_get_points_range( $product );
+		// Pro already prints assigned points for this card when its own option is on; avoid a second message.
+		if ( $this->wps_wpr_pro_shows_loop_points( $product ) ) {
+			return;
+		}
+		$range = $this->wps_wpr_get_cached_range( $product );
 		if ( $range[1] <= 0 ) {
 			return;
 		}
@@ -352,16 +546,43 @@ class WPS_WPR_Earn_Messages {
 	}
 
 	/**
-	 * Whether the pro plugin prints product points on the shop loop itself.
+	 * Whether the pro plugin prints product points for this card itself. Mirrors pro's
+	 * conditions: its option is on, the page is the shop or a product category, and the
+	 * product has assigned points.
 	 *
+	 * @param  WC_Product $product product in the loop.
 	 * @return bool
 	 */
-	public function wps_wpr_pro_shows_loop_points() {
-		if ( ! ( function_exists( 'wps_wpr_is_active' ) && wps_wpr_is_active() ) ) {
+	public function wps_wpr_pro_shows_loop_points( $product ) {
+		if ( ! self::wps_wpr_is_pro_active() || ! $product instanceof WC_Product ) {
 			return false;
 		}
 		$pro_settings = get_option( 'wps_wpr_assign_products_points', array() );
-		return is_array( $pro_settings ) && isset( $pro_settings['wps_wpr_show_assign_points_on_shop_page'] ) && '1' === (string) $pro_settings['wps_wpr_show_assign_points_on_shop_page'];
+		if ( ! ( is_array( $pro_settings ) && isset( $pro_settings['wps_wpr_show_assign_points_on_shop_page'] ) && '1' === (string) $pro_settings['wps_wpr_show_assign_points_on_shop_page'] ) ) {
+			return false;
+		}
+		if ( ! ( is_shop() || is_product_category() ) ) {
+			return false;
+		}
+		$general = get_option( 'wps_wpr_settings_gallery', array() );
+		if ( ! ( is_array( $general ) && ! empty( $general['wps_wpr_general_setting_enable'] ) ) ) {
+			return false;
+		}
+		$product_id = $product->get_id();
+		if ( 'yes' !== get_post_meta( $product_id, 'wps_product_points_enable', true ) ) {
+			return false;
+		}
+		if ( $product->is_type( 'variable' ) ) {
+			$variation_ids = $product->get_visible_children();
+			self::wps_wpr_prime_variation_meta( $product, $variation_ids );
+			foreach ( $variation_ids as $variation_id ) {
+				if ( ! empty( get_post_meta( $variation_id, 'wps_wpr_variable_points', true ) ) ) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return ! empty( get_post_meta( $product_id, 'wps_points_product_value', true ) );
 	}
 
 	/**
@@ -390,30 +611,76 @@ class WPS_WPR_Earn_Messages {
 		if ( ! $cart instanceof WC_Cart ) {
 			return 0;
 		}
-		$user_id  = null === $user_id ? get_current_user_id() : absint( $user_id );
-		$assigned = 0;
+		$user_id     = null === $user_id ? get_current_user_id() : absint( $user_id );
+		$assigned    = 0;
+		$items       = 0;
+		$points_only = 0;
 		foreach ( $cart->get_cart() as $item ) {
 			if ( empty( $item['data'] ) || ! $item['data'] instanceof WC_Product ) {
 				continue;
 			}
+			++$items;
+			// Items bought with points (pro) earn no product points.
+			if ( ! empty( $item['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) && self::wps_wpr_is_points_only_product( $item['data'] ) ) {
+				++$points_only;
+				continue;
+			}
 			$assigned += self::wps_wpr_get_assigned_points( $item['data'] ) * absint( $item['quantity'] );
 		}
-		$total  = (float) apply_filters( 'wps_wpr_earn_message_cart_total', (float) $cart->get_total( 'edit' ), $cart );
+		// An order paid only with points earns no per-currency points.
+		$total  = ( $items > 0 && $items === $points_only ) ? 0.0 : self::wps_wpr_get_cart_amount( $cart );
+		$total  = (float) apply_filters( 'wps_wpr_earn_message_cart_total', $total, $cart );
 		$points = $assigned + self::wps_wpr_get_per_currency_points( $total, $user_id );
 		return (int) apply_filters( 'wps_wpr_earn_message_cart_points', $points, $cart, $user_id );
 	}
 
 	/**
-	 * Whether the cart / checkout message should show for the current visitor.
+	 * Cart amount that earns per-currency points, on the same basis as the order award.
 	 *
+	 * @param  WC_Cart $cart cart.
+	 * @return float
+	 */
+	public static function wps_wpr_get_cart_amount( $cart ) {
+		if ( self::wps_wpr_pro_per_currency_on_subtotal() ) {
+			return (float) $cart->get_subtotal();
+		}
+		if ( class_exists( 'WPS_WPR_Points_Amount_Settings' ) && method_exists( 'WPS_WPR_Points_Amount_Settings', 'wps_wpr_get_cart_amount' ) ) {
+			return (float) WPS_WPR_Points_Amount_Settings::wps_wpr_get_cart_amount( $cart );
+		}
+		return (float) $cart->get_total( 'edit' );
+	}
+
+	/**
+	 * Whether pro prints its own "total earning points" notice on the cart or checkout.
+	 *
+	 * @param  string $context cart|checkout.
 	 * @return bool
 	 */
-	public function wps_wpr_should_show_cart_message() {
+	public function wps_wpr_pro_shows_cart_points( $context ) {
+		if ( ! self::wps_wpr_is_pro_active() || ! has_action( 'wps_wpr_show_total_earning_points' ) ) {
+			return false;
+		}
+		$key   = 'checkout' === $context ? 'wps_wpr_checkout_page_total_earning_points' : 'wps_wpr_cart_page_total_earning_points';
+		$other = get_option( 'wps_wpr_other_settings', array() );
+		// Pro only prints its notice when the option is exactly 1.
+		return is_array( $other ) && isset( $other[ $key ] ) && 1 === $other[ $key ];
+	}
+
+	/**
+	 * Whether the cart / checkout message should show for the current visitor.
+	 *
+	 * @param  string|null $context cart|checkout; defaults to the current page.
+	 * @return bool
+	 */
+	public function wps_wpr_should_show_cart_message( $context = null ) {
 		if ( ! self::wps_wpr_is_location_enabled( 'cart' ) || ! $this->wps_wpr_can_show_to_current_user() ) {
 			return false;
 		}
-		// Pro shows its own "total earning points" notice on the cart.
-		if ( has_action( 'wps_wpr_show_total_earning_points' ) ) {
+		if ( null === $context ) {
+			$context = ( function_exists( 'is_checkout' ) && is_checkout() ) ? 'checkout' : 'cart';
+		}
+		// Pro shows its own "total earning points" notice there; avoid a second one.
+		if ( $this->wps_wpr_pro_shows_cart_points( $context ) ) {
 			return false;
 		}
 		return function_exists( 'WC' ) && WC()->cart;
@@ -441,12 +708,13 @@ class WPS_WPR_Earn_Messages {
 		if ( empty( $block['blockName'] ) || ! in_array( $block['blockName'], array( 'woocommerce/cart', 'woocommerce/checkout' ), true ) ) {
 			return $block_content;
 		}
-		if ( is_admin() || ! $this->wps_wpr_should_show_cart_message() ) {
+		$context = 'woocommerce/checkout' === $block['blockName'] ? 'checkout' : 'cart';
+		if ( is_admin() || ! $this->wps_wpr_should_show_cart_message( $context ) ) {
 			return $block_content;
 		}
 		$settings = self::wps_wpr_get_settings();
 		$points   = self::wps_wpr_get_cart_points( WC()->cart );
-		$notice   = '<div class="wps_wpr_earn_message wps_wpr_earn_message_cart_block" style="color:' . esc_attr( $settings['wps_wpr_em_text_color'] ) . ';' . ( $points > 0 ? '' : 'display:none;' ) . '">'
+		$notice   = '<div class="wps_wpr_earn_message wps_wpr_earn_message_cart_block" data-context="' . esc_attr( $context ) . '" style="color:' . esc_attr( $settings['wps_wpr_em_text_color'] ) . ';' . ( $points > 0 ? '' : 'display:none;' ) . '">'
 			. esc_html( $settings['wps_wpr_em_cart_text'] ) . ': <span class="wps_wpr_earn_message_points">' . esc_html( self::wps_wpr_format_points( $points ) ) . '</span></div>';
 		return $notice . $block_content;
 	}
@@ -460,7 +728,9 @@ class WPS_WPR_Earn_Messages {
 		if ( function_exists( 'wc_load_cart' ) && function_exists( 'WC' ) && ! WC()->cart ) {
 			wc_load_cart();
 		}
-		if ( ! $this->wps_wpr_should_show_cart_message() ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- read-only request for the visitor's own cart.
+		$context = ( isset( $_POST['context'] ) && 'checkout' === sanitize_key( wp_unslash( $_POST['context'] ) ) ) ? 'checkout' : 'cart';
+		if ( ! $this->wps_wpr_should_show_cart_message( $context ) ) {
 			wp_send_json_success( array( 'points' => 0, 'text' => '' ) );
 		}
 		WC()->cart->calculate_totals();
@@ -479,7 +749,8 @@ class WPS_WPR_Earn_Messages {
 	 * @return void
 	 */
 	public function wps_wpr_render_cart_row() {
-		if ( ! $this->wps_wpr_should_show_cart_message() ) {
+		$context = 'woocommerce_review_order_after_order_total' === current_filter() ? 'checkout' : 'cart';
+		if ( ! $this->wps_wpr_should_show_cart_message( $context ) ) {
 			return;
 		}
 		$points = self::wps_wpr_get_cart_points( WC()->cart );

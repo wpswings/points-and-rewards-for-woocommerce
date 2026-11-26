@@ -46,7 +46,7 @@ $wps_wpr_em_toggles  = array(
 	),
 	'wps_wpr_em_enable_cart'    => array(
 		'label' => __( 'Show on Cart and Checkout', 'points-and-rewards-for-woocommerce' ),
-		'desc'  => __( 'Add a row to the cart and checkout totals with the points the order will earn.', 'points-and-rewards-for-woocommerce' ),
+		'desc'  => __( 'Add a row to the cart and checkout totals with the points the order will earn. When the Pro plugin\'s own "total earning points" notice is on for the cart or checkout, that notice is shown there instead.', 'points-and-rewards-for-woocommerce' ),
 	),
 	'wps_wpr_em_show_guests'    => array(
 		'label' => __( 'Show to Guests', 'points-and-rewards-for-woocommerce' ),
@@ -76,6 +76,7 @@ $wps_wpr_em_texts = array(
 			<div class="wps_wpr_section_content">
 				<input type="hidden" name="wps_wpr_earn_messages_nonce" id="wps_wpr_earn_messages_nonce" value="<?php echo esc_attr( wp_create_nonce( 'earn-messages-setting-nonce' ) ); ?>">
 				<p class="wps_wpr_label_notice"><?php esc_html_e( 'Points are worked out with your earning rules: product points plus per-currency points (including membership rates).', 'points-and-rewards-for-woocommerce' ); ?></p>
+				<p class="wps_wpr_label_notice"><?php esc_html_e( 'Product and shop amounts are an estimate for one item, on the same price basis as orders (including tax unless set otherwise). The cart and checkout show the points for the whole order, including quantities, discounts and shipping, so they can differ slightly from the per-item figure.', 'points-and-rewards-for-woocommerce' ); ?></p>
 				<?php foreach ( $wps_wpr_em_toggles as $wps_wpr_em_key => $wps_wpr_em_field ) : ?>
 					<article class="wps_wpr_general_row">
 						<label for="<?php echo esc_attr( $wps_wpr_em_key ); ?>" class="wps_wpr_general_label"><?php echo esc_html( $wps_wpr_em_field['label'] ); ?></label>

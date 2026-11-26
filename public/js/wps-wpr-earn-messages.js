@@ -40,7 +40,7 @@
 		var timer     = null;
 
 		function refresh() {
-			$.post( config.ajax_url, { action: config.action } ).done( function ( response ) {
+			$.post( config.ajax_url, { action: config.action, context: $notice.data( 'context' ) || 'cart' } ).done( function ( response ) {
 				if ( response && response.success ) {
 					$notice.find( '.wps_wpr_earn_message_points' ).text( response.data.text );
 					$notice.toggle( response.data.points > 0 );
