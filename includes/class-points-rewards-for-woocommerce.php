@@ -153,6 +153,12 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
 		/**
+		 * The condition engine and achievement / bonus rules.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-condition-engine.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-achievement-rules.php';
+
+		/**
 		 * The class responsible for earn-points messages on shop, product and cart pages.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-earn-messages.php';
@@ -512,6 +518,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_update_quiz_data', $plugin_public, 'wps_wpr_rewards_quiz_points', 10 );
 			// assign social share points.
 			$this->loader->add_action( 'wp_ajax_action_social_link_click', $plugin_public, 'wps_wpr_assign_social_share_points', 10 );
+
+			// achievement / bonus rules.
+			$achievement_rules = new WPS_WPR_Achievement_Rules();
+			$this->loader->add_action( 'woocommerce_order_status_changed', $achievement_rules, 'wps_wpr_check_achievements', 30, 3 );
+			$this->loader->add_action( 'wps_extend_point_tab_section', $achievement_rules, 'wps_wpr_render_account_achievements', 5, 1 );
 
 			// abandoned cart recovery with points incentive.
 			$abandoned_cart = new WPS_WPR_Abandoned_Cart_Recovery();
