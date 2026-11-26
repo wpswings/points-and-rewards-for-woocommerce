@@ -12,6 +12,21 @@
 		} );
 	}
 
+	// Tell screen reader users where an item ended up (aria-live region in the template).
+	function announce( $list, $item ) {
+		var $live = $( '#wps_wpr_campaign_order_live' );
+		var l10n = window.wps_wpr_campaign_ordering || {};
+		if ( ! $live.length || ! $item.length ) {
+			return;
+		}
+		var $items = $list.children( '.wps_wpr_campaign_order_item' );
+		var message = ( l10n.moved || '%1$s moved to position %2$d of %3$d.' )
+			.replace( '%1$s', $.trim( $item.find( '.wps_wpr_campaign_order_label' ).text() ) )
+			.replace( '%2$d', $items.index( $item ) + 1 )
+			.replace( '%3$d', $items.length );
+		$live.text( message );
+	}
+
 	$( function () {
 		var $list = $( '#wps_wpr_campaign_order_list' );
 		if ( ! $list.length || 'function' !== typeof $list.sortable ) {
@@ -24,8 +39,9 @@
 			cancel: 'input,label',
 			placeholder: 'wps_wpr_campaign_order_placeholder',
 			forcePlaceholderSize: true,
-			update: function () {
+			update: function ( event, ui ) {
 				renumber( $list );
+				announce( $list, ui.item );
 			},
 		} );
 
@@ -42,6 +58,7 @@
 				$item.insertAfter( $item.next() );
 			}
 			renumber( $list );
+			announce( $list, $item );
 			$( this ).trigger( 'focus' );
 		} );
 	} );

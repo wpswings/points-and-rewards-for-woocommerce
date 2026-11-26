@@ -153,13 +153,101 @@ class CampaignOrderingTest extends TestCase {
 			array(
 				'birthday'      => 3,
 				'spin_wheel'    => 1,
-				'share_twitter' => 4,
 				'first_order'   => WPS_WPR_Campaign_Ordering::MAX_ORDER,
 				'scriptbadsc'   => 2,
 			),
 			$clean
 		);
 		$this->assertSame( array(), WPS_WPR_Campaign_Ordering::wps_wpr_sanitize_priorities( 'nope' ) );
+	}
+
+	public function test_sanitize_priorities_treats_negative_as_unset_and_keeps_zero() {
+		$clean = WPS_WPR_Campaign_Ordering::wps_wpr_sanitize_priorities(
+			array(
+				'birthday'   => '-3',
+				'quiz'       => -1,
+				'spin_wheel' => '0',
+				'comments'   => '2.7',
+			)
+		);
+		$this->assertSame(
+			array(
+				'spin_wheel' => 0,
+				'comments'   => 2,
+			),
+			$clean
+		);
+	}
+
+	public function test_sort_helper_treats_negative_as_unset() {
+		$sorted = wps_wpr_sort_items_by_order(
+			array(
+				'a' => 'A',
+				'b' => 'B',
+				'c' => 'C',
+			),
+			array(
+				'c' => -5,
+				'b' => 1,
+			)
+		);
+		$this->assertSame( array( 'b', 'a', 'c' ), array_keys( $sorted ) );
+	}
+
+	public function test_sort_helper_keeps_decimal_order() {
+		$sorted = wps_wpr_sort_items_by_order(
+			array(
+				'x' => 'X',
+				'y' => 'Y',
+				'z' => 'Z',
+			),
+			array(
+				'x' => '1.9',
+				'y' => 1.1,
+				'z' => '1.5',
+			)
+		);
+		$this->assertSame( array( 'y', 'z', 'x' ), array_keys( $sorted ) );
+	}
+
+	public function test_sort_rewards_leaves_non_array_values_alone() {
+		$this->assertFalse( WPS_WPR_Campaign_Ordering::wps_wpr_sort_rewards( false ) );
+		$this->assertNull( WPS_WPR_Campaign_Ordering::wps_wpr_sort_rewards( null ) );
+	}
+
+	public function test_remove_blank_quiz_rows_keeps_real_questions() {
+		$legacy = array(
+			'wps_wpr_enable_campaign_settings' => 'yes',
+			'wps_wpr_quiz_question'            => array( '', 'Q1?', '  ', 'Q2?' ),
+			'wps_wpr_quiz_option_one'          => array( '', 'a1', '', 'b1' ),
+			'wps_wpr_quiz_option_two'          => array( '', 'a2', '', 'b2' ),
+			'wps_wpr_quiz_option_three'        => array( '', 'a3', '', 'b3' ),
+			'wps_wpr_quiz_option_four'         => array( '', 'a4', '', 'b4' ),
+			'wps_wpr_quiz_answer'              => array( '', 'a1', '', 'b2' ),
+			'wps_wpr_quiz_rewards_points'      => array( '', '10', '', '20' ),
+		);
+		$clean  = WPS_WPR_Campaign_Ordering::wps_wpr_remove_blank_quiz_rows( $legacy );
+		$this->assertSame( array( 'Q1?', 'Q2?' ), $clean['wps_wpr_quiz_question'] );
+		$this->assertSame( array( 'a1', 'b1' ), $clean['wps_wpr_quiz_option_one'] );
+		$this->assertSame( array( 'a4', 'b4' ), $clean['wps_wpr_quiz_option_four'] );
+		$this->assertSame( array( 'a1', 'b2' ), $clean['wps_wpr_quiz_answer'] );
+		$this->assertSame( array( '10', '20' ), $clean['wps_wpr_quiz_rewards_points'] );
+		$this->assertSame( 'yes', $clean['wps_wpr_enable_campaign_settings'] );
+
+		// The single blank row v2.10.6 stored becomes an empty quiz.
+		$only_blank = WPS_WPR_Campaign_Ordering::wps_wpr_remove_blank_quiz_rows(
+			array(
+				'wps_wpr_quiz_question'   => array( '' ),
+				'wps_wpr_quiz_option_one' => array( '' ),
+			)
+		);
+		$this->assertSame( array(), $only_blank['wps_wpr_quiz_question'] );
+		$this->assertSame( array(), $only_blank['wps_wpr_quiz_option_one'] );
+
+		// Settings without blank rows, or without a quiz, are returned unchanged.
+		$real = array( 'wps_wpr_quiz_question' => array( 'Q?' ), 'wps_wpr_quiz_answer' => array( 'x' ) );
+		$this->assertSame( $real, WPS_WPR_Campaign_Ordering::wps_wpr_remove_blank_quiz_rows( $real ) );
+		$this->assertSame( array( 'a' => 1 ), WPS_WPR_Campaign_Ordering::wps_wpr_remove_blank_quiz_rows( array( 'a' => 1 ) ) );
 	}
 
 	public function test_legacy_settings_without_priorities_keep_default_order() {

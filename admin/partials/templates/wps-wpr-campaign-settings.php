@@ -100,22 +100,7 @@ function wps_wpr_process_campaign_settings( $post_data ) {
 
 	// Drop blank quiz rows. Saving the tab with an unused quiz otherwise stores one empty
 	// row, which renders as required-but-empty fields and blocks every later save.
-	$wps_wpr_quiz_fields = array( 'wps_wpr_quiz_question', 'wps_wpr_quiz_option_one', 'wps_wpr_quiz_option_two', 'wps_wpr_quiz_option_three', 'wps_wpr_quiz_option_four', 'wps_wpr_quiz_answer', 'wps_wpr_quiz_rewards_points' );
-	if ( ! empty( $processed_data['wps_wpr_quiz_question'] ) && is_array( $processed_data['wps_wpr_quiz_question'] ) ) {
-		foreach ( $processed_data['wps_wpr_quiz_question'] as $wps_wpr_index => $wps_wpr_question ) {
-			if ( '' !== trim( (string) $wps_wpr_question ) ) {
-				continue;
-			}
-			foreach ( $wps_wpr_quiz_fields as $wps_wpr_quiz_field ) {
-				if ( is_array( $processed_data[ $wps_wpr_quiz_field ] ) ) {
-					unset( $processed_data[ $wps_wpr_quiz_field ][ $wps_wpr_index ] );
-				}
-			}
-		}
-		foreach ( $wps_wpr_quiz_fields as $wps_wpr_quiz_field ) {
-			$processed_data[ $wps_wpr_quiz_field ] = is_array( $processed_data[ $wps_wpr_quiz_field ] ) ? array_values( $processed_data[ $wps_wpr_quiz_field ] ) : array();
-		}
-	}
+	$processed_data = WPS_WPR_Campaign_Ordering::wps_wpr_remove_blank_quiz_rows( $processed_data );
 
 	// Campaign display order (key => order number).
 	$processed_data[ WPS_WPR_Campaign_Ordering::SETTING_KEY ] = WPS_WPR_Campaign_Ordering::wps_wpr_sanitize_priorities( isset( $post_data[ WPS_WPR_Campaign_Ordering::SETTING_KEY ] ) ? wp_unslash( $post_data[ WPS_WPR_Campaign_Ordering::SETTING_KEY ] ) : array() );
@@ -165,6 +150,8 @@ function wps_wpr_get_campaign_settings( $field, $type, $default = '' ) {
 
 	$wps_wpr_campaign_settings = get_option( 'wps_wpr_campaign_settings', array() );
 	$wps_wpr_campaign_settings = is_array( $wps_wpr_campaign_settings ) ? $wps_wpr_campaign_settings : array();
+	// Hide blank quiz rows stored by older versions so they do not block saving.
+	$wps_wpr_campaign_settings = WPS_WPR_Campaign_Ordering::wps_wpr_remove_blank_quiz_rows( $wps_wpr_campaign_settings );
 	switch ( $type ) {
 
 		case 'string':
@@ -250,6 +237,7 @@ function wps_wpr_render_campaign_block( $url = '', $points = '', $selected_label
 
 $wps_wpr_campaign_settings            = get_option( 'wps_wpr_campaign_settings', array() );
 $wps_wpr_campaign_settings            = is_array( $wps_wpr_campaign_settings ) ? $wps_wpr_campaign_settings : array();
+$wps_wpr_campaign_settings            = WPS_WPR_Campaign_Ordering::wps_wpr_remove_blank_quiz_rows( $wps_wpr_campaign_settings );
 $wps_wpr_enable_campaign_settings     = wps_wpr_get_campaign_settings( 'wps_wpr_enable_campaign_settings', 'string' );
 $wps_wpr_enable_sign_up_campaign      = wps_wpr_get_campaign_settings( 'wps_wpr_enable_sign_up_campaign', 'string' );
 $wps_wpr_enable_referral_campaign     = wps_wpr_get_campaign_settings( 'wps_wpr_enable_referral_campaign', 'string' );
@@ -548,6 +536,8 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 					<article class="wps_wpr_general_row">
 						<div class="wps_wpr_general_content">
 							<span class="wps_wpr_label_notice"><?php esc_html_e( 'Drag campaigns into the order they should appear in the campaign popup, or type an order number (lower numbers show first). Campaigns without a number keep their default position after the numbered ones. New social share tasks appear here after you save them.', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<span class="wps_wpr_label_notice wps_wpr_campaign_order_keyboard_help" id="wps_wpr_campaign_order_keyboard_help"><?php esc_html_e( 'Keyboard: focus an order number field and press Alt + Up Arrow or Alt + Down Arrow to move that campaign.', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<div class="screen-reader-text" id="wps_wpr_campaign_order_live" aria-live="polite" aria-atomic="true"></div>
 							<ul class="wps_wpr_campaign_order_list" id="wps_wpr_campaign_order_list" style="margin:12px 0 0;max-width:520px;">
 								<?php
 								$wps_wpr_position = 0;
@@ -564,7 +554,7 @@ $upgrade_link                            = '<a href="https://wpswings.com/produc
 											printf( esc_html__( 'Order number for %s', 'points-and-rewards-for-woocommerce' ), esc_html( $wps_wpr_campaign_label ) );
 											?>
 										</label>
-										<input type="number" min="0" max="<?php echo esc_attr( WPS_WPR_Campaign_Ordering::MAX_ORDER ); ?>" step="1" style="width:80px;" class="wps_wpr_campaign_priority_input" id="wps_wpr_campaign_priority_<?php echo esc_attr( $wps_wpr_campaign_key ); ?>" name="<?php echo esc_attr( WPS_WPR_Campaign_Ordering::SETTING_KEY ); ?>[<?php echo esc_attr( $wps_wpr_campaign_key ); ?>]" value="<?php echo esc_attr( $wps_wpr_order_value ); ?>" placeholder="<?php echo esc_attr( $wps_wpr_position ); ?>">
+										<input type="number" min="0" max="<?php echo esc_attr( WPS_WPR_Campaign_Ordering::MAX_ORDER ); ?>" step="1" style="width:80px;" class="wps_wpr_campaign_priority_input" aria-describedby="wps_wpr_campaign_order_keyboard_help" id="wps_wpr_campaign_priority_<?php echo esc_attr( $wps_wpr_campaign_key ); ?>" name="<?php echo esc_attr( WPS_WPR_Campaign_Ordering::SETTING_KEY ); ?>[<?php echo esc_attr( $wps_wpr_campaign_key ); ?>]" value="<?php echo esc_attr( $wps_wpr_order_value ); ?>" placeholder="<?php echo esc_attr( $wps_wpr_position ); ?>">
 									</li>
 									<?php
 								}

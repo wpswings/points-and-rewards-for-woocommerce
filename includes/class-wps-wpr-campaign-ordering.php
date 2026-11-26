@@ -26,6 +26,10 @@ if ( ! function_exists( 'wps_wpr_sort_items_by_order' ) ) {
 	 * original relative position and go after the numbered ones. Ties keep
 	 * their original relative position too, so the sort is stable.
 	 *
+	 * Order numbers may be decimals (1.1 sorts before 1.9). Negative numbers
+	 * are invalid and are treated as unset, the same as
+	 * WPS_WPR_Campaign_Ordering::wps_wpr_sanitize_priorities() does.
+	 *
 	 * @param array $items      items keyed by id, in their default order.
 	 * @param array $priorities order numbers keyed by the same ids.
 	 * @return array sorted items, keys preserved.
@@ -37,8 +41,8 @@ if ( ! function_exists( 'wps_wpr_sort_items_by_order' ) ) {
 		$rank     = array();
 		$position = 0;
 		foreach ( $items as $key => $item ) {
-			$has_order    = isset( $priorities[ $key ] ) && '' !== $priorities[ $key ] && is_numeric( $priorities[ $key ] );
-			$rank[ $key ] = array( $has_order ? (int) $priorities[ $key ] : PHP_INT_MAX, $position++ );
+			$order        = isset( $priorities[ $key ] ) && is_scalar( $priorities[ $key ] ) && is_numeric( trim( (string) $priorities[ $key ] ) ) ? (float) $priorities[ $key ] : -1;
+			$rank[ $key ] = array( $order >= 0 ? $order : INF, $position++ );
 		}
 
 		uksort(
@@ -157,8 +161,12 @@ class WPS_WPR_Campaign_Ordering {
 	/**
 	 * Sanitize posted order numbers.
 	 *
+	 * Values are cast with intval() and capped at MAX_ORDER. Empty, non-numeric
+	 * and negative values are invalid and dropped, so that item is treated as
+	 * unset (it keeps its default position after the numbered ones).
+	 *
 	 * @param mixed $raw raw value, key => number.
-	 * @return array key => int, empty values dropped.
+	 * @return array key => int, invalid values dropped.
 	 */
 	public static function wps_wpr_sanitize_priorities( $raw ) {
 		$clean = array();
@@ -172,7 +180,11 @@ class WPS_WPR_Campaign_Ordering {
 			if ( '' === $key || '' === $value || ! is_numeric( $value ) ) {
 				continue;
 			}
-			$clean[ $key ] = min( self::MAX_ORDER, absint( $value ) );
+			$value = intval( $value );
+			if ( $value < 0 ) {
+				continue;
+			}
+			$clean[ $key ] = min( self::MAX_ORDER, $value );
 		}
 
 		return $clean;
@@ -227,7 +239,59 @@ class WPS_WPR_Campaign_Ordering {
 	 * @return array
 	 */
 	public static function wps_wpr_sort_rewards( $rewards ) {
+		// Leave non-array values from earlier filters (e.g. false) untouched.
+		if ( ! is_array( $rewards ) ) {
+			return $rewards;
+		}
 		return wps_wpr_sort_items_by_field( $rewards, 'order' );
+	}
+
+	/**
+	 * Quiz fields that hold one value per quiz row.
+	 *
+	 * @return array
+	 */
+	public static function wps_wpr_get_quiz_fields() {
+		return array( 'wps_wpr_quiz_question', 'wps_wpr_quiz_option_one', 'wps_wpr_quiz_option_two', 'wps_wpr_quiz_option_three', 'wps_wpr_quiz_option_four', 'wps_wpr_quiz_answer', 'wps_wpr_quiz_rewards_points' );
+	}
+
+	/**
+	 * Drop quiz rows whose question is blank.
+	 *
+	 * Saving the Campaigning tab with an unused quiz (v2.10.6 and earlier) stored one
+	 * empty row. It renders as required-but-empty fields and blocks every later save,
+	 * so it is removed both when the settings are saved and when they are read.
+	 * Rows with a question are kept as they are.
+	 *
+	 * @param array $settings campaign settings.
+	 * @return array
+	 */
+	public static function wps_wpr_remove_blank_quiz_rows( $settings ) {
+		if ( ! is_array( $settings ) || empty( $settings['wps_wpr_quiz_question'] ) || ! is_array( $settings['wps_wpr_quiz_question'] ) ) {
+			return $settings;
+		}
+
+		$fields  = self::wps_wpr_get_quiz_fields();
+		$removed = false;
+		foreach ( $settings['wps_wpr_quiz_question'] as $index => $question ) {
+			if ( is_scalar( $question ) && '' !== trim( (string) $question ) ) {
+				continue;
+			}
+			$removed = true;
+			foreach ( $fields as $field ) {
+				if ( isset( $settings[ $field ] ) && is_array( $settings[ $field ] ) ) {
+					unset( $settings[ $field ][ $index ] );
+				}
+			}
+		}
+
+		if ( $removed ) {
+			foreach ( $fields as $field ) {
+				$settings[ $field ] = isset( $settings[ $field ] ) && is_array( $settings[ $field ] ) ? array_values( $settings[ $field ] ) : array();
+			}
+		}
+
+		return $settings;
 	}
 
 	/**
@@ -250,6 +314,14 @@ class WPS_WPR_Campaign_Ordering {
 			array( 'jquery', 'jquery-ui-sortable' ),
 			REWARDEEM_WOOCOMMERCE_POINTS_REWARDS_VERSION,
 			true
+		);
+		wp_localize_script(
+			'wps-wpr-campaign-ordering',
+			'wps_wpr_campaign_ordering',
+			array(
+				/* translators: 1: campaign name, 2: new position, 3: number of campaigns */
+				'moved' => __( '%1$s moved to position %2$d of %3$d.', 'points-and-rewards-for-woocommerce' ),
+			)
 		);
 	}
 }
