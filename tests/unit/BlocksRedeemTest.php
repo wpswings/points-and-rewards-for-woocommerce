@@ -111,8 +111,16 @@ class BlocksRedeemTest extends TestCase {
 		return false;
 	}
 
+	/**
+	 * Backed-up callbacks of the Pro order-limit filter.
+	 *
+	 * @var WP_Hook|null
+	 */
+	private $pro_filter_backup = null;
+
 	protected function setUp(): void {
 		$this->set_settings();
+		$this->pro_filter_backup = isset( $GLOBALS['wp_filter']['wps_wpr_enable_points_on_order_total'] ) ? clone $GLOBALS['wp_filter']['wps_wpr_enable_points_on_order_total'] : null;
 
 		$this->user_id = wp_insert_user(
 			array(
@@ -149,6 +157,10 @@ class BlocksRedeemTest extends TestCase {
 			WC()->cart->empty_cart();
 		}
 		$_SERVER['REQUEST_URI'] = '/';
+		remove_all_filters( 'wps_wpr_enable_points_on_order_total' );
+		if ( $this->pro_filter_backup ) {
+			$GLOBALS['wp_filter']['wps_wpr_enable_points_on_order_total'] = $this->pro_filter_backup;
+		}
 		wp_set_current_user( 0 );
 		require_once ABSPATH . 'wp-admin/includes/user.php';
 		wp_delete_user( $this->user_id );
@@ -247,11 +259,12 @@ class BlocksRedeemTest extends TestCase {
 		$this->assertSame( '', $this->run_update( array( 'action' => 'apply', 'points' => '500' ) ) );
 		$this->assertEquals( 5.0, (float) WC()->session->get( 'wps_cart_points' ) );
 
+		// The Store API calculates the cart before it builds the response.
+		WC()->cart->calculate_totals();
 		$data = $this->redeem->wps_wpr_cart_data();
 		$this->assertSame( 500, $data['applied_points'] );
 		$this->assertStringContainsString( '5', $data['applied_amount'] );
 
-		WC()->cart->calculate_totals();
 		$codes = array_map( 'strtolower', WC()->cart->get_applied_coupons() );
 		$this->assertContains( strtolower( __( 'Cart Discount', 'points-and-rewards-for-woocommerce' ) ), $codes );
 		$this->assertEquals( 5.0, (float) WC()->cart->get_discount_total() );
@@ -342,5 +355,105 @@ class BlocksRedeemTest extends TestCase {
 		$response = $this->public->wps_wpr_remove_points_from_cart();
 		$this->assertTrue( $response['result'] );
 		$this->assertEmpty( WC()->session->get( 'wps_cart_points' ) );
+	}
+
+	/**
+	 * Turn on the Pro "maximum points on order total" limit as Pro does.
+	 *
+	 * @param string $type  wps_wpr_fixed_cart or wps_wpr_percentage_cart.
+	 * @param int    $value amount or percent.
+	 */
+	private function enable_order_limit( $type, $value ) {
+		$this->set_settings(
+			array(
+				'wps_wpr_max_points_on_cart' => 1,
+				'wps_wpr_cart_point_type'    => $type,
+				'wps_wpr_amount_value'       => $value,
+			)
+		);
+		remove_all_filters( 'wps_wpr_enable_points_on_order_total' );
+		add_filter( 'wps_wpr_enable_points_on_order_total', '__return_true' );
+	}
+
+	/**
+	 * Set the test product quantity and recalculate.
+	 *
+	 * @param int $qty quantity.
+	 */
+	private function set_quantity( $qty ) {
+		foreach ( WC()->cart->get_cart() as $key => $item ) {
+			WC()->cart->set_quantity( $key, $qty, false );
+		}
+		WC()->cart->calculate_totals();
+	}
+
+	public function test_applied_line_follows_quantity_drop() {
+		update_user_meta( $this->user_id, 'wps_wpr_points', 5000 );
+		$this->set_quantity( 2 );
+		$this->assertSame( '', $this->run_update( array( 'action' => 'apply', 'points' => '3000' ) ) );
+		WC()->cart->calculate_totals();
+		$this->assertSame( 3000, $this->redeem->wps_wpr_cart_data()['applied_points'] );
+
+		// Quantity 2 -> 1: subtotal 20, so only 2000 points (20 off) are really applied.
+		$this->set_quantity( 1 );
+		$this->assertEquals( 20.0, (float) WC()->cart->get_discount_total() );
+		$data = $this->redeem->wps_wpr_cart_data();
+		$this->assertSame( 2000, $data['applied_points'] );
+		$this->assertStringContainsString( '20', $data['applied_amount'] );
+		$this->assertStringNotContainsString( '30', $data['applied_amount'] );
+		$this->assertEquals( 20.0, (float) WC()->session->get( 'wps_cart_points' ) );
+
+		// Raising the quantity again does not silently bring the old 30 back.
+		$this->set_quantity( 3 );
+		$this->assertEquals( 20.0, (float) WC()->cart->get_discount_total() );
+		$this->assertSame( 2000, $this->redeem->wps_wpr_cart_data()['applied_points'] );
+	}
+
+	public function test_order_limit_caps_max_points_and_rejects_more() {
+		$this->enable_order_limit( 'wps_wpr_fixed_cart', 5 );
+		$this->assertSame( 500, $this->redeem->wps_wpr_cart_data()['max_points'] );
+
+		$message = $this->run_update( array( 'action' => 'apply', 'points' => '1500' ) );
+		$this->assertStringContainsString( 'up to 500 points', $message );
+		$this->assertEmpty( WC()->session->get( 'wps_cart_points' ) );
+
+		$this->assertSame( '', $this->run_update( array( 'action' => 'apply', 'points' => '500' ) ) );
+		$this->assertEquals( 5.0, (float) WC()->session->get( 'wps_cart_points' ) );
+	}
+
+	public function test_order_limit_percentage() {
+		$this->enable_order_limit( 'wps_wpr_percentage_cart', 25 );
+		// 25% of 20 = 5.
+		$this->assertSame( 500, $this->redeem->wps_wpr_cart_data()['max_points'] );
+	}
+
+	public function test_applied_line_clamped_to_order_limit() {
+		// Applied before the limit took effect.
+		$this->assertSame( '', $this->run_update( array( 'action' => 'apply', 'points' => '1500' ) ) );
+		$this->enable_order_limit( 'wps_wpr_fixed_cart', 5 );
+		WC()->cart->calculate_totals();
+		$data = $this->redeem->wps_wpr_cart_data();
+		$this->assertSame( 500, $data['applied_points'] );
+		$this->assertStringContainsString( '5', $data['applied_amount'] );
+		$this->assertStringNotContainsString( '15', $data['applied_amount'] );
+		$this->assertEquals( 5.0, (float) WC()->session->get( 'wps_cart_points' ) );
+		WC()->cart->calculate_totals();
+		$this->assertEquals( 5.0, (float) WC()->cart->get_discount_total() );
+	}
+
+	public function test_request_over_subtotal_returns_notice() {
+		update_user_meta( $this->user_id, 'wps_wpr_points', 5000 );
+		$message = $this->run_update( array( 'action' => 'apply', 'points' => '3000' ) );
+		$this->assertStringContainsString( 'up to ' . number_format_i18n( 2000 ) . ' points', $message );
+		$this->assertEmpty( WC()->session->get( 'wps_cart_points' ) );
+	}
+
+	public function test_points_type_validation() {
+		foreach ( array( true, false, 10.0, 5.5, array( 500 ), null ) as $bad ) {
+			$this->assertNotSame( '', $this->run_update( array( 'action' => 'apply', 'points' => $bad ) ), var_export( $bad, true ) . ' should be rejected' );
+		}
+		$this->assertEmpty( WC()->session->get( 'wps_cart_points' ) );
+		$this->assertSame( '', $this->run_update( array( 'action' => 'apply', 'points' => 400 ) ) );
+		$this->assertEquals( 4.0, (float) WC()->session->get( 'wps_cart_points' ) );
 	}
 }

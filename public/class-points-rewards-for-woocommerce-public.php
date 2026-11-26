@@ -2319,6 +2319,29 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
+	 * Points charged for a "Cart Discount" coupon amount.
+	 *
+	 * Used by the order deduction and by the Cart / Checkout block panel, so the
+	 * points shown to the customer are exactly the points taken at checkout.
+	 *
+	 * @since 2.10.6
+	 * @param float $coupon_amount coupon amount, after the tax adjustment.
+	 * @return int
+	 */
+	public function wps_wpr_cart_discount_to_points( $coupon_amount ) {
+		// Redemption Conversion rate calculate.
+		$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
+		$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+		$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
+		$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+		$coupon_amount            = (float) $coupon_amount / ( $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+		// WOOCS - WooCommerce Currency Switcher Compatibility.
+		$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
+		// round() first so float noise (e.g. 10.0000001) does not cost an extra point.
+		return (int) ceil( round( (float) $coupon_amount, 4 ) );
+	}
+
+	/**
 	 * Validate the requested points and apply them to the cart as the "Cart Discount".
 	 *
 	 * Shared by the classic cart AJAX handler and the Cart/Checkout block Store API callback.
@@ -3127,16 +3150,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								$coupon_amount = $coupon_amount - WC()->session->get( 'wps_wpr_tax_before_coupon' );
 							}
 
-							// Redemption Conversion rate calculate.
-							$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
-							$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
-							$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
-							$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
-							$coupon_amount            = $coupon_amount / ( $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
-							// WOOCS - WooCommerce Currency Switcher Compatibility.
-							$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
-							// round() first so float noise (e.g. 10.0000001) does not cost an extra point.
-							$fee_to_point = (int) ceil( round( $coupon_amount, 4 ) );
+							$fee_to_point = $this->wps_wpr_cart_discount_to_points( $coupon_amount );
 
 							// Security: lock the user's balance and re-read it, so two parallel checkouts cannot spend the same points.
 							if ( ! $this->wps_wpr_acquire_user_lock( 'redeem', $user_id ) ) {

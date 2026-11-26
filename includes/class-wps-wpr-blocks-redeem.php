@@ -163,16 +163,99 @@ class WPS_WPR_Blocks_Redeem {
 	}
 
 	/**
+	 * Redemption conversion rates.
+	 *
+	 * @return array { 0: points rate, 1: price rate }
+	 */
+	private function wps_wpr_rates() {
+		$points_rate = $this->wps_wpr_setting( 'wps_wpr_cart_points_rate' );
+		$price_rate  = $this->wps_wpr_setting( 'wps_wpr_cart_price_rate' );
+		return array( $points_rate > 0 ? $points_rate : 1, $price_rate > 0 ? $price_rate : 1 );
+	}
+
+	/**
+	 * Largest discount amount the points can give on the current cart.
+	 *
+	 * The cart subtotal (same cap as the classic cart), lowered by the Pro
+	 * "maximum points on order total" limit when Pro enables it through the
+	 * wps_wpr_enable_points_on_order_total filter (same check as the classic cart).
+	 *
+	 * @return float
+	 */
+	public function wps_wpr_max_discount_amount() {
+		$cart = ( isset( WC()->cart ) && WC()->cart ) ? WC()->cart : null;
+		if ( ! $cart ) {
+			return 0.0;
+		}
+		$subtotal = max( 0.0, (float) $cart->get_subtotal() );
+		$limit    = $subtotal;
+
+		if ( apply_filters( 'wps_wpr_enable_points_on_order_total', false ) ) {
+			$settings = get_option( 'wps_wpr_settings_gallery', array() );
+			$settings = is_array( $settings ) ? $settings : array();
+			$value    = ! empty( $settings['wps_wpr_amount_value'] ) && is_numeric( $settings['wps_wpr_amount_value'] ) ? max( 0.0, (float) $settings['wps_wpr_amount_value'] ) : 0.0;
+			$type     = ! empty( $settings['wps_wpr_cart_point_type'] ) ? $settings['wps_wpr_cart_point_type'] : '';
+			$order    = ( 'wps_wpr_percentage_cart' === $type ) ? ( $value / 100 ) * (float) $cart->subtotal : $value;
+			$limit    = min( $limit, $order );
+		}
+
+		/**
+		 * Filter the largest points discount amount for the current cart in the Cart / Checkout blocks.
+		 *
+		 * @param float   $limit discount amount.
+		 * @param WC_Cart $cart  cart.
+		 */
+		return max( 0.0, (float) apply_filters( 'wps_wpr_block_redeem_max_amount', $limit, $cart ) );
+	}
+
+	/**
+	 * Keep the stored points discount within the current limit.
+	 *
+	 * When the cart shrinks (quantity drop) or a per-order limit applies, the
+	 * session amount is lowered to what is really applied, so the panel, the
+	 * discount and the checkout deduction agree and the discount does not grow
+	 * back by itself later.
+	 *
+	 * @return void
+	 */
+	private function wps_wpr_clamp_session_amount() {
+		if ( ! isset( WC()->session ) || ! WC()->session ) {
+			return;
+		}
+		$amount = (float) WC()->session->get( 'wps_cart_points', 0 );
+		$limit  = $this->wps_wpr_max_discount_amount();
+		if ( $amount > 0 && $limit > 0 && $amount > $limit ) {
+			WC()->session->set( 'wps_cart_points', $limit );
+		}
+	}
+
+	/**
+	 * The "Cart Discount" coupon amount really applied to the cart (0 when none).
+	 *
+	 * @return float
+	 */
+	private function wps_wpr_applied_coupon_amount() {
+		if ( ! isset( WC()->cart ) || ! WC()->cart ) {
+			return 0.0;
+		}
+		$cart_discount = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
+		foreach ( WC()->cart->get_applied_coupons() as $code ) {
+			if ( strtolower( (string) $code ) === strtolower( $cart_discount ) ) {
+				$coupon = new WC_Coupon( $cart_discount );
+				return max( 0.0, (float) $coupon->get_amount() );
+			}
+		}
+		return 0.0;
+	}
+
+	/**
 	 * Data added to the cart endpoint.
 	 *
 	 * @return array
 	 */
 	public function wps_wpr_cart_data() {
-		$points_rate = $this->wps_wpr_setting( 'wps_wpr_cart_points_rate' );
-		$points_rate = $points_rate > 0 ? $points_rate : 1;
-		$price_rate  = $this->wps_wpr_setting( 'wps_wpr_cart_price_rate' );
-		$price_rate  = $price_rate > 0 ? $price_rate : 1;
-		$user_id     = get_current_user_id();
+		list( $points_rate, $price_rate ) = $this->wps_wpr_rates();
+		$user_id = get_current_user_id();
 
 		$data = array(
 			'enabled_cart'     => 1 === $this->wps_wpr_setting( 'wps_wpr_custom_points_on_cart' ),
@@ -198,19 +281,35 @@ class WPS_WPR_Blocks_Redeem {
 		$data['can_redeem'] = ! wps_wpr_restrict_user_fun( $user_id ) && ! apply_filters( 'wps_wpr_allowed_user_roles_points_features', false );
 		$data['balance']    = max( 0, (int) get_user_meta( $user_id, 'wps_wpr_points', true ) );
 		$data['available']  = max( 0, (int) $this->public->wps_wpr_get_available_redeem_points( $user_id ) );
+		$data['max_points'] = $this->wps_wpr_max_points( $data['available'] );
 
-		$subtotal = ( isset( WC()->cart ) && WC()->cart ) ? (float) WC()->cart->get_subtotal() : 0;
-		$to_cover = $subtotal > 0 ? (int) ceil( round( $subtotal * $points_rate / $price_rate, 4 ) ) : 0;
+		$this->wps_wpr_clamp_session_amount();
 
-		$data['max_points'] = min( $data['available'], $to_cover );
-
-		$applied_amount = ( isset( WC()->session ) && WC()->session ) ? (float) WC()->session->get( 'wps_cart_points', 0 ) : 0;
+		// Show what is really applied: the coupon amount and the points the checkout will deduct for it.
+		$applied_amount = $this->wps_wpr_applied_coupon_amount();
 		if ( $applied_amount > 0 ) {
-			$data['applied_points'] = (int) ceil( round( $applied_amount * $points_rate / $price_rate, 4 ) );
+			$coupon_amount = $applied_amount;
+			if ( isset( WC()->session ) && WC()->session && ! empty( WC()->session->get( 'wps_wpr_tax_before_coupon' ) ) ) {
+				$coupon_amount -= (float) WC()->session->get( 'wps_wpr_tax_before_coupon' );
+			}
+			$data['applied_points'] = max( 0, $this->public->wps_wpr_cart_discount_to_points( $coupon_amount ) );
 			$data['applied_amount'] = $this->wps_wpr_plain_price( $applied_amount );
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Most points usable on the current cart.
+	 *
+	 * @param int $available points available to the customer.
+	 * @return int
+	 */
+	private function wps_wpr_max_points( $available ) {
+		list( $points_rate, $price_rate ) = $this->wps_wpr_rates();
+		$limit    = $this->wps_wpr_max_discount_amount();
+		$to_cover = $limit > 0 ? (int) ceil( round( $limit * $points_rate / $price_rate, 4 ) ) : 0;
+		return max( 0, min( (int) $available, $to_cover ) );
 	}
 
 	/**
@@ -239,7 +338,27 @@ class WPS_WPR_Blocks_Redeem {
 			$this->wps_wpr_throw( __( 'Points redemption is not available.', 'points-and-rewards-for-woocommerce' ) );
 		}
 
-		$points   = isset( $data['points'] ) && is_scalar( $data['points'] ) ? sanitize_text_field( (string) $data['points'] ) : '';
+		// Only whole numbers or numeric strings; booleans, floats and arrays are rejected by the shared validation.
+		$points = '';
+		if ( isset( $data['points'] ) && is_int( $data['points'] ) ) {
+			$points = (string) $data['points'];
+		} elseif ( isset( $data['points'] ) && is_string( $data['points'] ) ) {
+			$points = sanitize_text_field( $data['points'] );
+		}
+
+		// Tell the customer about the order limit instead of silently lowering the request.
+		$user_id = get_current_user_id();
+		if ( $user_id && '' !== $points && ctype_digit( trim( $points ) ) ) {
+			$requested = (int) trim( $points );
+			$available = max( 0, (int) $this->public->wps_wpr_get_available_redeem_points( $user_id ) );
+			$min       = $this->wps_wpr_setting( 'wps_wpr_apply_points_value' );
+			$max       = $this->wps_wpr_max_points( $available );
+			if ( $requested > 0 && $requested <= $available && $available >= $min && $requested > $max ) {
+				/* translators: %s: number of points. */
+				$this->wps_wpr_throw( sprintf( __( 'You can use up to %s points on this order.', 'points-and-rewards-for-woocommerce' ), number_format_i18n( $max ) ) );
+			}
+		}
+
 		$response = $this->public->wps_wpr_apply_points_to_cart( $points );
 		if ( empty( $response['result'] ) ) {
 			$message = ! empty( $response['message'] ) ? $response['message'] : __( 'Can not redeem!', 'points-and-rewards-for-woocommerce' );
