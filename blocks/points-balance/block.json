@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wps-wpr/points-balance",
+	"version": "2.10.6",
+	"title": "Points Balance",
+	"category": "wps-points-and-rewards",
+	"icon": "star-filled",
+	"description": "Shows the logged-in customer's current points balance.",
+	"keywords": [
+		"points",
+		"balance",
+		"rewards"
+	],
+	"textdomain": "points-and-rewards-for-woocommerce",
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"showLevel": {
+			"type": "boolean",
+			"default": false
+		},
+		"showLoginPrompt": {
+			"type": "boolean",
+			"default": true
+		},
+		"loginText": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		],
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"editorScript": "wps-wpr-blocks-editor",
+	"style": "wps-wpr-blocks"
+}

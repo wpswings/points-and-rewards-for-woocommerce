@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wps-wpr/referral-link",
+	"version": "2.10.6",
+	"title": "Referral Link",
+	"category": "wps-points-and-rewards",
+	"icon": "share",
+	"description": "Shows the customer's referral link with a copy button.",
+	"keywords": [
+		"referral",
+		"refer",
+		"invite"
+	],
+	"textdomain": "points-and-rewards-for-woocommerce",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"showLoginPrompt": {
+			"type": "boolean",
+			"default": true
+		},
+		"loginText": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		],
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"editorScript": "wps-wpr-blocks-editor",
+	"style": "wps-wpr-blocks"
+}
