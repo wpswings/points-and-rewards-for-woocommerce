@@ -148,6 +148,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
 		/**
+		 * The class responsible for the native Gutenberg blocks pack.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-blocks.php';
+
+		/**
 		 * The class keeping order points consistent across cancel / refund / re-complete.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
@@ -322,6 +327,13 @@ class Points_Rewards_For_Woocommerce {
 
 		$plugin_public = new Points_Rewards_For_WooCommerce_Public( $this->get_plugin_name(), $this->get_version() );
 
+		// Gutenberg blocks pack. Registered even when the program is off so saved content never breaks.
+		$wps_wpr_blocks = new WPS_WPR_Blocks();
+		$this->loader->add_action( 'init', $wps_wpr_blocks, 'wps_wpr_register_blocks' );
+		$this->loader->add_filter( 'block_categories_all', $wps_wpr_blocks, 'wps_wpr_block_category', 10, 1 );
+		foreach ( array( 'added_user_meta', 'updated_user_meta', 'deleted_user_meta' ) as $wps_wpr_meta_hook ) {
+			$this->loader->add_action( $wps_wpr_meta_hook, $wps_wpr_blocks, 'wps_wpr_flush_leaderboard_cache', 10, 3 );
+		}
 		// Schedules the birthday cron, or clears it when birthday points or the plugin are switched off.
 		$this->loader->add_action( 'init', new WPS_WPR_Birthday_First_Order_Points(), 'wps_wpr_maybe_schedule_cron' );
 

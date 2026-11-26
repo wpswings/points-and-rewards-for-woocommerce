@@ -1,0 +1,59 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wps-wpr/leaderboard",
+	"version": "2.10.6",
+	"title": "Points Leaderboard",
+	"category": "wps-points-and-rewards",
+	"icon": "chart-bar",
+	"description": "Shows the customers with the most points. Never shows email addresses.",
+	"keywords": [
+		"leaderboard",
+		"top",
+		"ranking"
+	],
+	"textdomain": "points-and-rewards-for-woocommerce",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"limit": {
+			"type": "number",
+			"default": 5
+		},
+		"showPoints": {
+			"type": "boolean",
+			"default": true
+		},
+		"nameFormat": {
+			"type": "string",
+			"default": "first_initial",
+			"enum": [
+				"first_initial",
+				"display_name",
+				"anonymous"
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		],
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"editorScript": "wps-wpr-blocks-editor",
+	"style": "wps-wpr-blocks"
+}
