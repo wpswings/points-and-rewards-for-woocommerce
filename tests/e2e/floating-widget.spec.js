@@ -6,19 +6,25 @@
  */
 const { test, expect } = require( '@playwright/test' );
 
-const SETTINGS_URL = '/wp-admin/admin.php?page=wps-rwpr-setting&tab=floating-widget';
-
-async function dismissOnboarding( page ) {
-	const close = page.locator( '.wps-wpr-on-boarding-close-btn a, .wps-wpr-onboarding-section .wps-close-btn, .swal2-close' ).first();
-	if ( await close.isVisible().catch( () => false ) ) {
-		await close.click().catch( () => {} );
-	}
-}
+const { SETTINGS_URL, blockOnboarding, submitSettings, backupSettings, restoreSettings, withAdminPage } = require( './floating-widget-helpers' );
 
 test.describe.serial( 'Floating loyalty widget', () => {
+	let backup = null;
+
+	test.beforeAll( async ( { browser }, testInfo ) => {
+		backup = await withAdminPage( browser, testInfo, ( page ) => backupSettings( page ) );
+	} );
+
+	test.afterAll( async ( { browser }, testInfo ) => {
+		await withAdminPage( browser, testInfo, ( page ) => restoreSettings( page, backup ) );
+	} );
+
+	test.beforeEach( async ( { page } ) => {
+		await blockOnboarding( page );
+	} );
+
 	test( 'admin can enable and configure the widget', async ( { page } ) => {
 		await page.goto( SETTINGS_URL );
-		await dismissOnboarding( page );
 		await expect( page.locator( '#wps_wpr_fw_enable' ) ).toBeAttached();
 
 		const title = page.locator( '.wps_wpr_general_sign_title', { hasText: 'Floating Loyalty Widget' } );
@@ -29,8 +35,7 @@ test.describe.serial( 'Floating loyalty widget', () => {
 		await page.locator( '#wps_wpr_fw_position' ).selectOption( 'bottom-left' );
 		await page.locator( '#wps_wpr_fw_label' ).fill( 'My Rewards' );
 		await page.locator( '#wps_wpr_fw_show_to' ).selectOption( 'all' );
-		await page.locator( '#wps_wpr_save_floating_widget_settings' ).click();
-		await page.waitForLoadState( 'domcontentloaded' );
+		await submitSettings( page );
 
 		await expect( page.locator( '#wps_wpr_fw_enable' ) ).toBeChecked();
 		await expect( page.locator( '#wps_wpr_fw_label' ) ).toHaveValue( 'My Rewards' );
@@ -79,13 +84,11 @@ test.describe.serial( 'Floating loyalty widget', () => {
 	test( 'panel close button stays on screen with a large offset', async ( { page } ) => {
 		const setOffset = async ( value ) => {
 			await page.goto( SETTINGS_URL );
-			await dismissOnboarding( page );
 			if ( ! ( await page.locator( '#wps_wpr_fw_offset' ).isVisible() ) ) {
 				await page.locator( '.wps_wpr_general_sign_title', { hasText: 'Floating Loyalty Widget' } ).click();
 			}
 			await page.locator( '#wps_wpr_fw_offset' ).fill( String( value ) );
-			await page.locator( '#wps_wpr_save_floating_widget_settings' ).click();
-			await page.waitForLoadState( 'domcontentloaded' );
+			await submitSettings( page );
 		};
 		await setOffset( 400 );
 		try {
@@ -124,13 +127,11 @@ test.describe.serial( 'Floating loyalty widget', () => {
 
 	test( 'admin can disable the widget again', async ( { page } ) => {
 		await page.goto( SETTINGS_URL );
-		await dismissOnboarding( page );
 		if ( ! ( await page.locator( '#wps_wpr_fw_enable' ).isVisible() ) ) {
 			await page.locator( '.wps_wpr_general_sign_title', { hasText: 'Floating Loyalty Widget' } ).click();
 		}
 		await page.locator( '#wps_wpr_fw_enable' ).uncheck();
-		await page.locator( '#wps_wpr_save_floating_widget_settings' ).click();
-		await page.waitForLoadState( 'domcontentloaded' );
+		await submitSettings( page );
 		await page.goto( '/' );
 		await expect( page.locator( '#wps-wpr-floating-widget' ) ).toHaveCount( 0 );
 	} );

@@ -1,5 +1,7 @@
 /**
- * Floating loyalty widget: open/close, Esc, focus handling and referral copy.
+ * Floating loyalty widget / rewards launcher: open/close, Esc, focus handling,
+ * referral copy, launcher tabs (ARIA tabs pattern), lazy activity loading and
+ * hiding while the campaign popup is open.
  */
 ( function () {
 	'use strict';
@@ -16,6 +18,8 @@
 		if ( ! launcher || ! panel ) {
 			return;
 		}
+		var tabs = Array.prototype.slice.call( root.querySelectorAll( '[data-wps-wpr-fw-tab]' ) );
+		var activityLoaded = false;
 
 		function isOpen() {
 			return 'true' === launcher.getAttribute( 'aria-expanded' );
@@ -26,6 +30,10 @@
 			launcher.setAttribute( 'aria-expanded', 'true' );
 			root.classList.add( 'wps-wpr-fw--open' );
 			panel.focus();
+			var selected = getSelectedTab();
+			if ( selected ) {
+				maybeLoad( selected );
+			}
 		}
 
 		function close( returnFocus ) {
@@ -36,6 +44,89 @@
 				launcher.focus();
 			}
 		}
+
+		function getSelectedTab() {
+			for ( var i = 0; i < tabs.length; i++ ) {
+				if ( 'true' === tabs[ i ].getAttribute( 'aria-selected' ) ) {
+					return tabs[ i ];
+				}
+			}
+			return tabs[ 0 ] || null;
+		}
+
+		function loadActivity( container ) {
+			if ( activityLoaded || ! i18n.ajaxUrl || ! i18n.activityNonce ) {
+				return;
+			}
+			activityLoaded = true;
+			var body = new FormData();
+			body.append( 'action', 'wps_wpr_launcher_activity' );
+			body.append( 'nonce', i18n.activityNonce );
+			fetch( i18n.ajaxUrl, { method: 'POST', credentials: 'same-origin', body: body } )
+				.then( function ( response ) {
+					return response.json();
+				} )
+				.then( function ( json ) {
+					if ( json && json.success && json.data ) {
+						container.innerHTML = json.data.html;
+					} else {
+						throw new Error( 'failed' );
+					}
+				} )
+				.catch( function () {
+					activityLoaded = false;
+					container.textContent = i18n.activityError || '';
+				} );
+		}
+
+		function maybeLoad( tab ) {
+			if ( 'activity' !== tab.getAttribute( 'data-wps-wpr-fw-tab' ) ) {
+				return;
+			}
+			var tabPanel = document.getElementById( tab.getAttribute( 'aria-controls' ) );
+			var container = tabPanel ? tabPanel.querySelector( '[data-wps-wpr-fw-activity]' ) : null;
+			if ( container ) {
+				loadActivity( container );
+			}
+		}
+
+		function selectTab( tab, setFocus ) {
+			tabs.forEach( function ( item ) {
+				var selected = item === tab;
+				item.setAttribute( 'aria-selected', selected ? 'true' : 'false' );
+				item.setAttribute( 'tabindex', selected ? '0' : '-1' );
+				var tabPanel = document.getElementById( item.getAttribute( 'aria-controls' ) );
+				if ( tabPanel ) {
+					tabPanel.hidden = ! selected;
+				}
+			} );
+			if ( setFocus ) {
+				tab.focus();
+			}
+			maybeLoad( tab );
+		}
+
+		tabs.forEach( function ( tab, index ) {
+			tab.addEventListener( 'click', function () {
+				selectTab( tab, false );
+			} );
+			tab.addEventListener( 'keydown', function ( event ) {
+				var next = null;
+				if ( 'ArrowRight' === event.key || 'ArrowDown' === event.key ) {
+					next = tabs[ ( index + 1 ) % tabs.length ];
+				} else if ( 'ArrowLeft' === event.key || 'ArrowUp' === event.key ) {
+					next = tabs[ ( index - 1 + tabs.length ) % tabs.length ];
+				} else if ( 'Home' === event.key ) {
+					next = tabs[ 0 ];
+				} else if ( 'End' === event.key ) {
+					next = tabs[ tabs.length - 1 ];
+				}
+				if ( next ) {
+					event.preventDefault();
+					selectTab( next, true );
+				}
+			} );
+		} );
 
 		launcher.addEventListener( 'click', function () {
 			if ( isOpen() ) {
@@ -80,6 +171,10 @@
 		function focusables() {
 			var nodes = panel.querySelectorAll( 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])' );
 			return Array.prototype.filter.call( nodes, function ( node ) {
+				// Skip roving-tabindex items (inactive launcher tabs) and hidden nodes.
+				if ( '-1' === node.getAttribute( 'tabindex' ) ) {
+					return false;
+				}
 				return node.offsetWidth > 0 || node.offsetHeight > 0 || node.getClientRects().length > 0;
 			} );
 		}
@@ -119,6 +214,20 @@
 				close( false );
 			}
 		} );
+
+		// Stay out of the way while the campaign popup is open.
+		var campaign = document.getElementById( 'wps-wpr-campaign-modal' );
+		if ( campaign && window.MutationObserver ) {
+			var sync = function () {
+				var active = campaign.classList.contains( 'wps-wpr-campaign-modal--active' );
+				root.classList.toggle( 'wps-wpr-fw--suppressed', active );
+				if ( active && isOpen() ) {
+					close( false );
+				}
+			};
+			new MutationObserver( sync ).observe( campaign, { attributes: true, attributeFilter: [ 'class' ] } );
+			sync();
+		}
 	}
 
 	if ( 'loading' === document.readyState ) {

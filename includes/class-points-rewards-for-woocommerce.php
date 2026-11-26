@@ -174,6 +174,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-floating-widget.php';
 
 		/**
+		 * The class responsible for the persistent rewards launcher (full mode of the floating widget).
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-rewards-launcher.php';
+
+		/**
 		 * The class responsible for the native Gutenberg blocks pack.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-blocks.php';
@@ -559,6 +564,11 @@ class Points_Rewards_For_Woocommerce {
 			$floating_widget = new WPS_WPR_Floating_Widget();
 			$this->loader->add_action( 'wp_enqueue_scripts', $floating_widget, 'wps_wpr_enqueue_assets' );
 			$this->loader->add_action( 'wp_footer', $floating_widget, 'wps_wpr_render', 50 );
+
+			// persistent rewards launcher (tabbed mode of the floating widget).
+			$rewards_launcher = new WPS_WPR_Rewards_Launcher( $floating_widget );
+			$this->loader->add_filter( 'wps_wpr_floating_widget_display', $rewards_launcher, 'wps_wpr_filter_display', 10, 2 );
+			$this->loader->add_action( 'wp_ajax_' . WPS_WPR_Rewards_Launcher::AJAX_ACTION, $rewards_launcher, 'wps_wpr_ajax_activity' );
 
 			// birthday and first-order points.
 			$birthday_first_order = new WPS_WPR_Birthday_First_Order_Points();
