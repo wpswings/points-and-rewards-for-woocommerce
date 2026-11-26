@@ -133,11 +133,14 @@ class WPS_WPR_Setup_Wizard {
 				'nonce'            => wp_create_nonce( 'wps_wpr_wizard_save' ),
 				'settings_url'     => admin_url( 'admin.php?page=wps-rwpr-setting' ),
 				'currency_symbol'  => get_woocommerce_currency_symbol(),
+				'templates'        => class_exists( 'WPS_WPR_Wizard_Templates' ) ? wp_list_pluck( WPS_WPR_Wizard_Templates::wps_wpr_get_templates(), 'wizard' ) : array(),
 				'i18n'             => array(
 					'saving'           => __( 'Saving...', 'points-and-rewards-for-woocommerce' ),
 					'success'          => __( 'Settings saved successfully!', 'points-and-rewards-for-woocommerce' ),
 					'error'            => __( 'Failed to save settings. Please try again.', 'points-and-rewards-for-woocommerce' ),
 					'validation_error' => __( 'Please fill all required fields.', 'points-and-rewards-for-woocommerce' ),
+					'template_applied' => __( 'Template applied. Review and adjust each step, then complete the setup.', 'points-and-rewards-for-woocommerce' ),
+					'template_cleared' => __( 'Starting from scratch. Your current settings are kept.', 'points-and-rewards-for-woocommerce' ),
 				),
 			)
 		);
@@ -204,8 +207,14 @@ class WPS_WPR_Setup_Wizard {
 		$other_settings   = get_option( 'wps_wpr_other_settings', array() );
 
 		// Step 0: Master Enable Plugin.
+		$program_template = '';
 		if ( isset( $wizard_data['step0'] ) ) {
 			$step0 = $wizard_data['step0'];
+
+			// Ready-made program template chosen on step 0 (optional).
+			if ( ! empty( $step0['program_template'] ) && is_string( $step0['program_template'] ) ) {
+				$program_template = sanitize_key( $step0['program_template'] );
+			}
 
 			// Enable/disable plugin (save as integer 1 or empty string to match main settings).
 			$general_settings['wps_wpr_general_setting_enable'] = isset( $step0['plugin_enable'] ) && '1' === $step0['plugin_enable'] ? 1 : '';
@@ -278,6 +287,11 @@ class WPS_WPR_Setup_Wizard {
 		// Save all settings to database.
 		update_option( 'wps_wpr_settings_gallery', $general_settings );
 		update_option( 'wps_wpr_other_settings', $other_settings );
+
+		// Apply the template's extra settings (those without a wizard step, e.g. per-currency earning).
+		if ( '' !== $program_template && class_exists( 'WPS_WPR_Wizard_Templates' ) ) {
+			WPS_WPR_Wizard_Templates::wps_wpr_apply_template_extras( $program_template );
+		}
 
 		// Always return true as update_option returns false if value hasn't changed.
 		// The operation is still successful even if no database write occurred.

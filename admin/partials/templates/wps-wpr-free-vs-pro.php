@@ -129,9 +129,9 @@ $wps_free_vs_pro_features = array(
 		'pro'         => true,
 	),
 	array(
-		'feature'     => __( 'Birthday Points', 'points-and-rewards-for-woocommerce' ),
-		'description' => __( 'Send birthday points to customers automatically', 'points-and-rewards-for-woocommerce' ),
-		'free'        => false,
+		'feature'     => __( 'Birthday & First Order Points', 'points-and-rewards-for-woocommerce' ),
+		'description' => __( 'Send birthday points automatically and reward a customer\'s first order', 'points-and-rewards-for-woocommerce' ),
+		'free'        => true,
 		'pro'         => true,
 	),
 	array(
