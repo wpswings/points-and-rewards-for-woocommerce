@@ -20,6 +20,7 @@
 						return {
 							term: params.term,
 							action: $select.data( 'action' ),
+							exclude_type: $select.data( 'exclude_type' ),
 							security: wc_enhanced_select_params.search_products_nonce
 						};
 					},

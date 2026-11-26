@@ -33,6 +33,11 @@ if ( isset( $_POST['wps_wpr_save_reward_catalog'], $_POST['wps_wpr_reward_catalo
 		}
 		WPS_WPR_Reward_Catalog::wps_wpr_save_settings( $wps_wpr_rc_enable, $wps_wpr_rc_rewards );
 		$settings_obj->wps_wpr_settings_saved();
+		foreach ( WPS_WPR_Reward_Catalog::wps_wpr_get_save_errors() as $wps_wpr_rc_error ) {
+			?>
+			<div class="notice notice-error wps-wpr-rc-error"><p><?php echo esc_html( $wps_wpr_rc_error ); ?></p></div>
+			<?php
+		}
 	}
 }
 
@@ -70,12 +75,16 @@ $wps_wpr_rc_row = static function ( $index, $reward, $types ) {
 			</div>
 			<div class="wps-wpr-rc-product-wrap">
 				<label><?php esc_html_e( 'Product', 'points-and-rewards-for-woocommerce' ); ?>
-					<select class="wps-wpr-rc-product" name="<?php echo esc_attr( $name ); ?>[product_id]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'points-and-rewards-for-woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations" data-allow_clear="true" style="width:100%;">
+					<select class="wps-wpr-rc-product" name="<?php echo esc_attr( $name ); ?>[product_id]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'points-and-rewards-for-woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations" data-exclude_type="<?php echo esc_attr( implode( ',', WPS_WPR_Reward_Catalog::EXCLUDED_PRODUCT_TYPES ) ); ?>" data-allow_clear="true" style="width:100%;">
 						<?php if ( $product ) : ?>
 							<option value="<?php echo esc_attr( $product->get_id() ); ?>" selected="selected"><?php echo esc_html( wp_strip_all_tags( $product->get_formatted_name() ) ); ?></option>
 						<?php endif; ?>
 					</select>
 				</label>
+				<span class="description"><?php esc_html_e( 'Simple products and single variations only.', 'points-and-rewards-for-woocommerce' ); ?></span>
+			</div>
+			<div class="wps-wpr-rc-shipping-wrap">
+				<span class="description"><?php esc_html_e( 'Needs a Free shipping method set to "A valid free shipping coupon" in your shipping zones, otherwise the coupon does nothing.', 'points-and-rewards-for-woocommerce' ); ?></span>
 			</div>
 		</td>
 		<td>
@@ -104,6 +113,7 @@ $wps_wpr_rc_row = static function ( $index, $reward, $types ) {
 	.wps-wpr-rc-table input[type="number"] { max-width: 120px; }
 	.wps-wpr-rc-row:not([data-type="fixed_cart"]):not([data-type="percent"]) .wps-wpr-rc-amount-wrap { display: none; }
 	.wps-wpr-rc-row:not([data-type="free_product"]) .wps-wpr-rc-product-wrap { display: none; }
+	.wps-wpr-rc-row:not([data-type="free_shipping"]) .wps-wpr-rc-shipping-wrap { display: none; }
 </style>
 <div class="wps_wpr_reward_catalog_main_wrappers">
 	<main class="wps_wpr_main_reward_catalog_wrapper">
@@ -116,6 +126,7 @@ $wps_wpr_rc_row = static function ( $index, $reward, $types ) {
 					<div class="wps_wpr_general_content">
 						<input type="checkbox" name="wps_wpr_reward_catalog_enable" id="wps_wpr_reward_catalog_enable" value="yes" <?php checked( $wps_wpr_rc_settings['enable'], 'yes' ); ?>>
 						<span class="wps_wpr_label_notice"><?php esc_html_e( 'Show a Rewards section on the My Account points page where customers spend points on the rewards below. Each redemption creates a single-use coupon for that customer.', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<p class="description"><?php esc_html_e( 'Coupons are locked to the customer\'s account email at the time of redemption. Coupons already issued stay valid when a reward is deactivated or removed; to cancel one, delete it under Marketing > Coupons (points are not refunded automatically). Removing a reward and adding it again resets its per-customer limit.', 'points-and-rewards-for-woocommerce' ); ?></p>
 					</div>
 				</article>
 				<table class="widefat striped wps-wpr-rc-table" id="wps-wpr-rc-table">

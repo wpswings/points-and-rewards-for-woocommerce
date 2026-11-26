@@ -49,6 +49,35 @@ class WPS_WPR_Reward_Catalog {
 	const APPLY_ARG = 'wps_wpr_apply_reward';
 
 	/**
+	 * Option name prefix of the per-user redeem lock.
+	 */
+	const LOCK_PREFIX = 'wps_wpr_reward_lock_';
+
+	/**
+	 * Seconds after which a redeem lock is treated as stale.
+	 */
+	const LOCK_TTL = 30;
+
+	/**
+	 * Product types that cannot be a free product reward (they cannot be added to the cart directly).
+	 */
+	const EXCLUDED_PRODUCT_TYPES = array( 'variable', 'grouped', 'external' );
+
+	/**
+	 * Lock tokens held by this request, keyed by user id.
+	 *
+	 * @var array
+	 */
+	private static $wps_wpr_lock_tokens = array();
+
+	/**
+	 * Validation errors from the last wps_wpr_save_settings() call.
+	 *
+	 * @var array
+	 */
+	private static $wps_wpr_save_errors = array();
+
+	/**
 	 * Reward types.
 	 *
 	 * @return array type => label.
@@ -123,12 +152,48 @@ class WPS_WPR_Reward_Catalog {
 	}
 
 	/**
+	 * Read a whole, non-negative number from a submitted field.
+	 *
+	 * @param  array  $raw     raw reward data.
+	 * @param  string $key     field.
+	 * @param  int    $min     smallest allowed value.
+	 * @param  bool   $invalid set to true when the value is present but not allowed.
+	 * @return int the value, or 0 when invalid / empty.
+	 */
+	private static function wps_wpr_read_int( $raw, $key, $min, &$invalid ) {
+		$value = isset( $raw[ $key ] ) ? trim( (string) $raw[ $key ] ) : '';
+		if ( '' === $value && 0 === $min ) {
+			return 0;
+		}
+		if ( ! preg_match( '/^-?\d+$/', $value ) || (int) $value < $min ) {
+			$invalid = true;
+			return 0;
+		}
+		return (int) $value;
+	}
+
+	/**
+	 * Can this product be given away as a free product reward.
+	 *
+	 * @param  WC_Product|false|null $product product.
+	 * @return bool
+	 */
+	public static function wps_wpr_is_valid_free_product( $product ) {
+		return $product instanceof WC_Product && ! $product->is_type( self::EXCLUDED_PRODUCT_TYPES ) && $product->is_purchasable();
+	}
+
+	/**
 	 * Sanitize one submitted reward. Returns null for an empty / invalid row.
 	 *
-	 * @param  array $raw raw reward data.
+	 * Invalid values (a points cost below 1, a negative limit or expiry, or a
+	 * free product that cannot be added to the cart) are not silently changed:
+	 * the reward is saved as inactive and an error is added to $errors.
+	 *
+	 * @param  array $raw    raw reward data.
+	 * @param  array $errors validation errors, appended to.
 	 * @return array|null
 	 */
-	public static function wps_wpr_sanitize_reward( $raw ) {
+	public static function wps_wpr_sanitize_reward( $raw, &$errors = array() ) {
 		if ( ! is_array( $raw ) ) {
 			return null;
 		}
@@ -142,13 +207,16 @@ class WPS_WPR_Reward_Catalog {
 		$types                 = self::wps_wpr_get_reward_types();
 		$reward['id']          = ! empty( $raw['id'] ) ? sanitize_key( $raw['id'] ) : 'rwd' . strtolower( wp_generate_password( 10, false ) );
 		$reward['description'] = isset( $raw['description'] ) ? sanitize_textarea_field( $raw['description'] ) : '';
-		$reward['points']      = isset( $raw['points'] ) ? absint( $raw['points'] ) : 0;
+		$bad_points            = false;
+		$reward['points']      = self::wps_wpr_read_int( $raw, 'points', 1, $bad_points );
 		$reward['type']        = isset( $raw['type'] ) && isset( $types[ $raw['type'] ] ) ? sanitize_key( $raw['type'] ) : 'fixed_cart';
 		$reward['amount']      = isset( $raw['amount'] ) ? max( 0, (float) wc_format_decimal( $raw['amount'] ) ) : 0;
 		$reward['product_id']  = isset( $raw['product_id'] ) ? absint( $raw['product_id'] ) : 0;
 		$reward['min_amount']  = isset( $raw['min_amount'] ) ? max( 0, (float) wc_format_decimal( $raw['min_amount'] ) ) : 0;
-		$reward['expiry_days'] = isset( $raw['expiry_days'] ) ? absint( $raw['expiry_days'] ) : 0;
-		$reward['user_limit']  = isset( $raw['user_limit'] ) ? absint( $raw['user_limit'] ) : 0;
+		$bad_expiry            = false;
+		$reward['expiry_days'] = self::wps_wpr_read_int( $raw, 'expiry_days', 0, $bad_expiry );
+		$bad_limit             = false;
+		$reward['user_limit']  = self::wps_wpr_read_int( $raw, 'user_limit', 0, $bad_limit );
 		$reward['active']      = ! empty( $raw['active'] ) && 'yes' === $raw['active'] ? 'yes' : 'no';
 
 		if ( 'percent' === $reward['type'] ) {
@@ -159,6 +227,25 @@ class WPS_WPR_Reward_Catalog {
 		}
 		if ( 'free_product' !== $reward['type'] ) {
 			$reward['product_id'] = 0;
+		}
+
+		$row_errors = array();
+		if ( $bad_points ) {
+			$row_errors[] = __( 'the points cost must be a whole number of at least 1', 'points-and-rewards-for-woocommerce' );
+		}
+		if ( $bad_limit ) {
+			$row_errors[] = __( 'redemptions per customer cannot be negative', 'points-and-rewards-for-woocommerce' );
+		}
+		if ( $bad_expiry ) {
+			$row_errors[] = __( 'the coupon expiry cannot be negative', 'points-and-rewards-for-woocommerce' );
+		}
+		if ( 'free_product' === $reward['type'] && $reward['product_id'] && ! self::wps_wpr_is_valid_free_product( wc_get_product( $reward['product_id'] ) ) ) {
+			$row_errors[] = __( 'the free product must be a simple product or a single variation, not a variable, grouped or external product', 'points-and-rewards-for-woocommerce' );
+		}
+		if ( $row_errors ) {
+			$reward['active'] = 'no';
+			/* translators: 1: reward title, 2: list of problems */
+			$errors[] = sprintf( __( '"%1$s" was saved as inactive: %2$s.', 'points-and-rewards-for-woocommerce' ), $reward['title'], implode( '; ', $row_errors ) );
 		}
 
 		return apply_filters( 'wps_wpr_reward_catalog_sanitize_reward', $reward, $raw );
@@ -172,9 +259,10 @@ class WPS_WPR_Reward_Catalog {
 	 * @return array saved settings.
 	 */
 	public static function wps_wpr_save_settings( $enable, $rewards ) {
-		$clean = array();
+		$clean  = array();
+		$errors = array();
 		foreach ( (array) $rewards as $raw ) {
-			$reward = self::wps_wpr_sanitize_reward( $raw );
+			$reward = self::wps_wpr_sanitize_reward( $raw, $errors );
 			if ( $reward ) {
 				$clean[ $reward['id'] ] = $reward;
 			}
@@ -184,7 +272,17 @@ class WPS_WPR_Reward_Catalog {
 			'rewards' => $clean,
 		);
 		update_option( self::OPTION, $settings );
+		self::$wps_wpr_save_errors = $errors;
 		return $settings;
+	}
+
+	/**
+	 * Validation errors from the last save.
+	 *
+	 * @return array
+	 */
+	public static function wps_wpr_get_save_errors() {
+		return self::$wps_wpr_save_errors;
 	}
 
 	/**
@@ -203,8 +301,7 @@ class WPS_WPR_Reward_Catalog {
 				$valid = (float) $reward['amount'] > 0;
 				break;
 			case 'free_product':
-				$product = wc_get_product( absint( $reward['product_id'] ) );
-				$valid   = $product && $product->is_purchasable();
+				$valid = self::wps_wpr_is_valid_free_product( wc_get_product( absint( $reward['product_id'] ) ) );
 				break;
 			default:
 				$valid = true;
@@ -335,29 +432,72 @@ class WPS_WPR_Reward_Catalog {
 	/**
 	 * Take a short per-user lock so two requests cannot spend the same points.
 	 *
+	 * The lock is an options row created with INSERT IGNORE, which is atomic:
+	 * only one request can insert it. A lock older than LOCK_TTL seconds (left
+	 * by a request that died) is removed and the insert is tried once more.
+	 *
 	 * @param  int $user_id user id.
 	 * @return bool
 	 */
 	private static function wps_wpr_acquire_lock( $user_id ) {
-		$key = 'wps_wpr_reward_lock_' . $user_id;
-		if ( add_option( $key, time(), '', 'no' ) ) {
-			return true;
-		}
-		// Recover from a stale lock.
-		if ( (int) get_option( $key ) < time() - 30 ) {
-			delete_option( $key );
-			return add_option( $key, time(), '', 'no' );
+		global $wpdb;
+
+		$key   = self::LOCK_PREFIX . absint( $user_id );
+		$token = time() . ':' . wp_generate_password( 12, false );
+
+		for ( $attempt = 0; $attempt < 2; $attempt++ ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- atomic lock, must bypass the options API and cache.
+			$inserted = $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO {$wpdb->options} (option_name, option_value, autoload) VALUES (%s, %s, 'no')", $key, $token ) );
+			if ( 1 === (int) $inserted ) {
+				self::$wps_wpr_lock_tokens[ $user_id ] = $token;
+				return true;
+			}
+			if ( $attempt > 0 ) {
+				break;
+			}
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$current = $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", $key ) );
+			if ( null !== $current && (int) $current >= time() - self::LOCK_TTL ) {
+				return false;
+			}
+			if ( null !== $current ) {
+				// Stale: delete only the exact row we saw, so a fresh lock taken meanwhile survives.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name = %s AND option_value = %s", $key, $current ) );
+			}
 		}
 		return false;
 	}
 
 	/**
-	 * Release the per-user lock.
+	 * Release the per-user lock taken by this request.
 	 *
 	 * @param int $user_id user id.
 	 */
 	private static function wps_wpr_release_lock( $user_id ) {
-		delete_option( 'wps_wpr_reward_lock_' . $user_id );
+		global $wpdb;
+		if ( empty( self::$wps_wpr_lock_tokens[ $user_id ] ) ) {
+			return;
+		}
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name = %s AND option_value = %s", self::LOCK_PREFIX . absint( $user_id ), self::$wps_wpr_lock_tokens[ $user_id ] ) );
+		unset( self::$wps_wpr_lock_tokens[ $user_id ] );
+		wp_cache_delete( self::LOCK_PREFIX . absint( $user_id ), 'options' );
+	}
+
+	/**
+	 * Current points balance, read from the database (not the object cache).
+	 * Also drops the cached user meta so later meta reads are fresh too.
+	 *
+	 * @param  int $user_id user id.
+	 * @return int
+	 */
+	private static function wps_wpr_get_fresh_balance( $user_id ) {
+		global $wpdb;
+		wp_cache_delete( $user_id, 'user_meta' );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$value = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM {$wpdb->usermeta} WHERE user_id = %d AND meta_key = %s ORDER BY umeta_id ASC LIMIT 1", $user_id, 'wps_wpr_points' ) );
+		return absint( $value );
 	}
 
 	/**
@@ -391,53 +531,53 @@ class WPS_WPR_Reward_Catalog {
 			return new WP_Error( 'wps_wpr_busy', __( 'Another request is in progress. Please try again.', 'points-and-rewards-for-woocommerce' ) );
 		}
 
-		$limit = absint( $reward['user_limit'] );
-		if ( $limit > 0 && self::wps_wpr_count_user_redemptions( $user_id, $reward_id ) >= $limit ) {
+		try {
+			// Everything below is re-read from the database while holding the lock.
+			$balance = self::wps_wpr_get_fresh_balance( $user_id );
+
+			$limit = absint( $reward['user_limit'] );
+			if ( $limit > 0 && self::wps_wpr_count_user_redemptions( $user_id, $reward_id ) >= $limit ) {
+				return new WP_Error( 'wps_wpr_limit', __( 'You have reached the redemption limit for this reward.', 'points-and-rewards-for-woocommerce' ) );
+			}
+
+			if ( $balance < $cost ) {
+				return new WP_Error( 'wps_wpr_points', __( 'You do not have enough points for this reward.', 'points-and-rewards-for-woocommerce' ) );
+			}
+
+			$coupon = self::wps_wpr_create_reward_coupon( $reward, $user );
+			if ( is_wp_error( $coupon ) ) {
+				return $coupon;
+			}
+
+			$remaining = $balance - $cost;
+			update_user_meta( $user_id, 'wps_wpr_points', $remaining );
+
+			$redemption = array(
+				'reward_id' => $reward['id'],
+				'title'     => $reward['title'],
+				'type'      => $reward['type'],
+				'points'    => $cost,
+				'coupon_id' => $coupon->get_id(),
+				'code'      => $coupon->get_code(),
+				'date'      => time(),
+			);
+			$redemptions   = self::wps_wpr_get_user_redemptions( $user_id );
+			$redemptions[] = $redemption;
+			update_user_meta( $user_id, self::REDEMPTIONS_META, $redemptions );
+
+			$points_log = get_user_meta( $user_id, 'points_details', true );
+			$points_log = ! empty( $points_log ) && is_array( $points_log ) ? $points_log : array();
+
+			$points_log[ self::LOG_KEY ][] = array(
+				self::LOG_KEY => $cost,
+				'date'        => date_i18n( 'Y-m-d h:i:sa' ),
+				'reward'      => $reward['title'],
+				'coupon'      => $coupon->get_code(),
+			);
+			update_user_meta( $user_id, 'points_details', $points_log );
+		} finally {
 			self::wps_wpr_release_lock( $user_id );
-			return new WP_Error( 'wps_wpr_limit', __( 'You have reached the redemption limit for this reward.', 'points-and-rewards-for-woocommerce' ) );
 		}
-
-		wp_cache_delete( $user_id, 'user_meta' );
-		$balance = absint( get_user_meta( $user_id, 'wps_wpr_points', true ) );
-		if ( $balance < $cost ) {
-			self::wps_wpr_release_lock( $user_id );
-			return new WP_Error( 'wps_wpr_points', __( 'You do not have enough points for this reward.', 'points-and-rewards-for-woocommerce' ) );
-		}
-
-		$coupon = self::wps_wpr_create_reward_coupon( $reward, $user );
-		if ( is_wp_error( $coupon ) ) {
-			self::wps_wpr_release_lock( $user_id );
-			return $coupon;
-		}
-
-		$remaining = $balance - $cost;
-		update_user_meta( $user_id, 'wps_wpr_points', $remaining );
-
-		$redemption = array(
-			'reward_id' => $reward['id'],
-			'title'     => $reward['title'],
-			'type'      => $reward['type'],
-			'points'    => $cost,
-			'coupon_id' => $coupon->get_id(),
-			'code'      => $coupon->get_code(),
-			'date'      => time(),
-		);
-		$redemptions   = self::wps_wpr_get_user_redemptions( $user_id );
-		$redemptions[] = $redemption;
-		update_user_meta( $user_id, self::REDEMPTIONS_META, $redemptions );
-
-		$points_log = get_user_meta( $user_id, 'points_details', true );
-		$points_log = ! empty( $points_log ) && is_array( $points_log ) ? $points_log : array();
-
-		$points_log[ self::LOG_KEY ][] = array(
-			self::LOG_KEY => $cost,
-			'date'        => date_i18n( 'Y-m-d h:i:sa' ),
-			'reward'      => $reward['title'],
-			'coupon'      => $coupon->get_code(),
-		);
-		update_user_meta( $user_id, 'points_details', $points_log );
-
-		self::wps_wpr_release_lock( $user_id );
 
 		do_action( 'wps_wpr_update_points_log', $user_id );
 		do_action( 'wps_wpr_reward_catalog_redeemed', $user_id, $reward, $coupon, $remaining );
@@ -479,7 +619,7 @@ class WPS_WPR_Reward_Catalog {
 	 */
 	public static function wps_wpr_get_redemption_status( $redemption ) {
 		$coupon = new WC_Coupon( absint( $redemption['coupon_id'] ) );
-		if ( ! $coupon->get_id() ) {
+		if ( ! $coupon->get_id() || 'publish' !== $coupon->get_status() ) {
 			return 'deleted';
 		}
 		if ( $coupon->get_usage_limit() && $coupon->get_usage_count() >= $coupon->get_usage_limit() ) {
@@ -534,7 +674,7 @@ class WPS_WPR_Reward_Catalog {
 
 		$code   = wc_format_coupon_code( sanitize_text_field( wp_unslash( $_GET[ self::APPLY_ARG ] ) ) );
 		$coupon = new WC_Coupon( $code );
-		if ( ! $coupon->get_id() || absint( $coupon->get_meta( '_wps_wpr_reward_user' ) ) !== get_current_user_id() ) {
+		if ( ! $coupon->get_id() || 'publish' !== $coupon->get_status() || absint( $coupon->get_meta( '_wps_wpr_reward_user' ) ) !== get_current_user_id() ) {
 			return;
 		}
 
@@ -550,6 +690,16 @@ class WPS_WPR_Reward_Catalog {
 				}
 			}
 			if ( ! $in_cart ) {
+				$product = wc_get_product( $product_id );
+				if ( ! self::wps_wpr_is_valid_free_product( $product ) ) {
+					// A variable parent needs an option chosen on its product page first.
+					if ( $product ) {
+						wc_add_notice( __( 'Please choose a product option and add it to your cart, then apply your reward coupon.', 'points-and-rewards-for-woocommerce' ), 'notice' );
+						wp_safe_redirect( $product->get_permalink() );
+						exit;
+					}
+					return;
+				}
 				WC()->cart->add_to_cart( $product_id );
 			}
 		}
