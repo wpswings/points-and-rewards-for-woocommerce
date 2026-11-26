@@ -148,6 +148,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
 		/**
+		 * The class responsible for the floating loyalty widget.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-floating-widget.php';
+
+		/**
 		 * The class responsible for the native Gutenberg blocks pack.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-blocks.php';
@@ -480,6 +485,11 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_order_status_changed', $abandoned_cart, 'wps_wpr_award_recovery_points', 20, 3 );
 			$this->loader->add_action( 'woocommerce_before_cart', $abandoned_cart, 'wps_wpr_show_incentive_notice' );
 			$this->loader->add_action( 'woocommerce_before_checkout_form', $abandoned_cart, 'wps_wpr_show_incentive_notice', 5 );
+
+			// floating loyalty widget.
+			$floating_widget = new WPS_WPR_Floating_Widget();
+			$this->loader->add_action( 'wp_enqueue_scripts', $floating_widget, 'wps_wpr_enqueue_assets' );
+			$this->loader->add_action( 'wp_footer', $floating_widget, 'wps_wpr_render', 50 );
 
 			// birthday and first-order points.
 			$birthday_first_order = new WPS_WPR_Birthday_First_Order_Points();
