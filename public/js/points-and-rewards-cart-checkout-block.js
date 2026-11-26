@@ -3,10 +3,13 @@
     
     jQuery(document).ready(function($){
 
+		// The native Cart/Checkout block panel renders the redeem UI; skip the injected markup.
+		var wps_wpr_native_blocks = ( 'undefined' !== typeof wps_wpr_cart_block_obj && 1 == wps_wpr_cart_block_obj.native_blocks );
+
 		// ============= Append Add a points section html ============
 
 		// show html on cart page.
-		if ( 1 == wps_wpr.is_cart_redeem_sett_enable ) {
+		if ( ! wps_wpr_native_blocks && 1 == wps_wpr.is_cart_redeem_sett_enable ) {
 
 			if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
 
@@ -27,7 +30,7 @@
 		}
 
 		// show html on checkout page.
-		if ( 1 == wps_wpr.is_checkout_redeem_enable ) {
+		if ( ! wps_wpr_native_blocks && 1 == wps_wpr.is_checkout_redeem_enable ) {
 			if ( jQuery('#wps_wpr_button_to_add_points_section').length === 0 ) {
 
 				setTimeout(() => {
@@ -72,13 +75,15 @@
 			}
 		});
 
-		// Remove coupon when cart block enable.
-		setTimeout(() => {
-			
-			jQuery('.wc-block-components-chip__remove').attr('onclick','on_cart_click(this)');
-		}, 2000);
+		// Remove coupon when cart block enable (the native panel clears points through the Store API instead).
+		if ( ! wps_wpr_native_blocks ) {
+			setTimeout(() => {
 
-		$(document).on('click',
+				jQuery('.wc-block-components-chip__remove').attr('onclick','on_cart_click(this)');
+			}, 2000);
+		}
+
+		! wps_wpr_native_blocks && $(document).on('click',
 			'.wc-block-components-chip__remove .wc-block-components-chip__remove-icon',
 			function(e) {
 				e.preventDefault();
@@ -131,8 +136,8 @@
 
 		// Restore redemption state after page reload for block-based cart/checkout
 		function wps_wpr_restore_block_redemption_state() {
-			// Only run if redemption is enabled for cart or checkout
-			if ( 1 == wps_wpr.is_cart_redeem_sett_enable || 1 == wps_wpr.is_checkout_redeem_enable ) {
+			// Only run if redemption is enabled for cart or checkout (and the legacy markup is in use).
+			if ( ! wps_wpr_native_blocks && ( 1 == wps_wpr.is_cart_redeem_sett_enable || 1 == wps_wpr.is_checkout_redeem_enable ) ) {
 
 				jQuery.ajax({
 					url: wps_wpr.ajaxurl,

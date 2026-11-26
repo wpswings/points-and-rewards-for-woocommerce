@@ -53,6 +53,8 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 	public function __construct() {
 		// Take the bonus back when the recovered order is cancelled or refunded.
 		add_action( 'woocommerce_order_status_changed', array( $this, 'wps_wpr_reverse_recovery_points' ), 25, 3 );
+		// Give a reversed bonus back when the order reaches the award status again.
+		add_action( 'woocommerce_order_status_changed', array( $this, 'wps_wpr_restore_recovery_points' ), 20, 3 );
 	}
 
 	/**
@@ -516,7 +518,7 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 	 * @return void
 	 */
 	public function wps_wpr_reverse_recovery_points( $order_id, $old_status, $new_status ) {
-		if ( $old_status === $new_status || ! in_array( $new_status, array( 'cancelled', 'refunded' ), true ) ) {
+		if ( $old_status === $new_status || ! wps_wpr_is_points_reversal_status( $new_status ) ) {
 			return;
 		}
 
@@ -543,8 +545,8 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 		$order->update_meta_data( 'wps_wpr_ac_points_reversed', $deducted );
 		$order->save();
 		$order->add_order_note(
-			/* translators: %s: deducted points */
-			sprintf( esc_html__( '%s abandoned cart recovery bonus points deducted because the order was cancelled or refunded.', 'points-and-rewards-for-woocommerce' ), $deducted )
+			/* translators: 1: deducted points, 2: order status */
+			sprintf( esc_html__( '%1$s abandoned cart recovery bonus points deducted because the order is %2$s.', 'points-and-rewards-for-woocommerce' ), $deducted, wc_get_order_status_name( $new_status ) )
 		);
 
 		$points_log = get_user_meta( $user_id, 'points_details', true );
@@ -559,6 +561,55 @@ class WPS_WPR_Abandoned_Cart_Recovery {
 		do_action( 'wps_wpr_update_points_log', $user_id );
 
 		do_action( 'wps_wpr_abandoned_cart_points_reversed', $user_id, $deducted, $order_id );
+	}
+
+	/**
+	 * Give a reversed recovery bonus back when its order reaches the award status again
+	 * (e.g. processing -> failed -> processing).
+	 *
+	 * The bonus is not awarded afresh (the offer was used up when it was first awarded); the points
+	 * that were taken back are returned. `wps_wpr_ac_points_reversed` is the marker: the reversal only
+	 * runs while it is empty and this only runs while it is set, so bouncing the status never
+	 * awards or deducts twice.
+	 *
+	 * @param  int    $order_id   order id.
+	 * @param  string $old_status old status.
+	 * @param  string $new_status new status.
+	 * @return void
+	 */
+	public function wps_wpr_restore_recovery_points( $order_id, $old_status, $new_status ) {
+		list( $old_status, $new_status ) = wps_wpr_map_award_order_statuses( $order_id, $old_status, $new_status );
+		$award_statuses = apply_filters( 'wps_wpr_abandoned_cart_award_statuses', array( 'completed' ) );
+		if ( $old_status === $new_status || ! in_array( $new_status, $award_statuses, true ) ) {
+			return;
+		}
+
+		$order = wc_get_order( $order_id );
+		if ( ! $order || absint( $order->get_meta( 'wps_wpr_ac_points_awarded' ) ) <= 0 || '' === (string) $order->get_meta( 'wps_wpr_ac_points_reversed' ) ) {
+			return;
+		}
+
+		$user_id = absint( $order->get_user_id() );
+		if ( ! $user_id ) {
+			return;
+		}
+
+		$restore = absint( $order->get_meta( 'wps_wpr_ac_points_reversed' ) );
+		$order->delete_meta_data( 'wps_wpr_ac_points_reversed' );
+		$order->save();
+		if ( $restore <= 0 ) {
+			return;
+		}
+
+		$updated_points = absint( get_user_meta( $user_id, 'wps_wpr_points', true ) ) + $restore;
+		update_user_meta( $user_id, 'wps_wpr_points', $updated_points );
+		$order->add_order_note(
+			/* translators: 1: points, 2: order status */
+			sprintf( esc_html__( '%1$s abandoned cart recovery bonus points given back because the order is %2$s again.', 'points-and-rewards-for-woocommerce' ), $restore, wc_get_order_status_name( $order->get_status() ) )
+		);
+		$this->wps_wpr_create_recovery_points_log( $user_id, $restore, $order_id );
+
+		do_action( 'wps_wpr_abandoned_cart_points_restored', $user_id, $restore, $order_id );
 	}
 
 	/**

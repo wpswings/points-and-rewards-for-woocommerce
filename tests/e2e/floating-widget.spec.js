@@ -1,0 +1,138 @@
+/**
+ * E2E: floating loyalty widget.
+ *
+ * Needs a logged-in admin storage state (WP_STORAGE_STATE) and the points
+ * program enabled on the site.
+ */
+const { test, expect } = require( '@playwright/test' );
+
+const { SETTINGS_URL, blockOnboarding, submitSettings, backupSettings, restoreSettings, withAdminPage } = require( './floating-widget-helpers' );
+
+test.describe.serial( 'Floating loyalty widget', () => {
+	let backup = null;
+
+	test.beforeAll( async ( { browser }, testInfo ) => {
+		backup = await withAdminPage( browser, testInfo, ( page ) => backupSettings( page ) );
+	} );
+
+	test.afterAll( async ( { browser }, testInfo ) => {
+		await withAdminPage( browser, testInfo, ( page ) => restoreSettings( page, backup ) );
+	} );
+
+	test.beforeEach( async ( { page } ) => {
+		await blockOnboarding( page );
+	} );
+
+	test( 'admin can enable and configure the widget', async ( { page } ) => {
+		await page.goto( SETTINGS_URL );
+		await expect( page.locator( '#wps_wpr_fw_enable' ) ).toBeAttached();
+
+		const title = page.locator( '.wps_wpr_general_sign_title', { hasText: 'Floating Loyalty Widget' } );
+		if ( ! ( await page.locator( '#wps_wpr_fw_enable' ).isVisible() ) ) {
+			await title.click();
+		}
+		await page.locator( '#wps_wpr_fw_enable' ).check();
+		await page.locator( '#wps_wpr_fw_position' ).selectOption( 'bottom-left' );
+		await page.locator( '#wps_wpr_fw_label' ).fill( 'My Rewards' );
+		await page.locator( '#wps_wpr_fw_show_to' ).selectOption( 'all' );
+		await submitSettings( page );
+
+		await expect( page.locator( '#wps_wpr_fw_enable' ) ).toBeChecked();
+		await expect( page.locator( '#wps_wpr_fw_label' ) ).toHaveValue( 'My Rewards' );
+	} );
+
+	test( 'logged-in customer sees balance; Esc closes the panel', async ( { page } ) => {
+		await page.goto( '/' );
+		const launcher = page.locator( '#wps-wpr-floating-widget .wps-wpr-fw__launcher' );
+		await expect( launcher ).toBeVisible();
+		await expect( launcher ).toContainText( 'My Rewards' );
+		await expect( page.locator( '#wps-wpr-floating-widget' ) ).toHaveClass( /wps-wpr-fw--bottom-left/ );
+
+		await launcher.click();
+		await expect( launcher ).toHaveAttribute( 'aria-expanded', 'true' );
+		const panel = page.locator( '#wps-wpr-fw-panel' );
+		await expect( panel ).toBeVisible();
+		await expect( panel.locator( '[data-wps-wpr-fw-balance]' ) ).toHaveText( /\d/ );
+		await expect( panel.locator( 'a.wps-wpr-fw__button' ) ).toHaveAttribute( 'href', /points/ );
+
+		await page.keyboard.press( 'Escape' );
+		await expect( panel ).toBeHidden();
+		await expect( launcher ).toHaveAttribute( 'aria-expanded', 'false' );
+		await expect( launcher ).toBeFocused();
+	} );
+
+	test( 'Tab and Shift+Tab stay inside the open panel', async ( { page } ) => {
+		await page.goto( '/' );
+		const launcher = page.locator( '#wps-wpr-floating-widget .wps-wpr-fw__launcher' );
+		await launcher.click();
+		const panel = page.locator( '#wps-wpr-fw-panel' );
+		await expect( panel ).toBeVisible();
+		const inPanel = () => page.evaluate( () => document.getElementById( 'wps-wpr-fw-panel' ).contains( document.activeElement ) );
+		for ( let i = 0; i < 8; i++ ) {
+			await page.keyboard.press( 'Tab' );
+			expect( await inPanel() ).toBe( true );
+		}
+		for ( let i = 0; i < 8; i++ ) {
+			await page.keyboard.press( 'Shift+Tab' );
+			expect( await inPanel() ).toBe( true );
+		}
+		await page.keyboard.press( 'Escape' );
+		await expect( panel ).toBeHidden();
+		await expect( launcher ).toBeFocused();
+	} );
+
+	test( 'panel close button stays on screen with a large offset', async ( { page } ) => {
+		const setOffset = async ( value ) => {
+			await page.goto( SETTINGS_URL );
+			if ( ! ( await page.locator( '#wps_wpr_fw_offset' ).isVisible() ) ) {
+				await page.locator( '.wps_wpr_general_sign_title', { hasText: 'Floating Loyalty Widget' } ).click();
+			}
+			await page.locator( '#wps_wpr_fw_offset' ).fill( String( value ) );
+			await submitSettings( page );
+		};
+		await setOffset( 400 );
+		try {
+			await page.setViewportSize( { width: 360, height: 640 } );
+			await page.goto( '/?fw=' + Date.now() );
+			await page.locator( '#wps-wpr-floating-widget .wps-wpr-fw__launcher' ).click();
+			const close = page.locator( '#wps-wpr-fw-panel [data-wps-wpr-fw-close]' );
+			await expect( close ).toBeVisible();
+			const panelBox = await page.locator( '#wps-wpr-fw-panel' ).boundingBox();
+			const closeBox = await close.boundingBox();
+			expect( panelBox.y ).toBeGreaterThanOrEqual( 0 );
+			expect( closeBox.y ).toBeGreaterThanOrEqual( 0 );
+			await close.click();
+			await expect( page.locator( '#wps-wpr-fw-panel' ) ).toBeHidden();
+		} finally {
+			await page.setViewportSize( { width: 1280, height: 720 } );
+			await setOffset( 24 );
+		}
+	} );
+
+	test( 'guest sees the join call to action', async ( { browser, baseURL } ) => {
+		const context = await browser.newContext( { storageState: { cookies: [], origins: [] }, baseURL } );
+		const page = await context.newPage();
+		await page.goto( '/' );
+		const launcher = page.locator( '#wps-wpr-floating-widget .wps-wpr-fw__launcher' );
+		await expect( launcher ).toBeVisible();
+		await launcher.click();
+		const panel = page.locator( '#wps-wpr-fw-panel' );
+		await expect( panel ).toBeVisible();
+		await expect( panel ).toContainText( 'Sign up / Log in' );
+		await expect( panel.locator( '[data-wps-wpr-fw-balance]' ) ).toHaveCount( 0 );
+		await panel.locator( '[data-wps-wpr-fw-close]' ).click();
+		await expect( panel ).toBeHidden();
+		await context.close();
+	} );
+
+	test( 'admin can disable the widget again', async ( { page } ) => {
+		await page.goto( SETTINGS_URL );
+		if ( ! ( await page.locator( '#wps_wpr_fw_enable' ).isVisible() ) ) {
+			await page.locator( '.wps_wpr_general_sign_title', { hasText: 'Floating Loyalty Widget' } ).click();
+		}
+		await page.locator( '#wps_wpr_fw_enable' ).uncheck();
+		await submitSettings( page );
+		await page.goto( '/' );
+		await expect( page.locator( '#wps-wpr-floating-widget' ) ).toHaveCount( 0 );
+	} );
+} );
