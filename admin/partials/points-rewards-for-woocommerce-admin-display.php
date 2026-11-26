@@ -80,6 +80,10 @@ $wps_wpr_setting_tab = array(
 		'title'     => __( 'Abandoned Cart', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-abandoned-cart-settings.php',
 	),
+	'earn-messages-settings' => array(
+		'title'     => __( 'Earn Messages', 'points-and-rewards-for-woocommerce' ),
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-earn-messages-settings.php',
+	),
 	'reward-catalog'          => array(
 		'title'     => __( 'Reward Catalog', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-reward-catalog-settings.php',
@@ -167,6 +171,7 @@ $wps_wpr_tab_descriptions = apply_filters(
 		'wps-campaign-settings' => __( 'Create referral and promotional campaigns to drive engagement using reward incentives.', 'points-and-rewards-for-woocommerce' ),
 		'points-expiration'       => __( 'Let unused points expire after a set period and remind customers before they do.', 'points-and-rewards-for-woocommerce' ),
 		'abandoned-cart-settings' => __( 'Recover abandoned carts by offering bonus points to customers who complete their purchase.', 'points-and-rewards-for-woocommerce' ),
+		'earn-messages-settings'  => __( 'Show customers how many points they will earn on shop, product, cart and checkout pages.', 'points-and-rewards-for-woocommerce' ),
 		'reward-catalog'          => __( 'Offer redeemable rewards such as discounts, free products and free shipping that customers buy with points.', 'points-and-rewards-for-woocommerce' ),
 		'floating-widget'       => __( 'Show a floating rewards button on your store with the customer\'s points, level, ways to earn and referral link.', 'points-and-rewards-for-woocommerce' ),
 		'import-export'           => __( 'Export customer points to CSV or import balances from this plugin or another loyalty plugin.', 'points-and-rewards-for-woocommerce' ),

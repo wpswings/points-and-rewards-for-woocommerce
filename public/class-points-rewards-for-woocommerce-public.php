@@ -3296,6 +3296,11 @@ class Points_Rewards_For_WooCommerce_Public {
 		if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
 			return;
 		}
+
+		// The Earn Messages product message replaces this badge when it is enabled.
+		if ( ! apply_filters( 'wps_wpr_show_legacy_product_points_badge', true ) ) {
+			return;
+		}
 		global $post;
 		/*Get the color of the*/
 		$wps_wpr_notification_color = $this->wps_wpr_get_other_settings( 'wps_wpr_notification_color' );
