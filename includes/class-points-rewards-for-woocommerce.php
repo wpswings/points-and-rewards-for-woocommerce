@@ -215,6 +215,11 @@ class Points_Rewards_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-import-export.php';
 
+		/**
+		 * The class responsible for migrating points from other loyalty plugins.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-migration.php';
+
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
 		/**
@@ -332,6 +337,12 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_start', $points_import_export, 'wps_wpr_ajax_import_start' );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_batch', $points_import_export, 'wps_wpr_ajax_import_batch' );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_discard', $points_import_export, 'wps_wpr_ajax_import_discard' );
+		// points migration from other loyalty plugins.
+		$points_migration = new WPS_WPR_Points_Migration();
+		$this->loader->add_action( 'wp_ajax_wps_wpr_migration_preview', $points_migration, 'wps_wpr_ajax_preview' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_migration_start', $points_migration, 'wps_wpr_ajax_start' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_migration_run', $points_migration, 'wps_wpr_ajax_run' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_migration_discard', $points_migration, 'wps_wpr_ajax_discard' );
 		// email preview.
 		$this->loader->add_filter( 'wps_wpr_preview_email_content', $plugin_admin, 'wps_wpr_preview_email_content_call', 10, 1 );
 		// manage discount on order edit page.
