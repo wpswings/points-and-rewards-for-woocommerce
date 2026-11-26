@@ -219,6 +219,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-ai-assistant.php';
 
 		/**
+		 * The class responsible for campaign and reward display ordering.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-campaign-ordering.php';
+
+		/**
 		 * The class responsible for points CSV import and export.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-import-export.php';
@@ -363,6 +368,11 @@ class Points_Rewards_For_Woocommerce {
 		// set campaign image.
 		$this->loader->add_action( 'wp_ajax_wps_set_camp_heading_and_image', $plugin_admin, 'wps_wpr_set_camp_heading_and_image', 10 );
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'wps_wpr_org_remove_action' );
+
+		// campaign and reward display ordering.
+		$campaign_ordering = new WPS_WPR_Campaign_Ordering();
+		$this->loader->add_action( 'admin_enqueue_scripts', $campaign_ordering, 'wps_wpr_enqueue_admin_assets' );
+		$this->loader->add_filter( 'wps_wpr_reward_catalog_available_rewards', 'WPS_WPR_Campaign_Ordering', 'wps_wpr_sort_rewards', 20 );
 
 		// birthday and first-order points settings and admin log.
 		$birthday_first_order = new WPS_WPR_Birthday_First_Order_Points();

@@ -338,6 +338,9 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 							}
 							?>
 							<?php
+							// Each earn campaign is buffered, then echoed in the admin-defined order (see WPS_WPR_Campaign_Ordering).
+							$wps_wpr_campaign_blocks = array();
+							ob_start();
 							if ( 'yes' === $wps_wpr_enable_birthday_campaign ) {
 								if ( empty( $_my_bday ) ) {
 									?>
@@ -357,6 +360,8 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 										<?php
 								}
 							}
+							$wps_wpr_campaign_blocks['birthday'] = ob_get_clean();
+							ob_start();
 							?>
 							<?php if ( 'yes' === $wps_wpr_enable_comments_campaign ) : ?>
 								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor">
@@ -371,6 +376,10 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 									?>
 								</div>
 							<?php endif; ?>
+							<?php
+							$wps_wpr_campaign_blocks['comments'] = ob_get_clean();
+							ob_start();
+							?>
 							<?php if ( 'yes' === $wps_wpr_enable_gami_points ) : ?>
 								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor">
 									<img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" />
@@ -400,10 +409,18 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 									?>
 								</div>
 							<?php endif; ?>
+							<?php
+							$wps_wpr_campaign_blocks['spin_wheel'] = ob_get_clean();
+							ob_start();
+							?>
 							<?php if ( 'yes' === $wps_wpr_enable_camp_first_order_points ) : ?>
 								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable wps_disabled_cursor"><img src="<?php echo esc_url( $icons_url ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php esc_html_e( 'Unlock bonus points when you shop for the very first time', 'points-and-rewards-for-woocommerce' ); ?> <span class="wps-wpr_camp-h2-icon"><?php echo esc_html( $wps_first_order_points ); ?>+</span></div>
 							<?php endif; ?>
-							<?php if ( 'yes' === $wps_wpr_enable_quiz_contest_campaign ) { ?>
+							<?php
+							$wps_wpr_campaign_blocks['first_order'] = ob_get_clean();
+							ob_start();
+							?>
+							<?php if ( 'yes' === $wps_wpr_enable_quiz_contest_campaign && ! empty( $wps_wpr_quiz_rewards_points ) && is_array( $wps_wpr_quiz_rewards_points ) ) { ?>
 								<div class="wps-wpr_campaign-h2 wps_wpr_guest_user_disable"><img src="<?php echo esc_url( $cam_arrow ); ?>" alt="user" class="wps-wpr-hlw_co-icon" /><?php printf( /* translators: %s: sms msg */ esc_html__( 'Play the Quiz, have fun, and earn %1$s–%2$s points!', 'points-and-rewards-for-woocommerce' ), esc_html( min( $wps_wpr_quiz_rewards_points ) ), esc_html( max( $wps_wpr_quiz_rewards_points ) ) ); ?> <span class="wps-wpr_camp-h2-icon">🎁 <?php echo esc_html( max( $wps_wpr_quiz_rewards_points ) ); ?></span></div>
 								<div class="wps-wpr_camp-acc-wrap wps_wpr_guest_user_disable">
 									<?php
@@ -455,6 +472,7 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 								</div>
 								<?php
 							}
+							$wps_wpr_campaign_blocks['quiz'] = ob_get_clean();
 							?>
 
 						<!-- +++++++++++   Social Share Campaign Start Here   +++++++++++++ -->
@@ -464,6 +482,7 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 						$performed = (array) get_user_meta( $user_id, 'wps_wpr_social_action_performed', true );
 
 						// 1) mailing_list uses a custom inner description in your original markup — render it first if present
+						ob_start();
 						if ( array_key_exists( 'mailing_list', $wps_wpr_combined ) ) {
 
 							$ml             = $wps_wpr_combined['mailing_list'];
@@ -501,6 +520,7 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 
 							<?php
 						}
+						$wps_wpr_campaign_blocks['mailing_list'] = ob_get_clean();
 
 						// Loop and render.
 						foreach ( $campaign_templates as $key => $tpl ) {
@@ -510,6 +530,7 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 								continue;
 							}
 
+							ob_start();
 							$data = $wps_wpr_combined[ $key ];
 							if ( ! in_array( $key, $performed ) ) {
 								?>
@@ -589,6 +610,12 @@ $campaign_templates = apply_filters( 'wps_wpr_additional_user_campaign', $campai
 								</div>
 								<?php
 							}
+							$wps_wpr_campaign_blocks[ $key ] = ob_get_clean();
+						}
+
+						// Output the earn campaigns in the admin-defined display order.
+						foreach ( WPS_WPR_Campaign_Ordering::wps_wpr_sort_campaign_blocks( $wps_wpr_campaign_blocks ) as $wps_wpr_campaign_block ) {
+							echo $wps_wpr_campaign_block; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- each block was escaped while it was buffered above.
 						}
 						?>
 						</div>
