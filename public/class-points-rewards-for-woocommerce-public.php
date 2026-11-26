@@ -1365,7 +1365,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				return;
 			}
 			/*Get the order total points*/
-			$order_total = $order->get_total();
+			$order_total = wps_wpr_get_order_amount_for_points( $order );
 			// WOOCS - WooCommerce Currency Switcher Compatibility.
 			$order_total  = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
 			$total_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
@@ -1577,7 +1577,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 				// Rewards Per Currency points.
 				$points_calculation = 0;
-				$order_total        = $order->get_total();
+				$order_total        = wps_wpr_get_order_amount_for_points( $order );
 				$order_total        = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
 				// WOOCS - WooCommerce Currency Switcher Compatibility.
 				$order_total            = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
@@ -1981,8 +1981,8 @@ class Points_Rewards_For_WooCommerce_Public {
 			$thankyouorder_value = $this->wps_wpr_get_order_total_settings( 'wps_wpr_thankyouorder_current_type' );
 			$order               = wc_get_order( $order_id );
 
-			/*Get the order total points*/
-			$order_total         = $order->get_total();
+			/*Get the order total points, on the basis they were awarded on*/
+			$order_total         = wps_wpr_get_awarded_order_amount_for_points( $order );
 			// WOOCS - WooCommerce Currency Switcher Compatibility.
 			$order_total         = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $order_total );
 			$user_id             = $order->get_user_id();
@@ -5602,7 +5602,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							$updated_points    = (int) $user_points + $mem_rewards_points_val;
 						} else {
 
-							$calculated_points = (int) ( $order->get_total() * $mem_rewards_points_val ) / 100;
+							$calculated_points = (int) ( wps_wpr_get_order_amount_for_points( $order ) * $mem_rewards_points_val ) / 100;
 							$updated_points    = $user_points + $calculated_points;
 						}
 
