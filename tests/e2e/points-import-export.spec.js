@@ -8,13 +8,18 @@ const fs = require( 'fs' );
 
 const TAB_URL = '/wp-admin/admin.php?page=wps-rwpr-setting&tab=import-export';
 
-// Open the tab, close the onboarding popup if shown, and expand the Import section.
+// The WP Swings onboarding modal opens about a second after an admin page loads (until it is
+// submitted or skipped). It used to appear after the one-off close check below had already run,
+// and then covered the Export button or the result notice, which made this spec flaky. Block
+// its script so the modal never opens; nothing is saved on the site.
+async function blockOnboarding( page ) {
+	await page.route( /wpswings-onboarding-admin(\.min)?\.js/, ( route ) => route.abort() );
+}
+
+// Open the tab and expand the Import section.
 async function openTab( page ) {
 	await page.goto( TAB_URL );
-	const close = page.locator( '.wps-on-boarding-close-btn a' );
-	if ( await close.isVisible() ) {
-		await close.click();
-	}
+	await page.waitForLoadState( 'load' );
 	const importMode = page.locator( '#wps_wpr_import_mode' );
 	if ( ! ( await importMode.isVisible() ) ) {
 		await page.locator( '.wps_wpr_general_sign_title', { hasText: 'Import Points' } ).click();
@@ -50,6 +55,10 @@ async function importCsv( page, csv, mode ) {
 }
 
 test.describe( 'Points Import / Export tab', () => {
+	test.beforeEach( async ( { page } ) => {
+		await blockOnboarding( page );
+	} );
+
 	test( 'tab renders export and import sections', async ( { page } ) => {
 		await openTab( page );
 		await expect( page ).not.toHaveURL( /wp-login/ );
