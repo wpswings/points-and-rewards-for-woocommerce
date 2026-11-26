@@ -5,8 +5,11 @@
  * Admins define goals such as "spend 500 within 30 days" or "place 3 orders
  * within 60 days". When an order reaches the points award status, every
  * active rule is checked for the customer and the bonus is awarded once per
- * rule (or once per goal cycle for repeatable rules). Rules can be targeted
- * with the condition engine (WPS_WPR_Condition_Engine).
+ * rule. A repeatable rule awards at most once per period (its N-day window):
+ * after an award only orders that reach the award status later count toward
+ * the next award, and the next award can't happen until the window has
+ * passed since the last one. Rules can be targeted with the condition engine
+ * (WPS_WPR_Condition_Engine).
  *
  * The free plugin evaluates one active rule; the limit is filterable with
  * `wps_wpr_achievement_rules_limit` (0 = unlimited), which the Pro plugin uses.
@@ -46,6 +49,11 @@ class WPS_WPR_Achievement_Rules {
 	 * Order meta prefix marking a rule awarded for that order.
 	 */
 	const ORDER_META_PREFIX = 'wps_wpr_achievement_awarded_';
+
+	/**
+	 * Order meta: GMT timestamp at which the order first reached the award status.
+	 */
+	const COUNTED_META = '_wps_wpr_ach_counted_at';
 
 	/**
 	 * Goal types.
@@ -127,6 +135,26 @@ class WPS_WPR_Achievement_Rules {
 	}
 
 	/**
+	 * IDs of rules marked active that do not run because of the rule limit.
+	 *
+	 * @return string[]
+	 */
+	public static function wps_wpr_get_limited_rule_ids() {
+		$limit = self::wps_wpr_rules_limit();
+		if ( $limit <= 0 ) {
+			return array();
+		}
+		$running = wp_list_pluck( self::wps_wpr_get_active_rules(), 'id' );
+		$limited = array();
+		foreach ( self::wps_wpr_get_rules() as $rule ) {
+			if ( 'yes' === $rule['active'] && ! in_array( $rule['id'], $running, true ) ) {
+				$limited[] = $rule['id'];
+			}
+		}
+		return $limited;
+	}
+
+	/**
 	 * Sanitize rules posted from the settings form.
 	 *
 	 * Rules beyond the active limit are saved as inactive.
@@ -180,7 +208,12 @@ class WPS_WPR_Achievement_Rules {
 					$operator  = isset( $condition['operator'], $operators[ $condition['operator'] ] ) ? $condition['operator'] : key( $operators );
 					$value     = isset( $condition['value'] ) ? sanitize_text_field( $condition['value'] ) : '';
 					if ( 'number' === $kind ) {
-						$value = (string) (float) wc_format_decimal( $value );
+						$number = wc_format_decimal( $value );
+						// Drop invalid numbers instead of saving them as 0.
+						if ( '' === $number || ! is_numeric( $number ) || preg_match( '/[^0-9.,\-\s]/', $value ) ) {
+							continue;
+						}
+						$value = (string) (float) $number;
 					} elseif ( '' === trim( $value ) ) {
 						continue;
 					}
@@ -253,11 +286,95 @@ class WPS_WPR_Achievement_Rules {
 	}
 
 	/**
+	 * Timestamp from which a repeatable rule can award again (0 = now).
+	 *
+	 * A repeatable rule awards at most once per period: the next award can't
+	 * happen until the rule's window has passed since the last award.
+	 *
+	 * @param array $rule    rule.
+	 * @param int   $user_id user id.
+	 * @return int
+	 */
+	public static function wps_wpr_next_award_time( $rule, $user_id ) {
+		$last = self::wps_wpr_last_award_time( $user_id, $rule['id'] );
+		if ( ! $last || 'repeat' !== $rule['repeat'] ) {
+			return 0;
+		}
+		return $last + absint( $rule['window_days'] ) * DAY_IN_SECONDS;
+	}
+
+	/**
+	 * Record when an order first reached the award status. Window membership
+	 * is based on this time, not on the order creation date.
+	 *
+	 * @param WC_Order $order order.
+	 * @return void
+	 */
+	public static function wps_wpr_mark_counted( $order ) {
+		if ( $order->get_meta( self::COUNTED_META ) ) {
+			return;
+		}
+		$order->update_meta_data( self::COUNTED_META, time() );
+		$order->save_meta_data();
+	}
+
+	/**
+	 * IDs of a user's counted orders that reached the award status in a range.
+	 *
+	 * Uses the time recorded by wps_wpr_mark_counted(). Orders that reached the
+	 * award status before that meta existed fall back to their completed date
+	 * (award status "completed") or paid date (any other award status).
+	 *
+	 * @param int $user_id user id.
+	 * @param int $start   range start (GMT timestamp, inclusive).
+	 * @param int $end     range end (GMT timestamp, inclusive).
+	 * @return int[]
+	 */
+	public static function wps_wpr_get_counted_order_ids( $user_id, $start, $end ) {
+		$base = array(
+			'customer_id' => absint( $user_id ),
+			'status'      => self::wps_wpr_counted_statuses(),
+			'limit'       => -1,
+			'return'      => 'ids',
+			'type'        => 'shop_order',
+		);
+
+		$with_meta = wc_get_orders(
+			$base + array(
+				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'     => self::COUNTED_META,
+						'value'   => array( (int) $start, (int) $end ),
+						'compare' => 'BETWEEN',
+						'type'    => 'NUMERIC',
+					),
+				),
+			)
+		);
+
+		$award_status = function_exists( 'wps_wpr_get_points_award_status' ) ? wps_wpr_get_points_award_status() : 'completed';
+		$date_field   = 'completed' === $award_status ? 'date_completed' : 'date_paid';
+		$legacy       = wc_get_orders(
+			$base + array(
+				$date_field  => (int) $start . '...' . (int) $end,
+				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'     => self::COUNTED_META,
+						'compare' => 'NOT EXISTS',
+					),
+				),
+			)
+		);
+
+		return array_values( array_unique( array_map( 'absint', array_merge( (array) $with_meta, (array) $legacy ) ) ) );
+	}
+
+	/**
 	 * Progress of a user toward a rule's goal.
 	 *
-	 * Counts orders created inside the rule window. For repeatable rules the
-	 * window also starts after the last award, so the same orders never earn
-	 * the bonus twice.
+	 * Counts orders that reached the award status inside the rule window. For
+	 * repeatable rules only orders that reached it after the last award count,
+	 * so the same orders never earn the bonus twice.
 	 *
 	 * @param array    $rule    rule.
 	 * @param int      $user_id user id.
@@ -271,26 +388,14 @@ class WPS_WPR_Achievement_Rules {
 			$start = max( $start, self::wps_wpr_last_award_time( $user_id, $rule['id'] ) + 1 );
 		}
 
-		$orders = wc_get_orders(
-			array(
-				'customer_id'  => absint( $user_id ),
-				'status'       => self::wps_wpr_counted_statuses(),
-				'date_created' => '>=' . $start,
-				'limit'        => -1,
-				'type'         => 'shop_order',
-			)
-		);
-
-		$current = 0.0;
-		foreach ( $orders as $order ) {
-			if ( 'orders' === $rule['goal_type'] ) {
-				++$current;
-			} else {
-				$current += max( 0, (float) $order->get_total() - (float) $order->get_total_refunded() );
-			}
+		$order_ids = self::wps_wpr_get_counted_order_ids( $user_id, $start, $now );
+		if ( 'orders' === $rule['goal_type'] ) {
+			$current = (float) count( $order_ids );
+		} else {
+			$current = WPS_WPR_Condition_Engine::wps_wpr_sum_net_totals( $order_ids );
 		}
 
-		$current = (float) apply_filters( 'wps_wpr_achievement_progress', $current, $rule, $user_id, $orders );
+		$current = (float) apply_filters( 'wps_wpr_achievement_progress', $current, $rule, $user_id, $order_ids );
 		$goal    = (float) $rule['goal_value'];
 
 		return array(
@@ -320,6 +425,9 @@ class WPS_WPR_Achievement_Rules {
 		if ( ! $order || ! is_a( $order, 'WC_Order' ) ) {
 			return;
 		}
+		self::wps_wpr_mark_counted( $order );
+		WPS_WPR_Condition_Engine::wps_wpr_flush_cache();
+
 		$user_id = absint( $order->get_user_id() );
 		if ( ! $user_id || ( function_exists( 'wps_wpr_restrict_user_fun' ) && wps_wpr_restrict_user_fun( $user_id ) ) ) {
 			return;
@@ -344,6 +452,10 @@ class WPS_WPR_Achievement_Rules {
 			return false;
 		}
 		if ( 'once' === $rule['repeat'] && self::wps_wpr_last_award_time( $user_id, $rule['id'] ) ) {
+			return false;
+		}
+		// Repeatable rules award at most once per period.
+		if ( time() < self::wps_wpr_next_award_time( $rule, $user_id ) ) {
 			return false;
 		}
 
@@ -431,7 +543,30 @@ class WPS_WPR_Achievement_Rules {
 			return;
 		}
 		echo '<style>' . self::wps_wpr_account_css() . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static CSS.
-		echo wp_kses_post( $html );
+		echo wp_kses( $html, self::wps_wpr_account_allowed_html() );
+	}
+
+	/**
+	 * Allowed HTML of the My Account section: post HTML plus the progress bar's ARIA attributes.
+	 *
+	 * @return array
+	 */
+	public static function wps_wpr_account_allowed_html() {
+		$allowed        = wp_kses_allowed_html( 'post' );
+		$allowed['div'] = array_merge(
+			isset( $allowed['div'] ) ? $allowed['div'] : array(),
+			array(
+				'class'          => true,
+				'data-rule'      => true,
+				'role'           => true,
+				'aria-label'     => true,
+				'aria-valuemin'  => true,
+				'aria-valuemax'  => true,
+				'aria-valuenow'  => true,
+				'aria-valuetext' => true,
+			)
+		);
+		return $allowed;
 	}
 
 	/**
@@ -465,12 +600,14 @@ class WPS_WPR_Achievement_Rules {
 			if ( ! WPS_WPR_Condition_Engine::wps_wpr_evaluate( $rule['conditions'], $rule['match'], $context ) ) {
 				continue;
 			}
-			$earned   = 'once' === $rule['repeat'] && self::wps_wpr_last_award_time( $user_id, $rule['id'] );
+			$next     = self::wps_wpr_next_award_time( $rule, $user_id );
+			$earned   = ( 'once' === $rule['repeat'] && self::wps_wpr_last_award_time( $user_id, $rule['id'] ) ) || time() < $next;
 			$progress = self::wps_wpr_get_progress( $rule, $user_id );
 			$percent  = $earned ? 100 : ( $progress['goal'] > 0 ? min( 100, (int) floor( $progress['current'] / $progress['goal'] * 100 ) ) : 0 );
 			$items[]  = array(
 				'rule'     => $rule,
 				'earned'   => $earned,
+				'next'     => 'repeat' === $rule['repeat'] && time() < $next ? $next : 0,
 				'progress' => $progress,
 				'percent'  => $percent,
 			);
@@ -505,10 +642,13 @@ class WPS_WPR_Achievement_Rules {
 						</span>
 					</div>
 					<div class="wps_wpr_achievement_goal"><?php echo esc_html( self::wps_wpr_goal_text( $rule ) ); ?></div>
-					<div class="wps_wpr_achievement_bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?php echo esc_attr( $item['percent'] ); ?>"><span style="width:<?php echo esc_attr( $item['percent'] ); ?>%"></span></div>
+					<div class="wps_wpr_achievement_bar" role="progressbar" aria-label="<?php echo esc_attr( $rule['name'] ); ?>" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?php echo esc_attr( $item['percent'] ); ?>"><span style="width:<?php echo esc_attr( $item['percent'] ); ?>%"></span></div>
 					<div class="wps_wpr_achievement_meta">
 						<?php
-						if ( $item['earned'] ) {
+						if ( $item['next'] ) {
+							/* translators: %s: date */
+							echo esc_html( sprintf( __( 'Earned. You can earn it again from %s.', 'points-and-rewards-for-woocommerce' ), date_i18n( get_option( 'date_format' ), $item['next'] ) ) );
+						} elseif ( $item['earned'] ) {
 							esc_html_e( 'Earned', 'points-and-rewards-for-woocommerce' );
 						} else {
 							echo esc_html( $progress_text );

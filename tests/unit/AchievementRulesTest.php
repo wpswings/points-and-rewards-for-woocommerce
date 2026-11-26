@@ -50,6 +50,9 @@ class AchievementRulesTest extends TestCase {
 		foreach ( $this->orders as $order_id ) {
 			$order = wc_get_order( $order_id );
 			if ( $order ) {
+				foreach ( $order->get_refunds() as $refund ) {
+					$refund->delete( true );
+				}
 				$order->delete( true );
 			}
 		}
@@ -63,6 +66,7 @@ class AchievementRulesTest extends TestCase {
 			update_option( WPS_WPR_Achievement_Rules::OPTION, $this->saved_rules );
 		}
 		remove_all_filters( 'wps_wpr_achievement_rules_limit' );
+		WPS_WPR_Condition_Engine::wps_wpr_flush_cache();
 		$this->users  = array();
 		$this->orders = array();
 	}
@@ -96,7 +100,7 @@ class AchievementRulesTest extends TestCase {
 	 * @param int    $user_id  customer.
 	 * @param float  $total    order total.
 	 * @param string $status   status.
-	 * @param int    $days_ago creation date offset.
+	 * @param int    $days_ago creation (and paid / completed) date offset.
 	 * @return WC_Order
 	 */
 	private function make_order( $user_id, $total, $status = 'completed', $days_ago = 0 ) {
@@ -107,6 +111,13 @@ class AchievementRulesTest extends TestCase {
 			$order->set_date_created( time() - $days_ago * DAY_IN_SECONDS );
 		}
 		$order->set_status( $status );
+		$order->save();
+		if ( $days_ago && $order->get_date_paid() ) {
+			$order->set_date_paid( time() - $days_ago * DAY_IN_SECONDS );
+		}
+		if ( $days_ago && $order->get_date_completed() ) {
+			$order->set_date_completed( time() - $days_ago * DAY_IN_SECONDS );
+		}
 		$order->save();
 		$this->orders[] = $order->get_id();
 		return wc_get_order( $order->get_id() );
@@ -426,5 +437,248 @@ class AchievementRulesTest extends TestCase {
 
 		update_user_meta( $user_id, 'billing_country', 'DE' );
 		$this->assertSame( '', WPS_WPR_Achievement_Rules::wps_wpr_get_account_achievements_html( $user_id ) );
+	}
+
+	/**
+	 * Move a user's award times and orders' counted times back in time.
+	 *
+	 * @param int   $user_id   user.
+	 * @param int   $seconds   seconds to move back.
+	 * @param int[] $order_ids orders whose counted time is moved too.
+	 */
+	private function shift_back( $user_id, $seconds, $order_ids = array() ) {
+		$awards = WPS_WPR_Achievement_Rules::wps_wpr_get_user_awards( $user_id );
+		foreach ( $awards as $rule_id => $list ) {
+			foreach ( $list as $i => $award ) {
+				$awards[ $rule_id ][ $i ]['time'] = $award['time'] - $seconds;
+			}
+		}
+		update_user_meta( $user_id, WPS_WPR_Achievement_Rules::AWARDS_META, $awards );
+		foreach ( $order_ids as $order_id ) {
+			$order = wc_get_order( $order_id );
+			$order->update_meta_data( WPS_WPR_Achievement_Rules::COUNTED_META, (int) $order->get_meta( WPS_WPR_Achievement_Rules::COUNTED_META ) - $seconds );
+			$order->save_meta_data();
+		}
+	}
+
+	/**
+	 * Complete an order through the achievement hook.
+	 *
+	 * @param WPS_WPR_Achievement_Rules $rules rules object.
+	 * @param WC_Order                  $order order.
+	 */
+	private function complete( $rules, $order ) {
+		$order = wc_get_order( $order->get_id() );
+		$order->set_status( 'completed' );
+		$order->save();
+		$rules->wps_wpr_check_achievements( $order->get_id(), 'processing', 'completed' );
+	}
+
+	/**
+	 * Total awards of a rule for a user.
+	 *
+	 * @param int $user_id user.
+	 * @return int
+	 */
+	private function award_count( $user_id ) {
+		$awards = WPS_WPR_Achievement_Rules::wps_wpr_get_user_awards( $user_id );
+		return isset( $awards['rule_test1'] ) ? count( $awards['rule_test1'] ) : 0;
+	}
+
+	/**
+	 * A repeatable rule awards at most once per period, and again in the next period.
+	 */
+	public function test_repeatable_awards_once_per_period() {
+		$user_id = $this->make_user();
+		update_option(
+			WPS_WPR_Achievement_Rules::OPTION,
+			array( $this->rule( array( 'goal_value' => 100, 'points' => 10, 'repeat' => 'repeat' ) ) )
+		);
+		$rules = new WPS_WPR_Achievement_Rules();
+
+		$first = $this->make_order( $user_id, 100, 'processing' );
+		$this->complete( $rules, $first );
+		$this->assertSame( 1, $this->award_count( $user_id ) );
+
+		// 50 + 50 on the same day: the goal is reached again, but not in a new period.
+		$second = $this->make_order( $user_id, 50, 'processing' );
+		$this->complete( $rules, $second );
+		$third = $this->make_order( $user_id, 50, 'processing' );
+		$this->complete( $rules, $third );
+		$this->assertSame( 1, $this->award_count( $user_id ) );
+		$this->assertSame( 10, absint( get_user_meta( $user_id, 'wps_wpr_points', true ) ) );
+
+		// 10 days later: still inside the period, no award.
+		$this->shift_back( $user_id, 10 * DAY_IN_SECONDS, array( $first->get_id() ) );
+		$fourth = $this->make_order( $user_id, 1, 'processing' );
+		$this->complete( $rules, $fourth );
+		$this->assertSame( 1, $this->award_count( $user_id ) );
+
+		// The period has passed since the award: the 50 + 50 (+1) reached after it award again.
+		$this->shift_back( $user_id, 21 * DAY_IN_SECONDS, array( $first->get_id() ) );
+		$html = WPS_WPR_Achievement_Rules::wps_wpr_get_account_achievements_html( $user_id );
+		$this->assertStringNotContainsString( 'You can earn it again', $html );
+		$fifth = $this->make_order( $user_id, 1, 'processing' );
+		$this->complete( $rules, $fifth );
+		$this->assertSame( 2, $this->award_count( $user_id ) );
+		$this->assertSame( 20, absint( get_user_meta( $user_id, 'wps_wpr_points', true ) ) );
+
+		// Right after the second award My Account shows when it can be earned again.
+		$html = WPS_WPR_Achievement_Rules::wps_wpr_get_account_achievements_html( $user_id );
+		$this->assertStringContainsString( 'You can earn it again from', $html );
+	}
+
+	/**
+	 * Window membership uses the date the order reached the award status, not its creation date.
+	 */
+	public function test_order_completed_after_award_counts() {
+		$user_id = $this->make_user();
+		update_option(
+			WPS_WPR_Achievement_Rules::OPTION,
+			array( $this->rule( array( 'goal_value' => 100, 'points' => 10, 'repeat' => 'repeat' ) ) )
+		);
+		$rules = new WPS_WPR_Achievement_Rules();
+
+		// Two orders placed together; A completes first and earns the award.
+		$a = $this->make_order( $user_id, 100, 'processing', 2 );
+		$b = $this->make_order( $user_id, 100, 'processing', 2 );
+		$this->complete( $rules, $a );
+		$this->assertSame( 1, $this->award_count( $user_id ) );
+
+		// The period passes; B was placed before the award (and before the window) but completes now.
+		$this->shift_back( $user_id, 31 * DAY_IN_SECONDS, array( $a->get_id() ) );
+		$b->set_date_created( time() - 33 * DAY_IN_SECONDS );
+		$b->save();
+		$this->complete( $rules, $b );
+		$this->assertSame( 2, $this->award_count( $user_id ) );
+	}
+
+	/**
+	 * Spend progress and lifetime spend are net of refunds, using aggregate queries.
+	 */
+	public function test_spend_is_net_of_refunds() {
+		$user_id = $this->make_user();
+		$this->make_order( $user_id, 120 );
+		$order = $this->make_order( $user_id, 200 );
+		wc_create_refund(
+			array(
+				'order_id' => $order->get_id(),
+				'amount'   => 50,
+			)
+		);
+		$this->make_order( $user_id, 999, 'cancelled' );
+
+		$this->assertEquals( 270, WPS_WPR_Achievement_Rules::wps_wpr_get_progress( $this->rule(), $user_id )['current'] );
+		WPS_WPR_Condition_Engine::wps_wpr_flush_cache();
+		$this->assertEquals( 270, WPS_WPR_Condition_Engine::wps_wpr_resolve_lifetime_spend( array( 'user_id' => $user_id ) ) );
+		$this->assertEquals( 2, WPS_WPR_Achievement_Rules::wps_wpr_get_progress( $this->rule( array( 'goal_type' => 'orders' ) ), $user_id )['current'] );
+		$this->assertSame( 0.0, WPS_WPR_Condition_Engine::wps_wpr_sum_net_totals( array() ) );
+	}
+
+	/**
+	 * The rendered progress bar keeps its ARIA values.
+	 */
+	public function test_rendered_progress_bar_keeps_aria() {
+		$user_id = $this->make_user();
+		$this->make_order( $user_id, 125 );
+		update_option( WPS_WPR_Achievement_Rules::OPTION, array( $this->rule() ) );
+
+		ob_start();
+		( new WPS_WPR_Achievement_Rules() )->wps_wpr_render_account_achievements( $user_id );
+		$html = ob_get_clean();
+		$this->assertStringContainsString( 'role="progressbar"', $html );
+		$this->assertStringContainsString( 'aria-valuenow="25"', $html );
+		$this->assertStringContainsString( 'aria-valuemin="0"', $html );
+		$this->assertStringContainsString( 'aria-valuemax="100"', $html );
+	}
+
+	/**
+	 * Active rules beyond the free limit are shown as "Inactive (limit)" and don't run.
+	 */
+	public function test_rules_beyond_limit_shown_inactive() {
+		$first  = $this->rule( array( 'id' => 'rule_p1', 'name' => 'P1', 'goal_value' => 100 ) );
+		$second = $this->rule( array( 'id' => 'rule_p2', 'name' => 'P2', 'goal_value' => 100 ) );
+		update_option( WPS_WPR_Achievement_Rules::OPTION, array( $first, $second ) );
+
+		$this->assertSame( array( 'rule_p2' ), WPS_WPR_Achievement_Rules::wps_wpr_get_limited_rule_ids() );
+		$this->assertSame( array( 'rule_p1' ), wp_list_pluck( WPS_WPR_Achievement_Rules::wps_wpr_get_active_rules(), 'id' ) );
+
+		// Runtime matches: only P1 awards.
+		$user_id = $this->make_user();
+		$order   = $this->make_order( $user_id, 150 );
+		( new WPS_WPR_Achievement_Rules() )->wps_wpr_check_achievements( $order->get_id(), 'processing', 'completed' );
+		$this->assertSame( array( 'rule_p1' ), array_keys( WPS_WPR_Achievement_Rules::wps_wpr_get_user_awards( $user_id ) ) );
+
+		ob_start();
+		include WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-achievement-rules-settings.php';
+		$html = ob_get_clean();
+		$this->assertSame( 1, substr_count( $html, 'wps_wpr_ach_limited_badge' ) );
+		$this->assertStringContainsString( 'Inactive (limit)', $html );
+		$this->assertStringContainsString( 'wps_wpr_ach_limited_notice', $html );
+		$this->assertStringContainsString( 'at most once per period', $html );
+
+		// With the limit lifted nothing is limited.
+		add_filter( 'wps_wpr_achievement_rules_limit', '__return_zero' );
+		$this->assertSame( array(), WPS_WPR_Achievement_Rules::wps_wpr_get_limited_rule_ids() );
+	}
+
+	/**
+	 * In "any" mode, a skipped order condition keeps the rule visible on My Account.
+	 */
+	public function test_any_rule_with_skipped_order_condition_is_shown() {
+		$user_id    = $this->make_user( array( 'membership_level' => 'Gold' ) );
+		$conditions = array(
+			array( 'type' => 'membership', 'operator' => 'in', 'value' => 'Silver' ),
+			array( 'type' => 'order_total', 'operator' => '>=', 'value' => '1' ),
+		);
+		$preview = array( 'user_id' => $user_id, 'skip_order_conditions' => true );
+		$this->assertTrue( WPS_WPR_Condition_Engine::wps_wpr_evaluate( $conditions, 'any', $preview ) );
+		$this->assertFalse( WPS_WPR_Condition_Engine::wps_wpr_evaluate( $conditions, 'all', $preview ) );
+		// Without preview mode the order condition fails as before.
+		$this->assertFalse( WPS_WPR_Condition_Engine::wps_wpr_evaluate( $conditions, 'any', array( 'user_id' => $user_id ) ) );
+
+		update_option( WPS_WPR_Achievement_Rules::OPTION, array( $this->rule( array( 'match' => 'any', 'conditions' => $conditions ) ) ) );
+		$this->assertStringContainsString( 'Spend 500 in 30 days', WPS_WPR_Achievement_Rules::wps_wpr_get_account_achievements_html( $user_id ) );
+	}
+
+	/**
+	 * Invalid numbers in number conditions are dropped instead of saved as 0.
+	 */
+	public function test_invalid_number_condition_dropped() {
+		$result = WPS_WPR_Achievement_Rules::wps_wpr_sanitize_rules(
+			array(
+				array(
+					'name'       => 'N',
+					'goal_value' => '10',
+					'points'     => '5',
+					'conditions' => array(
+						array( 'type' => 'order_total', 'operator' => '>=', 'value' => 'abc' ),
+						array( 'type' => 'order_total', 'operator' => '>=', 'value' => '12abc' ),
+						array( 'type' => 'order_total', 'operator' => '>=', 'value' => '' ),
+						array( 'type' => 'order_count', 'operator' => '>=', 'value' => '3' ),
+						array( 'type' => 'lifetime_spend', 'operator' => '>=', 'value' => '0' ),
+					),
+				),
+			)
+		);
+		$conditions = $result['rules'][0]['conditions'];
+		$this->assertCount( 2, $conditions );
+		$this->assertSame( 'order_count', $conditions[0]['type'] );
+		$this->assertSame( '3', $conditions[0]['value'] );
+		$this->assertSame( '0', $conditions[1]['value'] );
+	}
+
+	/**
+	 * The customer's own locale wins over the current request language.
+	 */
+	public function test_language_prefers_customer_locale() {
+		$user_id = $this->make_user( array( 'locale' => 'fr_FR' ) );
+		$wpml    = function () {
+			return 'de';
+		};
+		add_filter( 'wpml_current_language', $wpml );
+		$this->assertTrue( $this->check( 'language', 'in', 'fr', array( 'user_id' => $user_id ) ) );
+		$this->assertFalse( $this->check( 'language', 'in', 'de', array( 'user_id' => $user_id ) ) );
+		remove_filter( 'wpml_current_language', $wpml );
 	}
 }

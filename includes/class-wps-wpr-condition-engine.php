@@ -25,6 +25,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WPS_WPR_Condition_Engine {
 
 	/**
+	 * Lifetime spend per user for the current request.
+	 *
+	 * @var array
+	 */
+	private static $lifetime_spend_cache = array();
+
+	/**
 	 * Operators available for list conditions.
 	 *
 	 * @return array
@@ -132,10 +139,12 @@ class WPS_WPR_Condition_Engine {
 		);
 
 		$results = array();
+		$skipped = false;
 		foreach ( $conditions as $condition ) {
 			$result = self::wps_wpr_evaluate_condition( $condition, $context );
 			if ( null === $result ) {
-				continue; // Skipped (e.g. order condition outside an order).
+				$skipped = true; // Skipped (e.g. order condition outside an order).
+				continue;
 			}
 			$results[] = $result;
 		}
@@ -144,7 +153,12 @@ class WPS_WPR_Condition_Engine {
 			return true;
 		}
 
-		$passed = 'any' === $match ? in_array( true, $results, true ) : ! in_array( false, $results, true );
+		if ( 'any' === $match ) {
+			// A skipped condition could still pass on a future order, so "any" may pass.
+			$passed = $skipped || in_array( true, $results, true );
+		} else {
+			$passed = ! in_array( false, $results, true );
+		}
 
 		return (bool) apply_filters( 'wps_wpr_conditions_passed', $passed, $conditions, $match, $context );
 	}
@@ -290,6 +304,11 @@ class WPS_WPR_Condition_Engine {
 	/**
 	 * Lifetime spend (net of refunds) on paid orders.
 	 *
+	 * Uses order IDs plus one aggregate query instead of loading every order.
+	 * WooCommerce's own customer total spent is not used because it is gross
+	 * of refunds, ignores a custom points award status and is cached in user
+	 * meta. The value is memoized per user for the current request.
+	 *
 	 * @param array $context context.
 	 * @return float
 	 */
@@ -298,24 +317,72 @@ class WPS_WPR_Condition_Engine {
 		if ( ! $user_id ) {
 			return 0.0;
 		}
-		$orders = wc_get_orders(
+		if ( isset( self::$lifetime_spend_cache[ $user_id ] ) ) {
+			return self::$lifetime_spend_cache[ $user_id ];
+		}
+		$ids = wc_get_orders(
 			array(
 				'customer_id' => $user_id,
 				'status'      => self::wps_wpr_paid_statuses(),
 				'limit'       => -1,
+				'return'      => 'ids',
 				'type'        => 'shop_order',
 			)
 		);
-		$total = 0.0;
-		foreach ( $orders as $order ) {
-			$total += (float) $order->get_total() - (float) $order->get_total_refunded();
-		}
-		return $total;
+		self::$lifetime_spend_cache[ $user_id ] = self::wps_wpr_sum_net_totals( $ids );
+		return self::$lifetime_spend_cache[ $user_id ];
 	}
 
 	/**
-	 * Language of the customer: order language (WPML), current language
-	 * (WPML / Polylang), then the user's locale.
+	 * Clear the per-request caches (call when orders change).
+	 *
+	 * @return void
+	 */
+	public static function wps_wpr_flush_cache() {
+		self::$lifetime_spend_cache = array();
+	}
+
+	/**
+	 * Sum of order totals net of refunds, without loading order objects.
+	 *
+	 * Works with both HPOS and posts storage. Refund orders store a negative
+	 * total, so adding them gives the net amount.
+	 *
+	 * @param int[] $order_ids order ids.
+	 * @return float
+	 */
+	public static function wps_wpr_sum_net_totals( $order_ids ) {
+		global $wpdb;
+		$order_ids = array_values( array_filter( array_map( 'absint', (array) $order_ids ) ) );
+		if ( empty( $order_ids ) ) {
+			return 0.0;
+		}
+
+		$hpos  = class_exists( '\Automattic\WooCommerce\Utilities\OrderUtil' ) && \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled();
+		$total = 0.0;
+		foreach ( array_chunk( $order_ids, 500 ) as $chunk ) {
+			$in = implode( ',', $chunk ); // Integers only (absint above).
+			// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery
+			if ( $hpos ) {
+				$table  = $wpdb->prefix . 'wc_orders';
+				$total += (float) $wpdb->get_var( "SELECT SUM(total_amount) FROM {$table} WHERE id IN ({$in})" );
+				$total += (float) $wpdb->get_var( "SELECT SUM(total_amount) FROM {$table} WHERE type = 'shop_order_refund' AND parent_order_id IN ({$in})" );
+			} else {
+				$total += (float) $wpdb->get_var( "SELECT SUM(meta_value) FROM {$wpdb->postmeta} WHERE meta_key = '_order_total' AND post_id IN ({$in})" );
+				$total += (float) $wpdb->get_var( "SELECT SUM(pm.meta_value) FROM {$wpdb->posts} p INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID AND pm.meta_key = '_order_total' WHERE p.post_type = 'shop_order_refund' AND p.post_parent IN ({$in})" );
+			}
+			// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery
+		}
+		return max( 0.0, $total );
+	}
+
+	/**
+	 * Language of the customer: order language (WPML), the user's own locale,
+	 * then (on the storefront only) the current WPML / Polylang language, and
+	 * finally the site locale.
+	 *
+	 * The request language is not used in wp-admin, cron, REST or webhooks,
+	 * where it is the admin's language rather than the customer's.
 	 *
 	 * @param array $context context.
 	 * @return string
@@ -328,12 +395,23 @@ class WPS_WPR_Condition_Engine {
 			}
 		}
 
-		$language = apply_filters( 'wpml_current_language', null );
-		if ( empty( $language ) && function_exists( 'pll_current_language' ) ) {
-			$language = pll_current_language( 'locale' );
+		$user_id = absint( $context['user_id'] );
+		if ( $user_id ) {
+			$user_locale = get_user_meta( $user_id, 'locale', true );
+			if ( $user_locale ) {
+				return (string) $user_locale;
+			}
+		}
+
+		$language   = '';
+		$storefront = ! is_admin() && ! wp_doing_cron() && ! wp_doing_ajax() && ! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) && ! ( defined( 'WP_CLI' ) && WP_CLI );
+		if ( $storefront ) {
+			$language = apply_filters( 'wpml_current_language', null );
+			if ( empty( $language ) && function_exists( 'pll_current_language' ) ) {
+				$language = pll_current_language( 'locale' );
+			}
 		}
 		if ( empty( $language ) ) {
-			$user_id  = absint( $context['user_id'] );
 			$language = $user_id ? get_user_locale( $user_id ) : determine_locale();
 		}
 		return (string) $language;

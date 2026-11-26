@@ -38,6 +38,7 @@ $wps_wpr_ach_goal_types = WPS_WPR_Achievement_Rules::wps_wpr_goal_types();
 $wps_wpr_ach_cond_types = WPS_WPR_Condition_Engine::wps_wpr_get_condition_types();
 $wps_wpr_ach_list_ops   = WPS_WPR_Condition_Engine::wps_wpr_list_operators();
 $wps_wpr_ach_num_ops    = WPS_WPR_Condition_Engine::wps_wpr_number_operators();
+$wps_wpr_ach_limited    = WPS_WPR_Achievement_Rules::wps_wpr_get_limited_rule_ids();
 
 /**
  * Print one condition row.
@@ -83,9 +84,10 @@ $wps_wpr_ach_condition_row = function ( $rule_key, $cond_key, $condition, $types
  * @param array  $rule     rule values.
  * @return void
  */
-$wps_wpr_ach_rule_block = function ( $rule_key, $rule ) use ( $wps_wpr_ach_condition_row, $wps_wpr_ach_goal_types, $wps_wpr_ach_cond_types, $wps_wpr_ach_list_ops, $wps_wpr_ach_num_ops ) {
-	$rule = wp_parse_args( $rule, WPS_WPR_Achievement_Rules::wps_wpr_rule_defaults() );
-	$name = 'wps_wpr_achievement_rules[' . $rule_key . ']';
+$wps_wpr_ach_rule_block = function ( $rule_key, $rule ) use ( $wps_wpr_ach_condition_row, $wps_wpr_ach_goal_types, $wps_wpr_ach_cond_types, $wps_wpr_ach_list_ops, $wps_wpr_ach_num_ops, $wps_wpr_ach_limited ) {
+	$rule    = wp_parse_args( $rule, WPS_WPR_Achievement_Rules::wps_wpr_rule_defaults() );
+	$name    = 'wps_wpr_achievement_rules[' . $rule_key . ']';
+	$limited = '' !== $rule['id'] && in_array( $rule['id'], $wps_wpr_ach_limited, true );
 	?>
 	<section class="wps_wpr_general_row_wrap wps_wpr_ach_rule" data-rule-key="<?php echo esc_attr( $rule_key ); ?>">
 		<div class="wps_wpr_general_sign_title"><?php echo '' !== $rule['name'] ? esc_html( $rule['name'] ) : esc_html__( 'New rule', 'points-and-rewards-for-woocommerce' ); ?></div>
@@ -101,6 +103,10 @@ $wps_wpr_ach_rule_block = function ( $rule_key, $rule ) use ( $wps_wpr_ach_condi
 				<label class="wps_wpr_general_label"><?php esc_html_e( 'Active', 'points-and-rewards-for-woocommerce' ); ?></label>
 				<div class="wps_wpr_general_content">
 					<input type="checkbox" class="wps_wpr_ach_active" name="<?php echo esc_attr( $name . '[active]' ); ?>" value="yes" <?php checked( $rule['active'], 'yes' ); ?>>
+					<?php if ( $limited ) : ?>
+						<span class="wps_wpr_ach_limited_badge" style="color:#b32d2e;font-weight:600;margin-left:6px;"><?php esc_html_e( 'Inactive (limit)', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<span class="wps_wpr_label_notice"><?php esc_html_e( 'This rule is not running because the active rule limit was reached. Saving will mark it inactive.', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<?php endif; ?>
 				</div>
 			</article>
 			<article class="wps_wpr_general_row">
@@ -129,8 +135,9 @@ $wps_wpr_ach_rule_block = function ( $rule_key, $rule ) use ( $wps_wpr_ach_condi
 				<div class="wps_wpr_general_content">
 					<select name="<?php echo esc_attr( $name . '[repeat]' ); ?>" class="wps_wpr_ach_repeat">
 						<option value="once" <?php selected( $rule['repeat'], 'once' ); ?>><?php esc_html_e( 'Once per customer', 'points-and-rewards-for-woocommerce' ); ?></option>
-						<option value="repeat" <?php selected( $rule['repeat'], 'repeat' ); ?>><?php esc_html_e( 'Every time the goal is reached again', 'points-and-rewards-for-woocommerce' ); ?></option>
+						<option value="repeat" <?php selected( $rule['repeat'], 'repeat' ); ?>><?php esc_html_e( 'Repeatable, at most once per period', 'points-and-rewards-for-woocommerce' ); ?></option>
 					</select>
+					<span class="wps_wpr_label_notice"><?php esc_html_e( 'Repeatable rules award at most once per period (the number of days above). After an award, progress starts again: only orders that reach the award status after the award count toward the next one, and the next award can only happen once the period has passed.', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</div>
 			</article>
 			<article class="wps_wpr_general_row">
@@ -171,6 +178,14 @@ $wps_wpr_ach_rule_block = function ( $rule_key, $rule ) use ( $wps_wpr_ach_condi
 			<?php
 			/* translators: %s: number of active rules */
 			echo esc_html( sprintf( _n( 'You can have %s active rule. Upgrade to Pro for unlimited active rules.', 'You can have %s active rules. Upgrade to Pro for unlimited active rules.', $wps_wpr_ach_limit, 'points-and-rewards-for-woocommerce' ), number_format_i18n( $wps_wpr_ach_limit ) ) );
+			?>
+		</p></div>
+	<?php endif; ?>
+	<?php if ( ! empty( $wps_wpr_ach_limited ) ) : ?>
+		<div class="notice notice-warning inline wps_wpr_ach_limited_notice"><p>
+			<?php
+			/* translators: %s: number of rules */
+			echo esc_html( sprintf( _n( '%s rule marked active is not running because the active rule limit was reached. It is shown as "Inactive (limit)".', '%s rules marked active are not running because the active rule limit was reached. They are shown as "Inactive (limit)".', count( $wps_wpr_ach_limited ), 'points-and-rewards-for-woocommerce' ), number_format_i18n( count( $wps_wpr_ach_limited ) ) ) );
 			?>
 		</p></div>
 	<?php endif; ?>

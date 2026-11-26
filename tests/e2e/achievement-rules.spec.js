@@ -1,10 +1,58 @@
 /**
  * E2E: achievement / bonus rules.
  *
- * Needs a logged-in admin storage state (WP_STORAGE_STATE) and the points
- * program enabled. The spec creates its own rule and deletes it at the end.
+ * Needs a logged-in admin storage state (WP_STORAGE_STATE) and WP-CLI for the
+ * site: set WP_CLI to the command (default `wp`, run in the site root).
+ *
+ * Before it runs, the spec backs up the points settings and the saved
+ * achievement rules (into the option wps_wpr_ach_e2e_backup, so a crashed run
+ * is restored by the next one), turns the points program on and clears the
+ * rules. Afterwards it restores both, so it can be run again.
  */
 const { test, expect } = require( '@playwright/test' );
+const { execFileSync } = require( 'child_process' );
+
+/**
+ * Run PHP through `wp eval-file -` and return its trimmed output.
+ *
+ * @param {string} code PHP code (without the opening tag).
+ * @return {string} output.
+ */
+function php( code ) {
+	const cmd = ( process.env.WP_CLI || 'wp' ).split( ' ' );
+	return execFileSync( cmd[ 0 ], [ ...cmd.slice( 1 ), 'eval-file', '-' ], {
+		input: `<?php\n${ code }`,
+		encoding: 'utf8',
+		stdio: [ 'pipe', 'pipe', 'pipe' ],
+	} ).trim();
+}
+
+const PHP_RESTORE = `
+$backup = get_option( 'wps_wpr_ach_e2e_backup', null );
+if ( is_array( $backup ) ) {
+	foreach ( $backup as $name => $value ) {
+		if ( '__none__' === $value ) {
+			delete_option( $name );
+		} else {
+			update_option( $name, $value );
+		}
+	}
+	delete_option( 'wps_wpr_ach_e2e_backup' );
+}
+echo 'restored';`;
+
+const PHP_SETUP = `
+$backup = array();
+foreach ( array( 'wps_wpr_settings_gallery', 'wps_wpr_achievement_rules' ) as $name ) {
+	$backup[ $name ] = get_option( $name, '__none__' );
+}
+add_option( 'wps_wpr_ach_e2e_backup', $backup, '', 'no' );
+$gallery = get_option( 'wps_wpr_settings_gallery', array() );
+$gallery = is_array( $gallery ) ? $gallery : array();
+$gallery['wps_wpr_general_setting_enable'] = 1;
+update_option( 'wps_wpr_settings_gallery', $gallery );
+delete_option( 'wps_wpr_achievement_rules' );
+echo 'ready';`;
 
 const SETTINGS_URL = '/wp-admin/admin.php?page=wps-rwpr-setting&tab=achievement-rules';
 const POINTS_URL = '/my-account/points/';
@@ -30,6 +78,15 @@ async function openSection( section ) {
 }
 
 test.describe.serial( 'Achievement rules', () => {
+	test.beforeAll( () => {
+		php( PHP_RESTORE );
+		expect( php( PHP_SETUP ) ).toBe( 'ready' );
+	} );
+
+	test.afterAll( () => {
+		expect( php( PHP_RESTORE ) ).toBe( 'restored' );
+	} );
+
 	test( 'admin creates a rule with conditions', async ( { page } ) => {
 		await page.goto( SETTINGS_URL );
 		await dismissOnboarding( page );
@@ -42,6 +99,7 @@ test.describe.serial( 'Achievement rules', () => {
 		await rule.locator( '.wps_wpr_ach_goal_value' ).fill( '400' );
 		await rule.locator( '.wps_wpr_ach_window' ).fill( '30' );
 		await rule.locator( '.wps_wpr_ach_points' ).fill( '40' );
+		await expect( rule ).toContainText( 'at most once per period' );
 
 		// Condition: role is administrator. Number types switch the operators.
 		await rule.locator( '.wps_wpr_ach_add_condition' ).click();
