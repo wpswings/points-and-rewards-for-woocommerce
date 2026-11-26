@@ -6,7 +6,7 @@ Requires at least: 6.7.0
 Tested up to: 7.1
 WC requires at least: 6.5.0
 WC tested up to: 11.3.0
-Stable tag: 2.10.5
+Stable tag: 2.10.6
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -306,6 +306,10 @@ Customers can see their points balance in the Points tab under the Account secti
 Please visit [**WP Swings PAR Knowledge Base**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/points-and-rewards-for-woocommerce/?utm_source=wpswings-par-kb&utm_medium=par-org-page&utm_campaign=kb)
 
 == Changelog ==
+
+= 2.10.6 - Released on 18 Nov 2026 =
+* Security Hardening: Stronger concurrent-request protection for Win Wheel, quiz contest and social share rewards
+* Improvement: Leaner release package with development-only files removed
 
 = 2.10.5 - Released on 17 Nov 2026 =
 * New: AI Assistant in admin to help configure plugin settings
