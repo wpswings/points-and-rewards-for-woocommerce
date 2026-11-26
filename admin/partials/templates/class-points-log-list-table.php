@@ -1529,6 +1529,7 @@ if ( ! empty( $wps_wpr_actions ) && ! empty( $user_log_id ) ) {
 					'partial_refund_points_deducted' => array( esc_html__( 'Earned points deducted for a partial refund', 'points-and-rewards-for-woocommerce' ), '-' ),
 					'partial_refund_points_restored' => array( esc_html__( 'Partial refund deduction added back after the full order points were deducted', 'points-and-rewards-for-woocommerce' ), '+' ),
 					'order_rewards_points_reversed'  => array( esc_html__( 'Order Rewards points deducted after the order was cancelled or refunded', 'points-and-rewards-for-woocommerce' ), '-' ),
+					'first_order_points_reversed'    => array( esc_html__( 'First order points deducted after the order was cancelled or refunded', 'points-and-rewards-for-woocommerce' ), '-' ),
 				);
 				foreach ( $wps_wpr_order_adjust_logs as $wps_wpr_log_type => $wps_wpr_log_info ) {
 					if ( empty( $point_log[ $wps_wpr_log_type ] ) || ! is_array( $point_log[ $wps_wpr_log_type ] ) ) {

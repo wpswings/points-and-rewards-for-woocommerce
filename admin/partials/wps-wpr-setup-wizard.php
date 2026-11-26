@@ -76,6 +76,40 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 					<label><strong><?php esc_html_e( 'Enable WooCommerce Points and Rewards', 'points-and-rewards-for-woocommerce' ); ?></strong></label>
 				</div>
 
+				<?php
+				$wps_wpr_program_templates = class_exists( 'WPS_WPR_Wizard_Templates' ) ? WPS_WPR_Wizard_Templates::wps_wpr_get_templates() : array();
+				if ( ! empty( $wps_wpr_program_templates ) ) {
+					?>
+					<div class="wps-wpr-program-templates" id="wps-wpr-program-templates">
+						<h3><?php esc_html_e( 'Start from a template (optional)', 'points-and-rewards-for-woocommerce' ); ?></h3>
+						<p class="wps-wpr-step-description"><?php esc_html_e( 'Pick a ready-made program to pre-fill the next steps. You can still change every value before completing the setup.', 'points-and-rewards-for-woocommerce' ); ?></p>
+						<input type="hidden" name="step0[program_template]" id="wps_wpr_program_template" value="">
+						<div class="wps-wpr-program-template-grid">
+							<?php foreach ( $wps_wpr_program_templates as $wps_wpr_template_id => $wps_wpr_template ) { ?>
+								<div class="wps-wpr-program-template" data-template="<?php echo esc_attr( $wps_wpr_template_id ); ?>">
+									<h4><?php echo esc_html( $wps_wpr_template['title'] ); ?></h4>
+									<?php if ( ! empty( $wps_wpr_template['description'] ) ) { ?>
+										<p><?php echo esc_html( $wps_wpr_template['description'] ); ?></p>
+									<?php } ?>
+									<ul class="wps-wpr-program-template-preview">
+										<?php foreach ( $wps_wpr_template['preview'] as $wps_wpr_preview_line ) { ?>
+											<li><?php echo esc_html( $wps_wpr_preview_line ); ?></li>
+										<?php } ?>
+									</ul>
+									<button type="button" class="wps-wpr-btn wps-wpr-btn-secondary wps-wpr-apply-template" data-template="<?php echo esc_attr( $wps_wpr_template_id ); ?>">
+										<?php esc_html_e( 'Use this template', 'points-and-rewards-for-woocommerce' ); ?>
+									</button>
+								</div>
+							<?php } ?>
+						</div>
+						<button type="button" class="button-link wps-wpr-clear-template" style="display:none;">
+							<?php esc_html_e( 'Start from scratch instead', 'points-and-rewards-for-woocommerce' ); ?>
+						</button>
+					</div>
+					<?php
+				}
+				?>
+
 				<div class="wps-wpr-info-box">
 					<strong><?php esc_html_e( 'What happens when enabled?', 'points-and-rewards-for-woocommerce' ); ?></strong>
 					<ul>
@@ -423,8 +457,8 @@ $currency_symbol  = get_woocommerce_currency_symbol();
 						</div>
 						<div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
 							<div style="font-size: 24px; margin-bottom: 8px;">⏰</div>
-							<strong style="display: block; margin-bottom: 4px; color: white;"><?php esc_html_e( 'Points Expiration', 'points-and-rewards-for-woocommerce' ); ?></strong>
-							<span style="font-size: 14px; color: rgba(255,255,255,0.8);"><?php esc_html_e( 'Set expiry rules to drive urgency', 'points-and-rewards-for-woocommerce' ); ?></span>
+							<strong style="display: block; margin-bottom: 4px; color: white;"><?php esc_html_e( 'Advanced Points Expiry', 'points-and-rewards-for-woocommerce' ); ?></strong>
+							<span style="font-size: 14px; color: rgba(255,255,255,0.8);"><?php esc_html_e( 'Threshold alerts and letting customers extend expiry', 'points-and-rewards-for-woocommerce' ); ?></span>
 						</div>
 						<div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; backdrop-filter: blur(10px);">
 							<div style="font-size: 24px; margin-bottom: 8px;">📧</div>

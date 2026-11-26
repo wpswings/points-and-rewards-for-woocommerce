@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wps-wpr/earn-points",
+	"version": "2.10.6",
+	"title": "Ways to Earn Points",
+	"category": "wps-points-and-rewards",
+	"icon": "awards",
+	"description": "Lists the ways customers can earn points, based on your settings.",
+	"keywords": [
+		"earn",
+		"points",
+		"rewards"
+	],
+	"textdomain": "points-and-rewards-for-woocommerce",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		],
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"editorScript": "wps-wpr-blocks-editor",
+	"style": "wps-wpr-blocks"
+}
