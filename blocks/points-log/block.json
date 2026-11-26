@@ -1,0 +1,46 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wps-wpr/points-log",
+	"version": "2.10.6",
+	"title": "Points Log",
+	"category": "wps-points-and-rewards",
+	"icon": "list-view",
+	"description": "Shows the logged-in customer's full points history.",
+	"keywords": [
+		"points",
+		"history",
+		"log"
+	],
+	"textdomain": "points-and-rewards-for-woocommerce",
+	"attributes": {
+		"showLoginPrompt": {
+			"type": "boolean",
+			"default": true
+		},
+		"loginText": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		],
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"editorScript": "wps-wpr-blocks-editor",
+	"style": "wps-wpr-blocks"
+}

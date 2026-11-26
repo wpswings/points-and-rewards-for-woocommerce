@@ -127,7 +127,7 @@ class WPS_WPR_Order_Points_Lifecycle {
 	 * @return void
 	 */
 	public function wps_wpr_restore_reversed_order_points( $order_id, $old_status, $new_status ) {
-		if ( ! in_array( $old_status, array( 'cancelled', 'refunded', 'failed' ), true ) ) {
+		if ( 'failed' !== $old_status && ! wps_wpr_is_points_reversal_status( $old_status ) ) {
 			return;
 		}
 
@@ -192,6 +192,14 @@ class WPS_WPR_Order_Points_Lifecycle {
 			$restored = true;
 		}
 
+		// Membership level points: the refund check marks a reversed award. Clearing all three keys lets the
+		// membership handler award again at the award status, and leaves nothing to deduct before it does.
+		$membership_restored = false;
+		if ( 'done' === $order->get_meta( 'wps_wpr_mem_points_refund_check' ) ) {
+			$this->wps_wpr_delete_order_meta( $order, array( 'wps_wpr_mem_points_refund_check', 'wps_wpr_already_assign_mem_points', 'wps_wpr_reward_assign_mem_points' ) );
+			$membership_restored = true;
+		}
+
 		if ( $restored ) {
 			// Pro award idempotency token: the per-type flags above still guard every award.
 			$order->delete_meta_data( '_wps_par_points_awarded' );
@@ -224,7 +232,7 @@ class WPS_WPR_Order_Points_Lifecycle {
 		}
 		$order->delete_meta_data( self::RETURNED_REDEEM_META );
 
-		if ( ! $restored && empty( $returned ) ) {
+		if ( ! $restored && ! $membership_restored && empty( $returned ) ) {
 			return;
 		}
 		$order->save();
@@ -349,7 +357,7 @@ class WPS_WPR_Order_Points_Lifecycle {
 	 * @return void
 	 */
 	public function wps_wpr_reverse_order_rewards_points( $order_id, $old_status, $new_status ) {
-		if ( $old_status === $new_status || ! in_array( $new_status, array( 'cancelled', 'refunded' ), true ) ) {
+		if ( $old_status === $new_status || ! wps_wpr_is_points_reversal_status( $new_status ) ) {
 			return;
 		}
 
@@ -395,8 +403,8 @@ class WPS_WPR_Order_Points_Lifecycle {
 		do_action( 'wps_wpr_update_points_log', $user_id );
 
 		$order->add_order_note(
-			/* translators: %s: deducted points */
-			sprintf( esc_html__( '%s Order Rewards points deducted because the order was cancelled or refunded.', 'points-and-rewards-for-woocommerce' ), $awarded )
+			/* translators: 1: points, 2: order status */
+			sprintf( esc_html__( '%1$s Order Rewards points deducted because the order is %2$s.', 'points-and-rewards-for-woocommerce' ), $awarded, wc_get_order_status_name( $new_status ) )
 		);
 	}
 
@@ -521,7 +529,7 @@ class WPS_WPR_Order_Points_Lifecycle {
 	 * @return void
 	 */
 	public function wps_wpr_settle_partial_refunds_on_reversal( $order_id, $old_status, $new_status ) {
-		if ( $old_status === $new_status || ! in_array( $new_status, array( 'cancelled', 'refunded' ), true ) ) {
+		if ( $old_status === $new_status || ! wps_wpr_is_points_reversal_status( $new_status ) ) {
 			return;
 		}
 
