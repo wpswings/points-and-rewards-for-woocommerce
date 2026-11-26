@@ -47,6 +47,13 @@ class WPS_WPR_Rewards_Launcher {
 	protected $widget;
 
 	/**
+	 * Catalog rewards cached for the current request.
+	 *
+	 * @var array|null
+	 */
+	protected static $catalog_cache = null;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param WPS_WPR_Floating_Widget|null $widget floating widget instance.
@@ -123,27 +130,61 @@ class WPS_WPR_Rewards_Launcher {
 	}
 
 	/**
+	 * Special page types that page targeting can match besides page IDs.
+	 *
+	 * @return array key => label.
+	 */
+	public static function wps_wpr_get_page_types() {
+		return array(
+			'front_page' => __( 'Front page', 'points-and-rewards-for-woocommerce' ),
+			'blog'       => __( 'Blog posts index', 'points-and-rewards-for-woocommerce' ),
+			'shop'       => __( 'Shop page', 'points-and-rewards-for-woocommerce' ),
+			'product'    => __( 'Product pages', 'points-and-rewards-for-woocommerce' ),
+			'archive'    => __( 'Archives (categories, tags, product categories)', 'points-and-rewards-for-woocommerce' ),
+			'search'     => __( 'Search results', 'points-and-rewards-for-woocommerce' ),
+		);
+	}
+
+	/**
+	 * Parse a list of page type keys into the known ones.
+	 *
+	 * @param  string|array $types raw keys (array or comma-separated).
+	 * @return string[]
+	 */
+	public static function wps_wpr_parse_page_types( $types ) {
+		if ( ! is_array( $types ) ) {
+			$types = preg_split( '/[\s,]+/', (string) $types, -1, PREG_SPLIT_NO_EMPTY );
+		}
+		$types = array_map( 'sanitize_key', array_map( 'strval', (array) $types ) );
+		return array_values( array_intersect( array_keys( self::wps_wpr_get_page_types() ), $types ) );
+	}
+
+	/**
 	 * Whether page targeting allows the widget for a queried object.
 	 *
-	 * @param  int   $object_id queried object id (0 for archives, search, etc).
-	 * @param  array $settings  widget settings.
+	 * @param  int        $object_id  queried object id (0 for archives, search, etc).
+	 * @param  array      $settings   widget settings.
+	 * @param  array      $page_types page types the current request matches (see wps_wpr_get_current_page_types()).
 	 * @return bool
 	 */
-	public static function wps_wpr_page_targeting_allows( $object_id, $settings ) {
-		$mode = isset( $settings['wps_wpr_fw_targeting'] ) ? $settings['wps_wpr_fw_targeting'] : 'all';
-		$ids  = self::wps_wpr_parse_page_ids( isset( $settings['wps_wpr_fw_page_ids'] ) ? $settings['wps_wpr_fw_page_ids'] : '' );
+	public static function wps_wpr_page_targeting_allows( $object_id, $settings, $page_types = array() ) {
+		$mode     = isset( $settings['wps_wpr_fw_targeting'] ) ? $settings['wps_wpr_fw_targeting'] : 'all';
+		$ids      = self::wps_wpr_parse_page_ids( isset( $settings['wps_wpr_fw_page_ids'] ) ? $settings['wps_wpr_fw_page_ids'] : '' );
+		$selected = self::wps_wpr_parse_page_types( isset( $settings['wps_wpr_fw_page_types'] ) ? $settings['wps_wpr_fw_page_types'] : '' );
+		$matched  = in_array( absint( $object_id ), $ids, true ) || array_intersect( $selected, (array) $page_types );
 
 		if ( 'include' === $mode ) {
-			return in_array( absint( $object_id ), $ids, true );
+			return (bool) $matched;
 		}
 		if ( 'exclude' === $mode ) {
-			return ! in_array( absint( $object_id ), $ids, true );
+			return ! $matched;
 		}
 		return true;
 	}
 
 	/**
-	 * Queried object id, mapping the WooCommerce shop archive to the shop page.
+	 * Queried object id, mapping the WooCommerce shop archive to the shop page
+	 * and the blog posts index to the "Posts page".
 	 *
 	 * @return int
 	 */
@@ -151,10 +192,41 @@ class WPS_WPR_Rewards_Launcher {
 		if ( function_exists( 'is_shop' ) && is_shop() && function_exists( 'wc_get_page_id' ) ) {
 			return absint( wc_get_page_id( 'shop' ) );
 		}
+		if ( is_home() && ! is_front_page() ) {
+			return absint( get_option( 'page_for_posts' ) );
+		}
 		if ( is_singular() || is_page() ) {
 			return absint( get_queried_object_id() );
 		}
 		return 0;
+	}
+
+	/**
+	 * Special page types the current request matches.
+	 *
+	 * @return string[]
+	 */
+	public static function wps_wpr_get_current_page_types() {
+		$types = array();
+		if ( is_front_page() ) {
+			$types[] = 'front_page';
+		}
+		if ( is_home() ) {
+			$types[] = 'blog';
+		}
+		if ( function_exists( 'is_shop' ) && is_shop() ) {
+			$types[] = 'shop';
+		}
+		if ( function_exists( 'is_product' ) && is_product() ) {
+			$types[] = 'product';
+		}
+		if ( is_archive() && ! in_array( 'shop', $types, true ) ) {
+			$types[] = 'archive';
+		}
+		if ( is_search() ) {
+			$types[] = 'search';
+		}
+		return $types;
 	}
 
 	/**
@@ -170,7 +242,7 @@ class WPS_WPR_Rewards_Launcher {
 		if ( ! $display ) {
 			return false;
 		}
-		return self::wps_wpr_page_targeting_allows( self::wps_wpr_get_current_object_id(), $settings );
+		return self::wps_wpr_page_targeting_allows( self::wps_wpr_get_current_object_id(), $settings, self::wps_wpr_get_current_page_types() );
 	}
 
 	/**
@@ -277,6 +349,7 @@ class WPS_WPR_Rewards_Launcher {
 			if ( ! is_array( $rows ) ) {
 				continue;
 			}
+			$position = 0;
 			foreach ( $rows as $row ) {
 				if ( ! is_array( $row ) || ! isset( $row[ $key ] ) || ! is_numeric( $row[ $key ] ) ) {
 					continue;
@@ -287,14 +360,15 @@ class WPS_WPR_Rewards_Launcher {
 				}
 				$negative = in_array( $key, $deductions, true ) || ( isset( $row['sign'] ) && '-' === $row['sign'] );
 				$date     = isset( $row['date'] ) ? (string) $row['date'] : '';
-				$time     = '' !== $date ? strtotime( $date ) : false;
+				$time     = self::wps_wpr_parse_log_date( $date );
 
 				$entries[] = array(
 					'key'       => (string) $key,
 					'label'     => self::wps_wpr_get_activity_label( $key ),
 					'points'    => (int) round( $negative ? -$amount : $amount ),
 					'date'      => $date,
-					'timestamp' => false === $time ? 0 : $time,
+					'timestamp' => $time,
+					'position'  => $position++,
 					'sequence'  => $sequence++,
 				);
 			}
@@ -303,16 +377,21 @@ class WPS_WPR_Rewards_Launcher {
 		usort(
 			$entries,
 			static function ( $a, $b ) {
-				if ( $a['timestamp'] === $b['timestamp'] ) {
-					return $b['sequence'] - $a['sequence'];
+				// Newest first. Rows of one log key are appended in order, so on equal
+				// (or unknown) times the later position in its key is the newer one.
+				if ( $a['timestamp'] !== $b['timestamp'] ) {
+					return $b['timestamp'] - $a['timestamp'];
 				}
-				return $b['timestamp'] - $a['timestamp'];
+				if ( $a['position'] !== $b['position'] ) {
+					return $b['position'] - $a['position'];
+				}
+				return $b['sequence'] - $a['sequence'];
 			}
 		);
 
 		$entries = array_slice( $entries, 0, max( 1, absint( $limit ) ) );
 		foreach ( $entries as &$entry ) {
-			unset( $entry['sequence'] );
+			unset( $entry['sequence'], $entry['position'] );
 		}
 		unset( $entry );
 
@@ -323,6 +402,78 @@ class WPS_WPR_Rewards_Launcher {
 		 * @param int   $user_id user id.
 		 */
 		return (array) apply_filters( 'wps_wpr_launcher_activity', $entries, $user_id );
+	}
+
+	/**
+	 * Timestamp (wall-clock, as UTC) of a points log date.
+	 *
+	 * Log dates are written with date_i18n( 'Y-m-d h:i:sa' ), so the am/pm part
+	 * is translated on non-English sites ("nachm.", "अपराह्न", ...) and strtotime()
+	 * cannot read it. Only the digits are parsed here; the meridiem is compared
+	 * with the English and the site locale's strings. When it is not recognised
+	 * the day is still used, so ordering across days stays right.
+	 *
+	 * @param  string $date log date.
+	 * @return int 0 when the date cannot be read.
+	 */
+	public static function wps_wpr_parse_log_date( $date ) {
+		if ( ! preg_match( '/^\s*(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?\s*(.*)$/u', (string) $date, $m ) ) {
+			return 0;
+		}
+		$year  = (int) $m[1];
+		$month = (int) $m[2];
+		$day   = (int) $m[3];
+		if ( ! checkdate( $month, $day, $year ) ) {
+			return 0;
+		}
+		$hour   = isset( $m[4] ) && '' !== $m[4] ? (int) $m[4] : 0;
+		$minute = isset( $m[5] ) && '' !== $m[5] ? (int) $m[5] : 0;
+		$second = isset( $m[6] ) && '' !== $m[6] ? (int) $m[6] : 0;
+		$suffix = isset( $m[7] ) ? trim( $m[7] ) : '';
+
+		if ( '' !== $suffix && $hour >= 1 && $hour <= 12 ) {
+			$meridiem = self::wps_wpr_match_meridiem( $suffix );
+			if ( 'pm' === $meridiem ) {
+				$hour = 12 === $hour ? 12 : $hour + 12;
+			} elseif ( 'am' === $meridiem ) {
+				$hour = 12 === $hour ? 0 : $hour;
+			} else {
+				// Unknown meridiem: keep the day only.
+				$hour   = 0;
+				$minute = 0;
+				$second = 0;
+			}
+		}
+		if ( $hour > 23 || $minute > 59 || $second > 59 ) {
+			return 0;
+		}
+
+		return (int) gmmktime( $hour, $minute, $second, $month, $day, $year );
+	}
+
+	/**
+	 * Whether a meridiem string means "am" or "pm".
+	 *
+	 * @param  string $suffix meridiem as stored in the log.
+	 * @return string 'am', 'pm' or '' when unknown.
+	 */
+	protected static function wps_wpr_match_meridiem( $suffix ) {
+		global $wp_locale;
+		$lower = function_exists( 'mb_strtolower' ) ? mb_strtolower( $suffix ) : strtolower( $suffix );
+		foreach ( array( 'am', 'pm' ) as $key ) {
+			$names = array( $key );
+			if ( $wp_locale instanceof WP_Locale ) {
+				$names[] = $wp_locale->get_meridiem( $key );
+				$names[] = $wp_locale->get_meridiem( strtoupper( $key ) );
+			}
+			foreach ( $names as $name ) {
+				$name = function_exists( 'mb_strtolower' ) ? mb_strtolower( (string) $name ) : strtolower( (string) $name );
+				if ( '' !== $name && $name === $lower ) {
+					return $key;
+				}
+			}
+		}
+		return '';
 	}
 
 	/**
@@ -395,6 +546,10 @@ class WPS_WPR_Rewards_Launcher {
 	 * @return array
 	 */
 	public static function wps_wpr_get_catalog_rewards() {
+		if ( null !== self::$catalog_cache ) {
+			return self::$catalog_cache;
+		}
+
 		$rewards = array();
 		if ( class_exists( 'WPS_WPR_Reward_Catalog' )
 			&& method_exists( 'WPS_WPR_Reward_Catalog', 'wps_wpr_is_enabled' )
@@ -419,23 +574,50 @@ class WPS_WPR_Rewards_Launcher {
 			}
 		);
 
+		self::$catalog_cache = $rewards;
 		return $rewards;
+	}
+
+	/**
+	 * Forget the per-request catalog cache (after the catalog changes, and in tests).
+	 *
+	 * @return void
+	 */
+	public static function wps_wpr_reset_catalog_cache() {
+		self::$catalog_cache = null;
+	}
+
+	/**
+	 * Points balance of a user as used for rewards: a negative balance (for
+	 * example after a refund of an order paid with points) counts as 0.
+	 *
+	 * @param  int $user_id user id.
+	 * @return int
+	 */
+	public static function wps_wpr_get_spendable_balance( $user_id ) {
+		return $user_id ? max( 0, (int) get_user_meta( $user_id, 'wps_wpr_points', true ) ) : 0;
 	}
 
 	/**
 	 * The cheapest reward the user cannot afford yet.
 	 *
-	 * @param  int   $balance points balance.
+	 * @param  int   $balance points balance (a negative balance counts as 0).
 	 * @param  array $rewards rewards.
 	 * @return array|null
 	 */
 	public static function wps_wpr_get_next_reward( $balance, $rewards ) {
-		foreach ( $rewards as $reward ) {
-			if ( isset( $reward['points'] ) && absint( $reward['points'] ) > absint( $balance ) ) {
-				return $reward;
+		$balance = max( 0, (int) $balance );
+		$next    = null;
+		foreach ( (array) $rewards as $reward ) {
+			if ( ! is_array( $reward ) || ! isset( $reward['points'] ) ) {
+				continue;
+			}
+			$cost = absint( $reward['points'] );
+			if ( $cost > $balance && ( null === $next || $cost < absint( $next['points'] ) ) ) {
+				$next = $reward;
 			}
 		}
-		return null;
+		return $next;
 	}
 
 	/**
@@ -452,7 +634,19 @@ class WPS_WPR_Rewards_Launcher {
 			$user = get_userdata( $user_id );
 			$name = $user ? ( $user->first_name ? $user->first_name : $user->display_name ) : '';
 		}
-		if ( ! $user_id || '' === $name ) {
+		if ( ! $user_id && false !== strpos( $text, '[NAME]' ) ) {
+			// The default "Welcome back, [NAME]!" is written for customers; guests get their own line.
+			$guest = __( 'Welcome! Join our rewards program to earn points on every order.', 'points-and-rewards-for-woocommerce' );
+
+			/**
+			 * Filter the launcher welcome line shown to guests when the welcome text uses [NAME].
+			 *
+			 * @param string $guest    guest welcome (plain text).
+			 * @param array  $settings widget settings.
+			 */
+			return trim( (string) apply_filters( 'wps_wpr_launcher_guest_welcome', $guest, $settings ) );
+		}
+		if ( '' === $name ) {
 			$text = trim( preg_replace( '/,?\s*\[NAME\]/', '', $text ) );
 		}
 		return trim( str_replace( '[NAME]', $name, $text ) );
@@ -478,11 +672,12 @@ class WPS_WPR_Rewards_Launcher {
 				}
 				if ( $user_id ) {
 					$html   .= isset( $sections['balance'] ) ? $sections['balance'] : '';
-					$balance = absint( get_user_meta( $user_id, 'wps_wpr_points', true ) );
+					$balance = self::wps_wpr_get_spendable_balance( $user_id );
 					$next    = self::wps_wpr_get_next_reward( $balance, self::wps_wpr_get_catalog_rewards() );
 					if ( $next ) {
-						$needed = absint( $next['points'] ) - $balance;
-						$pct    = absint( $next['points'] ) > 0 ? min( 100, (int) floor( $balance * 100 / absint( $next['points'] ) ) ) : 0;
+						$cost   = absint( $next['points'] );
+						$needed = max( 0, $cost - $balance );
+						$pct    = $cost > 0 ? max( 0, min( 100, (int) floor( $balance * 100 / $cost ) ) ) : 0;
 						$html  .= '<div class="wps-wpr-fw__next">'
 							/* translators: 1: points still needed, 2: reward title */
 							. '<span>' . esc_html( sprintf( __( '%1$s more points to unlock %2$s', 'points-and-rewards-for-woocommerce' ), number_format_i18n( $needed ), isset( $next['title'] ) ? $next['title'] : '' ) ) . '</span>'
@@ -541,7 +736,7 @@ class WPS_WPR_Rewards_Launcher {
 	 */
 	protected function wps_wpr_get_redeem_html( $user_id ) {
 		$rewards    = self::wps_wpr_get_catalog_rewards();
-		$balance    = $user_id ? absint( get_user_meta( $user_id, 'wps_wpr_points', true ) ) : 0;
+		$balance    = self::wps_wpr_get_spendable_balance( $user_id );
 		$points_url = function_exists( 'wc_get_account_endpoint_url' ) ? wc_get_account_endpoint_url( 'points' ) : '';
 		$html       = '';
 

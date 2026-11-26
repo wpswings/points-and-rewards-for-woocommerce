@@ -31,14 +31,51 @@ class RewardsLauncherTest extends TestCase {
 	 */
 	private $users = array();
 
+	/**
+	 * Locale meridiem backup.
+	 *
+	 * @var array|null
+	 */
+	private $meridiem_backup = null;
+
+	/**
+	 * Main query backup.
+	 *
+	 * @var WP_Query|null
+	 */
+	private $query_backup = null;
+
+	/**
+	 * Rewards used by the negative balance tests.
+	 *
+	 * @return array
+	 */
+	public static function two_rewards() {
+		return array(
+			array( 'title' => '5 off', 'points' => 200 ),
+			array( 'title' => '10% off', 'points' => 30 ),
+		);
+	}
+
 	protected function setUp(): void {
 		foreach ( array( WPS_WPR_Floating_Widget::OPTION, 'wps_wpr_settings_gallery' ) as $option ) {
 			$this->backup[ $option ] = get_option( $option, null );
 		}
 		wp_set_current_user( 0 );
+		WPS_WPR_Rewards_Launcher::wps_wpr_reset_catalog_cache();
 	}
 
 	protected function tearDown(): void {
+		WPS_WPR_Rewards_Launcher::wps_wpr_reset_catalog_cache();
+		if ( null !== $this->meridiem_backup ) {
+			$GLOBALS['wp_locale']->meridiem = $this->meridiem_backup;
+			$this->meridiem_backup          = null;
+		}
+		if ( null !== $this->query_backup ) {
+			$GLOBALS['wp_query']     = $this->query_backup; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$GLOBALS['wp_the_query'] = $this->query_backup; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$this->query_backup      = null;
+		}
 		foreach ( $this->backup as $option => $value ) {
 			if ( null === $value ) {
 				delete_option( $option );
@@ -308,6 +345,114 @@ class RewardsLauncherTest extends TestCase {
 		wp_set_current_user( 0 );
 		$json = $this->call_activity_ajax( wp_create_nonce( WPS_WPR_Rewards_Launcher::NONCE_ACTION ) );
 		$this->assertFalse( $json['success'] );
+	}
+
+	public function test_negative_balance_counts_as_zero_for_rewards() {
+		add_filter( 'wps_wpr_launcher_rewards', array( __CLASS__, 'two_rewards' ) );
+		$user_id = $this->make_user( -50 );
+		$this->launcher_settings();
+		$html = ( new WPS_WPR_Floating_Widget() )->wps_wpr_get_markup( $user_id );
+
+		$this->assertStringContainsString( '30 more points to unlock 10% off', $html, 'The next reward is the cheapest one not yet affordable.' );
+		$this->assertStringNotContainsString( 'to unlock 5 off', $html );
+		$this->assertStringNotContainsString( 'wps-wpr-fw__reward--available', $html, 'Nothing is available with a negative balance.' );
+		$this->assertStringContainsString( 'aria-valuenow="0"', $html );
+		$this->assertStringContainsString( 'width:0%', $html );
+
+		$next = WPS_WPR_Rewards_Launcher::wps_wpr_get_next_reward( -50, self::two_rewards() );
+		$this->assertSame( 30, $next['points'], 'Unsorted rewards still give the cheapest one.' );
+		$this->assertSame( 200, WPS_WPR_Rewards_Launcher::wps_wpr_get_next_reward( 30, self::two_rewards() )['points'] );
+		$this->assertNull( WPS_WPR_Rewards_Launcher::wps_wpr_get_next_reward( 500, self::two_rewards() ) );
+		$this->assertSame( 0, WPS_WPR_Rewards_Launcher::wps_wpr_get_spendable_balance( $user_id ) );
+	}
+
+	public function test_page_types_target_front_page_archives_and_search() {
+		$clean = WPS_WPR_Floating_Widget::wps_wpr_sanitize_settings(
+			array( 'wps_wpr_fw_page_types' => array( 'front_page', 'search', 'bogus', '<b>' ) )
+		);
+		$this->assertSame( 'front_page,search', $clean['wps_wpr_fw_page_types'] );
+		$this->assertSame( array( 'front_page', 'search' ), WPS_WPR_Rewards_Launcher::wps_wpr_parse_page_types( $clean['wps_wpr_fw_page_types'] ) );
+
+		$include = array( 'wps_wpr_fw_targeting' => 'include', 'wps_wpr_fw_page_ids' => '5', 'wps_wpr_fw_page_types' => 'front_page,archive' );
+		$exclude = array( 'wps_wpr_fw_targeting' => 'exclude', 'wps_wpr_fw_page_ids' => '5', 'wps_wpr_fw_page_types' => 'search' );
+
+		$this->assertTrue( WPS_WPR_Rewards_Launcher::wps_wpr_page_targeting_allows( 0, $include, array( 'front_page', 'blog' ) ) );
+		$this->assertTrue( WPS_WPR_Rewards_Launcher::wps_wpr_page_targeting_allows( 0, $include, array( 'archive' ) ) );
+		$this->assertTrue( WPS_WPR_Rewards_Launcher::wps_wpr_page_targeting_allows( 5, $include, array() ), 'Page IDs keep working.' );
+		$this->assertFalse( WPS_WPR_Rewards_Launcher::wps_wpr_page_targeting_allows( 0, $include, array( 'search' ) ) );
+		$this->assertFalse( WPS_WPR_Rewards_Launcher::wps_wpr_page_targeting_allows( 0, $exclude, array( 'search' ) ) );
+		$this->assertFalse( WPS_WPR_Rewards_Launcher::wps_wpr_page_targeting_allows( 5, $exclude, array() ) );
+		$this->assertTrue( WPS_WPR_Rewards_Launcher::wps_wpr_page_targeting_allows( 0, $exclude, array( 'archive' ) ) );
+
+		// A real search request is detected through the conditional tags.
+		$this->query_backup      = $GLOBALS['wp_query'];
+		$GLOBALS['wp_query']     = new WP_Query( array( 's' => 'rltest-nothing-matches' ) ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		$GLOBALS['wp_the_query'] = $GLOBALS['wp_query']; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		$this->assertContains( 'search', WPS_WPR_Rewards_Launcher::wps_wpr_get_current_page_types() );
+		$launcher = new WPS_WPR_Rewards_Launcher();
+		$this->assertFalse( $launcher->wps_wpr_filter_display( true, $exclude ), 'Search results are hidden when "Search results" is excluded.' );
+		$this->assertTrue( $launcher->wps_wpr_filter_display( true, array_merge( $include, array( 'wps_wpr_fw_page_types' => 'search' ) ) ) );
+	}
+
+	public function test_activity_sorts_translated_meridiem_dates() {
+		$this->meridiem_backup                       = $GLOBALS['wp_locale']->meridiem;
+		$GLOBALS['wp_locale']->meridiem['am']        = 'vorm.';
+		$GLOBALS['wp_locale']->meridiem['pm']        = 'nachm.';
+
+		$this->assertSame( gmmktime( 14, 5, 6, 3, 1, 2026 ), WPS_WPR_Rewards_Launcher::wps_wpr_parse_log_date( '2026-03-01 02:05:06nachm.' ) );
+		$this->assertSame( gmmktime( 0, 5, 6, 3, 1, 2026 ), WPS_WPR_Rewards_Launcher::wps_wpr_parse_log_date( '2026-03-01 12:05:06vorm.' ) );
+		$this->assertSame( gmmktime( 14, 5, 6, 3, 1, 2026 ), WPS_WPR_Rewards_Launcher::wps_wpr_parse_log_date( '2026-03-01 02:05:06pm' ) );
+		$this->assertSame( gmmktime( 0, 0, 0, 3, 1, 2026 ), WPS_WPR_Rewards_Launcher::wps_wpr_parse_log_date( '2026-03-01 02:05:06अपराह्न' ), 'Unknown meridiem keeps the day.' );
+		$this->assertSame( gmmktime( 0, 0, 0, 3, 1, 2026 ), WPS_WPR_Rewards_Launcher::wps_wpr_parse_log_date( '2026-03-01' ) );
+		$this->assertSame( 0, WPS_WPR_Rewards_Launcher::wps_wpr_parse_log_date( 'yesterday' ) );
+
+		$log     = array(
+			'registration'    => array( array( 'registration' => 3, 'date' => '2026-03-01 02:00:00nachm.' ) ),
+			'comment'         => array( array( 'comment' => 2, 'date' => '2026-03-01 09:00:00vorm.' ) ),
+			'points_on_order' => array(
+				array( 'points_on_order' => 1, 'date' => '2026-02-01 11:00:00nachm.' ),
+				array( 'points_on_order' => 4, 'date' => '2026-02-20 01:00:00अपराह्न' ),
+				array( 'points_on_order' => 5, 'date' => '2026-02-20 01:00:00अपराह्न' ),
+			),
+		);
+		$user_id = $this->make_user( 0, $log );
+		$points  = wp_list_pluck( WPS_WPR_Rewards_Launcher::wps_wpr_get_recent_activity( $user_id ), 'points' );
+		$this->assertSame( array( 3, 2, 5, 4, 1 ), $points, 'Newest first; same day falls back to the order the rows were logged.' );
+
+		$html = WPS_WPR_Rewards_Launcher::wps_wpr_get_activity_html( WPS_WPR_Rewards_Launcher::wps_wpr_get_recent_activity( $user_id ) );
+		$this->assertStringNotContainsString( 'nachm.', $html, 'Parsed dates are shown in the site date format.' );
+	}
+
+	public function test_guest_gets_guest_welcome() {
+		$this->launcher_settings();
+		$html = ( new WPS_WPR_Floating_Widget() )->wps_wpr_get_markup( 0 );
+		$this->assertStringNotContainsString( 'Welcome back', $html );
+		$this->assertStringContainsString( 'Join our rewards program', $html );
+
+		$this->launcher_settings( array( 'wps_wpr_fw_welcome' => 'Hello there!' ) );
+		$html = ( new WPS_WPR_Floating_Widget() )->wps_wpr_get_markup( 0 );
+		$this->assertStringContainsString( 'Hello there!', $html, 'A welcome without [NAME] is shown to guests as written.' );
+	}
+
+	public function test_catalog_is_queried_once_per_request() {
+		$calls = 0;
+		add_filter(
+			'wps_wpr_launcher_rewards',
+			static function () use ( &$calls ) {
+				++$calls;
+				return array( array( 'title' => 'Sticker', 'points' => 500 ) );
+			}
+		);
+		$user_id = $this->make_user( 100 );
+		$this->launcher_settings();
+		$html = ( new WPS_WPR_Floating_Widget() )->wps_wpr_get_markup( $user_id );
+		$this->assertStringContainsString( '400 more points to unlock Sticker', $html );
+		$this->assertStringContainsString( 'reward-title">Sticker', $html );
+		$this->assertSame( 1, $calls, 'Home and Redeem share one catalog lookup.' );
+
+		WPS_WPR_Rewards_Launcher::wps_wpr_reset_catalog_cache();
+		WPS_WPR_Rewards_Launcher::wps_wpr_get_catalog_rewards();
+		$this->assertSame( 2, $calls );
 	}
 
 	public function test_hooks_registered_when_plugin_enabled() {

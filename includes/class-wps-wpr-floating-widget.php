@@ -67,6 +67,7 @@ class WPS_WPR_Floating_Widget {
 			'wps_wpr_fw_tab_refer'     => 'yes',
 			'wps_wpr_fw_targeting'     => 'all',
 			'wps_wpr_fw_page_ids'      => '',
+			'wps_wpr_fw_page_types'    => '',
 			/* translators: [NAME] is replaced with the customer's first name. */
 			'wps_wpr_fw_welcome'       => __( 'Welcome back, [NAME]!', 'points-and-rewards-for-woocommerce' ),
 		);
@@ -109,6 +110,7 @@ class WPS_WPR_Floating_Widget {
 		$mode     = isset( $input['wps_wpr_fw_mode'] ) ? sanitize_key( $input['wps_wpr_fw_mode'] ) : '';
 		$target   = isset( $input['wps_wpr_fw_targeting'] ) ? sanitize_key( $input['wps_wpr_fw_targeting'] ) : '';
 		$page_ids = isset( $input['wps_wpr_fw_page_ids'] ) && class_exists( 'WPS_WPR_Rewards_Launcher' ) ? WPS_WPR_Rewards_Launcher::wps_wpr_parse_page_ids( $input['wps_wpr_fw_page_ids'] ) : array();
+		$types    = isset( $input['wps_wpr_fw_page_types'] ) && class_exists( 'WPS_WPR_Rewards_Launcher' ) ? WPS_WPR_Rewards_Launcher::wps_wpr_parse_page_types( $input['wps_wpr_fw_page_types'] ) : array();
 		$welcome  = isset( $input['wps_wpr_fw_welcome'] ) ? sanitize_text_field( $input['wps_wpr_fw_welcome'] ) : $defaults['wps_wpr_fw_welcome'];
 
 		return array(
@@ -130,6 +132,7 @@ class WPS_WPR_Floating_Widget {
 			'wps_wpr_fw_tab_refer'     => $yes_no( 'wps_wpr_fw_tab_refer' ),
 			'wps_wpr_fw_targeting'     => in_array( $target, array( 'all', 'include', 'exclude' ), true ) ? $target : $defaults['wps_wpr_fw_targeting'],
 			'wps_wpr_fw_page_ids'      => implode( ',', $page_ids ),
+			'wps_wpr_fw_page_types'    => implode( ',', $types ),
 			'wps_wpr_fw_welcome'       => mb_substr( $welcome, 0, 120 ),
 		);
 	}

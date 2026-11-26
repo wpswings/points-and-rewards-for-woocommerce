@@ -25,7 +25,9 @@ if ( isset( $_POST['wps_wpr_floating_widget_nonce'], $_POST['wps_wpr_save_floati
 		$wps_wpr_fw_input  = array();
 		foreach ( $wps_wpr_fw_fields as $wps_wpr_fw_field ) {
 			if ( isset( $_POST[ $wps_wpr_fw_field ] ) ) {
-				$wps_wpr_fw_input[ $wps_wpr_fw_field ] = sanitize_text_field( wp_unslash( $_POST[ $wps_wpr_fw_field ] ) );
+				$wps_wpr_fw_input[ $wps_wpr_fw_field ] = is_array( $_POST[ $wps_wpr_fw_field ] )
+					? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $wps_wpr_fw_field ] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+					: sanitize_text_field( wp_unslash( $_POST[ $wps_wpr_fw_field ] ) );
 			}
 		}
 		update_option( WPS_WPR_Floating_Widget::OPTION, WPS_WPR_Floating_Widget::wps_wpr_sanitize_settings( $wps_wpr_fw_input ) );
@@ -147,6 +149,11 @@ $wps_wpr_fw = WPS_WPR_Floating_Widget::wps_wpr_get_settings();
 						<span class="wps_wpr_label_notice"><?php esc_html_e( 'Shown at the top of the Home tab. [NAME] is replaced with the customer\'s first name.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
+			</div>
+		</section>
+		<section class="wps_wpr_general_row_wrap">
+			<div class="wps_wpr_general_sign_title"><?php esc_html_e( 'Page Targeting', 'points-and-rewards-for-woocommerce' ); ?></div>
+			<div class="wps_wpr_section_content">
 				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_fw_targeting" class="wps_wpr_general_label"><?php esc_html_e( 'Page Targeting', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_general_content">
@@ -155,13 +162,27 @@ $wps_wpr_fw = WPS_WPR_Floating_Widget::wps_wpr_get_settings();
 							<option value="include" <?php selected( $wps_wpr_fw['wps_wpr_fw_targeting'], 'include' ); ?>><?php esc_html_e( 'Show only on the pages below', 'points-and-rewards-for-woocommerce' ); ?></option>
 							<option value="exclude" <?php selected( $wps_wpr_fw['wps_wpr_fw_targeting'], 'exclude' ); ?>><?php esc_html_e( 'Hide on the pages below', 'points-and-rewards-for-woocommerce' ); ?></option>
 						</select>
+						<span class="wps_wpr_label_notice"><?php esc_html_e( 'Applies to both the compact panel and the full rewards launcher.', 'points-and-rewards-for-woocommerce' ); ?></span>
+					</div>
+				</article>
+				<article class="wps_wpr_general_row">
+					<span class="wps_wpr_general_label"><?php esc_html_e( 'Page Types', 'points-and-rewards-for-woocommerce' ); ?></span>
+					<div class="wps_wpr_general_content">
+						<?php $wps_wpr_fw_selected_types = WPS_WPR_Rewards_Launcher::wps_wpr_parse_page_types( $wps_wpr_fw['wps_wpr_fw_page_types'] ); ?>
+						<?php foreach ( WPS_WPR_Rewards_Launcher::wps_wpr_get_page_types() as $wps_wpr_fw_type_key => $wps_wpr_fw_type_label ) : ?>
+							<label class="wps_wpr_fw_page_type" style="margin-right:14px;display:inline-block;">
+								<input type="checkbox" name="wps_wpr_fw_page_types[]" id="<?php echo esc_attr( 'wps_wpr_fw_page_type_' . $wps_wpr_fw_type_key ); ?>" value="<?php echo esc_attr( $wps_wpr_fw_type_key ); ?>" <?php checked( in_array( $wps_wpr_fw_type_key, $wps_wpr_fw_selected_types, true ) ); ?>>
+								<?php echo esc_html( $wps_wpr_fw_type_label ); ?>
+							</label>
+						<?php endforeach; ?>
+						<span class="wps_wpr_label_notice"><?php esc_html_e( 'Pages of these types count as listed, together with the IDs below.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 				<article class="wps_wpr_general_row">
 					<label for="wps_wpr_fw_page_ids" class="wps_wpr_general_label"><?php esc_html_e( 'Page / Post IDs', 'points-and-rewards-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_general_content">
 						<input type="text" name="wps_wpr_fw_page_ids" id="wps_wpr_fw_page_ids" class="input-text" placeholder="12, 34, 56" value="<?php echo esc_attr( $wps_wpr_fw['wps_wpr_fw_page_ids'] ); ?>">
-						<span class="wps_wpr_label_notice"><?php esc_html_e( 'Comma-separated IDs of pages, posts or products. Use the Shop page ID for the shop archive.', 'points-and-rewards-for-woocommerce' ); ?></span>
+						<span class="wps_wpr_label_notice"><?php esc_html_e( 'Comma-separated IDs of pages, posts or products. The Shop page ID matches the shop archive and the Posts page ID matches the blog index.', 'points-and-rewards-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 			</div>

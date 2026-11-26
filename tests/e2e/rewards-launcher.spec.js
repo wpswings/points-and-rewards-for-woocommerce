@@ -6,36 +6,34 @@
  */
 const { test, expect } = require( '@playwright/test' );
 
-const SETTINGS_URL = '/wp-admin/admin.php?page=wps-rwpr-setting&tab=floating-widget';
-
-async function dismissOnboarding( page ) {
-	const close = page.locator( '.wps-wpr-on-boarding-close-btn a, .wps-wpr-onboarding-section .wps-close-btn, .swal2-close' ).first();
-	if ( await close.isVisible().catch( () => false ) ) {
-		await close.click().catch( () => {} );
-	}
-}
-
-async function openSection( page, title, field ) {
-	if ( ! ( await page.locator( field ).isVisible() ) ) {
-		await page.locator( '.wps_wpr_general_sign_title', { hasText: title } ).click();
-	}
-	await expect( page.locator( field ) ).toBeVisible();
-}
+const { blockOnboarding, openSettings, openSection, submitSettings, backupSettings, restoreSettings, withAdminPage } = require( './floating-widget-helpers' );
 
 async function saveSettings( page, changes ) {
-	await page.goto( SETTINGS_URL );
-	await dismissOnboarding( page );
+	await openSettings( page );
 	await openSection( page, 'Floating Loyalty Widget', '#wps_wpr_fw_enable' );
 	await page.locator( '#wps_wpr_fw_enable' ).check();
 	await page.locator( '#wps_wpr_fw_show_mobile' ).check();
 	await openSection( page, 'Rewards Launcher', '#wps_wpr_fw_mode' );
+	await openSection( page, 'Page Targeting', '#wps_wpr_fw_targeting' );
 	await changes( page );
-	await page.locator( '#wps_wpr_save_floating_widget_settings' ).click();
-	await page.waitForLoadState( 'domcontentloaded' );
+	await submitSettings( page );
 }
 
 test.describe.serial( 'Rewards launcher', () => {
 	let myAccountId = 0;
+	let backup = null;
+
+	test.beforeAll( async ( { browser }, testInfo ) => {
+		backup = await withAdminPage( browser, testInfo, ( page ) => backupSettings( page ) );
+	} );
+
+	test.afterAll( async ( { browser }, testInfo ) => {
+		await withAdminPage( browser, testInfo, ( page ) => restoreSettings( page, backup ) );
+	} );
+
+	test.beforeEach( async ( { page } ) => {
+		await blockOnboarding( page );
+	} );
 
 	test( 'admin switches the widget to launcher mode', async ( { page } ) => {
 		await saveSettings( page, async ( p ) => {
@@ -46,6 +44,9 @@ test.describe.serial( 'Rewards launcher', () => {
 			await p.locator( '#wps_wpr_fw_welcome' ).fill( 'Hi [NAME], welcome!' );
 			await p.locator( '#wps_wpr_fw_targeting' ).selectOption( 'all' );
 			await p.locator( '#wps_wpr_fw_page_ids' ).fill( '' );
+			for ( const box of await p.locator( 'input[name="wps_wpr_fw_page_types[]"]' ).all() ) {
+				await box.uncheck();
+			}
 		} );
 
 		await openSection( page, 'Rewards Launcher', '#wps_wpr_fw_mode' );
@@ -136,5 +137,23 @@ test.describe.serial( 'Rewards launcher', () => {
 		await expect( page.locator( '#wps-wpr-floating-widget' ) ).toHaveCount( 0 );
 		await page.goto( '/' );
 		await expect( page.locator( '#wps-wpr-floating-widget' ) ).toBeVisible();
+	} );
+
+	test( 'page types target search results alongside page IDs', async ( { page } ) => {
+		await saveSettings( page, async ( p ) => {
+			await p.locator( '#wps_wpr_fw_targeting' ).selectOption( 'include' );
+			await p.locator( '#wps_wpr_fw_page_ids' ).fill( myAccountId );
+			await p.locator( '#wps_wpr_fw_page_type_search' ).check();
+		} );
+		await openSection( page, 'Page Targeting', '#wps_wpr_fw_targeting' );
+		await expect( page.locator( '#wps_wpr_fw_page_type_search' ) ).toBeChecked();
+		await expect( page.locator( '#wps_wpr_fw_page_type_front_page' ) ).not.toBeChecked();
+
+		await page.goto( '/?s=rewards' );
+		await expect( page.locator( '#wps-wpr-floating-widget' ) ).toBeVisible();
+		await page.goto( '/my-account/' );
+		await expect( page.locator( '#wps-wpr-floating-widget' ) ).toBeVisible();
+		await page.goto( '/' );
+		await expect( page.locator( '#wps-wpr-floating-widget' ) ).toHaveCount( 0 );
 	} );
 } );
