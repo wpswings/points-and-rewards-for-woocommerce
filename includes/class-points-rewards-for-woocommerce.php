@@ -143,6 +143,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-points-rewards-for-woocommerce-public.php';
 
 		/**
+		 * Native Cart / Checkout block support for points redemption.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-blocks-redeem.php';
+
+		/**
 		 * The class responsible for abandoned cart recovery with points incentive.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
@@ -467,6 +472,17 @@ class Points_Rewards_For_Woocommerce {
 			// cart/checkout block js.
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_before', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
+
+			// Native Cart / Checkout block points redemption (Store API + block integration).
+			$blocks_redeem = new WPS_WPR_Blocks_Redeem( $plugin_public );
+			if ( did_action( 'woocommerce_blocks_loaded' ) ) {
+				$blocks_redeem->wps_wpr_register_store_api();
+			} else {
+				$this->loader->add_action( 'woocommerce_blocks_loaded', $blocks_redeem, 'wps_wpr_register_store_api' );
+			}
+			$this->loader->add_action( 'woocommerce_blocks_cart_block_registration', $blocks_redeem, 'wps_wpr_register_block_integration' );
+			$this->loader->add_action( 'woocommerce_blocks_checkout_block_registration', $blocks_redeem, 'wps_wpr_register_block_integration' );
+			$this->loader->add_action( 'woocommerce_removed_coupon', $blocks_redeem, 'wps_wpr_coupon_removed', 10, 1 );
 			// Multivendor X compatibility.
 			$this->loader->add_filter( 'mvx_available_payment_gateways', $plugin_public, 'wps_wpr_admin_mvx_list_modules', 10 );
 			// verify cart page nonce.
