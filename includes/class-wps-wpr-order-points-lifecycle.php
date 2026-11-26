@@ -426,9 +426,18 @@ class WPS_WPR_Order_Points_Lifecycle {
 			return;
 		}
 
+		// Order amount the points were awarded on (stored basis; order total for older orders).
+		$order_total = (float) $order->get_total();
+		$order_basis = (float) WPS_WPR_Points_Amount_Settings::wps_wpr_get_awarded_order_amount( $order );
+		if ( ! isset( $tracked['refunded_basis'] ) ) {
+			// Refunds tracked before the basis was tracked: convert in proportion to the order.
+			$tracked['refunded_basis'] = $order_total > 0 ? (float) $tracked['refunded_amount'] * $order_basis / $order_total : 0;
+		}
+
 		// Cumulative refunded amount and quantities, tracked here to avoid stale order caches.
 		$tracked['refund_ids'][]     = (int) $refund_id;
 		$tracked['refunded_amount'] += (float) $refund->get_amount();
+		$tracked['refunded_basis']  += (float) WPS_WPR_Points_Amount_Settings::wps_wpr_get_refund_amount( $refund, $order );
 		foreach ( $refund->get_items() as $refund_item ) {
 			$refunded_item_id = absint( $refund_item->get_meta( '_refunded_item_id' ) );
 			if ( $refunded_item_id ) {
@@ -436,15 +445,14 @@ class WPS_WPR_Order_Points_Lifecycle {
 			}
 		}
 
-		$deduct      = 0;
-		$order_total = (float) $order->get_total();
+		$deduct = 0;
 
-		// Per currency spent points: share of the refunded amount.
+		// Per currency spent points: share of the refunded amount, on the basis the points were awarded on.
 		$currency_reversed = $this->wps_wpr_order_has_flag( $order, array( "$order_id#cancel_per_currency_spend_points", "$order_id#refund_per_currency_spend_points" ), 'yes' );
-		if ( $order_total > 0 && 'set' === $order->get_meta( "$order_id#item_conversion_id" ) && ! $currency_reversed ) {
+		if ( $order_basis > 0 && 'set' === $order->get_meta( "$order_id#item_conversion_id" ) && ! $currency_reversed ) {
 			$awarded = $this->wps_wpr_get_awarded_currency_points( $user_id, $order_id );
 			if ( $awarded > 0 ) {
-				$ratio  = min( 1, $tracked['refunded_amount'] / $order_total );
+				$ratio  = min( 1, $tracked['refunded_basis'] / $order_basis );
 				$target = min( $awarded, (int) round( $awarded * $ratio ) );
 				$delta  = $target - (int) $tracked['currency'];
 				if ( $delta > 0 ) {

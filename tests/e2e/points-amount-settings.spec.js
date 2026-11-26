@@ -1,11 +1,44 @@
 /**
  * E2E: earn with or without tax / shipping (WPS-8328).
  *
- * Needs a logged-in admin storage state (WP_STORAGE_STATE). The test saves the
- * General settings tab, so back up the `wps_wpr_settings_gallery` option first
- * and restore it afterwards.
+ * Needs a logged-in admin storage state (WP_STORAGE_STATE).
+ * Needs WP-CLI for the site: set WP_CLI to the command (default `wp`, run in
+ * the site root). Saving the General tab rewrites the whole
+ * `wps_wpr_settings_gallery` option, so the spec backs it up before it runs and
+ * restores it afterwards, so it can be run again.
  */
 const { test, expect } = require( '@playwright/test' );
+const { execSync } = require( 'child_process' );
+
+/**
+ * Run a WP-CLI command and return its trimmed output.
+ *
+ * @param {string} args  arguments, already shell-quoted where needed.
+ * @param {string} input optional stdin.
+ * @return {string} output.
+ */
+function wp( args, input ) {
+	return execSync( `${ process.env.WP_CLI || 'wp' } ${ args }`, {
+		input,
+		encoding: 'utf8',
+		stdio: [ 'pipe', 'pipe', 'pipe' ],
+	} ).trim();
+}
+
+/**
+ * Run a WP-CLI command; return null instead of throwing when it fails
+ * (for example when the option does not exist).
+ *
+ * @param {string} args arguments.
+ * @return {string|null} output.
+ */
+function wpOrNull( args ) {
+	try {
+		return wp( args );
+	} catch ( e ) {
+		return null;
+	}
+}
 
 const SETTINGS_URL = '/wp-admin/admin.php?page=wps-rwpr-setting&tab=general-setting';
 const TAX = '#wps_wpr_points_amount_tax_mode';
@@ -33,6 +66,20 @@ async function save( page ) {
 }
 
 test.describe.serial( 'Earning calculation settings', () => {
+	const backup = { settings: null };
+
+	test.beforeAll( () => {
+		backup.settings = wpOrNull( 'option get wps_wpr_settings_gallery --format=json' );
+	} );
+
+	test.afterAll( () => {
+		if ( null === backup.settings ) {
+			wpOrNull( 'option delete wps_wpr_settings_gallery' );
+		} else {
+			wp( 'option update wps_wpr_settings_gallery --format=json', backup.settings );
+		}
+	} );
+
 	test( 'section shows tax and shipping options with including-tax default', async ( { page } ) => {
 		await openSettings( page );
 		await expect( page.locator( `${ TAX } option[value="incl"]` ) ).toHaveCount( 1 );

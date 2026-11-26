@@ -1979,8 +1979,8 @@ class Points_Rewards_For_WooCommerce_Public {
 			$thankyouorder_value = $this->wps_wpr_get_order_total_settings( 'wps_wpr_thankyouorder_current_type' );
 			$order               = wc_get_order( $order_id );
 
-			/*Get the order total points*/
-			$order_total         = wps_wpr_get_order_amount_for_points( $order );
+			/*Get the order total points, on the basis they were awarded on*/
+			$order_total         = wps_wpr_get_awarded_order_amount_for_points( $order );
 			// WOOCS - WooCommerce Currency Switcher Compatibility.
 			$order_total         = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $order_total );
 			$user_id             = $order->get_user_id();
