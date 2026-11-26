@@ -80,6 +80,10 @@ $wps_wpr_setting_tab = array(
 		'title'     => __( 'Abandoned Cart', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-abandoned-cart-settings.php',
 	),
+	'import-export'         => array(
+		'title'     => __( 'Import / Export', 'points-and-rewards-for-woocommerce' ),
+		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-import-export-settings.php',
+	),
 	'ai-assistant'          => array(
 		'title'     => __( 'AI Assistant', 'points-and-rewards-for-woocommerce' ),
 		'file_path' => WPS_RWPR_DIR_PATH . 'admin/partials/templates/wps-wpr-ai-assistant-settings.php',
@@ -140,6 +144,7 @@ $wps_wpr_tab_descriptions = apply_filters(
 		'wps-sms-settings'      => __( 'Configure SMS and WhatsApp notifications to communicate points activity in real time.', 'points-and-rewards-for-woocommerce' ),
 		'wps-campaign-settings' => __( 'Create referral and promotional campaigns to drive engagement using reward incentives.', 'points-and-rewards-for-woocommerce' ),
 		'abandoned-cart-settings' => __( 'Recover abandoned carts by offering bonus points to customers who complete their purchase.', 'points-and-rewards-for-woocommerce' ),
+		'import-export'           => __( 'Export customer points to CSV or import balances from this plugin or another loyalty plugin.', 'points-and-rewards-for-woocommerce' ),
 		'ai-assistant'            => __( 'Ask questions about your loyalty program and let AI help you configure settings.', 'points-and-rewards-for-woocommerce' ),
 	)
 );
