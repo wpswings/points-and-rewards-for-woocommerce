@@ -132,10 +132,20 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wps-wpr-setup-wizard.php';
 
 		/**
+		 * Ready-made program templates for the setup wizard.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wps-wpr-wizard-templates.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-points-rewards-for-woocommerce-public.php';
+
+		/**
+		 * Native Cart / Checkout block support for points redemption.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-blocks-redeem.php';
 
 		/**
 		 * The class responsible for abandoned cart recovery with points incentive.
@@ -143,9 +153,65 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-abandoned-cart-recovery.php';
 
 		/**
+		 * The class providing the "earn with or without tax / shipping" settings and the
+		 * wps_wpr_get_order_amount_for_points() helper. Loaded on every request because order
+		 * points can be awarded wherever an order status changes.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-amount-settings.php';
+		new WPS_WPR_Points_Amount_Settings();
+
+		/**
+		 * The condition engine and achievement / bonus rules.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-condition-engine.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-achievement-rules.php';
+
+		/**
+		 * The class responsible for earn-points messages on shop, product and cart pages.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-earn-messages.php';
+
+		/**
+		 * The class responsible for basic points expiry.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-expiry.php';
+
+		/**
+		 * The class responsible for the floating loyalty widget.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-floating-widget.php';
+
+		/**
+		 * The class responsible for the persistent rewards launcher (full mode of the floating widget).
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-rewards-launcher.php';
+
+		/**
+		 * The class responsible for the native Gutenberg blocks pack.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-blocks.php';
+
+		/**
 		 * The class keeping order points consistent across cancel / refund / re-complete.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
+
+		/**
+		 * The class responsible for the reward catalog.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-reward-catalog.php';
+
+		/**
+		 * The class providing the configurable award / reversal order status settings.
+		 * Loaded on every request: the award status is needed wherever order statuses change.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-status-settings.php';
+		new WPS_WPR_Order_Status_Settings();
+
+		/**
+		 * The class responsible for birthday points and first-order points.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-birthday-first-order-points.php';
 
 		/**
 		 * The class responsible for the AI settings assistant.
@@ -156,6 +222,16 @@ class Points_Rewards_For_Woocommerce {
 		 * The class responsible for campaign and reward display ordering.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-campaign-ordering.php';
+
+		/**
+		 * The class responsible for points CSV import and export.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-import-export.php';
+
+		/**
+		 * The class responsible for migrating points from other loyalty plugins.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-migration.php';
 
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
@@ -211,6 +287,10 @@ class Points_Rewards_For_Woocommerce {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'wps_wpr_admin_enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wps_rwpr_admin_menu', 10, 2 );
+
+		// reward catalog admin assets.
+		$reward_catalog_admin = new WPS_WPR_Reward_Catalog();
+		$this->loader->add_action( 'admin_enqueue_scripts', $reward_catalog_admin, 'wps_wpr_admin_enqueue_scripts' );
 		// Security: admin-only actions are not registered for anonymous users (removed wp_ajax_nopriv_ hooks).
 		$this->loader->add_action( 'wp_ajax_wps_wpr_points_update', $plugin_admin, 'wps_wpr_points_update' );
 		$this->loader->add_action( 'wp_ajax_wps_wpr_select_category', $plugin_admin, 'wps_wpr_select_category' );
@@ -263,6 +343,19 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_wpr_add_additional_import_points', $plugin_admin, 'wps_wpr_add_additional_import_org_points', 10 );
 		}
 		$this->loader->add_action( 'wp_ajax_wps_large_scv_import', $plugin_admin, 'wps_large_scv_import' );
+		// points CSV export (runs before admin output so the file can be streamed).
+		$points_import_export = new WPS_WPR_Points_Import_Export();
+		$this->loader->add_action( 'admin_init', $points_import_export, 'wps_wpr_maybe_export_points' );
+		// points CSV import, applied in AJAX batches.
+		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_start', $points_import_export, 'wps_wpr_ajax_import_start' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_batch', $points_import_export, 'wps_wpr_ajax_import_batch' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_discard', $points_import_export, 'wps_wpr_ajax_import_discard' );
+		// points migration from other loyalty plugins.
+		$points_migration = new WPS_WPR_Points_Migration();
+		$this->loader->add_action( 'wp_ajax_wps_wpr_migration_preview', $points_migration, 'wps_wpr_ajax_preview' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_migration_start', $points_migration, 'wps_wpr_ajax_start' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_migration_run', $points_migration, 'wps_wpr_ajax_run' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_migration_discard', $points_migration, 'wps_wpr_ajax_discard' );
 		// email preview.
 		$this->loader->add_filter( 'wps_wpr_preview_email_content', $plugin_admin, 'wps_wpr_preview_email_content_call', 10, 1 );
 		// manage discount on order edit page.
@@ -280,6 +373,13 @@ class Points_Rewards_For_Woocommerce {
 		$campaign_ordering = new WPS_WPR_Campaign_Ordering();
 		$this->loader->add_action( 'admin_enqueue_scripts', $campaign_ordering, 'wps_wpr_enqueue_admin_assets' );
 		$this->loader->add_filter( 'wps_wpr_reward_catalog_available_rewards', 'WPS_WPR_Campaign_Ordering', 'wps_wpr_sort_rewards', 20 );
+
+		// birthday and first-order points settings and admin log.
+		$birthday_first_order = new WPS_WPR_Birthday_First_Order_Points();
+		$this->loader->add_filter( 'wps_wpr_general_settings', $birthday_first_order, 'wps_wpr_add_general_settings', 5 );
+		$this->loader->add_filter( 'wps_wpr_general_settings_save_option', $birthday_first_order, 'wps_wpr_save_general_settings', 5 );
+		$this->loader->add_filter( 'wps_wpr_email_notification_settings', $birthday_first_order, 'wps_wpr_add_notification_settings', 5 );
+		$this->loader->add_action( 'wps_points_admin_table_log', $birthday_first_order, 'wps_wpr_admin_points_log', 5 );
 
 		// AI settings assistant (needs the WordPress AI Client, WP 7.0+).
 		if ( WPS_WPR_AI_Assistant::wps_wpr_has_ai_api() ) {
@@ -302,6 +402,17 @@ class Points_Rewards_For_Woocommerce {
 	private function define_public_hooks() {
 
 		$plugin_public = new Points_Rewards_For_WooCommerce_Public( $this->get_plugin_name(), $this->get_version() );
+
+		// Gutenberg blocks pack. Registered even when the program is off so saved content never breaks.
+		$wps_wpr_blocks = new WPS_WPR_Blocks();
+		$this->loader->add_action( 'init', $wps_wpr_blocks, 'wps_wpr_register_blocks' );
+		$this->loader->add_filter( 'block_categories_all', $wps_wpr_blocks, 'wps_wpr_block_category', 10, 1 );
+		foreach ( array( 'added_user_meta', 'updated_user_meta', 'deleted_user_meta' ) as $wps_wpr_meta_hook ) {
+			$this->loader->add_action( $wps_wpr_meta_hook, $wps_wpr_blocks, 'wps_wpr_flush_leaderboard_cache', 10, 3 );
+		}
+		// Schedules the birthday cron, or clears it when birthday points or the plugin are switched off.
+		$this->loader->add_action( 'init', new WPS_WPR_Birthday_First_Order_Points(), 'wps_wpr_maybe_schedule_cron' );
+
 		if ( $this->wps_rwpr_is_plugin_enable() ) {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_styles' );
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_scripts' );
@@ -401,6 +512,17 @@ class Points_Rewards_For_Woocommerce {
 			// cart/checkout block js.
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
 			$this->loader->add_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_before', $plugin_public, 'wps_wpr_enqueue_cart_block_file' );
+
+			// Native Cart / Checkout block points redemption (Store API + block integration).
+			$blocks_redeem = new WPS_WPR_Blocks_Redeem( $plugin_public );
+			if ( did_action( 'woocommerce_blocks_loaded' ) ) {
+				$blocks_redeem->wps_wpr_register_store_api();
+			} else {
+				$this->loader->add_action( 'woocommerce_blocks_loaded', $blocks_redeem, 'wps_wpr_register_store_api' );
+			}
+			$this->loader->add_action( 'woocommerce_blocks_cart_block_registration', $blocks_redeem, 'wps_wpr_register_block_integration' );
+			$this->loader->add_action( 'woocommerce_blocks_checkout_block_registration', $blocks_redeem, 'wps_wpr_register_block_integration' );
+			$this->loader->add_action( 'woocommerce_removed_coupon', $blocks_redeem, 'wps_wpr_coupon_removed', 10, 1 );
 			// Multivendor X compatibility.
 			$this->loader->add_filter( 'mvx_available_payment_gateways', $plugin_public, 'wps_wpr_admin_mvx_list_modules', 10 );
 			// verify cart page nonce.
@@ -431,6 +553,11 @@ class Points_Rewards_For_Woocommerce {
 			// assign social share points.
 			$this->loader->add_action( 'wp_ajax_action_social_link_click', $plugin_public, 'wps_wpr_assign_social_share_points', 10 );
 
+			// achievement / bonus rules.
+			$achievement_rules = new WPS_WPR_Achievement_Rules();
+			$this->loader->add_action( 'woocommerce_order_status_changed', $achievement_rules, 'wps_wpr_check_achievements', 30, 3 );
+			$this->loader->add_action( 'wps_extend_point_tab_section', $achievement_rules, 'wps_wpr_render_account_achievements', 5, 1 );
+
 			// abandoned cart recovery with points incentive.
 			$abandoned_cart = new WPS_WPR_Abandoned_Cart_Recovery();
 
@@ -445,6 +572,41 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_order_status_changed', $abandoned_cart, 'wps_wpr_award_recovery_points', 20, 3 );
 			$this->loader->add_action( 'woocommerce_before_cart', $abandoned_cart, 'wps_wpr_show_incentive_notice' );
 			$this->loader->add_action( 'woocommerce_before_checkout_form', $abandoned_cart, 'wps_wpr_show_incentive_notice', 5 );
+
+			// earn-points messages on shop, product, cart and checkout pages.
+			$earn_messages = new WPS_WPR_Earn_Messages();
+			$earn_messages->wps_wpr_register_hooks();
+
+			// reward catalog.
+			$reward_catalog = new WPS_WPR_Reward_Catalog();
+			$this->loader->add_action( 'wp_enqueue_scripts', $reward_catalog, 'wps_wpr_enqueue_scripts' );
+			$this->loader->add_action( 'wps_extend_point_tab_section', $reward_catalog, 'wps_wpr_render_catalog', 5, 1 );
+			$this->loader->add_action( 'wp_ajax_' . WPS_WPR_Reward_Catalog::AJAX_ACTION, $reward_catalog, 'wps_wpr_ajax_redeem_reward' );
+			$this->loader->add_action( 'wp_loaded', $reward_catalog, 'wps_wpr_maybe_apply_reward_coupon', 30 );
+
+			// basic points expiry ( stays idle when Pro runs its own expiry ).
+			$points_expiry = new WPS_WPR_Points_Expiry();
+			$this->loader->add_action( 'init', $points_expiry, 'wps_wpr_maybe_schedule_cron' );
+			$this->loader->add_action( WPS_WPR_Points_Expiry::CRON_HOOK, $points_expiry, 'wps_wpr_process_expiry' );
+
+			// floating loyalty widget.
+			$floating_widget = new WPS_WPR_Floating_Widget();
+			$this->loader->add_action( 'wp_enqueue_scripts', $floating_widget, 'wps_wpr_enqueue_assets' );
+			$this->loader->add_action( 'wp_footer', $floating_widget, 'wps_wpr_render', 50 );
+
+			// persistent rewards launcher (tabbed mode of the floating widget).
+			$rewards_launcher = new WPS_WPR_Rewards_Launcher( $floating_widget );
+			$this->loader->add_filter( 'wps_wpr_floating_widget_display', $rewards_launcher, 'wps_wpr_filter_display', 10, 2 );
+			$this->loader->add_action( 'wp_ajax_' . WPS_WPR_Rewards_Launcher::AJAX_ACTION, $rewards_launcher, 'wps_wpr_ajax_activity' );
+
+			// birthday and first-order points.
+			$birthday_first_order = new WPS_WPR_Birthday_First_Order_Points();
+			$this->loader->add_action( WPS_WPR_Birthday_First_Order_Points::CRON_HOOK, $birthday_first_order, 'wps_wpr_process_birthdays', 10, 0 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $birthday_first_order, 'wps_wpr_award_first_order_points', 20, 3 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $birthday_first_order, 'wps_wpr_reverse_first_order_points', 25, 3 );
+			$this->loader->add_action( 'woocommerce_edit_account_form', $birthday_first_order, 'wps_wpr_account_birthday_field' );
+			$this->loader->add_action( 'woocommerce_save_account_details', $birthday_first_order, 'wps_wpr_save_account_birthday', 10, 1 );
+			$this->loader->add_action( 'wps_points_on_first_order', $birthday_first_order, 'wps_wpr_public_points_log', 5, 1 );
 		}
 	}
 

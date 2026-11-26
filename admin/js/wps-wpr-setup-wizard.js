@@ -35,6 +35,13 @@
 			$(this).closest('.wps-wpr-template-card').addClass('wps-wpr-template-selected');
 		});
 
+		// Program templates.
+		snapshotFormValues();
+		$('.wps-wpr-apply-template').on('click', function() {
+			applyProgramTemplate($(this).data('template'));
+		});
+		$('.wps-wpr-clear-template').on('click', clearProgramTemplate);
+
 		// Progress step click
 		$('.wps-wpr-progress-step').on('click', function() {
 			const stepNum = parseInt($(this).data('step'));
@@ -202,6 +209,99 @@
 		}
 
 		return isValid;
+	}
+
+	let initialValues = {};
+
+	/**
+	 * Remember the form values the page loaded with, so "start from scratch" can restore them.
+	 */
+	function snapshotFormValues() {
+		initialValues = {};
+		$('#wps-wpr-wizard-form').find('input[name^="step"]').each(function() {
+			const $field = $(this);
+			const type = $field.attr('type');
+			const key = $field.attr('name') + (type === 'radio' ? '|' + $field.val() : '');
+			initialValues[key] = (type === 'checkbox' || type === 'radio') ? $field.is(':checked') : $field.val();
+		});
+	}
+
+	/**
+	 * Set one wizard field from a template value.
+	 */
+	function setWizardField(step, field, value) {
+		const name = step + '[' + field + ']';
+		const $fields = $('#wps-wpr-wizard-form').find('[name="' + name + '"]');
+		if (!$fields.length) {
+			return;
+		}
+		const type = $fields.first().attr('type');
+		if (type === 'checkbox') {
+			$fields.prop('checked', String(value) === '1');
+		} else if (type === 'radio') {
+			$fields.each(function() {
+				const $radio = $(this);
+				$radio.prop('checked', $radio.val() === String(value));
+			});
+			$fields.filter(':checked').trigger('change');
+		} else {
+			$fields.val(value).trigger('change');
+		}
+	}
+
+	/**
+	 * Pre-fill the wizard with a program template.
+	 */
+	function applyProgramTemplate(templateId) {
+		const templates = (wps_wpr_wizard_obj && wps_wpr_wizard_obj.templates) || {};
+		const values = templates[templateId];
+		if (!values) {
+			return;
+		}
+		// Start from the stored values, so fields this template leaves out
+		// (e.g. the points of a feature it turns off) keep the store's value.
+		restoreFormValues();
+		$.each(values, function(step, fields) {
+			$.each(fields, function(field, value) {
+				setWizardField(step, field, value);
+			});
+		});
+		$('#wps_wpr_program_template').val(templateId);
+		$('.wps-wpr-program-template').removeClass('wps-wpr-program-template-selected')
+			.filter('[data-template="' + templateId + '"]').addClass('wps-wpr-program-template-selected');
+		$('.wps-wpr-clear-template').show();
+		showNotification(wps_wpr_wizard_obj.i18n.template_applied, 'success');
+	}
+
+	/**
+	 * Put every wizard field back to the value the page loaded with.
+	 */
+	function restoreFormValues() {
+		$('#wps-wpr-wizard-form').find('input[name^="step"]').each(function() {
+			const $field = $(this);
+			const type = $field.attr('type');
+			const key = $field.attr('name') + (type === 'radio' ? '|' + $field.val() : '');
+			if (!(key in initialValues)) {
+				return;
+			}
+			if (type === 'checkbox' || type === 'radio') {
+				$field.prop('checked', initialValues[key]);
+			} else {
+				$field.val(initialValues[key]);
+			}
+		});
+		$('.wps-wpr-template-card input[type="radio"]:checked').trigger('change');
+	}
+
+	/**
+	 * Drop the selected template and restore the original values.
+	 */
+	function clearProgramTemplate() {
+		restoreFormValues();
+		$('#wps_wpr_program_template').val('');
+		$('.wps-wpr-program-template').removeClass('wps-wpr-program-template-selected');
+		$('.wps-wpr-clear-template').hide();
+		showNotification(wps_wpr_wizard_obj.i18n.template_cleared, 'success');
 	}
 
 	/**

@@ -99,8 +99,14 @@ $wps_free_vs_pro_features = array(
 		'pro'         => true,
 	),
 	array(
-		'feature'     => __( 'Points Expiry System', 'points-and-rewards-for-woocommerce' ),
-		'description' => __( 'Set expiration dates for earned points with automated notifications', 'points-and-rewards-for-woocommerce' ),
+		'feature'     => __( 'Points Expiry', 'points-and-rewards-for-woocommerce' ),
+		'description' => __( 'Expire unused points after a set period, with a reminder email before they expire', 'points-and-rewards-for-woocommerce' ),
+		'free'        => true,
+		'pro'         => true,
+	),
+	array(
+		'feature'     => __( 'Advanced Points Expiry', 'points-and-rewards-for-woocommerce' ),
+		'description' => __( 'Threshold alerts, expiry shortcode and letting customers extend expiry with points', 'points-and-rewards-for-woocommerce' ),
 		'free'        => false,
 		'pro'         => true,
 	),
@@ -123,9 +129,9 @@ $wps_free_vs_pro_features = array(
 		'pro'         => true,
 	),
 	array(
-		'feature'     => __( 'Birthday Points', 'points-and-rewards-for-woocommerce' ),
-		'description' => __( 'Send birthday points to customers automatically', 'points-and-rewards-for-woocommerce' ),
-		'free'        => false,
+		'feature'     => __( 'Birthday & First Order Points', 'points-and-rewards-for-woocommerce' ),
+		'description' => __( 'Send birthday points automatically and reward a customer\'s first order', 'points-and-rewards-for-woocommerce' ),
+		'free'        => true,
 		'pro'         => true,
 	),
 	array(

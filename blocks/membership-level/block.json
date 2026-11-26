@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wps-wpr/membership-level",
+	"version": "2.10.6",
+	"title": "Membership Level",
+	"category": "wps-points-and-rewards",
+	"icon": "id-alt",
+	"description": "Shows the logged-in customer's membership level.",
+	"keywords": [
+		"membership",
+		"level",
+		"tier"
+	],
+	"textdomain": "points-and-rewards-for-woocommerce",
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"noLevelText": {
+			"type": "string",
+			"default": ""
+		},
+		"showLoginPrompt": {
+			"type": "boolean",
+			"default": true
+		},
+		"loginText": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		],
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"editorScript": "wps-wpr-blocks-editor",
+	"style": "wps-wpr-blocks"
+}

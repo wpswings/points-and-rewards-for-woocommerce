@@ -276,6 +276,8 @@ class Points_Rewards_For_WooCommerce_Public {
 				'wps_wpr_cart_page_total_earning_points' => $wps_wpr_cart_page_total_earning_points,
 				'current__points'                        => max( 0, $current_points ),
 				'available_points_msg'                   => esc_html__( 'Your available points', 'points-and-rewards-for-woocommerce' ),
+				// The native block panel (WPS_WPR_Blocks_Redeem) replaces the injected redeem markup.
+				'native_blocks'                          => ( class_exists( 'WPS_WPR_Blocks_Redeem' ) && WPS_WPR_Blocks_Redeem::wps_wpr_is_native_enabled() && interface_exists( '\Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface' ) ) ? 1 : 0,
 			);
 			wp_localize_script( 'wp-wps-wpr-cart-class', 'wps_wpr_cart_block_obj', $wps_wpr );
 		}
@@ -1363,7 +1365,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				return;
 			}
 			/*Get the order total points*/
-			$order_total = $order->get_total();
+			$order_total = wps_wpr_get_order_amount_for_points( $order );
 			// WOOCS - WooCommerce Currency Switcher Compatibility.
 			$order_total  = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
 			$total_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
@@ -1575,7 +1577,7 @@ class Points_Rewards_For_WooCommerce_Public {
 
 				// Rewards Per Currency points.
 				$points_calculation = 0;
-				$order_total        = $order->get_total();
+				$order_total        = wps_wpr_get_order_amount_for_points( $order );
 				$order_total        = apply_filters( 'wps_wpr_per_currency_points_on_subtotal', $order_total, $order );
 				// WOOCS - WooCommerce Currency Switcher Compatibility.
 				$order_total            = apply_filters( 'wps_wpr_convert_same_currency_base_price', $order_total, $order_id );
@@ -1979,8 +1981,8 @@ class Points_Rewards_For_WooCommerce_Public {
 			$thankyouorder_value = $this->wps_wpr_get_order_total_settings( 'wps_wpr_thankyouorder_current_type' );
 			$order               = wc_get_order( $order_id );
 
-			/*Get the order total points*/
-			$order_total         = $order->get_total();
+			/*Get the order total points, on the basis they were awarded on*/
+			$order_total         = wps_wpr_get_awarded_order_amount_for_points( $order );
 			// WOOCS - WooCommerce Currency Switcher Compatibility.
 			$order_total         = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $order_total );
 			$user_id             = $order->get_user_id();
@@ -2273,127 +2275,165 @@ class Points_Rewards_For_WooCommerce_Public {
 	public function wps_wpr_apply_fee_on_cart_subtotal() {
 
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+		$wps_cart_points = isset( $_POST['wps_cart_points'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_cart_points'] ) ) : '';
+		wp_send_json( $this->wps_wpr_apply_points_to_cart( $wps_cart_points ) );
+	}
+
+	/**
+	 * Points the current user can still redeem on the cart.
+	 *
+	 * The balance minus points already committed elsewhere in the cart
+	 * (points discount and "purchase through points only" products).
+	 *
+	 * @since 2.10.6
+	 * @param int $user_id user id.
+	 * @return int
+	 */
+	public function wps_wpr_get_available_redeem_points( $user_id ) {
+
+		$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
+		$get_points = $get_points > 0 ? $get_points : 0;
+
+		// deduct points if Points Discount is applied.
+		$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? (float) get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
+		$get_points                                   = (int) $get_points - $wps_wpr_check_points_discount_applied_amount;
+
+		// deduct points if discount applied via product edit page( purchase throught only points ).
+		$applied__points = 0;
+		if ( isset( WC()->cart ) ) {
+			foreach ( WC()->cart->get_cart() as $cart ) {
+
+				// purchase through points only data.
+				if ( 'yes' == wps_wpr_hpos_get_meta_data( $cart['product_id'], 'wps_product_purchase_points_only', true ) ) {
+					if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
+
+						// Already stored as cost x quantity by the Pro plugin.
+						$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
+					}
+				}
+			}
+		}
+
+		// purchase through points only data.
+		return (int) $get_points - $applied__points;
+	}
+
+	/**
+	 * Points charged for a "Cart Discount" coupon amount.
+	 *
+	 * Used by the order deduction and by the Cart / Checkout block panel, so the
+	 * points shown to the customer are exactly the points taken at checkout.
+	 *
+	 * @since 2.10.6
+	 * @param float $coupon_amount coupon amount, after the tax adjustment.
+	 * @return int
+	 */
+	public function wps_wpr_cart_discount_to_points( $coupon_amount ) {
+		// Redemption Conversion rate calculate.
+		$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
+		$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+		$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
+		$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+		$coupon_amount            = (float) $coupon_amount / ( $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+		// WOOCS - WooCommerce Currency Switcher Compatibility.
+		$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
+		// round() first so float noise (e.g. 10.0000001) does not cost an extra point.
+		return (int) ceil( round( (float) $coupon_amount, 4 ) );
+	}
+
+	/**
+	 * Validate the requested points and apply them to the cart as the "Cart Discount".
+	 *
+	 * Shared by the classic cart AJAX handler and the Cart/Checkout block Store API callback.
+	 *
+	 * @since 2.10.6
+	 * @param mixed $wps_cart_points requested points (raw, sanitized text).
+	 * @return array { result: bool, message: string }
+	 */
+	public function wps_wpr_apply_points_to_cart( $wps_cart_points ) {
+
 		$response['result']  = false;
 		$response['message'] = __( 'Can not redeem!', 'points-and-rewards-for-woocommerce' );
-		if ( isset( $_POST ) ) {
 
-			// Get data via ajax. Security: always the logged-in user, never a posted user id.
-			$user_id         = get_current_user_id();
-			$wps_cart_points = isset( $_POST['wps_cart_points'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_cart_points'] ) ) : '';
+		// Security: always the logged-in user, never a posted user id.
+		$user_id         = get_current_user_id();
+		$wps_cart_points = is_scalar( $wps_cart_points ) ? trim( (string) $wps_cart_points ) : '';
 
-			// Security: only whole, positive point values can be redeemed (rejects "abc", "10.7", "-5" instead of a fatal error or a fractional discount).
-			if ( '' === $wps_cart_points || ! ctype_digit( (string) $wps_cart_points ) || (int) $wps_cart_points <= 0 ) {
+		// Security: only whole, positive point values can be redeemed (rejects "abc", "10.7", "-5" instead of a fatal error or a fractional discount).
+		if ( '' === $wps_cart_points || ! ctype_digit( (string) $wps_cart_points ) || (int) $wps_cart_points <= 0 ) {
 
-				$response['result']  = false;
-				$response['message'] = esc_html__( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
-				wp_send_json( $response );
+			$response['result']  = false;
+			$response['message'] = esc_html__( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
+			return $response;
+		}
+		$wps_cart_points = (int) $wps_cart_points;
+
+		// Security: enforce the "restrict user" setting on the server, not only in the browser.
+		if ( empty( $user_id ) || wps_wpr_restrict_user_fun() || apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
+
+			return $response;
+		}
+
+		// Redemption Conversion rate calculate.
+		$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
+		$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
+		$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
+		$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
+
+		$get_points = $this->wps_wpr_get_available_redeem_points( $user_id );
+
+		// Security: enforce the admin's "minimum points required to redeem" on the server (same rule as the cart UI).
+		$get_min_redeem_req = (int) $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' );
+		if ( $get_min_redeem_req > 0 && $get_points < $get_min_redeem_req ) {
+
+			$response['result']  = false;
+			$response['message'] = esc_html__( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
+			return $response;
+		}
+
+		// Security: compare the requested POINTS with the available POINTS before any currency conversion.
+		if ( $get_points <= 0 || $wps_cart_points > $get_points ) {
+
+			$response['result']  = false;
+			$response['message'] = esc_html__( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
+			return $response;
+		}
+
+		// Convert the validated points to a discount amount.
+		$wps_cart_points = ( $wps_cart_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
+
+		// if cart subtotal is less than points value then apply fee on cart subtotal only.
+		if ( isset( WC()->cart ) ) {
+
+			$cart_subtotals = ! empty( WC()->cart->get_subtotal() ) && (float) WC()->cart->get_subtotal() > 0 ? (float) WC()->cart->get_subtotal() : 0;
+			if ( $wps_cart_points > $cart_subtotals ) {
+
+				$wps_cart_points = $cart_subtotals;
 			}
-			$wps_cart_points = (int) $wps_cart_points;
+		}
 
-			// Security: enforce the "restrict user" setting on the server, not only in the browser.
-			if ( empty( $user_id ) || wps_wpr_restrict_user_fun() || apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
+		// check points redeem restriction by category.
+		$wps_cart_points = apply_filters( 'wps_wpr_restrict_redeem_points_by_category_wise', $wps_cart_points );
+		// BUG-12: filters may return '' / non-numeric strings; keep the amount numeric to avoid "string * int" fatals.
+		$wps_cart_points = is_numeric( $wps_cart_points ) ? (float) $wps_cart_points : 0;
+		// Applied points here.
+		if ( $get_points > 0 && $wps_cart_points > 0 ) {
+			if ( $get_points >= ceil( round( $wps_cart_points * $wps_wpr_cart_points_rate / $wps_wpr_cart_price_rate, 4 ) ) ) {
 
-				wp_send_json( $response );
-			}
-
-			$get_points = (int) get_user_meta( $user_id, 'wps_wpr_points', true );
-			$get_points = $get_points > 0 ? $get_points : 0;
-
-			// Redemption Conversion rate calculate.
-			$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
-			$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
-			$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
-			$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
-
-			// deduct points if Points Discount is applied.
-			$wps_wpr_check_points_discount_applied_amount = ! empty( get_option( 'wps_wpr_check_points_discount_applied_amount' ) ) ? (float) get_option( 'wps_wpr_check_points_discount_applied_amount' ) : 0;
-			$get_points                                   = (int) $get_points - $wps_wpr_check_points_discount_applied_amount;
-
-			// deduct points if discount applied via product edit page( purchase throught only points ).
-			$applied__points     = 0;
-			$product_sale__price = 0;
-			$discount_value      = 0;
-			if ( isset( WC()->cart ) ) {
-				foreach ( WC()->cart->get_cart() as $cart ) {
-
-					// purchase through points only data.
-					if ( 'yes' == wps_wpr_hpos_get_meta_data( $cart['product_id'], 'wps_product_purchase_points_only', true ) ) {
-						if ( isset( $cart['product_meta'] ) && isset( $cart['product_meta']['meta_data'] ) && isset( $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'] ) ) {
-
-							// Already stored as cost x quantity by the Pro plugin.
-							$applied__points += (int) $cart['product_meta']['meta_data']['wps_wpr_purchase_point_only'];
-						}
-					}
-
-					// get sale product price.
-					$product = wc_get_product( $cart['product_id'] );
-					if ( $product && $product->is_on_sale() ) {
-
-						$product_sale__price += (float) $product->get_sale_price() * (int) $cart['quantity'];
-					}
-				}
-			}
-
-			// purchase through points only data.
-			$get_points = (int) $get_points - $applied__points;
-
-			// Restriction on sale Product data.
-			$general_settings      = get_option( 'wps_wpr_settings_gallery' );
-			$restrict_sale_on_cart = ! empty( $general_settings['wps_wpr_points_restrict_sale'] ) ? $general_settings['wps_wpr_points_restrict_sale'] : '';
-
-			// Security: enforce the admin's "minimum points required to redeem" on the server (same rule as the cart UI).
-			$get_min_redeem_req = (int) $this->wps_wpr_get_general_settings_num( 'wps_wpr_apply_points_value' );
-			if ( $get_min_redeem_req > 0 && $get_points < $get_min_redeem_req ) {
-
-				$response['result']  = false;
-				$response['message'] = esc_html__( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
-				wp_send_json( $response );
-			}
-
-			// Security: compare the requested POINTS with the available POINTS before any currency conversion.
-			if ( $get_points <= 0 || $wps_cart_points > $get_points ) {
-
-				$response['result']  = false;
-				$response['message'] = esc_html__( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
-				wp_send_json( $response );
-			}
-
-			// Convert the validated points to a discount amount.
-			$wps_cart_points = ( $wps_cart_points * $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
-
-			// if cart subtotal is less than points value then apply fee on cart subtotal only.
-			if ( isset( WC()->cart ) ) {
-
-				$cart_subtotals = ! empty( WC()->cart->get_subtotal() ) && (float) WC()->cart->get_subtotal() > 0 ? (float) WC()->cart->get_subtotal() : 0;
-				if ( $wps_cart_points > $cart_subtotals ) {
-
-					$wps_cart_points = $cart_subtotals;
-				}
-			}
-
-			// check points redeem restriction by category.
-			$wps_cart_points = apply_filters( 'wps_wpr_restrict_redeem_points_by_category_wise', $wps_cart_points );
-			// BUG-12: filters may return '' / non-numeric strings; keep the amount numeric to avoid "string * int" fatals.
-			$wps_cart_points = is_numeric( $wps_cart_points ) ? (float) $wps_cart_points : 0;
-			// Applied points here.
-			if ( $get_points > 0 && $wps_cart_points > 0 ) {
-				if ( $get_points >= ceil( round( $wps_cart_points * $wps_wpr_cart_points_rate / $wps_wpr_cart_price_rate, 4 ) ) ) {
-
-					WC()->session->set( 'wps_cart_points', $wps_cart_points );
-					$response['result']  = true;
-					$response['message'] = apply_filters( 'wps_wpr_modify_points_success_msg', esc_html__( 'Custom Point has been applied Successfully!', 'points-and-rewards-for-woocommerce' ) );
-				} else {
-
-					$response['result']  = false;
-					$response['message'] = esc_html__( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
-				}
+				WC()->session->set( 'wps_cart_points', $wps_cart_points );
+				$response['result']  = true;
+				$response['message'] = apply_filters( 'wps_wpr_modify_points_success_msg', esc_html__( 'Custom Point has been applied Successfully!', 'points-and-rewards-for-woocommerce' ) );
 			} else {
 
 				$response['result']  = false;
-				$response['message'] = apply_filters( 'wps_wpr_modify_points_error_msg', esc_html__( 'Invalid Points!', 'points-and-rewards-for-woocommerce' ) );
+				$response['message'] = esc_html__( 'Please enter some valid points!', 'points-and-rewards-for-woocommerce' );
 			}
+		} else {
+
+			$response['result']  = false;
+			$response['message'] = apply_filters( 'wps_wpr_modify_points_error_msg', esc_html__( 'Invalid Points!', 'points-and-rewards-for-woocommerce' ) );
 		}
-		wp_send_json( $response );
+		return $response;
 	}
 
 	/**
@@ -2795,11 +2835,22 @@ class Points_Rewards_For_WooCommerce_Public {
 	 */
 	public function wps_wpr_remove_cart_point() {
 		check_ajax_referer( 'wps-wpr-verify-nonce', 'wps_nonce' );
+		wp_send_json( $this->wps_wpr_remove_points_from_cart() );
+	}
+
+	/**
+	 * Remove the redeemed points ("Cart Discount") from the cart.
+	 *
+	 * Shared by the classic cart AJAX handler and the Cart/Checkout block Store API callback.
+	 *
+	 * @since 2.10.6
+	 * @return array { result: bool, message: string }
+	 */
+	public function wps_wpr_remove_points_from_cart() {
 		$response['result']  = false;
 		$response['message'] = __( 'Failed to Remove Cart Discount', 'points-and-rewards-for-woocommerce' );
 		$cart_discount       = esc_html__( 'Cart Discount', 'points-and-rewards-for-woocommerce' );
-		$coupon_code         = isset( $_POST['coupon_code'] ) && ! empty( $_POST['coupon_code'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon_code'] ) ) : '';
-		if ( ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
+		if ( isset( WC()->session ) && ! empty( WC()->session->get( 'wps_cart_points' ) ) ) {
 			WC()->session->__unset( 'wps_cart_points' );
 			WC()->session->__unset( 'wps_wpr_tax_before_coupon' );
 			$response['result'] = true;
@@ -2815,7 +2866,7 @@ class Points_Rewards_For_WooCommerce_Public {
 				}
 			}
 		}
-		wp_send_json( $response );
+		return $response;
 	}
 
 	/**
@@ -2837,7 +2888,8 @@ class Points_Rewards_For_WooCommerce_Public {
 	}
 
 	/**
-	 * Give the redeemed (Cart Discount) points back when the payment fails or the order is cancelled / refunded.
+	 * Give the redeemed (Cart Discount) points back when the payment fails or the order is cancelled / refunded
+	 * (or enters another status configured to deduct points, see wps_wpr_get_points_reversal_statuses()).
 	 * Runs on its own so the earning restrictions in wps_wpr_woocommerce_order_status_changed() never block it.
 	 *
 	 * @param int    $order_id   order id.
@@ -2846,7 +2898,7 @@ class Points_Rewards_For_WooCommerce_Public {
 	 * @return void
 	 */
 	public function wps_wpr_return_redeemed_cart_points( $order_id, $old_status, $new_status ) {
-		if ( $old_status === $new_status || ! in_array( $new_status, array( 'failed', 'cancelled', 'refunded' ), true ) ) {
+		if ( $old_status === $new_status || ( 'failed' !== $new_status && ! wps_wpr_is_points_reversal_status( $new_status ) ) ) {
 			return;
 		}
 
@@ -3099,16 +3151,7 @@ class Points_Rewards_For_WooCommerce_Public {
 								$coupon_amount = $coupon_amount - WC()->session->get( 'wps_wpr_tax_before_coupon' );
 							}
 
-							// Redemption Conversion rate calculate.
-							$wps_wpr_cart_points_rate = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_points_rate' );
-							$wps_wpr_cart_points_rate = ( 0 == $wps_wpr_cart_points_rate ) ? 1 : $wps_wpr_cart_points_rate;
-							$wps_wpr_cart_price_rate  = $this->wps_wpr_get_general_settings_num( 'wps_wpr_cart_price_rate' );
-							$wps_wpr_cart_price_rate  = ( 0 == $wps_wpr_cart_price_rate ) ? 1 : $wps_wpr_cart_price_rate;
-							$coupon_amount            = $coupon_amount / ( $wps_wpr_cart_price_rate / $wps_wpr_cart_points_rate );
-							// WOOCS - WooCommerce Currency Switcher Compatibility.
-							$coupon_amount = apply_filters( 'wps_wpr_convert_base_price_diffrent_currency', $coupon_amount );
-							// round() first so float noise (e.g. 10.0000001) does not cost an extra point.
-							$fee_to_point = (int) ceil( round( $coupon_amount, 4 ) );
+							$fee_to_point = $this->wps_wpr_cart_discount_to_points( $coupon_amount );
 
 							// Security: lock the user's balance and re-read it, so two parallel checkouts cannot spend the same points.
 							if ( ! $this->wps_wpr_acquire_user_lock( 'redeem', $user_id ) ) {
@@ -3293,6 +3336,11 @@ class Points_Rewards_For_WooCommerce_Public {
 
 		// check allowed user for points features.
 		if ( apply_filters( 'wps_wpr_allowed_user_roles_points_features', false ) ) {
+			return;
+		}
+
+		// The Earn Messages product message replaces this badge when it is enabled.
+		if ( ! apply_filters( 'wps_wpr_show_legacy_product_points_badge', true ) ) {
 			return;
 		}
 		global $post;
@@ -5554,7 +5602,7 @@ class Points_Rewards_For_WooCommerce_Public {
 							$updated_points    = (int) $user_points + $mem_rewards_points_val;
 						} else {
 
-							$calculated_points = (int) ( $order->get_total() * $mem_rewards_points_val ) / 100;
+							$calculated_points = (int) ( wps_wpr_get_order_amount_for_points( $order ) * $mem_rewards_points_val ) / 100;
 							$updated_points    = $user_points + $calculated_points;
 						}
 
