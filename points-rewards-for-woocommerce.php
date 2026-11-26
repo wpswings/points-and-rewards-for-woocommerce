@@ -399,6 +399,18 @@ if ( $activated ) {
 		$handles = ! wps_wpr_is_active() || defined( 'WPS_WPR_PRO_DEFERS_BIRTHDAY_FIRST_ORDER' );
 		return (bool) apply_filters( 'wps_wpr_free_handles_birthday_first_order', $handles );
 	}
+	register_deactivation_hook( __FILE__, 'wps_wpr_clear_points_expiry_cron' );
+
+	/**
+	 * Clear the free plugin's points expiry cron on deactivation.
+	 *
+	 * Only the free plugin's own hook is cleared; Pro's expiry cron is left alone.
+	 *
+	 * @return void
+	 */
+	function wps_wpr_clear_points_expiry_cron() {
+		wp_clear_scheduled_hook( 'wps_wpr_free_points_expiry_cron' );
+	}
 	/**
 	 * This function is used to create points tab.
 	 *
