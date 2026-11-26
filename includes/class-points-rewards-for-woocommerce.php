@@ -132,6 +132,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wps-wpr-setup-wizard.php';
 
 		/**
+		 * Ready-made program templates for the setup wizard.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wps-wpr-wizard-templates.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
@@ -153,9 +158,19 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-order-points-lifecycle.php';
 
 		/**
+		 * The class responsible for birthday points and first-order points.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-birthday-first-order-points.php';
+
+		/**
 		 * The class responsible for the AI settings assistant.
 		 */
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-ai-assistant.php';
+
+		/**
+		 * The class responsible for points CSV import and export.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-wps-wpr-points-import-export.php';
 
 		$this->loader = new Points_Rewards_For_Woocommerce_Loader();
 
@@ -263,6 +278,13 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'wps_wpr_add_additional_import_points', $plugin_admin, 'wps_wpr_add_additional_import_org_points', 10 );
 		}
 		$this->loader->add_action( 'wp_ajax_wps_large_scv_import', $plugin_admin, 'wps_large_scv_import' );
+		// points CSV export (runs before admin output so the file can be streamed).
+		$points_import_export = new WPS_WPR_Points_Import_Export();
+		$this->loader->add_action( 'admin_init', $points_import_export, 'wps_wpr_maybe_export_points' );
+		// points CSV import, applied in AJAX batches.
+		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_start', $points_import_export, 'wps_wpr_ajax_import_start' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_batch', $points_import_export, 'wps_wpr_ajax_import_batch' );
+		$this->loader->add_action( 'wp_ajax_wps_wpr_points_import_discard', $points_import_export, 'wps_wpr_ajax_import_discard' );
 		// email preview.
 		$this->loader->add_filter( 'wps_wpr_preview_email_content', $plugin_admin, 'wps_wpr_preview_email_content_call', 10, 1 );
 		// manage discount on order edit page.
@@ -275,6 +297,13 @@ class Points_Rewards_For_Woocommerce {
 		// set campaign image.
 		$this->loader->add_action( 'wp_ajax_wps_set_camp_heading_and_image', $plugin_admin, 'wps_wpr_set_camp_heading_and_image', 10 );
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'wps_wpr_org_remove_action' );
+
+		// birthday and first-order points settings and admin log.
+		$birthday_first_order = new WPS_WPR_Birthday_First_Order_Points();
+		$this->loader->add_filter( 'wps_wpr_general_settings', $birthday_first_order, 'wps_wpr_add_general_settings', 5 );
+		$this->loader->add_filter( 'wps_wpr_general_settings_save_option', $birthday_first_order, 'wps_wpr_save_general_settings', 5 );
+		$this->loader->add_filter( 'wps_wpr_email_notification_settings', $birthday_first_order, 'wps_wpr_add_notification_settings', 5 );
+		$this->loader->add_action( 'wps_points_admin_table_log', $birthday_first_order, 'wps_wpr_admin_points_log', 5 );
 
 		// AI settings assistant (needs the WordPress AI Client, WP 7.0+).
 		if ( WPS_WPR_AI_Assistant::wps_wpr_has_ai_api() ) {
@@ -305,6 +334,8 @@ class Points_Rewards_For_Woocommerce {
 		foreach ( array( 'added_user_meta', 'updated_user_meta', 'deleted_user_meta' ) as $wps_wpr_meta_hook ) {
 			$this->loader->add_action( $wps_wpr_meta_hook, $wps_wpr_blocks, 'wps_wpr_flush_leaderboard_cache', 10, 3 );
 		}
+		// Schedules the birthday cron, or clears it when birthday points or the plugin are switched off.
+		$this->loader->add_action( 'init', new WPS_WPR_Birthday_First_Order_Points(), 'wps_wpr_maybe_schedule_cron' );
 
 		if ( $this->wps_rwpr_is_plugin_enable() ) {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'wps_wpr_public_enqueue_styles' );
@@ -449,6 +480,15 @@ class Points_Rewards_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_order_status_changed', $abandoned_cart, 'wps_wpr_award_recovery_points', 20, 3 );
 			$this->loader->add_action( 'woocommerce_before_cart', $abandoned_cart, 'wps_wpr_show_incentive_notice' );
 			$this->loader->add_action( 'woocommerce_before_checkout_form', $abandoned_cart, 'wps_wpr_show_incentive_notice', 5 );
+
+			// birthday and first-order points.
+			$birthday_first_order = new WPS_WPR_Birthday_First_Order_Points();
+			$this->loader->add_action( WPS_WPR_Birthday_First_Order_Points::CRON_HOOK, $birthday_first_order, 'wps_wpr_process_birthdays', 10, 0 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $birthday_first_order, 'wps_wpr_award_first_order_points', 20, 3 );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $birthday_first_order, 'wps_wpr_reverse_first_order_points', 25, 3 );
+			$this->loader->add_action( 'woocommerce_edit_account_form', $birthday_first_order, 'wps_wpr_account_birthday_field' );
+			$this->loader->add_action( 'woocommerce_save_account_details', $birthday_first_order, 'wps_wpr_save_account_birthday', 10, 1 );
+			$this->loader->add_action( 'wps_points_on_first_order', $birthday_first_order, 'wps_wpr_public_points_log', 5, 1 );
 		}
 	}
 
