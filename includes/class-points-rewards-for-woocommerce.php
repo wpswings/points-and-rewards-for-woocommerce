@@ -132,6 +132,11 @@ class Points_Rewards_For_Woocommerce {
 		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wps-wpr-setup-wizard.php';
 
 		/**
+		 * Ready-made program templates for the setup wizard.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-wps-wpr-wizard-templates.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */

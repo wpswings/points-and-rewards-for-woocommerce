@@ -633,3 +633,71 @@
 	font-size: 18px;
 	margin-left: 15px;
 }
+
+/* Program templates (step 0) */
+.wps-wpr-program-templates {
+	margin-top: 30px;
+}
+
+.wps-wpr-program-templates h3 {
+	margin: 0 0 6px;
+	font-size: 18px;
+}
+
+.wps-wpr-program-template-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 16px;
+	margin-top: 16px;
+}
+
+.wps-wpr-program-template {
+	display: flex;
+	flex-direction: column;
+	padding: 18px;
+	border: 2px solid #e5e7eb;
+	border-radius: 10px;
+	background: #fff;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.wps-wpr-program-template:hover {
+	border-color: #a5b4fc;
+}
+
+.wps-wpr-program-template-selected {
+	border-color: #667eea;
+	box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.wps-wpr-program-template h4 {
+	margin: 0 0 6px;
+	font-size: 16px;
+}
+
+.wps-wpr-program-template p {
+	margin: 0 0 10px;
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.wps-wpr-program-template-preview {
+	flex: 1;
+	margin: 0 0 14px;
+	padding-left: 18px;
+	list-style: disc;
+	font-size: 13px;
+	color: #374151;
+}
+
+.wps-wpr-program-template-preview li {
+	margin-bottom: 4px;
+}
+
+.wps-wpr-program-template .wps-wpr-apply-template {
+	align-self: flex-start;
+}
+
+.wps-wpr-clear-template {
+	margin-top: 12px;
+}
