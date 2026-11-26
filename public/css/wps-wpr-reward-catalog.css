@@ -1,0 +1,10 @@
+.wps-wpr-reward-catalog { margin: 24px 0; }
+.wps-wpr-reward-catalog__list { list-style: none; margin: 0 0 16px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.wps-wpr-reward-card { display: flex; flex-direction: column; gap: 6px; padding: 14px; border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; }
+.wps-wpr-reward-card__type { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.7; }
+.wps-wpr-reward-card__desc { font-size: 14px; opacity: 0.85; }
+.wps-wpr-reward-card__cost { font-weight: 600; }
+.wps-wpr-reward-card__redeem { margin-top: auto; }
+.wps-wpr-reward-card__redeem[disabled] { opacity: 0.55; cursor: not-allowed; }
+.wps-wpr-reward-catalog__notice:empty { display: none; }
+.wps-wpr-reward-catalog__notice code { user-select: all; }

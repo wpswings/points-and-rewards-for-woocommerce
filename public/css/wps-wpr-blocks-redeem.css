@@ -1,0 +1,54 @@
+/* "Redeem points" panel in the Cart and Checkout blocks. */
+.wps-wpr-block-redeem {
+	border-top: 1px solid hsla(0, 0%, 7%, 0.11);
+	padding: 16px 0 8px;
+	margin: 0 16px;
+	font-size: 0.875em;
+}
+
+.wps-wpr-block-redeem__title {
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.wps-wpr-block-redeem__text {
+	margin: 0 0 8px;
+}
+
+.wps-wpr-block-redeem__rate {
+	opacity: 0.75;
+}
+
+.wps-wpr-block-redeem__form,
+.wps-wpr-block-redeem__applied {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.wps-wpr-block-redeem__input {
+	flex: 1 1 120px;
+	min-width: 0;
+	min-height: 40px;
+	padding: 0 10px;
+	border: 1px solid hsla(0, 0%, 7%, 0.8);
+	border-radius: 4px;
+	font-size: inherit;
+}
+
+.wps-wpr-block-redeem__apply,
+.wps-wpr-block-redeem__remove {
+	min-height: 40px;
+	padding: 0 16px;
+	cursor: pointer;
+}
+
+.wps-wpr-block-redeem__applied-text {
+	flex: 1 1 auto;
+}
+
+.wps-wpr-block-redeem__error {
+	color: #cc1818;
+	margin: 8px 0 0;
+}
