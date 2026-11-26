@@ -1,0 +1,68 @@
+/* Points and Rewards blocks pack. */
+.wps-wpr-block {
+	box-sizing: border-box;
+	margin-bottom: 1em;
+}
+.wps-wpr-block__heading {
+	font-weight: 600;
+	margin: 0 0 0.5em;
+}
+.wps-wpr-block__value {
+	font-size: 1.5em;
+	font-weight: 700;
+}
+.wps-wpr-block__level {
+	display: inline-block;
+	padding: 0.1em 0.6em;
+	border-radius: 999px;
+	background: rgba(0, 0, 0, 0.08);
+	font-size: 0.9em;
+}
+.wps-wpr-block__list {
+	margin: 0;
+	padding-left: 1.4em;
+}
+.wps-wpr-block-earn-points .wps-wpr-block__list {
+	list-style: none;
+	padding-left: 0;
+}
+.wps-wpr-block__item {
+	display: flex;
+	justify-content: space-between;
+	gap: 1em;
+	padding: 0.35em 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.wps-wpr-block__item:last-child {
+	border-bottom: 0;
+}
+.wps-wpr-block__item-points {
+	font-weight: 600;
+	white-space: nowrap;
+}
+.wps-wpr-block__leaderboard {
+	list-style: none;
+	padding-left: 0;
+}
+.wps-wpr-block__rank {
+	min-width: 1.6em;
+	font-weight: 700;
+}
+.wps-wpr-block__leaderboard .wps-wpr-block__item-label {
+	flex: 1;
+}
+.wps-wpr-block__item.is-current-user {
+	font-weight: 700;
+}
+.wps-wpr-block__copy {
+	display: flex;
+	gap: 0.5em;
+}
+.wps-wpr-block__link {
+	flex: 1;
+	min-width: 0;
+}
+.wps-wpr-block__notice {
+	opacity: 0.7;
+	font-style: italic;
+}
