@@ -114,6 +114,8 @@ while IFS= read -r pair; do
 	tar -C "$src" --exclude=.git --exclude=node_modules --exclude=test-results --exclude=playwright-report -cf - . | tar -C "$WP_DIR/wp-content/plugins/$slug" -xf -
 	$WP plugin activate "$slug" --quiet
 done <<< "${WPR_PLUGINS:-}"
+# Treat the WP Swings onboarding popup as done (nothing is sent) so it does not cover the admin pages.
+$WP option update 'wps_wpr_onboarding-data-sent' sent --quiet
 $WP rewrite flush --quiet
 
 if [ "${WPR_ENABLE_POINTS:-}" = "1" ]; then
