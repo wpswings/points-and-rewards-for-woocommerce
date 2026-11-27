@@ -167,6 +167,8 @@ jobs:
           WPR_DB_HOST: ${{ vars.WPR_DB_HOST }}
           WPR_DB_USER: ${{ vars.WPR_DB_USER }}
           WPR_DB_PASSWORD: ${{ secrets.WPR_DB_PASSWORD }}
+          # The e2e specs expect the points program switched on.
+          WPR_ENABLE_POINTS: '1'
         run: bash .github/ci/setup-wp.sh
 
       - name: Unit tests (PHPUnit)

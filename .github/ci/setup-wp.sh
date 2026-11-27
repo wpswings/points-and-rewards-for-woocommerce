@@ -13,6 +13,7 @@
 #   WC_VERSION    WooCommerce version from wordpress.org (default: latest)
 #   WP_VERSION    WordPress version (default: latest)
 #   WPR_WP_CLI_PHAR  optional path of a wp-cli.phar already on the runner
+#   WPR_ENABLE_POINTS  1 to switch the points program on (General > Enable Points and Rewards)
 #
 # Writes to $GITHUB_ENV: WP_DIR, WP_BASE_URL, WP_CLI, WP_LOAD_PATH,
 # WP_USERNAME, WP_PASSWORD, WPR_CI_DIR and what teardown-wp.sh needs.
@@ -114,6 +115,11 @@ while IFS= read -r pair; do
 	$WP plugin activate "$slug" --quiet
 done <<< "${WPR_PLUGINS:-}"
 $WP rewrite flush --quiet
+
+if [ "${WPR_ENABLE_POINTS:-}" = "1" ]; then
+	# General > Enable Points and Rewards.
+	$WP eval '$g = get_option( "wps_wpr_settings_gallery", array() ); $g = is_array( $g ) ? $g : array(); $g["wps_wpr_general_setting_enable"] = 1; update_option( "wps_wpr_settings_gallery", $g );'
+fi
 
 # ---------- Web server ----------
 LOG="$WORK/php-server.log"
