@@ -91,6 +91,7 @@ class RewardsLauncherTest extends TestCase {
 		remove_all_filters( 'wps_wpr_launcher_rewards' );
 		remove_all_filters( 'wp_doing_ajax' );
 		remove_all_filters( 'wp_die_ajax_handler' );
+		remove_filter( 'doing_it_wrong_trigger_error', array( $this, 'skip_rest_send_json_notice' ), 10 );
 		unset( $_REQUEST['nonce'], $_POST['nonce'] );
 	}
 
@@ -310,6 +311,10 @@ class RewardsLauncherTest extends TestCase {
 			}
 		);
 		$_REQUEST['nonce'] = $nonce;
+		// BlocksTest defines REST_REQUEST for the rest of the run; wp_send_json() then
+		// raises a "called incorrectly" notice (an error with WP_DEBUG on) that a real
+		// admin-ajax.php request never sees.
+		add_filter( 'doing_it_wrong_trigger_error', array( $this, 'skip_rest_send_json_notice' ), 10, 2 );
 
 		ob_start();
 		try {
@@ -320,6 +325,17 @@ class RewardsLauncherTest extends TestCase {
 		$output = ob_get_clean();
 
 		return json_decode( $output, true );
+	}
+
+	/**
+	 * Silence only the wp_send_json() REST notice.
+	 *
+	 * @param  bool   $trigger  whether to trigger the notice.
+	 * @param  string $function function name.
+	 * @return bool
+	 */
+	public function skip_rest_send_json_notice( $trigger, $function ) {
+		return 'wp_send_json' === $function ? false : $trigger;
 	}
 
 	public function test_activity_ajax_returns_only_current_users_entries() {
