@@ -1,10 +1,54 @@
 /**
  * E2E: setup wizard program templates (WPS-8316).
  *
- * Needs a logged-in admin (WP_STORAGE_STATE). The last test saves the wizard,
- * so run it on a test site or back up the plugin settings first.
+ * Needs a logged-in admin (WP_STORAGE_STATE) and WP-CLI for the site: set
+ * WP_CLI to the command (default `wp`, run in the site root).
+ *
+ * The last test saves the wizard. Before the tests run, the spec backs up every
+ * option the wizard writes (into wps_wpr_wizard_e2e_backup, so a crashed run is
+ * restored by the next one) and puts them back afterwards.
  */
 const { test, expect } = require( '@playwright/test' );
+const { execFileSync } = require( 'child_process' );
+
+/**
+ * Run PHP through `wp eval-file -` and return its trimmed output.
+ *
+ * @param {string} code PHP code (without the opening tag).
+ * @return {string} output.
+ */
+function php( code ) {
+	const cmd = ( process.env.WP_CLI || 'wp' ).split( ' ' );
+	return execFileSync( cmd[ 0 ], [ ...cmd.slice( 1 ), 'eval-file', '-' ], {
+		input: `<?php\n${ code }`,
+		encoding: 'utf8',
+		stdio: [ 'pipe', 'pipe', 'pipe' ],
+	} ).trim();
+}
+
+const WIZARD_OPTIONS = "array( 'wps_wpr_settings_gallery', 'wps_wpr_other_settings', 'wps_wpr_coupons_gallery', 'wps_wpr_wizard_template', 'wps_wpr_wizard_completed', 'wps_wpr_wizard_skipped' )";
+
+const PHP_RESTORE = `
+$backup = get_option( 'wps_wpr_wizard_e2e_backup', null );
+if ( is_array( $backup ) ) {
+	foreach ( $backup as $name => $value ) {
+		if ( '__none__' === $value ) {
+			delete_option( $name );
+		} else {
+			update_option( $name, $value );
+		}
+	}
+	delete_option( 'wps_wpr_wizard_e2e_backup' );
+}
+echo 'restored';`;
+
+const PHP_BACKUP = `
+$backup = array();
+foreach ( ${ WIZARD_OPTIONS } as $name ) {
+	$backup[ $name ] = get_option( $name, '__none__' );
+}
+add_option( 'wps_wpr_wizard_e2e_backup', $backup, '', 'no' );
+echo 'saved';`;
 
 const WIZARD_URL = '/wp-admin/admin.php?page=wps-wpr-setup-wizard';
 
@@ -19,6 +63,15 @@ async function next( page ) {
 }
 
 test.describe( 'Setup wizard templates', () => {
+	test.beforeAll( () => {
+		php( PHP_RESTORE );
+		expect( php( PHP_BACKUP ) ).toBe( 'saved' );
+	} );
+
+	test.afterAll( () => {
+		expect( php( PHP_RESTORE ) ).toBe( 'restored' );
+	} );
+
 	test( 'shows template cards with a preview of their settings', async ( { page } ) => {
 		await openWizard( page );
 
