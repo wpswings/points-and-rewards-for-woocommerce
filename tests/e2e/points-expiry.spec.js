@@ -29,6 +29,8 @@ test.describe.serial( 'Points expiry', () => {
 		await page.goto( SETTINGS_URL );
 		await dismissOnboarding( page );
 		await expect( page.locator( '#wps_wpr_points_expiration_enable' ) ).toBeAttached();
+		// With Pro active the tab shows Pro's own expiry form (covered by Pro's points-expiry-pro spec).
+		test.skip( 0 === ( await page.locator( '#wps_wpr_save_points_expiry_settings' ).count() ), 'Pro replaces the basic expiry form' );
 
 		await openSection( page, 'Points Expiration', '#wps_wpr_points_expiration_enable' );
 		await page.locator( '#wps_wpr_points_expiration_enable' ).check();
@@ -58,6 +60,8 @@ test.describe.serial( 'Points expiry', () => {
 	test( 'Free vs Pro lists points expiry as free', async ( { page } ) => {
 		await page.goto( '/wp-admin/admin.php?page=wps-rwpr-setting&tab=free-vs-pro' );
 		await dismissOnboarding( page );
+		// The Free vs Pro tab only exists while Pro is inactive.
+		test.skip( 0 === ( await page.locator( '.wps-free-vs-pro__wrapper' ).count() ), 'Free vs Pro tab is hidden while Pro is active' );
 		await expect( page.getByText( 'Expire unused points after a set period', { exact: false } ) ).toBeAttached();
 		await expect( page.getByText( 'Advanced Points Expiry', { exact: true } ) ).toBeAttached();
 	} );
