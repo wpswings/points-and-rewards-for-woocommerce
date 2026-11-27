@@ -1,28 +1,67 @@
-name: PHPCS & PHPCBF
+name: PHPCS, Unit & E2E Tests
+
+# Runs on the self-hosted runner labelled "main".
+#
+# Runner needs: Linux, git, curl, PHP 8.1+ with mysqli (otherwise setup-php
+# installs it, which needs passwordless sudo), Node is installed by the job,
+# and a database: Docker, or the repository variables WPR_DB_HOST /
+# WPR_DB_USER plus the secret WPR_DB_PASSWORD for a MySQL the runner can reach.
+# Chromium's system libraries must be present once:
+#   sudo npx playwright@1.65.1 install-deps chromium
 
 on:
   push:
-    branches: [ v2.10.2 ]
+    branches: [ master, 'release/**' ]
   pull_request:
-    branches: [ v2.10.2 ]
+    branches: [ master, 'release/**' ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PLAYWRIGHT_VERSION: 1.65.1
+  PHPUNIT_PHAR: https://phar.phpunit.de/phpunit-10.5.phar
 
 jobs:
   phpcs:
-    runs-on: ubuntu-latest
+    runs-on: main
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: Check PHP on the runner
+        id: php
+        run: |
+          if command -v php >/dev/null && php -r 'exit( PHP_VERSION_ID >= 80100 ? 0 : 1 );' && php -m | grep -qi '^zip$'; then
+            echo "ready=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=no" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Install PHP
-        run: sudo apt-get update && sudo apt-get install -y php-cli php-zip unzip curl
+        if: steps.php.outputs.ready != 'yes'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mysqli, zip, mbstring, intl
+          tools: none
 
-      - name: Install Composer
-        run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      - name: Install Composer and WP-CLI (runner temp, no sudo)
+        run: |
+          mkdir -p "$RUNNER_TEMP/bin"
+          if ! command -v composer >/dev/null; then
+            curl -sS https://getcomposer.org/installer | php -- --install-dir="$RUNNER_TEMP/bin" --filename=composer
+          fi
+          curl -fsSL -o "$RUNNER_TEMP/bin/wp" https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          chmod +x "$RUNNER_TEMP/bin/wp"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
 
       - name: Install PHPCS + Standards
         run: |
           composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-          composer global require \
+          composer global require --no-interaction \
             squizlabs/php_codesniffer \
             wp-coding-standards/wpcs \
             woocommerce/woocommerce-sniffs \
@@ -33,7 +72,7 @@ jobs:
             phpcsstandards/phpcsextra
 
       - name: Add Composer global bin to PATH
-        run: echo "$HOME/.composer/vendor/bin" >> $GITHUB_PATH
+        run: composer global config bin-dir --absolute 2>/dev/null >> "$GITHUB_PATH"
 
       - name: Verify PHPCS installation
         run: phpcs -i
@@ -58,22 +97,17 @@ jobs:
                  --extensions=php,html .
         continue-on-error: true
 
-      - name: Install WP-CLI
-        run: |
-          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-          chmod +x wp-cli.phar
-          sudo mv wp-cli.phar /usr/local/bin/wp
-
       - name: Generate POT file
         run: |
           wp i18n make-pot . languages/points-and-rewards-for-woocommerce.pot \
             --exclude=node_modules,vendor,tests,public/js,admin/js,packages,build,dist
 
-      - name: Install gettext
-        run: sudo apt-get update && sudo apt-get install -y gettext
-
       - name: Compile .mo files from .po (if any exist)
         run: |
+          if ! command -v msgfmt >/dev/null; then
+            echo "::warning::gettext (msgfmt) is not installed on the runner; .mo files were not compiled."
+            exit 0
+          fi
           if ls languages/*.po 1> /dev/null 2>&1; then
             for file in languages/*.po; do
               msgfmt "$file" -o "${file%.po}.mo"
@@ -96,3 +130,111 @@ jobs:
             phpcbf-report.txt
             languages/*.pot
             languages/*.mo
+
+  tests:
+    name: Unit & E2E tests
+    runs-on: main
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check PHP on the runner
+        id: php
+        run: |
+          if command -v php >/dev/null && php -r 'exit( PHP_VERSION_ID >= 80100 ? 0 : 1 );' && php -m | grep -qi '^mysqli$'; then
+            echo "ready=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install PHP
+        if: steps.php.outputs.ready != 'yes'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mysqli, zip, mbstring, intl, gd
+          tools: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up WordPress + WooCommerce test site
+        env:
+          WPR_PLUGINS: ${{ github.workspace }}:points-and-rewards-for-woocommerce
+          WC_VERSION: ${{ vars.WC_VERSION || 'latest' }}
+          WPR_DB_HOST: ${{ vars.WPR_DB_HOST }}
+          WPR_DB_USER: ${{ vars.WPR_DB_USER }}
+          WPR_DB_PASSWORD: ${{ secrets.WPR_DB_PASSWORD }}
+        run: bash .github/ci/setup-wp.sh
+
+      - name: Unit tests (PHPUnit)
+        id: unit
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/phpunit.phar" "$PHPUNIT_PHAR"
+          php -d memory_limit=1G "$RUNNER_TEMP/phpunit.phar" -c phpunit.xml.dist --log-junit unit-results.xml
+
+      - name: Install Playwright
+        if: ${{ !cancelled() && steps.unit.conclusion != 'skipped' }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/pw"
+          npm install --prefix "$RUNNER_TEMP/pw" --no-audit --no-fund --silent "@playwright/test@$PLAYWRIGHT_VERSION"
+          echo "NODE_PATH=$RUNNER_TEMP/pw/node_modules" >> "$GITHUB_ENV"
+          echo "$RUNNER_TEMP/pw/node_modules/.bin" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install chromium
+
+      - name: Log in as admin
+        if: ${{ !cancelled() && steps.unit.conclusion != 'skipped' }}
+        run: |
+          node .github/ci/login.js "$RUNNER_TEMP/admin-state.json"
+          echo "WP_STORAGE_STATE=$RUNNER_TEMP/admin-state.json" >> "$GITHUB_ENV"
+
+      # ab-testing.spec.js tests a Pro feature and runs in the Pro repository's CI.
+      # cart-checkout-blocks-redeem.spec.js needs seed data, so it runs in its own step below.
+      - name: E2E tests (Playwright)
+        id: e2e
+        if: ${{ !cancelled() && steps.unit.conclusion != 'skipped' }}
+        env:
+          PW_OUTPUT_DIR: test-results/e2e
+          PLAYWRIGHT_HTML_REPORT: playwright-report/e2e
+          PLAYWRIGHT_HTML_OPEN: never
+        run: |
+          specs=$( ls tests/e2e/*.spec.js | grep -v -e ab-testing -e cart-checkout-blocks-redeem )
+          playwright test -c playwright.config.js --reporter=list,html $specs
+
+      - name: E2E tests - block cart & checkout (seeded)
+        if: ${{ !cancelled() && steps.unit.conclusion != 'skipped' }}
+        env:
+          PW_OUTPUT_DIR: test-results/blocks
+          PLAYWRIGHT_HTML_REPORT: playwright-report/blocks
+          PLAYWRIGHT_HTML_OPEN: never
+        run: |
+          "$WP_CLI" eval-file .github/ci/seed-block-checkout.php
+          playwright test -c playwright.config.js --reporter=list,html tests/e2e/cart-checkout-blocks-redeem.spec.js
+
+      - name: PHP errors logged during the run
+        if: ${{ always() && env.WP_DIR != '' }}
+        run: |
+          if [ -s "$WP_DIR/wp-content/debug.log" ]; then
+            grep -E "PHP (Fatal|Warning|Parse)" "$WP_DIR/wp-content/debug.log" | sort | uniq -c | sort -rn | head -50 || true
+            cp "$WP_DIR/wp-content/debug.log" debug.log
+          else
+            echo "No PHP errors logged."
+          fi
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          if-no-files-found: ignore
+          path: |
+            unit-results.xml
+            playwright-report/
+            test-results/
+            debug.log
+
+      - name: Tear down test site
+        if: always()
+        run: bash .github/ci/teardown-wp.sh
