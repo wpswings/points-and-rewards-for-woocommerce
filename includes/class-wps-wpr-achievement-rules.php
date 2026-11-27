@@ -319,6 +319,38 @@ class WPS_WPR_Achievement_Rules {
 	}
 
 	/**
+	 * Run wc_get_orders() with a meta query on either order storage.
+	 *
+	 * The HPOS order store accepts a `meta_query` argument. The posts (CPT)
+	 * order store ignores it (WooCommerce only logs a notice), which would
+	 * count every order, so there the meta query is added to the underlying
+	 * WP_Query arguments instead.
+	 *
+	 * @param array $args       wc_get_orders() arguments.
+	 * @param array $meta_query meta query clauses.
+	 * @return array
+	 */
+	private static function wps_wpr_get_orders_with_meta_query( $args, $meta_query ) {
+		$hpos = class_exists( \Automattic\WooCommerce\Utilities\OrderUtil::class ) && \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled();
+		if ( $hpos ) {
+			$args['meta_query'] = $meta_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			return wc_get_orders( $args );
+		}
+
+		$add_meta_query = static function ( $query ) use ( $meta_query ) {
+			$existing            = isset( $query['meta_query'] ) && is_array( $query['meta_query'] ) ? $query['meta_query'] : array();
+			$query['meta_query'] = array_merge( $existing, $meta_query ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			return $query;
+		};
+		add_filter( 'woocommerce_order_data_store_cpt_get_orders_query', $add_meta_query );
+		try {
+			return wc_get_orders( $args );
+		} finally {
+			remove_filter( 'woocommerce_order_data_store_cpt_get_orders_query', $add_meta_query );
+		}
+	}
+
+	/**
 	 * IDs of a user's counted orders that reached the award status in a range.
 	 *
 	 * Uses the time recorded by wps_wpr_mark_counted(). Orders that reached the
@@ -339,29 +371,26 @@ class WPS_WPR_Achievement_Rules {
 			'type'        => 'shop_order',
 		);
 
-		$with_meta = wc_get_orders(
-			$base + array(
-				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-					array(
-						'key'     => self::COUNTED_META,
-						'value'   => array( (int) $start, (int) $end ),
-						'compare' => 'BETWEEN',
-						'type'    => 'NUMERIC',
-					),
+		$with_meta = self::wps_wpr_get_orders_with_meta_query(
+			$base,
+			array(
+				array(
+					'key'     => self::COUNTED_META,
+					'value'   => array( (int) $start, (int) $end ),
+					'compare' => 'BETWEEN',
+					'type'    => 'NUMERIC',
 				),
 			)
 		);
 
 		$award_status = function_exists( 'wps_wpr_get_points_award_status' ) ? wps_wpr_get_points_award_status() : 'completed';
 		$date_field   = 'completed' === $award_status ? 'date_completed' : 'date_paid';
-		$legacy       = wc_get_orders(
-			$base + array(
-				$date_field  => (int) $start . '...' . (int) $end,
-				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-					array(
-						'key'     => self::COUNTED_META,
-						'compare' => 'NOT EXISTS',
-					),
+		$legacy       = self::wps_wpr_get_orders_with_meta_query(
+			$base + array( $date_field => (int) $start . '...' . (int) $end ),
+			array(
+				array(
+					'key'     => self::COUNTED_META,
+					'compare' => 'NOT EXISTS',
 				),
 			)
 		);

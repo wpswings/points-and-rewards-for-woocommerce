@@ -4678,3 +4678,16 @@ body.wp-admin.folded #wps_rwpr_setting_wrapper.wps-rma-admin-wrap .button-primar
   border-color: transparent transparent #65748b transparent;
   border-width: 0 5px 6px 5px;
 }
+
+/* Achievement rules: "Delete rule" uses the same button style as "Add rule", in red. */
+.wp-core-ui .button.wps_wpr_ach_remove_rule {
+	color: #b32d2e;
+	border-color: #b32d2e;
+}
+.wp-core-ui .button.wps_wpr_ach_remove_rule:hover,
+.wp-core-ui .button.wps_wpr_ach_remove_rule:focus {
+	color: #fff;
+	background: #b32d2e;
+	border-color: #b32d2e;
+	box-shadow: 0 0 0 1px #b32d2e;
+}

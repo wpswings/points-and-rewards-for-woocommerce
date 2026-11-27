@@ -161,7 +161,7 @@ $wps_wpr_ach_rule_block = function ( $rule_key, $rule ) use ( $wps_wpr_ach_condi
 					<span class="wps_wpr_label_notice"><?php esc_html_e( 'Leave empty to apply the rule to every customer. List values are comma separated.', 'points-and-rewards-for-woocommerce' ); ?></span>
 				</div>
 			</article>
-			<p><button type="button" class="button-link-delete wps_wpr_ach_remove_rule"><?php esc_html_e( 'Delete rule', 'points-and-rewards-for-woocommerce' ); ?></button></p>
+			<p><button type="button" class="button wps_wpr_ach_remove_rule"><?php esc_html_e( 'Delete rule', 'points-and-rewards-for-woocommerce' ); ?></button></p>
 		</div>
 	</section>
 	<?php
