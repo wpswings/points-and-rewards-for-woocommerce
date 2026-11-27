@@ -126,8 +126,11 @@ fi
 # ---------- Web server ----------
 LOG="$WORK/php-server.log"
 # Fully detached (own session, no inherited stdin/stdout) so the CI step does not wait on it.
-PHP_CLI_SERVER_WORKERS=4 setsid nohup php -d memory_limit=512M -S "127.0.0.1:$PORT_WEB" -t "$WP_DIR" "$CI_DIR/router.php" </dev/null >"$LOG" 2>&1 &
-echo $! > "$WORK/php-server.pid"
+# The shell writes its own PID (setsid may fork) and execs PHP, so the PID file
+# names the session / process-group leader that teardown-wp.sh kills.
+PHP_CLI_SERVER_WORKERS=4 setsid sh -c 'echo $$ > "$1"; shift; exec "$@"' sh "$WORK/php-server.pid" \
+	php -d memory_limit=512M -S "127.0.0.1:$PORT_WEB" -t "$WP_DIR" "$CI_DIR/router.php" </dev/null >"$LOG" 2>&1 &
+for i in $( seq 1 50 ); do [ -s "$WORK/php-server.pid" ] && break; sleep 0.1; done
 for i in $( seq 1 30 ); do
 	curl -fsS --max-time 20 -o /dev/null "$URL/wp-login.php" 2>/dev/null && break
 	[ "$i" = 30 ] && { echo "::error::The PHP web server did not start."; cat "$LOG"; exit 1; }
