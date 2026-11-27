@@ -41,6 +41,36 @@ class EarnMessagesTest extends TestCase {
 	private $filters = array();
 
 	/**
+	 * Plugin callbacks removed by a test, put back in tearDown.
+	 *
+	 * @var array[] array( hook, callback, priority, accepted_args ).
+	 */
+	private $unhooked = array();
+
+	/**
+	 * Remove the callbacks the running plugin added to a hook from its own
+	 * WPS_WPR_Earn_Messages instance, so a test only sees its own instance.
+	 *
+	 * @param string $hook hook name.
+	 */
+	private function unhook_plugin_instances( $hook ) {
+		global $wp_filter;
+		if ( empty( $wp_filter[ $hook ] ) ) {
+			return;
+		}
+		foreach ( $wp_filter[ $hook ]->callbacks as $priority => $callbacks ) {
+			foreach ( $callbacks as $callback ) {
+				if ( is_array( $callback['function'] ) && $callback['function'][0] instanceof WPS_WPR_Earn_Messages ) {
+					$this->unhooked[] = array( $hook, $callback['function'], $priority, $callback['accepted_args'] );
+				}
+			}
+		}
+		foreach ( $this->unhooked as $removed ) {
+			remove_filter( $removed[0], $removed[1], $removed[2] );
+		}
+	}
+
+	/**
 	 * Tax rate created by a test.
 	 *
 	 * @var int
@@ -128,6 +158,11 @@ class EarnMessagesTest extends TestCase {
 		foreach ( $this->filters as $filter ) {
 			remove_filter( $filter[0], $filter[1], 10 );
 		}
+		foreach ( $this->unhooked as $hook ) {
+			remove_filter( $hook[0], $hook[1], $hook[2] );
+			add_filter( $hook[0], $hook[1], $hook[2], $hook[3] );
+		}
+		$this->unhooked = array();
 		if ( $this->tax_rate_id ) {
 			WC_Tax::_delete_tax_rate( $this->tax_rate_id );
 			$this->tax_rate_id = 0;
@@ -529,6 +564,8 @@ class EarnMessagesTest extends TestCase {
 			$ids[] = $this->make_simple( 5 + $i )->get_id();
 		}
 
+		// With the plugin enabled its own instance already renders the message; count only this one.
+		$this->unhook_plugin_instances( 'woocommerce_after_shop_loop_item_title' );
 		$em = new WPS_WPR_Earn_Messages();
 		add_action( 'woocommerce_after_shop_loop_item_title', array( $em, 'wps_wpr_render_shop_message' ), 20 );
 		$this->filters[] = array( 'woocommerce_after_shop_loop_item_title', array( $em, 'wps_wpr_render_shop_message' ) );
