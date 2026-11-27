@@ -6,7 +6,9 @@ CI_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [ -n "${WPR_CI_WORK:-}" ] && [ -f "$WPR_CI_WORK/php-server.pid" ]; then
 	pid="$( cat "$WPR_CI_WORK/php-server.pid" )"
-	# Workers are children of the server process.
+	# setup-wp.sh starts the server with setsid, so it leads its own process
+	# group: killing the group also stops the worker processes.
+	kill -- "-$pid" 2>/dev/null || true
 	pkill -P "$pid" 2>/dev/null || true
 	kill "$pid" 2>/dev/null || true
 fi
