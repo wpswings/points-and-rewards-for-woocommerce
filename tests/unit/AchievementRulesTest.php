@@ -34,11 +34,35 @@ class AchievementRulesTest extends TestCase {
 	private $saved_rules;
 
 	/**
+	 * Saved per-currency earning settings, restored after each test.
+	 *
+	 * @var mixed
+	 */
+	private $saved_coupons;
+
+	/**
+	 * Saved general settings (sign-up bonus), restored after each test.
+	 *
+	 * @var mixed
+	 */
+	private $saved_general;
+
+	/**
 	 * Back up the rules option.
 	 */
 	protected function setUp(): void {
 		$this->saved_rules = get_option( WPS_WPR_Achievement_Rules::OPTION, null );
 		delete_option( WPS_WPR_Achievement_Rules::OPTION );
+		// Balances must only change by the bonus, so switch off the site's sign-up and per-currency earning.
+		$this->saved_general = get_option( 'wps_wpr_settings_gallery', null );
+		$general             = is_array( $this->saved_general ) ? $this->saved_general : array();
+		$general['wps_wpr_general_signup'] = 0;
+		update_option( 'wps_wpr_settings_gallery', $general );
+		$this->saved_coupons = get_option( 'wps_wpr_coupons_gallery', null );
+		$coupons             = is_array( $this->saved_coupons ) ? $this->saved_coupons : array();
+		$coupons['wps_wpr_coupon_conversion_enable'] = 0;
+		update_option( 'wps_wpr_coupons_gallery', $coupons );
+		$this->flush_public_option_cache();
 		// Test the free plugin's default limit even when Pro is active.
 		remove_all_filters( 'wps_wpr_achievement_rules_limit' );
 	}
@@ -65,10 +89,32 @@ class AchievementRulesTest extends TestCase {
 		} else {
 			update_option( WPS_WPR_Achievement_Rules::OPTION, $this->saved_rules );
 		}
+		if ( null === $this->saved_general ) {
+			delete_option( 'wps_wpr_settings_gallery' );
+		} else {
+			update_option( 'wps_wpr_settings_gallery', $this->saved_general );
+		}
+		if ( null === $this->saved_coupons ) {
+			delete_option( 'wps_wpr_coupons_gallery' );
+		} else {
+			update_option( 'wps_wpr_coupons_gallery', $this->saved_coupons );
+		}
+		$this->flush_public_option_cache();
 		remove_all_filters( 'wps_wpr_achievement_rules_limit' );
 		WPS_WPR_Condition_Engine::wps_wpr_flush_cache();
 		$this->users  = array();
 		$this->orders = array();
+	}
+
+	/**
+	 * Clear the public class's per-request option cache so changed settings apply.
+	 */
+	private function flush_public_option_cache() {
+		if ( class_exists( 'Points_Rewards_For_WooCommerce_Public' ) && property_exists( 'Points_Rewards_For_WooCommerce_Public', 'wps_wpr_option_cache' ) ) {
+			$cache = new ReflectionProperty( 'Points_Rewards_For_WooCommerce_Public', 'wps_wpr_option_cache' );
+			$cache->setAccessible( true );
+			$cache->setValue( null, array() );
+		}
 	}
 
 	/**
@@ -118,7 +164,16 @@ class AchievementRulesTest extends TestCase {
 		if ( $days_ago && $order->get_date_completed() ) {
 			$order->set_date_completed( time() - $days_ago * DAY_IN_SECONDS );
 		}
+		// With the plugin enabled the status hook stamps the order as counted "now";
+		// move that stamp back too, so the order really reached the status $days_ago.
 		$order->save();
+		if ( $days_ago ) {
+			$order = wc_get_order( $order->get_id() );
+			if ( $order->get_meta( WPS_WPR_Achievement_Rules::COUNTED_META ) ) {
+				$order->update_meta_data( WPS_WPR_Achievement_Rules::COUNTED_META, time() - $days_ago * DAY_IN_SECONDS );
+				$order->save_meta_data();
+			}
+		}
 		$this->orders[] = $order->get_id();
 		return wc_get_order( $order->get_id() );
 	}

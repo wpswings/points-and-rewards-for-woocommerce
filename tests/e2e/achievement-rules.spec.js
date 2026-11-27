@@ -90,7 +90,9 @@ test.describe.serial( 'Achievement rules', () => {
 	test( 'admin creates a rule with conditions', async ( { page } ) => {
 		await page.goto( SETTINGS_URL );
 		await dismissOnboarding( page );
-		await expect( page.locator( '.wps_wpr_ach_limit_notice' ) ).toBeVisible();
+		// The free plugin shows a rule-limit notice; a licensed Pro lifts the limit (limit 0) and hides it.
+		const limit = Number( php( 'echo WPS_WPR_Achievement_Rules::wps_wpr_rules_limit();' ) );
+		await expect( page.locator( '.wps_wpr_ach_limit_notice' ) ).toHaveCount( limit > 0 ? 1 : 0 );
 
 		await page.locator( '.wps_wpr_ach_add_rule' ).click();
 		const rule = page.locator( '.wps_wpr_ach_rule' ).last();
